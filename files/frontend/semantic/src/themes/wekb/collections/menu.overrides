@@ -1,0 +1,10 @@
+/*******************************
+         Theme Overrides
+*******************************/
+
+.ui.vertical.inverted.menu .item .menu a.item:hover {
+  text-decoration: underline;
+}
+.ui.vertical.menu .menu .item {
+  margin-left: 5px;
+}

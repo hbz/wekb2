@@ -1,0 +1,12 @@
+/*******************************
+         Theme Overrides
+*******************************/
+.ui.segment.footer.wekb-footer {
+  padding: 40px;
+  background-color: rgb(76 127 144 / 16%);
+  .ui.link.list .item,
+  .ui.link.list .item a:not(.ui),
+  .ui.link.list a.item {
+    color: rgb(0 0 0 / 71%);
+  }
+}
