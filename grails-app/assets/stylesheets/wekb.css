@@ -1,0 +1,144 @@
+/*
+ * FileName: wekb.css
+ *
+ *= require /semantic.min.css         //-- semantic
+
+ *= require /jquery-editable.css //-- externalLibs
+
+ *= require security-styles
+
+
+ */
+
+
+
+.editable-clear-x {
+    background: none;
+    height: 1em;
+    color: #767676;
+    display: block;
+    margin: -9px 3px 0 0;
+    font-size: 1.5em;
+    -webkit-transition: color 0.6s ease, -webkit-transform 0.2s ease;
+    transition: color 0.6s ease, -webkit-transform 0.2s ease;
+    transition: color 0.6s ease, transform 0.2s ease;
+    transition: color 0.6s ease, transform 0.2s ease, -webkit-transform 0.2s ease;
+    font-family: Icons;
+    font-style: normal;
+    font-weight: 400;
+    text-decoration: inherit;
+    text-align: center;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    z-index: 80;
+}
+
+.editable-clear-x:before {
+    content: "\f2ed";
+}
+/* label what server */
+.wb-server-label {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    top: 0;
+    margin: 0 !important;
+    border-radius: 0 !important;
+    z-index: 999;
+}
+.wb-server-label span {
+    line-height: 30px;
+}
+
+.wekb-local{
+    border-left: 10px solid #5bc0de!important;
+}
+.wekb-dev{
+    border-left: 10px solid #5cb85c!important;
+}
+.wekb-qa{
+    border-left: 10px solid #d9534f!important;
+}
+
+/*  */
+
+.control-label {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    padding-left: 0.7em;
+    font-weight: bold;
+}
+
+.ui.table tfoot th.control-label {
+    color: #4f4f4f;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    padding-left: 0.7em;
+    font-weight: 700;
+}
+
+.wekb-inline-lists dl {
+    display: table-row;
+}
+
+.wekb-inline-lists dl dt,
+.wekb-inline-lists dl dd {
+    display: table-cell;
+    padding-top: 0.4rem;
+    padding-bottom: 1rem;
+}
+
+.wekb-inline-lists dl dd {
+    padding-left: 1rem;
+}
+
+.wekb-inline-lists dl dd {
+    word-wrap: break-word;
+}
+
+.wekb-inline-lists .la-dl-no-table dl dt,
+.wekb-inline-lists .la-dl-no-table dl dd {
+    display: inline;
+}
+
+.wekb-inline-lists .ui.card {
+    width: 100%;
+}
+
+.inline-lists > dl > dt,
+.inline-lists > dl > dd {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.inline-lists > dl > dt {
+    width: 25%;
+}
+
+.inline-lists > dl > dt > label {
+    font-weight: bold;
+}
+
+.inline-lists > dl > dd {
+    width: 70%;
+    word-wrap: break-word;
+}
+body {
+/*    display: flex;
+    min-height: 100vh;
+    flex-direction: column;*/
+}
+main {
+    flex:1;
+}
+.wekb-local{
+    border-left: 10px solid #5bc0de!important;
+}
+.wekb-dev{
+    border-left: 10px solid #5cb85c!important;
+}
+.wekb-qa{
+    border-left: 10px solid #d9534f!important;
+}
+
+
