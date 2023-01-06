@@ -1,0 +1,557 @@
+rdc;token;value_de;value_en
+Activity.Status;Abandoned;Abandoned;Abandoned
+Activity.Status;Active;Active;Active
+Activity.Status;Complete;Complete;Complete
+Activity.Type;TitleTransfer;TitleTransfer;TitleTransfer
+AllocatedReviewGroup.Status;Claimed;Claimed;Claimed
+AllocatedReviewGroup.Status;In Progress;In Progress;In Progress
+Update.Status;Successful;Successful;Successful
+Update.Status;Failed;Failed;Failed
+Update.Status;Warning;Warning;Warning
+Update.Type;New Title;New Title;New Title
+Update.Type;Changed Title;Changed Title;Changed Title
+Update.Type;Removed Title;Removed Title;Removed Title
+Update.Type;Failed Title;Failed Title;Failed Title
+Combo.Status;Active;Active;Active
+Combo.Status;Deleted;Deleted;Deleted
+Combo.Status;Expired;Expired;Expired
+Combo.Status;Superseded;Superseded;Superseded
+Combo.Type;KBComponent.Ids;KBComponent.Ids;KBComponent.Ids
+Combo.Type;Office.CuratoryGroups;Office.CuratoryGroups;Office.CuratoryGroups
+Combo.Type;Office.Org;Office.Org;Office.Org
+Combo.Type;Org.CuratoryGroups;Org.CuratoryGroups;Org.CuratoryGroups
+Combo.Type;Org.Parent;Org.Parent;Org.Parent
+Combo.Type;Org.Previous;Org.Previous;Org.Previous
+Combo.Type;Package.Broker;Package.Broker;Package.Broker
+Combo.Type;Package.CuratoryGroups;Package.CuratoryGroups;Package.CuratoryGroups
+Combo.Type;Package.Licensor;Package.Licensor;Package.Licensor
+Combo.Type;Package.NominalPlatform;Package.NominalPlatform;Package.NominalPlatform
+Combo.Type;Package.Parent;Package.Parent;Package.Parent
+Combo.Type;Package.Previous;Package.Previous;Package.Previous
+Combo.Type;Package.Provider;Package.Provider;Package.Provider
+Combo.Type;Package.Vendor;Package.Vendor;Package.Vendor
+Combo.Type;Platform.CuratoryGroups;Platform.CuratoryGroups;Platform.CuratoryGroups
+Combo.Type;Platform.Provider;Platform.Provider;Platform.Provider
+Combo.Type;Source.CuratoryGroups;Source.CuratoryGroups;Source.CuratoryGroups
+Contact.Content.Type;E-Mail;E-Mail;E-Mail
+Contact.Content.Type;Fax;Fax;Fax
+Contact.Content.Type;Phone;Phone;Phone
+Contact.Content.Type;Url;Url;Url
+Contact.Content.Type;Mobil;Mobil;Mobil
+Contact.Content.Type;Phone 2;Phone 2;Phone 2
+Contact.Type;Technical Support;Technical Support;Technical Support
+Contact.Type;Service Support;Service Support;Service Support
+Contact.Type;Metadata Contact;Metadata Contact;Metadata Contact
+Country;AD;Andorra;Andorra
+Country;AE;Vereinigte Arabische Emirate;United Arab Emirates
+Country;AF;Afghanistan;Afghanistan
+Country;AG;Antigua und Barbuda;Antigua and Barbuda
+Country;AI;Anguilla;Anguilla
+Country;AL;Albanien;Albania
+Country;AM;Armenien;Armenia
+Country;AO;Angola;Angola
+Country;AQ;Antarktis;Antarctica
+Country;AR;Argentinien;Argentina
+Country;AS;Samoa amerikanischer Teil;American Samoa
+Country;AT;Österreich;Austria
+Country;AU;Australien;Australia
+Country;AW;Aruba;Aruba
+Country;AX;Åland;Åland Islands
+Country;AZ;Aserbaidschan;Azerbaijan
+Country;BA;Bosnien-Herzegowina;Bosnia and Herzegovina
+Country;BB;Barbados;Barbados
+Country;BD;Bangladesh;Bangladesh
+Country;BE;Belgien;Belgium
+Country;BF;Burkina Faso;Burkina Faso
+Country;BG;Bulgarien;Bulgaria
+Country;BH;Bahrain;Bahrain
+Country;BI;Burundi;Burundi
+Country;BJ;Benin;Benin
+Country;BL;St. Barthélemy;Saint Barthélemy
+Country;BM;Bermuda;Bermuda
+Country;BN;Brunei;Brunei Darussalam
+Country;BO;Bolivien;Bolivia Plurinational State of
+Country;BQ;Karibische Niederlande;Bonaire Sint Eustatius and Saba
+Country;BR;Brasilien;Brazil
+Country;BS;Bahamas;Bahamas
+Country;BT;Bhutan;Bhutan
+Country;BV;Bouvet-Insel;Bouvet Island
+Country;BW;Botswana;Botswana
+Country;BY;Belarus;Belarus
+Country;BZ;Belize;Belize
+Country;CA;Kanada;Canada
+Country;CC;Kokos-Insel (Keeling);Cocos (Keeling) Islands
+Country;CD;Kongo demokratische Republik;Congo the Democratic Republic of the
+Country;CF;Zentralafrika;Central African Republic
+Country;CG;Kongo (Republik);Congo
+Country;CH;Schweiz;Switzerland
+Country;CI;Elfenbeinküste;Côte d'Ivoire
+Country;CK;Cook-Inseln;Cook Islands
+Country;CL;Chile;Chile
+Country;CM;Kamerun;Cameroon
+Country;CN;China (Volksrepublik);China
+Country;CO;Kolumbien;Colombia
+Country;CR;Costa Rica;Costa Rica
+Country;CU;Kuba;Cuba
+Country;CV;Kapverdische Inseln;Cape Verde
+Country;CW;Curaçao;Curaçao
+Country;CX;Weihnachtsinseln (indischer Ozean);Christmas Island
+Country;CY;Zypern;Cyprus
+Country;CZ;Tschechische Republik;Czech Republic
+Country;DE;Deutschland;Germany
+Country;DJ;Djibouti;Djibouti
+Country;DK;Dänemark;Denmark
+Country;DM;Dominica;Dominica
+Country;DO;Dominikanische Republik;Dominican Republic
+Country;DZ;Algerien;Algeria
+Country;EC;Ekuador;Ecuador
+Country;EE;Estland;Estonia
+Country;EG;Ägypten;Egypt
+Country;EH;Westsahara;Western Sahara
+Country;ER;Eritrea;Eritrea
+Country;ES;Spanien;Spain
+Country;ET;Äthiopien;Ethiopia
+Country;FI;Finnland;Finland
+Country;FJ;Fidschi;Fiji
+Country;FK;Falkland-Inseln;Falkland Islands (Malvinas)
+Country;FM;Mikronesien (Föderierte Staaten von);Micronesia Federated States of
+Country;FO;Färöer-Inseln;Faroe Islands
+Country;FR;Frankreich;France
+Country;GA;Gabun;Gabon
+Country;GB;Grossbritannien und Nordirland;United Kingdom
+Country;GD;Grenada;Grenada
+Country;GE;Georgien;Georgia
+Country;GF;Französisch-Guyana;French Guiana
+Country;GG;Guernsey;Guernsey
+Country;GH;Ghana;Ghana
+Country;GI;Gibraltar;Gibraltar
+Country;GL;Grönland;Greenland
+Country;GM;Gambia;Gambia
+Country;GN;Guinea (Republik);Guinea
+Country;GP;Guadeloupe;Guadeloupe
+Country;GQ;Äquatorial-Guinea;Equatorial Guinea
+Country;GR;Griechenland;Greece
+Country;GS;Südgeorgien und die südlichen Sandwichinseln;South Georgia and the South Sandwich Islands
+Country;GT;Guatemala;Guatemala
+Country;GU;Guam;Guam
+Country;GW;Guinea-Bissau;Guinea-Bissau
+Country;GY;Guyana;Guyana
+Country;HK;Hongkong;Hong Kong
+Country;HM;Heard- und McDonald-Inseln;Heard Island and McDonald Islands
+Country;HN;Honduras;Honduras
+Country;HR;Kroatien;Croatia
+Country;HT;Haiti;Haiti
+Country;HU;Ungarn;Hungary
+Country;ID;Indonesien;Indonesia
+Country;IE;Irland;Ireland
+Country;IL;Israel;Israel
+Country;IM;Man Insel;Isle of Man
+Country;IN;Indien;India
+Country;IO;Britisches Territorium im indischen Ozean;British Indian Ocean Territory
+Country;IQ;Irak;Iraq
+Country;IR;Iran;Iran Islamic Republic of
+Country;IS;Island;Iceland
+Country;IT;Italien;Italy
+Country;JE;Jersey;Jersey
+Country;JM;Jamaika;Jamaica
+Country;JO;Jordanien;Jordan
+Country;JP;Japan;Japan
+Country;KE;Kenia;Kenya
+Country;KG;Kirgisistan;Kyrgyzstan
+Country;KH;Kambodscha;Cambodia
+Country;KI;Kiribati;Kiribati
+Country;KM;Komoren;Comoros
+Country;KN;St. Christoph (St. Kitts) und Nevis;Saint Kitts and Nevis
+Country;KP;Korea demokratische Volksrepublik (Nordkorea);Korea Democratic People's Republic of
+Country;KR;Korea Republik (Südkorea);Korea Republic of
+Country;KW;Kuwait;Kuwait
+Country;KY;Cayman;Cayman Islands
+Country;KZ;Kasachstan;Kazakhstan
+Country;LA;Laos;Lao People's Democratic Republic
+Country;LB;Libanon;Lebanon
+Country;LC;St. Lucia;Saint Lucia
+Country;LI;Liechtenstein;Liechtenstein
+Country;LK;Sri Lanka;Sri Lanka
+Country;LR;Liberia;Liberia
+Country;LS;Lesotho;Lesotho
+Country;LT;Litauen;Lithuania
+Country;LU;Luxemburg;Luxembourg
+Country;LV;Lettland;Latvia
+Country;LY;Libyen;Libya
+Country;MA;Marokko;Morocco
+Country;MC;Monaco;Monaco
+Country;MD;Moldova;Moldova Republic of
+Country;ME;Montenegro Republik;Montenegro
+Country;MF;St. Martin;Saint Martin (French part)
+Country;MG;Madagaskar;Madagascar
+Country;MH;Marshall-Inseln;Marshall Islands
+Country;MK;Mazedonien ehemalige jugoslawische Republik;Macedonia the Former Yugoslav Republic of
+Country;ML;Mali;Mali
+Country;MM;Myanmar (Union);Myanmar
+Country;MN;Mongolei;Mongolia
+Country;MO;Macao;Macao
+Country;MP;Marianen-Inseln;Northern Mariana Islands
+Country;MQ;Martinique;Martinique
+Country;MR;Mauretanien;Mauritania
+Country;MS;Montserrat;Montserrat
+Country;MT;Malta;Malta
+Country;MU;Mauritius Insel;Mauritius
+Country;MV;Malediven;Maldives
+Country;MW;Malawi;Malawi
+Country;MX;Mexiko;Mexico
+Country;MY;Malaysia;Malaysia
+Country;MZ;Mosambik;Mozambique
+Country;NA;Namibia;Namibia
+Country;NC;Neukaledonien;New Caledonia
+Country;NE;Niger;Niger
+Country;NF;Norfolk-Insel;Norfolk Island
+Country;NG;Nigeria;Nigeria
+Country;NI;Nicaragua;Nicaragua
+Country;NL;Niederlande;Netherlands
+Country;NO;Norwegen;Norway
+Country;NP;Nepal;Nepal
+Country;NR;Nauru;Nauru
+Country;NU;Niue;Niue
+Country;NZ;Neuseeland;New Zealand
+Country;OM;Oman;Oman
+Country;PA;Panama;Panama
+Country;PE;Peru;Peru
+Country;PF;Französisch-Polynesien;French Polynesia
+Country;PG;Papua-Neuguinea;Papua New Guinea
+Country;PH;Philippinen;Philippines
+Country;PK;Pakistan;Pakistan
+Country;PL;Polen;Poland
+Country;PM;St. Pierre und Miquelon;Saint Pierre and Miquelon
+Country;PN;Pitcairn;Pitcairn
+Country;PR;Puerto Rico;Puerto Rico
+Country;PS;Palästina;Palestine State of
+Country;PT;Portugal;Portugal
+Country;PW;Palau;Palau
+Country;PY;Paraguay;Paraguay
+Country;QA;Qatar;Qatar
+Country;RE;Réunion;Réunion
+Country;RO;Rumänien;Romania
+Country;RS;Serbien Republik;Serbia
+Country;RU;Russische Föderation;Russian Federation
+Country;RW;Rwanda;Rwanda
+Country;SA;Saudi-Arabien;Saudi Arabia
+Country;SB;Salomon-Inseln;Solomon Islands
+Country;SC;Seychellen;Seychelles
+Country;SD;Sudan;Sudan
+Country;SE;Schweden;Sweden
+Country;SG;Singapur;Singapore
+Country;SH;St. Helena Ascension und Tristan da Cunha;Saint Helena Ascension and Tristan da Cunha
+Country;SI;Slowenien;Slovenia
+Country;SJ;Svalbard und Insel Jan Mayen;Svalbard and Jan Mayen
+Country;SK;Slowakische Republik;Slovakia
+Country;SL;Sierra Leone;Sierra Leone
+Country;SM;San Marino;San Marino
+Country;SN;Senegal;Senegal
+Country;SO;Somalia;Somalia
+Country;SR;Suriname;Suriname
+Country;SS;Südsudan;South Sudan
+Country;ST;St. Thomas und Principe;Sao Tome and Principe
+Country;SV;El Salvador;El Salvador
+Country;SX;St. Maarten;Sint Maarten (Dutch part)
+Country;SY;Syrien;Syrian Arab Republic
+Country;SZ;Swasiland;Swaziland
+Country;TC;Turks und Caicos;Turks and Caicos Islands
+Country;TD;Tschad;Chad
+Country;TF;Französische Süd- und Antarktisgebiete;French Southern Territories
+Country;TG;Togo;Togo
+Country;TH;Thailand;Thailand
+Country;TJ;Tadschikistan;Tajikistan
+Country;TK;Tokelau;Tokelau
+Country;TL;Timor-Leste;Timor-Leste
+Country;TM;Turkmenistan;Turkmenistan
+Country;TN;Tunesien;Tunisia
+Country;TO;Tonga;Tonga
+Country;TR;Türkei;Turkey
+Country;TT;Trinidad und Tobago;Trinidad and Tobago
+Country;TV;Tuvalu;Tuvalu
+Country;TW;Taiwan (Chinesisches Taipei);Taiwan Province of China
+Country;TZ;Tansania;Tanzania United Republic of
+Country;UA;Ukraine;Ukraine
+Country;UG;Uganda;Uganda
+Country;UM;Amerikanische Überseeinseln kleinere;United States Minor Outlying Islands
+Country;US;Vereinigte Staaten von Amerika;United States
+Country;UY;Uruguay;Uruguay
+Country;UZ;Usbekistan;Uzbekistan
+Country;VA;Vatikan;Holy See (Vatican City State)
+Country;VC;St. Vincent und Grenadinen;Saint Vincent and the Grenadines
+Country;VE;Venezuela;Venezuela Bolivarian Republic of
+Country;VG;britischer Teil (Tortola);Virgin Islands British;Virginische Inseln
+Country;VI;Amerikanische Jungferninseln;Virgin Islands U.S.
+Country;VN;Vietnam;Viet Nam
+Country;VU;Vanuatu;Vanuatu
+Country;WF;Wallis und Futuna;Wallis and Futuna
+Country;WS;Samoa West;Samoa
+Country;YE;Jemen;Yemen
+Country;YT;Mayotte;Mayotte
+Country;ZA;Südafrika;South Africa
+Country;ZM;Sambia;Zambia
+Country;ZW;Zimbabwe;Zimbabwe
+CuratoryGroup.Type;Other;Sonstige;Other
+CuratoryGroup.Type;Provider;Anbieter;Provider
+Currency;EUR;EUR;EUR
+Currency;GBP;GBP;GBP
+Currency;USD;USD;USD
+DCType;Admin;Admin;Admin
+DCType;Standard;Standard;Standard
+DCType;Support;Support;Support
+DeletedKBComponent.Status;Permanently Deleted;Permanently Deleted;Permanently Deleted
+IdentifierNamespace.TargetType;Org;Org;Org
+IdentifierNamespace.TargetType;Package;Package;Package
+IdentifierNamespace.TargetType;TitleInstancePackagePlatform;TitleInstancePackagePlatform;TitleInstancePackagePlatform
+ingest.filetype;cufts;cufts;cufts
+ingest.filetype;ingram;ingram;ingram
+ingest.filetype;kbart2;kbart2;kbart3
+ingest.filetype;ybp;ybp;ybp
+Job.Type;AutoUpdatePackagesJob;AutoUpdatePackagesJob;AutoUpdatePackagesJob
+Job.Type;ManuellUpdatePackageJob;ManuellUpdatePackageJob;ManuellUpdatePackageJob
+Job.Type;BootstrapIdentifierCleanup;BootstrapIdentifierCleanup;BootstrapIdentifierCleanup
+Job.Type;CleanupDeletedComponents;CleanupDeletedComponents;CleanupDeletedComponents
+Job.Type;CleanupRemovedComponents;CleanupRemovedComponents;CleanupRemovedComponents
+Job.Type;CleanupRejectedComponents;CleanupRejectedComponents;CleanupRejectedComponents
+Job.Type;DeleteTIWithoutHistory;DeleteTIWithoutHistory;DeleteTIWithoutHistory
+Job.Type;EnrichmentService;EnrichmentService;EnrichmentService
+Job.Type;EnsureUUIDs;EnsureUUIDs;EnsureUUIDs
+Job.Type;GeneratePackageTypes;GeneratePackageTypes;GeneratePackageTypes
+Job.Type;GenerateTIPPCoverage;GenerateTIPPCoverage;GenerateTIPPCoverage
+Job.Type;IdentifierCleanup;IdentifierCleanup;IdentifierCleanup
+Job.Type;MarkInconsDateRanges;MarkInconsDateRanges;MarkInconsDateRanges
+Job.Type;PackageCrossRef;PackageCrossRef;PackageCrossRef
+Job.Type;PackageCrossRef Auto;PackageCrossRef Auto;PackageCrossRef Auto
+Job.Type;PlatformCleanup;PlatformCleanup;PlatformCleanup
+Job.Type;RecalculateStatistics;RecalculateStatistics;RecalculateStatistics
+Job.Type;RejectTIWithoutIdentifier;RejectTIWithoutIdentifier;RejectTIWithoutIdentifier
+Job.Type;ResetFreeTextIndexes;ResetFreeTextIndexes;ResetFreeTextIndexes
+Job.Type;TidyOrgsData;TidyOrgsData;TidyOrgsData
+Job.Type;TIPPCleanup;TIPPCleanup;TIPPCleanup
+Job.Type;TitleCrossRef;TitleCrossRef;TitleCrossRef
+Job.Type;Undefined;Undefined;Undefined
+Job.Type;Unknown;Unknown;Unknown
+Job.Type;UpdateFreeTextIndexes;UpdateFreeTextIndexes;UpdateFreeTextIndexes
+KBComponent.Status;Current;Current;Current
+KBComponent.Status;Deleted;Deleted;Deleted
+KBComponent.Status;Expected;Expected;Expected
+KBComponent.Status;Retired;Retired;Retired
+KBComponent.Status;Removed;Removed;Removed
+KBComponentVariantName.Locale;de;de;de
+KBComponentVariantName.Locale;en;en;en
+KBComponentVariantName.Locale;en_GB;en_GB;en_GB
+KBComponentVariantName.Locale;en_US;en_US;en_US
+KBComponentVariantName.Locale;es;es;es
+KBComponentVariantName.Locale;fr;fr;sa
+KBComponentVariantName.Locale;it;it;it
+KBComponentVariantName.Locale;la;la;la
+KBComponentVariantName.Locale;pt;pt;pt
+KBComponentVariantName.Locale;ru;ru;ru
+KBComponentVariantName.Status;Current;Current;Current
+KBComponentVariantName.Status;Deleted;Deleted;Deleted
+KBComponentVariantName.Status;Expected;Expected;Expected
+KBComponentVariantName.Status;Retired;Retired;Retired
+KBComponentVariantName.VariantType;Acronym;Acronym;Acronym
+KBComponentVariantName.VariantType;Alternate Title;Alternate Title;Alternate Title
+MembershipRole;Administrator;Administrator;Administrator
+MembershipRole;Member;Member;Member
+MembershipStatus;Approved;Approved;Approved
+MembershipStatus;Pending;Pending;Pending
+MembershipStatus;Rejected/Revoked;Rejected/Revoked;Rejected/Revoked
+Org.Mission;Academic;Academic;Academic
+Org.Mission;Commercial;Commercial;Commercial
+Org.Mission;Community Agency;Community Agency;Community Agency
+Org.Mission;Consortium;Consortium;Consortium
+Org.Role;Broker;Broker;Broker
+Org.Role;Content Provider;Content Provider;Content Provider
+Org.Role;Issuing Body;Issuing Body;Issuing Body
+Org.Role;Licensee;Licensee;Licensee
+Org.Role;Licensor;Licensor;Licensor
+Org.Role;Platform Provider;Platform Provider;Platform Provider
+Org.Role;Publisher;Publisher;Publisher
+Org.Role;Vendor;Vendor;Vendor
+Package.Breakable;No;No;No
+Package.Breakable;Unknown;Unknown;Unknown
+Package.Breakable;Yes;Yes;Yes
+Package.Consistent;No;No;No
+Package.Consistent;Unknown;Unknown;Unknown
+Package.Consistent;Yes;Yes;Yes
+Package.ContentType;Book;Book;Book
+Package.ContentType;Database;Database;Database
+Package.ContentType;Journal;Journal;Journal
+Package.ContentType;Mixed;Mixed;Mixed
+Package.ContentType;Other;Other;Other
+Package.Editing.Status;Concluded;Concluded;Concluded
+Package.Editing.Status;Ongoing;Ongoing;Ongoing
+Package.File;Back File;Back File;Back File
+Package.File;Front File;Front File;Front File
+Package.File;Master File;Master File;Master File
+Package.Global;Consortium;Consortium;Consortium
+Package.Global;Global;Global;Global
+Package.Global;Other;Other;Other
+Package.Global;Regional;Regional;Regional
+Package.LinkType;Parent;Parent;Parent
+Package.LinkType;Previous;Previous;Previous
+Package.OpenAccess;Blue OA;Blue OA;Blue OA
+Package.OpenAccess;Empty;Empty;Empty
+Package.OpenAccess;Gold OA;Gold OA;Gold OA
+Package.OpenAccess;Green OA;Green OA;Green OA
+Package.OpenAccess;Hybrid;Hybrid;Hybrid
+Package.OpenAccess;White OA;White OA;White OA
+Package.OpenAccess;Yellow OA;Yellow OA;Yellow OA
+Package.PaymentType;Mixed;Mixed;Mixed
+Package.PaymentType;Paid;Paid;Paid
+Package.PaymentType;Uncharged;Uncharged;Uncharged
+Package.PaymentType;Unknown;Unknown;Unknown
+Package.RegionalRange;Baden-Wurttemberg;Baden-Württemberg;Baden-Wurttemberg
+Package.RegionalRange;Bavaria;Bayern;Bavaria
+Package.RegionalRange;Berlin;Berlin;Berlin
+Package.RegionalRange;Brandenburg;Brandenburg;Brandenburg
+Package.RegionalRange;Bremen;Bremen;Bremen
+Package.RegionalRange;Hamburg;Hamburg;Hamburg
+Package.RegionalRange;Hesse;Hessen;Hesse
+Package.RegionalRange;Lower Saxony;Niedersachsen;Lower Saxony
+Package.RegionalRange;Mecklenburg-West Pomerania;Mecklenburg-Vorpommern;Mecklenburg-West Pomerania
+Package.RegionalRange;North Rhine-Westphalia;Nordrhein-Westfalen;North Rhine-Westphalia
+Package.RegionalRange;Rhineland-Palatinate;Rheinland-Pfalz;Rhineland-Palatinate
+Package.RegionalRange;Saarland;Saarland;Saarland
+Package.RegionalRange;Saxony;Sachsen;Saxony
+Package.RegionalRange;Saxony-Anhalt;Sachsen-Anhalt;Saxony-Anhalt
+Package.RegionalRange;Schleswig-Holstein;Schleswig-Holstein;Schleswig-Holstein
+Package.RegionalRange;Thuringia;Thüringen;Thuringia
+Package.Scope;Consortium;Consortium;Consortium
+Package.Scope;Global;Global;Global
+Package.Scope;Individual;Individual;Individual
+Package.Scope;National;National;National
+PackageArchivingAgency.ArchivingAgency;Archaeology Data Service;Archaeology Data Service;Archaeology Data Service
+PackageArchivingAgency.ArchivingAgency;British Library;British Library;British Library
+PackageArchivingAgency.ArchivingAgency;Cariniana Network;Cariniana Network;Cariniana Network
+PackageArchivingAgency.ArchivingAgency;CLOCKSS Archive;CLOCKSS Archive;CLOCKSS Archive
+PackageArchivingAgency.ArchivingAgency;Global LOCKSS Network;Global LOCKSS Network;Global LOCKSS Network
+PackageArchivingAgency.ArchivingAgency;HathiTrust;HathiTrust;HathiTrust
+PackageArchivingAgency.ArchivingAgency;Internet Archive;Internet Archive;Internet Archive
+PackageArchivingAgency.ArchivingAgency;Library of Congress;Library of Congress;Library of Congress
+PackageArchivingAgency.ArchivingAgency;Merritt Preservation Repository at the California Digital Library;Merritt Preservation Repository at the California Digital Library;Merritt Preservation Repository at the California Digital Library
+PackageArchivingAgency.ArchivingAgency;National Library of France;National Library of France;National Library of France
+PackageArchivingAgency.ArchivingAgency;National Digital Preservation Program, China;National Digital Preservation Program, China;National Digital Preservation Program, China;National Digital Preservation Program, China
+PackageArchivingAgency.ArchivingAgency;National Library of the Netherlands;National Library of the Netherlands;National Library of the Netherlands
+PackageArchivingAgency.ArchivingAgency;PKP PN;PKP PN;PKP PN
+PackageArchivingAgency.ArchivingAgency;Portico;Portico;Portico
+PackageArchivingAgency.ArchivingAgency;Scholars Portal;Scholars Portal;Scholars Portal
+PackageArchivingAgency.ArchivingAgency;Swiss National Library;Swiss National Library;Swiss National Library
+PackageArchivingAgency.OpenAccess;Yes;Yes;Yes
+PackageArchivingAgency.OpenAccess;No;No;No
+PackageArchivingAgency.OpenAccess;Partly;Partly;Partly
+PackageArchivingAgency.PostCancellationAccess;Yes;Yes;Yes
+PackageArchivingAgency.PostCancellationAccess;No;No;No
+PackageArchivingAgency.PostCancellationAccess;Partly;Partly;Partly
+Platform.IPAuthentication;IPv4;IPv4;IPv4
+Platform.IPAuthentication;IPv4;IPv4;IPv4
+Platform.IPAuthentication;IPv6;IPv6;IPv6
+Platform.IPAuthentication;IPv4/IPv6;IPv4/IPv6;IPv4/IPv6
+Platform.Role;Admin;Admin;Admin
+Platform.Role;Host;Host;Host
+Platform.Roles;Host;Host;Host
+Platform.Service;Highwire;Highwire;Highwire
+Platform.Software;Atupon;Atupon;Atupon
+Platform.Statistics.Format;COUNTER;COUNTER;COUNTER
+Platform.Statistics.Format; Document; Document;  Document
+Platform.Statistics.Format;Diagram;Diagram;Diagram
+Platform.Statistics.Update;Daily;Daily;Daily
+Platform.Statistics.Update;Weekly;Weekly;Weekly
+Platform.Statistics.Update;Monthly;Monthly;Monthly
+Platform.Statistics.Update;Quarterly;Quarterly;Quarterly
+Platform.Statistics.Update;Half-Yearly;Half-Yearly;Half-Yearly
+Platform.Statistics.Update;Yearly;Yearly;Yearly
+Price.type;list;list;list
+Price.type;on-off;on-off;on-off
+Price.type;open access apc;open access apc;open access apc
+Price.type;perpetual;perpetual;perpetual
+Price.type;subscription;subscription;subscription
+Price.type;topup;topup;topup
+RDFDataType;string;string;string
+RDFDataType;uri;uri;uri
+ReviewRequest.Status;Closed;Closed;Closed
+ReviewRequest.Status;Deleted;Deleted;Deleted
+ReviewRequest.Status;Open;Open;Open
+ReviewRequest.StdDesc;Ambiguous Matches;Ambiguous Matches;Ambiguous Matches
+ReviewRequest.StdDesc;Invalid TIPPs;Invalid TIPPs;Invalid TIPPs
+ReviewRequest.StdDesc;Major Identifier Mismatch;Major Identifier Mismatch;Major Identifier Mismatch
+ReviewRequest.StdDesc;Minor Identifier Mismatch;Minor Identifier Mismatch;Minor Identifier Mismatch
+ReviewRequest.StdDesc;Multiple Matches;Multiple Matches;Multiple Matches
+ReviewRequest.StdDesc;Name Mismatch;Name Mismatch;Name Mismatch
+ReviewRequest.StdDesc;Name Similarity;Name Similarity;Name Similarity
+ReviewRequest.StdDesc;Namespace Mismatch;Namespace Mismatch;Namespace Mismatch
+ReviewRequest.StdDesc;New Org;New Org;New Org
+ReviewRequest.StdDesc;New Platform;New Platform;New Platform
+ReviewRequest.StdDesc;Platform Noncurrent;Platform Noncurrent;Platform Noncurrent
+ReviewRequest.StdDesc;Removed Identifier;Removed Identifier;Removed Identifier
+ReviewRequest.StdDesc;Status Deleted;Status Deleted;Status Deleted
+ReviewRequest.StdDesc;Status Retired;Status Retired;Status Retired
+ReviewRequest.StdDesc;TIPPs Retired;TIPPs Retired;TIPPs Retired
+ReviewRequest.StdDesc;Type Mismatch;Type Mismatch;Type Mismatch
+ReviewRequest.Type;Import Request;Import Request;Import Request
+ReviewRequest.Type;User Request;User Request;User Request
+Source.DataFormat;KBART;KBART;KBART
+Source.DataFormat;Proprietary;Proprietary;Proprietary
+Source.DataSupplyMethod;eMail;eMail;eMail
+Source.DataSupplyMethod;FTP;FTP;FTP
+Source.DataSupplyMethod;HTTP Url;HTTP Url;HTTP Url
+Source.DataSupplyMethod;Other;Other;Other
+Source.Frequency;Daily;Daily;Daily
+Source.Frequency;Monthly;Monthly;Monthly
+Source.Frequency;Quarterly;Quarterly;Quarterly
+Source.Frequency;Weekly;Weekly;Weekly
+Source.Frequency;Yearly;Yearly;Yearly
+Tipp.LinkType;Comes With;Comes With;Comes With
+Tipp.LinkType;Parent;Parent;Parent
+Tipp.LinkType;Previous;Previous;Previous
+Tipp.StatusReason;Xfer In;Xfer In;Xfer In
+Tipp.StatusReason;Xfer Out;Xfer Out;Xfer Out
+TIPPCoverageStatement.CoverageDepth;Abstracts;Abstracts;Abstracts
+TIPPCoverageStatement.CoverageDepth;Fulltext;Fulltext;Fulltext
+TIPPCoverageStatement.CoverageDepth;Selected Articles;Selected Articles;Selected Articles
+TitleInstancePackagePlatform.AccessType;Free;Free;Free
+TitleInstancePackagePlatform.AccessType;Paid;Paid;Paid
+TitleInstancePackagePlatform.CoverageDepth;Abstracts;Abstracts;Abstracts
+TitleInstancePackagePlatform.CoverageDepth;Fulltext;Fulltext;Fulltext
+TitleInstancePackagePlatform.CoverageDepth;Selected Articles;Selected Articles;Selected Articles
+TitleInstancePackagePlatform.DelayedOA;No;No;No
+TitleInstancePackagePlatform.DelayedOA;Unknown;Unknown;Unknown
+TitleInstancePackagePlatform.DelayedOA;Yes;Yes;Yes
+TitleInstancePackagePlatform.Medium;A & I Database;A & I Database;A & I Database
+TitleInstancePackagePlatform.Medium;Article;Article;Article
+TitleInstancePackagePlatform.Medium;Audio;Audio;Audio
+TitleInstancePackagePlatform.Medium;Biography;Biography;Biography
+TitleInstancePackagePlatform.Medium;Book;Book;Book
+TitleInstancePackagePlatform.Medium;Cartography;Cartography;Cartography
+TitleInstancePackagePlatform.Medium;Database;Database;Database
+TitleInstancePackagePlatform.Medium;Dataset;Dataset;Dataset
+TitleInstancePackagePlatform.Medium;Encyclopedia;Encyclopedia;Encyclopedia
+TitleInstancePackagePlatform.Medium;Film;Film;Film
+TitleInstancePackagePlatform.Medium;Image;Image;Image
+TitleInstancePackagePlatform.Medium;Journal;Journal;Journal
+TitleInstancePackagePlatform.Medium;Legal Text;Legal Text;Legal Text
+TitleInstancePackagePlatform.Medium;Market Data;Market Data;Market Data
+TitleInstancePackagePlatform.Medium;Miscellaneous;Miscellaneous;Miscellaneous
+TitleInstancePackagePlatform.Medium;Other;Other;Other
+TitleInstancePackagePlatform.Medium;Published Score;Published Score;Published Score
+TitleInstancePackagePlatform.Medium;Software;Software;Software
+TitleInstancePackagePlatform.Medium;Standards;Standards;Standards
+TitleInstancePackagePlatform.Medium;Statistics;Statistics;Statistics
+TitleInstancePackagePlatform.Medium;Video;Video;Video
+TitleInstancePackagePlatform.OpenAccess;Blue OA;Blue OA;Blue OA
+TitleInstancePackagePlatform.OpenAccess;Empty;Empty;Empty
+TitleInstancePackagePlatform.OpenAccess;Gold OA;Gold OA;Gold OA
+TitleInstancePackagePlatform.OpenAccess;Green OA;Green OA;Green OA
+TitleInstancePackagePlatform.OpenAccess;Hybrid;Hybrid;Hybrid
+TitleInstancePackagePlatform.OpenAccess;White OA;White OA;White OA
+TitleInstancePackagePlatform.OpenAccess;Yellow OA;Yellow OA;Yellow OA
+TitleInstancePackagePlatform.Primary;No;No;No
+TitleInstancePackagePlatform.Primary;Yes;Yes;Yes
+TitleInstancePackagePlatform.PublicationType;Database;Database;Database
+TitleInstancePackagePlatform.PublicationType;Monograph;Monograph;Monograph
+TitleInstancePackagePlatform.PublicationType;Other;Other;Other
+TitleInstancePackagePlatform.PublicationType;Serial;Serial;Serial
+YN;No;No;No
+YN;Yes;Yes;Yes

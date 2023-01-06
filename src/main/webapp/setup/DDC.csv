@@ -1,0 +1,1001 @@
+rdc;token;value_de;value_en
+DDC;0;Informatik, Informationswissenschaft & allgemeine Werke;Computer science, information & general works
+DDC;1;Wissen;Knowledge
+DDC;2;Das Buch;The book
+DDC;3;Systeme;Systems
+DDC;4;Informatik;Data processing & computer science
+DDC;5;Computerprogrammierung, Computerprogramme & Daten;Computer programming, programs & data
+DDC;6;Spezielle Computerverfahren;Special computer methods
+DDC;7;Unbesetzt;Unassigned
+DDC;8;Unbesetzt;Unassigned
+DDC;9;Unbesetzt;Unassigned
+DDC;10;Bibliografie;Bibliography
+DDC;11;Bibliografien & Kataloge;Bibliographies
+DDC;12;Bibliografien & Kataloge von Einzelpersonen;Bibliographies of individuals
+DDC;13;Unbesetzt;Unassigned
+DDC;14;Anonymer & pseudonymer Werke;Of anonymous & pseudonymous works
+DDC;15;Von Werken aus einzelnen Orten;Bibliographies of works from specific places
+DDC;16;Von Werken über einzelne Themen;Bibliographies of works on specific subjects
+DDC;17;Allgemeinbibliografien;General subject catalogs
+DDC;18;Unbesetzt;Catalogs arranged by author, date, etc.
+DDC;19;Unbesetzt;Dictionary catalogs
+DDC;20;Bibliotheks- & Informationswissenschaften;Library & information sciences
+DDC;21;Beziehungen von Bibliotheken;Library relationships
+DDC;22;Verwaltung von Bibliotheksgebäuden und Bibliotheksstandorten;Administration of physical plant
+DDC;23;Personalmanagement;Personnel management
+DDC;24;Unbesetzt;Unassigned
+DDC;25;Tätigkeiten in Bibliotheken;Library operations
+DDC;26;Fachgebiets- & themenspezifische Bibliotheken;Libraries for specific subjects
+DDC;27;Allgemeinbibliotheken;General libraries
+DDC;28;Lesen & Nutzung anderer Informationsmedien;Reading & use of other information media
+DDC;29;Unbesetzt;Unassigned
+DDC;30;Allgemeinenzyklopädien;General encyclopedic works
+DDC;31;Enzyklopädien in amerikanischem Englisch;Encyclopedias in American English
+DDC;32;Enzyklopädien in Englisch;Encyclopedias in English
+DDC;33;In anderen germanischen Sprachen;In other Germanic languages
+DDC;34;Enzyklopädien in Französisch, Okzitanisch & Katalanisch;Encyclopedias in French, Occitan & Catalan
+DDC;35;In Italienisch, Rumänisch & verwandten Sprachen;In Italian, Romanian & related languages
+DDC;36;Enzyklopädien in Spanisch, Portugiesisch & Galicisch;Encyclopedias in Spanish & Portuguese
+DDC;37;Enzyklopädien in slawischen Sprachen;Encyclopedias in Slavic languages
+DDC;38;Enzyklopädien in skandinavischen Sprachen;Encyclopedias in Scandinavian languages
+DDC;39;Enzyklopädien in anderen Sprachen;Encyclopedias in other languages
+DDC;40;Unbesetzt;Unassigned
+DDC;41;Unbesetzt;Unassigned
+DDC;42;Unbesetzt;Unassigned
+DDC;43;Unbesetzt;Unassigned
+DDC;44;Unbesetzt;Unassigned
+DDC;45;Unbesetzt;Unassigned
+DDC;46;Unbesetzt;Unassigned
+DDC;47;Unbesetzt;Unassigned
+DDC;48;Unbesetzt;Unassigned
+DDC;49;Unbesetzt;Unassigned
+DDC;50;Magazine, Zeitschriften & fortlaufende Sammelwerke;General serial publications
+DDC;51;Fortlaufende Sammelwerke in amerikanischem Englisch;Serials in American English
+DDC;52;Fortlaufende Sammelwerke in Englisch;Serials in English
+DDC;53;Fortlaufende Sammelwerke in anderen germanischen Sprachen;Serials in other Germanic languages
+DDC;54;Sammelwerke in Französisch, Okzitanisch & Katalanisch;Serials in French, Occitan & Catalan
+DDC;55;In Italienisch, Rumänisch & verwandten Sprachen;In Italian, Romanian & related languages
+DDC;56;Fortlaufende Sammelwerke in Spanisch, Portugiesisch & Galicisch;Serials in Spanish & Portuguese
+DDC;57;Fortlaufende Sammelwerke in slawischen Sprachen;Serials in Slavic languages
+DDC;58;Fortlaufende Sammelwerke in skandinavischen Sprachen;Serials in Scandinavian languages
+DDC;59;Fortlaufende Sammelwerke in anderen Sprachen;Serials in other languages
+DDC;60;Allgemeine Organisationen & Museumswissenschaft;General organizations & museum science
+DDC;61;Organisationen in Nordamerika;Organizations in North America
+DDC;62;Organisationen auf den Britischen Inseln;Organizations in British Isles, in England
+DDC;63;Organisationen in Deutschland, in Mitteleuropa;Organizations in central Europe, in Germany
+DDC;64;Organisationen in Frankreich & Monaco;Organizations in France & Monaco
+DDC;65;In Italien, San Marino, Vatikanstadt, Malta;Organizations in Italy & adjacent islands
+DDC;66;In Spanien, Andorra, Gibraltar, Portugal;In Iberian Peninsula & adjacent islands
+DDC;67;Organisationen in Russland, in Osteuropa;Organizations in eastern Europe, in Russia
+DDC;68;Organisationen in anderen geografischen Gebieten;Organizations in other geographic areas
+DDC;69;Museumswissenschaft;Museum science
+DDC;70;Publizistische Medien, Journalismus & Verlagswesen;News media, journalism & publishing
+DDC;71;Zeitungen in Nordamerika;Newspapers in North America
+DDC;72;Zeitungen auf den Britischen Inseln;Newspapers in British Isles, in England
+DDC;73;Zeitungen in Deutschland, in Mitteleuropa;Newspapers in central Europe, in Germany
+DDC;74;Zeitungen in Frankreich & Monaco;Newspapers in France & Monaco
+DDC;75;In Italien, San Marino, Vatikanstadt, Malta;Newspapers in Italy & adjacent islands
+DDC;76;In Spanien, Andorra, Gibraltar, Portugal;In Iberian Peninsula & adjacent islands
+DDC;77;Zeitungen in Russland, in Osteuropa;Newspapers in eastern Europe, in Russia
+DDC;78;Zeitungen in Skandinavien;Newspapers in Scandinavia
+DDC;79;Zeitungen in anderen geografischen Gebieten;Newspapers in other geographic areas
+DDC;80;Allgemeine Sammelwerke;General collections
+DDC;81;Sammelwerke in amerikanischem Englisch;Collections in American English
+DDC;82;Sammelwerke in Englisch;Collections in English
+DDC;83;Sammelwerke in anderen germanischen Sprachen;Collections in other Germanic languages
+DDC;84;Sammelwerke in Französisch, Okzitanisch & Katalanisch;Collections in French, Occitan & Catalan
+DDC;85;In Italienisch, Rumänisch & verwandten Sprachen;In Italian, Romanian & related languages
+DDC;86;Sammelwerke in Spanisch, Portugiesisch & Galicisch;Collections in Spanish & Portuguese
+DDC;87;Sammelwerke in slawischen Sprachen;Collections in Slavic languages
+DDC;88;Sammelwerke in skandinavischen Sprachen;Collections in Scandinavian languages
+DDC;89;Sammelwerke in anderen Sprachen;Collections in other languages
+DDC;90;Handschriften & seltene Bücher;Manuscripts & rare books
+DDC;91;Handschriften;Manuscripts
+DDC;92;Blockbücher;Block books
+DDC;93;Inkunabeln;Incunabula
+DDC;94;Gedruckte Bücher;Printed books
+DDC;95;Bücher mit besonderem Einband;Books notable for bindings
+DDC;96;Bücher mit besonderen Illustrationen;Books notable for illustrations
+DDC;97;Bücher aus besonderem Besitz oder besonderer Herkunft;Books notable for ownership or origin
+DDC;98;Verbotene Werke, Fälschungen & Scherzdrucke;Prohibited works, forgeries & hoaxes
+DDC;99;Bücher mit besonderem Format;Books notable for format
+DDC;100;Philosophie und Psychologie;Philosophy & psychology
+DDC;101;Theorie der Philosophie;Theory of philosophy
+DDC;102;Verschiedenes;Miscellany
+DDC;103;Wörterbücher, Enzyklopädien;Dictionaries & encyclopedias
+DDC;104;Unbesetzt;Unassigned
+DDC;105;Fortlaufende Sammelwerke;Serial publications
+DDC;106;Organisationen, Management;Organizations & management
+DDC;107;Ausbildung, Forschung, verwandte Themen;Education, research & related topics
+DDC;108;Behandlung nach Personengruppen;Kinds of persons treatment
+DDC;109;Historische Behandlung, Behandlung mehrerer Einzelpersonen;Historical & collected persons treatment
+DDC;110;Metaphysik;Metaphysics
+DDC;111;Ontologie;Ontology
+DDC;112;Unbesetzt;Unassigned
+DDC;113;Kosmologie;Cosmology
+DDC;114;Raum;Space
+DDC;115;Zeit;Time
+DDC;116;Veränderung;Change
+DDC;117;Struktur;Structure
+DDC;118;Kraft und Energie;Force & energy
+DDC;119;Zahl und Quantität;Number & quantity
+DDC;120;Epistemologie, Kausalität, Menschheit;Epistemology, causation & humankind
+DDC;121;Epistemologie;Epistemology
+DDC;122;Kausalität;Causation
+DDC;123;Determinismus, Indeterminismus;Determinism & indeterminism
+DDC;124;Teleologie;Teleology
+DDC;125;Unbesetzt;Unassigned
+DDC;126;Das Selbst;The self
+DDC;127;Das Unbewusste, das Unterbewusste;The unconscious & the subconscious
+DDC;128;Menschheit;Humankind
+DDC;129;Ursprung und Schicksal individueller Seelen;Origin & destiny of individual souls
+DDC;130;Parapsychologie und Okkultismus;Parapsychology & occultism
+DDC;131;Parapsychologische und okkulte Techniken;Parapsychological & occult methods
+DDC;132;Unbesetzt;Unassigned
+DDC;133;Einzelne Themen der Parapsychologie und des Okkultismus;Specific topics in parapsychology & occultism
+DDC;134;Unbesetzt;Unassigned
+DDC;135;Träume, Mysterien;Dreams & mysteries
+DDC;136;Unbesetzt;Unassigned
+DDC;137;Divinatorische Graphologie;Divinatory graphology
+DDC;138;Physiognomie;Physiognomy
+DDC;139;Phrenologie;Phrenology
+DDC;140;Einzelne philosophische Schulen;Specific philosophical schools
+DDC;141;Idealismus und verwandte Systeme;Idealism & related systems
+DDC;142;Kritizismus;Critical philosophy
+DDC;143;Bergsonismus, Intuitionismus;Bergsonism & intuitionism
+DDC;144;Humanismus und verwandte Systeme;Humanism & related systems
+DDC;145;Sensualismus;Sensationalism
+DDC;146;Naturalismus und verwandte Systeme;Naturalism & related systems
+DDC;147;Pantheismus und verwandte Systeme;Pantheism & related systems
+DDC;148;Eklektizismus, Liberalismus, Traditionalismus;Eclecticism, liberalism & traditionalism
+DDC;149;Andere philosophische Systeme;Other philosophical systems
+DDC;150;Psychologie;Psychology
+DDC;151;Unbesetzt;Unassigned
+DDC;152;Sinneswahrnehmung, Bewegung, Emotionen, Triebe;Perception, movement, emotions & drives
+DDC;153;Kognitive Prozesse, Intelligenz;Mental processes & intelligence
+DDC;154;Unterbewusste und bewusstseinsveränderte Zustände;Subconscious & altered states
+DDC;155;Differentielle Psychologie, Entwicklungspsychologie;Differential & developmental psychology
+DDC;156;Vergleichende Psychologie;Comparative psychology
+DDC;157;Unbesetzt;Unassigned
+DDC;158;Angewandte Psychologie;Applied psychology
+DDC;159;Unbesetzt;Unassigned
+DDC;160;Logik;Logic
+DDC;161;Induktion;Induction
+DDC;162;Deduktion;Deduction
+DDC;163;Unbesetzt;Unassigned
+DDC;164;Unbesetzt;Unassigned
+DDC;165;Fehlschlüsse, Fehlerquellen;Fallacies & sources of error
+DDC;166;Syllogismen;Syllogisms
+DDC;167;Hypothesen;Hypotheses
+DDC;168;Argument, Überzeugungung;Argument & persuasion
+DDC;169;Analogie;Analogy
+DDC;170;Ethik;Ethics
+DDC;171;Ethische Systeme;Ethical systems
+DDC;172;Politische Ethik;Political ethics
+DDC;173;Familienethik;Ethics of family relationships
+DDC;174;Berufsethik;Occupational ethics
+DDC;175;Ethik von Freizeit und Erholung;Ethics of recreation & leisure
+DDC;176;Sexual- und Reproduktionsethik;Ethics of sex & reproduction
+DDC;177;Ethik sozialer Beziehungen;Ethics of social relations
+DDC;178;Konsumethik;Ethics of consumption
+DDC;179;Andere ethische Normen;Other ethical norms
+DDC;180;Antike, mittelalterliche und östliche Philosophie;Ancient, medieval & eastern philosophy
+DDC;181;Östliche Philosophie;Eastern philosophy
+DDC;182;Vorsokratische griechische Philosophien;Pre-Socratic Greek philosophies
+DDC;183;Sokratische und verwandte Philosophien;Socratic & related philosophies
+DDC;184;Platonische Philosophie;Platonic philosophy
+DDC;185;Aristotelische Philosophie;Aristotelian philosophy
+DDC;186;Skeptische und neuplatonische Philosophien;Skeptic & Neoplatonic philosophies
+DDC;187;Epikureische Philosophie;Epicurean philosophy
+DDC;188;Stoische Philosophie;Stoic philosophy
+DDC;189;Mittelalterliche westliche Philosophie;Medieval western philosophy
+DDC;190;Neuzeitliche westliche Philosophie;Modern western philosophy
+DDC;191;Philosophie in den USA und Kanada;Philosophy of United States & Canada
+DDC;192;Philosophie auf den Britischen Inseln;Philosophy of British Isles
+DDC;193;Philosophie in Deutschland und Österreich;Philosophy of Germany & Austria
+DDC;194;Philosophie in Frankreich;Philosophy of France
+DDC;195;Philosophie in Italien;Philosophy of Italy
+DDC;196;Philosophie in Spanien und Portugal;Philosophy of Spain & Portugal
+DDC;197;Philosophie in Russland und der früheren Sowjetunion;Philosophy of former Soviet Union
+DDC;198;Philosophie in Skandinavien;Philosophy of Scandinavia
+DDC;199;Philosophie in anderen geografischen Gebieten;Philosophy in other geographic areas
+DDC;200;Religion;Religion
+DDC;201;Religiöse Mythologie, Soziallehre;Religious mythology & social theology
+DDC;202;Lehren;Doctrines
+DDC;203;Gottesdienst und andere Formen der öffentlichen Religionsausübung;Public worship & other practices
+DDC;204;Religiöse Erfahrung, religiöses Leben, religiöse Praxis;Religious experience, life & practice
+DDC;205;Religiöse Ethik;Religious ethics
+DDC;206;Religiöse Führer und Organisation;Leaders & organization
+DDC;207;Mission, religiöse Erziehung;Missions & religious education
+DDC;208;Quellen;Sources
+DDC;209;Sekten, Reformbewegungen;Sects & reform movements
+DDC;210;Religionsphilosophie, Religionstheorie;Philosophy & theory of religion
+DDC;211;Gottesvorstellungen;Concepts of God
+DDC;212;Gottesfrage, Gotteserkenntnis, Eigenschaften Gottes;Existence, knowability & attributes of God
+DDC;213;Schöpfung;Creation
+DDC;214;Theodizee;Theodicy
+DDC;215;Naturwissenschaft und Religion;Science & religion
+DDC;216;Unbesetzt;Unassigned
+DDC;217;Unbesetzt;Unassigned
+DDC;218;Der Mensch;Humankind
+DDC;219;Unbesetzt;Unassigned
+DDC;220;Bibel;Bible
+DDC;221;Altes Testament (Tenach);Old Testament (Tanakh)
+DDC;222;Geschichtsbücher des Alten Testaments;Historical books of Old Testament
+DDC;223;Poetische Bücher des Alten Testaments;Poetic books of Old Testament
+DDC;224;Prophetische Bücher des Alten Testaments;Prophetic books of Old Testament
+DDC;225;Neues Testament;New Testament
+DDC;226;Evangelien, Apostelgeschichte;Gospels & Acts
+DDC;227;Briefe;Epistles
+DDC;228;Johannes-Apokalypse (Offenbarung des Johannes);Revelation (Apocalypse)
+DDC;229;Apokryphen, Pseudepigraphen;Apocrypha & pseudepigrapha
+DDC;230;Christentum, Christliche Theologie;Christianity & Christian theology
+DDC;231;Gott;God
+DDC;232;Jesus Christus und seine Familie;Jesus Christ & his family
+DDC;233;Der Mensch;Humankind
+DDC;234;Erlösung, Gnade;Salvation & grace
+DDC;235;Geistliche Wesen;Spiritual beings
+DDC;236;Eschatologie;Eschatology
+DDC;237;Unbesetzt;Unassigned
+DDC;238;Glaubensbekenntnisse, Katechismen;Creeds & catechisms
+DDC;239;Apologetik, Polemik;Apologetics & polemics
+DDC;240;Christliche Ethik, spirituelle Theologie;Christian moral & devotional theology
+DDC;241;Christliche Ethik;Christian ethics
+DDC;242;Erbauungsliteratur;Devotional literature
+DDC;243;Evangelistisches Schrifttum für Einzelpersonen;Evangelistic writings for individuals
+DDC;244;Unbesetzt;Unassigned
+DDC;245;Unbesetzt;Unassigned
+DDC;246;Kunst im Christentum;Use of art in Christianity
+DDC;247;Kirchenausstattung, liturgisches Gerät;Church furnishings & articles
+DDC;248;Christliche Erfahrung, christliche Praxis, christliches Leben;Christian experience, practice & life
+DDC;249;Christliches Leben in der Familie;Christian observances in family life
+DDC;250;Christliche Orden und Ortskirchen;Christian orders & local church
+DDC;251;Homiletik;Preaching
+DDC;252;Predigttexte;Texts of sermons
+DDC;253;Pastoraltheologie;Pastoral office & work
+DDC;254;Gemeindeverwaltung;Parish administration
+DDC;255;Religiöse Kongregationen und Orden;Religious congregations & orders
+DDC;256;Unbesetzt;Unassigned
+DDC;257;Unbesetzt;Unassigned
+DDC;258;Unbesetzt;Unassigned
+DDC;259;Familienseelsorge, Kategorialseelsorge;Pastoral care of families & kinds of persons
+DDC;260;Soziallehre, Ekklesiologie;Social & ecclesiastical theology
+DDC;261;Soziallehre;Social theology
+DDC;262;Ekklesiologie;Ecclesiology
+DDC;263;Heilige Tage, Zeiten und Orte;Days, times & places of observance
+DDC;264;Öffentliche Religionsausübung;Public worship
+DDC;265;Sakramente, andere Riten und Handlungen;Sacraments, other rites & acts
+DDC;266;Mission;Missions
+DDC;267;Religiöse Verbände;Associations for religious work
+DDC;268;Religiöse Erziehung;Religious education
+DDC;269;Geistliche Erneuerung;Spiritual renewal
+DDC;270;Geschichte des Christentums, Kirchengeschichte;History of Christianity & Christian church
+DDC;271;Religiöse Orden in der Kirchengeschichte;Religious orders in church history
+DDC;272;Verfolgung in der Kirchengeschichte;Persecutions in church history
+DDC;273;Dogmatische Kontroversen, Häresie;Doctrinal controversies & heresies
+DDC;274;Geschichte des Christentums in Europa;History of Christianity in Europe
+DDC;275;Geschichte des Christentums in Asien;History of Christianity in Asia
+DDC;276;Geschichte des Christentums in Afrika;History of Christianity in Africa
+DDC;277;Geschichte des Christentums in Nordamerika;History of Christianity in North America
+DDC;278;Geschichte des Christentums in Südamerika;History of Christianity in South America
+DDC;279;Geschichte des Christentums in anderen Gebieten;History of Christianity in other areas
+DDC;280;Christliche Konfessionen und Sekten;Christian denominations & sects
+DDC;281;Alte Kirche, Ostkirchen;Early church & Eastern churches
+DDC;282;Römisch-Katholische Kirche;Roman Catholic Church
+DDC;283;Anglikanische Kirchen;Anglican churches
+DDC;284;Protestanten kontinentaleuropäischen Ursprungs;Protestants of Continental origin
+DDC;285;Presbyterianer, Reformierte, Kongregationalisten;Presbyterian, Reformed & Congregational
+DDC;286;Baptisten, Disciples of Christ, Adventisten;Baptist, Disciples of Christ & Adventist
+DDC;287;Methodisten und verwandte Kirchen;Methodist & related churches
+DDC;288;Unbesetzt;Unassigned
+DDC;289;Andere Konfessionen und Sekten;Other denominations & sects
+DDC;290;Andere Religionen;Other religions
+DDC;291;Unbesetzt;Unassigned
+DDC;292;Griechische und römische Religion;Greek & Roman religion
+DDC;293;Germanische Religion;Germanic religion
+DDC;294;Religionen indischen Ursprungs;Religions of Indic origin
+DDC;295;Parsismus;Zoroastrianism
+DDC;296;Judentum;Judaism
+DDC;297;Islam, Babismus, Bahaismus;Islam, Babism & Bahai Faith
+DDC;298;(Optionale Notation);(Optional number)
+DDC;299;An anderer Stelle nicht vorgesehene Religionen;Religions not provided for elsewhere
+DDC;300;Sozialwissenschaften;Social sciences
+DDC;301;Soziologie, Anthropologie;Sociology & anthropology
+DDC;302;Soziale Interaktion;Social interaction
+DDC;303;Gesellschaftliche Prozesse;Social processes
+DDC;304;Das Sozialverhalten beeinflussende Faktoren;Factors affecting social behavior
+DDC;305;Soziale Gruppen;Social groups
+DDC;306;Kultur und Institutionen;Culture & institutions
+DDC;307;Gemeinschaften;Communities
+DDC;308;Unbesetzt;Unassigned
+DDC;309;Unbesetzt;Unassigned
+DDC;310;Sammlungen allgemeiner Statistiken;Collections of general statistics
+DDC;311;Unbesetzt;Unassigned
+DDC;312;Unbesetzt;Unassigned
+DDC;313;Unbesetzt;Unassigned
+DDC;314;Allgemeine Statistiken zu Europa;General statistics of Europe
+DDC;315;Allgemeine Statistiken zu Asien;General statistics of Asia
+DDC;316;Allgemeine Statistiken zu Afrika;General statistics of Africa
+DDC;317;Allgemeine Statistiken zu Nordamerika;General statistics of North America
+DDC;318;Allgemeine Statistiken zu Südamerika;General statistics of South America
+DDC;319;Allgemeine Statistiken zu anderen Gebieten;General statistics of other areas
+DDC;320;Politikwissenschaft;Political science
+DDC;321;Staatsformen und Regierungssysteme;Systems of governments & states
+DDC;322;Beziehungen des Staats zu organisierten Gruppen;Relation of state to organized groups
+DDC;323;Grundrechte und politische Rechte;Civil & political rights
+DDC;324;Der politische Prozess;The political process
+DDC;325;Internationale Migration, Kolonisation;International migration & colonization
+DDC;326;Sklaverei und Sklavenbefreiung;Slavery & emancipation
+DDC;327;Internationale Beziehungen;International relations
+DDC;328;Der Gesetzgebungsprozess;The legislative process
+DDC;329;Unbesetzt;Unassigned
+DDC;330;Wirtschaft;Economics
+DDC;331;Arbeitsökonomie;Labor economics
+DDC;332;Finanzwirtschaft;Financial economics
+DDC;333;Boden- und Energiewirtschaft;Economics of land & energy
+DDC;334;Genossenschaften;Cooperatives
+DDC;335;Sozialismus und verwandte Systeme;Socialism & related systems
+DDC;336;Öffentliche Finanzen;Public finance
+DDC;337;Weltwirtschaft;International economics
+DDC;338;Produktion;Production
+DDC;339;Makroökonomie und verwandte Themen;Macroeconomics & related topics
+DDC;340;Recht;Law
+DDC;341;Völkerrecht;Law of nations
+DDC;342;Verfassungs- und Verwaltungsrecht;Constitutional & administrative law
+DDC;343;Wehrrecht, Steuerrecht, Wirtschaftsrecht;Military, tax, trade & industrial law
+DDC;344;Arbeitsrecht, Sozialrecht, Bildungsrecht, Kulturrecht;Labor, social, education & cultural law
+DDC;345;Strafrecht;Criminal law
+DDC;346;Privatrecht;Private law
+DDC;347;Zivilprozessrecht, Zivilgerichte;Civil procedure & courts
+DDC;348;Gesetze, Verordnungen, Rechtsfälle;Laws, regulations & cases
+DDC;349;Recht einzelner Gebietskörperschaften und Gebiete;Law of specific jurisdictions & areas
+DDC;350;Öffentliche Verwaltung, Militärwissenschaft;Public administration & military science
+DDC;351;Öffentliche Verwaltung;Public administration
+DDC;352;Allgemeines zur öffentlichen Verwaltung;General considerations of public administration
+DDC;353;Einzelne Bereiche der öffentlichen Verwaltung;Specific fields of public administration
+DDC;354;Verwaltung von Wirtschaft und Umwelt;Administration of economy & environment
+DDC;355;Militärwissenschaft;Military science
+DDC;356;Infanterie und Kampfführung;Infantry forces & warfare
+DDC;357;Kavalleriestreitkräfte und Kampfführung;Mounted forces & warfare
+DDC;358;Luftstreitkräfte und andere spezialisierte Streitkräfte;Air & other specialized forces
+DDC;359;Seestreitkräfte und Kampfführung;Sea forces & warfare
+DDC;360;Soziale Probleme und Sozialdienste, Verbände;Social problems & services, associations
+DDC;361;Soziale Probleme und Sozialhilfe im Allgemeinen;Social problems & social welfare in general
+DDC;362;Probleme und Dienste der Sozialhilfe;Social welfare problems & services
+DDC;363;Andere soziale Probleme und Sozialdienste;Other social problems & services
+DDC;364;Kriminologie;Criminology
+DDC;365;Justizvollzugsanstalten und verwandte Einrichtungen;Penal & related institutions
+DDC;366;Verbände;Associations
+DDC;367;Allgemeine Klubs;General clubs
+DDC;368;Versicherungen;Insurance
+DDC;369;Verschiedene Arten von Verbänden;Miscellaneous kinds of associations
+DDC;370;Bildung und Erziehung;Education
+DDC;371;Schulen, schulische Tätigkeiten, Sonderpädagogik;Schools & their activities, special education
+DDC;372;Primar- und Elementarbildung;Elementary education
+DDC;373;Sekundarbildung;Secondary education
+DDC;374;Erwachsenenbildung;Adult education
+DDC;375;Curricula;Curricula
+DDC;376;Unbesetzt;Unassigned
+DDC;377;Unbesetzt;Unassigned
+DDC;378;Hochschulbildung;Higher education
+DDC;379;Bildungspolitik;Public policy issues in education
+DDC;380;Handel, Kommunikation, Verkehr;Commerce, communications & transportation
+DDC;381;Handel;Commerce
+DDC;382;Internationaler Handel;International commerce
+DDC;383;Postverkehr;Postal communication
+DDC;384;Kommunikation, Telekommunikation;Communications, telecommunication
+DDC;385;Schienenverkehr;Railroad transportation
+DDC;386;Binnenschifffahrt, Fährverkehr;Inland waterway & ferry transportation
+DDC;387;Schifffahrt, Luft-, Weltraumverkehr;Water, air & space transportation
+DDC;388;Verkehr, Landverkehr;Transportation, ground transportation
+DDC;389;Metrologie, Normung;Metrology & standardization
+DDC;390;Bräuche, Etikette, Folklore;Customs, etiquette & folklore
+DDC;391;Kleidung, äußeres Erscheinungsbild;Costume & personal appearance
+DDC;392;Bräuche im Lebenslauf und im häuslichen Leben;Customs of life cycle & domestic life
+DDC;393;Sterbe- und Bestattungsriten;Death customs
+DDC;394;Allgemeine Bräuche;General customs
+DDC;395;Etikette (Manieren);Etiquette (Manners)
+DDC;396;Unbesetzt;Unassigned
+DDC;397;Unbesetzt;Unassigned
+DDC;398;Folklore;Folklore
+DDC;399;Bräuche des Krieges und der Diplomatie;Customs of war & diplomacy
+DDC;400;Sprache;Language
+DDC;401;Sprachphilosophie, Sprachtheorie;Philosophy & theory
+DDC;402;Verschiedenes;Miscellany
+DDC;403;Wörterbücher, Enzyklopädien;Dictionaries & encyclopedias
+DDC;404;Spezielle Themen;Special topics
+DDC;405;Fortlaufende Sammelwerke;Serial publications
+DDC;406;Organisationen, Management;Organizations & management
+DDC;407;Ausbildung, Forschung, verwandte Themen;Education, research & related topics
+DDC;408;Behandlung nach Personengruppen;Kinds of persons treatment
+DDC;409;Geografische, personenbezogene Behandlung;Geographic & persons treatment
+DDC;410;Linguistik;Linguistics
+DDC;411;Schriftsysteme;Writing systems
+DDC;412;Etymologie;Etymology
+DDC;413;Wörterbücher;Dictionaries
+DDC;414;Phonologie, Phonetik;Phonology & phonetics
+DDC;415;Grammatik;Grammar
+DDC;416;Unbesetzt;Unassigned
+DDC;417;Dialektologie, historische Linguistik;Dialectology & historical linguistics
+DDC;418;Standardsprache, Angewandte Linguistik;Standard usage & applied linguistics
+DDC;419;Gebärdensprachen;Sign languages
+DDC;420;Englisch, Altenglisch;English & Old English
+DDC;421;Schriftsystem und Phonologie des Englischen;English writing system & phonology
+DDC;422;Etymologie des Englischen;English etymology
+DDC;423;Englische Wörterbücher;English dictionaries
+DDC;424;Unbesetzt;Unassigned
+DDC;425;Englische Grammatik;English grammar
+DDC;426;Unbesetzt;Unassigned
+DDC;427;Varianten des Englischen, Mittelenglisch;English language variations
+DDC;428;Gebrauch des Standard-Englisch;Standard English usage
+DDC;429;Altenglisch (Angelsächsisch);Old English (Anglo-Saxon)
+DDC;430;Germanische Sprachen, Deutsch;Germanic languages, German
+DDC;431;Schriftsysteme und Phonologie des Deutschen;German writing systems & phonology
+DDC;432;Etymologie des Deutschen;German etymology
+DDC;433;Deutsche Wörterbücher;German dictionaries
+DDC;434;Unbesetzt;Unassigned
+DDC;435;Deutsche Grammatik;German grammar
+DDC;436;Unbesetzt;Unassigned
+DDC;437;Varianten des Deutschen;German language variations
+DDC;438;Gebrauch des Standard-Deutsch;Standard German usage
+DDC;439;Andere germanische Sprachen;Other Germanic languages
+DDC;440;Romanische Sprachen, Französisch;Romance languages, French
+DDC;441;Schriftsysteme und Phonologie des Französischen;French writing systems & phonology
+DDC;442;Etymologie des Französischen;French etymology
+DDC;443;Französische Wörterbücher;French dictionaries
+DDC;444;Unbesetzt;Unassigned
+DDC;445;Französische Grammatik;French grammar
+DDC;446;Unbesetzt;Unassigned
+DDC;447;Varianten des Französischen;French language variations
+DDC;448;Gebrauch des Standard-Französisch;Standard French usage
+DDC;449;Okzitanisch, Katalanisch;Occitan & Catalan
+DDC;450;Italienisch, Rumänisch, Rätoromanisch;Italian, Romanian & related languages
+DDC;451;Schriftsysteme und Phonologie des Italienischen;Italian writing systems & phonology
+DDC;452;Etymologie des Italienischen;Italian etymology
+DDC;453;Italienische Wörterbücher;Italian dictionaries
+DDC;454;Unbesetzt;Unassigned
+DDC;455;Italienische Grammatik;Italian grammar
+DDC;456;Unbesetzt;Unassigned
+DDC;457;Varianten des Italienischen;Italian language variations
+DDC;458;Gebrauch des Standard-Italienisch;Standard Italian usage
+DDC;459;Rumänisch, Rätoromanisch;Romanian & related languages
+DDC;460;Spanisch, Portugiesisch;Spanish & Portuguese languages
+DDC;461;Schriftsysteme und Phonologie des Spanischen;Spanish writing systems & phonology
+DDC;462;Etymologie des Spanischen;Spanish etymology
+DDC;463;Spanische Wörterbücher;Spanish dictionaries
+DDC;464;Unbesetzt;Unassigned
+DDC;465;Spanische Grammatik;Spanish grammar
+DDC;466;Unbesetzt;Unassigned
+DDC;467;Varianten des Spanischen;Spanish language variations
+DDC;468;Gebrauch des Standard-Spanisch;Standard Spanish usage
+DDC;469;Portugiesisch;Portuguese
+DDC;470;Italische Sprachen, Latein;Italic languages, Latin
+DDC;471;Schriftsysteme und Phonologie des klassischen Latein;Classical Latin writing & phonology
+DDC;472;Etymologie des klassischen Latein;Classical Latin etymology
+DDC;473;Wörterbücher des klassischen Latein;Classical Latin dictionaries
+DDC;474;Unbesetzt;Unassigned
+DDC;475;Grammatik des klassischen Latein;Classical Latin grammar
+DDC;476;Unbesetzt;Unassigned
+DDC;477;Altlatein, Mittellatein, Neulatein, Kirchenlatein, Vulgärlatein;Old, postclassical & Vulgar Latin
+DDC;478;Gebrauch des klassischen Latein;Classical Latin usage
+DDC;479;Andere italische Sprachen;Other Italic languages
+DDC;480;Hellenische Sprachen, klassisches Griechisch;Hellenic languages, classical Greek
+DDC;481;Schriftsysteme und Phonologie des klassischen Griechisch;Classical Greek writing & phonology
+DDC;482;Etymologie des klassischen Griechisch;Classical Greek etymology
+DDC;483;Wörterbücher des klassischen Griechisch;Classical Greek dictionaries
+DDC;484;Unbesetzt;Unassigned
+DDC;485;Grammatik des klassischen Griechisch;Classical Greek grammar
+DDC;486;Unbesetzt;Unassigned
+DDC;487;Vorklassisches Griechisch, Mittelgriechisch;Preclassical & postclassical Greek
+DDC;488;Gebrauch des klassischen Griechisch;Classical Greek usage
+DDC;489;Andere hellenische Sprachen, Neugriechisch;Other Hellenic languages
+DDC;490;Andere Sprachen;Other languages
+DDC;491;Ostindoeuropäische und keltische Sprachen;East Indo-European & Celtic languages
+DDC;492;Afroasiatische Sprachen, semitische Sprachen;Afro-Asiatic languages, Semitic languages
+DDC;493;Nichtsemitische afroasiatische Sprachen;Non-Semitic Afro-Asiatic languages
+DDC;494;Altaische, uralische, paläosibirische, drawidische Sprachen;Altaic, Uralic, Hyperborean & Dravidian
+DDC;495;Ost- und südostasiatische Sprachen;Languages of East & Southeast Asia
+DDC;496;Afrikanische Sprachen;African languages
+DDC;497;Nordamerikanische Indianersprachen;North American native languages
+DDC;498;Südamerikanische Indianersprachen;South American native languages
+DDC;499;Austronesische und andere Sprachen;Austronesian & other languages
+DDC;500;Naturwissenschaften und Mathematik;Natural sciences & mathematics
+DDC;501;Philosophie, Theorie;Philosophy & theory
+DDC;502;Verschiedenes;Miscellany
+DDC;503;Wörterbücher, Enzyklopädien;Dictionaries & encyclopedias
+DDC;504;Unbesetzt;Unassigned
+DDC;505;Fortlaufende Sammelwerke;Serial publications
+DDC;506;Organisationen, Management;Organizations & management
+DDC;507;Ausbildung, Forschung, verwandte Themen;Education, research & related topics
+DDC;508;Naturgeschichte;Natural history
+DDC;509;Historische, geografische, personenbezogene Behandlung;Historical, geographic & persons treatment
+DDC;510;Mathematik;Mathematics
+DDC;511;Allgemeine mathematische Prinzipien;General principles of mathematics
+DDC;512;Algebra;Algebra
+DDC;513;Arithmetik;Arithmetic
+DDC;514;Topologie;Topology
+DDC;515;Analysis;Analysis
+DDC;516;Geometrie;Geometry
+DDC;517;Unbesetzt;Unassigned
+DDC;518;Numerische Analysis;Numerical analysis
+DDC;519;Wahrscheinlichkeiten, angewandte Mathematik;Probabilities & applied mathematics
+DDC;520;Astronomie und zugeordnete Wissenschaften;Astronomy & allied sciences
+DDC;521;Himmelsmechanik;Celestial mechanics
+DDC;522;Techniken, Ausstattung, Materialien;Techniques, equipment & materials
+DDC;523;Einzelne Himmelskörper und Himmelsphänomene;Specific celestial bodies & phenomena
+DDC;524;Unbesetzt;Unassigned
+DDC;525;Erde (Astronomische Geografie);Earth (Astronomical geography)
+DDC;526;Mathematische Geografie;Mathematical geography
+DDC;527;Astronavigation;Celestial navigation
+DDC;528;Ephemeriden;Ephemerides
+DDC;529;Chronologie;Chronology
+DDC;530;Physik;Physics
+DDC;531;Klassische Mechanik, Festkörpermechanik;Classical mechanics, solid mechanics
+DDC;532;Mechanik der Fluide, Mechanik der Flüssigkeiten;Fluid mechanics, liquid mechanics
+DDC;533;Gasmechanik;Gas mechanics
+DDC;534;Schall und verwandte Schwingungen;Sound & related vibrations
+DDC;535;Licht, Infrarot- und Ultraviolettphänomene;Light & infrared & ultraviolet phenomena
+DDC;536;Wärme;Heat
+DDC;537;Elektrizität, Elektronik;Electricity & electronics
+DDC;538;Magnetismus;Magnetism
+DDC;539;Moderne Physik;Modern physics
+DDC;540;Chemie und zugeordnete Wissenschaften;Chemistry & allied sciences
+DDC;541;Physikalische Chemie;Physical chemistry
+DDC;542;Techniken, Ausstattung, Materialien;Techniques, equipment & materials
+DDC;543;Analytische Chemie;Analytical chemistry
+DDC;544;Unbesetzt;Unassigned
+DDC;545;Unbesetzt;Unassigned
+DDC;546;Anorganische Chemie;Inorganic chemistry
+DDC;547;Organische Chemie;Organic chemistry
+DDC;548;Kristallografie;Crystallography
+DDC;549;Mineralogie;Mineralogy
+DDC;550;Geowissenschaften;Earth sciences
+DDC;551;Geologie, Hydrologie, Meteorologie;Geology, hydrology & meteorology
+DDC;552;Petrologie;Petrology
+DDC;553;Lagerstättenkunde;Economic geology
+DDC;554;Geowissenschaften Europas;Earth sciences of Europe
+DDC;555;Geowissenschaften Asiens;Earth sciences of Asia
+DDC;556;Geowissenschaften Afrikas;Earth sciences of Africa
+DDC;557;Geowissenschaften Nordamerikas;Earth sciences of North America
+DDC;558;Geowissenschaften Südamerikas;Earth sciences of South America
+DDC;559;Geowissenschaften anderer Gebiete;Earth sciences of other areas
+DDC;560;Paläontologie, Paläozoologie;Paleontology, paleozoology
+DDC;561;Paläobotanik, fossile Mikroorganismen;Paleobotany, fossil microorganisms
+DDC;562;Fossile Evertebrata (Wirbellose);Fossil invertebrates
+DDC;563;Fossile Wirbellose des Meeres und der Meeresküste;Fossil marine & seashore invertebrates
+DDC;564;Fossile Mollusca (Weichtiere), Tentaculata (Kranzfühler);Fossil mollusks & molluscoids
+DDC;565;Fossile Arthropoden (Gliederfüßer);Fossil arthropods
+DDC;566;Fossile Chordata (Chordatiere);Fossil chordates
+DDC;567;Fossile wechselwarme Wirbeltiere, fossile Pisces (Fische);Fossil cold-blooded vertebrates, fossil fishes
+DDC;568;Fossile Aves (Vögel);Fossil birds
+DDC;569;Fossile Mammalia (Säugetiere);Fossil mammals
+DDC;570;Biowissenschaften, Biologie;Life sciences, biology
+DDC;571;Physiologie und verwandte Themen;Physiology & related subjects
+DDC;572;Biochemie;Biochemistry
+DDC;573;Einzelne physiologische Systeme bei Tieren;Specific physiological systems in animals
+DDC;574;Unbesetzt;Unassigned
+DDC;575;Einzelne Teile von und physiologische Systeme bei Pflanzen;Specific parts of & systems in plants
+DDC;576;Genetik und Evolution;Genetics & evolution
+DDC;577;Ökologie;Ecology
+DDC;578;Naturgeschichte von Organismen;Natural history of organisms
+DDC;579;Mikroorganismen, Pilze, Algen;Microorganisms, fungi & algae
+DDC;580;Pflanzen (Botanik);Plants (Botany)
+DDC;581;Einzelne Themen in der Naturgeschichte;Specific topics in natural history
+DDC;582;Pflanzen mit spezifischen Merkmalen und Blüten;Plants noted for characteristics & flowers
+DDC;583;Magnoliopsida (Zweikeimblättrige);Dicotyledons
+DDC;584;Liliopsida (Einkeimblättrige);Monocotyledons
+DDC;585;Gymnospermae (Nacktsamer), Coniferae (Nadelgehölze);Gymnosperms, conifers
+DDC;586;Cryptogamia (Blütenlose Pflanzen);Seedless plants
+DDC;587;Pteridophyta (Farnpflanzen);Vascular seedless plants
+DDC;588;Bryophyta (Moose);Bryophytes
+DDC;589;Unbesetzt;Unassigned
+DDC;590;Tiere (Zoologie);Animals (Zoology)
+DDC;591;Einzelne Themen in der Naturgeschichte;Specific topics in natural history
+DDC;592;Evertebrata (Wirbellose);Invertebrates
+DDC;593;Wirbellose des Meeres und der Meeresküste;Marine & seashore invertebrates
+DDC;594;Mollusca (Weichtiere), Tentaculata (Kranzfühler);Mollusks & molluscoids
+DDC;595;Arthropoden (Gliederfüßer);Arthropods
+DDC;596;Chordata (Chordatiere);Chordates
+DDC;597;Wechselwarme Wirbeltiere, Pisces (Fische);Cold-blooded vertebrates, fishes
+DDC;598;Aves (Vögel);Birds
+DDC;599;Mammalia (Säugetiere);Mammals
+DDC;600;Technik, Technologie;Technology
+DDC;601;Philosophie, Theorie;Philosophy & theory
+DDC;602;Verschiedenes;Miscellany
+DDC;603;Wörterbücher, Enzyklopädien;Dictionaries & encyclopedias
+DDC;604;Spezielle Themen;Special topics
+DDC;605;Fortlaufende Sammelwerke;Serial publications
+DDC;606;Organisationen;Organizations
+DDC;607;Ausbildung, Forschung, verwandte Themen;Education, research & related topics
+DDC;608;Erfindungen, Patente;Inventions & patents
+DDC;609;Historische, geografische, personenbezogene Behandlung;Historical, geographic & persons treatment
+DDC;610;Medizin und Gesundheit;Medicine & health
+DDC;611;Menschliche Anatomie, Zytologie, Histologie;Human anatomy, cytology & histology
+DDC;612;Humanphysiologie;Human physiology
+DDC;613;Persönliche Gesundheit und Sicherheit;Personal health & safety
+DDC;614;Inzidenz und Prävention von Krankheiten;Incidence & prevention of disease
+DDC;615;Pharmakologie, Therapeutik;Pharmacology & therapeutics
+DDC;616;Krankheiten;Diseases
+DDC;617;Chirurgie und verwandte medizinische Fachrichtungen;Surgery & related medical specialties
+DDC;618;Gynäkologie, Geburtsmedizin, Pädiatrie, Geriatrie;Gynecology, obstetrics, pediatrics & geriatrics
+DDC;619;Unbesetzt;Unassigned
+DDC;620;Ingenieurwissenschaften und zugeordnete Tätigkeitenn;Engineering & allied operations
+DDC;621;Angewandte Physik;Applied physics
+DDC;622;Bergbau und verwandte Tätigkeiten;Mining & related operations
+DDC;623;Militär- und Schiffstechnik;Military & nautical engineering
+DDC;624;Ingenieurbau;Civil engineering
+DDC;625;Eisenbahn- und Straßenbau;Engineering of railroads & roads
+DDC;626;Unbesetzt;Unassigned
+DDC;627;Wasserbau;Hydraulic engineering
+DDC;628;Sanitär- und Kommunaltechnik, Umwelttechnik;Sanitary & municipal engineering
+DDC;629;Andere Fachrichtungen der Ingenieurwissenschaften;Other branches of engineering
+DDC;630;Landwirtschaft und verwandte Bereiche;Agriculture & related technologies
+DDC;631;Techniken, Ausstattung, Materialien;Techniques, equipment & materials
+DDC;632;Schäden, Krankheiten, Schädlinge an Pflanzen;Plant injuries, diseases & pests
+DDC;633;Feld- und Plantagenfrüchte;Field & plantation crops
+DDC;634;Obstanlagen, Früchte, Forstwirtschaft;Orchards, fruits & forestry
+DDC;635;Gartenpflanzen (Gartenbau);Garden crops (Horticulture)
+DDC;636;Viehwirtschaft;Animal husbandry
+DDC;637;Milchverarbeitung und verwandte Produkte;Processing dairy & related products
+DDC;638;Insektenzucht;Insect culture
+DDC;639;Jagd, Fischfang, Naturschutz;Hunting, fishing & conservation
+DDC;640;Hauswirtschaft und Familie;Home & family management
+DDC;641;Essen und Trinken;Food & drink
+DDC;642;Mahlzeiten, Tischkultur;Meals & table service
+DDC;643;Wohnen, Haushaltsausstattung;Housing & household equipment
+DDC;644;Gebäudeversorgung für Haushalte;Household utilities
+DDC;645;Einrichtungsgegenstände;Household furnishings
+DDC;646;Nähen, Kleidung, persönliches Leben, Familienleben;Sewing, clothing & personal living
+DDC;647;Großhaushaltsführung;Management of public households
+DDC;648;Haushaltsführung;Housekeeping
+DDC;649;Kindererziehung, häusliche Betreuung;Child rearing & home care of persons
+DDC;650;Management und unterstützende Tätigkeiten;Management & auxiliary services
+DDC;651;Büroarbeit;Office services
+DDC;652;Techniken der schriftlichen Kommunikation;Processes of written communication
+DDC;653;Stenografie;Shorthand
+DDC;654;Unbesetzt;Unassigned
+DDC;655;Unbesetzt;Unassigned
+DDC;656;Unbesetzt;Unassigned
+DDC;657;Rechnungslegung;Accounting
+DDC;658;Allgemeines Management;General management
+DDC;659;Werbung, Öffentlichkeitsarbeit;Advertising & public relations
+DDC;660;Chemische Verfahrenstechnik;Chemical engineering
+DDC;661;Industriechemikalien;Industrial chemicals
+DDC;662;Explosivstoffe, Brennstoffe und verwandte Produkte;Explosives, fuels & related products
+DDC;663;Getränketechnologie;Beverage technology
+DDC;664;Lebensmitteltechnologie;Food technology
+DDC;665;Industrielle Öle, Fette, Wachse, technische Gase;Industrial oils, fats, waxes & gases
+DDC;666;Keramiktechnologie und zugeordnete Technologien;Ceramic & allied technologies
+DDC;667;Reinigungs-, Färbe-, Beschichtungstechniken;Cleaning, color & coating technologies
+DDC;668;Technik anderer organischer Produkte;Technology of other organic products
+DDC;669;Metallurgie;Metallurgy
+DDC;670;Industrielle Fertigung;Manufacturing
+DDC;671;Metallverarbeitung und Rohprodukte aus Metall;Metalworking & primary metal products
+DDC;672;Eisen, Stahl, andere Eisenlegierungen;Iron, steel & other iron alloys
+DDC;673;Nichteisenmetalle;Nonferrous metals
+DDC;674;Holzverarbeitung, Holzprodukte, Kork;Lumber processing, wood products & cork
+DDC;675;Leder- und Pelzverarbeitung;Leather & fur processing
+DDC;676;Zellstoff und Papierherstellung;Pulp & paper technology
+DDC;677;Textilien;Textiles
+DDC;678;Elastomere, Elastomerprodukte;Elastomers & elastomer products
+DDC;679;Andere Produkte aus einzelnen Werkstoffen;Other products of specific materials
+DDC;680;Industrielle Fertigung für einzelne Verwendungszwecke;Manufacture for specific uses
+DDC;681;Präzisionsinstrumente und andere Geräte;Precision instruments & other devices
+DDC;682;Schmiedehandwerk;Small forge work (Blacksmithing)
+DDC;683;Eisenwaren, Haushaltsgeräte;Hardware & household appliances
+DDC;684;Wohnungseinrichtung, Heimwerkstätten;Furnishings & home workshops
+DDC;685;Leder- und Pelzwaren und verwandte Produkte;Leather, fur goods & related products
+DDC;686;Drucken und verwandte Tätigkeiten;Printing & related activities
+DDC;687;Kleidung, Accessoires;Clothing & accessories
+DDC;688;Andere Endprodukte, Verpackungstechnik;Other final products & packaging
+DDC;689;Unbesetzt;Unassigned
+DDC;690;Hausbau, Bauhandwerk;Buildings
+DDC;691;Baustoffe;Building materials
+DDC;692;Bauhilfstechniken;Auxiliary construction practices
+DDC;693;Einzelne Baustoffarten und Zwecke;Specific materials & purposes
+DDC;694;Holzbau, Zimmerhandwerk;Wood construction & carpentry
+DDC;695;Dachdeckung;Roof covering
+DDC;696;Versorgungseinrichtungen;Utilities
+DDC;697;Heizungs-, Lüftungs-, Klimatechnik;Heating, ventilating & air-conditioning
+DDC;698;Ausbau;Detail finishing
+DDC;699;Unbesetzt;Unassigned
+DDC;700;Künste, Bildende und angewandte Kunst;The arts, fine & decorative arts
+DDC;701;Kunstphilosophie, Kunsttheorie der bildenden und angewandten Kunst;Philosophy of fine & decorative arts
+DDC;702;Verschiedenes zur bildenden und angewandten Kunst;Miscellany of fine & decorative arts
+DDC;703;Wörterbücher, Enzyklopädien zur bildenden und angewandten Kunst;Dictionaries of fine & decorative arts
+DDC;704;Spezielle Themen zur bildenden und angewandten Kunst;Special topics in fine & decorative arts
+DDC;705;Fortlaufende Sammelwerke zur bildenden und angewandten Kunst;Serial publications of fine & decorative arts
+DDC;706;Organisationen, Management der bildenden und angewandten Kunst;Organizations & management
+DDC;707;Ausbildung, Forschung, verwandte Themen zur bildenden und angewandten Kunst;Education, research & related topics
+DDC;708;Galerien, Museen, Privatsammlungen zur bildenden und angewandten Kunst;Galleries, museums & private collections
+DDC;709;Historische, geografische, personenbezogene Behandlung der bildenden und angewandten Kunst;Historical, geographic & persons treatment
+DDC;710;Städtebau, Raumplanung, Landschaftsgestaltung;Civic & landscape art
+DDC;711;Raumplanung;Area planning
+DDC;712;Landschaftsgestaltung;Landscape architecture
+DDC;713;Landschaftsgestaltung von Verkehrswegen;Landscape architecture of trafficways
+DDC;714;Wasser als Gestaltungselement;Water features
+DDC;715;Gehölze als Gestaltungselemente;Woody plants
+DDC;716;Krautige Pflanzen als Gestaltungselemente;Herbaceous plants
+DDC;717;Andere Gestaltungselemente;Structures in landscape architecture
+DDC;718;Landschaftsgestaltung von Friedhöfen;Landscape design of cemeteries
+DDC;719;Naturlandschaften;Natural landscapes
+DDC;720;Architektur;Architecture
+DDC;721;Architektonische Struktur;Architectural structure
+DDC;722;Architektur bis ca. 300;Architecture to ca. 300
+DDC;723;Architektur von ca. 300;Architecture from ca. 300 to 1399
+DDC;724;Architektur ab 1400;Architecture from 1400
+DDC;725;Öffentliche Bauwerke;Public structures
+DDC;726;Gebäude für religiöse und verwandte Zwecke;Buildings for religious purposes
+DDC;727;Gebäude für Lehr- und Forschungszwecke;Buildings for education & research
+DDC;728;Wohnbauten und verwandte Gebäude;Residential & related buildings
+DDC;729;Entwurf und Gestaltung, Innenarchitektur;Design & decoration
+DDC;730;Plastische Künste, Bildhauerkunst;Plastic arts, sculpture
+DDC;731;Verfahren, Formen und Motive in der Bildhauerkunst;Processes, forms & subjects of sculpture
+DDC;732;Bildhauerei bis ca. 500;Sculpture to ca. 500
+DDC;733;Griechische, etruskische, römische Bildhauerkunst;Greek, Etruscan & Roman sculpture
+DDC;734;Bildhauerkunst von ca. 500;Sculpture from ca. 500 to 1399
+DDC;735;Bildhauerkunst ab 1400;Sculpture from 1400
+DDC;736;Schnitzen, Schnitzereien;Carving & carvings
+DDC;737;Numismatik, Siegelkunde;Numismatics & sigillography
+DDC;738;Keramikkunst;Ceramic arts
+DDC;739;Metallkunst;Art metalwork
+DDC;740;Zeichnung, angewandte Kunst;Drawing & decorative arts
+DDC;741;Zeichnung, Zeichnungen;Drawing & drawings
+DDC;742;Perspektive;Perspective
+DDC;743;Zeichnung und Zeichnungen nach Motiv;Drawing & drawings by subject
+DDC;744;Unbesetzt;Unassigned
+DDC;745;Angewandte Kunst;Decorative arts
+DDC;746;Textilkunst;Textile arts
+DDC;747;Innendekoration;Interior decoration
+DDC;748;Glas;Glass
+DDC;749;Möbel, Möbelzubehör;Furniture & accessories
+DDC;750;Malerei, Gemälde;Painting & paintings
+DDC;751;Techniken, Ausstattung, Materialien, Formen;Techniques, equipment, materials & forms
+DDC;752;Farbe;Color
+DDC;753;Symbolik, Allegorie, Mythologie, Legende;Symbolism, allegory, mythology & legend
+DDC;754;Genremalerei;Genre paintings
+DDC;755;Religion;Religion
+DDC;756;Unbesetzt;Unassigned
+DDC;757;Menschliche Figuren;Human figures
+DDC;758;Andere Motive;Other subjects
+DDC;759;Histor., geogr., personenbezogene Behandlung;Historical, geographic & persons treatment
+DDC;760;Grafik, Druckgrafik, Drucke;Graphic arts, printmaking & prints
+DDC;761;Hochdruckverfahren (Blockdruck);Relief processes (Block printing)
+DDC;762;Unbesetzt;Unassigned
+DDC;763;Lithografische Druckverfahren;Lithographic processes
+DDC;764;Farblithografie, Serigrafie;Chromolithography & serigraphy
+DDC;765;Metallgravur;Metal engraving
+DDC;766;Mezzotinto, Aquatinta und verwandte Techniken;Mezzotinting, aquatinting & related processes
+DDC;767;Radierung, Kaltnadelarbeit;Etching & drypoint
+DDC;768;Unbesetzt];Unassigned
+DDC;769;Drucke;Prints
+DDC;770;Fotografie, Fotografien, Computerkunst;Photography, photographs & computer art
+DDC;771;Techniken, Ausstattung, Materialien;Techniques, equipment & materials
+DDC;772;Entwicklungsverfahren mit Metallsalzen;Metallic salt processes
+DDC;773;Pigmentdruckverfahren;Pigment processes of printing
+DDC;774;Holografie;Holography
+DDC;775;Digitale Fotografie;Digital photography
+DDC;776;Computerkunst (Digitale Kunst);Computer art (Digital art)
+DDC;777;Unbesetzt;Unassigned
+DDC;778;Bereiche und Arten der Fotografie;Fields & kinds of photography
+DDC;779;Fotografien;Photographs
+DDC;780;Musik;Music
+DDC;781;Allgemeine Prinzipien, musikalische Formen;General principles & musical forms
+DDC;782;Vokalmusik;Vocal music
+DDC;783;Musik für Einzelstimmen, die Stimme;Music for single voices, the voice
+DDC;784;Instrumente, Instrumentalensembles;Instruments & instrumental ensembles
+DDC;785;Ensembles mit einem Instrument pro Stimme;Ensembles with one instrument per part
+DDC;786;Tasteninstrumente, andere Instrumente;Keyboard & other instruments
+DDC;787;Saiteninstrumente;Stringed instruments
+DDC;788;Blasinstrumente;Wind instruments
+DDC;789;(Optionale Notation);(Optional number)
+DDC;790;Freizeitgestaltung, darstellende Künste, Sport;Recreational & performing arts
+DDC;791;Öffentliche Darbietungen, Film, Rundfunk;Public performances
+DDC;792;Bühnenkunst;Stage presentations
+DDC;793;Spiele und Freizeitaktivitäten für drinnen;Indoor games & amusements
+DDC;794;Unterhaltungsspiele für drinnen;Indoor games of skill
+DDC;795;Glücksspiele;Games of chance
+DDC;796;Sportarten, Sportspiele;Athletic & outdoor sports & games
+DDC;797;Wasser- und Luftsport;Aquatic & air sports
+DDC;798;Pferdesport, Tierrennen;Equestrian sports & animal racing
+DDC;799;Fischfang, Jagd, Schießen;Fishing, hunting & shooting
+DDC;800;Literatur und Rhetorik;Literature & rhetoric
+DDC;801;Literaturtheorie;Philosophy & theory
+DDC;802;Verschiedenes;Miscellany
+DDC;803;Wörterbücher, Enzyklopädien;Dictionaries & encyclopedias
+DDC;804;Unbesetzt;Unassigned
+DDC;805;Fortlaufende Sammelwerke;Serial publications
+DDC;806;Organisationen, Management;Organizations & management
+DDC;807;Ausbildung, Forschung, verwandte Themen;Education, research & related topics
+DDC;808;Rhetorik, Sammlungen von Literatur;Rhetoric & collections of literature
+DDC;809;Geschichte, Darstellung, Literaturwissenschaft und –kritik;History, description & criticism
+DDC;810;Amerikanische Literatur in in Englisch;American literature in English
+DDC;811;Amerikanische Versdichtung;American poetry in English
+DDC;812;Amerikanische Dramen;American drama in English
+DDC;813;Amerikanische Erzählprosa;American fiction in English
+DDC;814;Amerikanische Essays;American essays in English
+DDC;815;Amerikanische Reden;American speeches in English
+DDC;816;Amerikanische Briefe;American letters in English
+DDC;817;Amerikanischer Humor, amerikanische Satire;American humor & satire in English
+DDC;818;Amerikanische vermischte Schriften;American miscellaneous writings
+DDC;819;(Optionale Notation);(Optional number)
+DDC;820;Englische, altenglische Literaturen;English & Old English literatures
+DDC;821;Englische Versdichtung;English poetry
+DDC;822;Englische Dramen;English drama
+DDC;823;Englische Erzählprosa;English fiction
+DDC;824;Englische Essays;English essays
+DDC;825;Englische Reden;English speeches
+DDC;826;Englische Briefe;English letters
+DDC;827;Englischer Humor, englische Satire;English humor & satire
+DDC;828;Englische vermischte Schriften;English miscellaneous writings
+DDC;829;Altenglische (Angelsächsische) Literatur;Old English (Anglo-Saxon)
+DDC;830;Literaturen germanischer Sprachen, Deutsche Literatur;Literatures of Germanic languages
+DDC;831;Deutsche Versdichtung;German poetry
+DDC;832;Deutsche Dramen;German drama
+DDC;833;Deutsche Erzählprosa;German fiction
+DDC;834;Deutsche Essays;German essays
+DDC;835;Deutsche Reden;German speeches
+DDC;836;Deutsche Briefe;German letters
+DDC;837;Deutscher Humor, deutsche Satire;German humor & satire
+DDC;838;Deutsche vermischte Schriften;German miscellaneous writings
+DDC;839;Andere germanische Literaturen;Other Germanic literatures
+DDC;840;Literaturen romanischer Sprachen, Französische Literatur;Literatures of Romance languages
+DDC;841;Französische Versdichtung;French poetry
+DDC;842;Französische Dramen;French drama
+DDC;843;Französische Erzählprosa;French fiction
+DDC;844;Französische Essays;French essays
+DDC;845;Französische Reden;French speeches
+DDC;846;Französische Briefe;French letters
+DDC;847;Französischer Humor, französische Satire;French humor & satire
+DDC;848;Französische vermischte Schriften;French miscellaneous writings
+DDC;849;Okzitanische, katalanische Literaturen;Occitan & Catalan literatures
+DDC;850;Italienische, rumänische, rätoromanische Literaturen;Italian, Romanian & related literatures
+DDC;851;Italienische Versdichtung;Italian poetry
+DDC;852;Italienische Dramen;Italian drama
+DDC;853;Italienische Erzählprosa;Italian fiction
+DDC;854;Italienische Essays;Italian essays
+DDC;855;Italienische Reden;Italian speeches
+DDC;856;Italienische Briefe;Italian letters
+DDC;857;Italienischer Humor, italienische Satire;Italian humor & satire
+DDC;858;Italienische vermischte Schriften;Italian miscellaneous writings
+DDC;859;Rumänische, rätoromanische Literaturen;Romanian & related literatures
+DDC;860;Spanische, portugiesische Literaturen;Spanish & Portuguese literatures
+DDC;861;Spanische Versdichtung;Spanish poetry
+DDC;862;Spanische Dramen;Spanish drama
+DDC;863;Spanische Erzählprosa;Spanish fiction
+DDC;864;Spanische Essays;Spanish essays
+DDC;865;Spanische Reden;Spanish speeches
+DDC;866;Spanische Briefe;Spanish letters
+DDC;867;Spanischer Humor, spanische Satire;Spanish humor & satire
+DDC;868;Spanische vermischte Schriften;Spanish miscellaneous writings
+DDC;869;Portugiesische Literatur;Portuguese literature
+DDC;870;Italische Literaturen, Lateinische Literatur;Italic literatures, Latin literature
+DDC;871;Lateinische Versdichtung;Latin poetry
+DDC;872;Lateinische dramatische Versdichtung, Dramen;Latin dramatic poetry & drama
+DDC;873;Lateinische erzählende Versdichtung, Erzählprosa;Latin epic poetry & fiction
+DDC;874;Lateinische lyrische Versdichtung;Latin lyric poetry
+DDC;875;Lateinische Reden;Latin speeches
+DDC;876;Lateinische Briefe;Latin letters
+DDC;877;Lateinischer Humor, lateinische Satire;Latin humor & satire
+DDC;878;Lateinische vermischte Schriften;Latin miscellaneous writings
+DDC;879;Literaturen anderer italischer Sprachen;Literatures of other Italic languages
+DDC;880;Hellenische Literaturen, Klassische griechische Literatur;Hellenic literatures, classical Greek
+DDC;881;Klassische griechische Versdichtung;Classical Greek poetry
+DDC;882;Klassische griechische dramatische Versdichtung, Dramen;Classical Greek dramatic poetry & drama
+DDC;883;Klassische griechische erzählende Versdichtung, Erzählprosa;Classical Greek epic poetry & fiction
+DDC;884;Klassische griechische lyrische Versdichtung;Classical Greek lyric poetry
+DDC;885;Klassische griechische Reden;Classical Greek speeches
+DDC;886;Klassische griechische Briefe;Classical Greek letters
+DDC;887;Humor und Satire in klassischem Griechisch;Classical Greek humor & satire
+DDC;888;Klassische griechische vermischte Schriften;Classical Greek miscellaneous writings
+DDC;889;Neugriechische Literatur;Modern Greek literature
+DDC;890;Literaturen anderer Sprachen;Literatures of other languages
+DDC;891;Ostindoeuropäische, keltische Literaturen;East Indo-European & Celtic literatures
+DDC;892;Afroasiatische Literaturen, Semitische Literaturen;Afro-Asiatic literatures, Semitic literatures
+DDC;893;Nichtsemitische afroasiatische Literaturen;Non-Semitic Afro-Asiatic literatures
+DDC;894;Altaische, uralische, paläosibirische, drawidische Literaturen;Altaic, Uralic, Hyperborean & Dravidian
+DDC;895;Ost- und südostasiatische Literaturen;Literatures of East & Southeast Asia
+DDC;896;Afrikanische Literaturen;African literatures
+DDC;897;Literaturen nordamerikanischer Indianersprachen;North American native literatures
+DDC;898;Literaturen südamerikanischer Indianersprachen;South American native literatures
+DDC;899;Austronesische und andere Literaturen;Austronesian & other literatures
+DDC;900;Geschichte und Geografie;History & geography
+DDC;901;Geschichtsphilosophie, Geschichtstheorie;Philosophy & theory
+DDC;902;Verschiedenes;Miscellany
+DDC;903;Wörterbücher, Enzyklopädien;Dictionaries & encyclopedias
+DDC;904;Allgemeine Darstellungen von Ereignissen;Collected accounts of events
+DDC;905;Fortlaufende Sammelwerke;Serial publications
+DDC;906;Organisationen, Management;Organizations & management
+DDC;907;Ausbildung, Forschung, verwandte Themen;Education, research & related topics
+DDC;908;Behandlung nach Personengruppen;Kinds of persons treatment
+DDC;909;Weltgeschichte;World history
+DDC;910;Geografie, Reisen;Geography & travel
+DDC;911;Historische Geografie;Historical geography
+DDC;912;Atlanten, Karten, Grafiken, Pläne;Atlases, maps, charts & plans
+DDC;913;Geografie der und Reisen in der Alten Welt;Geography of & travel in ancient world
+DDC;914;Geografie Europas und Reisen in Europa;Geography of & travel in Europe
+DDC;915;Geografie Asiens und Reisen in Asien;Geography of & travel in Asia
+DDC;916;Geografie Afrikas und Reisen in Afrika;Geography of & travel in Africa
+DDC;917;Geografie Nordamerikas und Reisen in Nordamerika;Geography of & travel in North America
+DDC;918;Geografie Südamerikas und Reisen in Südamerika;Geography of & travel in South America
+DDC;919;Geografie anderer Gebiete und Reisen in anderen Gebieten;Geography of & travel in other areas
+DDC;920;Biografien, Genealogie, Insignien;Biography, genealogy & insignia
+DDC;921;(Optionale Notation);(Optional number)
+DDC;922;(Optionale Notation);(Optional number)
+DDC;923;(Optionale Notation);(Optional number)
+DDC;924;(Optionale Notation);(Optional number)
+DDC;925;(Optionale Notation);(Optional number)
+DDC;926;(Optionale Notation);(Optional number)
+DDC;927;(Optionale Notation);(Optional number)
+DDC;928;(Optionale Notation);(Optional number)
+DDC;929;Genealogie, Namenkunde, Insignien;Genealogy, names & insignia
+DDC;930;Geschichte des Altertums bis ca. 499, Archäologie;History of ancient world to ca. 499
+DDC;931;Geschichte Chinas bis 420;China to 420
+DDC;932;Geschichte Ägyptens bis 640;Egypt to 640
+DDC;933;Geschichte Palästinas bis 70;Palestine to 70
+DDC;934;Geschichte Indiens bis 647;India to 647
+DDC;935;Geschichte Mesopotamiens und der iranischen Hochebene bis 637;Mesopotamia & Iranian Plateau to 637
+DDC;936;Geschichte Europas nördlich und westlich von Italien bis ca. 499;Europe north & west of Italy to ca. 499
+DDC;937;Geschichte Italiens und benachbarter Gebiete bis 476;Italy & adjacent territories to 476
+DDC;938;Geschichte Griechenlands bis 323;Greece to 323
+DDC;939;Geschichte anderer Teile der Welt bis ca. 640;Other parts of ancient world to ca. 640
+DDC;940;Geschichte Europas;History of Europe
+DDC;941;Geschichte der Britischen Inseln;British Isles
+DDC;942;Geschichte Englands und Wales’;England & Wales
+DDC;943;Geschichte Mitteleuropas, Deutschlands;Central Europe, Germany
+DDC;944;Geschichte Frankreichs und Monacos;France & Monaco
+DDC;945;Geschichte der italienische Halbinsel und benachbarter Inseln;Italian Peninsula & adjacent islands
+DDC;946;Geschichte der iberischen Halbinsel und benachbarter Inseln;Iberian Peninsula & adjacent islands
+DDC;947;Geschichte Osteuropas, Russlands;Eastern Europe, Russia
+DDC;948;Geschichte Skandinaviens;Scandinavia
+DDC;949;Geschichte anderer Teile Europas;Other parts of Europe
+DDC;950;Geschichte Asiens, des Fernen Ostens;History of Asia, Far East
+DDC;951;Geschichte Chinas und benachbarter Gebiete;China & adjacent areas
+DDC;952;Geschichte Japans;Japan
+DDC;953;Geschichte der arabischen Halbinsel und benachbarter Gebiete;Arabian Peninsula & adjacent areas
+DDC;954;Geschichte Südasiens, Indiens;South Asia, India
+DDC;955;Geschichte Irans;Iran
+DDC;956;Geschichte des Nahen Ostens (Mittleren Ostens);Middle East (Near East)
+DDC;957;Geschichte Sibiriens (der Asiatischen Russlands);Siberia (Asiatic Russia)
+DDC;958;Geschichte Zentralasiens;Central Asia
+DDC;959;Geschichte Südostasiens;Southeast Asia
+DDC;960;Geschichte Afrikas;History of Africa
+DDC;961;Geschichte Tunesiens und Libyens;Tunisia & Libya
+DDC;962;Geschichte Ägyptens und Sudans;Egypt & Sudan
+DDC;963;Geschichte Äthiopiens und Eritreas;Ethiopia & Eritrea
+DDC;964;Geschichte der nordwestafrikanischen Küste und vorgelagerter Inseln;Northwest African coast & offshore islands
+DDC;965;Geschichte Algeriens;Algeria
+DDC;966;Geschichte Westafrikas und vorgelagerter Inseln;West Africa & offshore islands
+DDC;967;Geschichte Zentralafrikas und vorgelagerter Inseln;Central Africa & offshore islands
+DDC;968;Geschichte Südafrikas, der Republik Südafrika;Southern Africa, Republic of South Africa
+DDC;969;Geschichte der Inseln im südlichen Indischen Ozean;South Indian Ocean islands
+DDC;970;Geschichte Nordamerikas;History of North America
+DDC;971;Geschichte Kanadas;Canada
+DDC;972;Geschichte Mittelamerikas, Mexikos;Middle America, Mexico
+DDC;973;Geschichte der USA;United States
+DDC;974;Geschichte der nordöstlichen Staaten der USA;Northeastern United States
+DDC;975;Geschichte der südöstlichen Staaten der USA;Southeastern United States
+DDC;976;Geschichte der südlichen zentralen Staaten der USA;South central United States
+DDC;977;Geschichte der nördlichen zentralen Staaten der USA;North central United States
+DDC;978;Geschichte der westlichen Staaten der USA;Western United States
+DDC;979;Geschichte der Staaten des Großen Beckens und der pazifischen Gebirgsketten;Great Basin & Pacific Slope region
+DDC;980;Geschichte Südamerikas;History of South America
+DDC;981;Geschichte Brasiliens;Brazil
+DDC;982;Geschichte Argentiniens;Argentina
+DDC;983;Geschichte Chiles;Chile
+DDC;984;Geschichte Boliviens;Bolivia
+DDC;985;Geschichte Perus;Peru
+DDC;986;Geschichte Kolumbiens und Ecuadors;Colombia & Ecuador
+DDC;987;Geschichte Venezuelas;Venezuela
+DDC;988;Geschichte Guayanas;Guiana
+DDC;989;Geschichte Paraguays und Uruguays;Paraguay & Uruguay
+DDC;990;Geschichte anderer Gebiete;History of other areas
+DDC;991;Unbesetzt;Unassigned
+DDC;992;Unbesetzt;Unassigned
+DDC;993;Geschichte Neuseelands;New Zealand
+DDC;994;Geschichte Australiens;Australia
+DDC;995;Geschichte Melanesiens, Neuguineas;Melanesia, New Guinea
+DDC;996;Geschichte anderer Teile des Pazifischen Ozeans, Polynesiens;Other parts of Pacific, Polynesia
+DDC;997;Geschichte der atlantischen Inseln;Atlantic Ocean islands
+DDC;998;Geschichte der arktischen Inseln und der Antarktis;Arctic islands & Antarctica
+DDC;999;Geschichte der außerirdischen Welten;Extraterrestrial worlds
