@@ -31,10 +31,10 @@ grails.plugin.databasemigration.updateOnStart = true
 grails.plugin.springsecurity.successHandler.useReferer = true
 grails.plugin.springsecurity.successHandler.alwaysUseDefault= false
 
-grails.plugin.springsecurity.userLookup.userDomainClassName = 'wekb.User'
-grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'wekb.UserRole'
+grails.plugin.springsecurity.userLookup.userDomainClassName = 'wekb.auth.User'
+grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'wekb.auth.UserRole'
 
-grails.plugin.springsecurity.authority.className = 'wekb.Role'
+grails.plugin.springsecurity.authority.className = 'wekb.auth.Role'
 
 grails.plugin.springsecurity.ui.forgotPassword.emailFrom = "laser@hbz-nrw.de"
 grails.plugin.springsecurity.ui.forgotPassword.emailSubject = "we:kb Forgotten Password"
