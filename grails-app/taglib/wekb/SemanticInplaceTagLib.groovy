@@ -1,88 +1,16 @@
 package wekb
 
-import com.k_int.ClassUtils
-import grails.plugin.springsecurity.SpringSecurityUtils
-import org.gokb.cred.RefdataCategory
-import org.gokb.cred.User
-import org.springframework.context.i18n.LocaleContextHolder
+import grails.plugin.springsecurity.SpringSecurityService
+import org.gokb.GenericOIDService
+import wekb.auth.User
 
-import java.text.NumberFormat
-import java.text.SimpleDateFormat
 
 class SemanticInplaceTagLib {
     static namespace = "semui"
 
-    def genericOIDService
-    def springSecurityService
+    GenericOIDService genericOIDService
+    SpringSecurityService springSecurityService
 
-    /*@Deprecated
-    private boolean checkEditable(attrs, body, out) {
-
-        // See if there is an owner attribute on the request - owner will be the domain object asking to be edited.
-        def user = springSecurityService.currentUser
-        def owner = attrs.owner ? ClassUtils.deproxy(attrs.owner) : null
-        def baseClass = attrs.baseClass ? grailsApplication.getArtefact("Domain", attrs.baseClass)?.clazz : null
-
-        boolean cur = request.curator != null ? request.curator.size() > 0 : true
-
-        // Default editable value.
-        boolean tl_editable = owner?.isEditable() ?: (params.curationOverride == 'true' && user.isAdmin())
-
-        if (owner?.class?.name == 'org.gokb.cred.User') {
-            tl_editable = user.equals(owner)
-        }
-
-        if (tl_editable && owner?.respondsTo('getCuratoryGroups')) {
-            tl_editable = (cur || (user.hasRole("ROLE_ADMIN") && params.curationOverride == "true"))
-        }
-
-        if (!tl_editable && !owner?.respondsTo('getCuratoryGroups') && baseClass?.isTypeAdministerable()) {
-            tl_editable = true
-        }
-
-*//*    if ( !tl_editable && owner?.class?.name == 'org.gokb.cred.Combo' ) {
-      tl_editable = owner.fromComponent.isEditable()
-    }*//*
-
-        if (!tl_editable && attrs.editable) {
-            tl_editable = attrs.editable
-        }
-
-        if (attrs.overWriteEditable != null) {
-            tl_editable = attrs.overWriteEditable
-        }
-
-        if (!tl_editable && SpringSecurityUtils.ifAnyGranted('ROLE_SUPERUSER')) {
-            tl_editable = true
-        }
-
-        // If not editable then we should output as value only and return the value.
-        if (!tl_editable) {
-            def content = (owner?."${attrs.field}" ? renderObjectValue(owner."${attrs.field}") : body()?.trim())
-            out << "<span class='readonly${content ? '' : ' editable-empty'}' title='This ${owner?.respondsTo('getNiceName') ? owner.getNiceName() : 'component'} is read only.' >${content ?: 'Empty'}</span>"
-        }
-
-        tl_editable
-    }*/
-
-   /* @Deprecated
-    private boolean checkViewable(attrs, body, out) {
-
-        // See if there is an baseClass attribute on the request - baseClass will be the domain class asking to be searched.
-        def baseClass = attrs.baseClass ? grailsApplication.getArtefact("Domain", attrs.baseClass)?.clazz : null
-        def owner = attrs.owner ? ClassUtils.deproxy(attrs.owner) : null
-        def tl_viewable = false
-
-        tl_viewable = baseClass.isTypeReadable()
-
-        // If not editable then we should output as value only and return the value.
-        if (!tl_viewable) {
-            def content = (owner?."${attrs.field}" ? renderObjectValue(owner."${attrs.field}") : body()?.trim())
-            out << "<span class='readonly${content ? '' : ' editable-empty'}' title='This ${baseClass?.respondsTo('getNiceName') ? baseClass.getNiceName() : 'component'} is not searchable.' >${content ?: 'Empty'}</span>"
-        }
-
-        tl_viewable
-    }*/
 
     def xEditable = { attrs, body ->
 
@@ -374,46 +302,6 @@ class SemanticInplaceTagLib {
         result
     }
 
-
-
-/*    *//**
-     * simpleReferenceTypedown - create a hidden input control that has the value fully.qualified.class:primary_key and which is editable with the
-     * user typing into the box. Takes advantage of refdataFind and refdataCreate methods on the domain class.
-     *//*
-    def simpleReferenceTypedown = { attrs, body ->
-
-        // The check editable should output the read only version so we should just exit
-        // if read only.
-        //if (!checkEditable(attrs, body, out)) return
-
-        out << "<input type=\"hidden\" value=\"${attrs.value ?: ''}\" name=\"${attrs.name}\" data-domain=\"${attrs.baseClass}\" "
-        if (attrs.id) {
-            out << "id=\"${attrs.id}\" "
-        }
-        if (attrs.style) {
-            out << "style=\"${attrs.style}\" "
-        }
-
-        if ((attrs.value != null) && (attrs.value.length() > 0)) {
-            def o = genericOIDService.resolveOID2(attrs.value)
-            out << "data-displayValue=\"${o.toString()}\" "
-        }
-
-        if (attrs.elastic) {
-            out << "data-elastic=\"${attrs.elastic}\""
-        }
-
-        if (attrs.require) {
-            out << "data-require=\"true\" "
-        }
-
-        if (attrs.filter1) {
-            out << "data-filter1=\"${attrs.filter1}\" "
-        }
-
-        out << "class=\"simpleReferenceTypedown ${attrs.class}\" />"
-    }*/
-
     def simpleReferenceDropdown = { attrs, body ->
 
         out << '<div class="ui fluid search selection dropdown simpleReferenceDropdown '
@@ -486,7 +374,7 @@ class SemanticInplaceTagLib {
 
             if (owner != null && owner[attrs.field] != null) {
                 String urlWithClassAndID = null
-                if(!(owner[attrs.field] instanceof org.gokb.cred.KBComponent))
+                if(!(owner[attrs.field] instanceof wekb.KBComponent))
                     urlWithClassAndID = "${ClassUtils.deproxy(owner[attrs.field]).class.name}" + ':' + owner[attrs.field].id
 
                 follow_link = createLink(controller: 'resource', action: 'show', id: urlWithClassAndID ?: owner[attrs.field].uuid)

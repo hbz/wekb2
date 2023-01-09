@@ -1,7 +1,6 @@
 package wekb
 
-import asset.pipeline.grails.AssetsTagLib
-import de.wekb.helper.ServerUtils
+import wekb.helper.ServerUtils
 import org.grails.io.support.GrailsResourceUtils
 
 class WekbTagLib {
