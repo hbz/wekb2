@@ -1,25 +1,11 @@
 package wekb
 
 
-import de.wekb.helper.RCConstants
-import de.wekb.helper.RDStore
-import gokbg3.DateFormatService
+import wekb.helper.RCConstants
+import wekb.helper.RDStore
 import grails.gorm.transactions.Transactional
 import grails.util.Holders
 import groovy.sql.Sql
-import org.gokb.CleanupService
-import org.gokb.GOKbTextUtils
-import org.gokb.cred.ComponentPrice
-import org.gokb.cred.Identifier
-import org.gokb.cred.IdentifierNamespace
-import org.gokb.cred.KBComponent
-import org.gokb.cred.Org
-import org.gokb.cred.Package
-import org.gokb.cred.Platform
-import org.gokb.cred.RefdataCategory
-import org.gokb.cred.RefdataValue
-import org.gokb.cred.TIPPCoverageStatement
-import org.gokb.cred.TitleInstancePackagePlatform
 import org.grails.web.json.JSONArray
 import org.hibernate.Session
 
@@ -93,7 +79,7 @@ class KbartImportService {
             if (name_candidates.size() == 0) {
                 log.debug("No platforms matched by name!")
 
-                def variant_normname = GOKbTextUtils.normaliseString(platformDTO.name)
+                def variant_normname = TextUtils.normaliseString(platformDTO.name)
 
                 def varname_candidates = Platform.executeQuery("select distinct pl from Platform as pl join pl.variantNames as v where v.normVariantName = ? and pl.status = ? ", [variant_normname, status_current])
 
@@ -245,7 +231,7 @@ class KbartImportService {
 
 /*        if (!result) {
             log.debug("Did not find a match via name, trying existing variantNames..")
-            def variant_normname = GOKbTextUtils.normaliseString(packageHeaderDTO.name)
+            def variant_normname = TextUtils.normaliseString(packageHeaderDTO.name)
             def variant_candidates = Package.executeQuery("select distinct p from Package as p join p.variantNames as v where v.normVariantName = ? and p.status <> ? ", [variant_normname, status_deleted])
 
             if (variant_candidates.size() == 1) {
@@ -266,7 +252,7 @@ class KbartImportService {
                         log.debug("Found existing package name for variantName ${it}")
                     }
                     else {
-                        def variant_normname = GOKbTextUtils.normaliseString(it)
+                        def variant_normname = TextUtils.normaliseString(it)
                         def variant_candidates = Package.executeQuery("select distinct p from Package as p join p.variantNames as v where v.normVariantName = ? and p.status <> ? ", [variant_normname, status_deleted])
                         if (variant_candidates.size() == 1) {
                             log.debug("Found existing package variant name for variantName ${it}")
@@ -340,7 +326,7 @@ class KbartImportService {
                 prov = Org.findByNormname(norm_prov_name)
                 if (!prov) {
                     log.debug("None found by Normname ${norm_prov_name}, trying variants")
-                    def variant_normname = GOKbTextUtils.normaliseString(packageHeaderDTO.nominalProvider.name)
+                    def variant_normname = TextUtils.normaliseString(packageHeaderDTO.nominalProvider.name)
                     def candidate_orgs = Org.executeQuery("select distinct o from Org as o join o.variantNames as v where v.normVariantName = ? and o.status != ?", [variant_normname, status_deleted])
                     if (candidate_orgs.size() == 1) {
                         prov = candidate_orgs[0]
@@ -370,15 +356,6 @@ class KbartImportService {
         else {
             log.warn("Could not extract nominalProvider information from JSON! ${packageHeaderDTO.nominalProvider}")
         }
-
-        // Source
-        // variantNames are handled in ComponentUpdateService
-        // packageHeaderDTO.variantNames?.each {
-        //   if ( it.trim().size() > 0 ) {
-        //     result.ensureVariantName(it)
-        //     changed=true
-        //   }
-        // }
 
         // CuratoryGroups
 /*        if(packageHeaderDTO.curatoryGroups) {
@@ -1408,8 +1385,8 @@ class KbartImportService {
                 cov_depth = RefdataCategory.lookup(RCConstants.TIPPCOVERAGESTATEMENT_COVERAGE_DEPTH, coverage[0].coverageDepth) ?: RefdataCategory.lookup(RCConstants.TIPPCOVERAGESTATEMENT_COVERAGE_DEPTH, "Fulltext")
             }
 
-            def parsedStart = GOKbTextUtils.completeDateString(coverage[0].startDate)
-            def parsedEnd = GOKbTextUtils.completeDateString(coverage[0].endDate, false)
+            def parsedStart = TextUtils.completeDateString(coverage[0].startDate)
+            def parsedEnd = TextUtils.completeDateString(coverage[0].endDate, false)
 
             com.k_int.ClassUtils.setStringIfDifferent(tipp.coverageStatements[0], 'startIssue', coverage[0].startIssue)
             com.k_int.ClassUtils.setStringIfDifferent(tipp.coverageStatements[0], 'endIssue', coverage[0].endIssue)
@@ -1432,8 +1409,8 @@ class KbartImportService {
 
         }else if(countNewCoverages > 0 && countTippCoverages == 0){
             coverage.each { c ->
-                def parsedStart = GOKbTextUtils.completeDateString(c.startDate)
-                def parsedEnd = GOKbTextUtils.completeDateString(c.endDate, false)
+                def parsedStart = TextUtils.completeDateString(c.startDate)
+                def parsedEnd = TextUtils.completeDateString(c.endDate, false)
                 def startAsDate = (parsedStart ? Date.from(parsedStart.atZone(ZoneId.systemDefault()).toInstant()) : null)
                 def endAsDate = (parsedEnd ? Date.from(parsedEnd.atZone(ZoneId.systemDefault()).toInstant()) : null)
 
@@ -1463,8 +1440,8 @@ class KbartImportService {
             tipp.save()
 
             coverage.each { c ->
-                def parsedStart = GOKbTextUtils.completeDateString(c.startDate)
-                def parsedEnd = GOKbTextUtils.completeDateString(c.endDate, false)
+                def parsedStart = TextUtils.completeDateString(c.startDate)
+                def parsedEnd = TextUtils.completeDateString(c.endDate, false)
                 def startAsDate = (parsedStart ? Date.from(parsedStart.atZone(ZoneId.systemDefault()).toInstant()) : null)
                 def endAsDate = (parsedEnd ? Date.from(parsedEnd.atZone(ZoneId.systemDefault()).toInstant()) : null)
 
@@ -1490,8 +1467,8 @@ class KbartImportService {
         }
 
        /* coverage.each { c ->
-            def parsedStart = GOKbTextUtils.completeDateString(c.startDate)
-            def parsedEnd = GOKbTextUtils.completeDateString(c.endDate, false)
+            def parsedStart = TextUtils.completeDateString(c.startDate)
+            def parsedEnd = TextUtils.completeDateString(c.endDate, false)
 
             //com.k_int.ClassUtils.setStringIfDifferent(tipp, 'coverageNote', c.coverageNote)
             //com.k_int.ClassUtils.setRefdataIfDifferent(c.coverageDepth, tipp, 'coverageDepth', RCConstants.TIPP_COVERAGE_DEPTH, true)
@@ -1746,7 +1723,7 @@ class KbartImportService {
         String result = ''
         if (value != null) {
             switch (value.class) {
-                case org.gokb.cred.RefdataValue.class:
+                case wekb.RefdataValue.class:
                     result = value.value
                     break
                 case Boolean.class:

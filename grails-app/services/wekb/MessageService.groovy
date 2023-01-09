@@ -1,4 +1,4 @@
-package gokbg3
+package wekb
 
 import org.springframework.validation.FieldError
 

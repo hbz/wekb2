@@ -3,12 +3,8 @@ package wekb
 import grails.converters.JSON
 import grails.gorm.transactions.Transactional
 import grails.web.servlet.mvc.GrailsParameterMap
-import org.gokb.ClassExaminationService
-import org.gokb.GenericOIDService
-import org.gokb.GokbAclService
-import org.gokb.cred.KBComponent
-import org.gokb.cred.SavedSearch
-import org.gokb.cred.User
+import wekb.auth.User
+import wekb.system.SavedSearch
 
 @Transactional
 class SearchService {
@@ -17,12 +13,11 @@ class SearchService {
     GlobalSearchTemplatesService globalSearchTemplatesService
     DisplayTemplateService displayTemplateService
     ClassExaminationService classExaminationService
-    GokbAclService gokbAclService
     AccessService accessService
 
     def doQuery (qbetemplate, params, result) {
         def target_class = grailsApplication.getArtefact("Domain",qbetemplate.baseclass);
-        com.k_int.HQLBuilder.build(grailsApplication, qbetemplate, params, result, target_class, genericOIDService)
+        HQLBuilder.build(grailsApplication, qbetemplate, params, result, target_class, genericOIDService)
     }
 
     Map search(User user = null, Map result, GrailsParameterMap params, String responseFormat = null){
@@ -132,7 +127,7 @@ class SearchService {
                     def display_start_time = System.currentTimeMillis();
                     if ( result.displayobj != null ) {
 
-                        if ( result.displayobj.class.name == "org.gokb.cred.ComponentWatch"  && result.displayobj.component?.id ) {
+                        if ( result.displayobj.class.name == "wekb.ComponentWatch"  && result.displayobj.component?.id ) {
                             result.displayobj = KBComponent.get(result.displayobj.component?.id)
                         }
 
@@ -145,7 +140,7 @@ class SearchService {
                         result.displayobjclassname_short = result.displayobj.class.simpleName
                         result.isComponent = (result.displayobj instanceof KBComponent)
 
-                        result.acl = gokbAclService.readAclSilently(result.displayobj)
+                        //result.acl = gokbAclService.readAclSilently(result.displayobj)
 
                         if ( result.displaytemplate == null ) {
                             log.error("Unable to locate display template for class ${result.displayobjclassname} (oid ${params.displayoid})");
@@ -183,14 +178,14 @@ class SearchService {
             result.qbetemplate.qbeConfig.qbeResults.each { rh ->
                 def ppath = rh.property.split(/\./)
                 def cobj = r
-                def final_oid = cobj instanceof org.gokb.cred.KBComponent ? cobj.uuid : cobj.class.name + ':' + cobj.id
+                def final_oid = cobj instanceof KBComponent ? cobj.uuid : cobj.class.name + ':' + cobj.id
 
                 if (!params.hide || (params.hide instanceof String ? (params.hide != rh.qpEquiv) : !params.hide.contains(rh.qpEquiv))) {
 
                     ppath.eachWithIndex { prop, idx ->
                         def sp = prop.minus('?')
 
-                        if(result.qbetemplate.baseclass != 'org.gokb.cred.RefdataValue' && cobj?.class?.name == 'org.gokb.cred.RefdataValue' ) {
+                        if(result.qbetemplate.baseclass != 'wekb.RefdataValue' && cobj?.class?.name == 'wekb.RefdataValue' ) {
                             cobj = cobj.value
                         }
                         else {
@@ -205,7 +200,7 @@ class SearchService {
 
                                 if (ppath.size() > 1 && idx == ppath.size()-2) {
                                     if (cobj && sp != 'class') {
-                                        final_oid = cobj instanceof org.gokb.cred.KBComponent ? cobj.uuid : cobj.class.name + ':' + cobj.id
+                                        final_oid = cobj instanceof KBComponent ? cobj.uuid : cobj.class.name + ':' + cobj.id
                                     }
                                     else {
                                         final_oid = null

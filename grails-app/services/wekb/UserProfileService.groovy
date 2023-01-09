@@ -1,10 +1,13 @@
-package org.gokb
+package wekb
 
 
 import grails.core.GrailsApplication
 import grails.gorm.transactions.Transactional
-import org.gokb.cred.*
 import org.springframework.beans.factory.annotation.Autowired
+import wekb.auth.Role
+import wekb.auth.User
+import wekb.auth.UserRole
+import wekb.system.SavedSearch
 
 @Transactional
 class UserProfileService {
@@ -21,14 +24,11 @@ class UserProfileService {
 
       log.debug("Replacing links to user with placeholder ..")
       CuratoryGroup.executeUpdate("update CuratoryGroup set owner = :del where owner = :utd", [utd: user_to_delete, del: del_user])
-      Note.executeUpdate("update Note set creator = :del where creator = :utd", [utd: user_to_delete, del: del_user])
       KBComponent.executeUpdate("update KBComponent set lastUpdatedBy = :del where lastUpdatedBy = :utd", [utd: user_to_delete, del: del_user])
-      UserOrganisation.executeUpdate("update UserOrganisation set owner = :del where owner = :utd", [utd: user_to_delete, del: del_user])
 
       log.debug("Setting links to null ..")
 
       log.debug("Deleting dependent entities ..")
-      UserOrganisationMembership.executeUpdate("delete from UserOrganisationMembership where party = :utd", [utd: user_to_delete])
       SavedSearch.executeUpdate("delete from SavedSearch where owner = :utd", [utd: user_to_delete])
       UserRole.removeAll(user_to_delete)
 

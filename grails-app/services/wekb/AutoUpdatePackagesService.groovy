@@ -1,12 +1,11 @@
 package wekb
 
 
-import de.hbznrw.ygor.tools.UrlToolkit
-import de.wekb.helper.RDStore
+import wekb.tools.UrlToolkit
+import wekb.helper.RDStore
 import grails.gorm.transactions.Transactional
 import org.apache.commons.lang.StringUtils
-import org.gokb.cred.JobResult
-import org.gokb.cred.Package
+import wekb.system.JobResult
 
 import java.time.LocalTime
 import java.util.concurrent.ExecutorService

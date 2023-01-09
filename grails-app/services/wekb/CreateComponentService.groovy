@@ -1,25 +1,11 @@
 package wekb
 
-import de.wekb.helper.RCConstants
-import de.wekb.helper.RDStore
+import wekb.helper.RCConstants
+import wekb.helper.RDStore
 import grails.core.GrailsClass
 import grails.gorm.transactions.Transactional
 import grails.web.servlet.mvc.GrailsParameterMap
-import org.apache.commons.lang.RandomStringUtils
-import org.gokb.cred.Combo
-import org.gokb.cred.CuratoryGroup
-import org.gokb.cred.Identifier
-import org.gokb.cred.IdentifierNamespace
-import org.gokb.cred.KBComponent
-import org.gokb.cred.Org
-import org.gokb.cred.Package
-import org.gokb.cred.Platform
-import org.gokb.cred.RefdataCategory
-import org.gokb.cred.RefdataValue
-import org.gokb.cred.Source
-import org.gokb.cred.TitleInstancePackagePlatform
-import org.gokb.cred.UpdateToken
-import org.gokb.cred.User
+import wekb.auth.User
 import org.grails.datastore.mapping.model.PersistentEntity
 import org.grails.datastore.mapping.model.PersistentProperty
 import org.grails.datastore.mapping.model.types.Association
@@ -80,7 +66,7 @@ class CreateComponentService {
 
                                     related_item = genericOIDService.resolveOID(p.value);
 
-                                    if (!related_item && pprop.getType().name == 'org.gokb.cred.RefdataValue') {
+                                    if (!related_item && pprop.getType().name == 'wekb.RefdataValue') {
                                         def rdc = classExaminationService.deriveCategoryForProperty(params.cls, p.key)
                                         related_item = RefdataCategory.lookup(rdc, p.value)
                                     }

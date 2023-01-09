@@ -1,9 +1,6 @@
-package org.gokb
-
-import com.k_int.ESSearchService
+package wekb
 
 import grails.converters.JSON
-import grails.gorm.transactions.Transactional
 import org.elasticsearch.action.admin.indices.flush.FlushRequest
 import org.elasticsearch.action.admin.indices.flush.FlushResponse
 import org.elasticsearch.action.bulk.BulkItemResponse
@@ -12,26 +9,20 @@ import org.elasticsearch.action.bulk.BulkResponse
 import org.elasticsearch.action.index.IndexRequest
 import org.elasticsearch.client.RequestOptions
 import org.elasticsearch.client.RestHighLevelClient
-import org.elasticsearch.common.xcontent.XContentType
-import org.gokb.cred.KBComponent
-import org.gokb.cred.KBComponentAdditionalProperty
-import org.gokb.cred.TIPPCoverageStatement
-import org.gokb.cred.RefdataValue
+import org.elasticsearch.xcontent.XContentType
 import org.hibernate.Session
-import wekb.Contact
-import wekb.KBComponentLanguage
-import wekb.PackageArchivingAgency
+import org.hibernate.SessionFactory
+import wekb.system.FTControl
 
 import java.text.Normalizer
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Future
 
-
 class FTUpdateService {
 
-  def ESWrapperService
-  def sessionFactory
-  def dateFormatService
+  ESWrapperService ESWrapperService
+  SessionFactory sessionFactory
+  DateFormatService dateFormatService
   Future activeFuture
   ExecutorService executorService
 
@@ -87,7 +78,7 @@ class FTUpdateService {
 
     def start_time = System.currentTimeMillis()
     try {
-      updateES(org.gokb.cred.Package.class) { org.gokb.cred.Package kbc ->
+      updateES(wekb.Package.class) { wekb.Package kbc ->
         def result = null
         result = [:]
         result.recid = "${kbc.class.name}:${kbc.id}"
@@ -190,7 +181,7 @@ class FTUpdateService {
         result
       }
 
-      updateES(org.gokb.cred.Org.class) { org.gokb.cred.Org kbc ->
+      updateES(wekb.Org.class) { wekb.Org kbc ->
         def result = [:]
         result.recid = "${kbc.class.name}:${kbc.id}"
         result.uuid = kbc.uuid
@@ -255,7 +246,7 @@ class FTUpdateService {
         result
       }
 
-      updateES(org.gokb.cred.Platform.class) { org.gokb.cred.Platform kbc ->
+      updateES(wekb.Platform.class) { wekb.Platform kbc ->
         def result = [:]
         result.recid = "${kbc.class.name}:${kbc.id}"
         result.uuid = kbc.uuid
@@ -322,7 +313,7 @@ class FTUpdateService {
       }
 
 
-      updateES(org.gokb.cred.TitleInstancePackagePlatform.class) { org.gokb.cred.TitleInstancePackagePlatform kbc ->
+      updateES(wekb.TitleInstancePackagePlatform.class) { wekb.TitleInstancePackagePlatform kbc ->
 
         def result = [:]
         result.recid = "${kbc.class.name}:${kbc.id}"

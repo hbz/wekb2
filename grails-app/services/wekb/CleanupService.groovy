@@ -1,12 +1,10 @@
-package org.gokb
+package wekb
 
-import com.k_int.ConcurrencyManagerService.Job
-import com.k_int.ESSearchService
-import de.wekb.helper.RCConstants
-import de.wekb.helper.RDStore
-import gokbg3.DateFormatService
+import grails.core.GrailsApplication
+import org.hibernate.SessionFactory
+import wekb.helper.RCConstants
+import wekb.helper.RDStore
 import grails.converters.JSON
-import grails.gorm.DetachedCriteria
 import grails.gorm.transactions.Transactional
 import org.elasticsearch.action.DocWriteResponse
 import org.elasticsearch.action.delete.DeleteRequest
@@ -14,14 +12,12 @@ import org.elasticsearch.action.delete.DeleteResponse
 import org.elasticsearch.action.index.IndexRequest
 import org.elasticsearch.action.index.IndexResponse
 import org.elasticsearch.client.RequestOptions
-import org.elasticsearch.common.xcontent.XContentType
-import org.gokb.cred.*
-import wekb.DeletedKBComponent
+import org.elasticsearch.xcontent.XContentType
+import wekb.ConcurrencyManagerService.Job
 
 class CleanupService {
-  def sessionFactory
-  def ESWrapperService
-  def grailsApplication
+  SessionFactory sessionFactory
+  ESWrapperService ESWrapperService
   DateFormatService dateFormatService
 
   private def expungeByIds ( ids, Job j = null ) {
@@ -202,151 +198,6 @@ class CleanupService {
     j.endTime = new Date()
   }
 
-
-  private final def duplicateIdentifierCleanup = {
-    log.debug("Beginning duplicate identifier tidyup.")
-
-    // Lookup the Ids refdata element name.
-    final long id_combo_type_id = RefdataCategory.lookup(RCConstants.COMBO_TYPE, 'KBComponent.Ids').id
-
-    def start_time = System.currentTimeMillis()
-
-    final session = sessionFactory.currentSession
-
-    // Query string with :startId as parameter placeholder.
-    String query = 'SELECT c.combo_id, dups.combo_from_fk, dups.combo_to_fk, dups.occurances FROM combo c join ' +
-      '(SELECT combo_from_fk, combo_to_fk, count(*) as occurances FROM combo WHERE combo_type_rv_fk=:rdvId GROUP BY combo_from_fk, combo_to_fk HAVING count(*) > 1) dups ' +
-      'on c.combo_from_fk = dups.combo_from_fk AND c.combo_to_fk = dups.combo_to_fk;'
-
-    // Create native SQL query.
-    def sqlQuery = session.createSQLQuery(query)
-
-    // Use Groovy with() method to invoke multiple methods
-    // on the sqlQuery object.
-      final results = sqlQuery.with {
-
-        // Set value for parameter startId.
-      setLong('rdvId', id_combo_type_id)
-
-      // Get all results.
-      list()
-    }
-
-    int total = results.size()
-    long projected_deletes = 0
-    def to_delete = []
-    for (int i=0; i<total; i++) {
-      def result = results[i]
-
-      // 0 = combo_id
-      long cid = result[0]
-
-      // 1 = from_component
-      long from_id = result[1]
-
-      // 2 = to_component
-      long to_id = result[2]
-
-      // 3 = Number of occurances
-      projected_deletes += (result[3] - 1)
-      while (i<(total - 1) && from_id == results[i+1][1] && to_id == results[i+1][2]) {
-
-        // Increment i here so we keep the index up to date for the outer loop too!
-        i++
-        to_delete << results[i][0]
-      }
-    }
-
-    // We can also check the number of occurances from the query as an added safety check.
-    log.debug("Projected deletions = ${projected_deletes}")
-    log.debug("Collected deletions = ${to_delete.size()}")
-    if (to_delete.size() != projected_deletes) {
-      log.error("Missmatch in duplicate combo deletion, backing out...")
-    } else {
-
-      if (projected_deletes > 0) {
-        log.debug("Matched number of deletions and projected number, delete...")
-
-        query = 'DELETE FROM Combo c WHERE c.combo_id IN (:delete_ids)'
-
-        while(to_delete.size() > 0){
-          def to_delete_size = to_delete.size();
-          def qrySize = (to_delete.size() > 50) ? 50 : to_delete.size();
-          log.debug "${to_delete_size} identifiers remaining."
-          def to_delete_part = to_delete.take(qrySize);
-          to_delete = to_delete.drop(qrySize);
-
-          // Create native SQL query.
-          sqlQuery = session.createSQLQuery(query)
-          def dres = sqlQuery.with {
-
-            // Set value for parameter startId.
-            setParameterList('delete_ids', to_delete_part)
-
-            // Get all results.
-            executeUpdate()
-          }
-          log.debug("Delete query returned ${dres} duplicated identifier instances removed.")
-        }
-      } else {
-        log.debug("No duplicates to delete...")
-      }
-    }
-
-    log.debug("Finished cleaning identifiers elapsed = ${System.currentTimeMillis() - start_time}")
-  }
-
-
-
-  def reviewDatesOfTippCoverage(Job j = null) {
-    log.debug("Adding Reviews to components with inconsistent dates")
-    TitleInstancePackagePlatform.withNewSession {
-      def tippCoverageDates = TIPPCoverageStatement.executeQuery("from TIPPCoverageStatement where endDate < startDate",[readOnly: true])
-
-      log.debug("Found ${tippCoverageDates.size()} offending coverageStatements")
-      j.message("Found ${tippCoverageDates.size()} offending coverageStatements".toString())
-
-      tippCoverageDates.each { tcs ->
-        KBComponent kbc = KBComponent.get(tcs.owner.id)
-
-        if (kbc) {
-          log.debug("Adding RR to TIPP ${kbc}")
-          def new_rr = ReviewRequest.raise(
-            kbc,
-            "Please review the coverage dates.",
-            "Found an end date earlier than the start date!."
-          ).save(flush:true)
-          log.debug("Created RR: ${new_rr}")
-        }
-        else {
-          log.debug("Could not get KBComponent for ${tcs}!")
-        }
-      }
-
-      def tippAccessDates = TitleInstancePackagePlatform.executeQuery("from TitleInstancePackagePlatform where accessEndDate < accessStartDate",[readOnly: true])
-
-      log.debug("Found ${tippAccessDates.size()} offending tipp access dates")
-      j.message("Found ${tippAccessDates.size()} offending tipp access dates".toString())
-
-      tippAccessDates.each { tcs ->
-        if (tcs){
-          log.debug("Adding RR to TIPP ${tcs}")
-          def new_rr = ReviewRequest.raise(
-            tcs,
-            "Please review the coverage dates.",
-            "Found an end date earlier than the start date!."
-          ).save(flush:true)
-          log.debug("Created RR: ${new_rr}")
-        }
-        else {
-          log.debug("Could not get KBComponent for ${tcs}!")
-        }
-      }
-    }
-    log.debug("Done");
-    j.endTime = new Date()
-  }
-
   def cleanUpGorm() {
     log.debug("Clean up GORM");
     def session = sessionFactory.currentSession
@@ -366,19 +217,9 @@ class CleanupService {
         remaining = remaining.drop(50)
 
         Combo.executeUpdate("delete from Combo as c where c.fromComponent.id IN (:component) or c.toComponent.id IN (:component)", [component: batch])
-        ComponentWatch.executeUpdate("delete from ComponentWatch as cw where cw.component.id IN (:component)", [component: batch])
         KBComponentAdditionalProperty.executeUpdate("delete from KBComponentAdditionalProperty as c where c.fromComponent.id IN (:component)", [component: batch]);
         KBComponentVariantName.executeUpdate("delete from KBComponentVariantName as c where c.owner.id IN (:component)", [component: batch]);
 
-        ReviewRequestAllocationLog.executeUpdate("delete from ReviewRequestAllocationLog as c where c.rr in ( select r from ReviewRequest as r where r.componentToReview.id IN (:component))", [component: batch]);
-        def events_to_delete = ComponentHistoryEventParticipant.executeQuery("select c.event from ComponentHistoryEventParticipant as c where c.participant.id IN (:component)", [component: batch])
-
-        events_to_delete.each {
-          ComponentHistoryEventParticipant.executeUpdate("delete from ComponentHistoryEventParticipant as c where c.event = ?", [it])
-          ComponentHistoryEvent.executeUpdate("delete from ComponentHistoryEvent as c where c.id = ?", [it.id])
-        }
-
-        ReviewRequest.executeUpdate("delete from ReviewRequest as c where c.componentToReview.id IN (:component)", [component: batch])
         ComponentPrice.executeUpdate("delete from ComponentPrice as cp where cp.owner.id IN (:component)", [component: batch])
 
         batch.each {

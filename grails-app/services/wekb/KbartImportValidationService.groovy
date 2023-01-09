@@ -1,17 +1,8 @@
 package wekb
 
-import de.wekb.helper.RCConstants
-import gokbg3.MessageService
+import wekb.helper.RCConstants
 import grails.gorm.transactions.Transactional
-import org.gokb.GOKbTextUtils
-import org.gokb.cred.Identifier
-import org.gokb.cred.IdentifierNamespace
-import org.gokb.cred.Package
-import org.gokb.cred.Platform
-import org.gokb.cred.RefdataCategory
-import org.gokb.cred.RefdataValue
 import org.grails.web.json.JSONArray
-import org.grails.web.json.JSONObject
 
 import java.time.LocalDateTime
 
@@ -132,7 +123,7 @@ class KbartImportValidationService {
             }
 
             if (!result.match) {
-                def variant_normname = GOKbTextUtils.normaliseString(packageHeaderDTO.name)
+                def variant_normname = TextUtils.normaliseString(packageHeaderDTO.name)
                 def variant_candidates = Package.executeQuery("select distinct p from Package as p join p.variantNames as v where v.normVariantName = ? and p.status <> ? ", [variant_normname, status_deleted])
 
                 if (variant_candidates.size() == 1) {
@@ -153,7 +144,7 @@ class KbartImportValidationService {
                         }
                         else {
 
-                            def variant_normname = GOKbTextUtils.normaliseString(it)
+                            def variant_normname = TextUtils.normaliseString(it)
                             def variant_candidates = Package.executeQuery("select distinct p from Package as p join p.variantNames as v where v.normVariantName = ? and p.status <> ? ", [variant_normname, status_deleted])
 
                             if (variant_candidates.size() == 1) {
@@ -279,8 +270,8 @@ class KbartImportValidationService {
         }
 
         for (def coverage : tipp_dto.coverage) {
-            LocalDateTime parsedStart = GOKbTextUtils.completeDateString(coverage.startDate)
-            LocalDateTime parsedEnd = GOKbTextUtils.completeDateString(coverage.endDate, false)
+            LocalDateTime parsedStart = TextUtils.completeDateString(coverage.startDate)
+            LocalDateTime parsedEnd = TextUtils.completeDateString(coverage.endDate, false)
 
             if (coverage.startDate && !parsedStart) {
                 if (!errors.startDate) {
@@ -365,35 +356,35 @@ class KbartImportValidationService {
         }
 
        if (tipp_dto.dateFirstInPrint) {
-            LocalDateTime dfip = GOKbTextUtils.completeDateString(tipp_dto.dateFirstInPrint, false)
+            LocalDateTime dfip = TextUtils.completeDateString(tipp_dto.dateFirstInPrint, false)
             if (!dfip) {
                 errors.put('dateFirstInPrint', [message: "Unable to parse date", baddata: tipp_dto.remove('dateFirstInPrint')])
             }
         }
 
         if (tipp_dto.dateFirstOnline) {
-            LocalDateTime dfo = GOKbTextUtils.completeDateString(tipp_dto.dateFirstOnline, false)
+            LocalDateTime dfo = TextUtils.completeDateString(tipp_dto.dateFirstOnline, false)
             if (!dfo) {
                 errors.put('dateFirstOnline', [message: "Unable to parse date", baddata: tipp_dto.remove('dateFirstOnline')])
             }
         }
 
         if (tipp_dto.lastChanged) {
-            LocalDateTime lce = GOKbTextUtils.completeDateString(tipp_dto.lastChanged, false)
+            LocalDateTime lce = TextUtils.completeDateString(tipp_dto.lastChanged, false)
             if (!lce) {
                 errors.put('lastChanged', [message: "Unable to parse date", baddata: tipp_dto.remove('lastChanged')])
             }
         }
 
         if (tipp_dto.accessStartDate) {
-            LocalDateTime dfo = GOKbTextUtils.completeDateString(tipp_dto.accessStartDate, false)
+            LocalDateTime dfo = TextUtils.completeDateString(tipp_dto.accessStartDate, false)
             if (!dfo) {
                 errors.put('accessStartDate', [message: "Unable to parse date", baddata: tipp_dto.remove('accessStartDate')])
             }
         }
 
         if (tipp_dto.accessEndDate) {
-            LocalDateTime dfo = GOKbTextUtils.completeDateString(tipp_dto.accessEndDate, false)
+            LocalDateTime dfo = TextUtils.completeDateString(tipp_dto.accessEndDate, false)
             if (!dfo) {
                 errors.put('accessEndDate', [message: "Unable to parse date", baddata: tipp_dto.remove('accessEndDate')])
             }
@@ -492,8 +483,8 @@ class KbartImportValidationService {
         }
 
         for (def coverage : tippMap.coverage) {
-            LocalDateTime parsedStart = GOKbTextUtils.completeDateString(coverage.startDate)
-            LocalDateTime parsedEnd = GOKbTextUtils.completeDateString(coverage.endDate, false)
+            LocalDateTime parsedStart = TextUtils.completeDateString(coverage.startDate)
+            LocalDateTime parsedEnd = TextUtils.completeDateString(coverage.endDate, false)
 
             if (coverage.startDate && !parsedStart) {
                 if (!errors.startDate) {
@@ -578,35 +569,35 @@ class KbartImportValidationService {
         }
 */
        /* if (tippMap.date_monograph_published_print) {
-            LocalDateTime dfip = GOKbTextUtils.completeDateString(tippMap.date_monograph_published_print, false)
+            LocalDateTime dfip = TextUtils.completeDateString(tippMap.date_monograph_published_print, false)
             if (!dfip) {
                 errors.put('date_monograph_published_print', [message: "Unable to parse date", baddata: tippMap.remove('date_monograph_published_print')])
             }
         }
 
         if (tippMap.date_monograph_published_online) {
-            LocalDateTime dfo = GOKbTextUtils.completeDateString(tippMap.date_monograph_published_online, false)
+            LocalDateTime dfo = TextUtils.completeDateString(tippMap.date_monograph_published_online, false)
             if (!dfo) {
                 errors.put('date_monograph_published_online', [message: "Unable to parse date", baddata: tippMap.remove('date_monograph_published_online')])
             }
         }
 
         if (tippMap.last_changed) {
-            LocalDateTime lce = GOKbTextUtils.completeDateString(tippMap.last_changed, false)
+            LocalDateTime lce = TextUtils.completeDateString(tippMap.last_changed, false)
             if (!lce) {
                 errors.put('last_changed', [message: "Unable to parse date", baddata: tippMap.remove('last_changed')])
             }
         }
 
         if (tippMap.access_start_date) {
-            LocalDateTime dfo = GOKbTextUtils.completeDateString(tippMap.access_start_date, false)
+            LocalDateTime dfo = TextUtils.completeDateString(tippMap.access_start_date, false)
             if (!dfo) {
                 errors.put('access_start_date', [message: "Unable to parse date", baddata: tippMap.remove('access_start_date')])
             }
         }
 
         if (tippMap.access_end_date) {
-            LocalDateTime dfo = GOKbTextUtils.completeDateString(tippMap.access_end_date, false)
+            LocalDateTime dfo = TextUtils.completeDateString(tippMap.access_end_date, false)
             if (!dfo) {
                 errors.put('access_end_date', [message: "Unable to parse date", baddata: tippMap.remove('access_end_date')])
             }
@@ -712,8 +703,8 @@ class KbartImportValidationService {
       }
 
       for (def coverage : tipp_dto.coverage) {
-        LocalDateTime parsedStart = GOKbTextUtils.completeDateString(coverage.startDate)
-        LocalDateTime parsedEnd = GOKbTextUtils.completeDateString(coverage.endDate, false)
+        LocalDateTime parsedStart = TextUtils.completeDateString(coverage.startDate)
+        LocalDateTime parsedEnd = TextUtils.completeDateString(coverage.endDate, false)
 
         if (coverage.startDate && !parsedStart) {
           if (!errors.startDate) {
@@ -810,21 +801,21 @@ class KbartImportValidationService {
       }
 
       if (tipp_dto.dateFirstInPrint) {
-        LocalDateTime dfip = GOKbTextUtils.completeDateString(tipp_dto.dateFirstInPrint, false)
+        LocalDateTime dfip = TextUtils.completeDateString(tipp_dto.dateFirstInPrint, false)
         if (!dfip) {
           errors.put('dateFirstInPrint', [message: "Unable to parse", baddata: tipp_dto.remove('dateFirstInPrint')])
         }
       }
 
       if (tipp_dto.dateFirstOnline) {
-        LocalDateTime dfo = GOKbTextUtils.completeDateString(tipp_dto.dateFirstOnline, false)
+        LocalDateTime dfo = TextUtils.completeDateString(tipp_dto.dateFirstOnline, false)
         if (!dfo) {
           errors.put('dateFirstOnline', [message: "Unable to parse", baddata: tipp_dto.remove('dateFirstOnline')])
         }
       }
 
       if (tipp_dto.last_changed) {
-        LocalDateTime lce = GOKbTextUtils.completeDateString(tipp_dto.lastChangedExternal, false)
+        LocalDateTime lce = TextUtils.completeDateString(tipp_dto.lastChangedExternal, false)
         if (!lce) {
           errors.put('last_changed', [message: "Unable to parse", baddata: tipp_dto.remove('lastChangedExternal')])
         }

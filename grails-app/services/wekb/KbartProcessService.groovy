@@ -1,17 +1,9 @@
 package wekb
 
-import de.hbznrw.ygor.tools.DateToolkit
-import de.wekb.helper.RDStore
+import wekb.tools.DateToolkit
+import wekb.helper.RDStore
 import grails.gorm.transactions.Transactional
 import grails.util.Holders
-import org.gokb.CleanupService
-import org.gokb.cred.IdentifierNamespace
-import org.gokb.cred.KBComponent
-import org.gokb.cred.Package
-import org.gokb.cred.Platform
-import org.gokb.cred.RefdataValue
-import org.gokb.cred.Source
-import org.gokb.cred.TitleInstancePackagePlatform
 import org.hibernate.Session
 import org.hibernate.SessionFactory
 import org.hibernate.StatelessSession

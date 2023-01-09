@@ -1,13 +1,6 @@
 package wekb
 
 import grails.gorm.transactions.Transactional
-import org.gokb.cred.ComponentPrice
-import org.gokb.cred.Identifier
-import org.gokb.cred.KBComponent
-import org.gokb.cred.KBComponentAdditionalProperty
-import org.gokb.cred.KBComponentVariantName
-import org.gokb.cred.TIPPCoverageStatement
-import org.gokb.cred.TitleInstancePackagePlatform
 
 @Transactional
 class CascadingUpdateService {

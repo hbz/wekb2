@@ -1,7 +1,6 @@
 package wekb
 
-import de.wekb.helper.RCConstants
-import de.wekb.helper.RDStore
+import wekb.helper.RCConstants
 import grails.gorm.transactions.Transactional
 
 @Transactional
@@ -12,29 +11,24 @@ class GlobalSearchTemplatesService {
     @javax.annotation.PostConstruct
     def init() {
         globalSearchTemplates.put('additionalPropertyDefinitions', additionalPropertyDefinitions())
-        globalSearchTemplates.put('allocatedReviewGroups', allocatedReviewGroups())
         globalSearchTemplates.put('components', components())
         globalSearchTemplates.put('curatoryGroups', curatoryGroups())
         globalSearchTemplates.put('identifiers', identifiers())
         globalSearchTemplates.put('jobResults', jobResults())
         globalSearchTemplates.put('namespaces', namespaces())
-        globalSearchTemplates.put('notes', notes())
         globalSearchTemplates.put('orgs', orgs())
         globalSearchTemplates.put('packages', packages())
         globalSearchTemplates.put('publicPackages', publicPackages())
         globalSearchTemplates.put('platforms', platforms())
         globalSearchTemplates.put('refdataCategories', refdataCategories())
         globalSearchTemplates.put('refdataValues', refdataValues())
-        globalSearchTemplates.put('reviewRequests', reviewRequests())
         globalSearchTemplates.put('sources', sources())
         globalSearchTemplates.put('tipps', tipps())
         globalSearchTemplates.put('tippsOfPkg', tippsOfPkg())
         globalSearchTemplates.put('updatePackageInfos', updatePackageInfos())
         globalSearchTemplates.put('updateTippInfos', updateTippInfos())
-        globalSearchTemplates.put('userOrganisation', userOrganisations())
         globalSearchTemplates.put('users', users())
         globalSearchTemplates.put('userJobs', userJobs())
-        globalSearchTemplates.put('userWatchedComponents', userWatchedComponents())
 
     }
 
@@ -49,7 +43,7 @@ class GlobalSearchTemplatesService {
 
     Map additionalPropertyDefinitions() {
         Map result = [
-                baseclass: 'org.gokb.cred.AdditionalPropertyDefinition',
+                baseclass: 'wekb.AdditionalPropertyDefinition',
                 title    : 'Additional Property Definitions',
                 group    : 'Secondary',
                 qbeConfig: [
@@ -66,70 +60,6 @@ class GlobalSearchTemplatesService {
                         qbeResults: [
                                 [heading: 'Property Name', property: 'propertyName', sort: 'propertyName', link: true],
                                 // [heading:'Property Name', property:'propertyName', link:[controller:'search',action:'index',params:'x.params+[\'det\':x.counter]']]
-                        ]
-                ]
-        ]
-        result
-    }
-
-    Map allocatedReviewGroups() {
-        Map result = [
-                baseclass: 'org.gokb.cred.AllocatedReviewGroup',
-                title    : 'Requests For Review by Group',
-                group    : 'Secondary',
-                qbeConfig: [
-                        qbeForm   : [
-                                [
-                                        type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.RefdataValue',
-                                        filter1    : RCConstants.REVIEW_REQUEST_STATUS,
-                                        prompt     : 'Status',
-                                        qparam     : 'qp_status',
-                                        placeholder: 'Name or title of item',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'status']
-                                ],
-                                [
-                                        prompt     : 'Cause',
-                                        qparam     : 'qp_cause',
-                                        placeholder: 'Cause',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'like', 'prop': 'descriptionOfCause']
-                                ],
-                                [
-                                        type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.RefdataValue',
-                                        filter1    : RCConstants.REVIEW_REQUEST_STD_DESC,
-                                        prompt     : 'Type',
-                                        qparam     : 'qp_desc',
-                                        placeholder: 'Standard description',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'stdDesc']
-                                ],
-                                [
-                                        type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.RefdataValue',
-                                        filter1    : RCConstants.REVIEW_REQUEST_TYPE,
-                                        prompt     : 'Type',
-                                        qparam     : 'qp_type',
-                                        placeholder: 'Type',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'type']
-                                ],
-                                [
-                                        type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.CuratoryGroup',
-                                        prompt     : 'Curatory Group',
-                                        qparam     : 'qp_curgroup',
-                                        placeholder: 'Curatory Group',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'group'],
-                                        hide       : false
-                                ],
-                        ],
-                        qbeGlobals: [
-                        ],
-                        qbeResults: [
-                                [heading: 'Cause', property: 'review.descriptionOfCause', link: true],
-                                [heading: 'Request', property: 'review.reviewRequest'],
-                                [heading: 'Status', property: 'review.status?.value'],
-                                [heading: 'Type', property: 'review.type?.value'],
-                                [heading: 'Timestamp', property: 'review.dateCreated', sort: 'review.dateCreated'],
                         ]
                 ]
         ]
@@ -155,7 +85,7 @@ class GlobalSearchTemplatesService {
 
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.CuratoryGroup',
+                                        baseClass  : 'wekb.CuratoryGroup',
                                         prompt     : 'Curatory Group',
                                         qparam     : 'qp_curgroups',
                                         placeholder: 'Curatory Group',
@@ -165,7 +95,7 @@ class GlobalSearchTemplatesService {
 
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.Package',
+                                        baseClass  : 'wekb.Package',
                                         prompt     : 'Package',
                                         qparam     : 'qp_pkg',
                                         placeholder: 'Package',
@@ -173,7 +103,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.RefdataValue',
+                                        baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.UPDATE_STATUS,
                                         prompt     : 'Status',
                                         qparam     : 'qp_status',
@@ -183,7 +113,7 @@ class GlobalSearchTemplatesService {
 
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.RefdataValue',
+                                        baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Automatic Update',
                                         qparam     : 'qp_automaticUpdate',
@@ -256,7 +186,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.RefdataValue',
+                                        baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.UPDATE_TYPE,
                                         prompt     : 'Type',
                                         qparam     : 'qp_type',
@@ -265,7 +195,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.RefdataValue',
+                                        baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.UPDATE_STATUS,
                                         prompt     : 'Status',
                                         qparam     : 'qp_status',
@@ -298,7 +228,7 @@ class GlobalSearchTemplatesService {
 
     Map components() {
         Map result = [
-                baseclass: 'org.gokb.cred.KBComponent',
+                baseclass: 'wekb.KBComponent',
                 title    : 'Components',
                 group    : 'Secondary',
                 qbeConfig: [
@@ -325,7 +255,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.RefdataValue',
+                                        baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.KBCOMPONENT_STATUS,
                                         prompt     : 'Status',
                                         qparam     : 'qp_status',
@@ -351,7 +281,7 @@ class GlobalSearchTemplatesService {
 
     Map curatoryGroups() {
         Map result = [
-                baseclass: 'org.gokb.cred.CuratoryGroup',
+                baseclass: 'wekb.CuratoryGroup',
                 title    : 'Curatory Groups',
                 group    : 'Secondary',
                 defaultSort : 'name',
@@ -366,7 +296,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.RefdataValue',
+                                        baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.CURATORY_GROUP_TYPE,
                                         prompt     : 'Type',
                                         qparam     : 'qp_type',
@@ -375,7 +305,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.RefdataValue',
+                                        baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.KBCOMPONENT_STATUS,
                                         prompt     : 'Status',
                                         qparam     : 'qp_status',
@@ -397,7 +327,7 @@ class GlobalSearchTemplatesService {
 
     Map identifiers() {
         Map result = [
-                baseclass: 'org.gokb.cred.Identifier',
+                baseclass: 'wekb.Identifier',
                 title    : 'Identifiers',
                 group    : 'Tertiary',
                 defaultSort : 'value',
@@ -410,7 +340,7 @@ class GlobalSearchTemplatesService {
                                         placeholder: 'Namespace',
                                         filter1    : 'all',
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.IdentifierNamespace',
+                                        baseClass  : 'wekb.IdentifierNamespace',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'namespace'],
                                 ],
                                 [
@@ -436,7 +366,7 @@ class GlobalSearchTemplatesService {
 
     Map jobResults() {
         Map result = [
-                baseclass   : 'org.gokb.cred.JobResult',
+                baseclass   : 'wekb.system.JobResult',
                 title       : 'Job Results',
                 group       : 'Secondary',
                 defaultSort : 'id',
@@ -445,7 +375,7 @@ class GlobalSearchTemplatesService {
                         qbeForm   : [
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.RefdataValue',
+                                        baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.JOB_TYPE,
                                         prompt     : 'Type',
                                         qparam     : 'qp_type',
@@ -469,7 +399,7 @@ class GlobalSearchTemplatesService {
 
     Map namespaces() {
         Map result = [
-                baseclass: 'org.gokb.cred.IdentifierNamespace',
+                baseclass: 'wekb.IdentifierNamespace',
                 title    : 'Identifier Namespaces',
                 group    : 'Tertiary',
                 defaultSort : 'name',
@@ -484,7 +414,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.RefdataValue',
+                                        baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.IDENTIFIER_NAMESPACE_TARGET_TYPE,
                                         prompt     : 'Target Type',
                                         qparam     : 'qp_targetType',
@@ -513,52 +443,9 @@ class GlobalSearchTemplatesService {
         result
     }
 
-    Map notes() {
-        Map result = [
-                baseclass: 'org.gokb.cred.Note',
-                title    : 'Notes',
-                group    : 'Tertiary',
-                defaultSort : 'dateCreated',
-                defaultOrder: 'desc',
-                qbeConfig: [
-                        qbeForm   : [
-                                [
-                                        prompt     : 'Note',
-                                        qparam     : 'qp_note',
-                                        placeholder: 'Note',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'note', 'wildcard': 'B']
-                                ],
-                                [
-                                        prompt     : 'Owner Class',
-                                        qparam     : 'qp_ownerClass',
-                                        placeholder: 'Owner Class',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'ownerClass'],
-                                        hide       : true
-                                ],
-                                [
-                                        prompt     : 'Owner ID',
-                                        qparam     : 'qp_ownerClassID',
-                                        placeholder: 'Owner Class ID',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'ownerId', 'type': 'java.lang.Long'],
-                                        hide       : true
-                                ],
-                        ],
-                        qbeGlobals: [
-                        ],
-                        qbeResults: [
-                                [heading: 'Note', property: 'note'],
-                                [heading: 'Note', property: 'note'],
-                                [heading: 'Date Created', property: 'dateCreated'],
-                                [heading: 'Last Updated', property: 'lastUpdated'],
-                        ]
-                ]
-        ]
-        result
-    }
-
     Map orgs() {
         Map result = [
-                baseclass   : 'org.gokb.cred.Org',
+                baseclass   : 'wekb.Org',
                 title       : 'Providers',
                 group       : 'Secondary',
                 defaultSort : 'name',
@@ -581,7 +468,7 @@ class GlobalSearchTemplatesService {
 
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.RefdataValue',
+                                        baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.ORG_ROLE,
                                         prompt     : 'Role',
                                         qparam     : 'qp_roles',
@@ -590,7 +477,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.CuratoryGroup',
+                                        baseClass  : 'wekb.CuratoryGroup',
                                         prompt     : 'Curatory Group',
                                         qparam     : 'qp_curgroup',
                                         placeholder: 'Curatory Group',
@@ -600,7 +487,7 @@ class GlobalSearchTemplatesService {
                                 //FOR My Components Area
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.CuratoryGroup',
+                                        baseClass  : 'wekb.CuratoryGroup',
                                         prompt     : 'Curatory Group',
                                         qparam     : 'qp_curgroups',
                                         placeholder: 'Curatory Group',
@@ -610,7 +497,7 @@ class GlobalSearchTemplatesService {
 
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.RefdataValue',
+                                        baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.KBCOMPONENT_STATUS,
                                         prompt     : 'Status',
                                         qparam     : 'qp_status',
@@ -640,7 +527,7 @@ class GlobalSearchTemplatesService {
 
     Map packages() {
         Map result = [
-                baseclass   : 'org.gokb.cred.Package',
+                baseclass   : 'wekb.Package',
                 title       : 'Packages',
                 group       : 'Secondary',
                 defaultSort : 'name',
@@ -662,7 +549,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.RefdataValue',
+                                        baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.KBCOMPONENT_STATUS,
                                         prompt     : 'Status',
                                         qparam     : 'qp_status',
@@ -673,7 +560,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.RefdataValue',
+                                        baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.PACKAGE_SCOPE,
                                         prompt     : 'Scope',
                                         qparam     : 'qp_scope',
@@ -682,7 +569,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.RefdataValue',
+                                        baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.PACKAGE_CONTENT_TYPE,
                                         prompt     : 'Content Type',
                                         qparam     : 'qp_content',
@@ -691,7 +578,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.RefdataValue',
+                                        baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.PACKAGE_OPEN_ACCESS,
                                         prompt     : 'Open Access',
                                         qparam     : 'qp_oa',
@@ -700,7 +587,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.RefdataValue',
+                                        baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.DDC,
                                         prompt     : 'DDC',
                                         qparam     : 'qp_ddc',
@@ -709,7 +596,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.Org',
+                                        baseClass  : 'wekb.Org',
                                         prompt     : 'Provider',
                                         qparam     : 'qp_provider',
                                         placeholder: 'Provider',
@@ -725,7 +612,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.CuratoryGroup',
+                                        baseClass  : 'wekb.CuratoryGroup',
                                         prompt     : 'Curatory Group',
                                         qparam     : 'qp_curgroup',
                                         placeholder: 'Curatory Group',
@@ -734,7 +621,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.Platform',
+                                        baseClass  : 'wekb.Platform',
                                         prompt     : 'Platform',
                                         qparam     : 'qp_platform',
                                         placeholder: 'Platform',
@@ -743,7 +630,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.RefdataValue',
+                                        baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.PAA_ARCHIVING_AGENCY,
                                         prompt     : 'Package Archiving Agency',
                                         qparam     : 'qp_archivingAgency',
@@ -760,7 +647,7 @@ class GlobalSearchTemplatesService {
 
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.Source',
+                                        baseClass  : 'wekb.Source',
                                         prompt     : 'Source',
                                         qparam     : 'qp_source',
                                         placeholder: 'Source',
@@ -771,7 +658,7 @@ class GlobalSearchTemplatesService {
 
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.RefdataValue',
+                                        baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Source Automatic Updates',
                                         qparam     : 'qp_source_automaticUpdates',
@@ -791,7 +678,7 @@ class GlobalSearchTemplatesService {
                                 //FOR My Components Area
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.CuratoryGroup',
+                                        baseClass  : 'wekb.CuratoryGroup',
                                         prompt     : 'Curatory Group',
                                         qparam     : 'qp_curgroups',
                                         placeholder: 'Curatory Group',
@@ -827,7 +714,7 @@ class GlobalSearchTemplatesService {
 
     Map publicPackages() {
         Map result = [
-                baseclass   : 'org.gokb.cred.Package',
+                baseclass   : 'wekb.Package',
                 title       : 'Packages',
                 group       : 'Secondary',
                 defaultSort : 'name',
@@ -870,7 +757,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.CuratoryGroup',
+                                        baseClass  : 'wekb.CuratoryGroup',
                                         prompt     : 'Curatory Group',
                                         qparam     : 'qp_curgroup',
                                         placeholder: 'Curatory Group',
@@ -879,7 +766,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.Org',
+                                        baseClass  : 'wekb.Org',
                                         prompt     : 'Provider',
                                         qparam     : 'qp_provider',
                                         placeholder: 'Provider',
@@ -888,7 +775,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.RefdataValue',
+                                        baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Source Automatic Updates',
                                         qparam     : 'qp_source_automaticUpdates',
@@ -899,7 +786,7 @@ class GlobalSearchTemplatesService {
                                 //Package Filter
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.RefdataValue',
+                                        baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.PACKAGE_CONTENT_TYPE,
                                         prompt     : 'Content Type',
                                         qparam     : 'qp_contentType',
@@ -909,7 +796,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.RefdataValue',
+                                        baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.KBCOMPONENT_STATUS,
                                         prompt     : 'Status',
                                         qparam     : 'qp_status',
@@ -921,7 +808,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.RefdataValue',
+                                        baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.DDC,
                                         prompt     : 'DDC',
                                         qparam     : 'qp_ddc',
@@ -931,7 +818,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.RefdataValue',
+                                        baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.PACKAGE_PAYMENT_TYPE,
                                         prompt     : 'Paid',
                                         qparam     : 'qp_paymentType',
@@ -941,7 +828,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.RefdataValue',
+                                        baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.PACKAGE_OPEN_ACCESS,
                                         prompt     : 'Open Access',
                                         qparam     : 'qp_oa',
@@ -952,7 +839,7 @@ class GlobalSearchTemplatesService {
 
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.RefdataValue',
+                                        baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.PAA_ARCHIVING_AGENCY,
                                         prompt     : 'Package Archiving Agency',
                                         qparam     : 'qp_archivingAgency',
@@ -977,7 +864,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.RefdataValue',
+                                        baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.KBCOMPONENT_STATUS,
                                         prompt     : 'Status',
                                         qparam     : 'qp_status_tipp',
@@ -989,7 +876,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.RefdataValue',
+                                        baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.TIPP_PUBLICATION_TYPE,
                                         prompt     : 'Publication Type',
                                         qparam     : 'qp_publicationType_tipp',
@@ -999,7 +886,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.RefdataValue',
+                                        baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.TIPP_MEDIUM,
                                         prompt     : 'Medium',
                                         qparam     : 'qp_medium_tipp',
@@ -1009,7 +896,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.RefdataValue',
+                                        baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.TIPP_ACCESS_TYPE,
                                         prompt     : 'Access Type',
                                         qparam     : 'qp_accessType_tipp',
@@ -1048,7 +935,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.RefdataValue',
+                                        baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.DDC,
                                         prompt     : 'DDC',
                                         qparam     : 'qp_ddc_tipp',
@@ -1058,7 +945,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.RefdataValue',
+                                        baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.KBCOMPONENT_LANGUAGE,
                                         prompt     : 'Language',
                                         qparam     : 'qp_language_tipp',
@@ -1076,7 +963,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.RefdataValue',
+                                        baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Shibboleth Supported',
                                         qparam     : 'qp_shibbolethAuthentication_platform',
@@ -1086,7 +973,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.RefdataValue',
+                                        baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Open Athens Supported',
                                         qparam     : 'qp_openAthens_platform',
@@ -1096,7 +983,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.RefdataValue',
+                                        baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.PLATFORM_IP_AUTH,
                                         prompt     : 'IP Auth Supported',
                                         qparam     : 'qp_ipAuthentication_platform',
@@ -1106,7 +993,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.RefdataValue',
+                                        baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.PLATFORM_STATISTICS_FORMAT,
                                         prompt     : 'Statistics Format',
                                         qparam     : 'qp_statisticsFormat_platform',
@@ -1116,7 +1003,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.RefdataValue',
+                                        baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Counter R3 Supported',
                                         qparam     : 'qp_counterR3Supported_platform',
@@ -1126,7 +1013,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.RefdataValue',
+                                        baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Counter R4 Supported',
                                         qparam     : 'qp_counterR4Supported_platform',
@@ -1136,7 +1023,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.RefdataValue',
+                                        baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Counter R5 Supported',
                                         qparam     : 'qp_counterR5Supported_platform',
@@ -1146,7 +1033,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.RefdataValue',
+                                        baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Counter R4 Sushi Api Supported',
                                         qparam     : 'qp_counterR4SushiApiSupported_platform',
@@ -1156,7 +1043,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.RefdataValue',
+                                        baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Counter R5 Sushi Api Supported',
                                         qparam     : 'qp_counterR5SushiApiSupported_platform',
@@ -1191,7 +1078,7 @@ class GlobalSearchTemplatesService {
 
     Map platforms() {
         Map result = [
-                baseclass   : 'org.gokb.cred.Platform',
+                baseclass   : 'wekb.Platform',
                 title       : 'Platforms',
                 group       : 'Secondary',
                 defaultSort : 'name',
@@ -1212,7 +1099,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.RefdataValue',
+                                        baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.KBCOMPONENT_STATUS,
                                         prompt     : 'Status',
                                         qparam     : 'qp_status',
@@ -1223,7 +1110,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.CuratoryGroup',
+                                        baseClass  : 'wekb.CuratoryGroup',
                                         prompt     : 'Curatory Group',
                                         qparam     : 'qp_curgroup',
                                         placeholder: 'Curatory Group',
@@ -1233,7 +1120,7 @@ class GlobalSearchTemplatesService {
                                 //FOR My Components Area
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.CuratoryGroup',
+                                        baseClass  : 'wekb.CuratoryGroup',
                                         prompt     : 'Curatory Group',
                                         qparam     : 'qp_curgroups',
                                         placeholder: 'Curatory Group',
@@ -1242,7 +1129,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.Org',
+                                        baseClass  : 'wekb.Org',
                                         prompt     : 'Provider',
                                         qparam     : 'qp_provider',
                                         placeholder: 'Provider',
@@ -1260,7 +1147,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         filter1    : 'all',
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.IdentifierNamespace',
+                                        baseClass  : 'wekb.IdentifierNamespace',
                                         prompt     : 'Title Namespace',
                                         qparam     : 'qp_titleNamespace',
                                         placeholder: 'Title Namespace',
@@ -1269,7 +1156,7 @@ class GlobalSearchTemplatesService {
 
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.RefdataValue',
+                                        baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Shibboleth Supported',
                                         qparam     : 'qp_shibbolethAuthentication',
@@ -1278,7 +1165,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.RefdataValue',
+                                        baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Open Athens Supported',
                                         qparam     : 'qp_openAthens',
@@ -1287,7 +1174,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.RefdataValue',
+                                        baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.PLATFORM_IP_AUTH,
                                         prompt     : 'IP Auth Supported',
                                         qparam     : 'qp_ipAuthentication',
@@ -1296,7 +1183,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.RefdataValue',
+                                        baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.PLATFORM_STATISTICS_FORMAT,
                                         prompt     : 'Statistics Format',
                                         qparam     : 'qp_statisticsFormat',
@@ -1305,7 +1192,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.RefdataValue',
+                                        baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Counter R3 Supported',
                                         qparam     : 'qp_counterR3Supported',
@@ -1314,7 +1201,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.RefdataValue',
+                                        baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Counter R4 Supported',
                                         qparam     : 'qp_counterR4Supported',
@@ -1323,7 +1210,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.RefdataValue',
+                                        baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Counter R5 Supported',
                                         qparam     : 'qp_counterR5Supported',
@@ -1332,7 +1219,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.RefdataValue',
+                                        baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Counter R4 Sushi Api Supported',
                                         qparam     : 'qp_counterR4SushiApiSupported',
@@ -1341,7 +1228,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.RefdataValue',
+                                        baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Counter R5 Sushi Api Supported',
                                         qparam     : 'qp_counterR5SushiApiSupported',
@@ -1369,7 +1256,7 @@ class GlobalSearchTemplatesService {
 
     Map refdataCategories() {
         Map result = [
-                baseclass: 'org.gokb.cred.RefdataCategory',
+                baseclass: 'wekb.RefdataCategory',
                 title    : 'Refdata Categories ',
                 group    : 'Secondary',
                 defaultSort : 'desc',
@@ -1410,7 +1297,7 @@ class GlobalSearchTemplatesService {
 
     Map refdataValues() {
         Map result = [
-                baseclass: 'org.gokb.cred.RefdataValue',
+                baseclass: 'wekb.RefdataValue',
                 title    : 'Refdata Values ',
                 group    : 'Secondary',
                 defaultSort : 'value',
@@ -1433,7 +1320,7 @@ class GlobalSearchTemplatesService {
 
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.RefdataCategory',
+                                        baseClass  : 'wekb.RefdataCategory',
                                         prompt     : 'Refdata Category',
                                         qparam     : 'qp_owner',
                                         placeholder: 'Refdata Category',
@@ -1458,64 +1345,9 @@ class GlobalSearchTemplatesService {
         result
     }
 
-    Map reviewRequests() {
-        Map result = [
-                baseclass: 'org.gokb.cred.ReviewRequest',
-                title    : 'Requests For Review',
-                group    : 'Secondary',
-                qbeConfig: [
-                        qbeForm   : [
-                                [
-                                        type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.RefdataValue',
-                                        filter1    : RCConstants.REVIEW_REQUEST_STATUS,
-                                        prompt     : 'Status',
-                                        qparam     : 'qp_status',
-                                        placeholder: 'Name or title of item',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'status']
-                                ],
-                                [
-                                        prompt     : 'Cause',
-                                        qparam     : 'qp_cause',
-                                        placeholder: 'Cause',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'like', 'prop': 'descriptionOfCause']
-                                ],
-                                [
-                                        type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.RefdataValue',
-                                        filter1    : RCConstants.REVIEW_REQUEST_STD_DESC,
-                                        prompt     : 'Type',
-                                        qparam     : 'qp_desc',
-                                        placeholder: 'Standard description',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'stdDesc']
-                                ],
-                                [
-                                        type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.RefdataValue',
-                                        filter1    : RCConstants.REVIEW_REQUEST_TYPE,
-                                        prompt     : 'Type',
-                                        qparam     : 'qp_type',
-                                        placeholder: 'Type',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'type']
-                                ],
-                        ],
-                        qbeGlobals: [
-                        ],
-                        qbeResults: [
-                                [heading: 'Cause', property: 'descriptionOfCause', link: true],
-                                [heading: 'Request', property: 'reviewRequest'],
-                                [heading: 'Status', property: 'status?.value'],
-                                [heading: 'Type', property: 'type?.value'],
-                                [heading: 'Timestamp', property: 'dateCreated', sort: 'dateCreated'],
-                        ]
-                ]
-        ]
-        result
-    }
-
     Map sources() {
         Map result = [
-                baseclass: 'org.gokb.cred.Source',
+                baseclass: 'wekb.Source',
                 title    : 'Source',
                 group    : 'Secondary',
                 defaultSort : 'name',
@@ -1530,7 +1362,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.CuratoryGroup',
+                                        baseClass  : 'wekb.CuratoryGroup',
                                         prompt     : 'Curatory Group',
                                         qparam     : 'qp_curgroup',
                                         placeholder: 'Curatory Group',
@@ -1540,7 +1372,7 @@ class GlobalSearchTemplatesService {
                                 //FOR My Components Area
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.CuratoryGroup',
+                                        baseClass  : 'wekb.CuratoryGroup',
                                         prompt     : 'Curatory Group',
                                         qparam     : 'qp_curgroups',
                                         placeholder: 'Curatory Group',
@@ -1549,7 +1381,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.RefdataValue',
+                                        baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Automatic Updates',
                                         qparam     : 'qp_automaticUpdates',
@@ -1559,7 +1391,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.RefdataValue',
+                                        baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.SOURCE_FREQUENCY,
                                         prompt     : 'Frequency',
                                         qparam     : 'qp_frequency',
@@ -1589,7 +1421,7 @@ class GlobalSearchTemplatesService {
 
     Map tipps() {
         Map result = [
-                baseclass: 'org.gokb.cred.TitleInstancePackagePlatform',
+                baseclass: 'wekb.TitleInstancePackagePlatform',
                 title    : 'Titles',
                 group    : 'Secondary',
                 defaultSort : 'name',
@@ -1654,7 +1486,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.Org',
+                                        baseClass  : 'wekb.Org',
                                         prompt     : 'Provider',
                                         qparam     : 'qp_provider',
                                         placeholder: 'Provider',
@@ -1663,7 +1495,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.Package',
+                                        baseClass  : 'wekb.Package',
                                         prompt     : 'Package',
                                         qparam     : 'qp_pkg',
                                         placeholder: 'Package',
@@ -1671,7 +1503,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.Platform',
+                                        baseClass  : 'wekb.Platform',
                                         prompt     : 'Platform',
                                         qparam     : 'qp_plat',
                                         placeholder: 'Platform',
@@ -1679,7 +1511,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.CuratoryGroup',
+                                        baseClass  : 'wekb.CuratoryGroup',
                                         prompt     : 'Curatory Group',
                                         qparam     : 'qp_curgroup',
                                         placeholder: 'Curatory Group',
@@ -1689,7 +1521,7 @@ class GlobalSearchTemplatesService {
                                 //FOR My Components Area
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.CuratoryGroup',
+                                        baseClass  : 'wekb.CuratoryGroup',
                                         prompt     : 'Curatory Group',
                                         qparam     : 'qp_curgroups',
                                         placeholder: 'Curatory Group',
@@ -1704,7 +1536,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.RefdataValue',
+                                        baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.TIPP_PUBLICATION_TYPE,
                                         prompt     : 'Publication Type',
                                         qparam     : 'qp_publicationType',
@@ -1713,7 +1545,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.RefdataValue',
+                                        baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.TIPP_MEDIUM,
                                         prompt     : 'Medium',
                                         qparam     : 'qp_medium',
@@ -1734,7 +1566,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.RefdataValue',
+                                        baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.TIPP_ACCESS_TYPE,
                                         prompt     : 'Access Type',
                                         qparam     : 'qp_accessType',
@@ -1749,7 +1581,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.RefdataValue',
+                                        baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.DDC,
                                         prompt     : 'DDC',
                                         qparam     : 'qp_ddc',
@@ -1758,7 +1590,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.RefdataValue',
+                                        baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.TIPP_OPEN_ACCESS,
                                         prompt     : 'Open Access',
                                         qparam     : 'qp_openAccess',
@@ -1767,7 +1599,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.RefdataValue',
+                                        baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.KBCOMPONENT_LANGUAGE,
                                         prompt     : 'Language',
                                         qparam     : 'qp_language',
@@ -1776,7 +1608,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.RefdataValue',
+                                        baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.KBCOMPONENT_STATUS,
                                         prompt     : 'Status',
                                         qparam     : 'qp_status',
@@ -1808,7 +1640,7 @@ class GlobalSearchTemplatesService {
 
     Map tippsOfPkg() {
         Map result = [
-                baseclass: 'org.gokb.cred.TitleInstancePackagePlatform',
+                baseclass: 'wekb.TitleInstancePackagePlatform',
                 title    : 'Titles',
                 group    : 'Secondary',
                 defaultSort : 'name',
@@ -1877,7 +1709,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.RefdataValue',
+                                        baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.TIPP_PUBLICATION_TYPE,
                                         prompt     : 'Publication Type',
                                         qparam     : 'qp_publicationType',
@@ -1886,7 +1718,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.RefdataValue',
+                                        baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.TIPP_MEDIUM,
                                         prompt     : 'Medium',
                                         qparam     : 'qp_medium',
@@ -1907,7 +1739,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.RefdataValue',
+                                        baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.TIPP_ACCESS_TYPE,
                                         prompt     : 'Access Type',
                                         qparam     : 'qp_accessType',
@@ -1922,7 +1754,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.RefdataValue',
+                                        baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.DDC,
                                         prompt     : 'DDC',
                                         qparam     : 'qp_ddc',
@@ -1931,7 +1763,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.RefdataValue',
+                                        baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.TIPP_OPEN_ACCESS,
                                         prompt     : 'Open Access',
                                         qparam     : 'qp_openAccess',
@@ -1940,7 +1772,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.RefdataValue',
+                                        baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.KBCOMPONENT_LANGUAGE,
                                         prompt     : 'Language',
                                         qparam     : 'qp_language',
@@ -1949,7 +1781,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.RefdataValue',
+                                        baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.KBCOMPONENT_STATUS,
                                         prompt     : 'Status',
                                         qparam     : 'qp_status',
@@ -1961,7 +1793,7 @@ class GlobalSearchTemplatesService {
                                 //FOR My Components Area
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.CuratoryGroup',
+                                        baseClass  : 'wekb.CuratoryGroup',
                                         prompt     : 'Curatory Group',
                                         qparam     : 'qp_curgroups',
                                         placeholder: 'Curatory Group',
@@ -1987,7 +1819,7 @@ class GlobalSearchTemplatesService {
 
     Map users() {
         Map result = [
-                baseclass   : 'org.gokb.cred.User',
+                baseclass   : 'wekb.auth.User',
                 title       : 'Users',
                 group       : 'Admin',
                 defaultSort : 'username',
@@ -2017,34 +1849,9 @@ class GlobalSearchTemplatesService {
         result
     }
 
-    Map userOrganisations() {
-        Map result = [
-                baseclass: 'org.gokb.cred.UserOrganisation',
-                title    : 'User Organisations',
-                group    : 'Secondary',
-                qbeConfig: [
-                        qbeForm   : [
-                                [
-                                        prompt     : 'Name',
-                                        qparam     : 'qp_name',
-                                        placeholder: 'Username',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'username']
-                                ],
-                        ],
-                        qbeGlobals: [
-                        ],
-                        qbeResults: [
-                                [heading: 'Name', property: 'displayName', link: true],
-                        ]
-                ]
-        ]
-
-        result
-    }
-
     Map userJobs() {
         Map result = [
-                baseclass   : 'org.gokb.cred.JobResult',
+                baseclass   : 'wekb.system.JobResult',
                 title       : 'User Jobs',
                 group       : 'Secondary',
                 defaultSort : 'id',
@@ -2053,7 +1860,7 @@ class GlobalSearchTemplatesService {
                         qbeForm   : [
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'org.gokb.cred.RefdataValue',
+                                        baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.JOB_TYPE,
                                         prompt     : 'Type',
                                         qparam     : 'qp_type',
@@ -2077,35 +1884,4 @@ class GlobalSearchTemplatesService {
         ]
         result
     }
-
-    Map userWatchedComponents() {
-        Map result = [
-                baseclass   : 'org.gokb.cred.ComponentWatch',
-                title       : 'My Watched Components',
-                group       : 'Tertiary',
-                defaultSort : 'component.lastUpdated',
-                defaultOrder: 'desc',
-                qbeConfig   : [
-                        qbeForm   : [
-                                [
-                                        prompt     : 'Component Name',
-                                        qparam     : 'qp_name',
-                                        placeholder: 'Name or title of item',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'component.name', 'wildcard': 'R']
-                                ],
-                        ],
-                        qbeGlobals: [
-                                ['ctxtp': 'filter', 'prop': 'user.id', 'comparator': 'eq', 'value': '__USERID', 'default': 'on', 'qparam': 'qp_user', 'type': 'java.lang.Long', 'hidden': true]
-                        ],
-                        qbeResults: [
-                                [heading: 'Name', property: 'component.name', link: true],
-                                [heading: 'Type', property: 'component.niceName'],
-                                [heading: 'Last Update on', property: 'component.lastUpdated'],
-                                [heading: 'Last Update Comment', property: 'component.lastUpdateComment']
-                        ]
-                ]
-        ]
-        result
-    }
-
 }

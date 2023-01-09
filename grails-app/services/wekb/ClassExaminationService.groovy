@@ -1,12 +1,13 @@
 package wekb
 
+import grails.core.GrailsApplication
 import grails.core.GrailsClass
 import grails.util.GrailsNameUtils
 
 import java.lang.reflect.Field
 
 class ClassExaminationService {
-  def grailsApplication
+  GrailsApplication grailsApplication
 
   def getRefdataPropertyNames (String className) {
 

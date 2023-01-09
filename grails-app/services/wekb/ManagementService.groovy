@@ -1,13 +1,11 @@
 package wekb
 
-import de.wekb.helper.RCConstants
-import de.wekb.helper.RDStore
+import wekb.helper.RCConstants
+import wekb.helper.RDStore
 import grails.gorm.transactions.Transactional
 import grails.plugin.springsecurity.SpringSecurityService
 import grails.web.mvc.FlashScope
 import grails.web.servlet.mvc.GrailsParameterMap
-import org.gokb.cred.Package
-import org.gokb.cred.RefdataValue
 import org.grails.web.servlet.mvc.GrailsWebRequest
 import org.grails.web.util.WebUtils
 
@@ -29,7 +27,7 @@ class ManagementService {
             ],
             [
                     type       : 'lookup',
-                    baseClass  : 'org.gokb.cred.RefdataValue',
+                    baseClass  : 'wekb.RefdataValue',
                     filter1    : RCConstants.KBCOMPONENT_STATUS,
                     prompt     : 'Status',
                     bParam     : 'pkg_batch_status',
@@ -43,7 +41,7 @@ class ManagementService {
             ],
             [
                     type       : 'lookup',
-                    baseClass  : 'org.gokb.cred.RefdataValue',
+                    baseClass  : 'wekb.RefdataValue',
                     filter1    : RCConstants.PACKAGE_GLOBAL,
                     prompt     : 'Global Note',
                     bParam     : 'pkg_batch_globalNote',
@@ -51,7 +49,7 @@ class ManagementService {
             ],
             [
                     type       : 'lookup',
-                    baseClass  : 'org.gokb.cred.RefdataValue',
+                    baseClass  : 'wekb.RefdataValue',
                     filter1    : RCConstants.PACKAGE_BREAKABLE,
                     prompt     : 'Breakable',
                     bParam     : 'pkg_batch_breakable',
@@ -59,7 +57,7 @@ class ManagementService {
             ],
             [
                     type       : 'lookup',
-                    baseClass  : 'org.gokb.cred.RefdataValue',
+                    baseClass  : 'wekb.RefdataValue',
                     filter1    : RCConstants.PACKAGE_CONTENT_TYPE,
                     prompt     : 'Content Type',
                     bParam     : 'pkg_batch_contentType',
@@ -67,7 +65,7 @@ class ManagementService {
             ],
             [
                     type       : 'lookup',
-                    baseClass  : 'org.gokb.cred.RefdataValue',
+                    baseClass  : 'wekb.RefdataValue',
                     filter1    : RCConstants.PACKAGE_FILE,
                     prompt     : 'File',
                     bParam     : 'pkg_batch_file',
@@ -75,7 +73,7 @@ class ManagementService {
             ],
             [
                     type       : 'lookup',
-                    baseClass  : 'org.gokb.cred.RefdataValue',
+                    baseClass  : 'wekb.RefdataValue',
                     filter1    : RCConstants.PACKAGE_OPEN_ACCESS,
                     prompt     : 'Open Access',
                     bParam     : 'pkg_batch_oa',
@@ -83,7 +81,7 @@ class ManagementService {
             ],
             [
                     type       : 'lookup',
-                    baseClass  : 'org.gokb.cred.RefdataValue',
+                    baseClass  : 'wekb.RefdataValue',
                     filter1    : RCConstants.PACKAGE_PAYMENT_TYPE,
                     prompt     : 'Payment Type',
                     bParam     : 'pkg_batch_paymentType',
@@ -91,7 +89,7 @@ class ManagementService {
             ],
             [
                     type       : 'lookup',
-                    baseClass  : 'org.gokb.cred.RefdataValue',
+                    baseClass  : 'wekb.RefdataValue',
                     filter1    : RCConstants.PACKAGE_SCOPE,
                     prompt     : 'Scope',
                     bParam     : 'pkg_batch_scope',
@@ -102,7 +100,7 @@ class ManagementService {
     static packageSourceInfosBatchForm = [
             [
                     type     : 'lookup',
-                    baseClass: 'org.gokb.cred.RefdataValue',
+                    baseClass: 'wekb.RefdataValue',
                     filter1  : RCConstants.SOURCE_FREQUENCY,
                     prompt   : 'Frequency',
                     bParam   : 'pkg_batch_frequency',
@@ -110,7 +108,7 @@ class ManagementService {
             ],
             [
                     type     : 'lookup',
-                    baseClass: 'org.gokb.cred.RefdataValue',
+                    baseClass: 'wekb.RefdataValue',
                     filter1  : RCConstants.SOURCE_DATA_SUPPLY_METHOD,
                     prompt   : 'Default Supply Method',
                     bParam   : 'pkg_batch_defaultSupplyMethod',
@@ -118,7 +116,7 @@ class ManagementService {
             ],
             [
                     type     : 'lookup',
-                    baseClass: 'org.gokb.cred.RefdataValue',
+                    baseClass: 'wekb.RefdataValue',
                     filter1  : RCConstants.SOURCE_DATA_FORMAT,
                     prompt   : 'Default Data Format',
                     bParam   : 'pkg_batch_defaultDataFormat',
@@ -126,7 +124,7 @@ class ManagementService {
             ],
             [
                     type     : 'lookup',
-                    baseClass: 'org.gokb.cred.RefdataValue',
+                    baseClass: 'wekb.RefdataValue',
                     filter1  : RCConstants.YN,
                     prompt   : 'Automatic Updates',
                     bParam   : 'pkg_batch_automaticUpdates',
@@ -197,7 +195,7 @@ class ManagementService {
         Map<String, Object> result = [:]
         result.user = springSecurityService.currentUser
         List successChanges = []
-        if (accessService.checkReadable("org.gokb.cred.Package")) {
+        if (accessService.checkReadable("wekb.Package")) {
             FlashScope flash = getCurrentFlashScope()
             List selectedPackages = params.list("selectedPackages")
             if (selectedPackages) {
@@ -207,7 +205,7 @@ class ManagementService {
                         if (accessService.checkEditableObject(pkg, params)) {
                             packageGeneralInfosBatchForm.each { Map formMap ->
                                 if (params[formMap.bParam]) {
-                                    if(formMap.type == 'lookup' && formMap.baseClass  == 'org.gokb.cred.RefdataValue') {
+                                    if(formMap.type == 'lookup' && formMap.baseClass  == 'wekb.RefdataValue') {
                                         List splitBParam = params[formMap.bParam].split(':')
                                         Long refDataId = Long.parseLong(splitBParam[1])
                                         pkg."${formMap.bProp}" = RefdataValue.get(refDataId) ?: pkg."${formMap.bProp}"
@@ -239,7 +237,7 @@ class ManagementService {
         Map<String, Object> result = [:]
         result.user = springSecurityService.currentUser
         List successChanges = []
-        if (accessService.checkReadable("org.gokb.cred.Package")) {
+        if (accessService.checkReadable("wekb.Package")) {
             FlashScope flash = getCurrentFlashScope()
             List selectedPackages = params.list("selectedPackages")
             if (selectedPackages) {
@@ -249,7 +247,7 @@ class ManagementService {
                         if (accessService.checkEditableObject(pkg, params)) {
                             packageSourceInfosBatchForm.each { Map formMap ->
                                 if (params[formMap.bParam] && pkg.source) {
-                                    if(formMap.type == 'lookup' && formMap.baseClass  == 'org.gokb.cred.RefdataValue') {
+                                    if(formMap.type == 'lookup' && formMap.baseClass  == 'wekb.RefdataValue') {
                                         List splitBParam = params[formMap.bParam].split(':')
                                         Long refDataId = Long.parseLong(splitBParam[1])
                                         RefdataValue value = RefdataValue.get(refDataId)
@@ -282,7 +280,7 @@ class ManagementService {
         Map<String, Object> result = [:]
         result.user = springSecurityService.currentUser
         List successChanges = []
-        if (accessService.checkReadable("org.gokb.cred.Package")) {
+        if (accessService.checkReadable("wekb.Package")) {
             FlashScope flash = getCurrentFlashScope()
             List selectedPackages = params.list("selectedPackages")
             if (selectedPackages) {
@@ -348,7 +346,7 @@ class ManagementService {
         result.user = springSecurityService.currentUser
         List successChanges = []
         List failChanges = []
-        if (accessService.checkReadable("org.gokb.cred.Package")) {
+        if (accessService.checkReadable("wekb.Package")) {
             FlashScope flash = getCurrentFlashScope()
             List selectedPackages = params.list("selectedPackages")
             if (selectedPackages) {

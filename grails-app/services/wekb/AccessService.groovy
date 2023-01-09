@@ -5,34 +5,32 @@ import grails.gorm.transactions.Transactional
 import grails.plugin.springsecurity.SpringSecurityService
 import grails.plugin.springsecurity.SpringSecurityUtils
 import grails.web.servlet.mvc.GrailsParameterMap
-import org.gokb.cred.CuratoryGroup
-import org.gokb.cred.Identifier
-import org.gokb.cred.User
+import wekb.auth.User
 
 @Transactional
 class AccessService {
 
     SpringSecurityService springSecurityService
 
-    List allowedBaseClasses = ['org.gokb.cred.ComponentWatch',
-                               'org.gokb.cred.CuratoryGroup',
-                               'org.gokb.cred.JobResult',
-                               'org.gokb.cred.IdentifierNamespace',
-                               'org.gokb.cred.Identifier',
-                               'org.gokb.cred.Org',
-                               'org.gokb.cred.Package',
-                               'org.gokb.cred.Platform',
-                               'org.gokb.cred.ReviewRequest',
-                               'org.gokb.cred.TitleInstancePackagePlatform',
-                               'org.gokb.cred.Source',
+    List allowedBaseClasses = ['wekb.ComponentWatch',
+                               'wekb.CuratoryGroup',
+                               'wekb.system.JobResult',
+                               'wekb.IdentifierNamespace',
+                               'wekb.Identifier',
+                               'wekb.Org',
+                               'wekb.Package',
+                               'wekb.Platform',
+                               'wekb.ReviewRequest',
+                               'wekb.TitleInstancePackagePlatform',
+                               'wekb.Source',
                                'wekb.UpdatePackageInfo',
                                'wekb.UpdateTippInfo']
 
-    List allowedToCreate = ['org.gokb.cred.Org',
-                            'org.gokb.cred.Package',
-                            'org.gokb.cred.Platform',
-                            'org.gokb.cred.TitleInstancePackagePlatform',
-                            'org.gokb.cred.Source',]
+    List allowedToCreate = ['wekb.Org',
+                            'wekb.Package',
+                            'wekb.Platform',
+                            'wekb.TitleInstancePackagePlatform',
+                            'wekb.Source',]
 
     List allowedPublicShow = ['UpdatePackageInfo',
                               'UpdateTippInfo',

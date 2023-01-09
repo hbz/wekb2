@@ -1,7 +1,7 @@
-package com.k_int
+package wekb
 
-import org.gokb.cred.JobResult
-import org.gokb.cred.RefdataValue
+import wekb.system.JobResult
+
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.Future
 import java.util.concurrent.TimeUnit

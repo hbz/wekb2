@@ -1,8 +1,10 @@
-package org.gokb
+package wekb
+
+import grails.core.GrailsApplication
 
 class GenericOIDService {
 
-  def grailsApplication
+  GrailsApplication grailsApplication
   def classCache = [:]
 
   def resolveOID(oid, boolean lock=false) {

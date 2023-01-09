@@ -1,6 +1,6 @@
-package com.k_int
+package wekb
 
-import de.wekb.helper.RCConstants
+import wekb.helper.RCConstants
 import groovyx.net.http.HTTPBuilder
 import groovyx.net.http.Method
 import groovyx.net.http.URIBuilder
@@ -19,7 +19,6 @@ import org.elasticsearch.search.aggregations.AggregationBuilders
 import org.elasticsearch.search.builder.SearchSourceBuilder
 import org.elasticsearch.search.sort.FieldSortBuilder
 import org.elasticsearch.search.sort.SortOrder
-import org.gokb.cred.*
 
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -194,7 +193,7 @@ class ESSearchService{
                   subEntry.buckets.each { bucket ->
                     bucket.each { bi ->
                       String display = "Unknown"
-                      if (bi.getKey().startsWith('org.gokb.cred') && KBComponent.get(bi.getKey().split(':')[1].toLong())) {
+                      if (bi.getKey().startsWith('wekb') && KBComponent.get(bi.getKey().split(':')[1].toLong())) {
                         display = KBComponent.get(bi.getKey().split(':')[1].toLong()).name
                       }
                       facet_values.add([term: bi.getKey(), display: display, count: bi.getDocCount()])
@@ -205,7 +204,7 @@ class ESSearchService{
                 entry.buckets.each { bucket ->
                   bucket.each { bi ->
                     String display = "Unknown"
-                    if (bi.getKey().startsWith('org.gokb.cred') && KBComponent.get(bi.getKey().split(':')[1].toLong())) {
+                    if (bi.getKey().startsWith('wekb') && KBComponent.get(bi.getKey().split(':')[1].toLong())) {
                       display = KBComponent.get(bi.getKey().split(':')[1].toLong()).name
                     }
                     facet_values.add([term: bi.getKey(), display: display, count: bi.getDocCount()])
@@ -876,7 +875,7 @@ class ESSearchService{
             contextPath = context
           }
           else if (component_type) {
-            def obj_cls = Class.forName("org.gokb.cred.${component_type}").newInstance()
+            def obj_cls = Class.forName("wekb.${component_type}").newInstance()
             contextPath = obj_cls.restPath
           }
 
@@ -991,7 +990,7 @@ class ESSearchService{
         'curatoryGroups': false
     ]
 
-    def obj_cls = Class.forName("org.gokb.cred.${record.source.componentType}").newInstance()
+    def obj_cls = Class.forName("wekb.${record.source.componentType}").newInstance()
 
     if (obj_cls) {
 
@@ -1031,7 +1030,7 @@ class ESSearchService{
         }
         else if (esMapping[field] == "refdata" && !toSkip) {
           if (val) {
-            def cat = classExaminationService.deriveCategoryForProperty("org.gokb.cred.${record.source.componentType}", field)
+            def cat = classExaminationService.deriveCategoryForProperty("wekb.${record.source.componentType}", field)
             def rdv = RefdataCategory.lookup(cat, val)
             domainMapping[field] = [id: rdv.id, name:rdv.value]
           }
