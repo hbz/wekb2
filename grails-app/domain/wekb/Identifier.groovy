@@ -20,13 +20,19 @@ class Identifier {
   Date lastUpdated
 
   static belongsTo = [
-
+          tipp: TitleInstancePackagePlatform,
+          org: Org,
+          platform: Platform,
+          pkg: Package
   ]
 
 
   static constraints = {
     uuid(nullable: false, unique: false, blank: false, maxSize: 2048)
-
+    tipp(nullable:true)
+    org(nullable:true)
+    platform(nullable:true)
+    pkg(nullable:true)
     namespace(nullable: false, blank: false)
     value(validator: { val, obj ->
       if (!val || !val.trim()) {
@@ -47,7 +53,10 @@ class Identifier {
     value column: 'id_value', index: 'id_value_idx'
     namespace column: 'id_namespace_fk', index: 'id_namespace_idx'
     uuid column: 'id_uuid', type: 'text', index: 'id_uuid_idx'
-
+    tipp column: 'id_tipp_fk', index: 'id_tipp_idx'
+    org column: 'id_org_fk', index: 'id_org_idx'
+    platform column: 'id_platform_fk', index: 'id_platform_idx'
+    pkg column: 'id_pkg_fk', index: 'id_pkg_idx'
     lastUpdated column: 'id_last_updated'
     dateCreated column: 'id_date_created'
   }
@@ -66,7 +75,9 @@ class Identifier {
   def afterInsert (){
     log.debug("afterSave for ${this}")
     def ref = this.getReference()
-
+    if(ref instanceof KBComponent){
+      cascadingUpdateService.update(this, dateCreated)
+    }
 
   }
 
@@ -86,6 +97,9 @@ class Identifier {
   def afterUpdate(){
     log.debug("afterUpdate for ${this}")
     def ref = this.getReference()
+    if(ref instanceof KBComponent){
+      cascadingUpdateService.update(this, lastUpdated)
+    }
 
   }
   public String getName() {
@@ -99,13 +113,20 @@ class Identifier {
   static String getAttributeName(def object) {
     String name
 
+    name = object instanceof Org ?      'org' : name
     name = object instanceof Package ?  'pkg' : name
+    name = object instanceof TitleInstancePackagePlatform ? 'tipp' : name
+    name = object instanceof Platform ?      'platform' : name
 
     name
   }
 
   void setReference(def owner) {
-   }
+    org  = owner instanceof Org ? owner : org
+    pkg  = owner instanceof Package ? owner : pkg
+    platform = owner instanceof Platform ?  owner : platform
+    tipp = owner instanceof TitleInstancePackagePlatform ? owner : tipp
+  }
 
   Object getReference() {
     int refCount = 0

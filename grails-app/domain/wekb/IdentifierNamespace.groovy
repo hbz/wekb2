@@ -44,10 +44,6 @@ class IdentifierNamespace {
     value(unique: ['value', 'targetType'])
   }
 
-  public static final String restPath = "/namespaces"
-  // used by @gokbg3.RestMappingService.selectJsonLabel
-  public static final String jsonLabel = "name"
-
   @Override
   public boolean equals(Object obj) {
     if (obj != null) {
@@ -76,7 +72,7 @@ class IdentifierNamespace {
     }
     if ( ql ) {
       ql.each { t ->
-        result.add([id:"org.gokb.cred.IdentifierNamespace:${t.id}",text:"${t.name} ${params.filter1 == 'all' ? ( t.targetType ? '(for '+t.targetType.value+')' : '' ) : ''}"])
+        result.add([id:"wekb.IdentifierNamespace:${t.id}",text:"${t.name} ${params.filter1 == 'all' ? ( t.targetType ? '(for '+t.targetType.value+')' : '' ) : ''}"])
       }
     }
     result

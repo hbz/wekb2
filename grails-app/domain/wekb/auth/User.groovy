@@ -32,9 +32,6 @@ class User {
   RefdataValue showQuickView
   RefdataValue showInfoIcon
 
-  // used by @gokbg3.RestMappingService.selectJsonLabel
-  public static final String jsonLabel = "username"
-
   static hasMany = [
 
   ]

@@ -30,7 +30,7 @@ class Source extends KBComponent {
   Date lastChangedInKbart
 
   static manyByCombo = [
-    //curatoryGroups: CuratoryGroup
+    curatoryGroups: CuratoryGroup
   ]
 
   static mapping = {

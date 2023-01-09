@@ -28,11 +28,37 @@ class Org extends KBComponent {
 
 
   static manyByCombo = [
+    providedPackages : Package,
+    children         : Org,
+    'previous'       : Org,
+    curatoryGroups   : CuratoryGroup,
+    providedPlatforms: Platform,
+    brokeredPackages : Package,
+    licensedPackages : Package,
+    vendedPackages   : Package,
+    //  ids      : Identifier
+  ]
+
+  static hasByCombo = [
+    parent   : Org,
+    successor: Org,
   ]
 
   static mappedByCombo = [
+    providedPackages : 'provider',
+    providedPlatforms: 'provider',
+    publishedTitles  : 'publisher',
+    issuedTitles     : 'issuer',
+    children         : 'parent',
+    successor        : 'previous',
+    brokeredPackages : 'broker',
+    licensedPackages : 'licensor',
+    vendedPackages   : 'vendor',
   ]
 
+  //  static mappedBy = [
+  //    ids: 'component',
+  //  ]
 
   static hasMany = [
     roles: RefdataValue,

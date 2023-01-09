@@ -8,7 +8,6 @@ import grails.util.GrailsNameUtils
 import groovy.util.logging.Slf4j
 import org.grails.datastore.mapping.model.PersistentEntity
 import org.grails.datastore.mapping.model.PersistentProperty
-import wekb.KBComponentLanguage
 import wekb.auth.User
 
 import javax.persistence.Transient
@@ -460,7 +459,7 @@ abstract class KBComponent implements Auditable{
   /** Added here so that everyone who wants a normalised component name can
    call this function, then we have a single place to call or change to pivot the norm rules */
   static def generateNormname(str_to_norm){
-    def r = GOKbTextUtils.norm2(str_to_norm)
+    def r = TextUtils.norm2(str_to_norm)
     if (r.length() == 0){
       r = null
     }
@@ -477,9 +476,9 @@ abstract class KBComponent implements Auditable{
   protected def generateComponentHash(){
     // Default component hash generation -- Override in subclasses
     // To try and find instances
-    this.componentHash = GOKbTextUtils.generateComponentHash([normname, componentDiscriminator])
+    this.componentHash = TextUtils.generateComponentHash([normname, componentDiscriminator])
     // To find works
-    this.bucketHash = GOKbTextUtils.generateComponentHash([normname])
+    this.bucketHash = TextUtils.generateComponentHash([normname])
   }
 
 
@@ -865,7 +864,7 @@ abstract class KBComponent implements Auditable{
         obj_label = newVal.variantName
       }
       result = ['oid': "${newVal.class.name}:${newVal.id}", 'label': obj_label]
-      if (newVal.class.name == 'org.gokb.cred.RefdataValue'){
+      if (newVal.class.name == 'wekb.RefdataValue'){
         result.category = newVal.owner.label
       }
     }
@@ -950,7 +949,7 @@ abstract class KBComponent implements Auditable{
       def existing_component = KBComponent.findByNormname(normname)
       if (existing_component == null){
         // Variant names use different normalisation method.
-        normname = GOKbTextUtils.normaliseString(name)
+        normname = TextUtils.normaliseString(name)
         // not already a name
         // Make sure not already a variant name
         def existing_variants = KBComponentVariantName.findAllByNormVariantName(normname)
