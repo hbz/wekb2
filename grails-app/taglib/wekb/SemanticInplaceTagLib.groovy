@@ -1,7 +1,6 @@
 package wekb
 
 import grails.plugin.springsecurity.SpringSecurityService
-import org.gokb.GenericOIDService
 import wekb.auth.User
 
 
@@ -188,7 +187,7 @@ class SemanticInplaceTagLib {
             if (isAdmin) {
                 RefdataCategory rdc = RefdataCategory.findByDesc(config)
                 if (rdc) {
-                    out << '&nbsp;&nbsp;<a href="' + createLink(controller: 'resource', action: 'show', id: 'org.gokb.cred.RefdataCategory:' + rdc.id) + '"title="Jump to RefdataCategory"><i class="ui icon eye"></i></a><br/>'
+                    out << '&nbsp;&nbsp;<a href="' + createLink(controller: 'resource', action: 'show', id: 'wekb.RefdataCategory:' + rdc.id) + '"title="Jump to RefdataCategory"><i class="ui icon eye"></i></a><br/>'
                 }
             }
 
@@ -285,7 +284,7 @@ class SemanticInplaceTagLib {
         def result = ''
         if (value != null) {
             switch (value.class) {
-                case org.gokb.cred.RefdataValue.class:
+                case wekb.RefdataValue.class:
                     result = value.getI10n('value')
                     break;
                 case Boolean.class:
