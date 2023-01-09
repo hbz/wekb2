@@ -1,4 +1,4 @@
-package org.gokb
+package wekb
 
 class ComponentStatisticCollectionJob {
 

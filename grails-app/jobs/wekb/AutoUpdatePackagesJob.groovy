@@ -1,7 +1,5 @@
-package org.gokb
+package wekb
 
-
-import org.gokb.cred.Package
 import wekb.AutoUpdatePackagesService
 
 import java.util.concurrent.ExecutorService
