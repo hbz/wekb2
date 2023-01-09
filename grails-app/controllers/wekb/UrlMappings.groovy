@@ -1,5 +1,6 @@
 package wekb
 
+import javassist.NotFoundException
 import org.springframework.security.access.AccessDeniedException
 
 class UrlMappings {
