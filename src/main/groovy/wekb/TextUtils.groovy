@@ -7,7 +7,7 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.time.format.ResolverStyle
 
-class GOKbTextUtils {
+class TextUtils {
 
   private static final List<String> STOPWORDS = [
     "and",
