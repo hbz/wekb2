@@ -24,8 +24,7 @@ class ErrorController {
 
             String nl = " %0D%0A"
 
-            resp.mailString =
-                    "mailto:laser@hbz-nrw.de?subject=Error report - " +
+            resp.mailString ="subject=Error report" +
                             "&body=Your error description (please provide): " + nl + nl +
                             "URI: " + request.forwardURI + nl +
                             "Date/Time: " + new Date() + nl +
@@ -127,8 +126,7 @@ class ErrorController {
 
             String nl = " %0D%0A"
 
-            resp.mailString =
-                    "mailto:laser@hbz-nrw.de?subject=Error report - " +
+            resp.mailString ="subject=Error report" +
                             "&body=Your error description (please provide): " + nl + nl +
                             "URI: " + request.forwardURI + nl +
                             "Date/Time: " + new Date() + nl +
