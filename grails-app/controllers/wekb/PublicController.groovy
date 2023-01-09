@@ -1,19 +1,15 @@
-package gokb
+package wekb
 
-import de.wekb.helper.RCConstants
-import de.wekb.helper.RDStore
-import de.wekb.helper.ServerUtils
+import wekb.helper.RCConstants
+import wekb.helper.RDStore
+import wekb.helper.ServerUtils
 import grails.plugins.mail.MailService
-import org.gokb.cred.*
-import wekb.ExportService
-import wekb.SearchService
 
 import javax.servlet.ServletOutputStream
 
 class PublicController {
 
   def genericOIDService
-  def ESSearchService
   def dateFormatService
   ExportService exportService
   MailService mailService
@@ -175,10 +171,10 @@ class PublicController {
 
   def kbart() {
 
-    Package pkg = genericOIDService.resolveOID(params.id)
+    wekb.Package pkg = genericOIDService.resolveOID(params.id)
 
     if(!pkg){
-      pkg = Package.findByUuid(params.id)
+      pkg = wekb.Package.findByUuid(params.id)
     }
 
     if(!pkg){
@@ -207,10 +203,10 @@ class PublicController {
 
   def packageTSVExport() {
 
-    Package pkg = genericOIDService.resolveOID(params.id)
+    wekb.Package pkg = genericOIDService.resolveOID(params.id)
 
     if(!pkg){
-      pkg = Package.findByUuid(params.id)
+      pkg = wekb.Package.findByUuid(params.id)
     }
 
     if(!pkg){

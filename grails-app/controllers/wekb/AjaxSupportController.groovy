@@ -1,68 +1,28 @@
-package gokb
+package wekb
 
-import com.k_int.ClassUtils
-import de.wekb.helper.DateUtils
-import de.wekb.helper.RCConstants
-import de.wekb.helper.RDStore
+import grails.plugin.springsecurity.SpringSecurityService
+import wekb.auth.User
+import wekb.helper.DateUtils
+import wekb.helper.RCConstants
+import wekb.helper.RDStore
 import grails.converters.JSON
 import grails.core.GrailsClass
 import grails.gorm.transactions.Transactional
-import org.gokb.cred.*
 import org.grails.datastore.mapping.model.PersistentEntity
 import org.grails.datastore.mapping.model.types.Association
 import org.grails.datastore.mapping.model.types.ManyToOne
 import org.grails.datastore.mapping.model.types.OneToMany
 import org.grails.datastore.mapping.model.types.OneToOne
 import org.springframework.security.access.annotation.Secured
-import wekb.AccessService
-import wekb.Contact
-import wekb.KBComponentLanguage
 
 import java.text.SimpleDateFormat
 
 class AjaxSupportController {
 
-  def genericOIDService
-  def aclUtilService
-  def springSecurityService
-  def componentLookupService
-  def messageSource
-  def messageService
+  GenericOIDService genericOIDService
+  SpringSecurityService springSecurityService
+  MessageService messageService
   AccessService accessService
-
-
-  @Deprecated
-  @Secured(['ROLE_EDITOR', 'IS_AUTHENTICATED_FULLY'])
-  def edit() {
-    // edit [name:name, value:project:12, pk:org.gokb.cred.Package:2950, action:edit, controller:ajaxSupport]
-    log.debug("edit ${params}");
-    def result = [:]
-
-    try {
-      if ( params.pk ) {
-        def target = genericOIDService.resolveOID(params.pk)
-        def user = springSecurityService.currentUser
-
-        if (target) {
-          def editable = checkEditable(target)
-
-          if (editable) {
-            target[params.name] = params.value
-            target.save(flush:true)
-          }
-        }
-
-        pk_components = pk.split(':')
-        if ( pk_components.length == 2 ) {
-        }
-      }
-    }
-    catch ( Exception e ) {
-      log.error(e)
-    }
-
-    render result as JSON
-  }
 
   @Secured(['ROLE_EDITOR', 'IS_AUTHENTICATED_FULLY'])
   def setRef() {
@@ -117,7 +77,7 @@ class AjaxSupportController {
       log.debug("Row qry: ${config.rowQry}");
       log.debug("DOMAIN: ${config.domain}");
 
-      GrailsClass dc = grailsApplication.getArtefact("Domain", 'org.gokb.cred.'+ config.domain)
+      GrailsClass dc = grailsApplication.getArtefact("Domain", 'wekb.'+ config.domain)
 
       if (dc) {
         def cq = dc.getClazz().executeQuery(config.countQry,query_params);
@@ -141,33 +101,6 @@ class AjaxSupportController {
 
 
   def refdata_config = [
-    'ContentProvider' : [
-      domain:'Org',
-      countQry:'select count(o) from Org as o where lower(o.name) like ?',
-      rowQry:'select o from Org as o where lower(o.name) like ? order by o.name asc',
-      qryParams:[
-    [
-      param:'sSearch',
-      clos:{ value ->
-      def result = '%'
-      if ( value && ( value.length() > 0 ) )
-        result = "%${value.trim().toLowerCase()}%"
-      result
-      }
-    ]
-    ],
-      cols:['name'],
-      format:'map'
-    ],
-    'PackageType' : [
-      domain:'RefdataValue',
-      countQry:"select count(rdv) from RefdataValue as rdv where rdv.useInstead is null and rdv.owner.desc=?",
-      rowQry:"select rdv from RefdataValue as rdv where rdv.useInstead is null and rdv.owner.desc=?",
-      qryParams:[['cat': "Package Type"]],
-      rdvCat: RCConstants.PACKAGE_SCOPE,
-      cols:['value'],
-      format:'simple'
-    ],
     'KBComponent.Status' : [
       domain:'RefdataValue',
       // countQry:"select count(rdv) from RefdataValue as rdv where rdv.owner.desc='KBComponent.Status' and rdv.value !='${KBComponent.STATUS_DELETED}'",
@@ -177,15 +110,6 @@ class AjaxSupportController {
       required:true,
       qryParams:[],
       rdvCat: RCConstants.KBCOMPONENT_STATUS,
-      cols:['value'],
-      format:'simple'
-    ],
-    'VariantNameType' : [
-      domain:'RefdataValue',
-      countQry:"select count(rdv) from RefdataValue as rdv where rdv.useInstead is null and rdv.owner.desc=?",
-      rowQry:"select rdv from RefdataValue as rdv where rdv.useInstead is null and rdv.owner.desc=?",
-      qryParams:[],
-      rdvCat: RCConstants.KBCOMPONENT_VARIANTNAME_VARIANT_TYPE,
       cols:['value'],
       format:'simple'
     ],
@@ -204,17 +128,6 @@ class AjaxSupportController {
       rowQry:"select rdv from RefdataValue as rdv where rdv.useInstead is null and rdv.owner.desc=?",
       qryParams:[],
       rdvCat: RCConstants.KBCOMPONENT_VARIANTNAME_LOCAL,
-      cols:['value'],
-      format:'simple'
-    ],
-    'ReviewRequest.Status' : [
-      domain:'RefdataValue',
-      // countQry:"select count(rdv) from RefdataValue as rdv where rdv.owner.desc='KBComponent.Status' and rdv.value !='${KBComponent.STATUS_DELETED}'",
-      // rowQry:"select rdv from RefdataValue as rdv where rdv.owner.desc='KBComponent.Status' and rdv.value !='${KBComponent.STATUS_DELETED}'",
-      countQry:"select count(rdv) from RefdataValue as rdv where rdv.useInstead is null and rdv.owner.desc=?",
-      rowQry:"select rdv from RefdataValue as rdv where rdv.useInstead is null and rdv.owner.desc=?",
-      qryParams:[],
-      rdvCat: RCConstants.REVIEW_REQUEST_STATUS,
       cols:['value'],
       format:'simple'
     ],
@@ -268,9 +181,9 @@ class AjaxSupportController {
         if (editable || contextObj.id == user.id) {
           log.debug("Create a new instance of ${params.__newObjectClass}");
 
-          if (params.__newObjectClass == "org.gokb.cred.KBComponentVariantName"){
+          if (params.__newObjectClass == "wekb.KBComponentVariantName"){
 
-            def norm_variant = GOKbTextUtils.normaliseString(params.variantName)
+            def norm_variant = TextUtils.normaliseString(params.variantName)
             def existing_variants = KBComponentVariantName.findByNormVariantNameAndOwner(norm_variant, contextObj)
 
             if (existing_variants){
@@ -282,7 +195,7 @@ class AjaxSupportController {
             }
           }
 
-          if (params.__newObjectClass == "org.gokb.cred.TitleInstancePackagePlatform") {
+          if (params.__newObjectClass == "wekb.TitleInstancePackagePlatform") {
 
             if (!params.title || params.title.size() == 0) {
               log.debug("missing title for TIPP creation")
@@ -1003,7 +916,7 @@ class AjaxSupportController {
     def result=''
     if ( value ) {
       switch ( value.class ) {
-        case org.gokb.cred.RefdataValue.class:
+        case wekb.RefdataValue.class:
           if ( value.icon != null ) {
             result="<span class=\"select-icon ${value.icon}\"></span>${value.value}"
           }
@@ -1419,35 +1332,6 @@ class AjaxSupportController {
         render result as JSON
       }
     }
-  }
-
-  @Transactional
-  @Secured(['ROLE_EDITOR', 'IS_AUTHENTICATED_FULLY'])
-  def applyForUserorg() {
-    def result = ['result': 'OK', 'params': params]
-    def user_org = UserOrganisation.get(params.id ?: params.userOrg)
-    def user = springSecurityService.currentUser
-    def pending_status = RefdataCategory.lookup(RCConstants.MEMBERSHIP_STATUS, 'Pending')
-    def role_type = RefdataCategory.lookup(RCConstants.MEMBERSHIP_ROLE, 'Member')
-
-    if ( user_org && !user_org.members?.party?.contains(user) ) {
-      new UserOrganisationMembership(memberOf: user_org, party: user, role: role_type, status: pending_status).save(flush:true, failOnError:true)
-
-      result.item = [user:user.username, status: pending_status.value, role: role_type.value]
-    }
-    else {
-      result.result = 'ERROR'
-
-      if ( !user_org ) {
-        result.message = 'Could not find User Organisation with id ${params.userOrg}!'
-        result.code = 404
-      }
-      else {
-        result.message = 'This user is already a member of this group'
-      }
-    }
-
-    render result as JSON
   }
 
   @Transactional

@@ -1,4 +1,4 @@
-<%@ page import="org.gokb.cred.Platform; org.gokb.cred.Org" %>
+<%@ page import="wekb.Platform; wekb.Org" %>
 <!DOCTYPE html>
 <html>
 <head>

@@ -48,12 +48,12 @@
 
             <g:form controller="ajaxSupport" action="addToCollection">
                 <input type="hidden" name="__context" value="${d.class.name}:${d.id}"/>
-                <input type="hidden" name="__newObjectClass" value="org.gokb.cred.KBComponentAdditionalProperty"/>
+                <input type="hidden" name="__newObjectClass" value="wekb.KBComponentAdditionalProperty"/>
                 <input type="hidden" name="__addToColl" value="additionalProperties"/>
                 <div class="field">
                     <label>Additional Property Definition</label>
                 <semui:simpleReferenceDropdown  name="propertyDefn"
-                                                  baseClass="org.gokb.cred.AdditionalPropertyDefinition"
+                                                  baseClass="wekb.AdditionalPropertyDefinition"
                                                   editable="${editable}"/>
                 </div>
                 <div class="field">

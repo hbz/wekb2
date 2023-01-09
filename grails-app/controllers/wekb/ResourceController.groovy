@@ -1,17 +1,15 @@
-package gokb
+package wekb
 
+import grails.plugin.springsecurity.SpringSecurityService
 import grails.plugin.springsecurity.SpringSecurityUtils
-import org.gokb.cred.*
 import org.springframework.security.access.annotation.Secured
-import wekb.AccessService
-import wekb.SearchService
+import wekb.auth.User
 
 class ResourceController {
 
-  def genericOIDService
-  def classExaminationService
-  def springSecurityService
-  def displayTemplateService
+  GenericOIDService genericOIDService
+  SpringSecurityService springSecurityService
+  DisplayTemplateService displayTemplateService
   AccessService accessService
   SearchService searchService
 
@@ -29,7 +27,7 @@ class ResourceController {
     def read_perm = false
 
     if (params.type && params.id) {
-      oid = "org.gokb.cred." + params.type + ":" + params.id
+      oid = "wekb." + params.type + ":" + params.id
     }
     else if (params.int('id')) {
       displayobj = KBComponent.get(params.int('id'))
@@ -70,7 +68,7 @@ class ResourceController {
 
             if (read_perm) {
 
-              if (displayobj instanceof Package) {
+              if (displayobj instanceof wekb.Package) {
                 displayobj.createCoreIdentifiersIfNotExist()
               }
 

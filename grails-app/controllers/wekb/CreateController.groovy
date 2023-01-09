@@ -1,26 +1,21 @@
-package gokb
+package wekb
 
 
 import grails.converters.JSON
+import grails.plugin.springsecurity.SpringSecurityService
 import grails.plugin.springsecurity.SpringSecurityUtils
-import org.gokb.cred.*
 import org.mozilla.universalchardet.UniversalDetector
 import org.springframework.security.access.annotation.Secured
 import org.springframework.web.multipart.MultipartFile
-import wekb.AccessService
-import wekb.CreateComponentService
-import wekb.ExportService
+import wekb.auth.User
 
 @Secured(['IS_AUTHENTICATED_FULLY'])
 class CreateController {
 
-  def genericOIDService
-  def classExaminationService
-  def springSecurityService
-  def displayTemplateService
-  def messageSource
+  ClassExaminationService classExaminationService
+  SpringSecurityService springSecurityService
+  DisplayTemplateService displayTemplateService
   AccessService accessService
-  ComponentLookupService componentLookupService
   ExportService exportService
   CreateComponentService createComponentService
 

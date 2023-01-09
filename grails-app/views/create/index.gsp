@@ -14,7 +14,7 @@
 <h1 class="ui header">
     Create new ${displayobj?.getNiceName() ?: 'Component'}
 
-    <g:if test="${displayobj instanceof org.gokb.cred.Package}">
+    <g:if test="${displayobj instanceof wekb.Package}">
         <div class="ui right floated buttons">
             <g:link controller="create" action="packageBatch" class="ui black button">Upload Packages</g:link>
         </div>

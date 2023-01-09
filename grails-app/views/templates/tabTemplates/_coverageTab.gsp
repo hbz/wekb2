@@ -1,4 +1,4 @@
-<%@ page import="de.wekb.helper.RCConstants;" %>
+<%@ page import="wekb.helper.RCConstants;" %>
 <g:if test="${d.publicationType?.value == 'Serial'}">
 	<semui:tabsItemContent tab="tippcoverage" activeTab="${params.activeTab}">
 		<div class="content wekb-inline-lists">
@@ -81,7 +81,7 @@
 			<input type="hidden" name="__context"
 				   value="${d.class.name}:${d.id}"/>
 			<input type="hidden" name="__newObjectClass"
-				   value="org.gokb.cred.TIPPCoverageStatement"/>
+				   value="wekb.TIPPCoverageStatement"/>
 			<input type="hidden" name="__recip" value="owner"/>
 			<div class="field">
                               <label>Start Date</label>
@@ -122,7 +122,7 @@
                               <label>Coverage Depth</label>
 
 				<semui:simpleReferenceDropdown name="coverageDepth"
-											  baseClass="org.gokb.cred.RefdataValue"
+											  baseClass="wekb.RefdataValue"
 											  filter1="${RCConstants.TIPPCOVERAGESTATEMENT_COVERAGE_DEPTH}"/>
 			</div>
 			<div class="field">

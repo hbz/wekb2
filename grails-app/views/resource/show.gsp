@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<%@ page import="org.gokb.cred.TitleInstancePackagePlatform; de.wekb.helper.RDStore;" %>
+<%@ page import="wekb.TitleInstancePackagePlatform; wekb.helper.RDStore;" %>
 <html>
 <head>
     <meta name="layout" content="public_semui"/>
@@ -39,7 +39,7 @@
         </div>
         <g:if test="${displayobj && response.status != 403 && displayobj.class.simpleName in ["Package", "Org", "Platform", "TitleInstancePackagePlatform"]}">
             <ul class="nav navbar-nav navbar-right">
-                <g:if test="${org.gokb.cred.KBComponent.isAssignableFrom(displayobj.class)}">
+                <g:if test="${wekb.KBComponent.isAssignableFrom(displayobj.class)}">
                     <li><a onClick="javascript:toggleWatch('${displayobj.class.name}:${displayobj.id}')"
                            id="watchToggleLink"
                            title="${user_watching ? 'You are watching this item' : 'You are not watching this item'}"

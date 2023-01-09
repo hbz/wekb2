@@ -1,4 +1,4 @@
-<%@ page import="de.wekb.helper.RCConstants; org.gokb.cred.RefdataCategory;" %>
+<%@ page import="wekb.helper.RCConstants; wekb.RefdataCategory;" %>
 <g:set var="counter" value="${offset}"/>
 
 <g:form method="post" class="ui form" controller="${controllerName}" action="${actionName}"

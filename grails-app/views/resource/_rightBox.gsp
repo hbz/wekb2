@@ -1,11 +1,11 @@
-<%@ page import="grails.plugin.springsecurity.SpringSecurityUtils; org.gokb.cred.CuratoryGroup; org.gokb.cred.TitleInstancePackagePlatform;" %>
+<%@ page import="grails.plugin.springsecurity.SpringSecurityUtils; wekb.CuratoryGroup; wekb.TitleInstancePackagePlatform;" %>
 <g:set var="curatoryGroups"
        value="${(d instanceof TitleInstancePackagePlatform && d.pkg) ? d.pkg.curatoryGroups : (d.hasProperty('curatoryGroups') ? d.curatoryGroups : [])}"/>
 <wekb:serviceInjection/>
 
 
 <div class="ui inverted blue right floated segment">
-    <g:if test="${d instanceof org.gokb.cred.KBComponent}">
+    <g:if test="${d instanceof wekb.KBComponent}">
     <h2 class="ui header">Curated By</h2>
 
     <div class="ui bulleted list">
@@ -34,7 +34,7 @@
                     <div class="field">
                         <label>Select a Curatory Group to link with this component</label>
                         <semui:simpleReferenceDropdown name="__relatedObject"
-                                                       baseClass="org.gokb.cred.CuratoryGroup"
+                                                       baseClass="wekb.CuratoryGroup"
                                                        filter1="Current"/>
                     </div>
 
@@ -48,11 +48,11 @@
     <sec:ifNotLoggedIn>
         <div style="margin-top:10px;">
             <g:link controller="resource" action="showLogin" class="ui icon inverted button"
-                    id="${d instanceof org.gokb.cred.KBComponent ? d.uuid : d.class.name + ':' + d.id}"><i class="edit icon"></i> Edit (Login required)</g:link>
+                    id="${d instanceof wekb.KBComponent ? d.uuid : d.class.name + ':' + d.id}"><i class="edit icon"></i> Edit (Login required)</g:link>
         </div>
     </sec:ifNotLoggedIn>
     <sec:ifLoggedIn>
-        <g:if test="${(d.respondsTo("getCuratoryGroups") || d instanceof org.gokb.cred.KBComponent) && !((request.curator != null ? request.curator.size() > 0 : true))}">
+        <g:if test="${(d.respondsTo("getCuratoryGroups") || d instanceof wekb.KBComponent) && !((request.curator != null ? request.curator.size() > 0 : true))}">
             <div class="ui segment">
                 <h4 class="ui header">Info</h4>
 
@@ -89,7 +89,7 @@
 
     <g:render template="/templates/componentStatus" model="${[d: d]}"/>
 
-    <g:if test="${d instanceof org.gokb.cred.Package}">
+    <g:if test="${d instanceof wekb.Package}">
         <br>
         &nbsp;
         <br>

@@ -1,4 +1,4 @@
-<%@ page import="org.gokb.cred.RefdataValue; de.wekb.helper.RDStore; de.wekb.helper.RCConstants" %>
+<%@ page import="wekb.RefdataValue; wekb.helper.RDStore; wekb.helper.RCConstants" %>
 <dl>
     <dt class="control-label">
         Package

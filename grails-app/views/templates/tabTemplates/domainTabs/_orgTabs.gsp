@@ -1,4 +1,4 @@
-<%@ page import="de.wekb.helper.RCConstants" %>
+<%@ page import="wekb.helper.RCConstants" %>
 <g:if test="${d.id}">
     <semui:tabs>
         <semui:tabsItemWithoutLink tab="identifiers" defaultTab="identifiers" activeTab="${params.activeTab}" counts="${d.ids.size()}">

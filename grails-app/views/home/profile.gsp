@@ -1,4 +1,4 @@
-<%@ page import="de.wekb.helper.RCConstants" %>
+<%@ page import="wekb.helper.RCConstants" %>
 <!DOCTYPE html>
 <html>
 <head>

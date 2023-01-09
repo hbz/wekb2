@@ -1,4 +1,4 @@
-<%@ page import="de.wekb.helper.RCConstants; org.gokb.cred.RefdataCategory;" %>
+<%@ page import="wekb.helper.RCConstants; wekb.RefdataCategory;" %>
 <g:set var="counter" value="${offset}"/>
 
 <div style="overflow-x: auto">

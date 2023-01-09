@@ -1,4 +1,4 @@
-<%@ page import="de.wekb.helper.RCConstants" %>
+<%@ page import="wekb.helper.RCConstants" %>
 <dl>
     <dt class="control-label">
         Source Name
@@ -60,7 +60,7 @@
     </dt>
     <dd>
         <semui:xEditableManyToOne owner="${d}" field="responsibleParty"
-                                  baseClass="org.gokb.cred.Org">
+                                  baseClass="wekb.Org">
             ${d.responsibleParty?.name ?: ''}
         </semui:xEditableManyToOne>
     </dd>
@@ -79,7 +79,7 @@
     </dt>
     <dd>
         <semui:xEditableManyToOne owner="${d}" field="targetNamespace"
-                                  baseClass="org.gokb.cred.IdentifierNamespace"
+                                  baseClass="wekb.IdentifierNamespace"
                                   filter1="TitleInstancePackagePlatform">${d.targetNamespace}</semui:xEditableManyToOne>
     </dd>
 </dl>

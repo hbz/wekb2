@@ -76,7 +76,7 @@
                 <semui:xEditable owner="${v}" field="description"/>
               </td>
                 %{--<td><semui:xEditableManyToOne owner="${v}"
-                                              field="useInstead" baseClass="org.gokb.cred.RefdataValue"
+                                              field="useInstead" baseClass="wekb.RefdataValue"
                                               filter1="${d.desc}">
                     ${v.useInstead?.value}
                 </semui:xEditableManyToOne></td>--}%
@@ -97,7 +97,7 @@
                 <input type="hidden" name="__context"
                        value="${d.className}:${d.id}"/>
                 <input type="hidden" name="__newObjectClass"
-                       value="org.gokb.cred.RefdataValue"/>
+                       value="wekb.RefdataValue"/>
                 <input type="hidden" name="__recip" value="owner"/>
 
                 <div class="field">

@@ -1,9 +1,10 @@
-package gokb
+package wekb
 
 import org.springframework.security.access.annotation.Secured
+import wekb.auth.User
 
 @Secured(['IS_AUTHENTICATED_FULLY'])
-class UserController extends grails.plugin.springsecurity.ui.UserController {
+class UserController {
 
   UserProfileService userProfileService
 

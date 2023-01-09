@@ -1,14 +1,14 @@
 package wekb
 
-import de.wekb.helper.RCConstants
-import de.wekb.helper.RDStore
-import gokbg3.DateFormatService
+import grails.plugin.springsecurity.SpringSecurityService
+import wekb.helper.RCConstants
+import wekb.helper.RDStore
 import org.springframework.security.access.annotation.Secured
 
 @Secured(['IS_AUTHENTICATED_FULLY'])
 class GroupController {
 
-    def springSecurityService
+    SpringSecurityService springSecurityService
     SearchService searchService
     DateFormatService dateFormatService
     ExportService exportService

@@ -1,4 +1,4 @@
-<%@ page import="org.gokb.cred.RefdataValue; de.wekb.helper.RDStore;" %>
+<%@ page import="wekb.RefdataValue; wekb.helper.RDStore;" %>
 <g:if test="${d}">
 
     <semui:tabs>

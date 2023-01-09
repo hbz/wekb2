@@ -1,4 +1,4 @@
-<%@ page import="de.wekb.helper.RCConstants; org.gokb.cred.RefdataCategory" %>
+<%@ page import="wekb.helper.RCConstants; wekb.RefdataCategory" %>
 <g:if test="${d.id != null}">
     <div class="ui bulleted list">
         <g:each in="${d.regionalRanges.sort { it.getI10n('value') }}" var="regionalRange">
@@ -28,7 +28,7 @@
                     <label>Regional Range:</label>
 
                     <semui:simpleReferenceDropdown name="__relatedObject"
-                                                   baseClass="org.gokb.cred.RefdataValue"
+                                                   baseClass="wekb.RefdataValue"
                                                    filter1="${RCConstants.PACKAGE_REGIONAL_RANGE}"/>
                 </div>
             </g:form>

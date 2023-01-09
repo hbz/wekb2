@@ -1,4 +1,4 @@
-<%@ page import="de.wekb.helper.RCConstants; org.gokb.cred.RefdataCategory;" %>
+<%@ page import="wekb.helper.RCConstants; wekb.RefdataCategory;" %>
 <g:set var="counter" value="${offset}"/>
 
 <g:form method="post" class="ui form" controller="${controllerName}" action="${actionName}"
@@ -79,7 +79,7 @@
                             </td>
                             <td>
                                 <semui:xEditableManyToOne owner="${row_obj.source}" field="targetNamespace"
-                                                          baseClass="org.gokb.cred.IdentifierNamespace"
+                                                          baseClass="wekb.IdentifierNamespace"
                                                           filter1="TitleInstancePackagePlatform">${row_obj.source.targetNamespace}</semui:xEditableManyToOne>
                             </td>
                             <td>

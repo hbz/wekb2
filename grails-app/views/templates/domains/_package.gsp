@@ -1,4 +1,4 @@
-<%@ page import="de.wekb.helper.RCConstants; org.gokb.cred.RefdataCategory;" %>
+<%@ page import="wekb.helper.RCConstants; wekb.RefdataCategory;" %>
 <dl>
     <dt class="control-label">
         Name
@@ -9,18 +9,18 @@
 </dl>
 <dl>
     <dt class="control-label">Provider</dt>
-    <dd><semui:xEditableManyToOne owner="${d}" field="provider" baseClass="org.gokb.cred.Org"/></dd>
+    <dd><semui:xEditableManyToOne owner="${d}" field="provider" baseClass="wekb.Org"/></dd>
 </dl>
 
 <dl>
     <dt class="control-label">Source</dt>
-    <dd><semui:xEditableManyToOne owner="${d}" field="source" baseClass="org.gokb.cred.Source"/></dd>
+    <dd><semui:xEditableManyToOne owner="${d}" field="source" baseClass="wekb.Source"/></dd>
 </dl>
 
 <dl>
     <dt class="control-label">Nominal Platform</dt>
     <dd><semui:xEditableManyToOne owner="${d}" field="nominalPlatform"
-                                  baseClass="org.gokb.cred.Platform"/></dd>
+                                  baseClass="wekb.Platform"/></dd>
 </dl>
 <dl>
     <dt class="control-label">Status</dt>
@@ -194,20 +194,20 @@
             <div class="field">
                               <label>Archiving Agency</label>
                 <semui:simpleReferenceDropdown  name="archivingAgency"
-                                              baseClass="org.gokb.cred.RefdataValue"
+                                              baseClass="wekb.RefdataValue"
                                               filter1="${RCConstants.PAA_ARCHIVING_AGENCY}"/>
             </div>
             <div class="field">
                               <label>Open Access</label>
                 <semui:simpleReferenceDropdown  name="openAccess"
-                                              baseClass="org.gokb.cred.RefdataValue"
+                                              baseClass="wekb.RefdataValue"
                                               filter1="${RCConstants.PAA_OPEN_ACCESS}"/>
             </div>
 
             <div class="field">
                               <label>Post-Cancellation Access (PCA)</label>
                 <semui:simpleReferenceDropdown  name="postCancellationAccess"
-                                              baseClass="org.gokb.cred.RefdataValue"
+                                              baseClass="wekb.RefdataValue"
                                               filter1="${RCConstants.PAA_POST_CANCELLATION_ACCESS}"/>
             </div>
         </g:form>

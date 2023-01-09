@@ -1,4 +1,4 @@
-<%@ page import="org.gokb.cred.RefdataCategory; de.wekb.helper.ServerUtils;" %>
+<%@ page import="wekb.RefdataCategory; wekb.helper.ServerUtils;" %>
 <!doctype html>
 <html class="no-js" lang="">
 <head>

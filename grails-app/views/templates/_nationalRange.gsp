@@ -1,4 +1,4 @@
-<%@ page import="de.wekb.helper.RCConstants; org.gokb.cred.RefdataCategory" %>
+<%@ page import="wekb.helper.RCConstants; wekb.RefdataCategory" %>
 <g:if test="${d.id != null}">
     <div class="ui bulleted list">
         <g:each in="${d.nationalRanges.sort { it.getI10n('value') }}" var="nationalRange">
@@ -28,7 +28,7 @@
                     <label>National Range:</label>
 
                     <semui:simpleReferenceDropdown name="__relatedObject"
-                                                   baseClass="org.gokb.cred.RefdataValue"
+                                                   baseClass="wekb.RefdataValue"
                                                    filter1="${RCConstants.COUNTRY}"/>
                 </div>
 

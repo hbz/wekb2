@@ -1,4 +1,4 @@
-package gokb
+package wekb
 
 
 import grails.plugin.springsecurity.SpringSecurityService
@@ -12,13 +12,11 @@ import org.elasticsearch.search.aggregations.AggregationBuilders
 import org.elasticsearch.search.builder.SearchSourceBuilder
 import org.elasticsearch.search.sort.FieldSortBuilder
 import org.elasticsearch.search.sort.SortOrder
-import org.gokb.cred.*
-import wekb.AccessService
-import wekb.SearchService
+import wekb.auth.User
 
 class SearchController {
 
-    def genericOIDService
+    GenericOIDService genericOIDService
     SearchService searchService
     AccessService accessService
 

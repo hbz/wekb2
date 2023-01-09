@@ -1,5 +1,5 @@
-<%@ page import="de.wekb.helper.RCConstants" %>
-<g:set var="ctxoid" value="${org.gokb.cred.KBComponent.deproxy(d).class.name}:${d.id}"/>
+<%@ page import="wekb.helper.RCConstants" %>
+<g:set var="ctxoid" value="${wekb.KBComponent.deproxy(d).class.name}:${d.id}"/>
 <g:set var="pstring" value="${property + '_status'}"/>
 <g:set var="pstatus" value="${params[pstring] ?: (combo_status ?: 'Active')}"/>
 
@@ -30,14 +30,14 @@
     </thead>
     <tbody>
     <g:each in="${d.getCombosByPropertyNameAndStatus(property, pstatus)}" var="row">
-        <g:set var="combooid" value="${org.gokb.cred.KBComponent.deproxy(row).class.name}:${row.id}"/>
+        <g:set var="combooid" value="${wekb.KBComponent.deproxy(row).class.name}:${row.id}"/>
         <g:if test="${d.isComboReverse(property)}">
             <g:set var="linkedoid"
-                   value="${org.gokb.cred.KBComponent.deproxy(row.fromComponent).class.name}:${row.fromComponent.id}"/>
+                   value="${wekb.KBComponent.deproxy(row.fromComponent).class.name}:${row.fromComponent.id}"/>
         </g:if>
         <g:else>
             <g:set var="linkedoid"
-                   value="${org.gokb.cred.KBComponent.deproxy(row.toComponent).class.name}:${row.toComponent.id}"/>
+                   value="${wekb.KBComponent.deproxy(row.toComponent).class.name}:${row.toComponent.id}"/>
         </g:else>
         <tr>
             <g:each in="${cols}" var="c">
@@ -66,7 +66,7 @@
                                 <g:link
                                         controller='ajaxSupport'
                                         action='genericSetRel'
-                                        params="${['pk': 'org.gokb.cred.Combo:' + row.id, 'name': 'status', 'fragment': fragment, value: 'org.gokb.cred.RefdataValue:' + org.gokb.cred.RefdataCategory.lookup(RCConstants.COMBO_STATUS, 'Active').id]}"
+                                        params="${['pk': 'wekb.Combo:' + row.id, 'name': 'status', 'fragment': fragment, value: 'wekb.RefdataValue:' + wekb.RefdataCategory.lookup(RCConstants.COMBO_STATUS, 'Active').id]}"
                                         class="confirm-click btn-delete"
                                         title="Reactivate deleted link"
                                         data-confirm-message="Are you sure you wish to remove this ${row.toComponent.niceName}?">Reactivate</g:link>

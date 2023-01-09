@@ -1,4 +1,4 @@
-<%@ page import="de.wekb.helper.RCConstants; org.gokb.cred.RefdataCategory" %>
+<%@ page import="wekb.helper.RCConstants; wekb.RefdataCategory" %>
 <g:if test="${d.id != null}">
     <div class="ui bulleted list">
         <g:each in="${d.languages.sort { it.language.getI10n('value') }}" var="kbComponentLanguage">
@@ -31,7 +31,7 @@
                     <label>Language:</label>
 
                     <semui:simpleReferenceDropdown name="language"
-                                                   baseClass="org.gokb.cred.RefdataValue"
+                                                   baseClass="wekb.RefdataValue"
                                                    filter1="${RCConstants.KBCOMPONENT_LANGUAGE}"/>
                 </div>
             </g:form>

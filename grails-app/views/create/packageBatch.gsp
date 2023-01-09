@@ -1,4 +1,4 @@
-<%@ page import="org.gokb.cred.IdentifierNamespace; de.wekb.helper.RCConstants; org.gokb.cred.RefdataCategory; org.gokb.cred.IdentifierNamespace;" %>
+<%@ page import="wekb.IdentifierNamespace; wekb.helper.RCConstants; wekb.RefdataCategory; wekb.IdentifierNamespace;" %>
 <!DOCTYPE html>
 <html>
 <head>

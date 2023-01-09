@@ -1,4 +1,4 @@
-<%@ page import="de.wekb.helper.RCConstants" %>
+<%@ page import="wekb.helper.RCConstants" %>
 <dl>
 
     <dt class="control-label">Curatory Group Name</dt>
@@ -22,7 +22,7 @@
             </dt>
             <dd>
                 <semui:xEditableManyToOne owner="${d}" field="owner"
-                                          baseClass="org.gokb.cred.User">${d.owner?.username}</semui:xEditableManyToOne>
+                                          baseClass="wekb.auth.User">${d.owner?.username}</semui:xEditableManyToOne>
             </dd>
         </dl>
     </sec:ifAnyGranted>

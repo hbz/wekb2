@@ -1,4 +1,4 @@
-<%@ page import="de.wekb.helper.RCConstants" %>
+<%@ page import="wekb.helper.RCConstants" %>
 <dl class="dl-horizontal">
 
   <dt>Name</dt>
@@ -52,25 +52,25 @@
       <tfoot>
         <g:if test="${user.isAdmin() || d.owner == request.user || userIsOrgAdmin }">
           <g:form controller="ajaxSupport" action="addToCollection">
-            <input type="hidden" name="__context" value="org.gokb.cred.UserOrganisation:${d.id}"/>
+            <input type="hidden" name="__context" value="wekb.auth.UserOrganisation:${d.id}"/>
             <input type="hidden" name="__recip" value="memberOf"/>
-            <input type="hidden" name="__newObjectClass" value="org.gokb.cred.UserOrganisationMembership"/>
+            <input type="hidden" name="__newObjectClass" value="wekb.auth.UserOrganisationMembership"/>
             <tr>
               <td>
                 <semui:simpleReferenceDropdown
                                           name="party"
-                                          baseClass="org.gokb.cred.User"/>
+                                          baseClass="wekb.auth.User"/>
               </td>
               <td>
                 <semui:simpleReferenceDropdown
                                           name="status"
-                                          baseClass="org.gokb.cred.RefdataValue"
+                                          baseClass="wekb.RefdataValue"
                                           filter1="${RCConstants.MEMBERSHIP_STATUS}"/>
               </td>
               <td>
                 <semui:simpleReferenceDropdown
                                           name="role"
-                                          baseClass="org.gokb.cred.RefdataValue"
+                                          baseClass="wekb.RefdataValue"
                                           filter1="${RCConstants.MEMBERSHIP_ROLE}"/>
               </td>
               <td><button class="btn btn-success">Add</button></td>

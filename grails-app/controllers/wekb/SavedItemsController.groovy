@@ -1,8 +1,8 @@
-package gokb
+package wekb
 
-
-import org.gokb.cred.*
 import org.springframework.security.access.annotation.Secured
+import wekb.auth.User
+import wekb.system.SavedSearch
 
 @Secured(['IS_AUTHENTICATED_FULLY'])
 class SavedItemsController {

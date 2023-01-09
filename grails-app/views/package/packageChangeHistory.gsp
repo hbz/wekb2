@@ -1,4 +1,4 @@
-<%@ page import="de.wekb.helper.RDStore; org.gokb.cred.RefdataValue;" contentType="text/html;charset=UTF-8" %>
+<%@ page import="wekb.helper.RDStore; wekb.RefdataValue;" contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
     <meta name="layout" content="public_semui"/>

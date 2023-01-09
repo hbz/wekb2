@@ -1,4 +1,4 @@
-<%@ page import="de.wekb.helper.RCConstants" %>
+<%@ page import="wekb.helper.RCConstants" %>
 <dl>
   <dt class="control-label"> Value </dt>
   <dd> <semui:xEditable  owner="${d}" field="value" /> </dd>

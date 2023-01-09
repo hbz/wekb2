@@ -22,7 +22,7 @@
             <div class="field">
                 <label>Filter by Curatory Group</label>
                 <semui:simpleReferenceDropdown name="curatoryGroup"
-                                               baseClass="org.gokb.cred.CuratoryGroup"
+                                               baseClass="wekb.CuratoryGroup"
                                                filter1="Current" value="${params.curatoryGroup}"/>
             </div>
 

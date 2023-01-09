@@ -1,5 +1,5 @@
-<%@ page import="de.wekb.helper.RCConstants"%>
-<g:set var="ctxoid" value="${org.gokb.cred.KBComponent.deproxy(d).class.name}:${d.id}"/>
+<%@ page import="wekb.helper.RCConstants"%>
+<g:set var="ctxoid" value="${wekb.KBComponent.deproxy(d).class.name}:${d.id}"/>
 <wekb:serviceInjection/>
 
 <table class="ui selectable striped sortable celled table">
@@ -13,7 +13,7 @@
   </thead>
   <tbody>
     <g:each in="${d[property]}" var="row">
-     <g:set var="rowoid" value="${org.gokb.cred.KBComponent.deproxy(row).class.name}:${row.id}"/>
+     <g:set var="rowoid" value="${wekb.KBComponent.deproxy(row).class.name}:${row.id}"/>
       <tr>
         <g:each in="${cols}" var="c">
           <td>
@@ -52,9 +52,9 @@
     <dl class="dl-horizontal">
       <g:form controller="ajaxSupport" action="addToCollection">
         <input type="hidden" name="__context" value="${ctxoid}"/>
-        <input type="hidden" name="__newObjectClass" value="org.gokb.cred.Combo"/>
+        <input type="hidden" name="__newObjectClass" value="wekb.Combo"/>
         <input type="hidden" name="__recip" value="${recip}"/>
-        <input type="hidden" name="type" value="${org.gokb.cred.RefdataCategory.getOID(RCConstants.COMBO_TYPE,d.getComboTypeValue(property))}"/>
+        <input type="hidden" name="type" value="${wekb.RefdataCategory.getOID(RCConstants.COMBO_TYPE,d.getComboTypeValue(property))}"/>
         <dt class="dt-label">Add To List: </dt>
         <dd>
           <semui:simpleReferenceDropdown class="form-inline select-ml" style="display:inline-block;" name="${comboprop}" baseClass="${targetClass}"/>

@@ -1,9 +1,10 @@
-package gokb
+package wekb
 
-import com.k_int.ConcurrencyManagerService
-import com.k_int.ConcurrencyManagerService.Job
-import de.wekb.helper.RCConstants
-import de.wekb.helper.RDStore
+
+import wekb.ConcurrencyManagerService.Job
+import wekb.auth.User
+import wekb.helper.RCConstants
+import wekb.helper.RDStore
 import grails.converters.JSON
 import grails.plugin.springsecurity.SpringSecurityService
 import org.elasticsearch.client.RequestOptions
@@ -11,13 +12,10 @@ import org.elasticsearch.client.RestHighLevelClient
 import org.elasticsearch.client.core.CountRequest
 import org.elasticsearch.client.core.CountResponse
 import org.elasticsearch.client.indices.GetIndexRequest
-import org.gokb.cred.*
 import org.hibernate.Session
 import org.hibernate.SessionFactory
 import org.springframework.security.access.annotation.Secured
-import wekb.AdminService
-import wekb.AutoUpdatePackagesService
-import wekb.UpdatePackageInfo
+import wekb.system.FTControl
 
 import java.text.SimpleDateFormat
 import java.util.concurrent.CancellationException
@@ -26,11 +24,9 @@ import java.util.concurrent.ExecutorService
 @Secured(['ROLE_ADMIN', 'IS_AUTHENTICATED_FULLY'])
 class AdminController {
 
-  def componentStatisticService
-
+  ComponentStatisticService componentStatisticService
   ConcurrencyManagerService concurrencyManagerService
   CleanupService cleanupService
-  AdminService adminService
   AutoUpdatePackagesService autoUpdatePackagesService
   def ESWrapperService
   SpringSecurityService springSecurityService
@@ -38,8 +34,6 @@ class AdminController {
   SessionFactory sessionFactory
   GenericOIDService genericOIDService
   ExecutorService executorService
-
-  def ESSearchService
 
   static Map typePerIndex = [
           "wekbtipps": "TitleInstancePackagePlatform",
@@ -61,19 +55,6 @@ class AdminController {
 
     redirect(controller: 'admin', action: 'jobs');
 
-  }
-
-
-  def reviewDatesOfTippCoverage() {
-    Job j = concurrencyManagerService.createJob { Job j ->
-      cleanupService.reviewDatesOfTippCoverage(j)
-    }.startOrQueue()
-
-    j.description = "Mark insonsistent date ranges"
-    j.type = RefdataCategory.lookupOrCreate(RCConstants.JOB_TYPE, 'MarkInconsDateRanges')
-    j.startTime = new Date()
-
-    redirect(controller: 'admin', action: 'jobs');
   }
 
   def updateTextIndexes() {
@@ -303,7 +284,7 @@ class AdminController {
           domainClassName = 'wekb.DeletedKBComponent'
         }
         else {
-          domainClassName = "org.gokb.cred.${domainClassName}"
+          domainClassName = "wekb.${domainClassName}"
         }
         def res = FTControl.executeUpdate("delete FTControl c where c.domainClassName = ${domainClassName}")
         log.info("Result: ${res}")
@@ -366,7 +347,7 @@ class AdminController {
 
           } else {
             FTControl.withTransaction {
-              def res = FTControl.executeUpdate("delete FTControl c where c.domainClassName = :deleteFT", [deleteFT: "org.gokb.cred.${typePerIndex.get(indexName)}"])
+              def res = FTControl.executeUpdate("delete FTControl c where c.domainClassName = :deleteFT", [deleteFT: "wekb.${typePerIndex.get(indexName)}"])
               log.info("Result: ${res}")
             }
             FTUpdateService.updateFTIndexes()
@@ -447,7 +428,7 @@ class AdminController {
     List pkgs = []
     List<Source> sourceList = Source.findAllByAutomaticUpdatesAndTargetNamespaceIsNotNull(true)
 
-    Package.findAllByStatus(RDStore.KBC_STATUS_CURRENT, [sort: 'name']).eachWithIndex {Package aPackage, int index ->
+    Package.findAllByStatus(RDStore.KBC_STATUS_CURRENT, [sort: 'name']).eachWithIndex { Package aPackage, int index ->
       Integer tippDuplicatesByNameCount = aPackage.getTippDuplicatesByNameCount()
       Integer tippDuplicatesByUrlCount = aPackage.getTippDuplicatesByURLCount()
       Integer tippDuplicatesByTitleIDCount = aPackage.getTippDuplicatesByTitleIDCount()

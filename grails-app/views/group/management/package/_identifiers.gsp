@@ -1,4 +1,4 @@
-<%@ page import="org.gokb.cred.Package; de.wekb.helper.RCConstants; org.gokb.cred.RefdataCategory;" %>
+<%@ page import="wekb.Package; wekb.helper.RCConstants; wekb.RefdataCategory;" %>
 <g:set var="counter" value="${offset}"/>
 
 
@@ -80,7 +80,7 @@
                                 <div class="field">
                                     <label>Identifier Namespace</label>
                                     <semui:simpleReferenceDropdown name="identifierNamespace"
-                                                                   baseClass="org.gokb.cred.IdentifierNamespace"
+                                                                   baseClass="wekb.IdentifierNamespace"
                                                                    filter1="${row_obj.class.simpleName}"/>
                                 </div>
 

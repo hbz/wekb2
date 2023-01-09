@@ -37,5 +37,5 @@
 </dl>
 <dl>
   <dt class="control-label">Refdata Category</dt>
-  <dd> <g:link controller="resource" action="show" id="org.gokb.cred.RefdataCategory:${d.owner.id}">${d?.owner?.desc}</g:link></dd>
+  <dd> <g:link controller="resource" action="show" id="wekb.RefdataCategory:${d.owner.id}">${d?.owner?.desc}</g:link></dd>
 </dl>

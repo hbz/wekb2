@@ -1,4 +1,4 @@
-<%@page import="org.gokb.cred.Role"%>
+<%@page import="wekb.auth.Role"%>
 <html>
 <head>
 	<meta name="layout" content="${layoutUi}"/>
@@ -37,7 +37,7 @@
 			</table>
 		</s2ui:tab>
 		<s2ui:tab name='roles' height='275'>
-		<g:each var='entry' in='${org.gokb.cred.Role.findAll()}'>
+		<g:each var='entry' in='${wekb.auth.Role.findAll()}'>
 			<g:set var='roleName' value='${entry.authority}'/>
 			<g:if test="${su || ( roleName != 'ROLE_SUPERUSER' && !user.hasRole('ROLE_SUPERUSER') )}">
                     <div>

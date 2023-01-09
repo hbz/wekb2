@@ -1,4 +1,4 @@
-<%@ page import="de.wekb.helper.RCConstants" %>
+<%@ page import="wekb.helper.RCConstants" %>
 <dl>
     <dt class="control-label">
         Title
@@ -13,7 +13,7 @@
     </dt>
     <dd>
         <g:if test="${controllerName == 'create'}">
-            <semui:xEditableManyToOne owner="${d}" field="pkg" baseClass="org.gokb.cred.Package" required="true"/>
+            <semui:xEditableManyToOne owner="${d}" field="pkg" baseClass="wekb.Package" required="true"/>
         </g:if>
         <g:else>
             <g:if test="${d.pkg}">
@@ -32,7 +32,7 @@
     </dt>
     <dd>
         <g:if test="${controllerName == 'create'}">
-            <semui:xEditableManyToOne owner="${d}" field="hostPlatform" baseClass="org.gokb.cred.Platform"
+            <semui:xEditableManyToOne owner="${d}" field="hostPlatform" baseClass="wekb.Platform"
                                       required="true"/>
         </g:if>
         <g:else>

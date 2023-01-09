@@ -1,13 +1,12 @@
 package wekb
 
-import de.wekb.helper.RCConstants
+import wekb.helper.RCConstants
 import grails.converters.JSON
 
 import java.security.SecureRandom
 
 class Api2Controller {
     def ESSearchService
-    def genericOIDService
 
     SecureRandom rand = new SecureRandom()
 

@@ -1,4 +1,4 @@
-<%@ page import="de.wekb.helper.RCConstants; de.wekb.helper.RDStore;" %>
+<%@ page import="wekb.helper.RCConstants; wekb.helper.RDStore;" %>
 
 <g:if test="${d}">
     <semui:tabs>
@@ -19,7 +19,7 @@
 
     <semui:tabsItemContent tab="titledetails" activeTab="${params.activeTab}">
         <g:link class="display-inline" controller="search" action="inlineSearch"
-                params="[s_controllerName: controllerName, s_actionName: actionName, objectUUID: params.id, max: params.max, offset: params.offset, sort: params.sort, order: params.order, qbe: 'g:tipps', qp_plat_id: d.id, inline: true, refOid: d.getLogEntityId(), hide: ['qp_plat', 'qp_plat_id'], qp_status: org.gokb.cred.RefdataValue.class.name + ':' + RDStore.KBC_STATUS_CURRENT.id, activeTab: 'titledetails']"
+                params="[s_controllerName: controllerName, s_actionName: actionName, objectUUID: params.id, max: params.max, offset: params.offset, sort: params.sort, order: params.order, qbe: 'g:tipps', qp_plat_id: d.id, inline: true, refOid: d.getLogEntityId(), hide: ['qp_plat', 'qp_plat_id'], qp_status: wekb.RefdataValue.class.name + ':' + RDStore.KBC_STATUS_CURRENT.id, activeTab: 'titledetails']"
                 id="">Titles on this Platform</g:link>
     </semui:tabsItemContent>
 

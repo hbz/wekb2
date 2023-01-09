@@ -1,4 +1,4 @@
-<%@ page import="de.wekb.helper.RCConstants" %>
+<%@ page import="wekb.helper.RCConstants" %>
 <semui:tabsItemContent tab="variantNames" activeTab="${params.activeTab}">
   <g:if test="${d.id != null}">
         <table class="ui selectable striped sortable celled table">
@@ -46,7 +46,7 @@
                 <input type="hidden" name="__context"
                        value="${d.class.name}:${d.id}" />
                 <input type="hidden" name="__newObjectClass"
-                       value="org.gokb.cred.KBComponentVariantName" />
+                       value="wekb.KBComponentVariantName" />
                 <input type="hidden" name="__recip" value="owner" />
                 <input type="hidden" name="fragment" value="variantNames" />
                   <input type="hidden" name="curationOverride" value="${params.curationOverride}"/>
@@ -58,13 +58,13 @@
                   <div class="field">
                               <label>Locale</label>
                   <semui:simpleReferenceDropdown  name="locale"
-                                                baseClass="org.gokb.cred.RefdataValue"
+                                                baseClass="wekb.RefdataValue"
                                                 filter1="${RCConstants.KBCOMPONENT_VARIANTNAME_LOCAL}" />
                   </div>
                   <div class="field">
                                 <label>Variant Type</label>
                   <semui:simpleReferenceDropdown  name="variantType"
-                                                baseClass="org.gokb.cred.RefdataValue"
+                                                baseClass="wekb.RefdataValue"
                                                 filter1="${RCConstants.KBCOMPONENT_VARIANTNAME_VARIANT_TYPE}" />
                   </div>
               </g:form>

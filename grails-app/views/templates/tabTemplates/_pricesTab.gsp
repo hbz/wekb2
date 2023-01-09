@@ -1,4 +1,4 @@
-<%@ page import="de.wekb.helper.RCConstants " %>
+<%@ page import="wekb.helper.RCConstants " %>
 <semui:tabsItemContent tab="prices" activeTab="${params.activeTab}">
     <g:if test="${d.id != null}">
                 <table class="ui selectable striped sortable celled table">
@@ -47,7 +47,7 @@
                                 <input type="hidden" name="__context"
                                        value="${d.class.name}:${d.id}"/>
                                 <input type="hidden" name="__newObjectClass"
-                                       value="org.gokb.cred.ComponentPrice"/>
+                                       value="wekb.ComponentPrice"/>
                                 <input type="hidden" name="__recip" value="owner"/>
                                 <input type="hidden" name="curationOverride" value="${params.curationOverride}"/>
 
@@ -55,7 +55,7 @@
                                     <label>Price Type</label>
                                     <semui:simpleReferenceDropdown
                                             name="priceType"
-                                            baseClass="org.gokb.cred.RefdataValue"
+                                            baseClass="wekb.RefdataValue"
                                             filter1="${RCConstants.PRICE_TYPE}"/>
                                 </div>
                                 <div class="field">
@@ -67,7 +67,7 @@
                                 <div class="field">
                                     <label>Currency</label>
                                     <semui:simpleReferenceDropdown name="currency"
-                                                                   baseClass="org.gokb.cred.RefdataValue"
+                                                                   baseClass="wekb.RefdataValue"
                                                                    filter1="${RCConstants.CURRENCY}"/>
                                 </div>
                             </g:form>

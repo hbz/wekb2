@@ -1,4 +1,4 @@
-<%@ page import="org.gokb.cred.TitleInstancePackagePlatform; org.gokb.cred.Identifier; org.gokb.cred.Combo; de.wekb.helper.RDStore; org.gokb.cred.Package; org.gokb.cred.Org;" %>
+<%@ page import="wekb.TitleInstancePackagePlatform; wekb.Identifier; wekb.Combo; wekb.helper.RDStore; wekb.Package; wekb.Org;" %>
 <dl>
     <dt class="control-label">Identifier Namespace</dt>
     <dd>${d.namespace?.value}</dd>

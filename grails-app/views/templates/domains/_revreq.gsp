@@ -1,4 +1,4 @@
-<%@ page import="de.wekb.helper.RCConstants" %>
+<%@ page import="wekb.helper.RCConstants" %>
 <dl>
   <dt class="control-label">
           Internal ID
@@ -51,7 +51,7 @@
 
         <dd>
           <semui:xEditableManyToOne owner="${d}"
-            field="componentToReview" baseClass="org.gokb.cred.KBComponent">
+            field="componentToReview" baseClass="wekb.KBComponent">
             ${d.componentToReview?.displayName?:''}
           </semui:xEditableManyToOne>
         </dd>

@@ -44,20 +44,20 @@
             </dl>
             <dl>
                 <dt class="control-label">Provider</dt>
-                <dd><semui:xEditableManyToOne owner="${pkg}" field="provider" baseClass="org.gokb.cred.Org"
+                <dd><semui:xEditableManyToOne owner="${pkg}" field="provider" baseClass="wekb.Org"
                                               overwriteEditable="false"/></dd>
             </dl>
 
             <dl>
                 <dt class="control-label">Source</dt>
-                <dd><semui:xEditableManyToOne owner="${pkg}" field="source" baseClass="org.gokb.cred.Source"
+                <dd><semui:xEditableManyToOne owner="${pkg}" field="source" baseClass="wekb.Source"
                                               overwriteEditable="false"/></dd>
             </dl>
 
             <dl>
                 <dt class="control-label">Nominal Platform</dt>
                 <dd><semui:xEditableManyToOne owner="${pkg}" field="nominalPlatform"
-                                              baseClass="org.gokb.cred.Platform" overwriteEditable="false"/></dd>
+                                              baseClass="wekb.Platform" overwriteEditable="false"/></dd>
             </dl>
 
             <dl>

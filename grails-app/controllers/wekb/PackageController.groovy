@@ -1,12 +1,10 @@
 package wekb
 
-
-import de.wekb.helper.RDStore
+import wekb.auth.User
+import wekb.helper.RDStore
 import grails.core.GrailsApplication
 import grails.plugin.springsecurity.SpringSecurityService
 import grails.plugin.springsecurity.SpringSecurityUtils
-import org.gokb.GenericOIDService
-import org.gokb.cred.User
 import org.mozilla.universalchardet.UniversalDetector
 import org.springframework.security.access.annotation.Secured
 import org.springframework.web.multipart.MultipartFile

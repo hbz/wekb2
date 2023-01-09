@@ -1,4 +1,4 @@
-<%@ page import="de.wekb.helper.RCConstants; de.wekb.helper.RDStore;" %>
+<%@ page import="wekb.helper.RCConstants; wekb.helper.RDStore;" %>
 <dl>
     <dt class="control-label">
         Name
@@ -151,20 +151,20 @@
             <div class="field">
                     <label>Language</label>
                 <semui:simpleReferenceDropdown name="language"
-                                               baseClass="org.gokb.cred.RefdataValue"
+                                               baseClass="wekb.RefdataValue"
                                                filter1="${RCConstants.KBCOMPONENT_LANGUAGE}"/>
             </div>
             <div class="field">
                     <label>Content Type</label>
                 <semui:simpleReferenceDropdown name="contentType"
-                                               baseClass="org.gokb.cred.RefdataValue"
+                                               baseClass="wekb.RefdataValue"
                                                filter1="${RCConstants.CONTACT_CONTENT_TYPE}"/>
             </div>
 
             <div class="field">
                     <label>Contact Type</label>
                 <semui:simpleReferenceDropdown name="type"
-                                               baseClass="org.gokb.cred.RefdataValue"
+                                               baseClass="wekb.RefdataValue"
                                                filter1="${RCConstants.CONTACT_TYPE}"/>
             </div>
         </g:form>
@@ -178,7 +178,7 @@
             <input type="hidden" name="curationOverride" value="${params.curationOverride}"/>
             <div class="field">
                               <label>Role:</label> <semui:simpleReferenceDropdown name="__relatedObject"
-                                                 baseClass="org.gokb.cred.RefdataValue"
+                                                 baseClass="wekb.RefdataValue"
                                                  filter1="${RCConstants.ORG_ROLE}"/>
             </div>
         </g:form>

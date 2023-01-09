@@ -1,4 +1,4 @@
-<%@ page import="de.wekb.helper.ServerUtils;" %>
+<%@ page import="wekb.helper.ServerUtils;" %>
 <!DOCTYPE html>
 <html>
 <head>

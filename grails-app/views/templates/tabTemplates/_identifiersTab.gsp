@@ -1,4 +1,4 @@
-<%@ page import="de.wekb.helper.RDStore; org.gokb.cred.TitleInstancePackagePlatform; org.gokb.cred.Combo;" %>
+<%@ page import="wekb.helper.RDStore; wekb.TitleInstancePackagePlatform; wekb.Combo;" %>
 <semui:tabsItemContent tab="identifiers" class="${activeTab ? 'active' : ''}" defaultTab="${defaultTab}" activeTab="${params.activeTab}" counts="${d.ids.size()}">
 
     <table class="ui selectable striped sortable celled table">
@@ -42,7 +42,7 @@
     </table>
 
             <g:if test="${editable}">
-                <g:set var="ctxoid" value="${org.gokb.cred.KBComponent.deproxy(d).class.name}:${d.id}"/>
+                <g:set var="ctxoid" value="${wekb.KBComponent.deproxy(d).class.name}:${d.id}"/>
                 <a class="ui right floated black button" href="#" onclick="$('#identifiersModal').modal('show');">Add Identifier</a>
                 <br>
                 <br>
@@ -57,7 +57,7 @@
                         <div class="field">
                             <label>Identifier Namespace</label>
                             <semui:simpleReferenceDropdown name="identifierNamespace"
-                                                           baseClass="org.gokb.cred.IdentifierNamespace"
+                                                           baseClass="wekb.IdentifierNamespace"
                                                            filter1="${d.class.simpleName}"/>
                         </div>
 

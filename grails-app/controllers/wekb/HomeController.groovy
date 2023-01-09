@@ -1,15 +1,18 @@
-package gokb
+package wekb
 
-import de.wekb.helper.RCConstants
-import org.gokb.cred.*
+import grails.plugin.springsecurity.SpringSecurityService
+import org.springframework.security.crypto.password.PasswordEncoder
+import wekb.auth.User
+import wekb.helper.RCConstants
 import org.hibernate.SessionFactory
 import org.springframework.security.access.annotation.Secured
+import wekb.system.SavedSearch
 
 @Secured(['IS_AUTHENTICATED_FULLY'])
 class HomeController {
 
-  def springSecurityService
-  def passwordEncoder
+  SpringSecurityService springSecurityService
+  PasswordEncoder passwordEncoder
   SessionFactory sessionFactory
 
   static stats_cache = null;
@@ -53,11 +56,6 @@ class HomeController {
     def result=[:]
 
     User user = springSecurityService.currentUser
-    def active_status = RefdataCategory.lookupOrCreate(RCConstants.ACTIVITY_STATUS, 'Active')
-    def needs_review_status = RefdataCategory.lookupOrCreate(RCConstants.REVIEW_REQUEST_STATUS, 'Needs Review')
-
-    result.openActivities = Activity.findAllByOwnerAndStatus(user,active_status)
-    result.recentlyClosedActivities = Activity.findAllByOwnerAndStatusNotEqual(user,active_status,[max: 10, sort: "lastUpdated", order: "desc"])
 
     result
   }

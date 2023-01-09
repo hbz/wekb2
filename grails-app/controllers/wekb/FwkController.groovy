@@ -1,9 +1,10 @@
-package gokb
+package wekb
 
-import de.wekb.helper.RCConstants
+import wekb.RefdataCategory
+import wekb.audit.AuditLogEvent
+import wekb.helper.RCConstants
 import grails.converters.JSON
 import groovy.time.TimeCategory
-import org.gokb.cred.*
 import org.springframework.security.access.annotation.Secured
 
 @Secured(['IS_AUTHENTICATED_FULLY'])
@@ -67,7 +68,7 @@ class FwkController {
       else {
         def query_start_time = System.currentTimeMillis();
 
-        def events = AuditLogEvent.executeQuery("select e from org.gokb.cred.AuditLogEvent as e where e.className= :ocn and e.persistedObjectId= :oid order by id desc", qry_params,[max:result.max,offset:result.offset]);
+        def events = AuditLogEvent.executeQuery("select e from wekb.AuditLogEvent as e where e.className= :ocn and e.persistedObjectId= :oid order by id desc", qry_params,[max:result.max,offset:result.offset]);
 
         def processed_events = processEvents(events)
 
@@ -88,7 +89,7 @@ class FwkController {
   private List getCombinedEvents(def obj, LinkedHashMap qry_params, int max, int offset) {
     def events = []
     if(obj.class.simpleName == 'TitleInstancePackagePlatform') {
-      events = AuditLogEvent.executeQuery("select e from org.gokb.cred.AuditLogEvent as e where (e.className= :ocn and e.persistedObjectId= :oid) OR (e.persistedObjectId IN (:comboids) AND (e.propertyName = 'fromComponent' OR e.propertyName = 'toComponent') AND (e.newValue NOT LIKE :oidt OR e.newValue IS NULL) AND (e.oldValue NOT LIKE :oidt OR e.oldValue IS NULL)) order by id desc",qry_params,['max':max,'offset':offset]);
+      events = AuditLogEvent.executeQuery("select e from wekb.AuditLogEvent as e where (e.className= :ocn and e.persistedObjectId= :oid) OR (e.persistedObjectId IN (:comboids) AND (e.propertyName = 'fromComponent' OR e.propertyName = 'toComponent') AND (e.newValue NOT LIKE :oidt OR e.newValue IS NULL) AND (e.oldValue NOT LIKE :oidt OR e.oldValue IS NULL)) order by id desc",qry_params,['max':max,'offset':offset]);
     }
     else {
       def combo_rdc = RefdataCategory.findByLabel(RCConstants.COMBO_TYPE)
@@ -131,26 +132,26 @@ class FwkController {
               }
               or {
                 not {
-                  like('newValue', "[id:org.gokb.cred.TitleInstanceP%")
+                  like('newValue', "[id:wekb.TitleInstanceP%")
                 }
                 isNull('newValue')
               }
               or {
                 not {
-                  like('oldValue', "[id:org.gokb.cred.TitleInstanceP%")
+                  like('oldValue', "[id:wekb.TitleInstanceP%")
                 }
                 isNull('oldValue')
               }
               if ( obj.class.simpleName == 'Platform' || obj.class.simpleName == 'Org') {
                 or {
                   not {
-                    like('newValue', "[id:org.gokb.cred.Package%")
+                    like('newValue', "[id:wekb.Package%")
                   }
                   isNull('newValue')
                 }
                 or {
                   not {
-                    like('oldValue', "[id:org.gokb.cred.Package%")
+                    like('oldValue', "[id:wekb.Package%")
                   }
                   isNull('oldValue')
                 }
@@ -272,7 +273,7 @@ class FwkController {
           def aot = ao.trim()
           def oid_split = aot.split(']')
 
-          valueMaps.add([val: oid_split[1], oid: (oid_split[0].startsWith('id:org.gokb.cred') ? oid_split[0].substring(3) : null) ])
+          valueMaps.add([val: oid_split[1], oid: (oid_split[0].startsWith('id:wekb') ? oid_split[0].substring(3) : null) ])
         }
       }
     }
@@ -281,36 +282,6 @@ class FwkController {
     }
 
     valueMaps
-  }
-
-  def notes() { 
-    log.debug("FwkController::notes...");
-    def result = [:]
-    result.user = User.get(springSecurityService.principal.id)
-    // result.owner = 
-    def obj = resolveOID2(params.id)
-
-    if ( obj.isReadable() ) {
-
-      def oid_components = params.id.split(':');
-      def qry_params = [oid_components[0],Long.parseLong(oid_components[1])];
-      result.ownerClass = oid_components[0]
-      result.ownerId = oid_components[1]
-
-      result.name = (obj.getNiceName() ?: 'Component') +': '+ (obj.name ?: obj.id)
-
-      result.max = params.max ?: (result.user.defaultPageSize ?: 25)
-      result.offset = params.offset ?: 0
-
-      result.noteLines = Note.executeQuery("select n from Note as n where ownerClass=? and ownerId=? order by id desc", qry_params, [max:result.max, offset:result.offset]);
-      result.noteLinesTotal = AuditLogEvent.executeQuery("select count(n.id) from Note as n where ownerClass=? and ownerId=?",qry_params)[0];
-    }
-
-    result
-  }
-
-  def attachments() { 
-    log.debug("FwkController::attachments...");
   }
 
   def resolveOID2(oid) {
@@ -331,29 +302,6 @@ class FwkController {
       log.error("resolve OID failed to identify a domain class. Input was ${oid_components}");
     }
     result
-  }
-
-  def toggleWatch() {
-    log.debug("FwkController::toggleWatch(${params})");
-    def result = [change:0]
-
-    def displayobj = resolveOID2(params.oid)
-    def user = springSecurityService.currentUser
-
-    if ( displayobj && user ) {
-      def watch = ComponentWatch.findByComponentAndUser(displayobj, user)
-      if (watch) {
-        // watch exists
-        watch.delete(flush:true);
-        result.change = -1
-      }
-      else {
-        // Create new watch
-        def new_watch = new ComponentWatch(component:displayobj, user:user).save(flush:true, failOnError:true);
-        result.change = 1
-      }
-    }
-    render result as JSON
   }
 
 }

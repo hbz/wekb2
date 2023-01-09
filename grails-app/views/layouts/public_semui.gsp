@@ -1,4 +1,4 @@
-<%@ page import="de.wekb.helper.ServerUtils; de.wekb.helper.RDStore;" %>
+<%@ page import="wekb.helper.ServerUtils; wekb.helper.RDStore;" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -90,13 +90,13 @@
 
                     <div class="menu">
                         <g:link class="item" controller="create" action="index"
-                                params="[tmpl: 'org.gokb.cred.Package']">Packages</g:link>
+                                params="[tmpl: 'wekb.Package']">Packages</g:link>
                         <g:link class="item" controller="create" action="index"
-                                params="[tmpl: 'org.gokb.cred.Platform']">Platforms</g:link>
+                                params="[tmpl: 'wekb.Platform']">Platforms</g:link>
                         <g:link class="item" controller="create" action="index"
-                                params="[tmpl: 'org.gokb.cred.Source']">Sources</g:link>
+                                params="[tmpl: 'wekb.Source']">Sources</g:link>
                         <g:link class="item" controller="create" action="index"
-                                params="[tmpl: 'org.gokb.cred.TitleInstancePackagePlatform']">Titles</g:link>
+                                params="[tmpl: 'wekb.TitleInstancePackagePlatform']">Titles</g:link>
                     </div>
                 </div>
             </sec:ifAnyGranted>
@@ -158,19 +158,19 @@
                             </div>
                             <div class="menu">
                                 <g:link class="item" controller="create" action="index"
-                                        params="[tmpl: 'org.gokb.cred.IdentifierNamespace']">Identifier Namespace</g:link>
+                                        params="[tmpl: 'wekb.IdentifierNamespace']">Identifier Namespace</g:link>
                                 <g:link class="item" controller="create" action="index"
-                                        params="[tmpl: 'org.gokb.cred.RefdataCategory']">Refdata Category</g:link>
+                                        params="[tmpl: 'wekb.RefdataCategory']">Refdata Category</g:link>
                                 <g:link class="item" controller="create" action="index"
-                                        params="[tmpl: 'org.gokb.cred.RefdataValue']">Refdata Value</g:link>
+                                        params="[tmpl: 'wekb.RefdataValue']">Refdata Value</g:link>
                                 <g:link class="item" controller="create" action="index"
-                                        params="[tmpl: 'org.gokb.cred.ReviewRequest']">Review Request</g:link>
+                                        params="[tmpl: 'wekb.ReviewRequest']">Review Request</g:link>
                                 <g:link class="item" controller="create" action="index"
-                                         params="[tmpl: 'org.gokb.cred.CuratoryGroup']">Curatory Group</g:link>
+                                         params="[tmpl: 'wekb.CuratoryGroup']">Curatory Group</g:link>
                                 <g:link class="item" controller="create" action="index"
-                                        params="[tmpl: 'org.gokb.cred.Org']">Provider</g:link>
+                                        params="[tmpl: 'wekb.Org']">Provider</g:link>
                                  %{-- <g:link class="item" controller="create" action="index"
-                                         params="[tmpl: 'org.gokb.cred.UserOrganisation']">User Organisation</g:link>--}%
+                                         params="[tmpl: 'wekb.auth.UserOrganisation']">User Organisation</g:link>--}%
                             </div>
                         </div>
                         <div class="item">
@@ -185,8 +185,6 @@
                                         onclick="return confirm('Are you sure?')">Expunge Removed Component</g:link>
                                 <g:link class="item" controller="admin" action="cleanupPlatforms"
                                         onclick="return confirm('Are you sure?')">Deprecate Platforms Without URLs</g:link>
-                                %{--<g:link class="item" controller="admin" action="reviewDatesOfTippCoverage"
-                                        onclick="return confirm('Are you sure?')">Add Reviews for wrong Tipp Coverage Dates</g:link>--}%
                                 <g:link class="item" controller="admin" action="ensureUuids"
                                         onclick="return confirm('Are you sure?')">Ensure UUIDs</g:link>
                                 <g:link class="item" controller="admin" action="autoUpdatePackages"
