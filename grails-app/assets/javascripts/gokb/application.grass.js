@@ -304,7 +304,7 @@ window.gokb = {
             return {
               format:'json',
               q: term,
-              baseClass:'org.gokb.cred.Org',
+              baseClass:'wekb.Org',
               filter1:$(this).data('filter1')
             }
           },

@@ -5,14 +5,14 @@
    */
   var components = {
     'org'   : [
-      {id: 1, 'class': 'org.gokb.cred.Org', title: 'apple'},
-      {id: 3, 'class': 'org.gokb.cred.Org', title: 'facebook'},
-      {id: 4, 'class': 'org.gokb.cred.Org', title: 'github'}],
+      {id: 1, 'class': 'wekb.Org', title: 'apple'},
+      {id: 3, 'class': 'wekb.Org', title: 'facebook'},
+      {id: 4, 'class': 'wekb.Org', title: 'github'}],
     'title' : [
-      {id: 5, 'class': 'org.gokb.cred.TitleInstance', title: 'Title 1'},
-      {id: 6, 'class': 'org.gokb.cred.TitleInstance', title: 'Title 2'},
-      {id: 7, 'class': 'org.gokb.cred.TitleInstance', title: 'Title 3'},
-      {id: 8, 'class': 'org.gokb.cred.TitleInstance', title: 'Title 4'}]
+      {id: 5, 'class': 'wekb.TitleInstance', title: 'Title 1'},
+      {id: 6, 'class': 'wekb.TitleInstance', title: 'Title 2'},
+      {id: 7, 'class': 'wekb.TitleInstance', title: 'Title 3'},
+      {id: 8, 'class': 'wekb.TitleInstance', title: 'Title 4'}]
   };
   
   /**

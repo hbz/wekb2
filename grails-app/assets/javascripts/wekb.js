@@ -251,7 +251,7 @@ $(function () {
             apiSettings: {
                 // this url parses query server side and returns filtered results
                 url: simpleReferenceDropdownURL,
-                //url: simpleReferenceDropdownURL + "/?baseClass=org.gokb.cred.RefdataValue&filter1=KBComponent.Status&q={query}"
+                //url: simpleReferenceDropdownURL + "/?baseClass=wekb.RefdataValue&filter1=KBComponent.Status&q={query}"
                 cache: false
             },
             fields: {
