@@ -13,6 +13,9 @@
                 Login
             </div>
         </h2>
+
+        <semui:flashMessage data="${flash}"/>
+
         <g:form class="ui form" controller="login" action="authenticate" method="post" name="loginForm"
                 elementId="loginForm" autocomplete="off">
             <div class="ui stacked segment">
@@ -38,8 +41,8 @@
         </g:form>
 
         <div class="ui message">
-            <g:link controller="register" action="forgotPassword"><g:message
-                    code="spring.security.ui.login.forgotPassword"/></g:link>
+            <g:link action="forgotPassword"><g:message
+                    code="forgottenPassword.forgotPassword"/></g:link>
             <br>
             <a href="#" onclick="$('#infoModal').modal('show');">Not yet registered for a <g:message code="gokb.appname"
                                                                                             default="we:kb"/>: account?</a>

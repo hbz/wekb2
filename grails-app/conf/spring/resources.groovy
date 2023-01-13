@@ -35,6 +35,8 @@ beans = {
             ref('registerSessionAuthenticationStrategy')
     ])
 
+    /// after 2023-01
+
     // [ database migration plugin ..
     migrationCallbacks( CustomMigrationCallbacks ) {
         grailsApplication = ref('grailsApplication')

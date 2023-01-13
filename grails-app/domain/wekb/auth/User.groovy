@@ -3,6 +3,7 @@ package wekb.auth
 
 import groovy.util.logging.Slf4j
 import wekb.RefdataValue
+import wekb.helper.BeanStore
 
 import javax.persistence.Transient
 import java.lang.reflect.Field
@@ -10,47 +11,56 @@ import java.lang.reflect.Field
 @Slf4j
 class User {
 
-  // Used in user import to bypass password encoding - used to directly load hashes instead of password
-  transient direct_password = false
+  // Timestamps
+  Date dateCreated
+  Date lastUpdated
 
+  String displayName
   String username
   String password
   String email
+
+
   boolean enabled
   boolean accountExpired
   boolean accountLocked
   boolean passwordExpired
+
   Long defaultPageSize = new Long(10)
 
-  // When did the alerting system last check things on behalf of this user
-  Date last_alert_check
-
-  // seconds user wants between checks - System only checks daily, so values < 24*60*60 don't make much sense at the moment
-  Long alert_check_frequency
-
-  RefdataValue send_alert_emails
-  RefdataValue showQuickView
-  RefdataValue showInfoIcon
-
-  static hasMany = [
-
-  ]
+    static hasMany      = [ roles: UserRole ]
 
   static mappedBy = [curatoryGroups: "users"]
 
   static constraints = {
     username(blank: false, unique: true)
     password(blank: false)
-    showQuickView(blank: true, nullable:true)
     email(blank: true, nullable:true)
     defaultPageSize(blank: true, nullable:true)
-    last_alert_check(blank: false, nullable:true)
-    alert_check_frequency(blank: false, nullable:true)
-    send_alert_emails(blank: false, nullable:true)
+    displayName (blank: true, nullable:true)
   }
 
   static mapping = {
-    password column: '`password`'
+    table           name: '`user`'
+    password        column: '`password`'
+
+    id              column: 'usr_id'
+    version         column: 'usr_version'
+
+    accountExpired  column: 'usr_account_expired'
+    accountLocked   column: 'usr_account_locked'
+    displayName         column: 'usr_display_name'
+    email           column: 'usr_email'
+    enabled         column: 'usr_enabled'
+    password        column: 'usr_password'
+    passwordExpired column: 'usr_password_expired'
+    username        column: 'usr_username'
+
+    defaultPageSize column: 'usr_default_page_size'
+
+    lastUpdated     column: 'usr_last_updated'
+    dateCreated     column: 'usr_date_created'
+
   }
 
   String getLogEntityId() {
@@ -141,10 +151,21 @@ class User {
     false
   }
 
-  def beforeInsert() {
+  void beforeInsert() {
+    _encodePassword()
   }
 
-  def beforeUpdate() {
+  void beforeUpdate() {
+    if (isDirty('password')) {
+      _encodePassword()
+    }
+  }
+
+  /**
+   * Encodes the submitted password
+   */
+  private void _encodePassword() {
+    password = BeanStore.getSpringSecurityService().encodePassword(password)
   }
 
 //   @Override

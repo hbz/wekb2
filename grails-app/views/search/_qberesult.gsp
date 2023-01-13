@@ -137,9 +137,6 @@
                         </g:else>
                     </g:if>
                 </g:each>
-            %{--  <g:if test="${request.user?.showQuickView?.value=='Yes'}">
-                <th></th>
-              </g:if>--}%
             </tr>
             </thead>
             <tbody>
@@ -209,12 +206,6 @@
                                 </g:else>
                             </td>
                         </g:each>
-                    %{--<g:if test="${request.user?.showQuickView?.value=='Yes'}">
-                      <td>
-                        <g:link class="btn btn-xs btn-default pull-right desktop-only" controller="search"
-                          action="componentSearch" params="${params+['det':counter]}"><i class="fa fa-eye" ></i></g:link>
-                      </td>
-                    </g:if>--}%
                     </tr>
                 </g:if>
                 <g:else>

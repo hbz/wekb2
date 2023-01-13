@@ -1,6 +1,6 @@
 databaseChangeLog = {
 
- /*   include file: 'changelog-2021-03-28.groovy'
+    include file: 'changelog-2021-03-28.groovy'
     include file: 'changelog-2021-03-29.groovy'
     include file: 'changelog-2021-03-30.groovy'
     include file: 'changelog-2021-03-31.groovy'
@@ -41,6 +41,7 @@ databaseChangeLog = {
     include file: 'changelog-2022-09-30.groovy'
     include file: 'changelog-2022-10-04.groovy'
     include file: 'changelog-2022-10-17.groovy'
-    include file: 'changelog-2022-11-11.groovy'*/
+    include file: 'changelog-2022-11-11.groovy'
+    include file: 'changelog-2023-01-12.groovy'
 
 }

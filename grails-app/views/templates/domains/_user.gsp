@@ -51,14 +51,6 @@
         </dd>
     </dl>--}%
 
-%{--    <dl>
-        <dt class="control-label">Last Alert Check</dt>
-        <dd>
-            <g:if test="${d.last_alert_check}"><g:formatDate format="${session.sessionPreferences?.globalDateFormat}"
-                                                             date="${d.last_alert_check}"/></g:if>
-            <g:else>Never</g:else>
-        </dd>
-    </dl>--}%
 
 %{--<div id="content">
     <ul id="tabs" class="nav nav-tabs">

@@ -49,8 +49,8 @@ class UserProfileService {
     def result = [:]
     def errors = []
     log.debug("Updating user ${user.id} ..")
-    def immutables = ['id', 'username', 'last_alert_check']
-    def adminAttributes = ['roleIds', 'password', 'curatoryGroupIds', 'enabled', 'accountExpired', 'accountLocked', 'passwordExpired', 'last_alert_check']
+    def immutables = ['id', 'username']
+    def adminAttributes = ['roleIds', 'password', 'curatoryGroupIds', 'enabled', 'accountExpired', 'accountLocked', 'passwordExpired']
 
     if (!adminUser.isAdmin() && user != adminUser) {
       errors << [user: [message: "user $adminUser.username is not allowed to change properties of user $user.username",

@@ -22,28 +22,10 @@
 
         <semui:card text="My Preferences" class="fluid">
             <div class="content wekb-inline-lists">
-                %{-- <dl>
-                     <dt class="control-label">Show Info Icon :</dt>
-                     <dd>
-                         <semui:xEditableRefData owner="${user}" field="showInfoIcon"
-                                                 config="${RCConstants.YN}"/>
-                     </dd>
-                 </dl>
-                 <dl>
-                     <dt class="control-label">Show Quick View :</dt>
-                     <dd>
-                         <semui:xEditableRefData owner="${user}" field="showQuickView" config="${RCConstants.YN}"/>
-                     </dd>
-                 </dl>--}%
                 <dl>
                     <dt class="control-label">Default Page Size :</dt>
                     <dd><semui:xEditable owner="${user}" field="defaultPageSize"/></dd>
                 </dl>
-                %{-- <dl>
-                     <dt class="control-label">Send Alert Emails :</dt>
-                     <dd><semui:xEditableRefData owner="${user}" field="send_alert_emails"
-                                                 config="${RCConstants.YN}"/></dd>
-                 </dl>--}%
             </div>
         </semui:card>
 

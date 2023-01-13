@@ -2,7 +2,7 @@
 
 println("-- using application.groovy config file !!! --")
 
-grails.gorm.default.mapping = {
+/*grails.gorm.default.mapping = {
     autowire true
 }
 
@@ -10,7 +10,7 @@ grails.gorm.default.constraints = {
     '*'(nullable: true, blank:false)
 }
 
-grails.gorm.autoFlush=true
+grails.gorm.autoFlush=true*/
 
 //grails.gorm.failOnError=true
 
@@ -30,27 +30,28 @@ grails.plugin.databasemigration.updateOnStart = true
 // spring Security Core plugin
 grails.plugin.springsecurity.successHandler.useReferer = true
 grails.plugin.springsecurity.successHandler.alwaysUseDefault= false
+//grails.plugin.springsecurity.successHandler.defaultTargetUrl = '/'
+grails.plugin.springsecurity.successHandler.logout.afterLogoutUrl = '/'
+
+grails.plugin.springsecurity.logout.postOnly = false
 
 grails.plugin.springsecurity.userLookup.userDomainClassName = 'wekb.auth.User'
+grails.plugin.springsecurity.userLookup.usernamePropertyName = 'username'
 grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'wekb.auth.UserRole'
 
 grails.plugin.springsecurity.authority.className = 'wekb.auth.Role'
 
-grails.plugin.springsecurity.ui.forgotPassword.emailFrom = "laser@hbz-nrw.de"
-grails.plugin.springsecurity.ui.forgotPassword.emailSubject = "we:kb Forgotten Password"
+//grails.plugin.springsecurity.ui.forgotPassword.emailFrom = "laser@hbz-nrw.de"
+//grails.plugin.springsecurity.ui.forgotPassword.emailSubject = "we:kb Forgotten Password"
 
-grails.plugin.springsecurity.ui.password.minLength = 6
-grails.plugin.springsecurity.ui.password.maxLength = 64
-grails.plugin.springsecurity.ui.password.validationRegex = '^.*$'
-/**
- * We need to disable springs password encoding as we handle this in our domain model.
- */
-grails.plugin.springsecurity.ui.encodePassword = false
+//grails.plugin.springsecurity.ui.password.minLength = 6
+//grails.plugin.springsecurity.ui.password.maxLength = 64
+//grails.plugin.springsecurity.ui.password.validationRegex = '^.*$'
+
 
 // The following 2 entries make the app use basic auth by default
-grails.plugin.springsecurity.useBasicAuth = true
-
-grails.plugin.springsecurity.basic.realmName = "wekb"
+//grails.plugin.springsecurity.useBasicAuth = true
+//grails.plugin.springsecurity.basic.realmName = "wekb"
 
 grails.plugin.springsecurity.roleHierarchy = '''
     ROLE_YODA > ROLE_ADMIN
