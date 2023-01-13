@@ -1,4 +1,4 @@
-<%@ page import="wekb.helper.ServerUtils;" %>
+<%@ page import="wekb.utils.ServerUtils; wekb.utils.ServerUtils; wekb.utils.ServerUtils;" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -39,7 +39,7 @@
 
 </div>
 
-<g:if test="${ServerUtils.getCurrentServer() == ServerUtils.SERVER_DEV}">
+<g:if test="${wekb.utils.ServerUtils.getCurrentServer() == wekb.utils.ServerUtils.SERVER_DEV}">
     <g:renderException exception="${exception}"/>
 </g:if>
 <g:elseif env="development">

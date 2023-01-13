@@ -1,6 +1,6 @@
 package wekb
 
-import wekb.helper.ServerUtils
+import wekb.utils.ServerUtils
 import org.grails.io.support.GrailsResourceUtils
 
 class WekbTagLib {

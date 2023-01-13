@@ -1,4 +1,4 @@
-package wekb.helper
+package wekb.utils
 
 
 import grails.util.Environment

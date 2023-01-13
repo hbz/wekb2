@@ -1,4 +1,4 @@
-<%@ page import="wekb.RefdataCategory; wekb.helper.ServerUtils;" %>
+<%@ page import="wekb.RefdataCategory; wekb.utils.ServerUtils;" %>
 <!doctype html>
 <html class="no-js" lang="">
 <head>

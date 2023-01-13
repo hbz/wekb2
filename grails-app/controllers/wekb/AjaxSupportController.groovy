@@ -2,7 +2,7 @@ package wekb
 
 import grails.plugin.springsecurity.SpringSecurityService
 import wekb.auth.User
-import wekb.helper.DateUtils
+import wekb.utils.DateUtils
 import wekb.helper.RCConstants
 import wekb.helper.RDStore
 import grails.converters.JSON

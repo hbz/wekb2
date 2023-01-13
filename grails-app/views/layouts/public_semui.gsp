@@ -1,4 +1,4 @@
-<%@ page import="wekb.helper.ServerUtils; wekb.helper.RDStore;" %>
+<%@ page import="wekb.utils.ServerUtils; wekb.utils.ServerUtils; wekb.helper.RDStore;" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,7 +21,7 @@
 </head>
 
 <wekb:serviceInjection/>
-<g:set var="currentServer" scope="page" value="${ServerUtils.getCurrentServer()}"/>
+<g:set var="currentServer" scope="page" value="${wekb.utils.ServerUtils.getCurrentServer()}"/>
 
 <body id="page-body" class="pushable">
     <wekb:serverlabel server="${currentServer}"/>

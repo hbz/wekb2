@@ -1,4 +1,4 @@
-package wekb.helper
+package wekb.utils
 
 import grails.util.Holders
 import org.apache.commons.logging.Log

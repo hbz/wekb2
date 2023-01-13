@@ -2,7 +2,7 @@ package wekb
 
 
 import wekb.helper.RDStore
-import wekb.helper.ServerUtils
+import wekb.utils.ServerUtils
 import grails.plugins.mail.MailService
 
 class SendJobInfosJob {
