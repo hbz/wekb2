@@ -11,9 +11,6 @@ import javax.persistence.Transient
 @Slf4j
 class Package extends KBComponent {
 
-  def dateFormatService
-  static def messageService
-
   // Refdata
   @RefdataAnnotation(cat = RCConstants.PACKAGE_SCOPE)
   RefdataValue scope

@@ -1,14 +1,15 @@
 package wekb
 
+import groovy.util.logging.Slf4j
 import wekb.base.AbstractI10n
-import grails.plugins.orm.auditable.Auditable
 import org.apache.commons.logging.Log
 import org.apache.commons.logging.LogFactory
 import org.hibernate.proxy.HibernateProxy
 
 import javax.persistence.Transient
 
-class RefdataValue  extends AbstractI10n implements Auditable {
+@Slf4j
+class RefdataValue  extends AbstractI10n {
 
   static Log static_logger = LogFactory.getLog(RefdataValue)
 
@@ -58,8 +59,6 @@ class RefdataValue  extends AbstractI10n implements Auditable {
   String getLogEntityId() {
       "${this.class.name}:${id}"
   }
-
-  public static final String restPath = "/refdata/values"
 
   @Override
   public String toString() {

@@ -1,5 +1,5 @@
 
-println("------- Using local config from ~/.grails/wekb-config.groovy ------- ")
+println("------- Using local config from ~/.grails/wekb2-config.groovy ------- ")
 
 grails.mail.host = 'localhost'
 grails.mail.port = 25

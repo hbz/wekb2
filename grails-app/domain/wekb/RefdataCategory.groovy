@@ -59,8 +59,6 @@ class RefdataCategory extends AbstractI10n {
     "${this.class.name}:${id}"
   }
 
-  public static final String restPath = "/refdata/categories"
-
 
   static def lookup(category_name, value, def sortkey = null){
     if ((value == null) || (category_name == null)){
