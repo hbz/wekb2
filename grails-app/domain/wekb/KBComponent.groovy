@@ -29,7 +29,7 @@ abstract class KBComponent implements Auditable{
   '''
 
   private static refdataDefaults = [
-      "status"    : RDStore.KBC_STATUS_CURRENT
+      "status"    : "Current"
   ]
 
   private static final Map fullDefaultsForClass = [:]

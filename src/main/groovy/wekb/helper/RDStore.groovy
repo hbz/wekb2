@@ -1,10 +1,10 @@
 package wekb.helper
 
-
+import groovy.transform.CompileStatic
 import wekb.RefdataValue
 import org.grails.orm.hibernate.cfg.GrailsHibernateUtil
 
-//@CompileStatic
+@CompileStatic
 class RDStore {
 
     public static final UPDATE_STATUS_SUCCESSFUL    = getRefdataValue('Successful', RCConstants.UPDATE_STATUS)
