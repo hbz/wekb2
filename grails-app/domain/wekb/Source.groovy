@@ -1,6 +1,7 @@
 package wekb
 
 import wekb.helper.RCConstants
+import wekb.helper.RDStore
 
 import javax.persistence.Transient
 import java.sql.Timestamp
@@ -50,7 +51,6 @@ class Source extends KBComponent {
     frequency(nullable:true, blank:true)
     defaultSupplyMethod(nullable:true, blank:true)
     defaultDataFormat(nullable:true, blank:true)
-    responsibleParty(nullable:true, blank:true)
     ruleset(nullable:true, blank:true)
     targetNamespace(nullable:true, blank:true)
     lastRun(nullable:true,default: null)
@@ -76,11 +76,9 @@ class Source extends KBComponent {
     })
   }
 
-  public static final String restPath = "/sources"
-
   static def refdataFind(params) {
     def result = [];
-    def status_deleted = RefdataCategory.lookupOrCreate(RCConstants.KBCOMPONENT_STATUS, KBComponent.STATUS_DELETED)
+    def status_deleted = RDStore.KBC_STATUS_DELETED
     def status_filter = null
 
     if(params.filter1) {
@@ -102,62 +100,6 @@ class Source extends KBComponent {
 
     result
   }
-
-  @Transient
-  static def oaiConfig = [
-    id:'sources',
-    textDescription:'Source repository for GOKb',
-    query:" from Source as o where o.status.value != 'Deleted'",
-    pageSize:20
-  ]
-
-  /**
-   *  Render this package as OAI_dc
-   */
-  @Transient
-  def toOaiDcXml(builder, attr) {
-    builder.'dc'(attr) {
-      'dc:title' (name)
-    }
-  }
-
-
-  /**
-   *  Render this source as GoKBXML
-   */
-  @Transient
-  def toGoKBXml(builder, attr) {
-    builder.'gokb' (attr) {
-
-      addCoreGOKbXmlFields(builder, attr)
-
-      builder.'url' (url)
-      builder.'defaultAccessURL' (defaultAccessURL)
-      builder.'explanationAtSource' (explanationAtSource)
-      builder.'contextualNotes' (contextualNotes)
-      builder.'frequency' (frequency)
-      builder.'ruleset' (ruleset)
-      builder.'automaticUpdates' (automaticUpdates)
-      builder.'ezbMatch' (ezbMatch)
-      builder.'zdbMatch' (zdbMatch)
-      builder.'lastRun' (lastRun)
-      if ( targetNamespace ) {
-        builder.'targetNamespace'('namespaceName': targetNamespace.name, 'value': targetNamespace.value, 'id': targetNamespace.id)
-      }
-      if ( defaultSupplyMethod ) {
-        builder.'defaultSupplyMethod' ( defaultSupplyMethod.value )
-      }
-      if ( defaultDataFormat ) {
-        builder.'defaultDataFormat' ( defaultDataFormat.value )
-      }
-      if ( responsibleParty ) {
-        builder.'responsibleParty' {
-          builder.name(responsibleParty.name)
-        }
-      }
-    }
-  }
-
 
   boolean needsUpdate() {
     if (lastRun == null) {

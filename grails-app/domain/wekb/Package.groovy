@@ -39,13 +39,6 @@ class Package extends KBComponent {
 
   String descriptionURL
 
-/*  private static refdataDefaults = [
-    "scope"      : "Front File",
-    "breakable"  : "Unknown",
-    "consistent" : "Unknown",
-    "paymentType": "Unknown"
-  ]*/
-
   static manyByCombo = [
     curatoryGroups: CuratoryGroup
   ]
@@ -127,45 +120,9 @@ class Package extends KBComponent {
     paas(nullable:true)
   }
 
-  public String getRestPath() {
-    return "/packages"
-  }
-
-  static jsonMapping = [
-    'ignore'       : [
-      'updateToken'
-    ],
-    'es'           : [
-      'nominalPlatformUuid': "nominalPlatform.uuid",
-      'nominalPlatformName': "nominalPlatform.name",
-      'nominalPlatform'    : "nominalPlatform.id",
-      'cpname'             : false,
-      'provider'           : "provider.id",
-      'providerName'       : "provider.name",
-      'providerUuid'       : "provider.uuid",
-      'titleCount'         : false,
-      'paymentType'        : false,
-      'file'               : "refdata",
-      'editingStatus'      : "refdata",
-      'openAccess'         : "refdata",
-      'contentType'        : "refdata",
-      'scope'              : "refdata"
-    ],
-    'defaultLinks' : [
-      'provider',
-      'nominalPlatform',
-      'curatoryGroups'
-    ],
-    'defaultEmbeds': [
-      'ids',
-      'variantNames',
-      'curatoryGroups'
-    ]
-  ]
-
   static def refdataFind(params) {
     def result = [];
-    def status_deleted = RefdataCategory.lookupOrCreate(RCConstants.KBCOMPONENT_STATUS, KBComponent.STATUS_DELETED)
+    def status_deleted = RDStore.KBC_STATUS_DELETED
     def status_filter = null
 
     if (params.filter1) {
@@ -231,84 +188,6 @@ class Package extends KBComponent {
             , [pkg: this, status: refdata_status])[0]
 
     result
-  }
-
-  @Transient
-  public getReviews(def onlyOpen = true, def onlyCurrent = false) {
-    def all_rrs = null
-    def refdata_current = RefdataCategory.lookupOrCreate(RCConstants.KBCOMPONENT_STATUS, 'Current');
-
-   /* if (onlyOpen) {
-
-      log.debug("Looking for more ReviewRequests connected to ${this}")
-
-      def refdata_open = RefdataCategory.lookupOrCreate(RCConstants.REVIEW_REQUEST_STATUS, 'Open');
-
-      if (onlyCurrent) {
-        all_rrs = ReviewRequest.executeQuery('''select distinct rr
-          from ReviewRequest as rr,
-            TitleInstance as title,
-            Combo as pkgCombo,
-            Combo as titleCombo,
-            TitleInstancePackagePlatform as tipp
-          where pkgCombo.toComponent=tipp
-            and pkgCombo.fromComponent=?
-            and tipp.status = ?
-            and titleCombo.toComponent=tipp
-            and titleCombo.fromComponent=title
-            and rr.componentToReview = title
-            and rr.status = ?'''
-          , [this, refdata_current, refdata_open]);
-      }
-      else {
-        all_rrs = ReviewRequest.executeQuery('''select distinct rr
-          from ReviewRequest as rr,
-            TitleInstance as title,
-            Combo as pkgCombo,
-            Combo as titleCombo,
-            TitleInstancePackagePlatform as tipp
-          where pkgCombo.toComponent=tipp
-            and pkgCombo.fromComponent=?
-            and titleCombo.toComponent=tipp
-            and titleCombo.fromComponent=title
-            and rr.componentToReview = title
-            and rr.status = ?'''
-          , [this, refdata_open]);
-      }
-    }
-    else {
-      if (onlyCurrent) {
-        all_rrs = ReviewRequest.executeQuery('''select rr
-          from ReviewRequest as rr,
-            TitleInstance as title,
-            Combo as pkgCombo,
-            Combo as titleCombo,
-            TitleInstancePackagePlatform as tipp
-          where pkgCombo.toComponent=tipp
-            and pkgCombo.fromComponent=?
-            and tipp.status = ?
-            and titleCombo.toComponent=tipp
-            and titleCombo.fromComponent=title
-            and rr.componentToReview = title'''
-          , [this, refdata_current]);
-      }
-      else {
-        all_rrs = ReviewRequest.executeQuery('''select rr
-          from ReviewRequest as rr,
-            TitleInstance as title,
-            Combo as pkgCombo,
-            Combo as titleCombo,
-            TitleInstancePackagePlatform as tipp
-          where pkgCombo.toComponent=tipp
-            and pkgCombo.fromComponent=?
-            and titleCombo.toComponent=tipp
-            and titleCombo.fromComponent=title
-            and rr.componentToReview = title'''
-          , [this]);
-      }
-    }*/
-
-    return all_rrs;
   }
 
 
@@ -380,22 +259,6 @@ class Package extends KBComponent {
     ]
   }
 
-  @Transient
-  static def oaiConfig = [
-    id             : 'packages',
-    textDescription: 'Package repository for GOKb',
-    query          : " from Package as o ",
-    curators       : 'Package.CuratoryGroups',
-    pageSize       : 3
-  ]
-
-
-  @Transient
-  private static getTitleClass(Long title_id) {
-    def result = KBComponent.get(title_id)?.class.getSimpleName();
-
-    result
-  }
 
   @Transient
   private static getCoverageStatements(Long tipp_id) {
@@ -450,19 +313,6 @@ class Package extends KBComponent {
     }
 
     return result;
-  }
-
-  public void addCuratoryGroupIfNotPresent(String cgname) {
-    boolean add_needed = true;
-    curatoryGroups.each { cgtest ->
-      if (cgtest.name.equalsIgnoreCase(cgname))
-        add_needed = false;
-    }
-
-    if (add_needed) {
-      def cg = CuratoryGroup.findByName(cgname) ?: new CuratoryGroup(name: cgname).save(flush: true, failOnError: true);
-      curatoryGroups.add(cg);
-    }
   }
 
   void createCoreIdentifiersIfNotExist(){
@@ -567,12 +417,6 @@ class Package extends KBComponent {
     }else {
       return 0
     }
-  }
-
-  @Transient
-  String getIdentifierValue(idtype){
-    // Null returned if no match.
-    ids?.find{ it.namespace.value.toLowerCase() == idtype.toLowerCase() }?.value
   }
 
   @Transient

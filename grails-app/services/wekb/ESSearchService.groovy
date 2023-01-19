@@ -19,6 +19,7 @@ import org.elasticsearch.search.aggregations.AggregationBuilders
 import org.elasticsearch.search.builder.SearchSourceBuilder
 import org.elasticsearch.search.sort.FieldSortBuilder
 import org.elasticsearch.search.sort.SortOrder
+import wekb.helper.RDStore
 
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -156,8 +157,8 @@ class ESSearchService{
 
           List providerRoles = [RefdataCategory.lookup(RCConstants.ORG_ROLE, 'Content Provider'), RefdataCategory.lookup(RCConstants.ORG_ROLE, 'Platform Provider'), RefdataCategory.lookup(RCConstants.ORG_ROLE, 'Publisher')]
 
-          Integer countCuratoryGroups = CuratoryGroup.executeQuery("select count(o.id) from CuratoryGroup as o where status != :forbiddenStatus", [forbiddenStatus : RefdataCategory.lookup(RCConstants.KBCOMPONENT_STATUS, KBComponent.STATUS_DELETED)], [readOnly: true])[0]
-          Integer countProvider = Org.executeQuery("select count(o.id) from Org as o join o.roles rdv where rdv in (:roles) and o.status != :forbiddenStatus", [forbiddenStatus : RefdataCategory.lookup(RCConstants.KBCOMPONENT_STATUS, KBComponent.STATUS_DELETED), roles: providerRoles], [readOnly: true])[0]
+          Integer countCuratoryGroups = CuratoryGroup.executeQuery("select count(o.id) from CuratoryGroup as o where status != :forbiddenStatus", [forbiddenStatus : RDStore.KBC_STATUS_DELETED], [readOnly: true])[0]
+          Integer countProvider = Org.executeQuery("select count(o.id) from Org as o join o.roles rdv where rdv in (:roles) and o.status != :forbiddenStatus", [forbiddenStatus : RDStore.KBC_STATUS_DELETED, roles: providerRoles], [readOnly: true])[0]
 
 
           searchSourceBuilder.query(QueryBuilders.queryStringQuery(query_str))

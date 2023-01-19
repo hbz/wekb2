@@ -47,15 +47,6 @@ class KBComponentVariantName {
 
   static belongsTo = [owner: KBComponent]
 
-  static jsonMapping = [
-    'ignore': [
-      'status',
-      'normVariantName',
-      'status',
-      'owner'
-    ]
-  ]
-
   def beforeInsert() {
     // Generate the any necessary values.
     normVariantName = TextUtils.normaliseString(variantName);

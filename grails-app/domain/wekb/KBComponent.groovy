@@ -20,12 +20,6 @@ import javax.persistence.Transient
 @grails.gorm.dirty.checking.DirtyCheck
 abstract class KBComponent implements Auditable{
 
-  static final String STATUS_CURRENT = "Current"
-  static final String STATUS_DELETED = "Deleted"
-  static final String STATUS_EXPECTED = "Expected"
-  static final String STATUS_RETIRED = "Retired"
-
-
   static final String CURRENT_PRICE_HQL = '''
     select cp
     from ComponentPrice as cp
@@ -35,7 +29,7 @@ abstract class KBComponent implements Auditable{
   '''
 
   private static refdataDefaults = [
-      "status"    : STATUS_CURRENT
+      "status"    : RDStore.KBC_STATUS_CURRENT
   ]
 
   private static final Map fullDefaultsForClass = [:]
@@ -78,17 +72,10 @@ abstract class KBComponent implements Auditable{
   @Transient
   protected grails.core.GrailsApplication grailsApplication
 
-  /*@Transient
-  public setSpringSecurityService(sss){
-    this.springSecurityService = sss
-  }*/
-
   @Transient
   setGrailsApplication(ga){
     this.grailsApplication = ga
   }
-
-
 
   @Transient
   private ensureDefaults(){
@@ -397,40 +384,6 @@ abstract class KBComponent implements Auditable{
     result
   }
 
-  @Transient
-  static KBComponent lookupByIO(String idtype, String idvalue){
-    // println("lookupByIO(${idtype},${idvalue})")
-    // Component(ids) -> (fromComponent) Combo (toComponent) -> (identifiedComponents) Identifier
-    def result = null
-    def crit = KBComponent.createCriteria()
-    def db_results = crit.list{
-      createAlias('outgoingCombos', 'ogc')
-      createAlias('ogc.type', 'ogcType')
-      createAlias('ogcType.owner', 'ogcOwner')
-      createAlias('ogc.toComponent', 'tc')
-      createAlias('tc.namespace', 'tcNamespace')
-      and{
-        eq 'ogcOwner.desc', RCConstants.COMBO_TYPE
-        eq 'ogcType.value', 'KBComponent.Ids'
-        eq 'tc.value', idvalue
-        eq 'tcNamespace.value', idtype
-      }
-      projections{
-        distinct 'id'
-      }
-    }
-    switch (db_results.size()){
-      case 1:
-        result = KBComponent.get(db_results[0])
-        break
-      // case {it > 1} :
-      //   // Error. Should only match 1...
-      //   break
-    }
-    result
-  }
-
-
 
   /**
    *  refdataFind generic pattern needed by inplace edit taglib to provide reference data to typedowns and other UI components.
@@ -438,7 +391,7 @@ abstract class KBComponent implements Auditable{
    */
   static def refdataFind(params){
     def result = []
-    def status_deleted = RefdataCategory.lookupOrCreate(RCConstants.KBCOMPONENT_STATUS, KBComponent.STATUS_DELETED)
+    def status_deleted = RDStore.KBC_STATUS_DELETED
     def ql = null
 
     params.sort = 'name'
@@ -525,60 +478,6 @@ abstract class KBComponent implements Auditable{
   }
 
 
-  @Transient
-  List getOtherIncomingCombos(){
-    def combs = null
-    // Only run this query id this is not a transient object. This must have an ID for this method to work
-    if (this.id){
-      Set comboPropTypes = getAllComboTypeValuesFor(this.getClass())
-      combs = Combo.createCriteria().list{
-        and{
-          eq("toComponent", this)
-          type{
-            and{
-              owner{
-                eq("desc", RCConstants.COMBO_TYPE)
-              }
-              not{ 'in'("value", comboPropTypes) }
-            }
-
-          }
-        }
-      }
-    }
-    else{
-      combs = []
-    }
-    combs
-  }
-
-
-  @Transient
-  List getOtherOutgoingCombos(){
-    def combs = null
-    if (this.id != null){
-      Set comboPropTypes = getAllComboTypeValuesFor(this.getClass())
-      combs = Combo.createCriteria().list{
-        and{
-          eq("fromComponent", this)
-          type{
-            and{
-              owner{
-                eq("desc", RCConstants.COMBO_TYPE)
-              }
-              not{ 'in'("value", comboPropTypes) }
-            }
-          }
-        }
-      }
-    }
-    else{
-      combs = null
-    }
-    combs
-  }
-
-
   void deleteSoft(context){
     // Set the status to deleted.
     setStatus(RDStore.KBC_STATUS_DELETED)
@@ -630,16 +529,6 @@ abstract class KBComponent implements Auditable{
   }
 
 
-  /**
-   *  Return the combos pertaining to a specific property (Rather than the components linked).
-   *  Needed for editing start/end dates. Initially on publisher, but probably on other things too later on.
-   */
-  @Transient
-  List<Combo> getCombosByPropertyName(propertyName){
-    return getCombosByPropertyNameAndStatus(propertyName, null)
-  }
-
-
   @Transient
   List<Combo> getCombosByPropertyNameAndStatus(propertyName, status){
     // log.debug("KBComponent::getCombosByPropertyNameAndStatus::${propertyName}|${status}")
@@ -675,12 +564,6 @@ abstract class KBComponent implements Auditable{
   }
 
 
-  @Transient
-  String getDerivedName(){
-    return name
-  }
-
-
   @Override
   boolean equals(Object obj){
     Object o = KBComponent.deproxy(obj)
@@ -695,30 +578,6 @@ abstract class KBComponent implements Auditable{
   }
 
 
-  void appendToAdditionalProperty(String prop_name, String val){
-    // Only need to add if a name and value has been supplied.
-    if (prop_name && val){
-      // Find the KBComponentAdditionalProperty
-      KBComponentAdditionalProperty prop = additionalProperties.find{ KBComponentAdditionalProperty prop ->
-        prop.getPropertyDefn().getPropertyName() == prop_name &&
-            prop.getApValue()?.equalsIgnoreCase(val)
-      }
-      // Only add a prop if we haven't already got one matching the value and definition.
-      if (!prop){
-        // Add a new property.
-        def prop_defn = AdditionalPropertyDefinition.findByPropertyName(prop_name) ?: new AdditionalPropertyDefinition(propertyName: prop_name).save(failOnError: true)
-        // Add to the additional properties.
-        addToAdditionalProperties(
-            new KBComponentAdditionalProperty(
-                propertyDefn: prop_defn,
-                apValue: val
-            )
-        )
-      }
-    }
-  }
-
-
   String toString(){
     //"${name ?: ''} (${getNiceName()} ${this.id})".toString()
     "${name ?: ''}".toString()
@@ -727,199 +586,6 @@ abstract class KBComponent implements Auditable{
 
   String getNiceName(){
     "${this.class.getSimpleName()}"
-  }
-
-
-  /**
-   * Get the list of all properties and there values.
-   */
-  @Transient
-  Map getAllPropertiesAndVals(){
-    // The list of property names that we are to ignore.
-    // II: ToDo Steve - Please review this.
-    // explanation :: I'm not fully sure what side effects this might have, but in local_props below deproxy is called
-    // for each property. skippedTitles is a list of strings and was causing hell on earth in the A_Api which was unable to tell the
-    // difference between f(x) and f([x]) closure called with a list containing one argument. Not been able to fully
-    // wrap my head around A_Api yet, so added skippedTitles here as a stop-gap. Substantial changes already made to A_Api and don't
-    // want to change any more yet.
-    // added variantNames
-
-    // SO: Think the issue was actually that deproxy was being called on the list of items when iterating [each (el in val)]
-    // should have been called on el not val.
-    def ignore_list = [
-        'id',
-        'outgoingCombos',
-        'incomingCombos',
-        'systemOnly',
-        'additionalProperties',
-//      'skippedTitles',
-        'variantNames'
-    ]
-
-    // Get the domain class.
-    def domainClass = grailsApplication.getDomainClass(this."class".name)
-    // The map of current property names and values to be passed to the
-    // new constructor.
-    def props = [:]
-    // Add combo and persisted properties to the list.
-    def localProps = (domainClass?.persistentProperties?.collect{ it.name }) ?: []
-    localProps += allComboPropertyNames
-    localProps.each{ prop ->
-      // Ignore the ones in the list.
-      if (prop in ignore_list){
-        return
-      }
-      // println("Deproxy ${prop}")
-      def val = this."${prop}"
-      switch (val){
-        case { it instanceof Collection }:
-          def newVals = []
-          for (el in val){
-            // Deproxy the item in the list and then add.
-            def newVal = KBComponent.deproxy(el)
-            if (grailsApplication.isDomainClass(newVal."class")){
-              // Domain class.
-              newVal = newVal.merge()
-            }
-            // Add to the list.
-            newVals << newVal
-          }
-          props["${prop}"] = newVals
-          break
-        default:
-          props["${prop}"] = KBComponent.deproxy(val)
-      }
-    }
-    props
-  }
-
-
-  /**
-   * Get the list of all properties and ids.
-   */
-  @Transient
-  Map getAllPropertiesWithLinks(boolean addCombos = true){
-    def ignore_list = [
-        'id',
-        'outgoingCombos',
-        'incomingCombos',
-        'systemOnly',
-        'additionalProperties',
-//      'skippedTitles',
-//      'variantNames'
-    ]
-    // Get the domain class.
-    def domainClass = grailsApplication.getDomainClass(this."class".name)
-    // The map of current property names and values to be passed to the
-    // new constructor.
-    def props = [:]
-    // Add combo and persisted properties to the list.
-    def localProps = (domainClass?.persistentProperties?.collect{ it.name }) ?: []
-    if (addCombos){
-      localProps += allComboPropertyNames
-    }
-    localProps.each{ prop ->
-      // Ignore the ones in the list.
-      if (prop in ignore_list){
-        return
-      }
-      // println("Deproxy ${prop}")
-      def val = this."${prop}"
-      switch (val){
-        case { it instanceof Collection }:
-          def newVals = []
-          for (el in val){
-
-            // Deproxy the item in the list and then add.
-            def newVal = processPropVal(el)
-
-            newVals << newVal
-          }
-          props["${prop}"] = newVals
-          break
-        default:
-          props["${prop}"] = processPropVal(val)
-      }
-    }
-    props
-  }
-
-
-  private def processPropVal(el){
-    def newVal = KBComponent.deproxy(el)
-    def result = null
-    if (newVal && grailsApplication.isDomainClass(newVal."class")){
-      def obj_label = null
-
-      if (newVal.hasProperty('username')){
-        obj_label = newVal.username
-      }
-      else if (newVal.hasProperty('name')){
-        obj_label = newVal.name
-      }
-      else if (newVal.hasProperty('value')){
-        obj_label = newVal.value
-      }
-      else if (newVal.hasProperty('variantName')){
-        obj_label = newVal.variantName
-      }
-      result = ['oid': "${newVal.class.name}:${newVal.id}", 'label': obj_label]
-      if (newVal.class.name == 'wekb.RefdataValue'){
-        result.category = newVal.owner.label
-      }
-    }
-    else{
-      result = newVal
-    }
-    result
-  }
-
-
-  /**
-   * Creates a new component of the type of this class
-   * and populates all the properties with the values of this one
-   * with the exception of the id as this will be set on save.
-   */
-  @Transient
-  <T extends KBComponent> T clone(){
-    // Now we have a map of all properties and values we should create our new instance.
-    T comp = this."class".newInstance()
-    sync(comp)
-  }
-
-
-  /**
-   * This method copies the values from this component to the supplied.
-   */
-  @Transient
-  <T extends KBComponent> T sync(T to){
-    if (to){
-      T me = this
-      // Update Master tipp.
-      Map propVals = allPropertiesAndVals
-      log.debug("Found ${propVals.size()} properties to synchronize.")
-      int count = 1
-      propVals.each{ p, v ->
-        log.debug("(${count}) Attempting to copy '${p}' from component ${me.id} to ${to.id}...")
-        if (v != null){
-          def toHas = has(to, "${p}")
-
-          if (toHas){
-            log.debug("\t...sending value ${v.toString()}")
-            to."${p}" = v
-          }
-          else{
-            log.debug("\t...target doesn't support '${p}'")
-          }
-        }
-        else{
-          log.debug("\t...value is null")
-        }
-        count++
-      }
-    }
-    // Return the supplied element.
-    to
   }
 
 
@@ -941,46 +607,10 @@ abstract class KBComponent implements Auditable{
 
 
   @Transient
-  def ensureVariantName(String name){
-    def result = null
-    if (name.trim().size() != 0){
-      def normname = generateNormname(name)
-      // Check that name is not already a name or a variant, if so, add it.
-      def existing_component = KBComponent.findByNormname(normname)
-      if (existing_component == null){
-        // Variant names use different normalisation method.
-        normname = TextUtils.normaliseString(name)
-        // not already a name
-        // Make sure not already a variant name
-        def existing_variants = KBComponentVariantName.findAllByNormVariantName(normname)
-        if (existing_variants.size() == 0){
-          result = new KBComponentVariantName(owner: this, variantName: name).save()
-        }
-        else{
-          log.debug("Unable to add ${name} as an alternate name to ${id} - it's already an alternate name....")
-        }
-      }
-      else{
-        log.debug("Unable to add ${name} as an alternate name to ${id} - it's already name for ${existing_component.id}")
-      }
-    }
-    else{
-      log.error("No viable variant name supplied!")
-    }
-    result
-  }
-
-
-  @Transient
   String getDisplayName(){
     return name
   }
 
-
-  @Transient
-  def getNotes(){
-    return Note.findAllByOwnerClassAndOwnerId(this.class.name, this.getId())
-  }
 
 
   def expunge(){
@@ -1020,89 +650,6 @@ abstract class KBComponent implements Auditable{
       result.num_expunged += KBComponent.executeUpdate("delete KBComponent as c where c.id IN (:component)", [component: batch])
     }
     result
-  }
-
-
-  @Transient
-  def addCoreGOKbXmlFields(builder, attr) {
-    String cName = this.class.name
-
-    // Single props.
-    builder.'name'(name)
-    builder.'status'(status?.value)
-    if (languages){
-      builder.'languages'{
-        languages.each{ lan ->
-          builder.'language'(lan.language.value)
-        }
-      }
-    }
-    builder.'shortcode'(shortcode)
-
-    // Variant Names
-    if (variantNames){
-      builder.'variantNames'{
-        variantNames.each{ vn ->
-          builder.'variantName'(vn.variantName)
-        }
-      }
-    }
-    if (additionalProperties){
-      builder.'additionalProperties'{
-        additionalProperties.each{ prop ->
-          String pName = prop.propertyDefn?.propertyName
-          if (pName && prop.apValue){
-            builder.'additionalProperty'('name': pName, 'value': prop.apValue)
-          }
-        }
-      }
-    }
-    if (source){
-      builder.'source'{
-        source.with{
-          addCoreGOKbXmlFields(builder, attr)
-          builder.'url'(url)
-          builder.'defaultAccessURL'(defaultAccessURL)
-          builder.'explanationAtSource'(explanationAtSource)
-          builder.'contextualNotes'(contextualNotes)
-          builder.'frequency'(frequency)
-          builder.'ruleset'(ruleset)
-          if (defaultSupplyMethod){
-            builder.'defaultSupplyMethod'(defaultSupplyMethod.value)
-          }
-          if (defaultDataFormat){
-            builder.'defaultDataFormat'(defaultDataFormat.value)
-          }
-          if (responsibleParty){
-            builder.'responsibleParty'{
-              builder.'name'(responsibleParty.name)
-            }
-          }
-        }
-      }
-    }
-  }
-
-  // Given the type return a string such as "1.23 GBP" which represents the CURRENT
-  // price for the type variant. Default type to "list" if null is passed in.
-  String getPrice(String type){
-    String result = null
-    String price_type = type ?: 'list'
-    Date now = new Date()
-    def cpresult = ComponentPrice.executeQuery(CURRENT_PRICE_HQL, [t: price_type, c: this, d: now])
-    if (cpresult.size() == 1){
-      result = String.format('%.2f', cpresult.get(0).price)
-      if (cpresult.get(0).currency != null){
-        result += " ${cpresult.get(0).currency.value}"
-      }
-    }
-    else if (cpresult.size() == 0){
-      // No matches - return null
-    }
-    else{
-      throw new RuntimeException("Multiple prices match for component ${this.id} price type ${price_type}")
-    }
-    return result
   }
 
 

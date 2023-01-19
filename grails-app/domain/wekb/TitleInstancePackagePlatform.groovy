@@ -115,58 +115,6 @@ class TitleInstancePackagePlatform extends KBComponent {
 
   private static SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd")
 
-/*  private static refdataDefaults = [
-    "delayedOA"    : "Unknown",
-    "hybridOA"     : "Unknown",
-    "primary"      : "No",
-    "coverageDepth": "Fulltext"
-  ]*/
-
-  static jsonMapping = [
-    'ignore'       : [
-      'accessType',
-      'delayedOA',
-      'hybridOA',
-      'primary',
-      'coverageDepth',
-      'description',
-      'hybridOAUrl'
-    ],
-    'es'           : [
-      'hostPlatformUuid'      : "hostPlatform.uuid",
-      'hostPlatformName'      : "hostPlatform.name",
-      'hostPlatform'          : "hostPlatform.id",
-      'tippPackageUuid'       : "pkg.uuid",
-      'tippPackageName'       : "pkg.name",
-      'tippPackage'           : "pkg.id",
-      'titleType'             : "niceName",
-      'coverage'              : "coverageStatements",
-      'publisherName'         : "publisherName",
-      'dateFirstInPrint'      : "dateFirstInPrint",
-      'dateFirstOnline'       : "dateFirstOnline",
-      'firstAuthor'           : "firstAuthor",
-      'publicationType'       : "publicationType",
-      'volumeNumber'          : "volumeNumber",
-      'editionStatement'      : "editionStatement",
-      'firstEditor'           : "firstEditor",
-      'parentPublicationTitleId'   : "parentPublicationTitleId",
-      'precedingPublicationTitleId': "precedingPublicationTitleId",
-      'supersedingPublicationTitleId':"supersedingPublicationTitleId",
-      'lastChangedExternal'   : "lastChangedExternal",
-      'medium'                : "medium",
-      'languages'              : "languages",
-      'accessType'              : "accessType",
-      'openAccess'              : "openAccess"
-    ],
-    'defaultLinks' : [
-      'pkg',
-      'hostPlatform'
-    ],
-    'defaultEmbeds': [
-      'coverageStatements'
-    ]
-  ]
-
   static hasMany = [
     coverageStatements: TIPPCoverageStatement,
     ddcs: RefdataValue,
@@ -250,8 +198,6 @@ class TitleInstancePackagePlatform extends KBComponent {
     medium(nullable: true, blank: true)
     ddcs(nullable: true)
   }
-
-  public static final String restPath = "/package-titles"
 
   def availableActions() {
     [[code: 'setStatus::Retired', label: 'Mark the title as retired'],

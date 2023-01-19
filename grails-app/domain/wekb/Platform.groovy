@@ -3,6 +3,7 @@ package wekb
 import wekb.annotations.RefdataAnnotation
 import wekb.helper.RCConstants
 import groovy.util.logging.Slf4j
+import wekb.helper.RDStore
 
 import javax.persistence.Transient
 
@@ -150,30 +151,9 @@ class Platform extends KBComponent {
 
   }
 
-  public static final String restPath = "/platforms"
-
-  static jsonMapping = [
-    'ignore'       : [
-    ],
-    'es'           : [
-      'providerUuid': "provider.uuid",
-      'providerName': "provider.name",
-      'provider'    : "provider.id"
-    ],
-    'defaultLinks' : [
-      'provider',
-      'curatoryGroups'
-    ],
-    'defaultEmbeds': [
-      'ids',
-      'variantNames',
-      'curatoryGroups'
-    ]
-  ]
-
   static def refdataFind(params) {
     def result = [];
-    def status_deleted = RefdataCategory.lookupOrCreate(RCConstants.KBCOMPONENT_STATUS, KBComponent.STATUS_DELETED)
+    def status_deleted = RDStore.KBC_STATUS_DELETED
     def status_filter = null
 
     if (params.filter1) {
@@ -252,13 +232,6 @@ class Platform extends KBComponent {
             , [to: this, type: combo_tipps, status: refdata_current])[0]
 
     result
-  }
-
-  @Transient
-  String getIdentifierValue(idtype){
-    // This will return only the first match and stop looking afterwards.
-    // Null returned if no match.
-    ids?.find{ it.namespace.value.toLowerCase() == idtype.toLowerCase() }?.value
   }
 
   @Transient

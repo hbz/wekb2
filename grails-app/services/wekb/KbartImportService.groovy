@@ -224,9 +224,7 @@ class KbartImportService {
 
             changed |= ClassUtils.setStringIfDifferent(result, 'name', packageHeaderDTO.name)
 
-            if (!result.variantNames.find { it.variantName == current_name }) {
-                result.ensureVariantName(current_name)
-            }
+
         }*/
 
 /*        if (!result) {

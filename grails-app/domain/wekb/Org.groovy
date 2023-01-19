@@ -2,6 +2,7 @@ package wekb
 
 import wekb.helper.RCConstants
 import groovy.util.logging.Slf4j
+import wekb.helper.RDStore
 
 import javax.persistence.Transient
 
@@ -18,7 +19,7 @@ class Org extends KBComponent {
   def availableActions() {
     [
      /* [code: 'org::deprecateReplace', label: 'Replace Publisher With...'],
-      [code: 'org::deprecateDelete', label: 'Remove Publisher name from title records...'],*/
+     */
       [code: 'method::deleteSoft', label: 'Delete Provider', perm: 'delete'],
       [code: 'method::retire', label: 'Retire Provider', perm: 'admin'],
       [code: 'method::setCurrent', label: 'Set Provider Current'],
@@ -95,31 +96,9 @@ class Org extends KBComponent {
     packageNamespace(nullable: true)
   }
 
-  static jsonMapping = [
-    'ignore'       : [
-    ],
-    'es'           : [
-    ],
-    'defaultLinks' : [
-
-    ],
-    'defaultEmbeds': [
-      'ids',
-      'variantNames',
-      'curatoryGroups',
-      'providedPlatforms'
-    ]
-  ]
-
-  //  @Transient
-  //  def getPermissableCombos() {
-  //  [
-  //  ]
-  //  }
-
   static def refdataFind(params) {
     def result = [];
-    def status_deleted = RefdataCategory.lookupOrCreate(RCConstants.KBCOMPONENT_STATUS, KBComponent.STATUS_DELETED)
+    def status_deleted = RDStore.KBC_STATUS_DELETED
     def status_filter = null
 
     if (params.filter1) {
@@ -142,178 +121,9 @@ class Org extends KBComponent {
     result
   }
 
-  static Org lookupUsingComponentIdOrAlternate(ids) {
-    def located_org = null
-
-    switch (ids) {
-
-      case List:
-
-        // Assume [identifierType : "", identifierValue : "" ] format.
-        // See if we can locate the item using any of the custom identifiers.
-        ids.each { ci ->
-
-          // We've already located an org for this identifier, the new identifier should be new (And therefore added to this org) or
-          // resolve to this org. If it resolves to some other org, then there is a conflict and we fail!
-          located_org = lookupByIO(ci.identifierType, ci.identifierValue)
-          if (located_org) return located_org
-        }
-        break
-      case Identifier:
-        located_org = lookupByIO(
-          ids.ns.ns,
-          ids.value
-        )
-        break
-    }
-    located_org
-  }
-
   @Override
   public String getNiceName() {
     return "Provider";
-  }
-
-  @Transient
-  static def oaiConfig = [
-    id             : 'orgs',
-    textDescription: 'Organization repository for GOKb',
-    query          : " from Org as o ",
-    statusFilter   : ["Deleted"],
-    pageSize       : 10
-  ]
-
-  /**
-   *  Render this package as OAI_dc
-   */
-  @Transient
-  def toOaiDcXml(builder, attr) {
-    builder.'dc'(attr) {
-      'dc:title'(name)
-    }
-  }
-
-  public static final String restPath = "/orgs"
-
-  /**
-   *  Render this package as GoKBXML
-   */
-  @Transient
-  def toGoKBXml(builder, attr) {
-    def publishes = getPublishedTitles()
-    def issues = getIssuedTitles()
-    def provides = getProvidedPackages()
-    def platforms = getProvidedPlatforms()
-    def identifiers = getIds()
-
-    builder.'gokb'(attr) {
-      builder.'org'(['id': (id), 'uuid': (uuid)]) {
-
-        addCoreGOKbXmlFields(builder, attr)
-        builder.'homepage'(homepage)
-        builder.'metadataDownloaderURL'(metadataDownloaderURL)
-        builder.'kbartDownloaderURL'(kbartDownloaderURL)
-        if (packageNamespace)
-          builder.'packageNamespace'('namespaceName': packageNamespace.name, 'value': packageNamespace.value, 'id': packageNamespace.id)
-        if (roles) {
-          builder.'roles' {
-            roles.each { role ->
-              builder.'role'(role.value)
-            }
-          }
-        }
-
-        builder.'curatoryGroups' {
-          curatoryGroups.each { cg ->
-            builder.'group' {
-              builder.'name'(cg.name)
-            }
-          }
-        }
-
-        if (mission) {
-          builder.'mission'(mission.value)
-        }
-
-        if (platforms) {
-          'providedPlatforms' {
-            platforms.each { plat ->
-              builder.'platform'(['id': plat.id, 'uuid': plat.uuid]) {
-                builder.'name'(plat.name)
-                builder.'primaryUrl'(plat.primaryUrl)
-              }
-            }
-          }
-        }
-
-//         if (publishes) {
-//           'publishedTitles' {
-//             publishes.each { title ->
-//               builder.'title' (['id':title.id]) {
-//                 builder.'name' (title.name)
-//                 builder.'identifiers' {
-//                   title.ids?.each { tid ->
-//                     builder.'identifier' (['namespace':tid.namespace?.value], tid.value)
-//                   }
-//                 }
-//               }
-//             }
-//           }
-//         }
-//
-//         if (issues) {
-//           'issuedTitles' {
-//             issues.each { title ->
-//               builder.'title' (['id':title.id]) {
-//                 builder.'name' (title.name)
-//                 builder.'identifiers' {
-//                   title.ids?.each { tid ->
-//                     builder.'identifier' (['namespace':tid.namespace?.value], tid.value)
-//                   }
-//                 }
-//               }
-//             }
-//           }
-//         }
-
-        if (provides) {
-          'providedPackages' {
-            provides.each { pkg ->
-              builder.'package'(['id': pkg.id, 'uuid': pkg.uuid]) {
-                builder.'name'(pkg.name)
-                builder.'identifiers' {
-                  pkg.ids?.each { tid ->
-                    builder.'identifier'(['namespace': tid.namespace?.value, 'namespaceName': tid.namespace?.name, 'value': tid.value])
-                  }
-                }
-                builder.'curatoryGroups' {
-                  pkg.curatoryGroups?.each { cg ->
-                    builder.'group'(['id': cg.id]) {
-                      builder.'name'(cg.name)
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-
-  def deprecateDelete(context) {
-    log.debug("deprecateDelete");
-    def result = [:]
-    Combo.executeUpdate("delete from Combo where toComponent.id = :cID", [cID: this.getId()]);
-    Combo.executeUpdate("delete from Combo where fromComponent.id = :cID", [cID: this.getId()]);
-    result
-  }
-
-
-  @Transient
-  String getIdentifierValue(idtype){
-    // Null returned if no match.
-    ids?.find{ it.namespace.value.toLowerCase() == idtype.toLowerCase() }?.value
   }
 
   @Transient

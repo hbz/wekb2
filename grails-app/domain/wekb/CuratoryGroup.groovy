@@ -3,6 +3,7 @@ package wekb
 import wekb.annotations.RefdataAnnotation
 import wekb.helper.RCConstants
 import wekb.auth.User
+import wekb.helper.RDStore
 
 import javax.persistence.Transient
 
@@ -57,10 +58,6 @@ class CuratoryGroup extends KBComponent {
     type (nullable:true, blank:false)
   }
 
-  public String getRestPath() {
-    return "/curatoryGroups";
-  }
-
   @Override
   public String getNiceName() {
     return "Curatory Group";
@@ -68,7 +65,7 @@ class CuratoryGroup extends KBComponent {
 
   static def refdataFind(params) {
     def result = [];
-    def status_deleted = RefdataCategory.lookupOrCreate(RCConstants.KBCOMPONENT_STATUS, KBComponent.STATUS_DELETED)
+    def status_deleted = RDStore.KBC_STATUS_DELETED
     def ql = null;
 
     params.sort = 'name'
