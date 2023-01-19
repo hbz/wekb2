@@ -2,7 +2,7 @@
 grails:
     config:
         locations:
-            - ~/.grails/wekb-config.groovy
+            - ~/.grails/wekb2-config.groovy
     profile: web
     codegen:
         defaultPackage: wekb
