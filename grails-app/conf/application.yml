@@ -125,6 +125,8 @@ environments:
                 enabled: false
         wekb:
             defaultCuratoryGroup: Local
+        logging:
+            config: 'grails-app/conf/logback-development.xml'
     test:
         dataSource:
             dbCreate: none # create-drop // none because of database migration
