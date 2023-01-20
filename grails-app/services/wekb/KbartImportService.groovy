@@ -74,14 +74,14 @@ class KbartImportService {
                 }
             }
 
-            name_candidates = Platform.executeQuery("from Platform where name = ? and status != ? ", [platformDTO.name, status_deleted])
+            name_candidates = Platform.executeQuery("from Platform where name = :name and status != :status ", [name: platformDTO.name, status: status_deleted])
 
             if (name_candidates.size() == 0) {
                 log.debug("No platforms matched by name!")
 
                 def variant_normname = TextUtils.normaliseString(platformDTO.name)
 
-                def varname_candidates = Platform.executeQuery("select distinct pl from Platform as pl join pl.variantNames as v where v.normVariantName = ? and pl.status = ? ", [variant_normname, status_current])
+                def varname_candidates = Platform.executeQuery("select distinct pl from Platform as pl join pl.variantNames as v where v.normVariantName = :variantName and pl.status = :status ", [variantName: variant_normname, status: status_current])
 
                 if (varname_candidates.size() == 1) {
                     log.debug("Platform matched by variant name!")
@@ -325,7 +325,7 @@ class KbartImportService {
                 if (!prov) {
                     log.debug("None found by Normname ${norm_prov_name}, trying variants")
                     def variant_normname = TextUtils.normaliseString(packageHeaderDTO.nominalProvider.name)
-                    def candidate_orgs = Org.executeQuery("select distinct o from Org as o join o.variantNames as v where v.normVariantName = ? and o.status != ?", [variant_normname, status_deleted])
+                    def candidate_orgs = Org.executeQuery("select distinct o from Org as o join o.variantNames as v where v.normVariantName = :normName and o.status != :status", [normName: variant_normname, status: status_deleted])
                     if (candidate_orgs.size() == 1) {
                         prov = candidate_orgs[0]
                     }

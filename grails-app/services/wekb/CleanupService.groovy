@@ -116,11 +116,11 @@ class CleanupService {
         log.debug("Found replacement platform for ${ptr}")
         def new_plt = orig_plt[0]
 
-        def old_from_combos = Combo.executeQuery("from Combo where fromComponent = ?", [ptr])
-        def old_to_combos = Combo.executeQuery("from Combo where toComponent = ?", [ptr])
+        def old_from_combos = Combo.executeQuery("from Combo where fromComponent = :fromCom", [fromCom: ptr])
+        def old_to_combos = Combo.executeQuery("from Combo where toComponent = :toCom", [toCom: ptr])
 
         old_from_combos.each { oc ->
-          def existing_new = Combo.executeQuery("from Combo where type = ? and fromComponent = ? and toComponent = ?",[oc.type, new_plt, oc.toComponent])
+          def existing_new = Combo.executeQuery("from Combo where type = :type and fromComponent = :fromCom and toComponent = :toCom",[type: oc.type, fromCom: new_plt,toCom:  oc.toComponent])
 
           if (existing_new?.size() == 0 && oc.toComponent != new_plt) {
             oc.fromComponent = new_plt
@@ -134,7 +134,7 @@ class CleanupService {
         }
 
         old_to_combos.each { oc ->
-          def existing_new = Combo.executeQuery("from Combo where type = ? and toComponent = ? and fromComponent = ?",[oc.type, new_plt, oc.fromComponent])
+          def existing_new = Combo.executeQuery("from Combo where  = :type and fromComponent = :fromCom and toComponent = :toCom",[type: oc.type,toCom: new_plt,fromCom: oc.fromComponent])
 
           if (existing_new?.size() == 0 && oc.fromComponent != new_plt) {
             oc.toComponent = new_plt

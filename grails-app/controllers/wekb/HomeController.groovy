@@ -148,7 +148,7 @@ class HomeController {
 
         log.debug("Period ${i}")
 
-        def comp_stats = ComponentStatistic.executeQuery("from ComponentStatistic where componentType = ? and year = ? and month = ?", [component_data.componentName, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH)], [readOnly: true])[0]
+        def comp_stats = ComponentStatistic.executeQuery("from ComponentStatistic where componentType = :comType and year = :year and month = :month", [comType: component_data.componentName, year: calendar.get(Calendar.YEAR), month: calendar.get(Calendar.MONTH)], [readOnly: true])[0]
         def cur_month = calendar.get(Calendar.MONTH) + 1
 
         String xVal = "${calendar.get(Calendar.YEAR)}-${cur_month < 10 ? '0'+ cur_month : cur_month}"
