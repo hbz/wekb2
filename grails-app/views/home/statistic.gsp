@@ -25,13 +25,13 @@
 
     option = {
       title: {
-        text: <% print '"' + component.key + '"' %>
+        text: <% print raw('"' + component.key + '"') %>
         },
         tooltip: {
           trigger: 'axis'
         },
         legend: {
-          data: [<% print '"All ' + component.key + '",' + '"New ' + component.key + '"' %>]
+          data: [<% print raw("'All " + component.key + "'," + "'New " + component.key + "'") %>]
       },
       grid: {
         left: '3%',
@@ -47,25 +47,25 @@
       xAxis: {
         type: 'category',
         boundaryGap: false,
-        data: [<% print '"' + xAxis.collect { it }.join('","') + '"' %>]
+        data: [<% print raw('"' + xAxis.collect { it }.join('","') + '"') %>]
       },
       yAxis: {
         type: 'value'
       },
       series:[
            {
-            name: <% print '"All ' + component.key + '"' %>,
+            name: <% print raw('"All ' + component.key + '"') %>,
             type: 'line',
 
             smooth:true,
-            data: [<% print '"' + component.value.allComponentsData.collect { it }.join('","') + '"' %>]
+            data: [<% print raw('"' + component.value.allComponentsData.collect { it }.join('","') + '"') %>]
         },
            {
-            name: <% print '"New ' + component.key + '"' %>,
+            name: <% print raw('"New ' + component.key + '"') %>,
             type: 'line',
 
             smooth:true,
-            data: [<% print '"' + component.value.newComponentsData.collect { it }.join('","') + '"' %>]
+            data: [<% print raw('"' + component.value.newComponentsData.collect { it }.join('","') + '"') %>]
         }
       ]
     };
