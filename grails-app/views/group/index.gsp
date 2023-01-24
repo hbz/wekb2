@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta name="layout" content="public_semui" />
-<title>Group</title>
+<title>we:kb : Group</title>
 </head>
 <body>
 <h1 class="ui header">My Compoents (${groups.name.join(',')})</h1>

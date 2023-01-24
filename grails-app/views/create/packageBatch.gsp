@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta name="layout" content="public_semui"/>
-    <title>Upload Packages</title>
+    <title>we:kb : Upload Packages</title>
 </head>
 
 <body>

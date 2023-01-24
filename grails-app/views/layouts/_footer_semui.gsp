@@ -1,3 +1,4 @@
+<%@ page import="java.time.Year;" %>
 <footer class="ui fixed footer segment wekb-footer">
     <div class="ui center aligned container">
 
@@ -6,7 +7,7 @@
             <div class="five wide column left aligned">
                 <img height="30" alt="Logo wekb" src="${resource(dir: 'images', file: 'wekb-logo.svg')}"/>
 
-                <p>©${new Date().getYear()} Hochschulbibliothekszentrum des Landes Nordrhein-Westfalen (hbz) <br> ‧ Jülicher Straße 6 ‧ 50674 Köln<br>  ‧ +49 221 400 75-0
+                <p>©${Year.now().getValue()} Hochschulbibliothekszentrum des Landes Nordrhein-Westfalen (hbz) <br> ‧ Jülicher Straße 6 ‧ 50674 Köln<br>  ‧ +49 221 400 75-0
                 </p>
                 <a rel="license" href="http://creativecommons.org/publicdomain/zero/1.0/">
                     <img alt="CC0 1.0 Universal - Public Domain Dedication"

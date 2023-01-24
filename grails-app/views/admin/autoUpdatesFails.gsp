@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta name="layout" content="public_semui"/>
-    <title>Automatic Update Fails</title>
+    <title>we:kb : Automatic Update Fails</title>
 </head>
 
 <body>

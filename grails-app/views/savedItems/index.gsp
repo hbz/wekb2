@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta name="layout" content="public_semui" />
-<title>Saved Searchs</title>
+<title>we:kb : Saved Searchs</title>
 </head>
 <body>
 

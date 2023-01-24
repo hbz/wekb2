@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta name="layout" content="public_semui">
-    <title>Manage FTControl</title>
+    <title>we:kb : Manage FTControl</title>
 </head>
 
 <body>

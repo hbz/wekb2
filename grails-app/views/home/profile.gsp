@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta name="layout" content="public_semui"/>
-    <title>My Profile & Preferences</title>
+    <title>we:kb : My Profile & Preferences</title>
 </head>
 
 <body>

@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta name="layout" content="public_semui"/>
-    <title>Tipp Duplicates</title>
+    <title>we:kb : Tipp Duplicates</title>
 </head>
 
 <body>

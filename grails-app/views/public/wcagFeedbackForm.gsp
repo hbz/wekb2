@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta name="layout" content="public_semui"/>
-    <title><g:message code="gokb.appname" default="we:kb"/>: Accessibility Feedback Form</title>
+    <title>we:kb : Accessibility Feedback Form</title>
 </head>
 
 <body>

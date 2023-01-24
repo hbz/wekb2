@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta name="layout" content="public_semui"/>
-    <title><g:message code="gokb.appname" default="we:kb"/>: Forbidden</title>
+    <title>we:kb : Forbidden</title>
 </head>
 
 <body>

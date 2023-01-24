@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta name="layout" content="public_semui"/>
-    <title>Search <g:if test="${qbetemplate}">${qbetemplate.title}</g:if><g:if
+    <title>we:kb : Search <g:if test="${qbetemplate}">${qbetemplate.title}</g:if><g:if
             test="${refObject}">for ${refObject.niceName}</g:if></title>
 </head>
 

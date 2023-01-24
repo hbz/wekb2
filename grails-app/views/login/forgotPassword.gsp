@@ -1,7 +1,7 @@
 <html>
 <head>
     <meta name="layout" content="public_semui"/>
-    <title><g:message code="gokb.appname" default="we:kb"/>: <g:message
+    <title>we:kb : <g:message
             code='forgottenPassword.title'/></title>
 </head>
 

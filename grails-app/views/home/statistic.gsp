@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta name="layout" content="public_semui"/>
-    <title>Statistics</title>
+    <title>we:kb : Statistics</title>
 
 </head>
 

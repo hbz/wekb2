@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta name="layout" content="public_semui"/>
-    <title>My Review Requests of Curatory Groups (${groups.name.join(',')})</title>
+    <title>we:kb : My Review Requests of Curatory Groups (${groups.name.join(',')})</title>
 </head>
 
 <body>

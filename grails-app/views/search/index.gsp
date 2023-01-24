@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta name="layout" content="public_semui"/>
-    <title>Search in All Components</title>
+    <title>we:kb : Search in All Components</title>
 </head>
 
 <body>

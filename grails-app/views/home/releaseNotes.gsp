@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta name="layout" content="public_semui"/>
-    <title><g:message code="gokb.appname" default="we:kb"/>:  Release Notes</title>
+    <title>we:kb : Release Notes</title>
   </head>
   <body>
    <h1 class="ui header">Release Notes</h1>

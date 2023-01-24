@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta name="layout" content="public_semui"/>
-    <title>Frontend</title>
+    <title>we:kb : Frontend</title>
 </head>
 
 <body>

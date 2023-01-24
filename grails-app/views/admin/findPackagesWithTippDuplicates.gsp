@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta name="layout" content="public_semui"/>
-    <title>Packages with Tipp Duplicates</title>
+    <title>we:kb : Packages with Tipp Duplicates</title>
 </head>
 
 <body>

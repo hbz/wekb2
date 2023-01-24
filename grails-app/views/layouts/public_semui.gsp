@@ -3,12 +3,11 @@
 <html lang="en">
 <head>
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title><g:layoutTitle default="we:kb"/></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="shortcut icon" href="${resource(dir: 'images', file: 'favicon.ico')}" type="image/x-icon">
+    <link rel="shortcut icon" href="${resource(dir: 'images', file: 'favicon.ico')}">
 
     <g:javascript> var spotlightSearchUrl="${g.createLink(controller: 'search', action: 'spotlightSearch')}";</g:javascript>
     <g:javascript> var ajaxLookUp="${g.createLink(controller: 'ajaxJson', action: 'lookup')}";</g:javascript>
@@ -16,24 +15,17 @@
     <asset:javascript src="wekb.js"/>
     <asset:stylesheet src="wekb.css"/>
 
-    <title><g:message code="gokb.appname" default="we:kb"/></title>
-
 </head>
 
 <wekb:serviceInjection/>
 <g:set var="currentServer" scope="page" value="${wekb.utils.ServerUtils.getCurrentServer()}"/>
 
-<body id="page-body" class="pushable">
+<body class="pushable">
     <wekb:serverlabel server="${currentServer}"/>
     <div class="ui left vertical inverted visible menu sidebar ${serverLabel}" id="toc">
         <g:link controller="public" action="index" class="header item">
             <img alt="Logo wekb" src="${resource(dir: 'images', file: 'logo.svg')}"/>
         </g:link>
-
-
-    %{--<div class="item">
-        <g:link controller="public" action="index"><i class="ui icon home"></i> Home</g:link>
-    </div>--}%
 
         <div class="item">
             <div class="header">Search</div>

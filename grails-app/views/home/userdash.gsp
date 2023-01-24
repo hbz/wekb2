@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta name="layout" content="public_semui"/>
-    <title>My User Dashboard</title>
+    <title>we:kb : My User Dashboard</title>
 </head>
 
 <body>

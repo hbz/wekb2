@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta name="layout" content="public_semui"/>
-    <title>Package Management</title>
+    <title>we:kb : Package Management</title>
 </head>
 
 <body>

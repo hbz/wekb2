@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta name="layout" content="public_semui"/>
-    <title>KBART Import</title>
+    <title>we:kb : KBART Import</title>
 </head>
 
 <body>

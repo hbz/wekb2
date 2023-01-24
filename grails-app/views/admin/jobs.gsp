@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta name="layout" content="public_semui"/>
-    <title>Jobs</title>
+    <title>we:kb : Jobs</title>
 </head>
 
 <body>

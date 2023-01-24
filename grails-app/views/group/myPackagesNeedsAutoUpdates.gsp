@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta name="layout" content="public_semui"/>
-    <title>Packages due to automatic update of Curatory Groups (${groups.name.join(',')})</title>
+    <title>we:kb : Packages due to automatic update of Curatory Groups (${groups.name.join(',')})</title>
 </head>
 
 <body>

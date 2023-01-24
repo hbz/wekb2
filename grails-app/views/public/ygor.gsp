@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta name="layout" content="public_semui"/>
-    <title><g:message code="gokb.appname" default="we:kb"/>: Ygor</title>
+    <title>we:kb : Ygor</title>
 </head>
 
 <body>

@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta name="layout" content="public_semui"/>
-    <title>Title Identifiers with same Identifier Namespace</title>
+    <title>we:kb : Title Identifiers with same Identifier Namespace</title>
 </head>
 
 <body>

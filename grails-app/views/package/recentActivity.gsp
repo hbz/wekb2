@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta name="layout" content="public_semui"/>
-    <title>Package Recent Activity</title>
+    <title>we:kb : Package Recent Activity</title>
 </head>
 
 <body>

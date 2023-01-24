@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta name="layout" content="public_semui"/>
-        <title><g:message code="gokb.appname" default="we:kb"/>: Privacy Notice</title>
+        <title>we:kb : Privacy Notice</title>
     </head>
 
     <body>

@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta name="layout" content="public_semui"/>
-    <title>Change History for Package: ${pkg.name}</title>
+    <title>we:kb : Change History for Package: ${pkg.name}</title>
 </head>
 
 <body>

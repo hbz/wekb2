@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta name="layout" content="public_semui"/>
-    <title>Automatic update packages with title difference</title>
+    <title>we:kb : Automatic update packages with title difference</title>
 </head>
 
 <body>
