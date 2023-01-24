@@ -12,8 +12,7 @@ class AccessService {
 
     SpringSecurityService springSecurityService
 
-    List allowedBaseClasses = ['wekb.ComponentWatch',
-                               'wekb.CuratoryGroup',
+    List allowedBaseClasses = ['wekb.CuratoryGroup',
                                'wekb.system.JobResult',
                                'wekb.IdentifierNamespace',
                                'wekb.Identifier',

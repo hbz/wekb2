@@ -91,47 +91,6 @@ class PublicController {
     log.debug("PublicController::index ${params}");
     def result = [:]
 
-    /*def mutableParams = new HashMap(params)
-
-    if (mutableParams.newMax) {
-      session.setAttribute("newMax", mutableParams.newMax)
-    }
-
-    if (mutableParams.max == null && !session.getAttribute("newMax")){
-      mutableParams.max = 10
-    }
-    else {
-      mutableParams.max = session.getAttribute("newMax") ? Integer.parseInt(session.getAttribute("newMax")) : Integer.parseInt(mutableParams.max)
-    }
-
-    if (mutableParams.offset == null || mutableParams.newMax ) {
-      mutableParams.offset = 0
-    }
-    else {
-      mutableParams.offset = Integer.parseInt(mutableParams.offset)
-    }
-
-    if (!mutableParams.sort){
-      mutableParams.sort='sortname'
-      mutableParams.order = 'asc'
-    }
-
-    mutableParams.componentType = "Package" // Tells ESSearchService what to look for
-
-    if((mutableParams.q == null ) || (mutableParams.q == '') ) {
-      mutableParams.q = '*'
-    }
-    // params.remove('q');
-    // params.isPublic="Yes"
-
-    if(mutableParams.search.equals('yes')){
-      //when searching make sure results start from first page
-      mutableParams.offset = 0
-      mutableParams.search = null
-    }
-
-    result =  ESSearchService.search(mutableParams)
-*/
     def searchResult = [:]
 
     params.qbe = 'g:publicPackages'
@@ -142,6 +101,8 @@ class PublicController {
     //result.s_action = actionName
     //result.s_controller = controllerName
 
+
+    //for statistic panel
     def query_params = [forbiddenStatus : [RDStore.KBC_STATUS_DELETED, RDStore.KBC_STATUS_REMOVED]]
 
     List providerRoles = [RefdataCategory.lookup(RCConstants.ORG_ROLE, 'Content Provider'), RefdataCategory.lookup(RCConstants.ORG_ROLE, 'Platform Provider'), RefdataCategory.lookup(RCConstants.ORG_ROLE, 'Publisher')]
