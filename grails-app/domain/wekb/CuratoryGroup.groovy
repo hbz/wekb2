@@ -9,15 +9,11 @@ import javax.persistence.Transient
 
 class CuratoryGroup extends KBComponent {
 
-  static belongsTo = User
-
-  User owner
-
   @RefdataAnnotation(cat = RCConstants.CURATORY_GROUP_TYPE)
   RefdataValue type
 
   static hasMany = [
-    users: User
+    users: CuratoryGroupUser
   ]
 
   static mapping = {
@@ -40,7 +36,6 @@ class CuratoryGroup extends KBComponent {
   ]
 
   static constraints = {
-    owner (nullable:true, blank:false)
     name (validator: { val, obj ->
       if (obj.hasChanged('name')) {
         if (val && val.trim()) {
@@ -80,9 +75,6 @@ class CuratoryGroup extends KBComponent {
   }
 
   def beforeInsert() {
-    def user = springSecurityService?.currentUser
-    this.owner = user
-
     this.generateShortcode()
     this.generateNormname()
     //this.generateComponentHash()

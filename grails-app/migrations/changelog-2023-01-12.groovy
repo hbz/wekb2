@@ -250,4 +250,62 @@ databaseChangeLog = {
         }
     }
 
+    changeSet(author: "djebeniani (modified)", id: "1673535466327-40") {
+        grailsChange {
+            change {
+                sql.executeUpdate('''alter table curatory_group drop column owner_id;''')
+            }
+            rollback {}
+        }
+    }
+
+    changeSet(author: "djebeniani (modified)", id: "1673535466327-41") {
+        grailsChange {
+            change {
+                sql.executeUpdate('''alter table user_curatory_groups rename to "curatory_group_user";''')
+            }
+            rollback {}
+        }
+    }
+
+    changeSet(author: "djebeniani (modified)", id: "1673535466327-42") {
+        grailsChange {
+            change {
+                sql.executeUpdate('''alter table "curatory_group_user"
+    rename column user_id to cgu_user_fk;''')
+            }
+            rollback {}
+        }
+    }
+
+    changeSet(author: "djebeniani (modified)", id: "1673535466327-43") {
+        grailsChange {
+            change {
+                sql.executeUpdate('''alter table "curatory_group_user"
+    rename column curatory_group_id to cgu_curatory_group_fk;''')
+            }
+            rollback {}
+        }
+    }
+
+    changeSet(author: "djebeniani (modified)", id: "1673535466327-44") {
+        grailsChange {
+            change {
+                sql.executeUpdate('''alter table curatory_group_user
+    add cgu_last_updated timestamp;''')
+            }
+            rollback {}
+        }
+    }
+
+    changeSet(author: "djebeniani (modified)", id: "1673535466327-45") {
+        grailsChange {
+            change {
+                sql.executeUpdate('''alter table curatory_group_user
+    add cgu_date_created timestamp;''')
+            }
+            rollback {}
+        }
+    }
+
 }

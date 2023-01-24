@@ -2,6 +2,8 @@ package wekb.auth
 
 
 import groovy.util.logging.Slf4j
+import wekb.CuratoryGroup
+import wekb.CuratoryGroupUser
 import wekb.RefdataValue
 import wekb.helper.BeanStore
 
@@ -28,9 +30,11 @@ class User {
 
   Long defaultPageSize = new Long(10)
 
-    static hasMany      = [ roles: UserRole ]
+  static hasMany      = [ roles: UserRole,
+                          curatoryGroups : CuratoryGroupUser]
 
-  static mappedBy = [curatoryGroups: "users"]
+  static mappedBy     = [ roles: 'user',  curatoryGroups: 'user' ]
+
 
   static constraints = {
     username(blank: false, unique: true)
