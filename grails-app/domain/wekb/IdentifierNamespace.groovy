@@ -1,14 +1,12 @@
 package wekb
 
 import wekb.annotations.RefdataAnnotation
+import wekb.helper.BeanStore
 import wekb.helper.RCConstants
 
 import javax.persistence.Transient
 
 class IdentifierNamespace {
-
-  @Transient
-  def springSecurityService
 
   String name
   String value
@@ -100,7 +98,7 @@ class IdentifierNamespace {
 
   @Transient
   userAvailableActions(){
-    def user = springSecurityService.currentUser
+    def user = BeanStore.getSpringSecurityService().currentUser
     def allActions = []
     def result = []
     if (this.respondsTo('availableActions')){

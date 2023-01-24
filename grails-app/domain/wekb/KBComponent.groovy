@@ -1,5 +1,6 @@
 package wekb
 
+import wekb.helper.BeanStore
 import wekb.helper.RCConstants
 import wekb.helper.RDStore
 import grails.plugins.orm.auditable.AuditEventType
@@ -62,12 +63,6 @@ abstract class KBComponent implements Auditable{
   String getLogEntityId(){
     "${this.class.name}:${id}"
   }
-
-  @Transient
-  def springSecurityService
-
-  @Transient
-  def accessService
 
   @Transient
   protected grails.core.GrailsApplication grailsApplication
@@ -471,7 +466,7 @@ abstract class KBComponent implements Auditable{
     if (!uuid){
       generateUuid()
     }
-    def user = springSecurityService?.currentUser
+    def user = BeanStore.getSpringSecurityService()?.currentUser
     if (user != null){
       this.lastUpdatedBy = user
     }
@@ -709,13 +704,13 @@ abstract class KBComponent implements Auditable{
 
   @Transient
   userAvailableActions(){
-    def user = springSecurityService.currentUser
+    def user = BeanStore.getSpringSecurityService().currentUser
     def allActions = []
     def result = []
     if (this.respondsTo('availableActions')){
       allActions = this.availableActions()
       allActions.each{ ao ->
-        if (ao.perm == "delete" && !accessService.checkDeletable(this.class.name)){
+        if (ao.perm == "delete" && !BeanStore.getAccessService().checkDeletable(this.class.name)){
         }
         else if (ao.perm == "admin" && !user.hasRole('ROLE_ADMIN')){
         }

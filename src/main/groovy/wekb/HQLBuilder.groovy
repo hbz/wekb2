@@ -1,5 +1,6 @@
 package wekb
 
+import wekb.helper.BeanStore
 import wekb.helper.RCConstants
 import wekb.helper.RDStore
 import grails.util.GrailsClassUtils
@@ -448,7 +449,7 @@ public class HQLBuilder {
     else {
       switch(prop.value?.toString()) {
         case '__USERID':
-          def springSecurityService = grailsApplication.getMainContext().getBean('springSecurityService')
+          def springSecurityService = BeanStore.getSpringSecurityService()
           result=''+springSecurityService?.currentUser?.id;
           break;
         default:

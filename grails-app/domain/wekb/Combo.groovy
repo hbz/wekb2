@@ -13,9 +13,6 @@ import javax.persistence.Transient
 
 class Combo implements Auditable {
 
-  @Transient
-  private def springSecurityService
-
   static final String STATUS_ACTIVE = "Active"
   static final String STATUS_SUPERSEDED = "Superseded"
   static final String STATUS_DELETED = "Deleted"
