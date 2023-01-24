@@ -60,9 +60,9 @@
                 <g:set var="identifierOfComponent" value="${Identifier.findByValueAndTipp(d.value, component)}"/>
                 <g:if test="${editable && identifierOfComponent}">
                     <td>
-                        <g:link controller='ajaxSupport'
+                        <g:link controller='ajaxHtml'
                                 action='delete'
-                                params="${["__context": "${identifierOfComponent.class.name}:${identifierOfComponent.id}", 'fragment': 'identifiers', curationOverride: params.curationOverride]}"
+                                params="${["__context": "${identifierOfComponent.class.name}:${identifierOfComponent.id}", 'tab': 'identifiers', curationOverride: params.curationOverride]}"
                                 class="confirm-click btn-delete"
                                 title="Delete this link"
                                 data-confirm-message="Are you sure you wish to delete this Identifier from the title ${component}?">Delete</g:link>
@@ -95,9 +95,9 @@
                 <g:set var="identifierOfComponent" value="${Identifier.findByValueAndPkg(d.value, component)}"/>
                 <g:if test="${editable && identifierOfComponent}">
                     <td>
-                        <g:link controller='ajaxSupport'
+                        <g:link controller='ajaxHtml'
                                 action='delete'
-                                params="${["__context": "${identifierOfComponent.class.name}:${identifierOfComponent.id}", 'fragment': 'identifiers', curationOverride: params.curationOverride]}"
+                                params="${["__context": "${identifierOfComponent.class.name}:${identifierOfComponent.id}", 'tab': 'identifiers', curationOverride: params.curationOverride]}"
                                 class="confirm-click btn-delete"
                                 title="Delete this link"
                                 data-confirm-message="Are you sure you wish to delete this Identifier from the title ${component}?">Delete</g:link>
@@ -137,9 +137,9 @@
                 <g:set var="identifierOfComponent" value="${Identifier.findByValueAndOrg(d.value, component)}"/>
                 <g:if test="${editable && identifierOfComponent}">
                     <td>
-                        <g:link controller='ajaxSupport'
+                        <g:link controller='ajaxHtml'
                                 action='delete'
-                                params="${["__context": "${identifierOfComponent.class.name}:${identifierOfComponent.id}", 'fragment': 'identifiers', curationOverride: params.curationOverride]}"
+                                params="${["__context": "${identifierOfComponent.class.name}:${identifierOfComponent.id}", 'tab': 'identifiers', curationOverride: params.curationOverride]}"
                                 class="confirm-click btn-delete"
                                 title="Delete this link"
                                 data-confirm-message="Are you sure you wish to delete this Identifier from the title ${component}?">Delete</g:link>

@@ -45,9 +45,9 @@
 									</td>
 									<g:if test="${editable}">
 										<td>
-											<g:link controller="ajaxSupport"
+											<g:link controller="ajaxHtml"
 													action="deleteCoverageStatement"
-													params="[id: cs.id, fragment: 'tippcoverage', curationOverride: params.curationOverride]">Delete</g:link>
+													params="[id: cs.id, tab: 'tippcoverage', curationOverride: params.curationOverride]">Delete</g:link>
 										</td>
 									</g:if>
 								</tr>
@@ -77,7 +77,7 @@
 	<g:if test="${editable}">
 	<semui:modal id="coverageStatementsModal" title="Add Coverage Statement">
 
-		<g:form controller="ajaxSupport" action="addToCollection" params="[fragment: 'tippcoverage']" class="ui form">
+		<g:form controller="ajaxHtml" action="addToCollection" params="[tab: 'tippcoverage']" class="ui form">
 			<input type="hidden" name="__context"
 				   value="${d.class.name}:${d.id}"/>
 			<input type="hidden" name="__newObjectClass"

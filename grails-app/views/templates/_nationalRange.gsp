@@ -4,7 +4,7 @@
         <g:each in="${d.nationalRanges.sort { it.getI10n('value') }}" var="nationalRange">
             <div class="item">${nationalRange.value}: ${nationalRange.getI10n('value')}
             <g:if test="${editable}">
-                <g:link controller='ajaxSupport'
+                <g:link controller='ajaxHtml'
                         action='unlinkManyToMany'
                         params="${["__context": "${d.class.name}:${d.id}", "__property": "nationalRanges", "__itemToRemove": "${nationalRange.getClassName()}:${nationalRange.id}"]}">Delete</g:link>
             </g:if>
@@ -19,7 +19,7 @@
         <br>
 
         <semui:modal id="nationalRangesModal" title="Add National Range">
-            <g:form controller="ajaxSupport" action="addToStdCollection" class="ui form">
+            <g:form controller="ajaxHtml" action="addToStdCollection" class="ui form">
                 <input type="hidden" name="__context" value="${d.class.name}:${d.id}"/>
                 <input type="hidden" name="__property" value="nationalRanges"/>
                 <input type="hidden" name="curationOverride" value="${params.curationOverride}"/>

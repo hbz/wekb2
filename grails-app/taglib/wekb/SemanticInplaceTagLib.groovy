@@ -43,7 +43,7 @@ class SemanticInplaceTagLib {
             def update_link = null
             switch (attrs.type) {
                 case 'date':
-                    update_link = createLink(controller: 'ajaxSupport', action: 'editableSetValue', params: [type: 'date', curationOverride: params.curationOverride])
+                    update_link = createLink(controller: 'ajaxHtml', action: 'editableSetValue', params: [type: 'date', curationOverride: params.curationOverride])
                     out << " data-type='text' data-format='YYYY-MM-DD' data-inputclass='form-control form-date'  data-viewformat='yyyy-mm-dd'"
                     def dv = attrs."data-value"
 
@@ -62,7 +62,7 @@ class SemanticInplaceTagLib {
 
                     break;
                 default:
-                    update_link = createLink(controller: 'ajaxSupport', action: 'editableSetValue', params: [curationOverride: params.curationOverride])
+                    update_link = createLink(controller: 'ajaxHtml', action: 'editableSetValue', params: [curationOverride: params.curationOverride])
                     out << " data-type=\"${attrs.type ?: 'text'}\""
                     break;
             }
@@ -131,8 +131,8 @@ class SemanticInplaceTagLib {
             def owner = ClassUtils.deproxy(attrs.remove("owner"))
 
             def config = attrs.remove("config")
-            def data_link = createLink(controller: 'ajaxSupport', action: 'getRefdata', params: [id: config, format: 'json'])
-            def update_link = createLink(controller: 'ajaxSupport', action: 'genericSetRel', params: [curationOverride: params.curationOverride])
+            def data_link = createLink(controller: 'ajaxJson', action: 'getRefdata', params: [id: config, format: 'json'])
+            def update_link = createLink(controller: 'ajaxHtml', action: 'genericSetRel', params: [curationOverride: params.curationOverride])
             def oid = owner.id != null ? "${owner.class.name}:${owner.id}" : ''
             def id = attrs.remove("id") ?: "${oid}:${attrs.field}"
             //def type = attrs.remove("type") ?: "select"
@@ -219,8 +219,8 @@ class SemanticInplaceTagLib {
 
             def owner = ClassUtils.deproxy(attrs.remove("owner"))
 
-            def data_link = createLink(controller: 'ajaxSupport', action: 'getRefdata', params: [id: 'boolean', format: 'json'])
-            def update_link = createLink(controller: 'ajaxSupport', action: 'genericSetRel', params: [type: 'boolean', curationOverride: params.curationOverride])
+            def data_link = createLink(controller: 'ajaxHtml', action: 'getRefdata', params: [id: 'boolean', format: 'json'])
+            def update_link = createLink(controller: 'ajaxHtml', action: 'genericSetRel', params: [type: 'boolean', curationOverride: params.curationOverride])
             def oid = owner.id != null ? "${owner.class.name}:${owner.id}" : ''
             def id = attrs.remove("id") ?: "${oid}:${attrs.field}"
             def field = attrs.remove("field")
@@ -355,7 +355,7 @@ class SemanticInplaceTagLib {
 
             def oid = attrs.owner.id != null ? "${owner.class.name}:${owner.id}" : ''
             def id = attrs.id ?: "${oid ?: owner.class.name}:${attrs.field}"
-            def update_link = createLink(controller: 'ajaxSupport', action: 'genericSetRel', params: [curationOverride: params.curationOverride])
+            def update_link = createLink(controller: 'ajaxHtml', action: 'genericSetRel', params: [curationOverride: params.curationOverride])
 
             String data_link = createLink(
                     controller:'ajaxJson',
@@ -411,7 +411,7 @@ class SemanticInplaceTagLib {
 
 
             if(attrs.owner && attrs.owner."${attrs.field}")
-                out << g.link('Unlink', controller: "ajaxSupport", action: "unlinkManyToOne", class: "ui right floated negative mini button", params: ['curationOverride': params.curationOverride, '__property': attrs.field, '__context': attrs.owner.getClassName() + ':' + attrs.owner.id])
+                out << g.link('Unlink', controller: "ajaxHtml", action: "unlinkManyToOne", class: "ui right floated negative mini button", params: ['curationOverride': params.curationOverride, '__property': attrs.field, '__context': attrs.owner.getClassName() + ':' + attrs.owner.id])
 
           if (follow_link) {
                 out << ' &nbsp; <a href="' + follow_link + '" title="Jump to resource"><i class="ui share square icon"></i></a>'

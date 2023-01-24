@@ -24,9 +24,9 @@
                 <td><semui:xEditableRefData owner="${v}" field="locale" config="${RCConstants.KBCOMPONENT_VARIANTNAME_LOCAL}" overWriteEditable="${editable}"/></td>
                   <g:if test="${ editable && showActions }">
                     <td>
-                              <g:link controller="ajaxSupport" action="authorizeVariant" id="${v.id}" params="[fragment: 'variantNames']">Make Authorized</g:link>,
-                              <g:link controller="ajaxSupport" class="confirm-click" data-confirm-message="Are you sure you wish to delete this Variant?"
-                                action="deleteVariant" id="${v.id}" params="[fragment: 'variantNames']">Delete</g:link>
+                              <g:link controller="ajaxHtml" action="authorizeVariant" id="${v.id}" params="[tab: 'variantNames']">Make Authorized</g:link>,
+                              <g:link controller="ajaxHtml" class="confirm-click" data-confirm-message="Are you sure you wish to delete this Variant?"
+                                      action="deleteVariant" id="${v.id}" params="[tab: 'variantNames']">Delete</g:link>
                     </td>
                   </g:if>
               </tr>
@@ -42,13 +42,13 @@
 
             <semui:modal id="variantnamesModal" title="Add Variant Name">
 
-              <g:form controller="ajaxSupport" action="addToCollection" class="ui form">
+              <g:form controller="ajaxHtml" action="addToCollection" class="ui form">
                 <input type="hidden" name="__context"
                        value="${d.class.name}:${d.id}" />
                 <input type="hidden" name="__newObjectClass"
                        value="wekb.KBComponentVariantName" />
                 <input type="hidden" name="__recip" value="owner" />
-                <input type="hidden" name="fragment" value="variantNames" />
+                <input type="hidden" name="tab" value="variantNames" />
                   <input type="hidden" name="curationOverride" value="${params.curationOverride}"/>
                   <div class="field">
                               <label>Variant Name</label>

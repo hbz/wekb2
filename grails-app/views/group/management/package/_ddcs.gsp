@@ -72,9 +72,9 @@
                                                 ${ddc.value}: ${ddc.getI10n('value')}
                                             </td>
                                             <g:if test="${editable}">
-                                                <td><g:link controller='ajaxSupport'
+                                                <td><g:link controller='ajaxHtml'
                                                             action='unlinkManyToMany'
-                                                            params="${["__context": "${row_obj.class.name}:${row_obj.id}", "__property": "ddcs", "__itemToRemove": "${ddc.getClassName()}:${ddc.id}", fragment: 'ddcs']}">Delete</g:link>
+                                                            params="${["__context": "${row_obj.class.name}:${row_obj.id}", "__property": "ddcs", "__itemToRemove": "${ddc.getClassName()}:${ddc.id}", tab: 'ddcs']}">Delete</g:link>
                                                 </td>
                                             </g:if>
                                         </tr>

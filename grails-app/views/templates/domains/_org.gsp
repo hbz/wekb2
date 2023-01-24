@@ -63,7 +63,7 @@
                 <div class="item">
                     ${t.value}
                     <g:if test="${editable}">
-                        <g:link controller='ajaxSupport'
+                        <g:link controller='ajaxHtml'
                                 action='unlinkManyToMany'
                                 params="${["__context": "${d.class.name}:${d.id}", "__property": "roles", "__itemToRemove": "${t.getClassName()}:${t.id}"]}">Delete</g:link>
                     </g:if>
@@ -113,7 +113,7 @@
                         </td>
                         <td>
                             <g:if test="${editable}">
-                                <g:link controller='ajaxSupport'
+                                <g:link controller='ajaxHtml'
                                         action='delete'
                                         params="${["__context": "${contact.class.name}:${contact.id}", curationOverride: params.curationOverride]}">Delete</g:link>
                             </g:if>
@@ -137,11 +137,11 @@
 <g:if test="${editable}">
     <semui:modal id="contactModal" title="Add Contact">
 
-        <g:form controller="ajaxSupport" action="addContact" class="ui form">
+        <g:form controller="ajaxHtml" action="addContact" class="ui form">
             <input type="hidden" name="__context" value="${d.class.name}:${d.id}"/>
             <input type="hidden" name="__newObjectClass" value="wekb.Contact"/>
             <input type="hidden" name="__recip" value="org"/>
-            <input type="hidden" name="fragment" value="contact"/>
+            <input type="hidden" name="tab" value="contact"/>
             <input type="hidden" name="curationOverride" value="${params.curationOverride}"/>
             <div class="field">
                     <label>Value</label>
@@ -172,7 +172,7 @@
 
     <semui:modal id="rolesModal" title="Add Role">
 
-        <g:form controller="ajaxSupport" action="addToStdCollection" class="ui form">
+        <g:form controller="ajaxHtml" action="addToStdCollection" class="ui form">
             <input type="hidden" name="__context" value="${d.class.name}:${d.id}"/>
             <input type="hidden" name="__property" value="roles"/>
             <input type="hidden" name="curationOverride" value="${params.curationOverride}"/>

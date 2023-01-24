@@ -161,7 +161,7 @@
                         </td>
                         <td>
                             <g:if test="${editable}">
-                                <g:link controller='ajaxSupport'
+                                <g:link controller='ajaxHtml'
                                         action='delete'
                                         params="${["__context": "${paa.class.name}:${paa.id}", curationOverride: params.curationOverride]}">Delete</g:link>
                             </g:if>
@@ -186,7 +186,7 @@
 <g:if test="${editable && controllerName != 'create'}">
     <semui:modal id="paaModal" title="Add Archiving Agency">
 
-        <g:form controller="ajaxSupport" action="addToCollection" class="ui form">
+        <g:form controller="ajaxHtml" action="addToCollection" class="ui form">
             <input type="hidden" name="__context" value="${d.class.name}:${d.id}"/>
             <input type="hidden" name="__newObjectClass" value="wekb.PackageArchivingAgency"/>
             <input type="hidden" name="__recip" value="pkg"/>

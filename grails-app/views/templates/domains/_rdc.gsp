@@ -93,7 +93,7 @@
         <br>
 
         <semui:modal id="rdvModal" title="Add Refdata Value">
-            <g:form controller="ajaxSupport" action="addToCollection" class="ui form">
+            <g:form controller="ajaxHtml" action="addToCollection" class="ui form">
                 <input type="hidden" name="__context"
                        value="${d.className}:${d.id}"/>
                 <input type="hidden" name="__newObjectClass"

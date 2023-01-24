@@ -17,7 +17,7 @@
                 <td>${cp.apValue}</td>
                 <g:if test="${editable}">
                     <td>
-                        <g:link controller="ajaxSupport" action="unlinkManyToMany" class="confirm-click"
+                        <g:link controller="ajaxHtml" action="unlinkManyToMany" class="confirm-click"
                                 data-confirm-message="Are you sure you wish to unlink this property?"
                                 params="${["__property": "additionalProperties", "__context": d.getClassName() + ":" + d.id, "__itemToRemove": cp.getClassName() + ":" + cp.id]}">Delete</g:link>
                     </td>
@@ -46,7 +46,7 @@
 
         <semui:modal id="additionalPropertiesModal" title="Add Additional Property">
 
-            <g:form controller="ajaxSupport" action="addToCollection">
+            <g:form controller="ajaxHtml" action="addToCollection">
                 <input type="hidden" name="__context" value="${d.class.name}:${d.id}"/>
                 <input type="hidden" name="__newObjectClass" value="wekb.KBComponentAdditionalProperty"/>
                 <input type="hidden" name="__addToColl" value="additionalProperties"/>

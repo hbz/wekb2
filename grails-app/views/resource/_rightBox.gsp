@@ -12,8 +12,8 @@
         <g:each in="${curatoryGroups}" var="cg">
             <div class="item">${cg.name}
                 <g:if test="${params.curationOverride == 'true' && springSecurityService.isLoggedIn() && SpringSecurityUtils.ifAnyGranted("ROLE_ADMIN")}">
-                    <g:link controller="ajaxSupport" action="unlinkManyToMany" class="ui right floated negative mini button"
-                    params="['curationOverride': params.curationOverride, '__property':'curatoryGroups', '__context':d.getClassName() + ':' + d.id, '__itemToRemove' : cg.getClassName() + ':' + cg.id]">Unlink Curatory Group</g:link>
+                    <g:link controller="ajaxHtml" action="unlinkManyToMany" class="ui right floated negative mini button"
+                            params="['curationOverride': params.curationOverride, '__property':'curatoryGroups', '__context':d.getClassName() + ':' + d.id, '__itemToRemove' : cg.getClassName() + ':' + cg.id]">Unlink Curatory Group</g:link>
                 </g:if>
             </div>
         </g:each>
@@ -26,7 +26,7 @@
 
         <g:if test="${(params.curationOverride == 'true' || !curatoryGroups) && !(d instanceof CuratoryGroup) && !(d instanceof TitleInstancePackagePlatform) && springSecurityService.isLoggedIn() && SpringSecurityUtils.ifAnyGranted("ROLE_ADMIN")}">
             <div class="ui segment">
-                <g:form controller="ajaxSupport" action="addToStdCollection" class="ui form">
+                <g:form controller="ajaxHtml" action="addToStdCollection" class="ui form">
                     <input type="hidden" name="__context" value="${d.getClassName()}:${d.id}"/>
                     <input type="hidden" name="__property" value="curatoryGroups"/>
                     <input type="hidden" name="curationOverride" value="${params.curationOverride}"/>

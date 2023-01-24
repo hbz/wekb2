@@ -37,7 +37,7 @@
             </td>
             <td>
               <g:if test="${user.isAdmin() || userIsOrgAdmin }">
-                <g:link controller="ajaxSupport"
+                <g:link controller="ajaxHtml"
                         action="delete"
                         params="${['__context':m.class.name+':'+m.id]}"
                         class="confirm-click"
@@ -51,7 +51,7 @@
       </tbody>
       <tfoot>
         <g:if test="${user.isAdmin() || d.owner == request.user || userIsOrgAdmin }">
-          <g:form controller="ajaxSupport" action="addToCollection">
+          <g:form controller="ajaxHtml" action="addToCollection">
             <input type="hidden" name="__context" value="wekb.auth.UserOrganisation:${d.id}"/>
             <input type="hidden" name="__recip" value="memberOf"/>
             <input type="hidden" name="__newObjectClass" value="wekb.auth.UserOrganisationMembership"/>

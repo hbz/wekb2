@@ -20,7 +20,7 @@
           <td><g:link controller="resource" action="show" id="${t.getClassName()}:${t.id}"> ${t.name}</g:link></td>
           <g:if test="${cur_editable && editable && !(d instanceof TitleInstancePackagePlatform)}">
             <td>
-                <g:link controller="ajaxSupport" action="unlinkManyToMany" class="confirm-click" data-confirm-message="Are you sure you wish to unlink ${ t.name }?" params="${ ["__property":"curatoryGroups", "__context":d.getClassName() + ":" + d.id, "__itemToRemove" : t.getClassName() + ":" + t.id, "propagate": "true"] }" >Delete</g:link>
+                <g:link controller="ajaxHtml" action="unlinkManyToMany" class="confirm-click" data-confirm-message="Are you sure you wish to unlink ${ t.name }?" params="${ ["__property":"curatoryGroups", "__context":d.getClassName() + ":" + d.id, "__itemToRemove": t.getClassName() + ":" + t.id, "propagate": "true"] }" >Delete</g:link>
             </td>
           </g:if>
         </tr>
@@ -36,7 +36,7 @@
           <th colspan="2">Link a Curatory Group</th>
       </tr>
       <tr>
-        <g:form controller="ajaxSupport" action="addToStdCollection">
+        <g:form controller="ajaxHtml" action="addToStdCollection">
           <td colspan="2">
             <input type="hidden" name="__context" value="${d.getClassName()}:${d.id}"/>
             <input type="hidden" name="__property" value="curatoryGroups"/>

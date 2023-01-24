@@ -6,7 +6,7 @@
 <g:if test="${controllerName != 'public'}">
 
     <div style="margin:5px 0px;">
-        <g:form method="POST" controller="${controllerName}" action="${actionName}" fragment="${fragment}"
+        <g:form method="POST" controller="${controllerName}" action="${actionName}" tab="${tab}"
                 params="${params.findAll { k, v -> k != pstring }}">
 
             <span>Hide Deleted:</span> <g:select name="${pstring}" optionKey="key" optionValue="value"
@@ -64,18 +64,18 @@
                         <span>
                             <g:if test="${row.status?.value == 'Deleted'}">
                                 <g:link
-                                        controller='ajaxSupport'
+                                        controller='ajaxHtml'
                                         action='genericSetRel'
-                                        params="${['pk': 'wekb.Combo:' + row.id, 'name': 'status', 'fragment': fragment, value: 'wekb.RefdataValue:' + wekb.RefdataCategory.lookup(RCConstants.COMBO_STATUS, 'Active').id]}"
+                                        params="${['pk': 'wekb.Combo:' + row.id, 'name': 'status', 'tab': tab, value: 'wekb.RefdataValue:' + wekb.RefdataCategory.lookup(RCConstants.COMBO_STATUS, 'Active').id]}"
                                         class="confirm-click btn-delete"
                                         title="Reactivate deleted link"
                                         data-confirm-message="Are you sure you wish to remove this ${row.toComponent.niceName}?">Reactivate</g:link>
                             </g:if>
                             <g:else>
                                 <g:link
-                                        controller='ajaxSupport'
+                                        controller='ajaxHtml'
                                         action='deleteCombo'
-                                        params="${['id': row.id, 'fragment': fragment, 'keepLink': true, 'propagate': "true"]}"
+                                        params="${['id': row.id, 'tab': tab, 'keepLink': true, 'propagate': "true"]}"
                                         class="confirm-click btn-delete"
                                         title="Mark this link as 'Deleted'. This will prevent future automatic linkage of these components."
                                         data-confirm-message="Are you sure you wish to remove this ${row.toComponent.niceName}?">Delete</g:link>
@@ -85,9 +85,9 @@
                     </g:if>
 
                     <g:link
-                            controller='ajaxSupport'
+                            controller='ajaxHtml'
                             action='deleteCombo'
-                            params="${['id': row.id, 'fragment': fragment, 'propagate': "true"]}"
+                            params="${['id': row.id, 'tab': tab, 'propagate': "true"]}"
                             class="confirm-click btn-delete"
                             title="Delete this link"
                             data-confirm-message="Are you sure you wish to delete this ${row.toComponent.niceName}?">Delete</g:link>

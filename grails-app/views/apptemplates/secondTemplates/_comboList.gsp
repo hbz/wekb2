@@ -25,7 +25,7 @@
         </g:each>
         <td>
           <g:if test="${accessService.checkEditableObject(d, params)&& (d.respondsTo('curatoryGroups') ? (!d.respondsTo('getCuratoryGroups') ? true : cur) : true)}">
-            <g:link controller='ajaxSupport'
+            <g:link controller='ajaxHtml'
                     action='unlinkManyToMany'
                     params="${[__context:ctxoid,__property:property,__itemToRemove:rowoid, propagate:propagateDelete]}">Delete</g:link>
           </g:if>
@@ -50,7 +50,7 @@
       Add new Entry
     </h4>
     <dl class="dl-horizontal">
-      <g:form controller="ajaxSupport" action="addToCollection">
+      <g:form controller="ajaxHtml" action="addToCollection">
         <input type="hidden" name="__context" value="${ctxoid}"/>
         <input type="hidden" name="__newObjectClass" value="wekb.Combo"/>
         <input type="hidden" name="__recip" value="${recip}"/>

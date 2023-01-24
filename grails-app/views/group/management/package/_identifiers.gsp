@@ -52,9 +52,9 @@
                                         </td>
                                         <g:if test="${editable}">
                                             <td>
-                                                <g:link controller='ajaxSupport'
+                                                <g:link controller='ajaxHtml'
                                                         action='delete'
-                                                        params="${["__context": "${identifier.class.name}:${identifier.id}", 'fragment': fragment, curationOverride: params.curationOverride]}"
+                                                        params="${["__context": "${identifier.class.name}:${identifier.id}", 'tab': tab, curationOverride: params.curationOverride]}"
                                                         class="confirm-click btn-delete"
                                                         title="Delete this link"
                                                         data-confirm-message="Are you sure you wish to delete this Identifier (${identifier.namespace.value}: ${identifier.value})?">Delete</g:link>
@@ -72,7 +72,7 @@
                         <br>
                         <semui:modal id="identifiersModal_${row_obj.uuid}" title="Add Identifier">
 
-                            <g:form controller="ajaxSupport" action="addIdentifier" class="ui form">
+                            <g:form controller="ajaxHtml" action="addIdentifier" class="ui form">
                                 <input type="hidden" name="activeTab" value="identifiers"/>
 
                                 <input type="hidden" name="__context" value="${row_obj.class.name}:${row_obj.id}"/>

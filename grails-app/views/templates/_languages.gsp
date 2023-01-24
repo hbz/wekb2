@@ -4,9 +4,9 @@
         <g:each in="${d.languages.sort { it.language.getI10n('value') }}" var="kbComponentLanguage">
             <div class="item">${kbComponentLanguage.language.getI10n('value')}
             <g:if test="${editable}">
-                <g:link controller="ajaxSupport"
+                <g:link controller="ajaxHtml"
                         action="deleteLanguage" id="${kbComponentLanguage.id}"
-                        params="[fragment: 'languages', curationOverride: params.curationOverride]">Delete</g:link>
+                        params="[tab: 'languages', curationOverride: params.curationOverride]">Delete</g:link>
             </g:if>
             </div>
         </g:each>
@@ -19,7 +19,7 @@
         <br>
 
         <semui:modal id="languageModal" title="Add Language">
-            <g:form controller="ajaxSupport" action="addToCollection" class="ui form">
+            <g:form controller="ajaxHtml" action="addToCollection" class="ui form">
                 <input type="hidden" name="__context"
                        value="${d.class.name}:${d.id}"/>
                 <input type="hidden" name="__newObjectClass"

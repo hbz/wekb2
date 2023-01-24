@@ -17,140 +17,12 @@ import org.springframework.security.access.annotation.Secured
 
 import java.text.SimpleDateFormat
 
-class AjaxSupportController {
+class AjaxHtmlController {
 
   GenericOIDService genericOIDService
   SpringSecurityService springSecurityService
   MessageService messageService
   AccessService accessService
-
-  @Secured(['ROLE_EDITOR', 'IS_AUTHENTICATED_FULLY'])
-  def setRef() {
-    def result = [:]
-    render result as JSON
-  }
-
-  /**
-   *  getRefdata : Used to retrieve a list of all RefdataValues for a specific category.
-   * @param id : The label of the RefdataCategory
-   */
-
-  @Secured(['ROLE_USER', 'IS_AUTHENTICATED_FULLY'])
-  def getRefdata() {
-    log.debug("AjaxController::getRefdata ${params}")
-
-    def result = []
-
-    def config = refdata_config[params.id]
-
-    if (!config) {
-      log.debug("Use generic config.")
-
-      config = [
-      domain:'RefdataValue',
-      countQry:"select count(rdv) from RefdataValue as rdv where rdv.useInstead is null and rdv.owner.desc=?",
-      rowQry:"select rdv from RefdataValue as rdv where rdv.useInstead is null and rdv.owner.desc=? order by rdv.value asc, rdv.description asc",
-      rdvCat: "${params.id}",
-      qryParams:[],
-      cols:['value'],
-      format:'simple'
-      ]
-    }
-
-    if ( params.id == 'boolean' ) {
-      result.add([text:'Yes', value: 1])
-      result.add([text:'No', value: 0])
-    } else {
-      def query_params = [config.rdvCat]
-
-      config.qryParams.each { qp ->
-        if ( qp.clos ) {
-          query_params.add(qp.clos(params[qp.param]?:''));
-        }
-        else {
-          query_params.add(params[qp.param] ?: qp.cat);
-        }
-      }
-
-      log.debug("Params: ${query_params}");
-      log.debug("Count qry: ${config.countQry}");
-      log.debug("Row qry: ${config.rowQry}");
-      log.debug("DOMAIN: ${config.domain}");
-
-      GrailsClass dc = grailsApplication.getArtefact("Domain", 'wekb.'+ config.domain)
-
-      if (dc) {
-        def cq = dc.getClazz().executeQuery(config.countQry,query_params);
-        def rq = dc.getClazz().executeQuery(config.rowQry,
-                                  query_params,
-                                  [max:params.iDisplayLength?:400,offset:params.iDisplayStart?:0]);
-
-        if (!config.required) {
-          result.add([id:'', text:'', value:'']);
-        }
-
-        rq.each { it ->
-          def o = ClassUtils.deproxy(it)
-          result.add([id:"${o.class.name}:${o.id}", text: o[config.cols[0]], value:"${o.class.name}:${o.id}"]);
-        }
-      }
-    }
-
-    render result as JSON
-  }
-
-
-  def refdata_config = [
-    'KBComponent.Status' : [
-      domain:'RefdataValue',
-      countQry:"select count(rdv) from RefdataValue as rdv where rdv.useInstead is null and rdv.owner.desc=?",
-      rowQry:"select rdv from RefdataValue as rdv where rdv.useInstead is null and rdv.owner.desc=?",
-      required:true,
-      qryParams:[],
-      rdvCat: RCConstants.KBCOMPONENT_STATUS,
-      cols:['value'],
-      format:'simple'
-    ],
-    'KBComponentVariantName.VariantType' : [
-      domain:'RefdataValue',
-      countQry:"select count(rdv) from RefdataValue as rdv where rdv.useInstead is null and rdv.owner.desc=?",
-      rowQry:"select rdv from RefdataValue as rdv where rdv.useInstead is null and rdv.owner.desc=?",
-      qryParams:[],
-      rdvCat: RCConstants.KBCOMPONENT_VARIANTNAME_VARIANT_TYPE,
-      cols:['value'],
-      format:'simple'
-    ],
-    'Locale' : [
-      domain:'RefdataValue',
-      countQry:"select count(rdv) from RefdataValue as rdv where rdv.useInstead is null and rdv.owner.desc=?",
-      rowQry:"select rdv from RefdataValue as rdv where rdv.useInstead is null and rdv.owner.desc=?",
-      qryParams:[],
-      rdvCat: RCConstants.KBCOMPONENT_VARIANTNAME_LOCAL,
-      cols:['value'],
-      format:'simple'
-    ],
-    'TitleInstancePackagePlatform.CoverageDepth' : [
-      domain:'RefdataValue',
-      countQry:"select count(rdv) from RefdataValue as rdv where rdv.useInstead is null and rdv.owner.desc=?",
-      rowQry:"select rdv from RefdataValue as rdv where rdv.useInstead is null and rdv.owner.desc=?",
-      required:true,
-      qryParams:[],
-      rdvCat: RCConstants.TIPP_COVERAGE_DEPTH,
-      cols:['value'],
-      format:'simple'
-    ],
-    'TIPPCoverageStatement.CoverageDepth' : [
-      domain:'RefdataValue',
-      countQry:"select count(rdv) from RefdataValue as rdv where rdv.useInstead is null and rdv.owner.desc=?",
-      rowQry:"select rdv from RefdataValue as rdv where rdv.useInstead is null and rdv.owner.desc=?",
-      required:true,
-      qryParams:[],
-      rdvCat: RCConstants.TIPPCOVERAGESTATEMENT_COVERAGE_DEPTH,
-      cols:['value'],
-      format:'simple'
-    ],
-  ]
-
 
 
   /**
@@ -161,11 +33,10 @@ class AjaxSupportController {
    * @param __addToColl : The name of the local set to which the new object should be added
    * @param All other parameters are taken to be property names on newObjectClass and used to init the new instance.
    */
-
   @Transactional
   @Secured(['ROLE_EDITOR', 'IS_AUTHENTICATED_FULLY'])
   def addToCollection() {
-    log.debug("AjaxController::addToCollection ${params}");
+    log.debug("AjaxController::addToCollection ${params}")
     User user = springSecurityService.currentUser
     def contextObj = resolveOID2(params.__context)
     def new_obj = null
@@ -177,7 +48,7 @@ class AjaxSupportController {
         def editable = accessService.checkEditableObject(contextObj, params)//checkEditable(contextObj)
 
         if (editable || contextObj.id == user.id) {
-          log.debug("Create a new instance of ${params.__newObjectClass}");
+          log.debug("Create a new instance of ${params.__newObjectClass}")
 
           if (params.__newObjectClass == "wekb.KBComponentVariantName"){
 
@@ -212,22 +83,22 @@ class AjaxSupportController {
           }
 
           if (errors.size() == 0) {
-            new_obj = domain_class.getClazz().newInstance();
+            new_obj = domain_class.getClazz().newInstance()
             PersistentEntity pent = grailsApplication.mappingContext.getPersistentEntity(domain_class.fullName)
 
             pent.getPersistentProperties().each { p -> // list of PersistentProperties
-              log.debug("${p.name} (assoc=${p instanceof Association}) (oneToMany=${p instanceof OneToMany}) (ManyToOne=${p instanceof ManyToOne}) (OneToOne=${p instanceof OneToOne})");
+              log.debug("${p.name} (assoc=${p instanceof Association}) (oneToMany=${p instanceof OneToMany}) (ManyToOne=${p instanceof ManyToOne}) (OneToOne=${p instanceof OneToOne})")
               if ( params[p.name] && p.name != 'format' ) {
                 if ( p instanceof Association ) {
                   if ( p instanceof ManyToOne || p instanceof OneToOne ) {
                     // Set ref property
-                    log.debug("set assoc ${p.name} to lookup of OID ${params[p.name]}");
+                    log.debug("set assoc ${p.name} to lookup of OID ${params[p.name]}")
                     // if ( key == __new__ then we need to create a new instance )
                     new_obj[p.name] = resolveOID2(params[p.name])
                   }
                   else {
                     // Add to collection
-                    log.debug("add to collection ${p.name} for OID ${params[p.name]}");
+                    log.debug("add to collection ${p.name} for OID ${params[p.name]}")
                     new_obj[p.name].add(resolveOID2(params[p.name]))
                   }
                 }
@@ -235,26 +106,26 @@ class AjaxSupportController {
                   log.debug("checking for type of property -> ${p.type}")
                   switch ( p.type ) {
                     case Long.class:
-                      log.debug("Set simple prop ${p.name} = ${params[p.name]} (as long=${Long.parseLong(params[p.name])})");
-                      new_obj[p.name] = Long.parseLong(params[p.name]);
-                      break;
+                      log.debug("Set simple prop ${p.name} = ${params[p.name]} (as long=${Long.parseLong(params[p.name])})")
+                      new_obj[p.name] = Long.parseLong(params[p.name])
+                      break
 
                     case Date.class:
                       def dateObj = params.date(p.name, 'yyyy-MM-dd')
                       new_obj[p.name] = dateObj
-                      log.debug("Set simple prop ${p.name} = ${params[p.name]} (as date ${dateObj}))");
-                      break;
+                      log.debug("Set simple prop ${p.name} = ${params[p.name]} (as date ${dateObj}))")
+                      break
 
                     case Float.class:
-                      log.debug("Set simple prop ${p.name} = ${params[p.name]} (as float=${Float.valueOf(params[p.name])})");
-                      new_obj[p.name] = Float.valueOf(params[p.name]);
-                      break;
+                      log.debug("Set simple prop ${p.name} = ${params[p.name]} (as float=${Float.valueOf(params[p.name])})")
+                      new_obj[p.name] = Float.valueOf(params[p.name])
+                      break
 
                     default:
                       log.debug("Default for type ${p.type}")
-                      log.debug("Set simple prop ${p.name} = ${params[p.name]}");
+                      log.debug("Set simple prop ${p.name} = ${params[p.name]}")
                       new_obj[p.name] = params[p.name]
-                      break;
+                      break
                   }
                 }
               }
@@ -269,12 +140,12 @@ class AjaxSupportController {
             // Need to do the right thing depending on who owns the relationship. If new obj
             // BelongsTo other, should be added to recip collection.
             if ( params.__recip ) {
-              log.debug("Set reciprocal property ${params.__recip} to ${contextObj}");
+              log.debug("Set reciprocal property ${params.__recip} to ${contextObj}")
               new_obj[params.__recip] = contextObj
-              log.debug("Saving ${new_obj}");
+              log.debug("Saving ${new_obj}")
               if ( new_obj.validate() ) {
                 new_obj.save(flush:true)
-                log.debug("Saved OK");
+                log.debug("Saved OK")
                 if (contextObj.respondsTo("lastUpdateComment")){
                   contextObj.lastUpdateComment = "Added new connected ${new_obj.class.simpleName}(ID: ${new_obj.id})."
                 }
@@ -286,11 +157,11 @@ class AjaxSupportController {
             }
             else if ( params.__addToColl ) {
               contextObj[params.__addToColl].add(new_obj)
-              log.debug("Saving ${new_obj}");
+              log.debug("Saving ${new_obj}")
 
               if ( new_obj.validate() ) {
                 new_obj.save(flush:true)
-                log.debug("New Object Saved OK");
+                log.debug("New Object Saved OK")
               }
               else {
                 errors.addAll(messageService.processValidationErrorsToListForFlashError(new_obj.errors, request.locale))
@@ -298,7 +169,7 @@ class AjaxSupportController {
 
               if ( contextObj.validate() ) {
                   contextObj.save(flush:true)
-                log.debug("Context Object Saved OK");
+                log.debug("Context Object Saved OK")
               }
               else {
                 errors.addAll(messageService.processValidationErrorsToListForFlashError(contextObj.errors, request.locale))
@@ -306,10 +177,10 @@ class AjaxSupportController {
             }
             else {
               // Stand alone object.. Save it!
-              log.debug("Saving stand alone reference object");
+              log.debug("Saving stand alone reference object")
               if ( new_obj.validate() ) {
                 new_obj.save(flush:true, failOnError:true)
-                log.debug("Saved OK (${new_obj.class.name} ${new_obj.id})");
+                log.debug("Saved OK (${new_obj.class.name} ${new_obj.id})")
               }
               else {
                 errors.addAll(messageService.processValidationErrorsToListForFlashError(new_obj.errors, request.locale))
@@ -319,11 +190,11 @@ class AjaxSupportController {
             // Special combo processing
             if ( ( new_obj != null ) &&
                 ( new_obj.hasProperty('hasByCombo') ) && ( new_obj.hasByCombo != null ) ) {
-              log.debug("Processing hasByCombo properties...${new_obj.hasByCombo}");
+              log.debug("Processing hasByCombo properties...${new_obj.hasByCombo}")
               new_obj.hasByCombo.keySet().each { hbc ->
-                log.debug("Testing ${hbc} -> ${params[hbc]}");
+                log.debug("Testing ${hbc} -> ${params[hbc]}")
                 if ( params[hbc] ) {
-                  log.debug("Setting ${hbc} to ${params[hbc]}");
+                  log.debug("Setting ${hbc} to ${params[hbc]}")
                   new_obj[hbc] = resolveOID2(params[hbc])
                 }
               }
@@ -337,22 +208,22 @@ class AjaxSupportController {
           }
         }
         else {
-          log.debug("Located instance of context class with oid ${params.__context} is not editable.");
+          log.debug("Located instance of context class with oid ${params.__context} is not editable.")
           flash.error = message(code:'component.addToList.denied.label')
         }
       }
       else if (!contextObj) {
-        log.debug("Unable to locate instance of context class with oid ${params.__context}");
+        log.debug("Unable to locate instance of context class with oid ${params.__context}")
         flash.error = message(code:'component.context.notFound.label')
       }
     }
     else {
       if(!domain_class) {
-        log.error("Unable to lookup domain class ${params.__newObjectClass}");
+        log.error("Unable to lookup domain class ${params.__newObjectClass}")
         flash.error = message(code:'component.classNotFound.label', args:[params.__newObjectClass])
       }else{
         flash.error = message(code:'component.create.denied.label', args:[params.__newObjectClass])
-        log.error("No permission to create an object of domain class ${params.__newObjectClass}");
+        log.error("No permission to create an object of domain class ${params.__newObjectClass}")
       }
     }
 
@@ -360,35 +231,17 @@ class AjaxSupportController {
       flash.error = errors
     }
 
-    withFormat {
-      html {
-        if( new_obj && params.__showNew && errors.size() == 0) {
-          redirect(controller:'resource', action:'show', id:"${new_obj.class.name}:${new_obj.id}");
-        }
-        else {
+
+      if (new_obj && params.__showNew && errors.size() == 0) {
+          redirect(controller: 'resource', action: 'show', id: "${new_obj.class.name}:${new_obj.id}")
+      } else {
           def redirect_to = request.getHeader('referer')
 
-          if ( params.fragment && params.fragment.length() > 0 ) {
-            redirect_to = "${redirect_to}#${params.fragment}"
+          if (params.tab && params.tab.length() > 0) {
+              redirect_to = "${redirect_to}#${params.tab}"
           }
           redirect(url: redirect_to)
-        }
       }
-      json {
-        def result = ['result': 'OK', 'params': params]
-
-        if (flash.error) {
-          result.result = 'ERROR'
-          result.errors = flash.error
-        }
-        else {
-          result.new_object = new_obj
-          result.new_oid = "${new_obj.class.name}:${new_obj.id}"
-        }
-
-        render result as JSON
-      }
-    }
   }
 
   /**
@@ -397,11 +250,10 @@ class AjaxSupportController {
    * @param __relatedObject : the OID ([FullyQualifiedClassName]:[PrimaryKey]) of the object to be added to the list
    * @param __property : The property name of the collection to which the object should be added
    */
-
   @Transactional
   @Secured(['ROLE_EDITOR', 'IS_AUTHENTICATED_FULLY'])
   def addToStdCollection() {
-    log.debug("addToStdCollection(${params})");
+    log.debug("addToStdCollection(${params})")
     // Adds a link to a collection that is not mapped through a join object
     def contextObj = resolveOID2(params.__context)
     def user = springSecurityService.currentUser
@@ -414,46 +266,31 @@ class AjaxSupportController {
         if (!contextObj["${params.__property}"].contains(relatedObj)) {
           contextObj["${params.__property}"].add (relatedObj)
           contextObj.save(flush:true, failOnError:true)
-          log.debug("Saved: ${contextObj.id}");
+          log.debug("Saved: ${contextObj.id}")
           result.context = contextObj
         }else{
           flash.error = "Object is already present in this list!"
           log.debug("Tried to add the same object twice!")
-          result.result = 'ERROR'
-          result.error = "Object is already present in this list!"
         }
       }
       else {
         flash.error = message(code:'component.list.add.denied.label')
         log.debug("context object not editable.")
-        result.result = 'ERROR'
-        result.error = "Permission to add to this list was denied."
       }
     }
     else if (!contextObj) {
       flash.error = message(code:'component.context.notFound.label')
-      result.result = 'ERROR'
-      result.error = "Context object could not be found!"
     }
     else if (!relatedObj) {
       flash.error = message(code:'component.listItem.notFound.label')
-      result.result = 'ERROR'
-      result.error = "List item not found!"
     }
 
-    withFormat {
-      html {
-        def redirect_to = request.getHeader('referer')
+    def redirect_to = request.getHeader('referer')
 
-        if ( params.fragment && params.fragment.length() > 0 ) {
-          redirect_to = "${redirect_to}#${params.fragment}"
-        }
-        redirect(url: redirect_to)
-      }
-      json {
-        render result as JSON
-      }
+    if (params.tab && params.tab.length() > 0) {
+      redirect_to = "${redirect_to}#${params.tab}"
     }
+    redirect(url: redirect_to)
   }
 
   /**
@@ -463,11 +300,10 @@ class AjaxSupportController {
    * @param __property : The property name of the collection from which the object should be removed from
    * @param __otherEnd : The property name from the side of the object to be removed
    */
-
   @Transactional
   @Secured(['ROLE_EDITOR', 'IS_AUTHENTICATED_FULLY'])
   def unlinkManyToMany() {
-    log.debug("unlinkManyToMany(${params})");
+    log.debug("unlinkManyToMany(${params})")
     def contextObj = resolveOID2(params.__context)
     def user = springSecurityService.currentUser
     def result = ['result': 'OK', 'params': params]
@@ -479,26 +315,26 @@ class AjaxSupportController {
         if ( item_to_remove ) {
           if ( ( item_to_remove != null ) && ( item_to_remove.hasProperty('hasByCombo') ) && ( item_to_remove.hasByCombo != null ) ) {
             item_to_remove.hasByCombo.keySet().each { hbc ->
-              log.debug("Testing ${hbc}");
+              log.debug("Testing ${hbc}")
               log.debug("here's the data: "+ item_to_remove[hbc])
               if (item_to_remove[hbc]==contextObj) {
-                log.debug("context found");
+                log.debug("context found")
                 //item_to_remove[hbc]=resolveOID2(null)
                 if(item_to_remove.respondsTo('deleteParent')) {
                   log.debug("deleteParent()")
-                  item_to_remove.deleteParent();
+                  item_to_remove.deleteParent()
                 }
-                log.debug("tried removal: ${item_to_remove[hbc]}");
+                log.debug("tried removal: ${item_to_remove[hbc]}")
               }
             }
           }
-          log.debug("${params}");
-          log.debug("removing: ${item_to_remove} from ${params.__property} for ${contextObj}");
+          log.debug("${params}")
+          log.debug("removing: ${item_to_remove} from ${params.__property} for ${contextObj}")
 
-          def remove_result = contextObj[params.__property].remove(item_to_remove);
+          def remove_result = contextObj[params.__property].remove(item_to_remove)
 
           log.debug("remove successful?: ${remove_result}")
-          log.debug("child ${item_to_remove} removed: "+ contextObj[params.__property]);
+          log.debug("child ${item_to_remove} removed: "+ contextObj[params.__property])
 
           if ( params.propagate == "true" && KBComponent.isAssignableFrom(contextObj.class)) {
             contextObj.lastSeen = new Date().getTime()
@@ -509,8 +345,7 @@ class AjaxSupportController {
           }
           else {
             flash.error = messageService.processValidationErrorsToListForFlashError(contextObj.errors, request.locale)
-            result.result = 'ERROR'
-            result.code = 400
+
           }
 
           if (item_to_remove.hasProperty('fromComponent') && item_to_remove.fromComponent == contextObj) {
@@ -520,9 +355,9 @@ class AjaxSupportController {
 
             if (params.__otherEnd && item_to_remove[params.__otherEnd]!=null) {
               log.debug("remove parent: "+item_to_remove[params.__otherEnd])
-              //item_to_remove.setParent(null);
-              item_to_remove[params.__otherEnd]=null; //this seems to fail
-              log.debug("parent removed: "+item_to_remove[params.__otherEnd]);
+              //item_to_remove.setParent(null)
+              item_to_remove[params.__otherEnd]=null //this seems to fail
+              log.debug("parent removed: "+item_to_remove[params.__otherEnd])
             }
             if (!item_to_remove.validate()) {
               flash.error = messageService.processValidationErrorsToListForFlashError(item_to_remove.errors, request.locale)
@@ -532,47 +367,32 @@ class AjaxSupportController {
             }
           }
         } else {
-          log.error("Unable to resolve item to remove : ${params.__itemToRemove}");
+          log.error("Unable to resolve item to remove : ${params.__itemToRemove}")
           flash.error(code:'component.listItem.notFound.label')
         }
       }
       else {
         flash.error = message(code:'component.list.remove.denied.label')
-        log.debug("Located instance of context class with oid ${params.__context} is not editable.");
-        result.result = 'ERROR'
-        result.code = 403
+        log.debug("Located instance of context class with oid ${params.__context} is not editable.")
       }
     }
     else {
       flash.error = message(code:'component.context.notFound.label')
-      log.debug("Unable to locate instance of context class with oid ${params.__context}");
-      result.result = 'ERROR'
-      result.code = 404
+      log.debug("Unable to locate instance of context class with oid ${params.__context}")
     }
 
-    withFormat {
-      html {
-        def redirect_to = request.getHeader('referer')
+    def redirect_to = request.getHeader('referer')
 
-        if ( params.fragment && params.fragment.length() > 0 ) {
-          redirect_to = "${redirect_to}#${params.fragment}"
-        }
-        redirect(url: redirect_to)
-      }
-      json {
-        if (flash.error) {
-          result.errors = flash.error
-        }
-
-        render result as JSON
-      }
+    if (params.tab && params.tab.length() > 0) {
+      redirect_to = "${redirect_to}#${params.tab}"
     }
+    redirect(url: redirect_to)
   }
 
   @Transactional
   @Secured(['ROLE_EDITOR', 'IS_AUTHENTICATED_FULLY'])
   def unlinkManyToOne() {
-    log.debug("unlinkManyToOne(${params})");
+    log.debug("unlinkManyToOne(${params})")
     def contextObj = resolveOID2(params.__context)
     def result = ['result': 'OK', 'params': params]
     if (contextObj) {
@@ -586,52 +406,34 @@ class AjaxSupportController {
           }
           else {
             flash.error = messageService.processValidationErrorsToListForFlashError(contextObj.errors, request.locale)
-            result.result = 'ERROR'
-            result.code = 400
           }
       }
       else {
         flash.error = message(code:'component.delete.denied.label')
-        log.debug("Located instance of context class with oid ${params.__context} is not editable.");
-        result.result = 'ERROR'
-        result.code = 403
+        log.debug("Located instance of context class with oid ${params.__context} is not editable.")
       }
     }
     else {
       flash.error = message(code:'component.context.notFound.label')
-      log.debug("Unable to locate instance of context class with oid ${params.__context}");
-      result.result = 'ERROR'
-      result.code = 404
+      log.debug("Unable to locate instance of context class with oid ${params.__context}")
     }
 
-    withFormat {
-      html {
-        def redirect_to = request.getHeader('referer')
+    def redirect_to = request.getHeader('referer')
 
-        if ( params.fragment && params.fragment.length() > 0 ) {
-          redirect_to = "${redirect_to}#${params.fragment}"
-        }
-        redirect(url: redirect_to)
-      }
-      json {
-        if (flash.error) {
-          result.errors = flash.error
-        }
-
-        render result as JSON
-      }
+    if (params.tab && params.tab.length() > 0) {
+      redirect_to = "${redirect_to}#${params.tab}"
     }
+    redirect(url: redirect_to)
   }
 
   /**
    *  delete : Used to delete a domain class object.
    * @param __context : the OID ([FullyQualifiedClassName]:[PrimaryKey]) of the context object
    */
-
   @Transactional
   @Secured(['ROLE_EDITOR', 'IS_AUTHENTICATED_FULLY'])
   def delete() {
-    log.debug("delete(${params}), referer: ${request.getHeader('referer')}");
+    log.debug("delete(${params}), referer: ${request.getHeader('referer')}")
     // Adds a link to a collection that is not mapped through a join object
     def contextObj = resolveOID2(params.__context)
     def user = springSecurityService.currentUser
@@ -651,12 +453,12 @@ class AjaxSupportController {
       }
       else {
         flash.error = message(code:'component.delete.denied.label')
-        log.debug("Located instance of context class with oid ${params.__context} is not editable.");
+        log.debug("Located instance of context class with oid ${params.__context} is not editable.")
       }
     }
     else {
       flash.error = message(code:'component.notFound.label', args:[params.__context])
-      log.debug("Unable to locate instance of context class with oid ${params.__context}");
+      log.debug("Unable to locate instance of context class with oid ${params.__context}")
     }
 
     def redirect_to = request.getHeader('referer')
@@ -664,35 +466,23 @@ class AjaxSupportController {
     if ( params.redirect ) {
       redirect_to = params.redirect
     }
-    else if ( ( params.fragment ) && ( params.fragment.length() > 0 ) ) {
-      redirect_to = "${redirect_to}#${params.fragment}"
+    else if ( ( params.tab ) && ( params.tab.length() > 0 ) ) {
+      redirect_to = "${redirect_to}#${params.tab}"
     }
 
-    withFormat {
-      html {
-        redirect(url: redirect_to)
-      }
-      json {
-        if (flash.error) {
-          result.errors = flash.error
-          result.result = 'ERROR'
-        }
-
-        render result as JSON
-      }
-    }
+    redirect(url: redirect_to)
   }
 
   private def resolveOID2(oid) {
-    def oid_components = oid.split(':');
-    def result = null;
-    def domain_class=null;
+    def oid_components = oid.split(':')
+    def result = null
+    def domain_class=null
     domain_class = grailsApplication.getArtefact('Domain',oid_components[0])
     if ( domain_class ) {
       if (oid_components.size() == 2 ) {
         if ( oid_components[1]=='__new__' ) {
           result = domain_class.getClazz().refdataCreate(oid_components)
-          log.debug("Result of create ${oid} is ${result}");
+          log.debug("Result of create ${oid} is ${result}")
         }
         else {
           result = domain_class.getClazz().get(oid_components[1])
@@ -703,7 +493,7 @@ class AjaxSupportController {
       }
     }
     else {
-      log.debug("resolve OID failed to identify a domain class. Input was ${oid_components}");
+      log.debug("resolve OID failed to identify a domain class. Input was ${oid_components}")
     }
     result
   }
@@ -716,11 +506,10 @@ class AjaxSupportController {
    * @param name : The name of the property to be changed
    * @param value : The new value for the property
    */
-
   @Transactional
   @Secured(['ROLE_EDITOR', 'IS_AUTHENTICATED_FULLY'])
   def editableSetValue() {
-    log.debug("editableSetValue ${params}");
+    log.debug("editableSetValue ${params}")
     def user = springSecurityService.currentUser
     def target_object = genericOIDService.resolveOID(params.pk)
 
@@ -767,7 +556,7 @@ class AjaxSupportController {
         }
 
         if (target_object.validate()) {
-          target_object.save(flush:true);
+          target_object.save(flush:true)
         }
         else {
           errors = messageService.processValidationErrors(target_object.errors, request.locale)
@@ -775,44 +564,30 @@ class AjaxSupportController {
       }
       else {
         errors['global'] = [[message:"Object ${target_object} is not editable.".toString()]]
-        log.debug("Object ${target_object} is not editable.");
+        log.debug("Object ${target_object} is not editable.")
       }
     }
     else {
       errors['global'] = [[message:"Not able to resolve object from ${params.pk}.".toString()]]
-      log.debug("Object ${target_object} could not be resolved.");
+      log.debug("Object ${target_object} could not be resolved.")
     }
 
-    withFormat {
-      html {
-        def resp = null
-        if (errors.size() == 0) {
-          resp = params.value
-        }
-        else {
-          def error_obj = errors[params.name] ? errors[params.name][0] : errors['global'][0]
-          log.debug("Error msg: ${error_obj} (${error_obj.message})")
+    def resp = null
+    if (errors.size() == 0) {
+      resp = params.value
+    } else {
+      def error_obj = errors[params.name] ? errors[params.name][0] : errors['global'][0]
+      log.debug("Error msg: ${error_obj} (${error_obj.message})")
 
-          resp = error_obj.message
-          response.setContentType('text/plain;charset=UTF-8')
-          response.status = 400
-          render resp
-        }
-      }
-      json {
-        if (errors.size() > 0) {
-          result.errors = errors
-          result.result = 'ERROR'
-        }
-
-        render result as JSON
-      }
+      resp = error_obj.message
+      response.setContentType('text/plain;charset=UTF-8')
+      response.status = 400
+      render resp
     }
   }
 
   private boolean checkEditable(obj) {
-    def editable = accessService.checkEditableObject(obj, params)
-
+    boolean editable = accessService.checkEditableObject(obj, params)
     editable
   }
 
@@ -828,7 +603,7 @@ class AjaxSupportController {
   def genericSetRel() {
     // [id:1, value:JISC_Collections_NESLi2_Lic_IOP_Institute_of_Physics_NESLi2_2011-2012_01012011-31122012.., type:License, action:inPlaceSave, controller:ajax
     // def clazz=grailsApplication.domainClasses.findByFullName(params.type)
-    log.debug("genericSetRel ${params}");
+    log.debug("genericSetRel ${params}")
     def user = springSecurityService.currentUser
     def target = genericOIDService.resolveOID(params.pk)
     def value = null
@@ -847,10 +622,10 @@ class AjaxSupportController {
 
       if (editable) {
         // def binding_properties = [ "${params.name}":value ]
-        log.debug("Binding: ${params.name} into ${target} - a ${target.class.name}");
+        log.debug("Binding: ${params.name} into ${target} - a ${target.class.name}")
         // bindData(target, binding_properties)
         target[params.name] = value
-        log.debug("Saving... after assignment ${params.name} = ${target[params.name]}");
+        log.debug("Saving... after assignment ${params.name} = ${target[params.name]}")
 
         if ( target.validate() ) {
           target = target.merge(flush: true, failOnError: true)
@@ -859,76 +634,31 @@ class AjaxSupportController {
             result = value ? value[params.resultProp] : ''
           }
 
-          // We should clear the session values for a user if this is a user to force reload of the,
-          // parameters.
-          if (target instanceof User) {
-            session.userPereferences = null
-          }
-          else {
-            if ( value ) {
-              result.objVal = renderObjectValue(value);
-              // result = value.toString()
-            }
-          }
         }
         else {
-          log.debug("Problem saving.. ${target.errors}");
+          log.debug("Problem saving.. ${target.errors}")
           result.errors = messageService.processValidationErrors(target.errors, request.locale)
-          result.result = "ERROR"
         }
       }
       else {
-        log.debug("Target is not editable!");
-        result.result = "ERROR"
+        log.debug("Target is not editable!")
         result.errors = ["Not able to edit this property!"]
       }
     }
     else {
-      log.debug("Target not found!");
-      result.result = "ERROR"
+      log.debug("Target not found!")
       result.errors = ["Unable to locate intended target object!"]
     }
 
-    withFormat {
-      html {
-        def redirect_to = request.getHeader('referer')
+    def redirect_to = request.getHeader('referer')
 
-        if ( params.redirect ) {
-          redirect_to = params.redirect
-        }
-        else if ( ( params.fragment ) && ( params.fragment.length() > 0 ) ) {
-          redirect_to = "${redirect_to}#${params.fragment}"
-        }
-
-        redirect(url: redirect_to);
-      }
-      json {
-        result.newValue = target[params.name]
-        log.debug("return ${result}");
-        render result as JSON
-      }
+    if (params.redirect) {
+      redirect_to = params.redirect
+    } else if ((params.tab) && (params.tab.length() > 0)) {
+      redirect_to = "${redirect_to}#${params.tab}"
     }
-  }
 
-  def renderObjectValue(value) {
-    def result=''
-    if ( value ) {
-      switch ( value.class ) {
-        case wekb.RefdataValue.class:
-          if ( value.icon != null ) {
-            result="<span class=\"select-icon ${value.icon}\"></span>${value.value}"
-          }
-          else {
-            result=value.value
-          }
-          break;
-        case Boolean.class:
-          result = value ? 'Yes' : 'No'
-        default:
-          result=value.toString();
-      }
-    }
-    result;
+    redirect(url: redirect_to)
   }
 
   /**
@@ -941,7 +671,7 @@ class AjaxSupportController {
   @Transactional
   @Secured(['ROLE_EDITOR', 'IS_AUTHENTICATED_FULLY'])
   def addIdentifier() {
-    log.debug("addIdentifier - ${params}");
+    log.debug("addIdentifier - ${params}")
     def result = ['result': 'OK', 'params': params]
         def user = springSecurityService.currentUser
     def identifier_instance = null
@@ -967,7 +697,7 @@ class AjaxSupportController {
             }else if (!ident) {
                 ident = new Identifier(namespace: ns, value: params.identifierValue)
                 ident.setReference(owner)
-                boolean success = ident.save(flush: true) //needed to trigger afterInsert(); temp solution
+                boolean success = ident.save(flush: true) //needed to trigger afterInsert() temp solution
                 if (success){
                   flash.success = message(code:'identifier.create.success')
                 } else {
@@ -989,30 +719,14 @@ class AjaxSupportController {
         log.debug("could not create identifier!")
       }
     }
-    log.debug("Redirecting to referer: ${request.getHeader('referer')}");
+    log.debug("Redirecting to referer: ${request.getHeader('referer')}")
 
-    withFormat {
-      html {
-        if(params.hash){
-          redirect(url: (request.getHeader('referer')+params.hash))
-        }else if(params.activeTab){
-          redirect(url: (request.getHeader('referer')+'?activeTab='+params.activeTab))
-        }else {
-          redirect(url: (request.getHeader('referer')))
-        }
-      }
-      json {
-        if (flash.error) {
-          result.result = 'ERROR'
-          result.error = flash.error
-        }
-        else {
-          result.new_obj = identifier_instance
-          result.new_oid = "${identifier_instance.class.name}:${identifier_instance.id}"
-        }
-
-        render result as JSON
-      }
+    if (params.hash) {
+      redirect(url: (request.getHeader('referer') + params.hash))
+    } else if (params.activeTab) {
+      redirect(url: (request.getHeader('referer') + '?activeTab=' + params.activeTab))
+    } else {
+      redirect(url: (request.getHeader('referer')))
     }
   }
 
@@ -1027,7 +741,7 @@ class AjaxSupportController {
   @Transactional
   @Secured(['ROLE_EDITOR', 'IS_AUTHENTICATED_FULLY'])
   def authorizeVariant() {
-    log.debug("${params}");
+    log.debug("${params}")
     def result = ['result':'OK', 'params':params]
     def variant = KBComponentVariantName.get(params.id)
     def user = springSecurityService.currentUser
@@ -1044,7 +758,7 @@ class AjaxSupportController {
 
         if ( current_name_as_variant == null ) {
           log.debug("No variant name found for current name: ${owner.name} ")
-          def variant_name = owner.getId();
+          def variant_name = owner.getId()
 
           if(variant.owner.name){
             variant_name = owner.name
@@ -1056,7 +770,7 @@ class AjaxSupportController {
             variant_name = owner?.getName()?.trim()
           }
 
-          def new_variant = new KBComponentVariantName(owner:owner,variantName:variant_name).save(flush:true);
+          def new_variant = new KBComponentVariantName(owner:owner,variantName:variant_name).save(flush:true)
 
         }else{
             log.debug("Found existing variant name: ${current_name_as_variant}")
@@ -1066,48 +780,35 @@ class AjaxSupportController {
         owner.name = variant.variantName
 
         if (owner.validate()) {
-          owner.save(flush:true);
+          owner.save(flush:true)
           result.new_name = variant.owner.name
         }
         else {
-          result.result = 'ERROR'
-          result.code = 400
           result.message = "This name already belongs to another component of the same type!"
           flash.error = message(code:'variantName.authorize.notUnique')
         }
       }
       else {
-        result.result = 'ERROR'
-        result.code = 403
         result.message = "No permission to edit variants for this object!"
         flash.error = message(code:'variantName.owner.denied')
       }
     }
     else if (!variant) {
-      result.result = 'ERROR'
-      result.code = 404
       result.message = "Variant with id ${params.id} not found!".toString()
       def vname = message(code:'variantName.label')
       flash.message = message(code:'default.not.found.message', args:[vname, params.id])
     }
 
-    withFormat {
-      html {
-        def redirect_to = request.getHeader('referer')
+    def redirect_to = request.getHeader('referer')
 
-        if ( params.redirect ) {
-          redirect_to = params.redirect
-        }
-        else if ( ( params.fragment ) && ( params.fragment.length() > 0 ) ) {
-          redirect_to = "${redirect_to}#${params.fragment}"
-        }
-
-        redirect(url: redirect_to);
-      }
-      json {
-        render result as JSON
-      }
+    if (params.redirect) {
+      redirect_to = params.redirect
+    } else if ((params.tab) && (params.tab.length() > 0)) {
+      redirect_to = "${redirect_to}#${params.tab}"
     }
+
+    redirect(url: redirect_to)
+
   }
 
   /**
@@ -1118,7 +819,7 @@ class AjaxSupportController {
   @Transactional
   @Secured(['ROLE_EDITOR', 'IS_AUTHENTICATED_FULLY'])
   def deleteVariant() {
-    log.debug("${params}");
+    log.debug("${params}")
     def result = ['result':'OK', 'params': params]
     def variant = KBComponentVariantName.get(params.id)
     def user = springSecurityService.currentUser
@@ -1138,37 +839,25 @@ class AjaxSupportController {
         result.deleted_variant = "${variantName}"
       }
       else {
-        result.result = 'ERROR'
-        result.code = 403
         result.message = "No permission to edit variants for this object!"
         flash.error = message(code:'variantName.owner.denied')
       }
     }
     else if (!variant) {
-      result.result = 'ERROR'
-      result.code = 404
       def vname = message(code:'variantName.label')
       flash.error = message(code:'default.not.found.message', args:[vname, params.id])
       result.message = "Variant with id ${params.id} not found!".toString()
     }
 
-    withFormat {
-      html {
-        def redirect_to = request.getHeader('referer')
+    def redirect_to = request.getHeader('referer')
 
-        if ( params.redirect ) {
-          redirect_to = params.redirect
-        }
-        else if ( ( params.fragment ) && ( params.fragment.length() > 0 ) ) {
-          redirect_to = "${redirect_to}#${params.fragment}"
-        }
-
-        redirect(url: redirect_to);
-      }
-      json {
-        render result as JSON
-      }
+    if (params.redirect) {
+      redirect_to = params.redirect
+    } else if ((params.tab) && (params.tab.length() > 0)) {
+      redirect_to = "${redirect_to}#${params.tab}"
     }
+
+    redirect(url: redirect_to)
   }
 
   /**
@@ -1179,7 +868,7 @@ class AjaxSupportController {
   @Transactional
   @Secured(['ROLE_EDITOR', 'IS_AUTHENTICATED_FULLY'])
   def deleteCoverageStatement() {
-    log.debug("${params}");
+    log.debug("${params}")
     def result = ['result':'OK', 'params': params]
     def user = springSecurityService.currentUser
     def tcs = TIPPCoverageStatement.get(params.id)
@@ -1194,37 +883,25 @@ class AjaxSupportController {
         tipp.save(flush: true)
       }
       else {
-        result.result = 'ERROR'
-        result.code = 403
         result.message = "This TIPP is not editable!"
         flash.error = message(code:'tipp.coverage.denied.label')
       }
     }
     else if (!tcs) {
-      result.result = 'ERROR'
-      result.code = 404
       def vname = message(code:'TIPPCoverageStatement.label')
       result.message = "TIPPCoverageStatement with id ${params.id} not found!".toString()
       flash.error = message(code:'default.not.found.message', args:[vname, params.id])
     }
 
-    withFormat {
-      html {
-        def redirect_to = request.getHeader('referer')
+    def redirect_to = request.getHeader('referer')
 
-        if ( params.redirect ) {
-          redirect_to = params.redirect
-        }
-        else if ( ( params.fragment ) && ( params.fragment.length() > 0 ) ) {
-          redirect_to = "${redirect_to}#${params.fragment}"
-        }
-
-        redirect(url: redirect_to);
-      }
-      json {
-        render result as JSON
-      }
+    if (params.redirect) {
+      redirect_to = params.redirect
+    } else if ((params.tab) && (params.tab.length() > 0)) {
+      redirect_to = "${redirect_to}#${params.tab}"
     }
+
+    redirect(url: redirect_to)
   }
 
   /**
@@ -1236,7 +913,7 @@ class AjaxSupportController {
   @Secured(['ROLE_EDITOR', 'IS_AUTHENTICATED_FULLY'])
   def deleteCombo() {
     def result = ['result': "OK", 'params': params]
-    Combo c = Combo.get(params.id);
+    Combo c = Combo.get(params.id)
     def user = springSecurityService.currentUser
 
     if (c && c.fromComponent) {
@@ -1254,42 +931,31 @@ class AjaxSupportController {
           c.status = RefdataCategory.lookup(RCConstants.COMBO_STATUS, Combo.STATUS_DELETED)
         }
         else{
-          c.delete(flush:true);
+          c.delete(flush:true)
         }
       }
       else {
         def fcomp = (c.fromComponent?.logEntityId ?: "Combo ${params.id}")
-        result.code = 403
         result.message = "Not deleting combo.. no edit permissions on ${fcomp}!".toString()
-        result.result = 'ERROR'
         flash.error = message(code:'combo.fromComponent.denied.label', args:[fcomp])
         log.debug("Not deleting combo.. no edit permissions on fromComponent!")
       }
     }
     else {
-      result.code = 404
       result.message = "Unable to reference Combo!"
       def vname = message(code:'combo.label')
       flash.error = message(code:'default.not.found.message', args:[vname, params.id])
     }
 
-    withFormat {
-      html {
-        def redirect_to = request.getHeader('referer')
+    def redirect_to = request.getHeader('referer')
 
-        if ( params.redirect ) {
-          redirect_to = params.redirect
-        }
-        else if ( ( params.fragment ) && ( params.fragment.length() > 0 ) ) {
-          redirect_to = "${redirect_to}#${params.fragment}"
-        }
-
-        redirect(url: redirect_to);
-      }
-      json {
-        render result as JSON
-      }
+    if (params.redirect) {
+      redirect_to = params.redirect
+    } else if ((params.tab) && (params.tab.length() > 0)) {
+      redirect_to = "${redirect_to}#${params.tab}"
     }
+
+    redirect(url: redirect_to)
   }
 
   /**
@@ -1301,7 +967,7 @@ class AjaxSupportController {
   @Secured(['ROLE_EDITOR', 'IS_AUTHENTICATED_FULLY'])
   def deletePrice() {
     def result = ['result': "OK", 'params': params]
-    ComponentPrice c = ComponentPrice.get(params.id);
+    ComponentPrice c = ComponentPrice.get(params.id)
     def user = springSecurityService.currentUser
 
     if (c) {
@@ -1309,33 +975,26 @@ class AjaxSupportController {
 
       if (editable) {
         log.debug("Delete Price..")
-        c.delete(flush: true);
+        c.delete(flush: true)
       }
     }
 
-    withFormat {
-      html {
-        def redirect_to = request.getHeader('referer')
+    def redirect_to = request.getHeader('referer')
 
-        if ( params.redirect ) {
-          redirect_to = params.redirect
-        }
-        else if ( ( params.fragment ) && ( params.fragment.length() > 0 ) ) {
-          redirect_to = "${redirect_to}#${params.fragment}"
-        }
-
-        redirect(url: redirect_to);
-      }
-      json {
-        render result as JSON
-      }
+    if (params.redirect) {
+      redirect_to = params.redirect
+    } else if ((params.tab) && (params.tab.length() > 0)) {
+      redirect_to = "${redirect_to}#${params.tab}"
     }
+
+    redirect(url: redirect_to)
+
   }
 
   @Transactional
   @Secured(['ROLE_EDITOR', 'IS_AUTHENTICATED_FULLY'])
   def deleteLanguage() {
-    log.debug("${params}");
+    log.debug("${params}")
     def result = ['result':'OK', 'params': params]
     KBComponentLanguage kbComponentLanguage = KBComponentLanguage.get(params.id)
     def user = springSecurityService.currentUser
@@ -1347,42 +1006,30 @@ class AjaxSupportController {
         kbComponentLanguage.delete()
       }
       else {
-        result.result = 'ERROR'
-        result.code = 403
         result.message = "No permission to edit language for this object!"
         flash.error = "No permission to edit language for this object!"
       }
     }
     else if (!kbComponentLanguage) {
-      result.result = 'ERROR'
-      result.code = 404
       flash.error = message(code:'default.not.found.message', args:["Language", params.id])
       result.message = "Language with id ${params.id} not found!".toString()
     }
 
-    withFormat {
-      html {
-        def redirect_to = request.getHeader('referer')
+    def redirect_to = request.getHeader('referer')
 
-        if ( params.redirect ) {
-          redirect_to = params.redirect
-        }
-        else if ( ( params.fragment ) && ( params.fragment.length() > 0 ) ) {
-          redirect_to = "${redirect_to}#${params.fragment}"
-        }
-
-        redirect(url: redirect_to);
-      }
-      json {
-        render result as JSON
-      }
+    if (params.redirect) {
+      redirect_to = params.redirect
+    } else if ((params.tab) && (params.tab.length() > 0)) {
+      redirect_to = "${redirect_to}#${params.tab}"
     }
+
+    redirect(url: redirect_to)
   }
 
   @Transactional
   @Secured(['ROLE_EDITOR', 'IS_AUTHENTICATED_FULLY'])
   def addContact() {
-    log.debug("addContact - ${params}");
+    log.debug("addContact - ${params}")
     def result = ['result': 'OK', 'params': params]
     Contact contact = null
     if (params.content?.trim()) {
@@ -1411,11 +1058,7 @@ class AjaxSupportController {
     }
     log.debug("Redirecting to referer: ${request.getHeader('referer')}")
 
-    withFormat {
-      html {
-        redirect(url: (request.getHeader('referer')))
-      }
-    }
+    redirect(url: (request.getHeader('referer')))
   }
 
 }

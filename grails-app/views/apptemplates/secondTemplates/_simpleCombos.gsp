@@ -27,7 +27,7 @@
         </g:each>
         <g:if test="${delete=='true'}">
         <td>
-          <g:link controller='ajaxSupport' 
+          <g:link controller='ajaxHtml'
                   action='unlinkManyToMany' 
                   params="${[__context:ctxoid,__otherEnd:'parent',__property:property,__itemToRemove:rowoid]}">Delete</g:link>
         </td>
@@ -48,7 +48,7 @@
     <g:set var="comboprop" value="toComponent"/>
   </g:else>
 
-  <g:form controller="ajaxSupport" action="addToCollection">
+  <g:form controller="ajaxHtml" action="addToCollection">
     <input type="hidden" name="__context" value="${ctxoid}"/>
     <input type="hidden" name="__newObjectClass" value="wekb.Combo"/>
     <input type="hidden" name="__recip" value="${recip}"/>

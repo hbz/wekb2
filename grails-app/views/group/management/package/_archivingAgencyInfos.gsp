@@ -92,7 +92,7 @@
                                             </td>
                                             <td>
                                                 <g:if test="${editable}">
-                                                    <g:link controller='ajaxSupport'
+                                                    <g:link controller='ajaxHtml'
                                                             action='delete'
                                                             params="${["__context": "${paa.class.name}:${paa.id}", curationOverride: params.curationOverride]}">Delete</g:link>
                                                 </g:if>
