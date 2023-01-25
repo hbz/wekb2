@@ -44,8 +44,7 @@
             <g:link action="forgotPassword"><g:message
                     code="forgottenPassword.forgotPassword"/></g:link>
             <br>
-            <a href="#" onclick="$('#infoModal').modal('show');">Not yet registered for a <g:message code="gokb.appname"
-                                                                                            default="we:kb"/>: account?</a>
+            <a href="#" onclick="$('#infoModal').modal('show');">Not yet registered for a we:kb: account?</a>
         </div>
     </div>
 </div>

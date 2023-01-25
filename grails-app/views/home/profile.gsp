@@ -20,14 +20,7 @@
             </div>
         </semui:card>
 
-        <semui:card text="My Preferences" class="fluid">
-            <div class="content wekb-inline-lists">
-                <dl>
-                    <dt class="control-label">Default Page Size :</dt>
-                    <dd><semui:xEditable owner="${user}" field="defaultPageSize"/></dd>
-                </dl>
-            </div>
-        </semui:card>
+
 
     </div>
 
@@ -51,6 +44,16 @@
 
                     <button type="submit" class="ui black button">Change Password</button>
                 </g:form>
+            </div>
+        </semui:card>
+
+
+        <semui:card text="My Preferences" class="fluid">
+            <div class="content wekb-inline-lists">
+                <dl>
+                    <dt class="control-label">Default Page Size :</dt>
+                    <dd><semui:xEditable owner="${user}" field="defaultPageSize"/></dd>
+                </dl>
             </div>
         </semui:card>
 

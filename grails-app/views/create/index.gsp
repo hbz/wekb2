@@ -24,7 +24,6 @@
     <div class="content wekb-inline-lists">
         <g:if test="${displaytemplate != null}">
             <!-- Using display template ${displaytemplate.rendername} -->
-            <g:if test="${displaytemplate.type == 'staticgsp'}">
                 <g:if test="${displaytemplate.noCreate}">
                     <div id="content">
                         <div style="padding:20px">
@@ -41,7 +40,6 @@
                         <button id="save-btn" class="ui black button" type="button">Create and Edit </button>
                     </div>
                 </g:else>
-            </g:if>
         </g:if>
     </div>
 </div>

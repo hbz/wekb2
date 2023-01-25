@@ -11,8 +11,7 @@
 
 <div class="ui segment">
     <p>For more information contact us or go to <a target="_blank" class="content"
-                                                   href="https://service-wiki.hbz-nrw.de/display/WEKB/About+we%3Akb">About  <g:message
-                code="gokb.appname"/></a></p>
+                                                   href="https://service-wiki.hbz-nrw.de/display/WEKB/About+we%3Akb">About we:kb</a></p>
 </div>
 </body>
 </html>

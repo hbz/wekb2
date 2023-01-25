@@ -2,11 +2,11 @@
 <html>
 <head>
     <meta name="layout" content="public_semui"/>
-    <title><g:message code="gokb.appname" default="we:kb"/>: About</title>
+    <title>we:kb : About</title>
 </head>
 
 <body>
-<h1 class="ui header">About <g:message code="gokb.appname" default="we:kb"/></h1>
+<h1 class="ui header">About we:kb</h1>
 
 <div class="segment">
         <h3 class="ui header">

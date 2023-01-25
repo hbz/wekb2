@@ -7,7 +7,7 @@
 </head>
 
 <body>
-<h1 class="ui header">Welcome to <g:message code="gokb.appname" default="we:kb"/></h1>
+<h1 class="ui header">Welcome to we:kb</h1>
 
 <h3 class="ui header">Statistics</h3>
 

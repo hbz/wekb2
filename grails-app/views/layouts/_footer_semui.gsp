@@ -17,19 +17,17 @@
 
             <div class="three wide column left aligned">
 
-                <h3 class="ui  header">About <g:message code="gokb.appname"/></h3>
+                <h3 class="ui  header">About we:kb</h3>
 
                 <div class="ui  link list">
                     <div class="item">
                         <a target="_blank" class="content"
-                           href="https://service-wiki.hbz-nrw.de/display/WEKB/About+we%3Akb">About  <g:message
-                                code="gokb.appname"/></a>
+                           href="https://service-wiki.hbz-nrw.de/display/WEKB/About+we%3Akb">About we:kb</a>
                     </div>
 
                     <div class="item">
                         <a target="_blank" class="content"
-                           href="https://service-wiki.hbz-nrw.de/pages/viewpage.action?pageId=771129406">Manual  <g:message
-                                code="gokb.appname"/></a>
+                           href="https://service-wiki.hbz-nrw.de/pages/viewpage.action?pageId=771129406">Manual  we:kb</a>
                     </div>
                 </div>
 

@@ -31,8 +31,7 @@
                 <br>
                 <br>
                 <a target="_blank" class="content"
-                   href="https://service-wiki.hbz-nrw.de/pages/viewpage.action?pageId=771129406">Manual  <g:message
-                        code="gokb.appname"/></a>
+                   href="https://service-wiki.hbz-nrw.de/pages/viewpage.action?pageId=771129406">Manual  we:kb</a>
             </p>
         </div>
     </div>

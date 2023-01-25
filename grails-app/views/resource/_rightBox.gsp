@@ -56,34 +56,36 @@
             <div class="ui segment">
                 <h4 class="ui header">Info</h4>
 
-                <p>You are not a curator of this component. If you notice any errors, please contact a curator or request a review.</p>
+                <p>You are not a curator of this component. If you notice any errors, please contact a curator.</p>
             </div>
         </g:if>
         <sec:ifAnyGranted roles="ROLE_ADMIN">
-            <div class="ui segment">
-                <h4 class="ui header">Warning</h4>
+            <g:if test="${d.respondsTo("getCuratoryGroups")}">
+                <div class="ui segment">
+                    <h4 class="ui header">Warning</h4>
 
-                <p>As an admin you can still edit, but please contact a curator before making major changes.</p>
+                    <p>As an admin you can still edit, but please contact a curator before making major changes.</p>
 
-                <g:if test="${params.curationOverride == 'true'}">
-                    <g:link class="ui button green"
-                            controller="${params.controller}"
-                            action="${params.action}"
-                            id="${displayobj.class.name}:${displayobj.id}"
-                            params="${(request.param ?: [:])}">
-                        Disable admin override
-                    </g:link>
-                </g:if>
-                <g:else>
-                    <g:link class="ui button red"
-                            controller="${params.controller}"
-                            action="${params.action}"
-                            id="${displayobj.class.name}:${displayobj.id}"
-                            params="${(request.param ?: [:]) + ["curationOverride": true]}">
-                        Enable admin override
-                    </g:link>
-                </g:else>
-            </div>
+                    <g:if test="${params.curationOverride == 'true'}">
+                        <g:link class="ui button green"
+                                controller="${params.controller}"
+                                action="${params.action}"
+                                id="${displayobj.class.name}:${displayobj.id}"
+                                params="${(request.param ?: [:])}">
+                            Disable admin override
+                        </g:link>
+                    </g:if>
+                    <g:else>
+                        <g:link class="ui button red"
+                                controller="${params.controller}"
+                                action="${params.action}"
+                                id="${displayobj.class.name}:${displayobj.id}"
+                                params="${(request.param ?: [:]) + ["curationOverride": true]}">
+                            Enable admin override
+                        </g:link>
+                    </g:else>
+                </div>
+            </g:if>
         </sec:ifAnyGranted>
     </sec:ifLoggedIn>
 
@@ -101,8 +103,7 @@
                         id="${params.id}">KBART File</g:link> &nbsp;
                 <div class="or"></div>
             </g:if>
-            <a class="ui inverted button" href="#" onclick="$('#packageTSVExport').modal('show');"><g:message
-                    code="gokb.appname" default="we:kb"/> File</a>
+            <a class="ui inverted button" href="#" onclick="$('#packageTSVExport').modal('show');">we:kb File</a>
 
             <semui:modal id="packageTSVExport" title="Export we:kb File" msgSave="Export">
 
@@ -136,9 +137,6 @@
                     </div>
                 </g:form>
             </semui:modal>
-          %{--  <g:link controller="public" action="packageTSVExport" class="ui inverted button"
-                    id="${params.id}"><g:message
-                    code="gokb.appname" default="we:kb"/> File</g:link>--}%
         </div>
     </g:if>
 </div>

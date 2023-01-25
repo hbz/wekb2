@@ -26,13 +26,13 @@
             </dd>
         </dl>
     </sec:ifAnyGranted>
-    <g:if test="${sec.ifLoggedIn() && (user.isAdmin() || d.owner == user)}">
+    <g:if test="${sec.ifLoggedIn() && (user.isAdmin())}">
         <dl>
             <dt class="control-label">Members</dt>
             <dd>
-                <g:if test="${d.users}">
+                <g:if test="${d.curatoryGroupUsers}">
                     <ul>
-                        <g:each var="u" in="${d.users}">
+                        <g:each var="u" in="${d.curatoryGroupUsers}">
                             <sec:ifAnyGranted roles="ROLE_ADMIN">
                                 <li><a href="mailto:${u.email}"><i class="fa fa-envelope"></i>&nbsp;</a><g:link
                                         controller="resource" action="show"
