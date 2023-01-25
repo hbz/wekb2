@@ -561,10 +561,10 @@ abstract class KBComponent implements Auditable{
 
   @Override
   boolean equals(Object obj){
-    Object o = KBComponent.deproxy(obj)
+    Object o = ClassUtils.deproxy(obj)
     if (o != null){
       // Deproxy the object first to ensure it isn't a hibernate proxy.
-      boolean r = (this.getClassName() == o.getClass().name) && (this.getId() == o.getId())
+      boolean r = (this.getClass().name == o.getClass().name) && (this.getId() == o.getId())
       return r
     }
 

@@ -74,7 +74,7 @@
                                             <g:if test="${editable}">
                                                 <td><g:link controller='ajaxHtml'
                                                             action='unlinkManyToMany'
-                                                            params="${["__context": "${row_obj.class.name}:${row_obj.id}", "__property": "ddcs", "__itemToRemove": "${ddc.getClassName()}:${ddc.id}", tab: 'ddcs']}">Delete</g:link>
+                                                            params="${["__context": "${row_obj.class.name}:${row_obj.id}", "__property": "ddcs", "__itemToRemove": "${ddc.getClass().name}:${ddc.id}", tab: 'ddcs']}">Delete</g:link>
                                                 </td>
                                             </g:if>
                                         </tr>

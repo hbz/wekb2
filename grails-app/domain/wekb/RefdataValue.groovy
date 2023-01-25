@@ -73,7 +73,7 @@ class RefdataValue  extends AbstractI10n {
         return obj.id == id
       }
       else if ( obj instanceof HibernateProxy ) {
-        Object dep_obj = KBComponent.deproxy (obj)
+        Object dep_obj = ClassUtils.deproxy(obj)
         return dep_obj.id == id
       }
     }

@@ -1,5 +1,5 @@
-<%@ page import="wekb.helper.RCConstants" %>
-<g:set var="ctxoid" value="${wekb.KBComponent.deproxy(d).class.name}:${d.id}"/>
+<%@ page import="wekb.ClassUtils; wekb.helper.RCConstants" %>
+<g:set var="ctxoid" value="${wekb.ClassUtils.deproxy(d).class.name}:${d.id}"/>
 <g:set var="pstring" value="${property + '_status'}"/>
 <g:set var="pstatus" value="${params[pstring] ?: (combo_status ?: 'Active')}"/>
 
@@ -30,14 +30,14 @@
     </thead>
     <tbody>
     <g:each in="${d.getCombosByPropertyNameAndStatus(property, pstatus)}" var="row">
-        <g:set var="combooid" value="${wekb.KBComponent.deproxy(row).class.name}:${row.id}"/>
+        <g:set var="combooid" value="${ClassUtils.deproxy(row).class.name}:${row.id}"/>
         <g:if test="${d.isComboReverse(property)}">
             <g:set var="linkedoid"
-                   value="${wekb.KBComponent.deproxy(row.fromComponent).class.name}:${row.fromComponent.id}"/>
+                   value="${ClassUtils.deproxy(row.fromComponent).class.name}:${row.fromComponent.id}"/>
         </g:if>
         <g:else>
             <g:set var="linkedoid"
-                   value="${wekb.KBComponent.deproxy(row.toComponent).class.name}:${row.toComponent.id}"/>
+                   value="${ClassUtils.deproxy(row.toComponent).class.name}:${row.toComponent.id}"/>
         </g:else>
         <tr>
             <g:each in="${cols}" var="c">

@@ -19,7 +19,7 @@
                     <td>
                         <g:link controller="ajaxHtml" action="unlinkManyToMany" class="confirm-click"
                                 data-confirm-message="Are you sure you wish to unlink this property?"
-                                params="${["__property": "additionalProperties", "__context": d.getClassName() + ":" + d.id, "__itemToRemove": cp.getClassName() + ":" + cp.id]}">Delete</g:link>
+                                params="${["__property": "additionalProperties", "__context": d.getClass().name + ":" + d.id, "__itemToRemove": cp.getClass().name + ":" + cp.id]}">Delete</g:link>
                     </td>
                 </g:if>
             </tr>

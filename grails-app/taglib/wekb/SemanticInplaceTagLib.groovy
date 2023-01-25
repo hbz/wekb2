@@ -411,7 +411,7 @@ class SemanticInplaceTagLib {
 
 
             if(attrs.owner && attrs.owner."${attrs.field}")
-                out << g.link('Unlink', controller: "ajaxHtml", action: "unlinkManyToOne", class: "ui right floated negative mini button", params: ['curationOverride': params.curationOverride, '__property': attrs.field, '__context': attrs.owner.getClassName() + ':' + attrs.owner.id])
+                out << g.link('Unlink', controller: "ajaxHtml", action: "unlinkManyToOne", class: "ui right floated negative mini button", params: ['curationOverride': params.curationOverride, '__property': attrs.field, '__context': attrs.owner.getClass().name + ':' + attrs.owner.id])
 
           if (follow_link) {
                 out << ' &nbsp; <a href="' + follow_link + '" title="Jump to resource"><i class="ui share square icon"></i></a>'

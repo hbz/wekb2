@@ -17,10 +17,10 @@
     <g:if test="${ curatoryGroups.size() > 0 }" >
       <g:each in="${curatoryGroups}" var="t">
         <tr>
-          <td><g:link controller="resource" action="show" id="${t.getClassName()}:${t.id}"> ${t.name}</g:link></td>
+          <td><g:link controller="resource" action="show" id="${t.getClass().name}:${t.id}"> ${t.name}</g:link></td>
           <g:if test="${cur_editable && editable && !(d instanceof TitleInstancePackagePlatform)}">
             <td>
-                <g:link controller="ajaxHtml" action="unlinkManyToMany" class="confirm-click" data-confirm-message="Are you sure you wish to unlink ${ t.name }?" params="${ ["__property":"curatoryGroups", "__context":d.getClassName() + ":" + d.id, "__itemToRemove": t.getClassName() + ":" + t.id, "propagate": "true"] }" >Delete</g:link>
+                <g:link controller="ajaxHtml" action="unlinkManyToMany" class="confirm-click" data-confirm-message="Are you sure you wish to unlink ${ t.name }?" params="${ ["__property":"curatoryGroups", "__context":d.getClass().name + ":" + d.id, "__itemToRemove": t.getClass().name + ":" + t.id, "propagate": "true"] }" >Delete</g:link>
             </td>
           </g:if>
         </tr>
@@ -38,7 +38,7 @@
       <tr>
         <g:form controller="ajaxHtml" action="addToStdCollection">
           <td colspan="2">
-            <input type="hidden" name="__context" value="${d.getClassName()}:${d.id}"/>
+            <input type="hidden" name="__context" value="${d.getClass().name}:${d.id}"/>
             <input type="hidden" name="__property" value="curatoryGroups"/>
               <div class="input-group" style="width:100%;">
                 <semui:simpleReferenceDropdown  name="__relatedObject" baseClass="wekb.CuratoryGroup" filter1="Current"/>

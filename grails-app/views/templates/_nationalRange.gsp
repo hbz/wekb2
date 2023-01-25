@@ -6,7 +6,7 @@
             <g:if test="${editable}">
                 <g:link controller='ajaxHtml'
                         action='unlinkManyToMany'
-                        params="${["__context": "${d.class.name}:${d.id}", "__property": "nationalRanges", "__itemToRemove": "${nationalRange.getClassName()}:${nationalRange.id}"]}">Delete</g:link>
+                        params="${["__context": "${d.class.name}:${d.id}", "__property": "nationalRanges", "__itemToRemove": "${nationalRange.getClass().name}:${nationalRange.id}"]}">Delete</g:link>
             </g:if>
             </div>
         </g:each>
