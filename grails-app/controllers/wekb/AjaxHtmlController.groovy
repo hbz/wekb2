@@ -1,7 +1,9 @@
 package wekb
 
 import grails.plugin.springsecurity.SpringSecurityService
+import wekb.auth.Role
 import wekb.auth.User
+import wekb.auth.UserRole
 import wekb.utils.DateUtils
 import wekb.helper.RCConstants
 import wekb.helper.RDStore
@@ -1059,6 +1061,114 @@ class AjaxHtmlController {
     log.debug("Redirecting to referer: ${request.getHeader('referer')}")
 
     redirect(url: (request.getHeader('referer')))
+  }
+
+  @Transactional
+  @Secured(['ROLE_EDITOR', 'IS_AUTHENTICATED_FULLY'])
+  def addUserToCuratoryGroup() {
+    log.debug("addUserToCuratoryGroup(${params})")
+    User contextObj = resolveOID2(params.__user)
+    def user = springSecurityService.currentUser
+    CuratoryGroup curatoryGroup = resolveOID2(params.__curatoryGroup)
+    if (curatoryGroup != null && contextObj != null) {
+        if (user.isAdmin()) {
+        if (!CuratoryGroupUser.findByUserAndCuratoryGroup(contextObj, curatoryGroup)) {
+          CuratoryGroupUser curatoryGroupUser = new CuratoryGroupUser(user: contextObj, curatoryGroup: curatoryGroup)
+          curatoryGroupUser.save()
+        } else {
+          flash.error = "User has already this curatory group!"
+        }
+      } else {
+        flash.error = message(code: 'component.list.add.denied.label')
+      }
+    } else if (!contextObj) {
+      flash.error = message(code: 'component.context.notFound.label')
+    } else if (!curatoryGroup) {
+      flash.error = message(code: 'component.listItem.notFound.label')
+    }
+
+    def redirect_to = request.getHeader('referer')
+
+    if (params.tab && params.tab.length() > 0) {
+      redirect_to = "${redirect_to}#${params.tab}"
+    }
+    redirect(url: redirect_to)
+  }
+
+    @Transactional
+    @Secured(['ROLE_EDITOR', 'IS_AUTHENTICATED_FULLY'])
+    def addRoleToUser() {
+        log.debug("addRoleToUser(${params})")
+        User contextObj = resolveOID2(params.__user)
+        def user = springSecurityService.currentUser
+        Role role = resolveOID2(params.__role)
+        if (role != null && contextObj != null) {
+            if (user.isAdmin()) {
+                if (!UserRole.findByUserAndRole(contextObj, role)) {
+                    UserRole userRole = new UserRole(user: contextObj, role: role)
+                    userRole.save()
+                } else {
+                    flash.error = "User has already this role!"
+                }
+            } else {
+                flash.error = message(code: 'default.noPermissons')
+            }
+        } else if (!contextObj) {
+            flash.error = message(code: 'component.context.notFound.label')
+        } else if (!role) {
+            flash.error = message(code: 'component.listItem.notFound.label')
+        }
+
+        def redirect_to = request.getHeader('referer')
+
+        if (params.tab && params.tab.length() > 0) {
+            redirect_to = "${redirect_to}#${params.tab}"
+        }
+        redirect(url: redirect_to)
+    }
+
+    @Transactional
+    @Secured(['ROLE_EDITOR', 'IS_AUTHENTICATED_FULLY'])
+    def removeRoleFromUser() {
+        log.debug("removeRoleFromUser(${params})")
+        UserRole userRole = UserRole.get(params.usR_Id)
+        def user = springSecurityService.currentUser
+        if (userRole) {
+            if (user.isAdmin()) {
+                userRole.delete()
+            } else {
+                flash.error = message(code: 'default.noPermissons')
+            }
+        }
+
+        def redirect_to = request.getHeader('referer')
+
+        if (params.tab && params.tab.length() > 0) {
+            redirect_to = "${redirect_to}#${params.tab}"
+        }
+        redirect(url: redirect_to)
+    }
+
+  @Transactional
+  @Secured(['ROLE_EDITOR', 'IS_AUTHENTICATED_FULLY'])
+  def removeCuratoryGroupFromUser() {
+    log.debug("removeRoleFromUser(${params})")
+    CuratoryGroupUser curatoryGroupUser = CuratoryGroupUser.get(params.usCur_Id)
+    def user = springSecurityService.currentUser
+    if (curatoryGroupUser) {
+      if (user.isAdmin()) {
+        curatoryGroupUser.delete()
+      } else {
+        flash.error = message(code: 'default.noPermissons')
+      }
+    }
+
+    def redirect_to = request.getHeader('referer')
+
+    if (params.tab && params.tab.length() > 0) {
+      redirect_to = "${redirect_to}#${params.tab}"
+    }
+    redirect(url: redirect_to)
   }
 
 }

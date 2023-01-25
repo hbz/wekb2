@@ -13,7 +13,7 @@ class CuratoryGroup extends KBComponent {
   RefdataValue type
 
   static hasMany = [
-    users: CuratoryGroupUser
+          curatoryGroupUsers: CuratoryGroupUser
   ]
 
   static mapping = {

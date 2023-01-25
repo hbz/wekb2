@@ -6,21 +6,21 @@ public class DisplayTemplateService {
 
   @javax.annotation.PostConstruct
   def init() {
-    globalDisplayTemplates.put('wekb.AdditionalPropertyDefinition',[ type:'staticgsp', rendername:'addpropdef' ])
-    globalDisplayTemplates.put('wekb.CuratoryGroup',[ type:'staticgsp', rendername:'curatory_group' ])
-    globalDisplayTemplates.put('wekb.Identifier',[ type:'staticgsp', rendername:'identifier', noCreate:true ])
-    globalDisplayTemplates.put('wekb.IdentifierNamespace',[ type:'staticgsp', rendername:'identifier_namespace' ])
-    globalDisplayTemplates.put('wekb.system.JobResult',[ type:'staticgsp', rendername:'job_result', noCreate:true ])
-    globalDisplayTemplates.put('wekb.Org',[ type:'staticgsp', rendername:'org' ])
-    globalDisplayTemplates.put('wekb.Package',[ type:'staticgsp', rendername:'package' ])
-    globalDisplayTemplates.put('wekb.Platform',[ type:'staticgsp', rendername:'platform' ])
-    globalDisplayTemplates.put('wekb.RefdataCategory',[ type:'staticgsp', rendername:'rdc' ])
-    globalDisplayTemplates.put('wekb.RefdataValue',[ type:'staticgsp', rendername:'rdv', noCreate:true ])
-    globalDisplayTemplates.put('wekb.Source',[ type:'staticgsp', rendername:'source' ])
-    globalDisplayTemplates.put('wekb.TitleInstancePackagePlatform',[ type:'staticgsp', rendername:'tipp'])
-    globalDisplayTemplates.put('wekb.UpdatePackageInfo',[ type:'staticgsp', rendername:'update_package_info', noCreate:true])
-    globalDisplayTemplates.put('wekb.UpdateTippInfo',[ type:'staticgsp', rendername:'update_tipp_info', noCreate:true])
-    globalDisplayTemplates.put('wekb.auth.User',[ type:'staticgsp', rendername:'user', noCreate:true ])
+    globalDisplayTemplates.put('wekb.AdditionalPropertyDefinition',[rendername:'addpropdef' ])
+    globalDisplayTemplates.put('wekb.CuratoryGroup',[rendername:'curatory_group' ])
+    globalDisplayTemplates.put('wekb.Identifier',[rendername:'identifier', noCreate:true ])
+    globalDisplayTemplates.put('wekb.IdentifierNamespace',[rendername:'identifier_namespace' ])
+    globalDisplayTemplates.put('wekb.system.JobResult',[rendername:'job_result', noCreate:true ])
+    globalDisplayTemplates.put('wekb.Org',[rendername:'org' ])
+    globalDisplayTemplates.put('wekb.Package',[rendername:'package' ])
+    globalDisplayTemplates.put('wekb.Platform',[rendername:'platform' ])
+    globalDisplayTemplates.put('wekb.RefdataCategory',[rendername:'rdc' ])
+    globalDisplayTemplates.put('wekb.RefdataValue',[rendername:'rdv', noCreate:true ])
+    globalDisplayTemplates.put('wekb.Source',[rendername:'source' ])
+    globalDisplayTemplates.put('wekb.TitleInstancePackagePlatform',[rendername:'tipp'])
+    globalDisplayTemplates.put('wekb.UpdatePackageInfo',[rendername:'update_package_info', noCreate:true])
+    globalDisplayTemplates.put('wekb.UpdateTippInfo',[rendername:'update_tipp_info', noCreate:true])
+    globalDisplayTemplates.put('wekb.auth.User',[rendername:'user', noCreate:true ])
     
 
 

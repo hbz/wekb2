@@ -31,9 +31,9 @@ class User {
   Long defaultPageSize = new Long(10)
 
   static hasMany      = [ roles: UserRole,
-                          curatoryGroups : CuratoryGroupUser]
+                          curatoryGroupUsers : CuratoryGroupUser]
 
-  static mappedBy     = [ roles: 'user',  curatoryGroups: 'user' ]
+  static mappedBy     = [ roles: 'user',  curatoryGroupUsers: 'user' ]
 
 
   static constraints = {
