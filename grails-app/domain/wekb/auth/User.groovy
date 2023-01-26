@@ -4,8 +4,10 @@ package wekb.auth
 import groovy.util.logging.Slf4j
 import wekb.CuratoryGroup
 import wekb.CuratoryGroupUser
+import wekb.KBComponent
 import wekb.RefdataValue
 import wekb.helper.BeanStore
+import wekb.system.SavedSearch
 
 import javax.persistence.Transient
 import java.lang.reflect.Field
@@ -234,6 +236,19 @@ class User {
 
   public String getShowName() {
     return this.username
+  }
+
+  boolean deleteUser(){
+    log.debug("Deleting user ${this.id} ..")
+
+      SavedSearch.executeUpdate("delete from SavedSearch where owner = :utd", [utd: this])
+      UserRole.removeAll(this)
+
+      log.debug("Deleting user object ..")
+      this.delete()
+
+      log.debug("Done")
+
   }
 
 }

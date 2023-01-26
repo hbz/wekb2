@@ -96,7 +96,8 @@
                         <div class="item">
                             <div class="header">Admin Views</div>
                             <div class="menu">
-                                <g:link class="item" controller="user" action="search">User Management Console</g:link>
+                                <g:link class="item" controller="search" action="componentSearch"
+                                        params="[qbe: 'g:users']">User Management</g:link>
                                 <g:link class="item" controller="admin" action="jobs">Manage Jobs</g:link>
                                 <g:link class="item" controller="admin"
                                         action="manageFTControl">Manage FT Control</g:link>
@@ -128,21 +129,10 @@
                                 <g:link class="item" controller="search" action="componentSearch"
                                         params="[qbe: 'g:jobResults']">Job Infos</g:link>
                                 <g:link class="item" controller="search" action="componentSearch"
-                                        params="[qbe: 'g:notes']">Notes</g:link>
-                                <g:link class="item" controller="search" action="componentSearch"
                                         params="[qbe: 'g:refdataCategories']">Refdata Categories</g:link>
                                 <g:link class="item" controller="search" action="componentSearch"
                                         params="[qbe: 'g:refdataValues']">Refdata Values</g:link>
-                                <g:link class="item" controller="search" action="componentSearch"
-                                        params="[qbe: 'g:reviewRequests']">Review Requests</g:link>
-                               %{-- <g:link class="item" controller="search" action="componentSearch"
-                                        params="[qbe: 'g:userOrganisation']">User Organisation</g:link>--}%
-                                <g:link class="item" controller="search" action="componentSearch"
-                                        params="[qbe: 'g:users']">Users</g:link>
-                                %{--<g:link class="item" controller="search" action="componentSearch"
-                                        params="[qbe: 'g:userJobs']">User Jobs</g:link>
-                                <g:link class="item" controller="search" action="componentSearch"
-                                        params="[qbe: 'g:userWatchedComponents']">User Watched Components</g:link>--}%
+
                             </div>
                         </div>
                         <div class="item">
@@ -156,13 +146,9 @@
                                 <g:link class="item" controller="create" action="index"
                                         params="[tmpl: 'wekb.RefdataValue']">Refdata Value</g:link>
                                 <g:link class="item" controller="create" action="index"
-                                        params="[tmpl: 'wekb.ReviewRequest']">Review Request</g:link>
-                                <g:link class="item" controller="create" action="index"
                                          params="[tmpl: 'wekb.CuratoryGroup']">Curatory Group</g:link>
                                 <g:link class="item" controller="create" action="index"
                                         params="[tmpl: 'wekb.Org']">Provider</g:link>
-                                 %{-- <g:link class="item" controller="create" action="index"
-                                         params="[tmpl: 'wekb.auth.UserOrganisation']">User Organisation</g:link>--}%
                             </div>
                         </div>
                         <div class="item">
