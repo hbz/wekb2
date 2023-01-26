@@ -11,45 +11,40 @@ class ResourceController {
   SpringSecurityService springSecurityService
   DisplayTemplateService displayTemplateService
   AccessService accessService
-  SearchService searchService
 
   def index() {
   }
 
   def show() {
-
+    log.debug("ResourceController::show ${params}")
     User user = springSecurityService.currentUser
 
     log.debug("ResourceController::show ${params}");
     def result = ['params':params]
     def oid = params.id
     def displayobj = null
-    def read_perm = false
+    Boolean read_perm = false
 
     if (params.type && params.id) {
       oid = "wekb." + params.type + ":" + params.id
-    }
-    else if (params.int('id')) {
+    } else if (params.int('id')) {
       displayobj = KBComponent.get(params.int('id'))
       oid = (displayobj ? (displayobj.class.name + ":" + params.id) : null)
     }
 
-    if ( oid ) {
+    if (oid) {
       displayobj = KBComponent.findByUuid(oid)
 
       if (!displayobj) {
         displayobj = genericOIDService.resolveOID(oid)
       }
-      else {
-        oid = "${displayobj?.class?.name}:${displayobj?.id}"
-      }
 
-      if ( displayobj ) {
+      if (displayobj) {
 
         if ((displayobj.class.simpleName in accessService.allowedPublicShow) || (springSecurityService.isLoggedIn() && SpringSecurityUtils.ifAnyGranted("ROLE_ADMIN"))) {
 
           result.displayobjclassname = displayobj.class.name
-          result.__oid = "${result.displayobjclassname}:${displayobj.id}"
+          //result.__oid = "${result.displayobjclassname}:${displayobj.id}"
 
           log.debug("Looking up display template for ${result.displayobjclassname}")
 
@@ -59,11 +54,11 @@ class ResourceController {
 
           result.displayobjclassname_short = displayobj.class.simpleName
 
-          result.isComponent = (displayobj instanceof KBComponent)
+          //result.isComponent = (displayobj instanceof KBComponent)
 
           result.displayobj = displayobj
 
-          if(springSecurityService.isLoggedIn()) {
+          if (springSecurityService.isLoggedIn()) {
             read_perm = accessService.checkReadable(displayobj.class.name)
 
             if (read_perm) {
@@ -77,9 +72,8 @@ class ResourceController {
 
               def curatedObj = displayobj.respondsTo("getCuratoryGroups") ? displayobj : (displayobj.hasProperty('pkg') ? displayobj.pkg : false)
 
-              if (curatedObj && curatedObj.curatoryGroups && curatedObj.niceName != 'User') {
-
-                def cur = user.curatoryGroups?.id.intersect(curatedObj.curatoryGroups?.id) ?: []
+              if (curatedObj && curatedObj.curatoryGroups && curatedObj.niceName != 'User' && user.curatoryGroupUsers) {
+                def cur = user.curatoryGroupUsers.curatoryGroup.id.intersect(curatedObj.curatoryGroups.id) ?: []
                 request.curator = cur
               } else {
                 request.curator = null
@@ -90,31 +84,27 @@ class ResourceController {
               // Add any refdata property names for this class to the result.
               //result.refdata_properties = classExaminationService.getRefdataPropertyNames(result.displayobjclassname)
 
-              //result.acl = gokbAclService.readAclSilently(displayobj)
-
-              def oid_components = oid.split(':');
-              def qry_params = [result.displayobjclassname, Long.parseLong(oid_components[1])];
-              result.ownerClass = oid_components[0]
-              result.ownerId = oid_components[1]
             } else {
               flash.error = "You have no permission to view this resource."
+                result.noPermission = true
             }
           }
-        }else {
-          flash.error = "You have no permission to view this resource."
+        } else {
+            flash.error = "You have no permission to view this resource."
+            result.noPermission = true
         }
-      }
-      else {
+      } else {
         log.debug("unable to resolve object")
         flash.error = "Unable to find the requested resource."
       }
+    }else {
+      flash.error = "Unable to find the requested resource."
     }
-        result
-    }
+    result
+  }
 
   @Secured(['ROLE_USER', 'IS_AUTHENTICATED_FULLY'])
   def showLogin() {
-
     redirect(action: 'show', params: params)
   }
 }

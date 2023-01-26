@@ -98,7 +98,7 @@ class WorkflowController{
           def method_config = params.selectedBulkAction.split(/\:\:/) as List
           switch (method_config[0]){
             case "method":
-              def context = [user: request.user]
+              def context = [user: springSecurityService.currentUser]
               // Everything after the first 2 "parts" are args for the method.
               def method_params = []
               method_params.add(context)

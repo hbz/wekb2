@@ -86,4 +86,8 @@ class JobResult {
   public String getDomainName() {
     return "Job Info"
   }
+
+  public String getShowName() {
+    return this.id
+  }
 }

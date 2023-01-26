@@ -53,17 +53,17 @@
         </g:if>
 
         <semui:tabs>
-            <semui:tabsItemWithoutLink tab="curatoryGroupUsers" class="active" counts="${d.curatoryGroupUsers.size()}">
+            <semui:tabsItemWithoutLink tab="curatoryGroupUsers" defaultTab="curatoryGroupUsers" activeTab="${params.activeTab}" counts="${d.curatoryGroupUsers.size()}">
                 Curatory Groups
             </semui:tabsItemWithoutLink>
             <g:if test="${userIsAdmin}">
-                <semui:tabsItemWithoutLink tab="roles" counts="${d.roles.size()}">
+                <semui:tabsItemWithoutLink tab="roles" activeTab="${params.activeTab}" counts="${d.roles.size()}">
                     Roles
                 </semui:tabsItemWithoutLink>
             </g:if>
         </semui:tabs>
 
-        <semui:tabsItemContent tab="curatoryGroupUsers" activeTab="curatoryGroupUsers">
+        <semui:tabsItemContent tab="curatoryGroupUsers" activeTab="${params.activeTab}">
             <table class="ui selectable striped sortable celled table">
                 <thead>
                 <tr>
@@ -75,7 +75,7 @@
                 </thead>
                 <tbody>
                 <g:if test="${d.curatoryGroupUsers.size() > 0}">
-                    <g:each in="${d.curatoryGroupUsers}" var="curatoryGroupUser">
+                    <g:each in="${d.curatoryGroupUsers.sort { it.curatoryGroup.name }}" var="curatoryGroupUser">
                         <tr>
                             <td><g:link controller="resource" action="show"
                                         id="${curatoryGroupUser.curatoryGroup.getClass().name}:${curatoryGroupUser.curatoryGroup.id}">${curatoryGroupUser.curatoryGroup.name}</g:link></td>
@@ -84,7 +84,7 @@
                                     <g:link controller="ajaxHtml" action="removeCuratoryGroupFromUser"
                                             class="confirm-click"
                                             data-confirm-message="Are you sure you wish to unlink ${curatoryGroupUser.curatoryGroup.name}?"
-                                            params="${["usCur_Id": curatoryGroupUser.id]}">Delete</g:link>
+                                            params="${["us_Id": curatoryGroupUser.user.id, "cur_Id": curatoryGroupUser.curatoryGroup.id, activeTab: "curatoryGroupUsers"]}">Delete</g:link>
                                 </td>
                             </g:if>
                         </tr>
@@ -108,6 +108,7 @@
                 <semui:modal id="addCuratoryGroup" title="Add a Curatory Group">
                     <g:form controller="ajaxHtml" action="addUserToCuratoryGroup" class="ui form">
                         <input type="hidden" name="__user" value="${d.getClass().name}:${d.id}"/>
+                        <input type="hidden" name="activeTab" value="curatoryGroupUsers"/>
 
                         <div class="field">
                         <semui:simpleReferenceDropdown name="__curatoryGroup"
@@ -122,7 +123,7 @@
     </g:if>
 
     <g:if test="${userIsAdmin}">
-        <semui:tabsItemContent tab="roles" activeTab="curatoryGroupUsers">
+        <semui:tabsItemContent tab="roles" activeTab="${params.activeTab}">
             <table class="ui selectable striped sortable celled table">
                 <thead>
                 <tr>
@@ -141,7 +142,7 @@
                         <g:if test="${editable}">
                             <td><g:link controller='ajaxHtml'
                                         action='removeRoleFromUser'
-                                        params="${["usR_Id": "${userRole.id}", tab: 'roles']}">Delete</g:link>
+                                        params="${["us_Id": "${userRole.user.id}", "rol_Id": "${userRole.role.id}", activeTab: 'roles']}">Delete</g:link>
                             </td>
                         </g:if>
                     </tr>
@@ -159,6 +160,7 @@
                 <semui:modal id="addRoleToUser" title="Add Role">
                     <g:form controller="ajaxHtml" action="addRoleToUser" class="ui form">
                         <input type="hidden" name="__user" value="${d.getClass().name}:${d.id}"/>
+                        <input type="hidden" name="activeTab" value="roles"/>
 
                         <div class="field">
                             <semui:simpleReferenceDropdown name="__role"

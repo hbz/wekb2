@@ -226,4 +226,8 @@ class Identifier {
     return "Identifier"
   }
 
+  public String getShowName() {
+    return this.value
+  }
+
 }

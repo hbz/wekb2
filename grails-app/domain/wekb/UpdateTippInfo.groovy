@@ -86,4 +86,8 @@ class UpdateTippInfo {
     public String getDomainName() {
         return "Title Update Infos"
     }
+
+    public String getShowName() {
+        return this.tipp.name
+    }
 }

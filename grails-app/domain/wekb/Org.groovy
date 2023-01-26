@@ -131,6 +131,10 @@ class Org extends KBComponent {
     return "Provider"
   }
 
+  public String getShowName() {
+    return this.name
+  }
+
     @Transient
     public getCurrentTippCount() {
         def refdata_current = RefdataCategory.lookupOrCreate(RCConstants.KBCOMPONENT_STATUS, 'Current')

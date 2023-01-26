@@ -361,6 +361,10 @@ class TitleInstancePackagePlatform extends KBComponent {
     return "Title"
   }
 
+  public String getShowName() {
+    return this.name
+  }
+
     @Transient
     public getCountAutoUpdateTippInfos() {
         int result = UpdateTippInfo.executeQuery("select count(id) from UpdateTippInfo where tipp = :tipp and updatePackageInfo.automaticUpdate = true", [tipp: this])[0]

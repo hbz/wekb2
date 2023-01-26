@@ -190,10 +190,10 @@ class UserProfileService {
           'defaultPageSize': user.defaultPageSize
         ]
     if (params._embed?.split(',')?.contains('curatoryGroups'))
-      newUserData.curatoryGroups = user.curatoryGroups
+      newUserData.curatoryGroups = user.curatoryGroupUsers.curatoryGroup
     else {
       newUserData.curatoryGroups = []
-      user.curatoryGroups.each { group ->
+      user.curatoryGroupUsers.curatoryGroup.each { group ->
         newUserData.curatoryGroups += [
           id    : group.id,
           name  : group.name,

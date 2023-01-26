@@ -232,4 +232,8 @@ class User {
     return "User"
   }
 
+  public String getShowName() {
+    return this.username
+  }
+
 }

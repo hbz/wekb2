@@ -238,4 +238,8 @@ class Platform extends KBComponent {
   public String getDomainName() {
     return "Platform"
   }
+
+  public String getShowName() {
+    return this.name
+  }
 }

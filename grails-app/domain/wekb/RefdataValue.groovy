@@ -165,4 +165,8 @@ class RefdataValue  extends AbstractI10n {
     return "Refdata Value"
   }
 
+  public String getShowName() {
+    return this.value
+  }
+
 }

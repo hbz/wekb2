@@ -118,4 +118,8 @@ class IdentifierNamespace {
   public String getDomainName() {
     return "Identifier Namespace"
   }
+
+  public String getShowName() {
+    return this.name
+  }
 }

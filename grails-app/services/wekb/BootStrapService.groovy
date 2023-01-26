@@ -234,7 +234,7 @@ class BootStrapService {
             User.findAll().each { User user ->
 
                 log.debug("anonymizeUsers ${user.displayName} ${user.username}")
-                if(user.curatoryGroups.find{CuratoryGroup curatoryGroup -> curatoryGroup.name == "hbz" || curatoryGroup.name == "LAS:eR"}){
+                if(user.curatoryGroupUsers && user.curatoryGroupUsers.curatoryGroup.find{CuratoryGroup curatoryGroup -> curatoryGroup.name == "hbz" || curatoryGroup.name == "LAS:eR"}){
                     user.email = 'local@localhost.local'
                 }else {
                     user.username = "User ${user.id}"

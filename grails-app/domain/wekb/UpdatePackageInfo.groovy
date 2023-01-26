@@ -112,6 +112,10 @@ class UpdatePackageInfo {
         return "Package Update Infos"
     }
 
+    public String getShowName() {
+        return this.pkg.name
+    }
+
     @Transient
     public int getCountUpdateTippInfos() {
         int result = UpdateTippInfo.executeQuery("select count(id) from UpdateTippInfo where updatePackageInfo = :updatePackageInfo", [updatePackageInfo: this])[0]

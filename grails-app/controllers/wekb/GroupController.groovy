@@ -173,7 +173,7 @@ class GroupController {
         Map result = [:]
         result.user = springSecurityService.currentUser
 
-        boolean cur = result.user.curatoryGroups?.size() > 0
+        boolean cur = result.user.curatoryGroupUsers?.size() > 0
         if (!cur) {
             log.debug("No curator!")
             response.sendError(403)
@@ -183,7 +183,7 @@ class GroupController {
         //result.s_action = actionName
         //result.s_controller = controllerName
 
-        result.groups = result.user.curatoryGroups
+        result.groups = result.user.curatoryGroupUsers.curatoryGroup
 
         result
     }

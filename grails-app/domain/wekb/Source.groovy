@@ -226,6 +226,10 @@ class Source extends KBComponent {
     return "Source"
   }
 
+  public String getShowName() {
+    return this.name
+  }
+
   @Transient
   public List<Package> getPackages() {
     def result = Package.findAllBySource(this)

@@ -491,7 +491,7 @@ class KbartImportService {
         def trimmed_url = tipp_dto.url ? tipp_dto.url.trim() : null
 
         //TODO: Moe
-        def curator = pkg?.curatoryGroups?.size() > 0 ? (user.adminStatus || user.curatoryGroups?.id.intersect(pkg?.curatoryGroups?.id)) : false
+        def curator = pkg?.curatoryGroups?.size() > 0 ? (user.adminStatus || (user.curatoryGroupUsers && user.curatoryGroupUsers.curatoryGroup.id.intersect(pkg?.curatoryGroups?.id))) : false
 
         if (pkg && plt && curator) {
             log.debug("See if we already have a tipp")

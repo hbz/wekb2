@@ -99,5 +99,9 @@ class CuratoryGroup extends KBComponent {
     return "Curatory Group"
   }
 
+  public String getShowName() {
+    return this.name
+  }
+
 }
 

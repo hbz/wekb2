@@ -256,6 +256,10 @@ class RefdataCategory extends AbstractI10n {
     return "Refdata Category"
   }
 
+  public String getShowName() {
+    return this.desc
+  }
+
   static def refdataFind(params) {
     def result = [];
     def ql = null;

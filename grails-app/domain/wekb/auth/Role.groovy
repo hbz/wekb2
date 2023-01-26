@@ -19,8 +19,8 @@ class Role {
     // ql = RefdataValue.findAllByValueIlikeOrDescriptionIlike("%${params.q}%","%${params.q}%",params)
     // ql = RefdataValue.findWhere("%${params.q}%","%${params.q}%",params)
 
-    def query = "from Role as r where lower(r.authority) like ?"
-    def query_params = ["%${params.q.toLowerCase()}%"]
+    def query = "from Role as r where lower(r.authority) like :name"
+    def query_params = [name: "%${params.q.toLowerCase()}%"]
 
     ql = Role.findAll(query, query_params, params)
 

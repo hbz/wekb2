@@ -83,16 +83,16 @@ class AccessService {
             }
 
             User user = springSecurityService.currentUser
-            if (curatedObj && curatedObj.curatoryGroups && user.curatoryGroups && !(curatedObj instanceof User)) {
+            if (curatedObj && curatedObj.curatoryGroups && user.curatoryGroupUsers && !(curatedObj instanceof User)) {
 
-                if(user && user.curatoryGroups.id.intersect(curatedObj.curatoryGroups.id).size() > 0)
+                if(user && user.curatoryGroupUsers.curatoryGroup.id.intersect(curatedObj.curatoryGroups.id).size() > 0)
                 {
                     editable = true //SecurityApi.isTypeEditable(o.getClass(), true) ?: (grailsParameterMap.curationOverride == 'true' && user.isAdmin())
                 }else {
                     editable = (curationOverride && user.isAdmin()) //SpringSecurityUtils.ifAnyGranted('ROLE_SUPERUSER') ?: (grailsParameterMap.curationOverride == 'true' && user.isAdmin())
                 }
             }else {
-                if(o instanceof CuratoryGroup && user && o.id in user.curatoryGroups?.id){
+                if(o instanceof CuratoryGroup && user && user.curatoryGroupUsers && o.id in user.curatoryGroupUsers.curatoryGroup?.id){
                     editable = SpringSecurityUtils.ifAnyGranted('ROLE_ADMIN')
                 }
                 else{

@@ -194,8 +194,10 @@ class CreateComponentService {
                                     result.message = "Object was not assigned to a curator group because you are admin or superuser!!!!"
 
                                 }else {
-                                    user.curatoryGroups.each { CuratoryGroup cg ->
-                                        result.newobj.curatoryGroups.add(cg)
+                                    if(user.curatoryGroupUsers) {
+                                        user.curatoryGroupUsers.curatoryGroup.each { CuratoryGroup cg ->
+                                            result.newobj.curatoryGroups.add(cg)
+                                        }
                                     }
                                 }
 
@@ -554,12 +556,14 @@ class CreateComponentService {
                                 }
                             }
 
-                            user.curatoryGroups.each { CuratoryGroup cg ->
-                                if (!(cg in pkg.curatoryGroups)) {
-                                    def combo_type = RefdataCategory.lookup(RCConstants.COMBO_TYPE, 'Package.CuratoryGroups')
+                            if(user.curatoryGroupUsers) {
+                                user.curatoryGroupUsers.curatoryGroup.each { CuratoryGroup cg ->
+                                    if (!(cg in pkg.curatoryGroups)) {
+                                        def combo_type = RefdataCategory.lookup(RCConstants.COMBO_TYPE, 'Package.CuratoryGroups')
 
-                                    def new_combo = new Combo(fromComponent: pkg, toComponent: cg, type: combo_type).save()
+                                        def new_combo = new Combo(fromComponent: pkg, toComponent: cg, type: combo_type).save()
 
+                                    }
                                 }
                             }
 
@@ -692,11 +696,14 @@ class CreateComponentService {
                 }
 
                 if (source.save(flush: true) || source.isAttached()) {
-                    user.curatoryGroups.each { CuratoryGroup cg ->
-                        if (!(cg in source.curatoryGroups)) {
-                            def combo_type = RefdataCategory.lookup(RCConstants.COMBO_TYPE, 'Source.CuratoryGroups')
 
-                            def new_combo = new Combo(fromComponent: source, toComponent: cg, type: combo_type).save()
+                    if(user.curatoryGroupUsers) {
+                        user.curatoryGroupUsers.curatoryGroup.each { CuratoryGroup cg ->
+                            if (!(cg in source.curatoryGroups)) {
+                                def combo_type = RefdataCategory.lookup(RCConstants.COMBO_TYPE, 'Source.CuratoryGroups')
+
+                                def new_combo = new Combo(fromComponent: source, toComponent: cg, type: combo_type).save()
+                            }
                         }
                     }
                     if (source != aPackage.source) {

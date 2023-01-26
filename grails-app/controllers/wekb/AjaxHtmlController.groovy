@@ -1063,37 +1063,32 @@ class AjaxHtmlController {
     redirect(url: (request.getHeader('referer')))
   }
 
-  @Transactional
-  @Secured(['ROLE_EDITOR', 'IS_AUTHENTICATED_FULLY'])
-  def addUserToCuratoryGroup() {
-    log.debug("addUserToCuratoryGroup(${params})")
-    User contextObj = resolveOID2(params.__user)
-    def user = springSecurityService.currentUser
-    CuratoryGroup curatoryGroup = resolveOID2(params.__curatoryGroup)
-    if (curatoryGroup != null && contextObj != null) {
-        if (user.isAdmin()) {
-        if (!CuratoryGroupUser.findByUserAndCuratoryGroup(contextObj, curatoryGroup)) {
-          CuratoryGroupUser curatoryGroupUser = new CuratoryGroupUser(user: contextObj, curatoryGroup: curatoryGroup)
-          curatoryGroupUser.save()
-        } else {
-          flash.error = "User has already this curatory group!"
+    @Transactional
+    @Secured(['ROLE_EDITOR', 'IS_AUTHENTICATED_FULLY'])
+    def addUserToCuratoryGroup() {
+        log.debug("addUserToCuratoryGroup(${params})")
+        User contextObj = resolveOID2(params.__user)
+        def user = springSecurityService.currentUser
+        CuratoryGroup curatoryGroup = resolveOID2(params.__curatoryGroup)
+        if (curatoryGroup != null && contextObj != null) {
+            if (user.isAdmin()) {
+                if (!CuratoryGroupUser.findByUserAndCuratoryGroup(contextObj, curatoryGroup)) {
+                    CuratoryGroupUser curatoryGroupUser = new CuratoryGroupUser(user: contextObj, curatoryGroup: curatoryGroup)
+                    curatoryGroupUser.save()
+                } else {
+                    flash.error = "User has already this curatory group!"
+                }
+            } else {
+                flash.error = message(code: 'component.list.add.denied.label')
+            }
+        } else if (!contextObj) {
+            flash.error = message(code: 'component.context.notFound.label')
+        } else if (!curatoryGroup) {
+            flash.error = message(code: 'component.listItem.notFound.label')
         }
-      } else {
-        flash.error = message(code: 'component.list.add.denied.label')
-      }
-    } else if (!contextObj) {
-      flash.error = message(code: 'component.context.notFound.label')
-    } else if (!curatoryGroup) {
-      flash.error = message(code: 'component.listItem.notFound.label')
-    }
 
-    def redirect_to = request.getHeader('referer')
-
-    if (params.tab && params.tab.length() > 0) {
-      redirect_to = "${redirect_to}#${params.tab}"
+        redirect(controller:'resource', action:'show', id: contextObj.class.name+':'+contextObj.id, params: [activeTab: params.activeTab])
     }
-    redirect(url: redirect_to)
-  }
 
     @Transactional
     @Secured(['ROLE_EDITOR', 'IS_AUTHENTICATED_FULLY'])
@@ -1119,19 +1114,16 @@ class AjaxHtmlController {
             flash.error = message(code: 'component.listItem.notFound.label')
         }
 
-        def redirect_to = request.getHeader('referer')
-
-        if (params.tab && params.tab.length() > 0) {
-            redirect_to = "${redirect_to}#${params.tab}"
-        }
-        redirect(url: redirect_to)
+        redirect(controller:'resource', action:'show', id: contextObj.class.name+':'+contextObj.id, params: [activeTab: params.activeTab])
     }
 
     @Transactional
     @Secured(['ROLE_EDITOR', 'IS_AUTHENTICATED_FULLY'])
     def removeRoleFromUser() {
         log.debug("removeRoleFromUser(${params})")
-        UserRole userRole = UserRole.get(params.usR_Id)
+        User userObject = User.get(params.us_Id)
+        Role roleObject = Role.get(params.rol_Id)
+        UserRole userRole = UserRole.findByUserAndRole(userObject, roleObject)
         def user = springSecurityService.currentUser
         if (userRole) {
             if (user.isAdmin()) {
@@ -1141,34 +1133,26 @@ class AjaxHtmlController {
             }
         }
 
-        def redirect_to = request.getHeader('referer')
+        redirect(controller:'resource', action:'show', id: userObject.class.name+':'+userObject.id, params: [activeTab: params.activeTab])
+    }
 
-        if (params.tab && params.tab.length() > 0) {
-            redirect_to = "${redirect_to}#${params.tab}"
+    @Transactional
+    @Secured(['ROLE_EDITOR', 'IS_AUTHENTICATED_FULLY'])
+    def removeCuratoryGroupFromUser() {
+        log.debug("removeRoleFromUser(${params})")
+        User userObject = User.get(params.us_Id)
+        CuratoryGroup curatoryGroupObject = CuratoryGroup.get(params.cur_Id)
+        CuratoryGroupUser curatoryGroupUser = CuratoryGroupUser.findByUserAndCuratoryGroup(userObject, curatoryGroupObject)
+        def user = springSecurityService.currentUser
+        if (curatoryGroupUser) {
+            if (user.isAdmin()) {
+                curatoryGroupUser.delete()
+            } else {
+                flash.error = message(code: 'default.noPermissons')
+            }
         }
-        redirect(url: redirect_to)
-    }
 
-  @Transactional
-  @Secured(['ROLE_EDITOR', 'IS_AUTHENTICATED_FULLY'])
-  def removeCuratoryGroupFromUser() {
-    log.debug("removeRoleFromUser(${params})")
-    CuratoryGroupUser curatoryGroupUser = CuratoryGroupUser.get(params.usCur_Id)
-    def user = springSecurityService.currentUser
-    if (curatoryGroupUser) {
-      if (user.isAdmin()) {
-        curatoryGroupUser.delete()
-      } else {
-        flash.error = message(code: 'default.noPermissons')
-      }
+        redirect(controller:'resource', action:'show', id: userObject.class.name+':'+userObject.id, params: [activeTab: params.activeTab])
     }
-
-    def redirect_to = request.getHeader('referer')
-
-    if (params.tab && params.tab.length() > 0) {
-      redirect_to = "${redirect_to}#${params.tab}"
-    }
-    redirect(url: redirect_to)
-  }
 
 }
