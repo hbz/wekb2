@@ -129,9 +129,14 @@ class Source extends KBComponent {
     Calendar cal = Calendar.getInstance()
     cal.set(Calendar.YEAR, cal.get(Calendar.YEAR))
     cal.set(Calendar.DAY_OF_YEAR, 1)
+    cal.set(Calendar.HOUR_OF_DAY,20)
+    cal.set(Calendar.MINUTE,0)
+    cal.set(Calendar.SECOND,0)
+    cal.set(Calendar.MILLISECOND,0)
     Date nextUpdate = cal.getTime()
     while (nextUpdate.before(today)){
-      nextUpdate = nextUpdate.plus(interval)
+      cal.add(Calendar.DATE, interval)
+      nextUpdate = cal.getTime()
     }
     return nextUpdate
   }
@@ -143,6 +148,11 @@ class Source extends KBComponent {
     Calendar cal = Calendar.getInstance()
     cal.set(Calendar.YEAR, cal.get(Calendar.YEAR))
     cal.set(Calendar.DAY_OF_YEAR, 1)
+    cal.set(Calendar.HOUR_OF_DAY,20)
+    cal.set(Calendar.MINUTE,0)
+    cal.set(Calendar.SECOND,0)
+    cal.set(Calendar.MILLISECOND,0)
+
     Calendar cal2 = Calendar.getInstance()
     cal2.set(Calendar.YEAR, cal.get(Calendar.YEAR))
     cal2.set(Calendar.MONTH, 11) // 11 = december
@@ -150,7 +160,8 @@ class Source extends KBComponent {
     Date nextUpdate = cal.getTime()
     Date lastUpdate = cal2.getTime()
     while (nextUpdate.before(lastUpdate)){
-      nextUpdate = nextUpdate.plus(interval)
+      cal.add(Calendar.DATE, interval)
+      nextUpdate = cal.getTime()
       updateDays << nextUpdate
     }
     return updateDays
@@ -188,13 +199,13 @@ class Source extends KBComponent {
   Timestamp getNextUpdateTimestamp() {
     //20:00:00 is time of Cronjob in AutoUpdatePackagesJob
     if (automaticUpdates && lastRun == null) {
-      return Date.parse('dd.MM.yy hh:mm:SS', "${new Date().getDateString()} 20:00:00").toTimestamp()
+      return new Date().toTimestamp()
     }
     if (automaticUpdates && frequency != null) {
       def interval = intervals.get(frequency.value)
       if (interval != null){
         Date due = getUpdateDay(interval)
-          return Date.parse('dd.MM.yy hh:mm:SS', "${due.getDateString()} 20:00:00").toTimestamp()
+          return due.toTimestamp()
       }else {
         log.info("Source needsUpdate(): Frequency (${frequency}) is not null but intervals is null")
       }
@@ -213,7 +224,7 @@ class Source extends KBComponent {
         List<Date> due = getUpdateDays(interval)
         List<Timestamp> timestampList = []
         due.each {
-          timestampList << Date.parse('dd.MM.yy hh:mm:SS', "${it.getDateString()} 20:00:00").toTimestamp()
+          timestampList << it.toTimestamp()
         }
         return timestampList
       }

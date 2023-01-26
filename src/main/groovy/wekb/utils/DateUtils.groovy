@@ -73,6 +73,10 @@ class DateUtils {
         (Date) getSDF_NoTime()?.parseObject(value)
     }
 
+    static SimpleDateFormat getSDF_yyyyMMdd_HHmmssS(){
+        return new SimpleDateFormat('yyyy-MM-dd HH:mm:ss.S')
+    }
+
     // --
 
     static int getYearAsInteger(Date date) {

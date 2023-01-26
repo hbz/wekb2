@@ -106,22 +106,24 @@
        <div style="overflow-x: auto">
         <table class="ui selectable striped sortable celled table">
             <thead>
-            <sec:ifLoggedIn>
+%{--            <sec:ifLoggedIn>
               <tr>
                 <th></th>
                 <th colspan="${qbeConfig.qbeResults.size() + 1}"></th>
-                %{--<!-- see grails-app/assets/javascripts/gokb/action-forms.js for code relating to bulk actions -->
+                --}%%{--<!-- see grails-app/assets/javascripts/gokb/action-forms.js for code relating to bulk actions -->
                 <g:if test="${!hideActions}">
                   <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Actions <b class="caret"></b></a>
                     <ul class="dropdown-menu actions"></ul>
                   </li>
                   <li class="divider-vertical"></li>
-                </g:if>--}%
+                </g:if>--}%%{--
               </tr>
-            </sec:ifLoggedIn>
+            </sec:ifLoggedIn>--}%
             <tr>
                 <sec:ifLoggedIn>
+                    <g:if test="${controllerName == 'group'}">
                     <th></th>
+                    </g:if>
                 </sec:ifLoggedIn>
                 <th>#</th>
                 <g:each in="${qbeConfig.qbeResults}" var="c">
@@ -146,6 +148,7 @@
                     <tr class="${++counter == det ? 'positive' : ''}">
                     <!-- Row ${counter} -->
                         <sec:ifLoggedIn>
+                            <g:if test="${controllerName == 'group'}">
                             <td>
                                 <g:set var="objEditable" value="${accessService.checkEditableObject(row_obj, params)}"/>
                                 <g:if test="${objEditable && row_obj.respondsTo('availableActions')}">
@@ -160,6 +163,7 @@
                                            disabled="disabled" readonly="readonly"/>
                                 </g:else>
                             </td>
+                            </g:if>
                         </sec:ifLoggedIn>
                         <td>${counter}</td>
                         <g:each in="${r.cols}" var="c">
