@@ -1832,17 +1832,63 @@ class GlobalSearchTemplatesService {
                                         placeholder: 'Username',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'username']
                                 ],
+                                [
+                                        prompt     : 'Email',
+                                        qparam     : 'qp_email',
+                                        placeholder: 'Email',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'email']
+                                ],
+                                [
+                                        type       : 'lookup',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.YN,
+                                        prompt     : 'Enabled',
+                                        qparam     : 'qp_enabled',
+                                        placeholder: 'Enabled',
+                                        propType   : 'Boolean',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'enabled'],
+                                ],
+                                [
+                                        type       : 'lookup',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.YN,
+                                        prompt     : 'Account Expired',
+                                        qparam     : 'qp_accountExpired',
+                                        placeholder: 'Account Expired',
+                                        propType   : 'Boolean',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'accountExpired'],
+                                ],
+                                [
+                                        type       : 'lookup',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.YN,
+                                        prompt     : 'Account Locked',
+                                        qparam     : 'qp_accountLocked',
+                                        placeholder: 'Account Locked',
+                                        propType   : 'Boolean',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'accountLocked'],
+                                ],
+                                [
+                                        type       : 'lookup',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.YN,
+                                        prompt     : 'Password Expired',
+                                        qparam     : 'qp_passwordExpired',
+                                        placeholder: 'Password Expired',
+                                        propType   : 'Boolean',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'passwordExpired'],
+                                ],
                         ],
                         qbeGlobals: [
                         ],
                         qbeResults: [
-                                [heading: 'Username', property: 'username', link: true],
-                                [heading: 'Enabled', property: 'enabled'],
-                                [heading: 'Contributor', property: 'contributorStatus'],
+                                [heading: 'Username', property: 'username', link: true, sort: 'username'],
+                                [heading: 'Enabled', property: 'enabled', sort: 'enabled'],
+                                [heading: 'User', property: 'userStatus'],
                                 [heading: 'Editor', property: 'editorStatus'],
                                 [heading: 'API-User', property: 'apiUserStatus'],
-                                [heading: 'Admin', property: 'adminStatus']
-                                // [heading:'Username', property:'username', link:[controller:'search',action:'index',params:'x.params+[\'det\':x.counter]']]
+                                [heading: 'Admin', property: 'adminStatus'],
+                                [heading: 'Super-User', property: 'superUserStatus'],
                         ]
                 ]
         ]

@@ -135,6 +135,17 @@ class User {
     false
   }
 
+  transient boolean getUserStatus() {
+    Role role = Role.findByAuthority("ROLE_USER")
+
+    if (role != null) {
+      return getAuthorities().contains(role)
+    } else {
+      log.error( "Error loading admin role (ROLE_USER)" )
+    }
+    false
+  }
+
   transient boolean getApiUserStatus() {
     Role role = Role.findByAuthority("ROLE_API")
 
