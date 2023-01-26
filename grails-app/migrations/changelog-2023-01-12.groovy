@@ -311,7 +311,16 @@ databaseChangeLog = {
     changeSet(author: "djebeniani (modified)", id: "1673535466327-46") {
         grailsChange {
             change {
-                sql.executeUpdate('''delete from role where authority = 'ROLE_CONTRIBUTOR';''')
+                sql.executeUpdate("delete from user_role as u where u.role_id = (select r.role_id from role as r where r.authority = 'ROLE_CONTRIBUTOR');")
+            }
+            rollback {}
+        }
+    }
+
+    changeSet(author: "djebeniani (modified)", id: "1673535466327-47") {
+        grailsChange {
+            change {
+                sql.executeUpdate("delete from role where authority = 'ROLE_CONTRIBUTOR';")
             }
             rollback {}
         }
