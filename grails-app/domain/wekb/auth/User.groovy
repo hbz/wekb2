@@ -135,17 +135,6 @@ class User {
     false
   }
 
-  transient boolean getContributorStatus() {
-    Role role = Role.findByAuthority("ROLE_CONTRIBUTOR")
-
-    if (role != null) {
-      return getAuthorities().contains(role)
-    } else {
-      log.error( "Error loading admin role (ROLE_CONTRIBUTOR)" )
-    }
-    false
-  }
-
   transient boolean getApiUserStatus() {
     Role role = Role.findByAuthority("ROLE_API")
 

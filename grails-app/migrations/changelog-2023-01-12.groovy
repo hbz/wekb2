@@ -308,4 +308,13 @@ databaseChangeLog = {
         }
     }
 
+    changeSet(author: "djebeniani (modified)", id: "1673535466327-46") {
+        grailsChange {
+            change {
+                sql.executeUpdate('''delete from role where authority = 'ROLE_CONTRIBUTOR';''')
+            }
+            rollback {}
+        }
+    }
+
 }

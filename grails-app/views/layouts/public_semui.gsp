@@ -76,7 +76,7 @@
                     <g:link class="item" controller="home">Statistics</g:link>
                 </div>
             </div>
-            <sec:ifAnyGranted roles='ROLE_ADMIN,ROLE_EDITOR,ROLE_CONTRIBUTOR'>
+            <sec:ifAnyGranted roles='ROLE_ADMIN,ROLE_EDITOR'>
                 <div class="item">
                     <div class="header">Create</div>
 
