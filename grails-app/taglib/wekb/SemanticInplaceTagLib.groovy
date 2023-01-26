@@ -219,7 +219,7 @@ class SemanticInplaceTagLib {
 
             def owner = ClassUtils.deproxy(attrs.remove("owner"))
 
-            def data_link = createLink(controller: 'ajaxHtml', action: 'getRefdata', params: [id: 'boolean', format: 'json'])
+            def data_link = createLink(controller: 'ajaxJson', action: 'getRefdata', params: [id: 'boolean', format: 'json'])
             def update_link = createLink(controller: 'ajaxHtml', action: 'genericSetRel', params: [type: 'boolean', curationOverride: params.curationOverride])
             def oid = owner.id != null ? "${owner.class.name}:${owner.id}" : ''
             def id = attrs.remove("id") ?: "${oid}:${attrs.field}"

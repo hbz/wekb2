@@ -530,24 +530,24 @@ abstract class KBComponent implements Auditable{
     def combos
     def status_ref
     def hql_query
-    def hql_params = []
+    def hql_params = [:]
     if (this.getId() != null){
       // Unsaved components can't have combo relations
       RefdataValue type = RefdataCategory.lookupOrCreate(RCConstants.COMBO_TYPE, getComboTypeValue(propertyName))
       if (status && status != "null") status_ref = RefdataCategory.lookupOrCreate(RCConstants.COMBO_STATUS, status)
-      hql_query = "from Combo where type=? "
-      hql_params += type
+      hql_query = "from Combo where type = :type "
+      hql_params.type = type
       if (isComboReverse(propertyName)){
-        hql_query += " and toComponent=?"
-        hql_params += this
+        hql_query += " and toComponent = :toComp"
+        hql_params.toComp = this
       }
       else{
-        hql_query += " and fromComponent=?"
-        hql_params += this
+        hql_query += " and fromComponent = :fromComp"
+        hql_params.fromComp = this
       }
       if (status_ref){
-        hql_query += " and status=?"
-        hql_params += status_ref
+        hql_query += " and status = :status"
+        hql_params.status = status_ref
       }
       combos = Combo.executeQuery(hql_query, hql_params)
       //       log.debug("Qry: ${hql_query}, Params:${hql_params} : result.size=${combos?.size()}")
