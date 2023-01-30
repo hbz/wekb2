@@ -7,7 +7,6 @@ import wekb.auth.UserRole
 import wekb.utils.DateUtils
 import wekb.helper.RCConstants
 import wekb.helper.RDStore
-import grails.converters.JSON
 import grails.core.GrailsClass
 import grails.gorm.transactions.Transactional
 import org.grails.datastore.mapping.model.PersistentEntity
@@ -961,19 +960,19 @@ class AjaxHtmlController {
   }
 
   /**
-   *  deletePrice : Used to delete a ComponentPrice from a TitleInstance.
-   * @param id : The id of the ComponentPrice
+   *  deletePrice : Used to delete a TippPrice from a TitleInstance.
+   * @param id : The id of the TippPrice
    */
 
   @Transactional
   @Secured(['ROLE_EDITOR', 'IS_AUTHENTICATED_FULLY'])
   def deletePrice() {
     def result = ['result': "OK", 'params': params]
-    ComponentPrice c = ComponentPrice.get(params.id)
+    TippPrice c = TippPrice.get(params.id)
     def user = springSecurityService.currentUser
 
     if (c) {
-      def editable = checkEditable(c.owner)
+      def editable = checkEditable(c.tipp)
 
       if (editable) {
         log.debug("Delete Price..")

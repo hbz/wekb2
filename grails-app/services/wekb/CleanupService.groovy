@@ -1,6 +1,6 @@
 package wekb
 
-import grails.core.GrailsApplication
+
 import org.hibernate.SessionFactory
 import wekb.helper.RCConstants
 import wekb.helper.RDStore
@@ -219,7 +219,7 @@ class CleanupService {
         Combo.executeUpdate("delete from Combo as c where c.fromComponent.id IN (:component) or c.toComponent.id IN (:component)", [component: batch])
         KBComponentVariantName.executeUpdate("delete from KBComponentVariantName as c where c.owner.id IN (:component)", [component: batch]);
 
-        ComponentPrice.executeUpdate("delete from ComponentPrice as cp where cp.owner.id IN (:component)", [component: batch])
+        TippPrice.executeUpdate("delete from TippPrice as cp where cp.tipp.id IN (:component)", [component: batch])
 
         batch.each {
           KBComponent kbc = KBComponent.get(it)

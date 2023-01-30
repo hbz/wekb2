@@ -1,21 +1,14 @@
 package wekb
 
 
-
-/**
- * ComponentPrice - variant prices for a component based on different scenarios.
- * Allow a package/tipp to hold multiple variant prices - EG list price for a normal subscription, list price for 
- * perpetual access, list price for one off or top-up access.
- * Requirements derived from Jisc DAC project - See owen stephens for more info.
- */
-class ComponentPrice {
+class TippPrice {
 
 
   def cascadingUpdateService
 
-  KBComponent owner
-  RefdataValue priceType  // Examples are list, list-perpetual, list, list-topup, etc
-  RefdataValue currency // Currency for price
+  TitleInstancePackagePlatform tipp
+  RefdataValue priceType
+  RefdataValue currency
   Date startDate
   Date endDate
   Float price
@@ -24,30 +17,36 @@ class ComponentPrice {
   Date lastUpdated
 
   static mapping = {
-    owner column: 'cp_owner_component_fk', index: 'cp_owner_component_idx'
-    priceType column: 'cp_type_fk', index: 'cp_type_idx'
-    currency column: 'cp_currency_fk', index: 'cp_currency_idx'
-    startDate column: 'cp_start_date', index: 'cp_start_date_idx'
-    endDate column: 'cp_end_date', index: 'cp_end_date_idx'
-    price column: 'cp_price'
-    dateCreated     column: 'cp_date_created'
-    lastUpdated     column: 'cp_last_updated'
+    id column: 'tp_id'
+    version column: 'tp_version'
+
+    tipp column: 'tp_tipp_fk', index: 'tp_tipp_fk_idx'
+    priceType column: 'tp_type_fk', index: 'tp_type_idx'
+    currency column: 'tp_currency_fk', index: 'tp_currency_idx'
+
+    startDate column: 'tp_start_date', index: 'tp_start_date_idx'
+    endDate column: 'tp_end_date', index: 'tp_end_date_idx'
+    price column: 'tp_price'
+
+    dateCreated     column: 'tp_date_created'
+    lastUpdated     column: 'tp_last_updated'
   }
 
   static constraints = {
-    owner(nullable: false)
+    tipp(nullable: false)
     priceType(nullable: false, blank: true)
     currency(nullable: true, blank: true)
     startDate(nullable: false, blank: true)
     endDate(nullable: true, blank: true)
     price(nullable: true, blank: true)
+
     lastUpdated (nullable: true)
     dateCreated (nullable: true)
   }
 
   @Override
   int hashCode() {
-    return owner ? owner.hashCode() : 0
+    return tipp ? tipp.hashCode() : 0
     +priceType ? priceType.hashCode() : 0
     +currency ? currency.hashCode() : 0
     +startDate ? startDate.hashCode() : 0
@@ -57,11 +56,11 @@ class ComponentPrice {
 
   @Override
   boolean equals(Object obj) {
-    if (!ComponentPrice.isInstance(obj))
+    if (!TippPrice.isInstance(obj))
       return false
-    ComponentPrice other = (ComponentPrice) obj
-    if (this.owner != null && other.owner != null) {
-      boolean eq = this.owner == other.owner
+    TippPrice other = (TippPrice) obj
+    if (this.tipp != null && other.tipp != null) {
+      boolean eq = this.tipp == other.tipp
       if (!eq) {
         return false
       }

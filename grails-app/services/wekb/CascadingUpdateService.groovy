@@ -11,14 +11,14 @@ class CascadingUpdateService {
         ])
     }
 
-    void update(ComponentPrice obj, Date lastUpdated) {
-        if (obj.owner) {
-            if(obj.owner instanceof TitleInstancePackagePlatform) {
-                if (!obj.owner.kbartImportRunning) {
-                    update(obj.owner, lastUpdated)
+    void update(TippPrice obj, Date lastUpdated) {
+        if (obj.tipp) {
+            if(obj.tipp instanceof TitleInstancePackagePlatform) {
+                if (!obj.tipp.kbartImportRunning) {
+                    update(obj.tipp, lastUpdated)
                 }
             } else {
-                update(obj.owner, lastUpdated)
+                update(obj.tipp, lastUpdated)
             }
         }
     }

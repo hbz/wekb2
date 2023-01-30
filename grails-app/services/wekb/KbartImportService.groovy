@@ -1743,16 +1743,16 @@ class KbartImportService {
         Float f = null
         String newValue = price
         String oldValue = ''
-        ComponentPrice cp = null
+        TippPrice cp = null
         if (price && priceType && currency) {
             try {
             String uniformedThousandSeparator = price.replaceAll("[,.](\\d{3})", '$1')
             uniformedThousandSeparator = uniformedThousandSeparator.replaceAll(",", ".")
             f = Float.parseFloat(uniformedThousandSeparator)
             if (!f.isNaN()) {
-                List<ComponentPrice> existPrices = ComponentPrice.findAllByOwnerAndPriceTypeAndCurrency(tipp, priceType, currency, [sort: 'lastUpdated', order: 'ASC'])
+                List<TippPrice> existPrices = TippPrice.findAllByTippAndPriceTypeAndCurrency(tipp, priceType, currency, [sort: 'lastUpdated', order: 'ASC'])
                 if (existPrices.size() == 1) {
-                    ComponentPrice existPrice = existPrices[0]
+                    TippPrice existPrice = existPrices[0]
                     if (existPrice.price != f) {
                         oldValue = existPrice.price.toString()
                         existPrice.price = f
@@ -1764,13 +1764,13 @@ class KbartImportService {
                 } else if (existPrices.size() > 1) {
                     def pricesIDs = existPrices.id.clone()
                     pricesIDs.each {
-                        tipp.removeFromPrices(ComponentPrice.get(it))
-                        //ComponentPrice.executeUpdate("delete from ComponentPrice id = ${it}")
+                        tipp.removeFromPrices(TippPrice.get(it))
+                        //TippPrice.executeUpdate("delete from TippPrice id = ${it}")
                     }
                     tipp.save()
                     tipp = tipp.refresh()
-                    cp = new ComponentPrice(
-                            owner: tipp,
+                    cp = new TippPrice(
+                            tipp: tipp,
                             priceType: priceType,
                             currency: currency,
                             price: f)
@@ -1779,8 +1779,8 @@ class KbartImportService {
                     priceChanged = true
 
                 } else {
-                    cp = new ComponentPrice(
-                            owner: tipp,
+                    cp = new TippPrice(
+                            tipp: tipp,
                             priceType: priceType,
                             currency: currency,
                             price: f)

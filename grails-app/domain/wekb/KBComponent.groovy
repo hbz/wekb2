@@ -21,14 +21,6 @@ import javax.persistence.Transient
 @grails.gorm.dirty.checking.DirtyCheck
 abstract class KBComponent implements Auditable{
 
-  static final String CURRENT_PRICE_HQL = '''
-    select cp
-    from ComponentPrice as cp
-    where cp.owner = :c
-      and cp.priceType.value = :t
-      and ( ( startDate is null OR startDate <= :d ) and ( endDate is null OR endDate > :d ) )
-  '''
-
   private static refdataDefaults = [
       "status"    : "Current"
   ]
@@ -257,8 +249,7 @@ abstract class KBComponent implements Auditable{
   static mappedBy = [
       outgoingCombos      : 'fromComponent',
       incomingCombos      : 'toComponent',
-      variantNames        : 'owner',
-      prices              : 'owner'
+      variantNames        : 'owner'
   ]
 
 
@@ -266,7 +257,6 @@ abstract class KBComponent implements Auditable{
       outgoingCombos      : Combo,
       incomingCombos      : Combo,
       variantNames        : KBComponentVariantName,
-      prices              : ComponentPrice,
       languages           : KBComponentLanguage
   ]
 
@@ -611,7 +601,7 @@ abstract class KBComponent implements Auditable{
           }
         }
     }
-    KBComponent.executeUpdate("delete from ComponentPrice where owner=:component", [component: this])
+    KBComponent.executeUpdate("delete from TippPrice where tipp=:component", [component: this])
     this.delete(failOnError: true)
     result
   }
@@ -629,65 +619,12 @@ abstract class KBComponent implements Auditable{
 
       Combo.executeUpdate("delete from Combo as c where c.fromComponent.id IN (:component) or c.toComponent.id IN (:component)", [component: batch])
       KBComponentVariantName.executeUpdate("delete from KBComponentVariantName as c where c.owner.id IN (:component)", [component: batch])
-      ComponentPrice.executeUpdate("delete from ComponentPrice as cp where cp.owner.id IN (:component)", [component: batch])
+      TippPrice.executeUpdate("delete from TippPrice as cp where cp.tipp.id IN (:component)", [component: batch])
       result.num_expunged += KBComponent.executeUpdate("delete KBComponent as c where c.id IN (:component)", [component: batch])
     }
     result
   }
 
-
-  /**
-   * Set a price formatted as "nnnn.nn" or "nnnn.nn CUR"
-   */
-  void setPrice(String type, String price, String currency, Date startDate = null, Date endDate = null){
-    Float f = null
-    RefdataValue rdv_type = null
-    RefdataValue rdv_currency = null
-    if (price){
-      Date today = todayNoTime()
-      Date start = startDate
-      Date end = endDate
-      f = Float.parseFloat(price)
-      rdv_type = RefdataCategory.lookupOrCreate(RCConstants.PRICE_TYPE, type ?: 'list').save(flush: true, failOnError: true)
-
-      if (currency) {
-        rdv_currency = RefdataCategory.lookupOrCreate(RCConstants.CURRENCY, currency.trim()).save(flush: true, failOnError: true)
-      }
-      List<ComponentPrice> existPrices = ComponentPrice.findAllByOwnerAndPriceTypeAndCurrency(this, rdv_type, rdv_currency, [sort: 'lastUpdated', order: 'ASC'])
-      if (existPrices.size() > 0){
-        ComponentPrice existPrice = existPrices[0]
-        if (start != null) {
-          existPrice.startDate = start
-        }
-        if (start != null) {
-          existPrice.endDate = end
-        }
-        if(existPrice.price != f) {
-          existPrice.price = f
-          existPrice.save()
-        }
-        save()
-      }
-      else {
-        ComponentPrice cp = new ComponentPrice(
-                owner: this,
-                priceType: rdv_type,
-                currency: rdv_currency,
-                price: f,
-                startDate: start ?: today,
-                endDate: end)
-        cp.save()
-        /*ERMS-3813: Preishistory nicht mehr nötig in wekb
-        // set the end date for the current price(s)
-        ComponentPrice.executeUpdate('update ComponentPrice set endDate=:start where owner=:tipp and' +
-            '(endDate is null or endDate>:start) and priceType=:type and currency=:currency' ,
-            [start: cp.startDate, tipp: this, type: cp.priceType, currency:cp.currency])*/
-        // enter the new price
-        //prices << cp
-        save()
-      }
-    }
-  }
 
 
   @Transient

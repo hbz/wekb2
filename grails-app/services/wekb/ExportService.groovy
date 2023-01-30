@@ -344,7 +344,7 @@ class ExportService {
                         else {
                             switch (attribute[index]) {
                                 case 'listprice_eur':
-                                    List existPrice = ComponentPrice.executeQuery('select price from ComponentPrice where price is not null and owner.id = :owner and priceType = :priceType and currency = :currency ', [owner: tippID, priceType: priceTypeList, currency: RDStore.CURRENCY_EUR], [readOnly: true])
+                                    List existPrice = TippPrice.executeQuery('select price from TippPrice where price is not null and tipp.id = :owner and priceType = :priceType and currency = :currency ', [owner: tippID, priceType: priceTypeList, currency: RDStore.CURRENCY_EUR], [readOnly: true])
 
                                     if (existPrice.size() > 0) {
                                         row.add(sanitize(existPrice[0]))
@@ -353,7 +353,7 @@ class ExportService {
                                     }
                                     break;
                                 case 'listprice_usd':
-                                    List existPrice = ComponentPrice.executeQuery('select price from ComponentPrice where price is not null and owner.id = :owner and priceType = :priceType and currency = :currency ', [owner: tippID, priceType: priceTypeList, currency: RDStore.CURRENCY_USD], [readOnly: true])
+                                    List existPrice = TippPrice.executeQuery('select price from TippPrice where price is not null and tipp.id = :owner and priceType = :priceType and currency = :currency ', [owner: tippID, priceType: priceTypeList, currency: RDStore.CURRENCY_USD], [readOnly: true])
 
                                     if (existPrice.size() > 0) {
                                         row.add(sanitize(existPrice[0]))
@@ -362,7 +362,7 @@ class ExportService {
                                     }
                                     break;
                                 case 'listprice_gbp':
-                                    List existPrice = ComponentPrice.executeQuery('select price from ComponentPrice where price is not null and owner.id = :owner and priceType = :priceType and currency = :currency ', [owner: tippID, priceType: priceTypeList, currency: RDStore.CURRENCY_GBP], [readOnly: true])
+                                    List existPrice = TippPrice.executeQuery('select price from TippPrice where price is not null and tipp.id = :owner and priceType = :priceType and currency = :currency ', [owner: tippID, priceType: priceTypeList, currency: RDStore.CURRENCY_GBP], [readOnly: true])
 
                                     if (existPrice.size() > 0) {
                                         row.add(sanitize(existPrice[0]))
@@ -371,7 +371,7 @@ class ExportService {
                                     }
                                     break;
                                 case 'oa_apc_eur':
-                                    List existPrice = ComponentPrice.executeQuery('select price from ComponentPrice where price is not null and owner.id = :owner and priceType = :priceType and currency = :currency ', [owner: tippID, priceType: priceTypeOAAPC, currency: RDStore.CURRENCY_EUR], [readOnly: true])
+                                    List existPrice = TippPrice.executeQuery('select price from TippPrice where price is not null and tipp.id = :owner and priceType = :priceType and currency = :currency ', [owner: tippID, priceType: priceTypeOAAPC, currency: RDStore.CURRENCY_EUR], [readOnly: true])
 
                                     if (existPrice.size() > 0) {
                                         row.add(sanitize(existPrice[0]))
@@ -380,7 +380,7 @@ class ExportService {
                                     }
                                     break;
                                 case 'oa_apc_usd':
-                                    List existPrice = ComponentPrice.executeQuery('select price from ComponentPrice where price is not null and owner.id = :owner and priceType = :priceType and currency = :currency ', [owner: tippID, priceType: priceTypeOAAPC, currency: RDStore.CURRENCY_USD], [readOnly: true])
+                                    List existPrice = TippPrice.executeQuery('select price from TippPrice where price is not null and tipp.id = :owner and priceType = :priceType and currency = :currency ', [owner: tippID, priceType: priceTypeOAAPC, currency: RDStore.CURRENCY_USD], [readOnly: true])
 
                                     if (existPrice.size() > 0) {
                                         row.add(sanitize(existPrice[0]))
@@ -389,7 +389,7 @@ class ExportService {
                                     }
                                     break;
                                 case 'oa_apc_gbp':
-                                    List existPrice = ComponentPrice.executeQuery('select price from ComponentPrice where price is not null and owner.id = :owner and priceType = :priceType and currency = :currency ', [owner: tippID, priceType: priceTypeOAAPC, currency: RDStore.CURRENCY_GBP], [readOnly: true])
+                                    List existPrice = TippPrice.executeQuery('select price from TippPrice where price is not null and tipp.id = :owner and priceType = :priceType and currency = :currency ', [owner: tippID, priceType: priceTypeOAAPC, currency: RDStore.CURRENCY_GBP], [readOnly: true])
 
                                     if (existPrice.size() > 0) {
                                         row.add(sanitize(existPrice[0]))
