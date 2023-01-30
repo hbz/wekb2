@@ -17,24 +17,6 @@ class TitleInstancePackagePlatform extends KBComponent {
   Package pkg
   Platform hostPlatform
 
-  @Deprecated
-  String hybridOAUrl
-
-  @Deprecated
-  String coverageNote
-
-  @Deprecated
-  @RefdataAnnotation(cat = RCConstants.TIPP_PRIMARY)
-  RefdataValue primary
-
-  @Deprecated
-  @RefdataAnnotation(cat = RCConstants.TIPP_HYBRIDA_OA)
-  RefdataValue hybridOA
-
-  @Deprecated
-  @RefdataAnnotation(cat = RCConstants.TIPP_DELAYED_OA)
-  RefdataValue delayedOA
-
   @HbzKbartAnnotation(kbartField = 'oa_type' , type='all')
   @RefdataAnnotation(cat = RCConstants.TIPP_OPEN_ACCESS)
   RefdataValue openAccess
@@ -94,11 +76,6 @@ class TitleInstancePackagePlatform extends KBComponent {
   @RefdataAnnotation(cat = RCConstants.TIPP_ACCESS_TYPE)
   RefdataValue accessType
 
-  @Deprecated
-  @KbartAnnotation(kbartField = 'coverage_depth' , type='all')
-  @RefdataAnnotation(cat = RCConstants.TIPP_COVERAGE_DEPTH)
-  RefdataValue coverageDepth
-
   @KbartAnnotation(kbartField = 'medium' , type='all')
   @RefdataAnnotation(cat = RCConstants.TIPP_MEDIUM)
   RefdataValue medium
@@ -133,13 +110,7 @@ class TitleInstancePackagePlatform extends KBComponent {
 
   static mapping = {
     includes KBComponent.mapping
-    coverageDepth column: 'tipp_coverage_depth'
-    coverageNote column: 'tipp_coverage_note', type: 'text'
     note column: 'tipp_note', type: 'text'
-    delayedOA column: 'tipp_delayed_oa'
-    hybridOA column: 'tipp_hybrid_oa'
-    hybridOAUrl column: 'tipp_hybrid_oa_url'
-    primary column: 'tipp_primary'
     accessType column: 'tipp_access_type'
     accessStartDate column: 'tipp_access_start_date', index: 'tipp_access_start_date_idx'
     accessEndDate column: 'tipp_access_end_date', index: 'tipp_access_end_date_idx'
@@ -171,13 +142,7 @@ class TitleInstancePackagePlatform extends KBComponent {
   }
 
   static constraints = {
-    coverageDepth(nullable: true, blank: true)
-    coverageNote(nullable: true, blank: true)
     note(nullable: true, blank: true)
-    delayedOA(nullable: true, blank: true)
-    hybridOA(nullable: true, blank: true)
-    hybridOAUrl(nullable: true, blank: true)
-    primary(nullable: true, blank: true)
     accessType (nullable: true, blank: true)
     accessStartDate(nullable: true, blank: false)
     accessEndDate(validator: { val, obj ->
@@ -197,6 +162,17 @@ class TitleInstancePackagePlatform extends KBComponent {
     lastChangedExternal(nullable: true, blank: true)
     medium(nullable: true, blank: true)
     ddcs(nullable: true)
+    dateFirstInPrint (nullable: true, blank: false)
+    dateFirstOnline (nullable: true, blank: false)
+    publisherName (nullable: true, blank: false)
+    series (nullable: true, blank: false)
+    subjectArea (nullable: true, blank: false)
+    accessStartDate (nullable: true, blank: false)
+    accessEndDate (nullable: true, blank: false)
+    fromKbartImport (nullable: true, blank: false)
+    openAccess (nullable: true, blank: false)
+    hostPlatform (nullable: true, blank: false)
+    pkg (nullable: true, blank: false)
   }
 
   def availableActions() {

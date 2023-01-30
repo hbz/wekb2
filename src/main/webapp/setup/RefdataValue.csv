@@ -513,12 +513,6 @@ TIPPCoverageStatement.CoverageDepth;Fulltext;Fulltext;Fulltext
 TIPPCoverageStatement.CoverageDepth;Selected Articles;Selected Articles;Selected Articles
 TitleInstancePackagePlatform.AccessType;Free;Free;Free
 TitleInstancePackagePlatform.AccessType;Paid;Paid;Paid
-TitleInstancePackagePlatform.CoverageDepth;Abstracts;Abstracts;Abstracts
-TitleInstancePackagePlatform.CoverageDepth;Fulltext;Fulltext;Fulltext
-TitleInstancePackagePlatform.CoverageDepth;Selected Articles;Selected Articles;Selected Articles
-TitleInstancePackagePlatform.DelayedOA;No;No;No
-TitleInstancePackagePlatform.DelayedOA;Unknown;Unknown;Unknown
-TitleInstancePackagePlatform.DelayedOA;Yes;Yes;Yes
 TitleInstancePackagePlatform.Medium;A & I Database;A & I Database;A & I Database
 TitleInstancePackagePlatform.Medium;Article;Article;Article
 TitleInstancePackagePlatform.Medium;Audio;Audio;Audio
@@ -547,8 +541,6 @@ TitleInstancePackagePlatform.OpenAccess;Green OA;Green OA;Green OA
 TitleInstancePackagePlatform.OpenAccess;Hybrid;Hybrid;Hybrid
 TitleInstancePackagePlatform.OpenAccess;White OA;White OA;White OA
 TitleInstancePackagePlatform.OpenAccess;Yellow OA;Yellow OA;Yellow OA
-TitleInstancePackagePlatform.Primary;No;No;No
-TitleInstancePackagePlatform.Primary;Yes;Yes;Yes
 TitleInstancePackagePlatform.PublicationType;Database;Database;Database
 TitleInstancePackagePlatform.PublicationType;Monograph;Monograph;Monograph
 TitleInstancePackagePlatform.PublicationType;Other;Other;Other

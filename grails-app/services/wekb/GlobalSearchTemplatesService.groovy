@@ -10,7 +10,6 @@ class GlobalSearchTemplatesService {
 
     @javax.annotation.PostConstruct
     def init() {
-        globalSearchTemplates.put('additionalPropertyDefinitions', additionalPropertyDefinitions())
         globalSearchTemplates.put('components', components())
         globalSearchTemplates.put('curatoryGroups', curatoryGroups())
         globalSearchTemplates.put('identifiers', identifiers())
@@ -38,31 +37,6 @@ class GlobalSearchTemplatesService {
 
     public def findAllByBaseClass(String baseClass){
         def result = globalSearchTemplates.findAll {it.value.baseclass==baseClass}
-        result
-    }
-
-    Map additionalPropertyDefinitions() {
-        Map result = [
-                baseclass: 'wekb.AdditionalPropertyDefinition',
-                title    : 'Additional Property Definitions',
-                group    : 'Secondary',
-                qbeConfig: [
-                        qbeForm   : [
-                                [
-                                        prompt     : 'Property Name',
-                                        qparam     : 'qp_name',
-                                        placeholder: 'Property Name',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'propertyName']
-                                ],
-                        ],
-                        qbeGlobals: [
-                        ],
-                        qbeResults: [
-                                [heading: 'Property Name', property: 'propertyName', sort: 'propertyName', link: true],
-                                // [heading:'Property Name', property:'propertyName', link:[controller:'search',action:'index',params:'x.params+[\'det\':x.counter]']]
-                        ]
-                ]
-        ]
         result
     }
 

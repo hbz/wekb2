@@ -93,6 +93,7 @@ class Package extends KBComponent {
     paymentType(nullable: true, blank: false)
     globalNote(nullable: true, blank: true)
     openAccess (nullable: true, blank: true)
+    contentType (nullable: true, blank: true)
     file (nullable: true, blank: true)
     editingStatus (nullable: true, blank: true)
     descriptionURL(nullable: true, blank: true)

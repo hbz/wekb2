@@ -63,6 +63,11 @@ class UpdateTippInfo {
         newValue (nullable:true)
         oldValue (nullable:true)
 
+        dateCreated (nullable: true, blank: false)
+        lastUpdated (nullable: true, blank: false)
+
+        tipp (nullable: true, blank: false)
+
     }
 
     static belongsTo = [updatePackageInfo: UpdatePackageInfo,

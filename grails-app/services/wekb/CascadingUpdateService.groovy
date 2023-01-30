@@ -36,10 +36,6 @@ class CascadingUpdateService {
         }
     }
 
-    void update(KBComponentAdditionalProperty obj, Date lastUpdated) {
-        if (obj.fromComponent) { update(obj.fromComponent, lastUpdated) }
-    }
-
     void update(KBComponentLanguage obj, Date lastUpdated) {
         if (obj.kbcomponent) { update(obj.kbcomponent, lastUpdated) }
     }

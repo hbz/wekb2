@@ -48,6 +48,14 @@ class JobResult {
   static constraints = {
     dateCreated(nullable:true, blank:true)
     lastUpdated(nullable:true, blank:true)
+    statusText(nullable:true, blank:true)
+    resultObject (nullable:true, blank:true)
+    type (nullable:true, blank:true)
+    ownerId (nullable:true, blank:false)
+    groupId (nullable:true, blank:false)
+    linkedItemId (nullable:true, blank:false)
+    startTime (nullable:true, blank:false)
+    uuid (nullable:true, blank:false)
   }
 
   def afterInsert() {

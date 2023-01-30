@@ -224,13 +224,6 @@ class FTUpdateService {
           result.platforms.add(platform)
         }
 
-        result.additionalProperties = []
-
-        kbc.additionalProperties.each { KBComponentAdditionalProperty kbComponentAdditionalProperty ->
-          result.additionalProperties.add([value    : kbComponentAdditionalProperty.apValue,
-                                           name      : kbComponentAdditionalProperty.propertyDefn.propertyName])
-        }
-
         result.contacts = []
         kbc.contacts.each { Contact contact ->
           result.contacts.add([  content: contact.content,

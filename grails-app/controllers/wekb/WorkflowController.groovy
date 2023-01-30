@@ -235,7 +235,7 @@ class WorkflowController{
     log.info("deleteIdentifierNamespace ${identifierNamespaces}..")
     identifierNamespaces.each { idn ->
       IdentifierNamespace identifierNamespace = IdentifierNamespace.get(idn.id)
-      if(!Org.findByPackageNamespace(identifierNamespace) && !Platform.findByTitleNamespace(identifierNamespace) && !Source.findByTargetNamespace(identifierNamespace) && !Identifier.findByNamespace(identifierNamespace)){
+      if(!Platform.findByTitleNamespace(identifierNamespace) && !Source.findByTargetNamespace(identifierNamespace) && !Identifier.findByNamespace(identifierNamespace)){
         identifierNamespace.delete(flush: true)
       }else {
         flash.error = "Identifier Namespace is linked with identifier or org or source or platform! Please unlink first!"

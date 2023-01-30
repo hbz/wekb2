@@ -6,7 +6,6 @@ public class DisplayTemplateService {
 
   @javax.annotation.PostConstruct
   def init() {
-    globalDisplayTemplates.put('wekb.AdditionalPropertyDefinition',[rendername:'addpropdef' ])
     globalDisplayTemplates.put('wekb.CuratoryGroup',[rendername:'curatory_group' ])
     globalDisplayTemplates.put('wekb.Identifier',[rendername:'identifier', noCreate:true ])
     globalDisplayTemplates.put('wekb.IdentifierNamespace',[rendername:'identifier_namespace' ])

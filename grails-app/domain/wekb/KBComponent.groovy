@@ -207,16 +207,6 @@ abstract class KBComponent implements Auditable{
   RefdataValue status
 
   /**
-   *  Provenance
-   */
-  String provenance
-
-  /**
-   * Reference
-   */
-  String reference
-
-  /**
    * Last updated by
    * TODO: remove
    */
@@ -233,7 +223,6 @@ abstract class KBComponent implements Auditable{
   Set languages
   String lastUpdateComment
 
-  List additionalProperties = []
   Set outgoingCombos = []
   Set incomingCombos = []
   Set variantNames = []
@@ -268,7 +257,6 @@ abstract class KBComponent implements Auditable{
   static mappedBy = [
       outgoingCombos      : 'fromComponent',
       incomingCombos      : 'toComponent',
-      additionalProperties: 'fromComponent',
       variantNames        : 'owner',
       prices              : 'owner'
   ]
@@ -277,7 +265,6 @@ abstract class KBComponent implements Auditable{
   static hasMany = [
       outgoingCombos      : Combo,
       incomingCombos      : Combo,
-      additionalProperties: KBComponentAdditionalProperty,
       variantNames        : KBComponentVariantName,
       prices              : ComponentPrice,
       languages           : KBComponentLanguage
@@ -329,6 +316,7 @@ abstract class KBComponent implements Auditable{
     bucketHash(nullable: true, blank: false)
     componentDiscriminator(nullable: true, blank: false)
     componentHash(nullable: true, blank: false)
+    lastUpdatedBy (nullable: true, blank: false)
   }
 
 

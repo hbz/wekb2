@@ -57,7 +57,7 @@ class TIPPCoverageStatement {
       if(obj.startDate && val && (obj.hasChanged('endDate') || obj.hasChanged('startDate')) && obj.startDate > val) {
         return ['endDate.endPriorToStart']
       }
-    })
+    }, nullable:true, blank:true)
     endVolume (nullable:true, blank:true)
     endIssue (nullable:true, blank:true)
     embargo (nullable:true, blank:true)
@@ -66,6 +66,8 @@ class TIPPCoverageStatement {
 
     dateCreated(nullable:true, blank:true)
     lastUpdated(nullable:true, blank:true)
+
+    owner (nullable:true, blank:false)
   }
 
   def afterInsert (){

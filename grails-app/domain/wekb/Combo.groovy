@@ -57,6 +57,8 @@ class Combo implements Auditable {
     toComponent(nullable:false, blank:false)
     endDate(nullable:true, blank:false)
     startDate(nullable:true, blank:false)
+    dateCreated (nullable:true, blank:false)
+    lastUpdated (nullable:true, blank:false)
   }
 
   @Override

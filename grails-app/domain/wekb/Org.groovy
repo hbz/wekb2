@@ -11,7 +11,6 @@ class Org extends KBComponent {
 
   RefdataValue mission
   String homepage
-  IdentifierNamespace packageNamespace
 
   String metadataDownloaderURL
   String kbartDownloaderURL
@@ -93,7 +92,6 @@ class Org extends KBComponent {
         }
       }
     })
-    packageNamespace(nullable: true)
   }
 
   static def refdataFind(params) {

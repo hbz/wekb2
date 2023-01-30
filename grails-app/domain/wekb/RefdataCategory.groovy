@@ -53,6 +53,9 @@ class RefdataCategory extends AbstractI10n {
     label(nullable: true, blank: true)
     dateCreated(nullable:true, blank:true)
     lastUpdated(nullable:true, blank:true)
+
+    desc_de (nullable:true, blank:false)
+    desc_en (nullable:true, blank:false)
   }
 
   String getLogEntityId() {

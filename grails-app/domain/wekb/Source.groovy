@@ -9,23 +9,14 @@ import java.sql.Timestamp
 class Source extends KBComponent {
 
   String url
-  String defaultAccessURL
-  String explanationAtSource
-  String contextualNotes
-  // Org combo -- What organisation - aggregator -- responsibleParty
+
   Boolean automaticUpdates = false
   RefdataValue frequency
-  String ruleset
-  // Default method refdata - email web ftp other
-  // Default data Format KBART,Prop
   RefdataValue defaultSupplyMethod
   RefdataValue defaultDataFormat
   IdentifierNamespace targetNamespace
   Date lastRun
   String lastUpdateUrl
-  Boolean zdbMatch = false
-  Boolean ezbMatch = false
-  //Org responsibleParty
 
   Boolean kbartHasWekbFields = false
   Date lastChangedInKbart
@@ -37,7 +28,6 @@ class Source extends KBComponent {
   static mapping = {
     includes KBComponent.mapping
     url column:'source_url'
-    ruleset column:'source_ruleset', type:'text'
     lastUpdateUrl column: 'source_last_update_url'
     kbartHasWekbFields column: 'source_kbart_wekb_fields'
     lastChangedInKbart column: 'source_last_changed_in_kbart'
@@ -45,17 +35,11 @@ class Source extends KBComponent {
 
   static constraints = {
     url(nullable:true, blank:true)
-    defaultAccessURL(nullable:true, blank:true)
-    explanationAtSource(nullable:true, blank:true)
-    contextualNotes(nullable:true, blank:true)
     frequency(nullable:true, blank:true)
     defaultSupplyMethod(nullable:true, blank:true)
     defaultDataFormat(nullable:true, blank:true)
-    ruleset(nullable:true, blank:true)
     targetNamespace(nullable:true, blank:true)
     lastRun(nullable:true,default: null)
-    ezbMatch(nullable:true, default: false)
-    zdbMatch(nullable:true,default: false)
     automaticUpdates(nullable: true,default: false)
     lastUpdateUrl(nullable:true, blank:true)
     lastChangedInKbart (nullable:true, default: null)

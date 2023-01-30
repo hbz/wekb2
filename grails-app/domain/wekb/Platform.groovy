@@ -14,8 +14,6 @@ class Platform extends KBComponent {
 
   IdentifierNamespace titleNamespace
 
-  @Deprecated
-  RefdataValue authentication
 
   @RefdataAnnotation(cat = RCConstants.PLATFORM_IP_AUTH)
   RefdataValue ipAuthentication
@@ -74,10 +72,6 @@ class Platform extends KBComponent {
     provider: Org
   ]
 
-/*  private static refdataDefaults = [
-    "authentication": "Unknown"
-  ]*/
-
   static manyByCombo = [
     hostedPackages: Package,
     curatoryGroups: CuratoryGroup
@@ -90,7 +84,6 @@ class Platform extends KBComponent {
   static mapping = {
     includes KBComponent.mapping
     primaryUrl column: 'plat_primary_url', index: 'platform_primary_url_idx'
-    authentication column: 'plat_authentication_fk_rv'
     ipAuthentication column: 'plat_auth_by_ip_fk_rv'
     shibbolethAuthentication column: 'plat_auth_by_shib_fk_rv'
     openAthens column: 'plat_open_athens_fk_rv'
@@ -115,7 +108,6 @@ class Platform extends KBComponent {
 
   static constraints = {
     primaryUrl(url: true, nullable: true, blank: false)
-    authentication(nullable: true, blank: false)
     ipAuthentication(nullable: true, blank: false)
     shibbolethAuthentication(nullable: true, blank: false)
     openAthens (nullable: true, blank: false)

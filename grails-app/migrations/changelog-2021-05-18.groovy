@@ -1,9 +1,9 @@
-import wekb.helper.RCConstants
+/*import wekb.helper.RCConstants
 import wekb.AdditionalPropertyDefinition
 import wekb.KBComponentAdditionalProperty
 import wekb.RefdataCategory
 import wekb.RefdataValue
-import wekb.Contact
+import wekb.Contact*/
 
 databaseChangeLog = {
 
@@ -71,7 +71,7 @@ databaseChangeLog = {
         dropColumn(columnName: "title_namespace_id", tableName: "org")
     }
 
-    changeSet(author: "djebeniani (hand-coded)", id: "1621352515660-11") {
+   /* changeSet(author: "djebeniani (hand-coded)", id: "1621352515660-11") {
         grailsChange {
             change {
                 Integer count = 0
@@ -112,7 +112,7 @@ databaseChangeLog = {
             }
             rollback {}
         }
-    }
+    }*/
 
     changeSet(author: "djebeniani (hand-coded)", id: "1621352515660-12") {
         grailsChange {

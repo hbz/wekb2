@@ -105,22 +105,6 @@
         </sec:ifNotGranted>
     </dd>
 </dl>
-%{--<dl>
-    <dt class="control-label">
-        EZB Matching Enabled
-    </dt>
-    <dd>
-        <semui:xEditableBoolean owner="${d}" field="ezbMatch"/>
-    </dd>
-</dl>
-<dl>
-    <dt class="control-label">
-        ZDB Matching Enabled
-    </dt>
-    <dd>
-        <semui:xEditableBoolean owner="${d}" field="zdbMatch"/>
-    </dd>
-</dl>--}%
 <dl>
     <dt class="control-label">
         Last Run

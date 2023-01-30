@@ -19,7 +19,6 @@ class RefdataValue  extends AbstractI10n {
   String icon
   String description
   String sortKey
-  RefdataValue useInstead
   RefdataCategory owner
 
   Date dateCreated
@@ -35,7 +34,6 @@ class RefdataValue  extends AbstractI10n {
     value column:'rdv_value', index:'rdv_entry_idx'
     description column:'rdv_desc'
     sortKey column:'rdv_sortkey'
-    useInstead column:'rdv_use_instead'
     icon column:'rdv_icon'
     value_de column: 'rdv_value_de'
     value_en column: 'rdv_value_en'
@@ -49,11 +47,13 @@ class RefdataValue  extends AbstractI10n {
   static constraints = {
     icon(nullable:true, blank:true)
     description(nullable:true, blank:true, maxSize:64)
-    useInstead(nullable:true, blank:false)
     sortKey(nullable:true, blank:false)
 
     dateCreated(nullable:true, blank:true)
     lastUpdated(nullable:true, blank:true)
+
+    value_de (nullable:true, blank:true)
+    value_en (nullable:true, blank:true)
   }
 
   String getLogEntityId() {
@@ -87,7 +87,7 @@ class RefdataValue  extends AbstractI10n {
     // ql = RefdataValue.findAllByValueIlikeOrDescriptionIlike("%${params.q}%","%${params.q}%",params)
     // ql = RefdataValue.findWhere("%${params.q}%","%${params.q}%",params)
 
-    def query = "from RefdataValue as rv where rv.useInstead is null and (lower(rv.value) like :value OR lower(rv.value_de) like :value OR lower(rv.value_en) like :value)"
+    def query = "from RefdataValue as rv where (lower(rv.value) like :value OR lower(rv.value_de) like :value OR lower(rv.value_en) like :value)"
     Map query_params = [value: "%${params.q.toLowerCase()}%"]
 
     if ( ( params.filter1 != null ) && ( params.filter1.length() > 0 ) ) {

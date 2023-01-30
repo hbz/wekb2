@@ -13,27 +13,27 @@
         <semui:xEditable owner="${d}" field="desc"/>
 </dl>
 <dl>
-  <dt class="control-label">
-    Category Name / Description EN
-  </dt>
-  <dd>
-    <semui:xEditable owner="${d}" field="desc_en"/>
+    <dt class="control-label">
+        Category Name / Description EN
+    </dt>
+    <dd>
+        <semui:xEditable owner="${d}" field="desc_en"/>
 </dl>
 
 <dl>
-  <dt class="control-label">
-    Category Name / Description DE
-  </dt>
-  <dd>
-    <semui:xEditable owner="${d}" field="desc_de"/>
+    <dt class="control-label">
+        Category Name / Description DE
+    </dt>
+    <dd>
+        <semui:xEditable owner="${d}" field="desc_de"/>
 </dl>
 
 <dl>
-  <dt class="control-label">
-    Hard Data
-  </dt>
-  <dd>
-    <semui:xEditableBoolean owner="${d}" field="isHardData" overwriteEditable="false"/>
+    <dt class="control-label">
+        Hard Data
+    </dt>
+    <dd>
+        <semui:xEditableBoolean owner="${d}" field="isHardData" overwriteEditable="false"/>
 </dl>
 <dl>
     <dt class="control-label">
@@ -51,36 +51,30 @@
     <table class="ui selectable striped sortable celled table">
         <thead>
         <tr>
+            <th>#</th>
             <th>Value</th>
-          <th>Value EN</th>
-          <th>Value DE</th>
-          <th>Description</th>
-            %{--<td>Deprecate (Use)</td>--}%
-            %{--<th>Sort Key</th>--}%
+            <th>Value EN</th>
+            <th>Value DE</th>
+            <th>Description</th>
             <th>Actions</th>
         </tr>
         </thead>
         <tbody>
-        <g:each in="${d.values}" var="v">
+        <g:each in="${d.values}" var="v" status="i">
             <tr>
+                <td>${i + 1}</td>
                 <td>
                     <semui:xEditable owner="${v}" field="value"/>
                 </td>
-              <td>
-                <semui:xEditable owner="${v}" field="value_en"/>
-              </td>
-              <td>
-                <semui:xEditable owner="${v}" field="value_de"/>
-              </td>
-              <td>
-                <semui:xEditable owner="${v}" field="description"/>
-              </td>
-                %{--<td><semui:xEditableManyToOne owner="${v}"
-                                              field="useInstead" baseClass="wekb.RefdataValue"
-                                              filter1="${d.desc}">
-                    ${v.useInstead?.value}
-                </semui:xEditableManyToOne></td>--}%
-                %{--<td><semui:xEditable owner="${v}" field="sortKey"/></td>--}%
+                <td>
+                    <semui:xEditable owner="${v}" field="value_en"/>
+                </td>
+                <td>
+                    <semui:xEditable owner="${v}" field="value_de"/>
+                </td>
+                <td>
+                    <semui:xEditable owner="${v}" field="description"/>
+                </td>
                 <td></td>
             </tr>
         </g:each>
@@ -95,7 +89,7 @@
         <semui:modal id="rdvModal" title="Add Refdata Value">
             <g:form controller="ajaxHtml" action="addToCollection" class="ui form">
                 <input type="hidden" name="__context"
-                       value="${d.className}:${d.id}"/>
+                       value="${d.getClass().name}:${d.id}"/>
                 <input type="hidden" name="__newObjectClass"
                        value="wekb.RefdataValue"/>
                 <input type="hidden" name="__recip" value="owner"/>
@@ -106,32 +100,24 @@
                     <input type="text" name="value"/>
                 </div>
 
-              <div class="field">
-                <label>Refdata Value EN</label>
+                <div class="field">
+                    <label>Refdata Value EN</label>
 
-                <input type="text" name="value_en"/>
-              </div>
+                    <input type="text" name="value_en"/>
+                </div>
 
-              <div class="field">
-                <label>Refdata Value DE</label>
+                <div class="field">
+                    <label>Refdata Value DE</label>
 
-                <input type="text" name="value_de"/>
-              </div>
+                    <input type="text" name="value_de"/>
+                </div>
 
-              <div class="field">
-                <label>Description</label>
+                <div class="field">
+                    <label>Description</label>
 
-                <input type="text" name="description"/>
-              </div>
-
-                %{--<div class="field">
-                    <label>Sort Key</label>
-                    <input type="text" name="sortKey"/>
-                </div>--}%
+                    <input type="text" name="description"/>
+                </div>
             </g:form>
         </semui:modal>
     </sec:ifAnyGranted>
-    </dl>
 </g:if>
-<g:else>
-</g:else>
