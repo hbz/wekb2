@@ -428,7 +428,7 @@ class Package extends KBComponent {
   @Transient
   public String getAnbieterProduktIDs() {
     IdentifierNamespace namespace = IdentifierNamespace.findByValueAndTargetType("Anbieter_Produkt_ID", RDStore.IDENTIFIER_NAMESPACE_TARGET_TYPE_PACKAGE)
-    List<String> identifiers = Identifier.executeQuery('select value from Identifier where namespace = :ns and value != :val', [ns: namespace, val: 'Unknown'])
+    List<String> identifiers = Identifier.executeQuery('select value from Identifier where namespace = :ns and value != :val and pkg = :pkg', [pkg: this, ns: namespace, val: 'Unknown'])
 
     if(identifiers.size() == 0){
       return ''
