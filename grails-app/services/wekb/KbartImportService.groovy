@@ -696,18 +696,18 @@ class KbartImportService {
                     if (tipp.languages) {
                         def langIDs = tipp.languages.id.clone()
                         langIDs.each {
-                            KBComponentLanguage.executeUpdate('delete from KBComponentLanguage lang where lang.id = :langId',[langId: it])
+                            ComponentLanguage.executeUpdate('delete from ComponentLanguage lang where lang.id = :langId',[langId: it])
                         }
                         tipp.save()
-                        //KBComponentLanguage.executeUpdate("delete from KBComponentLanguage where kbcomponent = :tipp", [tipp: tipp])
+                        //ComponentLanguage.executeUpdate("delete from ComponentLanguage where tipp = :tipp", [tipp: tipp])
                     }
 
                     tipp_dto.language.each{ String lan ->
                         RefdataValue refdataValue = RefdataCategory.lookup(RCConstants.KBCOMPONENT_LANGUAGE, lan)
                         if(refdataValue){
-                            if(!KBComponentLanguage.findByKbcomponentAndLanguage(tipp, refdataValue)){
-                                KBComponentLanguage kbComponentLanguage = new KBComponentLanguage(kbcomponent: tipp, language: refdataValue)
-                                kbComponentLanguage.save()
+                            if(!ComponentLanguage.findByTippAndLanguage(tipp, refdataValue)){
+                                ComponentLanguage componentLanguage = new ComponentLanguage(tipp: tipp, language: refdataValue)
+                                componentLanguage.save()
                             }
                         }
                     }
@@ -2177,19 +2177,19 @@ class KbartImportService {
             if (tipp.languages) {
                 def langIDs = tipp.languages.id.clone()
                 langIDs.each {
-                    tipp.removeFromLanguages(KBComponentLanguage.get(it))
-                    KBComponentLanguage.get(it).delete()
+                    tipp.removeFromLanguages(ComponentLanguage.get(it))
+                    ComponentLanguage.get(it).delete()
                 }
                 tipp.save()
-                //KBComponentLanguage.executeUpdate("delete from KBComponentLanguage where kbcomponent = :tipp", [tipp: tipp])
+                //ComponentLanguage.executeUpdate("delete from ComponentLanguage where tipp = :tipp", [tipp: tipp])
             }
             List languages = tippMap.language.split(',')
             languages.each { String lan ->
                 RefdataValue refdataValue = RefdataCategory.lookup(RCConstants.KBCOMPONENT_LANGUAGE, lan)
                 if (refdataValue) {
-                    if (!KBComponentLanguage.findByKbcomponentAndLanguage(tipp, refdataValue)) {
-                        KBComponentLanguage kbComponentLanguage = new KBComponentLanguage(kbcomponent: tipp, language: refdataValue)
-                        kbComponentLanguage.save()
+                    if (!ComponentLanguage.findByTippAndLanguage(tipp, refdataValue)) {
+                        ComponentLanguage componentLanguage = new ComponentLanguage(tipp: tipp, language: refdataValue)
+                        componentLanguage.save()
                     }
                 }
             }
@@ -2451,9 +2451,9 @@ class KbartImportService {
                         languages.each { String lan ->
                             RefdataValue refdataValue = RefdataCategory.lookup(RCConstants.KBCOMPONENT_LANGUAGE, lan)
                             if (refdataValue) {
-                                if (!KBComponentLanguage.findByKbcomponentAndLanguage(tipp, refdataValue)) {
-                                    KBComponentLanguage kbComponentLanguage = new KBComponentLanguage(kbcomponent: tipp, language: refdataValue)
-                                    kbComponentLanguage.save()
+                                if (!ComponentLanguage.findByTippAndLanguage(tipp, refdataValue)) {
+                                    ComponentLanguage componentLanguage = new ComponentLanguage(tipp: tipp, language: refdataValue)
+                                    componentLanguage.save()
                                 }
                             }
                         }

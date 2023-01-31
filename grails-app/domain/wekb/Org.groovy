@@ -15,6 +15,8 @@ class Org extends KBComponent {
   String metadataDownloaderURL
   String kbartDownloaderURL
 
+  Set variantNames = []
+
   def availableActions() {
     [
      /* [code: 'org::deprecateReplace', label: 'Replace Publisher With...'],
@@ -56,14 +58,15 @@ class Org extends KBComponent {
     vendedPackages   : 'vendor',
   ]
 
-  //  static mappedBy = [
-  //    ids: 'component',
-  //  ]
+  static mappedBy = [
+          variantNames        : 'owner'
+  ]
 
   static hasMany = [
     roles: RefdataValue,
     contacts: Contact,
-    ids: Identifier
+    ids: Identifier,
+    variantNames        : ComponentVariantName
   ]
 
   static mapping = {
@@ -72,6 +75,8 @@ class Org extends KBComponent {
     homepage column: 'org_homepage'
     metadataDownloaderURL column: 'org_metadata_downloader_url', type: 'text'
     kbartDownloaderURL column: 'org_kbart_downloader_url', type: 'text'
+
+    variantNames cascade: "all,delete-orphan", lazy: false
   }
 
   static constraints = {

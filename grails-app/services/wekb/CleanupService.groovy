@@ -217,7 +217,7 @@ class CleanupService {
         remaining = remaining.drop(50)
 
         Combo.executeUpdate("delete from Combo as c where c.fromComponent.id IN (:component) or c.toComponent.id IN (:component)", [component: batch])
-        KBComponentVariantName.executeUpdate("delete from KBComponentVariantName as c where c.owner.id IN (:component)", [component: batch]);
+        ComponentVariantName.executeUpdate("delete from ComponentVariantName as c where c.owner.id IN (:component)", [component: batch]);
 
         TippPrice.executeUpdate("delete from TippPrice as cp where cp.tipp.id IN (:component)", [component: batch])
 

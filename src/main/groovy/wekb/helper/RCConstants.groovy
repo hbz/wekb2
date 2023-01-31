@@ -45,9 +45,9 @@ class RCConstants {
     public static final String KBCOMPONENT_STATUS   = "KBComponent.Status"
 
 
-    public static final String KBCOMPONENT_VARIANTNAME_VARIANT_TYPE = "KBComponentVariantName.VariantType"
-    public static final String KBCOMPONENT_VARIANTNAME_LOCAL = "KBComponentVariantName.Locale"
-    public static final String KBCOMPONENT_VARIANTNAME_STATUS = "KBComponentVariantName.Status"
+    public static final String KBCOMPONENT_VARIANTNAME_VARIANT_TYPE = "ComponentVariantName.VariantType"
+    public static final String KBCOMPONENT_VARIANTNAME_LOCAL = "ComponentVariantName.Locale"
+    public static final String KBCOMPONENT_VARIANTNAME_STATUS = "ComponentVariantName.Status"
 
     public static final String MEMBERSHIP_ROLE = "MembershipRole"
     public static final String MEMBERSHIP_STATUS = "MembershipStatus"

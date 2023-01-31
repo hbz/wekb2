@@ -1,6 +1,6 @@
 package wekb
 
-class KBComponentVariantName {
+class ComponentVariantName {
 
 
   def cascadingUpdateService

@@ -476,7 +476,7 @@ class ExportService {
                                     }
                                     break;
                                 case 'languages':
-                                    List<KBComponentLanguage> languages = KBComponentLanguage.executeQuery('select language.value from KBComponentLanguage where kbcomponent.id = :tippID', [tippID: tippID], [readOnly: true])
+                                    List<ComponentLanguage> languages = ComponentLanguage.executeQuery('select language.value from ComponentLanguage where tipp.id = :tippID', [tippID: tippID], [readOnly: true])
 
                                     if (languages.size() > 0) {
                                         row.add(sanitize(languages.join(';')))

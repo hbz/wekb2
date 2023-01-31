@@ -209,15 +209,10 @@ abstract class KBComponent implements Auditable{
    */
   Source source
 
-  /**
-   * Component languages. Linked to refdata table. Only applicable for TitleInstance and TitleInstancePackagePlatform.
-   */
-  Set languages
   String lastUpdateComment
 
   Set outgoingCombos = []
   Set incomingCombos = []
-  Set variantNames = []
 
   // Timestamps
   Date dateCreated
@@ -248,16 +243,13 @@ abstract class KBComponent implements Auditable{
 
   static mappedBy = [
       outgoingCombos      : 'fromComponent',
-      incomingCombos      : 'toComponent',
-      variantNames        : 'owner'
+      incomingCombos      : 'toComponent'
   ]
 
 
   static hasMany = [
       outgoingCombos      : Combo,
-      incomingCombos      : Combo,
-      variantNames        : KBComponentVariantName,
-      languages           : KBComponentLanguage
+      incomingCombos      : Combo
   ]
 
 
@@ -285,7 +277,6 @@ abstract class KBComponent implements Auditable{
     componentDiscriminator column: 'kbc_component_descriminator'
     incomingCombos batchSize: 10
     outgoingCombos batchSize: 10
-    variantNames cascade: "all,delete-orphan", lazy: false
     //dateCreatedYearMonth formula: "DATE_FORMAT(kbc_date_created, '%Y-%m')"
     //lastUpdatedYearMonth formula: "DATE_FORMAT(kbc_last_updated, '%Y-%m')"
   }
@@ -591,7 +582,7 @@ abstract class KBComponent implements Auditable{
     def result = [deleteType: this.class.name, deleteId: this.id]
     log.debug("Removing all components")
     Combo.executeUpdate("delete from Combo as c where c.fromComponent=:component or c.toComponent=:component", [component: this])
-    KBComponentVariantName.executeUpdate("delete from KBComponentVariantName as c where c.owner=:component", [component: this])
+    ComponentVariantName.executeUpdate("delete from ComponentVariantName as c where c.owner=:component", [component: this])
 
    if (this instanceof CuratoryGroup){
       User.withTransaction {
@@ -618,7 +609,7 @@ abstract class KBComponent implements Auditable{
       remaining = remaining.drop(50)
 
       Combo.executeUpdate("delete from Combo as c where c.fromComponent.id IN (:component) or c.toComponent.id IN (:component)", [component: batch])
-      KBComponentVariantName.executeUpdate("delete from KBComponentVariantName as c where c.owner.id IN (:component)", [component: batch])
+      ComponentVariantName.executeUpdate("delete from ComponentVariantName as c where c.owner.id IN (:component)", [component: batch])
       TippPrice.executeUpdate("delete from TippPrice as cp where cp.tipp.id IN (:component)", [component: batch])
       result.num_expunged += KBComponent.executeUpdate("delete KBComponent as c where c.id IN (:component)", [component: batch])
     }

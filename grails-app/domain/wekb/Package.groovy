@@ -36,6 +36,8 @@ class Package extends KBComponent {
 
   String descriptionURL
 
+  Set variantNames = []
+
   static manyByCombo = [
     curatoryGroups: CuratoryGroup
   ]
@@ -45,6 +47,10 @@ class Package extends KBComponent {
     nominalPlatform: Platform,
   ]
 
+  static mappedBy = [
+          variantNames        : 'owner'
+  ]
+
   static hasMany = [
           nationalRanges : RefdataValue,
           regionalRanges : RefdataValue,
@@ -52,7 +58,8 @@ class Package extends KBComponent {
           paas : PackageArchivingAgency,
           ids: Identifier,
           updatePackageInfos: UpdatePackageInfo,
-          tipps: TitleInstancePackagePlatform
+          tipps: TitleInstancePackagePlatform,
+          variantNames        : ComponentVariantName
   ]
 
   static mapping = {
@@ -84,6 +91,8 @@ class Package extends KBComponent {
             key:    'package_fk',
             column: 'regional_range_rv_fk', type:   'BIGINT'
     ], lazy: false
+
+    variantNames cascade: "all,delete-orphan", lazy: false
   }
 
   static constraints = {

@@ -23,6 +23,16 @@ class ComponentStatistic {
   }
 
   static mapping = {
+    id  column:'cs_id'
+    version column:'cs_version'
+
+    componentType column:'cs_component_type'
+    year column:'cs_year'
+    month column:'cs_month'
+
+    numTotal column:'cs_num_total'
+    numNew column:'cs_num_new'
+
     dateCreated column:'cs_date_created'
     lastUpdated column:'cs_last_updated'
   }

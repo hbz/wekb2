@@ -89,6 +89,8 @@ class TitleInstancePackagePlatform extends KBComponent {
   static transients = [ "kbartImportRunning" ]
   boolean kbartImportRunning = false
 
+  Set languages
+
 
   private static SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd")
 
@@ -97,7 +99,8 @@ class TitleInstancePackagePlatform extends KBComponent {
     ddcs: RefdataValue,
     ids: Identifier,
     updateTippInfos: UpdateTippInfo,
-    prices              : TippPrice
+    prices              : TippPrice,
+    languages           : ComponentLanguage
 
   ]
 

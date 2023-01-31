@@ -46,7 +46,7 @@
                 <input type="hidden" name="__context"
                        value="${d.class.name}:${d.id}" />
                 <input type="hidden" name="__newObjectClass"
-                       value="wekb.KBComponentVariantName" />
+                       value="wekb.ComponentVariantName" />
                 <input type="hidden" name="__recip" value="owner" />
                 <input type="hidden" name="tab" value="variantNames" />
                   <input type="hidden" name="curationOverride" value="${params.curationOverride}"/>

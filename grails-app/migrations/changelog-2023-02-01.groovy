@@ -1,7 +1,7 @@
 databaseChangeLog = {
 
 
-    changeSet(author: "djebeniani (generated)", id: "1675094079672-1") {
+    changeSet(author: "djebeniani (modified)", id: "1675094079672-1") {
         grailsChange {
             change {
                 sql.executeUpdate('''alter table component_price rename to "tipp_price";''')
@@ -10,7 +10,7 @@ databaseChangeLog = {
         }
     }
 
-    changeSet(author: "djebeniani (generated)", id: "1675094079672-2") {
+    changeSet(author: "djebeniani (modified)", id: "1675094079672-2") {
         grailsChange {
             change {
                 sql.executeUpdate('''alter table "tipp_price"
@@ -20,7 +20,7 @@ databaseChangeLog = {
         }
     }
 
-    changeSet(author: "djebeniani (generated)", id: "1675094079672-3") {
+    changeSet(author: "djebeniani (modified)", id: "1675094079672-3") {
         grailsChange {
             change {
                 sql.executeUpdate('''alter table "tipp_price"
@@ -30,7 +30,7 @@ databaseChangeLog = {
         }
     }
 
-    changeSet(author: "djebeniani (generated)", id: "1675094079672-4") {
+    changeSet(author: "djebeniani (modified)", id: "1675094079672-4") {
         grailsChange {
             change {
                 sql.executeUpdate('''alter table "tipp_price"
@@ -41,7 +41,7 @@ databaseChangeLog = {
     }
 
 
-    changeSet(author: "djebeniani (generated)", id: "1675094079672-5") {
+    changeSet(author: "djebeniani (modified)", id: "1675094079672-5") {
         grailsChange {
             change {
                 sql.executeUpdate('''alter table "tipp_price"
@@ -52,7 +52,7 @@ databaseChangeLog = {
     }
 
 
-    changeSet(author: "djebeniani (generated)", id: "1675094079672-6") {
+    changeSet(author: "djebeniani (modified)", id: "1675094079672-6") {
         grailsChange {
             change {
                 sql.executeUpdate('''alter table "tipp_price"
@@ -62,7 +62,7 @@ databaseChangeLog = {
         }
     }
 
-    changeSet(author: "djebeniani (generated)", id: "1675094079672-7") {
+    changeSet(author: "djebeniani (modified)", id: "1675094079672-7") {
         grailsChange {
             change {
                 sql.executeUpdate('''alter table "tipp_price"
@@ -72,7 +72,7 @@ databaseChangeLog = {
         }
     }
 
-    changeSet(author: "djebeniani (generated)", id: "1675094079672-8") {
+    changeSet(author: "djebeniani (modified)", id: "1675094079672-8") {
         grailsChange {
             change {
                 sql.executeUpdate('''alter table "tipp_price"
@@ -82,7 +82,7 @@ databaseChangeLog = {
         }
     }
 
-    changeSet(author: "djebeniani (generated)", id: "1675094079672-9") {
+    changeSet(author: "djebeniani (modified)", id: "1675094079672-9") {
         grailsChange {
             change {
                 sql.executeUpdate('''alter table "tipp_price"
@@ -92,7 +92,7 @@ databaseChangeLog = {
         }
     }
 
-    changeSet(author: "djebeniani (generated)", id: "1675094079672-10") {
+    changeSet(author: "djebeniani (modified)", id: "1675094079672-10") {
         grailsChange {
             change {
                 sql.executeUpdate('''alter table "tipp_price"
@@ -102,7 +102,7 @@ databaseChangeLog = {
         }
     }
 
-    changeSet(author: "djebeniani (generated)", id: "1675094079672-11") {
+    changeSet(author: "djebeniani (modified)", id: "1675094079672-11") {
         grailsChange {
             change {
                 sql.executeUpdate('''alter table "tipp_price"

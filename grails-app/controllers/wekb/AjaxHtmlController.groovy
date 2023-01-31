@@ -51,10 +51,10 @@ class AjaxHtmlController {
         if (editable || contextObj.id == user.id) {
           log.debug("Create a new instance of ${params.__newObjectClass}")
 
-          if (params.__newObjectClass == "wekb.KBComponentVariantName"){
+          if (params.__newObjectClass == "wekb.ComponentVariantName"){
 
             def norm_variant = TextUtils.normaliseString(params.variantName)
-            def existing_variants = KBComponentVariantName.findByNormVariantNameAndOwner(norm_variant, contextObj)
+            def existing_variants = ComponentVariantName.findByNormVariantNameAndOwner(norm_variant, contextObj)
 
             if (existing_variants){
               log.debug("found dupes!")
@@ -744,7 +744,7 @@ class AjaxHtmlController {
   def authorizeVariant() {
     log.debug("${params}")
     def result = ['result':'OK', 'params':params]
-    def variant = KBComponentVariantName.get(params.id)
+    def variant = ComponentVariantName.get(params.id)
     def user = springSecurityService.currentUser
 
     if ( variant != null) {
@@ -771,7 +771,7 @@ class AjaxHtmlController {
             variant_name = owner?.getName()?.trim()
           }
 
-          def new_variant = new KBComponentVariantName(owner:owner,variantName:variant_name).save(flush:true)
+          def new_variant = new ComponentVariantName(owner:owner,variantName:variant_name).save(flush:true)
 
         }else{
             log.debug("Found existing variant name: ${current_name_as_variant}")
@@ -822,7 +822,7 @@ class AjaxHtmlController {
   def deleteVariant() {
     log.debug("${params}")
     def result = ['result':'OK', 'params': params]
-    def variant = KBComponentVariantName.get(params.id)
+    def variant = ComponentVariantName.get(params.id)
     def user = springSecurityService.currentUser
     def variantOwner = variant?.owner ?: null
 
@@ -997,21 +997,21 @@ class AjaxHtmlController {
   def deleteLanguage() {
     log.debug("${params}")
     def result = ['result':'OK', 'params': params]
-    KBComponentLanguage kbComponentLanguage = KBComponentLanguage.get(params.id)
+    ComponentLanguage componentLanguage = ComponentLanguage.get(params.id)
     def user = springSecurityService.currentUser
 
-    if ( kbComponentLanguage != null ) {
-      def editable = checkEditable(kbComponentLanguage.kbcomponent)
+    if ( componentLanguage != null ) {
+      def editable = checkEditable(componentLanguage.tipp)
 
       if (editable) {
-        kbComponentLanguage.delete()
+        componentLanguage.delete()
       }
       else {
         result.message = "No permission to edit language for this object!"
         flash.error = "No permission to edit language for this object!"
       }
     }
-    else if (!kbComponentLanguage) {
+    else if (!componentLanguage) {
       flash.error = message(code:'default.not.found.message', args:["Language", params.id])
       result.message = "Language with id ${params.id} not found!".toString()
     }

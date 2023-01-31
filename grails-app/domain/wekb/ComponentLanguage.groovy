@@ -3,7 +3,7 @@ package wekb
 import wekb.annotations.RefdataAnnotation
 import wekb.helper.RCConstants
 
-class KBComponentLanguage {
+class ComponentLanguage {
 
     def cascadingUpdateService
 
@@ -14,22 +14,22 @@ class KBComponentLanguage {
     Date lastUpdated
 
     static belongsTo = [
-            kbcomponent: KBComponent
+            tipp: TitleInstancePackagePlatform
     ]
 
     static constraints = {
-        kbcomponent (nullable: true)
+        tipp (nullable: true)
         dateCreated (nullable: true)
         lastUpdated (nullable: true)
     }
 
     static mapping = {
-        id                    column: 'kbc_lang_id'
-        version               column: 'kbc_lang_version'
-        language              column: 'kbc_lang_rv_fk' , index: 'kbc_lang_language_idx'
-        kbcomponent           column: 'kbc_lang_kbc_fk', index: 'kbc_lang_kbc_idx'
-        dateCreated           column: 'kbc_lang_date_created'
-        lastUpdated           column: 'kbc_lang_last_updated'
+        id                    column: 'cl_id'
+        version               column: 'cl_version'
+        language              column: 'cl_rv_fk' , index: 'cl_language_idx'
+        tipp           column: 'cl_tipp_fk', index: 'cl_tipp_idx'
+        dateCreated           column: 'cl_date_created'
+        lastUpdated           column: 'cl_last_updated'
     }
 
     def afterInsert (){

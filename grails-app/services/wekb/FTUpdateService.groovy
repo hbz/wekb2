@@ -163,13 +163,6 @@ class FTUpdateService {
                            value_en  : ddc.value_en])
         }
 
-        result.languages = []
-        kbc.languages.each { KBComponentLanguage kbl ->
-          result.languages.add([value     : kbl.language.value,
-                                value_de  : kbl.language.value_de,
-                                value_en  : kbl.language.value_en])
-        }
-
         result.packageArchivingAgencies = []
         kbc.paas.each { PackageArchivingAgency paa ->
           result.packageArchivingAgencies.add([archivingAgency: paa.archivingAgency?.value,
@@ -468,7 +461,7 @@ class FTUpdateService {
         }
 
         result.languages = []
-        kbc.languages.each { KBComponentLanguage kbl ->
+        kbc.languages.each { ComponentLanguage kbl ->
           result.languages.add([value     : kbl.language.value,
                                 value_de  : kbl.language.value_de,
                                 value_en  : kbl.language.value_en])
