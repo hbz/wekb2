@@ -30,33 +30,13 @@ class Org extends KBComponent {
 
 
   static manyByCombo = [
-    providedPackages : Package,
-    children         : Org,
-    'previous'       : Org,
-    curatoryGroups   : CuratoryGroup,
-    providedPlatforms: Platform,
-    brokeredPackages : Package,
-    licensedPackages : Package,
-    vendedPackages   : Package,
-    //  ids      : Identifier
+    curatoryGroups   : CuratoryGroup
   ]
 
-  static hasByCombo = [
-    parent   : Org,
-    successor: Org,
-  ]
-
-  static mappedByCombo = [
+/*  static mappedByCombo = [
     providedPackages : 'provider',
-    providedPlatforms: 'provider',
-    publishedTitles  : 'publisher',
-    issuedTitles     : 'issuer',
-    children         : 'parent',
-    successor        : 'previous',
-    brokeredPackages : 'broker',
-    licensedPackages : 'licensor',
-    vendedPackages   : 'vendor',
-  ]
+    providedPlatforms: 'provider'
+  ]*/
 
   static mappedBy = [
           variantNames        : 'owner'
@@ -150,4 +130,14 @@ class Org extends KBComponent {
 
         result
     }
+
+  @Transient
+  def getProvidedPackages(){
+    Package.executeQuery('select p from Package as p where provider = :provider', [provider: this])
+  }
+
+  @Transient
+  def getProvidedPlatforms(){
+    Platform.executeQuery('select p from Platform as p where provider = :provider', [provider: this])
+  }
 }

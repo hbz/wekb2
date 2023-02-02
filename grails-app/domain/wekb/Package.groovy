@@ -11,6 +11,9 @@ import javax.persistence.Transient
 @Slf4j
 class Package extends KBComponent {
 
+    Org provider
+    Platform nominalPlatform
+
   // Refdata
   @RefdataAnnotation(cat = RCConstants.PACKAGE_SCOPE)
   RefdataValue scope
@@ -40,11 +43,6 @@ class Package extends KBComponent {
 
   static manyByCombo = [
     curatoryGroups: CuratoryGroup
-  ]
-
-  static hasByCombo = [
-    provider       : Org,
-    nominalPlatform: Platform,
   ]
 
   static mappedBy = [
@@ -93,6 +91,9 @@ class Package extends KBComponent {
     ], lazy: false
 
     variantNames cascade: "all,delete-orphan", lazy: false
+
+      nominalPlatform column: 'pkg_platform_fk'
+      provider column: 'pkg_provider_fk'
   }
 
   static constraints = {
@@ -125,6 +126,10 @@ class Package extends KBComponent {
     regionalRanges(nullable:true)
     ddcs(nullable:true)
     paas(nullable:true)
+
+    nominalPlatform (nullable: true, blank: false)
+    provider (nullable: true, blank: false)
+
   }
 
   static def refdataFind(params) {

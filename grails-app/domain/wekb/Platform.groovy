@@ -63,23 +63,20 @@ class Platform extends KBComponent {
 
   Date lastAuditDate
 
+  Org provider
+
   static hasMany = [
           roles: RefdataValue,
           ids: Identifier,
           tipps: TitleInstancePackagePlatform]
 
-  static hasByCombo = [
-    provider: Org
-  ]
-
   static manyByCombo = [
-    hostedPackages: Package,
     curatoryGroups: CuratoryGroup
   ]
 
-  static mappedByCombo = [
+ /* static mappedByCombo = [
     hostedPackages: 'nominalPlatform'
-  ]
+  ]*/
 
   static mapping = {
     includes KBComponent.mapping
@@ -103,6 +100,8 @@ class Platform extends KBComponent {
     proxySupported column: 'plat_proxy_supported_fk_rv'
     titleNamespace column: 'plat_title_namespace_fk'
     lastAuditDate column: 'plat_last_audit_date'
+
+    provider column: 'plat_provider_fk'
 
   }
 
@@ -141,6 +140,7 @@ class Platform extends KBComponent {
     titleNamespace(nullable: true)
     lastAuditDate (nullable: true)
 
+    provider(nullable: true, blank: false)
   }
 
   static def refdataFind(params) {
@@ -233,5 +233,10 @@ class Platform extends KBComponent {
 
   public String getShowName() {
     return this.name
+  }
+
+  @Transient
+  def  getHostedPackages(){
+    Package.executeQuery('select p from Package as p where nominalPlatform = :nominalPlatform', [nominalPlatform: this])
   }
 }
