@@ -12,9 +12,6 @@
         <semui:tabsItemWithoutLink tab="packages" activeTab="${params.activeTab}" counts="${d.hostedPackages.size()}">
             Packages
         </semui:tabsItemWithoutLink>
-        <semui:tabsItemWithoutLink tab="variantNames" activeTab="${params.activeTab}" counts="${d.variantNames.size()}">
-            Alternate Names
-        </semui:tabsItemWithoutLink>
     </semui:tabs>
 
     <semui:tabsItemContent tab="titledetails" activeTab="${params.activeTab}">
@@ -27,11 +24,6 @@
         <g:link class="display-inline" controller="search" action="inlineSearch"
                 params="[s_controllerName: controllerName, s_actionName: actionName, objectUUID: params.id, max: params.max, offset: params.offset, sort: params.sort, order: params.order, qbe: 'g:packages', qp_platform_id: d.id, inline: true, refOid: d.getLogEntityId(), hide: ['qp_platform', 'qp_platform_id'], activeTab: 'packages']"
                 id="">Packages on this Platform</g:link>
-    </semui:tabsItemContent>
-
-    <semui:tabsItemContent tab="variantNames">
-        <g:render template="/templates/tabTemplates/variantNamesTab"
-                  model="${[d: d, showActions: true]}"/>
     </semui:tabsItemContent>
 
     <semui:tabsItemContent tab="statistic" defaultTab="statistic" activeTab="${params.activeTab}">
