@@ -654,61 +654,61 @@ class CreateComponentService {
         }
 
         sources.each { Map map ->
-            Source source
+            KbartSource kbartSource
             Package aPackage = Package.get(map.pkgID)
 
             if(aPackage) {
-                if (aPackage.source == null) {
-                    def dupes = Source.findAllByNameIlikeAndStatusNotEqual(aPackage.name, status_deleted)
+                if (aPackage.kbartSource == null) {
+                    def dupes = KbartSource.findAllByNameIlikeAndStatusNotEqual(aPackage.name, status_deleted)
                     String sourceName = aPackage.name
                     if (dupes && dupes.size() > 0) {
                         sourceName = "${sourceName} ${dupes.size() + 1}"
                     }
 
-                    source = new Source(name: sourceName)
+                    kbartSource = new KbartSource(name: sourceName)
                 } else {
-                    source = aPackage.source
-                    def dupes = Source.findAllByNameIlikeAndStatusNotEqual(aPackage.name, status_deleted)
+                    kbartSource = aPackage.kbartSource
+                    def dupes = KbartSource.findAllByNameIlikeAndStatusNotEqual(aPackage.name, status_deleted)
                     String sourceName = aPackage.name
                     if (dupes && dupes.size() > 0) {
                         sourceName = "${sourceName} ${dupes.size() + 1}"
                     }
 
-                    if(sourceName != source.name){
-                        source.name = sourceName
+                    if(sourceName != kbartSource.name){
+                        kbartSource.name = sourceName
                     }
                 }
 
                 if (map.url) {
-                    source.url = map.url
+                    kbartSource.url = map.url
                 }
 
                 if (map.frequency) {
-                    source.frequency = RefdataValue.get(map.frequency)
+                    kbartSource.frequency = RefdataValue.get(map.frequency)
                 }
 
                 if (map.automaticUpdates) {
-                    source.automaticUpdates = map.automaticUpdates
+                    kbartSource.automaticUpdates = map.automaticUpdates
                 }
 
                 if (map.targetNamespace) {
-                    source.targetNamespace = IdentifierNamespace.get(map.targetNamespace)
+                    kbartSource.targetNamespace = IdentifierNamespace.get(map.targetNamespace)
                 }
 
-                if (source.save(flush: true) || source.isAttached()) {
+                if (kbartSource.save(flush: true) || kbartSource.isAttached()) {
 
                     if(user.curatoryGroupUsers) {
                         user.curatoryGroupUsers.curatoryGroup.each { CuratoryGroup cg ->
-                            if (!(cg in source.curatoryGroups)) {
-                                def combo_type = RefdataCategory.lookup(RCConstants.COMBO_TYPE, 'Source.CuratoryGroups')
+                            if (!(cg in kbartSource.curatoryGroups)) {
+                                def combo_type = RefdataCategory.lookup(RCConstants.COMBO_TYPE, 'KbartSource.CuratoryGroups')
 
-                                def new_combo = new Combo(fromComponent: source, toComponent: cg, type: combo_type).save()
+                                def new_combo = new Combo(fromComponent: kbartSource, toComponent: cg, type: combo_type).save()
                             }
                         }
                     }
-                    if (source != aPackage.source) {
+                    if (kbartSource != aPackage.kbartSource) {
                         aPackage = aPackage.refresh()
-                        aPackage.source = source
+                        aPackage.kbartSource = kbartSource
                         aPackage.save(flush: true)
                     }
                 }

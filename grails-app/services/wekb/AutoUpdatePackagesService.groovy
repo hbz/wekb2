@@ -29,15 +29,15 @@ class AutoUpdatePackagesService {
         List packageNeedsUpdate = []
         def updPacks = Package.executeQuery(
                 "from Package p " +
-                        "where p.source is not null and " +
-                        "p.source.automaticUpdates = true " +
-                        "and (p.source.lastRun is null or p.source.lastRun < current_date) order by p.source.lastRun")
+                        "where p.kbartSource is not null and " +
+                        "p.kbartSource.automaticUpdates = true " +
+                        "and (p.kbartSource.lastRun is null or p.kbartSource.lastRun < current_date) order by p.kbartSource.lastRun")
         updPacks.each { Package p ->
-            if (p.source.needsUpdate()) {
+            if (p.kbartSource.needsUpdate()) {
                 packageNeedsUpdate << p
             }
         }
-        log.info("findPackageToUpdateAndUpdate: Package with Source and lastRun < currentDate (${packageNeedsUpdate.size()})")
+        log.info("findPackageToUpdateAndUpdate: Package with KbartSource and lastRun < currentDate (${packageNeedsUpdate.size()})")
         if(packageNeedsUpdate.size() > 0){
               /*  packageNeedsUpdate.eachWithIndex { Package aPackage, int idx ->
                     while(!(activeFuture) || activeFuture.isDone() || idx == 0) {
@@ -85,17 +85,17 @@ class AutoUpdatePackagesService {
             } else {
                 UpdatePackageInfo updatePackageInfo = new UpdatePackageInfo(pkg: pkg, startTime: startTime, status: RDStore.UPDATE_STATUS_SUCCESSFUL, description: "Starting Update package.", onlyRowsWithLastChanged: onlyRowsWithLastChanged, automaticUpdate: true)
                 try {
-                    if (pkg.source && pkg.source.url) {
+                    if (pkg.kbartSource && pkg.kbartSource.url) {
                         List<URL> updateUrls
-                        if (pkg.getTippCount() <= 0 || pkg.source.lastRun == null) {
+                        if (pkg.getTippCount() <= 0 || pkg.kbartSource.lastRun == null) {
                             updateUrls = new ArrayList<>()
-                            updateUrls.add(new URL(pkg.source.url))
+                            updateUrls.add(new URL(pkg.kbartSource.url))
                         } else {
                             // this package had already been filled with data
-                            if ((UrlToolkit.containsDateStamp(pkg.source.url) || UrlToolkit.containsDateStampPlaceholder(pkg.source.url)) && pkg.source.lastUpdateUrl) {
-                                updateUrls = getUpdateUrls(pkg.source.lastUpdateUrl, pkg.source.lastRun, pkg.dateCreated)
+                            if ((UrlToolkit.containsDateStamp(pkg.kbartSource.url) || UrlToolkit.containsDateStampPlaceholder(pkg.kbartSource.url)) && pkg.kbartSource.lastUpdateUrl) {
+                                updateUrls = getUpdateUrls(pkg.kbartSource.lastUpdateUrl, pkg.kbartSource.lastRun, pkg.dateCreated)
                             } else {
-                                updateUrls = getUpdateUrls(pkg.source.url, pkg.source.lastRun, pkg.dateCreated)
+                                updateUrls = getUpdateUrls(pkg.kbartSource.url, pkg.kbartSource.lastRun, pkg.dateCreated)
                             }
                         }
                         log.info("Got ${updateUrls}")

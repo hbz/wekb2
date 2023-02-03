@@ -246,21 +246,21 @@ class ManagementService {
                     packages.each { Package pkg ->
                         if (accessService.checkEditableObject(pkg, params)) {
                             packageSourceInfosBatchForm.each { Map formMap ->
-                                if (params[formMap.bParam] && pkg.source) {
+                                if (params[formMap.bParam] && pkg.kbartSource) {
                                     if(formMap.type == 'lookup' && formMap.baseClass  == 'wekb.RefdataValue') {
                                         List splitBParam = params[formMap.bParam].split(':')
                                         Long refDataId = Long.parseLong(splitBParam[1])
                                         RefdataValue value = RefdataValue.get(refDataId)
-                                        pkg.source."${formMap.bProp}" = (formMap.bPropType == 'Boolean') ? (value == RDStore.YN_YES ? true : false) : (value ?: pkg.source."${formMap.bProp}")
+                                        pkg.kbartSource."${formMap.bProp}" = (formMap.bPropType == 'Boolean') ? (value == RDStore.YN_YES ? true : false) : (value ?: pkg.kbartSource."${formMap.bProp}")
                                     }else {
-                                        pkg.source."${formMap.bProp}" = params[formMap.bParam]
+                                        pkg.kbartSource."${formMap.bProp}" = params[formMap.bParam]
                                     }
                                 }
                             }
-                            if(pkg.source && pkg.source.isDirty()){
-                                pkg.source.save()
+                            if(pkg.kbartSource && pkg.kbartSource.isDirty()){
+                                pkg.kbartSource.save()
 
-                                successChanges << "The Source '${pkg.source.name}' on the package '${pkg.name}' was updated."
+                                successChanges << "The Source '${pkg.kbartSource.name}' on the package '${pkg.name}' was updated."
                             }
                         }
                     }

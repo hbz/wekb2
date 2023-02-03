@@ -189,7 +189,7 @@ class WorkflowController{
       packages_to_update.each{ ptv ->
         def pkgObj = Package.get(ptv.id)
 
-        if (pkgObj && pkgObj.source?.url){
+        if (pkgObj && pkgObj.kbartSource?.url){
 
           if (accessService.checkEditableObject(pkgObj, userAdmin)) {
             Set<Thread> threadSet = Thread.getAllStackTraces().keySet()
@@ -222,7 +222,7 @@ class WorkflowController{
           flash.error = "Unable to reference provided Package!"
         }
         else{
-          flash.error = "Please check the Package Source for validity!"
+          flash.error = "Please check the Package KbartSource for validity!"
         }
       }
     }
@@ -235,7 +235,7 @@ class WorkflowController{
     log.info("deleteIdentifierNamespace ${identifierNamespaces}..")
     identifierNamespaces.each { idn ->
       IdentifierNamespace identifierNamespace = IdentifierNamespace.get(idn.id)
-      if(!Platform.findByTitleNamespace(identifierNamespace) && !Source.findByTargetNamespace(identifierNamespace) && !Identifier.findByNamespace(identifierNamespace)){
+      if(!Platform.findByTitleNamespace(identifierNamespace) && !KbartSource.findByTargetNamespace(identifierNamespace) && !Identifier.findByNamespace(identifierNamespace)){
         identifierNamespace.delete(flush: true)
       }else {
         flash.error = "Identifier Namespace is linked with identifier or org or source or platform! Please unlink first!"

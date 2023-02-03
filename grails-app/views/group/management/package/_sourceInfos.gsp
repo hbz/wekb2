@@ -14,19 +14,19 @@
                 <th>#</th>
                 <semui:sortableColumn property="name" title="Package Name"
                                       params="${params}"/>
-                <semui:sortableColumn property="source.name" title="Source Name"
+                <semui:sortableColumn property="kbartSource.name" title="Source Name"
                                       params="${params}"/>
-                <semui:sortableColumn property="source.status" title="Source Status"
+                <semui:sortableColumn property="kbartSource.status" title="Source Status"
                                       params="${params}"/>
-                <semui:sortableColumn property="source.url" title="URL"
+                <semui:sortableColumn property="kbartSource.url" title="URL"
                                       params="${params}"/>
-                <semui:sortableColumn property="source.frequency" title="Frequency"
+                <semui:sortableColumn property="kbartSource.frequency" title="Frequency"
                                       params="${params}"/>
-                <semui:sortableColumn property="source.defaultSupplyMethod" title="Default Supply Method"
+                <semui:sortableColumn property="kbartSource.defaultSupplyMethod" title="Default Supply Method"
                                       params="${params}"/>
-                <semui:sortableColumn property="source.defaultDataFormat" title="Default Data Format"
+                <semui:sortableColumn property="kbartSource.defaultDataFormat" title="Default Data Format"
                                       params="${params}"/>
-                <semui:sortableColumn property="source.automaticUpdates" title="Automatic Updates"
+                <semui:sortableColumn property="kbartSource.automaticUpdates" title="Automatic Updates"
                                       params="${params}"/>
                 <th>Title ID Namespace</th>
                 <th>Source</th>
@@ -49,42 +49,42 @@
                         <td>
                             ${row_obj.name}
                         </td>
-                        <g:if test="${row_obj.source}">
+                        <g:if test="${row_obj.kbartSource}">
                             <td>
-                                <semui:xEditable owner="${row_obj.source}" field="name" required="true"/>
+                                <semui:xEditable owner="${row_obj.kbartSource}" field="name" required="true"/>
                             </td>
                             <td>
-                                <semui:xEditableRefData owner="${row_obj.source}" field="status"
+                                <semui:xEditableRefData owner="${row_obj.kbartSource}" field="status"
                                                         config="${RCConstants.KBCOMPONENT_STATUS}"
                                                         overwriteEditable="false"/>
                             </td>
                             <td>
-                                <semui:xEditable owner="${row_obj.source}" field="url" validation="url"
+                                <semui:xEditable owner="${row_obj.kbartSource}" field="url" validation="url"
                                                  outGoingLink="true"/>
                             </td>
                             <td>
-                                <semui:xEditableRefData owner="${row_obj.source}" field="frequency"
+                                <semui:xEditableRefData owner="${row_obj.kbartSource}" field="frequency"
                                                         config="${RCConstants.SOURCE_FREQUENCY}"/>
                             </td>
                             <td>
-                                <semui:xEditableRefData owner="${row_obj.source}" field="defaultSupplyMethod"
+                                <semui:xEditableRefData owner="${row_obj.kbartSource}" field="defaultSupplyMethod"
                                                         config="${RCConstants.SOURCE_DATA_SUPPLY_METHOD}"/>
                             </td>
                             <td>
-                                <semui:xEditableRefData owner="${row_obj.source}" field="defaultDataFormat"
+                                <semui:xEditableRefData owner="${row_obj.kbartSource}" field="defaultDataFormat"
                                                         config="${RCConstants.SOURCE_DATA_FORMAT}"/>
                             </td>
                             <td>
-                                <semui:xEditableBoolean owner="${row_obj.source}" field="automaticUpdates"/>
+                                <semui:xEditableBoolean owner="${row_obj.kbartSource}" field="automaticUpdates"/>
                             </td>
                             <td>
-                                <semui:xEditableManyToOne owner="${row_obj.source}" field="targetNamespace"
+                                <semui:xEditableManyToOne owner="${row_obj.kbartSource}" field="targetNamespace"
                                                           baseClass="wekb.IdentifierNamespace"
-                                                          filter1="TitleInstancePackagePlatform">${row_obj.source.targetNamespace}</semui:xEditableManyToOne>
+                                                          filter1="TitleInstancePackagePlatform">${row_obj.kbartSource.targetNamespace}</semui:xEditableManyToOne>
                             </td>
                             <td>
                                 <g:link class="ui icon button" controller="resource" action="show"
-                                        id="${row_obj.source.uuid}">
+                                        id="${row_obj.kbartSource.uuid}">
                                     <i class="edit icon"></i>
                                 </g:link>
                             </td>

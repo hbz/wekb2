@@ -46,25 +46,25 @@
                     ${pkg.provider}
                 </td>
                 <td>
-                    <g:link controller="resource" action="show" id="${pkg.source.uuid}">
-                        ${pkg.source.name}
+                    <g:link controller="resource" action="show" id="${pkg.kbartSource.uuid}">
+                        ${pkg.kbartSource.name}
                     </g:link>
                     <br>
                     <br>
-                    ${pkg.source.url}
-                    <semui:showOutGoingLink text="KBART Url" outGoingLink="${pkg.source.url}"/>
+                    ${pkg.kbartSource.url}
+                    <semui:showOutGoingLink text="KBART Url" outGoingLink="${pkg.kbartSource.url}"/>
                 </td>
                 <td>
-                    ${pkg.source.lastUpdateUrl} <semui:showOutGoingLink text="Last Update Url" outGoingLink="${pkg.source.lastUpdateUrl}"/>
+                    ${pkg.kbartSource.lastUpdateUrl} <semui:showOutGoingLink text="Last Update Url" outGoingLink="${pkg.kbartSource.lastUpdateUrl}"/>
                 </td>
                 <td>
-                    <g:if test="${pkg.source.lastRun}">
-                        <g:formatDate date="${pkg.source.lastRun}"
+                    <g:if test="${pkg.kbartSource.lastRun}">
+                        <g:formatDate date="${pkg.kbartSource.lastRun}"
                                       format="${message(code: 'default.date.format')}"/>
                     </g:if>
                 </td>
                 <td>
-                    <g:set var="nextRun" value="${pkg.source.getNextUpdateTimestamp()}"/>
+                    <g:set var="nextRun" value="${pkg.kbartSource.getNextUpdateTimestamp()}"/>
                     <g:if test="${nextRun}">
                         <g:formatDate date="${nextRun}"
                                       format="${message(code: 'default.date.format')}"/>

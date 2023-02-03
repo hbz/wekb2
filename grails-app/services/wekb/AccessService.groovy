@@ -21,7 +21,7 @@ class AccessService {
                                'wekb.Platform',
                                'wekb.ReviewRequest',
                                'wekb.TitleInstancePackagePlatform',
-                               'wekb.Source',
+                               'wekb.KbartSource',
                                'wekb.UpdatePackageInfo',
                                'wekb.UpdateTippInfo']
 
@@ -29,7 +29,7 @@ class AccessService {
                             'wekb.Package',
                             'wekb.Platform',
                             'wekb.TitleInstancePackagePlatform',
-                            'wekb.Source',]
+                            'wekb.KbartSource',]
 
     List allowedPublicShow = ['UpdatePackageInfo',
                               'UpdateTippInfo',

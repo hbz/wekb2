@@ -36,7 +36,7 @@
         <semui:actionsDropdown text="Available actions">
                 <g:each var="action" in="${displayobj.userAvailableActions().sort{it.label}}">
                     <g:if test="${action.code in ["packageUrlUpdate", "packageUrlUpdateAllTitles"]}">
-                        <g:if test="${displayobj.source}">
+                        <g:if test="${displayobj.kbartSource}">
                             <semui:actionsDropdownItem controller="workflow" action="action"
                                                        params="[component: object, selectedBulkAction: action.code, curationOverride: params.curationOverride]" text="${action.label}"/>
                         </g:if>
@@ -68,7 +68,7 @@
     <br>
     <br>
     <g:if test="${displaytemplate != null}">
-        <g:if test="${displaytemplate.rendername in ["org", "package", "platform", "source", "tipp"]}">
+        <g:if test="${displaytemplate.rendername in ["org", "package", "platform", "kbartSource", "tipp"]}">
             <g:render template="/templates/tabTemplates/domainTabs/${displaytemplate.rendername}Tabs"
                       model="${[d: displayobj]}"/>
         </g:if>

@@ -50,7 +50,7 @@
 
             <dl>
                 <dt class="control-label">Source</dt>
-                <dd><semui:xEditableManyToOne owner="${pkg}" field="source" baseClass="wekb.Source"
+                <dd><semui:xEditableManyToOne owner="${pkg}" field="kbartSource" baseClass="wekb.KbartSource"
                                               overwriteEditable="false"/></dd>
             </dl>
 

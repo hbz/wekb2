@@ -125,7 +125,7 @@ class KbartProcessService {
 
         List kbartRowsToCreateTipps = []
 
-        Date lastChangedInKbart = pkg.source ? pkg.source.lastChangedInKbart : null
+        Date lastChangedInKbart = pkg.kbartSource ? pkg.kbartSource.lastChangedInKbart : null
         List<LocalDate> lastChangedDates = []
 
         Platform plt = pkg.nominalPlatform
@@ -140,7 +140,7 @@ class KbartProcessService {
             if(onlyRowsWithLastChanged){
                 if(headerOfKbart.containsKey("last_changed")) {
                     LocalDate currentLastChangedInKbart = convertToLocalDateViaInstant(lastChangedInKbart)
-                    LocalDate lastUpdated = convertToLocalDateViaInstant(pkg.source.lastRun)
+                    LocalDate lastUpdated = convertToLocalDateViaInstant(pkg.kbartSource.lastRun)
                     if(currentLastChangedInKbart && currentLastChangedInKbart.isBefore(lastUpdated)){
                         lastUpdated = currentLastChangedInKbart
                     }
@@ -569,8 +569,8 @@ class KbartProcessService {
                     aPackage.save()
                 }
 
-                if (aPackage.source && updatePackageInfo.automaticUpdate) {
-                    Source src = Source.get(aPackage.source.id)
+                if (aPackage.kbartSource && updatePackageInfo.automaticUpdate) {
+                    KbartSource src = KbartSource.get(aPackage.kbartSource.id)
                     src.kbartHasWekbFields = !setAllTippsNotInKbartToDeleted
                     src.lastRun = new Date()
                     src.lastUpdateUrl = lastUpdateURL

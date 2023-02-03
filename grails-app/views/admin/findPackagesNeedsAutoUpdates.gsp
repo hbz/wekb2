@@ -44,8 +44,8 @@
             <th>Provider</th>
             <semui:sortableColumn property="p.curatoryGroups" title="Curatory Groups"/>
             <th>Source / KBART URL</th>
-            <semui:sortableColumn property="p.source.lastUpdateUrl" title="Last Update URL"/>
-            <semui:sortableColumn property="p.source.lastRun" title="Last Run"/>
+            <semui:sortableColumn property="p.kbartSource.lastUpdateUrl" title="Last Update URL"/>
+            <semui:sortableColumn property="p.kbartSource.lastRun" title="Last Run"/>
             <th>Next Run</th>
             <th>Titles</th>
             <th></th>
@@ -71,22 +71,22 @@
                     </g:each>
                 </td>
                 <td>
-                    <g:link controller="resource" action="show" id="${pkg.source.uuid}">
-                        ${pkg.source.name}
+                    <g:link controller="resource" action="show" id="${pkg.kbartSource.uuid}">
+                        ${pkg.kbartSource.name}
                     </g:link>
-                    <semui:showOutGoingLink text="KBART Url" outGoingLink="${pkg.source.url}"/>
+                    <semui:showOutGoingLink text="KBART Url" outGoingLink="${pkg.kbartSource.url}"/>
                 </td>
                 <td>
-                    <semui:showOutGoingLink text="Last Update Url" outGoingLink="${pkg.source.lastUpdateUrl}"/>
+                    <semui:showOutGoingLink text="Last Update Url" outGoingLink="${pkg.kbartSource.lastUpdateUrl}"/>
                 </td>
                 <td>
-                    <g:if test="${pkg.source.lastRun}">
-                        <g:formatDate date="${pkg.source.lastRun}"
+                    <g:if test="${pkg.kbartSource.lastRun}">
+                        <g:formatDate date="${pkg.kbartSource.lastRun}"
                                       format="${message(code: 'default.date.format')}"/>
                     </g:if>
                 </td>
                 <td>
-                    <g:set var="nextRun" value="${pkg.source.getNextUpdateTimestamp()}"/>
+                    <g:set var="nextRun" value="${pkg.kbartSource.getNextUpdateTimestamp()}"/>
                     <g:if test="${nextRun}">
                         <g:formatDate date="${nextRun}"
                                       format="${message(code: 'default.date.format')}"/>

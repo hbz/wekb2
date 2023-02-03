@@ -621,11 +621,11 @@ class GlobalSearchTemplatesService {
 
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'wekb.Source',
+                                        baseClass  : 'wekb.KbartSource',
                                         prompt     : 'Source',
                                         qparam     : 'qp_source',
                                         placeholder: 'Source',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'source'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'kbartSource'],
                                         hide       : false,
                                         notShowInPublic       : true
                                 ],
@@ -634,18 +634,18 @@ class GlobalSearchTemplatesService {
                                         type       : 'lookup',
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.YN,
-                                        prompt     : 'Source Automatic Updates',
+                                        prompt     : 'KbartSource Automatic Updates',
                                         qparam     : 'qp_source_automaticUpdates',
-                                        placeholder: 'Source Automatic Updates',
+                                        placeholder: 'KbartSource Automatic Updates',
                                         propType   : 'Boolean',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'source.automaticUpdates'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'kbartSource.automaticUpdates'],
                                 ],
 
                                 [
-                                        prompt     : 'Source ID',
+                                        prompt     : 'KbartSource ID',
                                         qparam     : 'qp_source_id',
-                                        placeholder: 'Source ID',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'source.id', 'type': 'java.lang.Long'],
+                                        placeholder: 'KbartSource ID',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'kbartSource.id', 'type': 'java.lang.Long'],
                                         hide       : true
                                 ],
 
@@ -675,8 +675,8 @@ class GlobalSearchTemplatesService {
                                 [heading: 'Titles', property: 'currentTippCount', sort: 'currentTippCount'],
                                //[heading: 'T', property: 'tippDuplicatesByURLCount'],
                                 [heading: 'Product IDs', property: 'anbieterProduktIDs'],
-                                [heading: 'Source', property: 'source?.name', link: true, sort: 'source.name'],
-                                [heading: 'Automatic Updates', property: 'source?.automaticUpdates']
+                                [heading: 'Source', property: 'kbartSource?.name', link: true, sort: 'kbartSource.name'],
+                                [heading: 'Automatic Updates', property: 'kbartSource?.automaticUpdates']
                         ],
                         actions   : [
                         ]
@@ -703,10 +703,10 @@ class GlobalSearchTemplatesService {
                                         hide       : true
                                 ],
                                 [
-                                        prompt     : 'Source ID',
+                                        prompt     : 'KbartSource ID',
                                         qparam     : 'qp_source_id',
-                                        placeholder: 'Source ID',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'source.id', 'type': 'java.lang.Long'],
+                                        placeholder: 'KbartSource ID',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'kbartSource.id', 'type': 'java.lang.Long'],
                                         hide       : true
                                 ],
                                 [
@@ -751,11 +751,11 @@ class GlobalSearchTemplatesService {
                                         type       : 'lookup',
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.YN,
-                                        prompt     : 'Source Automatic Updates',
+                                        prompt     : 'KbartSource Automatic Updates',
                                         qparam     : 'qp_source_automaticUpdates',
-                                        placeholder: 'Source Automatic Updates',
+                                        placeholder: 'KbartSource Automatic Updates',
                                         propType   : 'Boolean',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'source.automaticUpdates'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'kbartSource.automaticUpdates'],
                                 ],
                                 //Package Filter
                                 [
@@ -1040,7 +1040,7 @@ class GlobalSearchTemplatesService {
                                 [heading: 'Product IDs', property: 'anbieterProduktIDs'],
                                 [heading: 'Titles', property: 'currentTippCount', sort: 'currentTippCount'],
                                 [heading: 'Last Updated', property: 'lastUpdated', sort: 'lastUpdated'],
-                                [heading: 'Automatic Updates', property: 'source?.automaticUpdates']
+                                [heading: 'Automatic Updates', property: 'kbartSource?.automaticUpdates']
                         ],
                         actions   : [
                         ]
@@ -1321,7 +1321,7 @@ class GlobalSearchTemplatesService {
 
     Map sources() {
         Map result = [
-                baseclass: 'wekb.Source',
+                baseclass: 'wekb.KbartSource',
                 title    : 'Source',
                 group    : 'Secondary',
                 defaultSort : 'name',
@@ -1329,9 +1329,9 @@ class GlobalSearchTemplatesService {
                 qbeConfig: [
                         qbeForm   : [
                                 [
-                                        prompt     : 'Name of Source',
+                                        prompt     : 'Name of KbartSource',
                                         qparam     : 'qp_name',
-                                        placeholder: 'Name of Source',
+                                        placeholder: 'Name of KbartSource',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'name']
                                 ],
                                 [

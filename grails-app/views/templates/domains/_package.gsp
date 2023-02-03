@@ -14,7 +14,7 @@
 
 <dl>
     <dt class="control-label">Source</dt>
-    <dd><semui:xEditableManyToOne owner="${d}" field="source" baseClass="wekb.Source"/></dd>
+    <dd><semui:xEditableManyToOne owner="${d}" field="kbartSource" baseClass="wekb.KbartSource"/></dd>
 </dl>
 
 <dl>

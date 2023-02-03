@@ -391,12 +391,12 @@ class KbartImportService {
         /*if (packageHeaderDTO.source) {
             def src = null
             if (packageHeaderDTO.source instanceof Integer) {
-                src = Source.get(packageHeaderDTO.source)
+                src = KbartSource.get(packageHeaderDTO.source)
             }
             else if (packageHeaderDTO.source instanceof Map) {
                 def sourceMap = packageHeaderDTO.source
                 if (sourceMap.id) {
-                    src = Source.get(sourceMap.id)
+                    src = KbartSource.get(sourceMap.id)
                 }
                 else {
                     def namespace = null
@@ -413,7 +413,7 @@ class KbartImportService {
                                 automaticUpdate: (sourceMap.automaticUpdate ?: false),
                                 targetNamespace: namespace
                         ]
-                        src = new Source(source_config).save(flush: true)
+                        src = new KbartSource(source_config).save(flush: true)
                         result.curatoryGroups.each { cg ->
                             src.curatoryGroups.add(cg)
                         }
@@ -1042,11 +1042,11 @@ class KbartImportService {
 
     @Deprecated
     TitleInstancePackagePlatform tippMatchingByTitleID(JSONArray identifiers, Package aPackage, Platform platform) {
-        if(identifiers && aPackage.source && aPackage.source.targetNamespace){
+        if(identifiers && aPackage.kbartSource && aPackage.kbartSource.targetNamespace){
 
-            String value = identifiers.find {it.type == aPackage.source.targetNamespace.value}?.value
+            String value = identifiers.find {it.type == aPackage.kbartSource.targetNamespace.value}?.value
 
-            List<TitleInstancePackagePlatform> tippList = Identifier.executeQuery('select i.tipp from Identifier as i where LOWER(i.namespace.value) = :namespaceValue and i.value = :value and i.tipp is not null', [namespaceValue: aPackage.source.targetNamespace.value.toLowerCase(), value: value])
+            List<TitleInstancePackagePlatform> tippList = Identifier.executeQuery('select i.tipp from Identifier as i where LOWER(i.namespace.value) = :namespaceValue and i.value = :value and i.tipp is not null', [namespaceValue: aPackage.kbartSource.targetNamespace.value.toLowerCase(), value: value])
 
             if(tippList.size() == 1){
                     log.debug("tippsMatchingByTitleID provider internal identifier matching by "+tippList.size() + ": "+ tippList.id)
@@ -1067,11 +1067,11 @@ class KbartImportService {
     }
 
     List<TitleInstancePackagePlatform> tippsMatchingByTitleID(JSONArray identifiers, Package aPackage, Platform platform) {
-        if(identifiers && aPackage.source && aPackage.source.targetNamespace){
+        if(identifiers && aPackage.kbartSource && aPackage.kbartSource.targetNamespace){
 
-            String value = identifiers.find {it.type == aPackage.source.targetNamespace.value}?.value
+            String value = identifiers.find {it.type == aPackage.kbartSource.targetNamespace.value}?.value
 
-            List<TitleInstancePackagePlatform> tippList = Identifier.executeQuery('select i.tipp from Identifier as i where LOWER(i.namespace.value) = :namespaceValue and i.value = :value and i.tipp is not null', [namespaceValue: aPackage.source.targetNamespace.value.toLowerCase(), value: value])
+            List<TitleInstancePackagePlatform> tippList = Identifier.executeQuery('select i.tipp from Identifier as i where LOWER(i.namespace.value) = :namespaceValue and i.value = :value and i.tipp is not null', [namespaceValue: aPackage.kbartSource.targetNamespace.value.toLowerCase(), value: value])
 
             tippList = tippList.findAll {it.pkg == aPackage && it.status != RDStore.KBC_STATUS_REMOVED}
 

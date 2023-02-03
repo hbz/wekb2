@@ -41,9 +41,7 @@ class Package extends KBComponent {
 
   Set variantNames = []
 
-  static manyByCombo = [
-    curatoryGroups: CuratoryGroup
-  ]
+  KbartSource kbartSource
 
   static mappedBy = [
           variantNames        : 'owner'
@@ -94,6 +92,8 @@ class Package extends KBComponent {
 
       nominalPlatform column: 'pkg_platform_fk'
       provider column: 'pkg_provider_fk'
+
+    kbartSource column: 'pkg_kbart_source_fk'
   }
 
   static constraints = {
@@ -129,6 +129,7 @@ class Package extends KBComponent {
 
     nominalPlatform (nullable: true, blank: false)
     provider (nullable: true, blank: false)
+    kbartSource (nullable: true, blank: false)
 
   }
 
@@ -381,7 +382,7 @@ class Package extends KBComponent {
   @Transient
   List<TitleInstancePackagePlatform> findTippDuplicatesByTitleID() {
 
-    IdentifierNamespace identifierNamespace = this.source ? this.source.targetNamespace : null
+    IdentifierNamespace identifierNamespace = this.kbartSource ? this.kbartSource.targetNamespace : null
 
     if(identifierNamespace) {
       List<TitleInstancePackagePlatform> tippsDuplicates = TitleInstancePackagePlatform.executeQuery("select tipp from TitleInstancePackagePlatform as tipp join tipp.ids as ident" +
@@ -417,7 +418,7 @@ class Package extends KBComponent {
 
   @Transient
   Integer getTippDuplicatesByTitleIDCount() {
-    IdentifierNamespace identifierNamespace = this.source ? this.source.targetNamespace : null
+    IdentifierNamespace identifierNamespace = this.kbartSource ? this.kbartSource.targetNamespace : null
 
     if(identifierNamespace) {
       int result = TitleInstancePackagePlatform.executeQuery("select count(tipp.id) from TitleInstancePackagePlatform as tipp join tipp.ids as ident" +
@@ -462,7 +463,7 @@ class Package extends KBComponent {
   @Transient
   public IdentifierNamespace getTitleIDNameSpace(){
     IdentifierNamespace identifierNamespace
-    List<IdentifierNamespace> idnsCheck = IdentifierNamespace.executeQuery('select so.targetNamespace from Package pkg join pkg.source so where pkg = :pkg', [pkg: this])
+    List<IdentifierNamespace> idnsCheck = IdentifierNamespace.executeQuery('select so.targetNamespace from Package pkg join pkg.kbartSource so where pkg = :pkg', [pkg: this])
     if (!idnsCheck && this.nominalPlatform) {
       idnsCheck = IdentifierNamespace.executeQuery('select plat.titleNamespace from Platform plat where plat = :plat', [plat: this.nominalPlatform])
     }

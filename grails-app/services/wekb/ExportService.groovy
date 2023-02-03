@@ -27,12 +27,12 @@ class ExportService {
 
     public void exportOriginalKBART(def outputStream, Package pkg) {
 
-        if(pkg.source && (pkg.source.lastUpdateUrl || pkg.source.url)){
-            if((UrlToolkit.containsDateStamp(pkg.source.url) || UrlToolkit.containsDateStampPlaceholder(pkg.source.url)) && pkg.source.lastUpdateUrl){
-                File file = kbartFromUrl(pkg.source.lastUpdateUrl)
+        if(pkg.kbartSource && (pkg.kbartSource.lastUpdateUrl || pkg.kbartSource.url)){
+            if((UrlToolkit.containsDateStamp(pkg.kbartSource.url) || UrlToolkit.containsDateStampPlaceholder(pkg.kbartSource.url)) && pkg.kbartSource.lastUpdateUrl){
+                File file = kbartFromUrl(pkg.kbartSource.lastUpdateUrl)
                 outputStream << file.bytes
             }else{
-                File file = kbartFromUrl(pkg.source.url)
+                File file = kbartFromUrl(pkg.kbartSource.url)
                 outputStream << file.bytes
             }
             outputStream.close()
@@ -258,7 +258,7 @@ class ExportService {
         String packageEzbAnchor = "package_ezb_anchor"
         String packageIsci = "package_isci"
 
-        String titleIdNameSpace = (pkg.source && pkg.source.targetNamespace) ? pkg.source.targetNamespace.value : 'FAKE'
+        String titleIdNameSpace = (pkg.kbartSource && pkg.kbartSource.targetNamespace) ? pkg.kbartSource.targetNamespace.value : 'FAKE'
 
         RefdataValue priceTypeList = RDStore.PRICE_TYPE_LIST
         RefdataValue priceTypeOAAPC = RDStore.PRICE_TYPE_OA_APC
@@ -545,10 +545,10 @@ class ExportService {
             row.add(sanitize(pkg.regionalRanges?.value.join(',')))
             row.add(sanitize(pkg.getAnbieterProduktIDs()))
             row.add(sanitize(pkg.ddcs?.value.join(',')))
-            row.add(sanitize(pkg.source?.url))
-            row.add(sanitize(pkg.source?.frequency?.value))
-            row.add(sanitize(pkg.source?.targetNamespace?.value))
-            row.add(sanitize(pkg.source?.automaticUpdates ? 'Yes': 'No'))
+            row.add(sanitize(pkg.kbartSource?.url))
+            row.add(sanitize(pkg.kbartSource?.frequency?.value))
+            row.add(sanitize(pkg.kbartSource?.targetNamespace?.value))
+            row.add(sanitize(pkg.kbartSource?.automaticUpdates ? 'Yes': 'No'))
             row.add(sanitize(pkg.paas?.archivingAgency?.value))
             row.add(sanitize(pkg.paas?.openAccess?.value))
             row.add(sanitize(pkg.paas?.postCancellationAccess?.value))

@@ -86,7 +86,7 @@
                         <g:link class="item" controller="create" action="index"
                                 params="[tmpl: 'wekb.Platform']">Platforms</g:link>
                         <g:link class="item" controller="create" action="index"
-                                params="[tmpl: 'wekb.Source']">Sources</g:link>
+                                params="[tmpl: 'wekb.KbartSource']">Sources</g:link>
                         <g:link class="item" controller="create" action="index"
                                 params="[tmpl: 'wekb.TitleInstancePackagePlatform']">Titles</g:link>
                     </div>

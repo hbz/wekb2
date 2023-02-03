@@ -29,7 +29,7 @@
                 <dd>
                     <g:link class="display-inline" controller="search" action="inlineSearch"
                             params="[s_controllerName: controllerName, s_actionName: actionName, objectUUID: params.id, max: params.max, offset: params.offset, sort: params.sort, order: params.order, qbe: 'g:notes', qp_ownerClassID: d.id, inline: true, qp_ownerClass: d.getClass().name]"
-                            id="">Notes on this Source</g:link>
+                            id="">Notes on this KbartSource</g:link>
                 </dd>
             </dl>
         </div>

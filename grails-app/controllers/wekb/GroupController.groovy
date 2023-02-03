@@ -237,10 +237,10 @@ class GroupController {
                         " join p.outgoingCombos as curatoryGroups_combos " +
                         " join curatoryGroups_combos.toComponent as curatoryGroups " +
                         " WHERE curatoryGroups_combos.type = :curatoryGroups_combos_type AND curatoryGroups_combos.status = :curatoryGroups_combos_status AND  exists (select qp_curgroups from CuratoryGroup as qp_curgroups where qp_curgroups = curatoryGroups and qp_curgroups in (:curgroups) ) " +
-                        " AND p.source is not null AND " +
-                        " p.source.automaticUpdates = true " +
-                        " AND (p.source.lastRun is null or p.source.lastRun < current_date) order by p.name",[curatoryGroups_combos_status: RefdataCategory.lookup(RCConstants.COMBO_STATUS, Combo.STATUS_ACTIVE), curatoryGroups_combos_type: RefdataCategory.lookup(RCConstants.COMBO_TYPE, 'Package.CuratoryGroups'), curgroups: result.groups]).each { Package p ->
-            if (p.source.needsUpdate()) {
+                        " AND p.kbartSource is not null AND " +
+                        " p.kbartSource.automaticUpdates = true " +
+                        " AND (p.kbartSource.lastRun is null or p.kbartSource.lastRun < current_date) order by p.name",[curatoryGroups_combos_status: RefdataCategory.lookup(RCConstants.COMBO_STATUS, Combo.STATUS_ACTIVE), curatoryGroups_combos_type: RefdataCategory.lookup(RCConstants.COMBO_TYPE, 'Package.CuratoryGroups'), curgroups: result.groups]).each { Package p ->
+            if (p.kbartSource.needsUpdate()) {
                 pkgs << p
             }
         }

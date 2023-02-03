@@ -110,16 +110,16 @@ class FTUpdateService {
         result.file = kbc.file?.value
         result.contentType = kbc.contentType?.value
 
-        if (kbc.source) {
-          result.source = [
-            id              : kbc.source.id,
-            name            : kbc.source.name,
-            automaticUpdates: kbc.source.automaticUpdates,
-            url             : kbc.source.url,
-            frequency       : kbc.source.frequency?.value,
+        if (kbc.kbartSource) {
+          result.kbartSource = [
+            id              : kbc.kbartSource.id,
+            name            : kbc.kbartSource.name,
+            automaticUpdates: kbc.kbartSource.automaticUpdates,
+            url             : kbc.kbartSource.url,
+            frequency       : kbc.kbartSource.frequency?.value,
           ]
-          if (kbc.source.lastRun){
-            result.source.lastRun = dateFormatService.formatIsoTimestamp(kbc.source.lastRun)
+          if (kbc.kbartSource.lastRun){
+            result.kbartSource.lastRun = dateFormatService.formatIsoTimestamp(kbc.kbartSource.lastRun)
           }
         }
 

@@ -43,7 +43,7 @@
             <semui:sortableColumn property="p.name" title="Name"/>
             <semui:sortableColumn property="p.curatoryGroups" title="Curatory Groups"/>
             <th>Source / KBART URL</th>
-            <semui:sortableColumn property="p.source.lastRun" title="Last Run"/>
+            <semui:sortableColumn property="p.kbartSource.lastRun" title="Last Run"/>
             <th>Titles in Package</th>
             <th>Titles in KBART</th>
             <th>Invalid Titles in KBART</th>
@@ -73,14 +73,14 @@
                     </g:each>
                 </td>
                 <td>
-                    <g:link controller="resource" action="show" id="${pkg.source.uuid}">
-                        ${pkg.source.name}
+                    <g:link controller="resource" action="show" id="${pkg.kbartSource.uuid}">
+                        ${pkg.kbartSource.name}
                     </g:link>
-                    <semui:showOutGoingLink text="KBART Url" outGoingLink="${pkg.source.url}"/>
+                    <semui:showOutGoingLink text="KBART Url" outGoingLink="${pkg.kbartSource.url}"/>
                 </td>
                 <td>
-                    <g:if test="${pkg.source.lastRun}">
-                        <g:formatDate date="${pkg.source.lastRun}"
+                    <g:if test="${pkg.kbartSource.lastRun}">
+                        <g:formatDate date="${pkg.kbartSource.lastRun}"
                                       format="${message(code: 'default.date.format')}"/>
                     </g:if>
                 </td>

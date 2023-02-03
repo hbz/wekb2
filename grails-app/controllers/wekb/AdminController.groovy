@@ -426,7 +426,7 @@ class AdminController {
     def result = [:]
 
     List pkgs = []
-    List<Source> sourceList = Source.findAllByAutomaticUpdatesAndTargetNamespaceIsNotNull(true)
+    List<KbartSource> sourceList = KbartSource.findAllByAutomaticUpdatesAndTargetNamespaceIsNotNull(true)
 
     Package.findAllByStatus(RDStore.KBC_STATUS_CURRENT, [sort: 'name']).eachWithIndex { Package aPackage, int index ->
       Integer tippDuplicatesByNameCount = aPackage.getTippDuplicatesByNameCount()
@@ -610,10 +610,10 @@ class AdminController {
 
     Package.executeQuery(
             "from Package p " +
-                    "where p.source is not null and " +
-                    "p.source.automaticUpdates = true " +
-                    "and (p.source.lastRun is null or (p.source.lastRun < current_date)) order by ${params.sort} ${params.order}").each { Package p ->
-      if (p.source.needsUpdate()) {
+                    "where p.kbartSource is not null and " +
+                    "p.kbartSource.automaticUpdates = true " +
+                    "and (p.kbartSource.lastRun is null or (p.kbartSource.lastRun < current_date)) order by ${params.sort} ${params.order}").each { Package p ->
+      if (p.kbartSource.needsUpdate()) {
         if(curatoryGroupFilter){
          if(curatoryGroupFilter in p.curatoryGroups) {
            pkgs << p
@@ -642,8 +642,8 @@ class AdminController {
     params.order = params.order ?: 'asc'
 
     Package.executeQuery("from Package p " +
-                    "where p.status != ${RDStore.KBC_STATUS_DELETED.id} and p.source is not null and " +
-                    "p.source.automaticUpdates = true " +
+                    "where p.status != ${RDStore.KBC_STATUS_DELETED.id} and p.kbartSource is not null and " +
+                    "p.kbartSource.automaticUpdates = true " +
                     " order by ${params.sort} ${params.order}").each { Package p ->
 
       UpdatePackageInfo updatePackageInfo = p.getLastSuccessfulAutoUpdateInfo()

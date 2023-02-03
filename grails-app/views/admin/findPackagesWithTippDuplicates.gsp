@@ -53,7 +53,7 @@
                     </g:each>
                 </td>
                 <td>
-                    <g:if test="${pkg.source?.automaticUpdates}">
+                    <g:if test="${pkg.kbartSource?.automaticUpdates}">
                         <i class="fa fa-check-circle text-success fa-lg"
                            title="${message(code: 'default.boolean.true')}"></i>
                     </g:if>

@@ -52,26 +52,26 @@
                     </td>
 
                     <td>
-                        <g:if test="${pkg.source}">
-                            <g:link controller="resource" action="show" id="${pkg.source.uuid}">${pkg.source.name}</g:link>
+                        <g:if test="${pkg.kbartSource}">
+                            <g:link controller="resource" action="show" id="${pkg.kbartSource.uuid}">${pkg.kbartSource.name}</g:link>
                         </g:if>
                     </td>
 
                     <td>
-                        <g:if test="${pkg.source && pkg.source.frequency}">
-                            ${pkg.source.frequency.getI10n('value')}
+                        <g:if test="${pkg.kbartSource && pkg.kbartSource.frequency}">
+                            ${pkg.kbartSource.frequency.getI10n('value')}
                         </g:if>
                     </td>
 
                     <td>
-                        <g:if test="${pkg.source && pkg.source.targetNamespace}">
-                            ${pkg.source.targetNamespace.value}
+                        <g:if test="${pkg.kbartSource && pkg.kbartSource.targetNamespace}">
+                            ${pkg.kbartSource.targetNamespace.value}
                         </g:if>
                     </td>
 
                     <td>
-                        <g:if test="${pkg.source}">
-                            ${pkg.source.automaticUpdates ? 'Yes' : 'No'}
+                        <g:if test="${pkg.kbartSource}">
+                            ${pkg.kbartSource.automaticUpdates ? 'Yes' : 'No'}
                         </g:if>
                     </td>
 

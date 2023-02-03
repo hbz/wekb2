@@ -204,11 +204,6 @@ abstract class KBComponent implements Auditable{
    */
   User lastUpdatedBy
 
-  /**
-   * The source for the record (Whatever it is)
-   */
-  Source source
-
   String lastUpdateComment
 
   Set outgoingCombos = []
@@ -263,7 +258,6 @@ abstract class KBComponent implements Auditable{
     // create index norm_id_value_idx on kbcomponent(kbc_normname(64),id_namespace_fk)
     normname column: 'kbc_normname', type: 'text', index: 'kbc_normname_idx'
     description column: 'kbc_description', type: 'text'
-    source column: 'kbc_source_fk'
     status column: 'kbc_status_rv_fk', index: 'kbc_status_idx'
     shortcode column: 'kbc_shortcode', index: 'kbc_shortcode_idx'
     dateCreated column: 'kbc_date_created', index: 'kbc_date_created_idx'
@@ -289,7 +283,6 @@ abstract class KBComponent implements Auditable{
     description(nullable: true, blank: false)
     normname(nullable: true, blank: false, maxSize: 2048)
     status(nullable: true, blank: false)
-    source(nullable: true, blank: false)
     lastSeen(nullable: true, blank: false)
     lastUpdateComment(nullable: true, blank: false)
     insertBenchmark(nullable: true, blank: false)
