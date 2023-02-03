@@ -79,34 +79,6 @@ public class HQLBuilder {
       }
     }
 
-    qbetemplate.qbeConfig.qbeGlobals.each { global_prop_def ->
-      // log.debug("Adding query global: ${global_prop_def}");
-      // create a contextTree so we can process the filter just like something added to the query tree
-      // Is this global user selectable
-      
-      def interpretedValue = interpretGlobalValue(grailsApplication,global_prop_def)
-      
-      if( interpretedValue ) {
-        if ( global_prop_def.qparam != null) {  // Yes
-          if ( params[global_prop_def.qparam] == null ) { // If it's not be set
-            if ( global_prop_def.default == 'on' ) { // And the default is set
-              // log.debug("Adding prop ${global_prop_def.prop} ${global_prop_def.prop.replaceAll('\\.','_')}");
-              criteria.add([defn:[ qparam:global_prop_def.prop.replaceAll('\\.','_'), contextTree:global_prop_def],
-                            value:interpretedValue])
-            }
-          }
-          else if ( params[global_prop_def.qparam] == 'on' ) { // It's set explicitly, if its on, add the criteria
-            criteria.add([defn:[qparam:global_prop_def.prop.replaceAll('\\.','_'),contextTree:global_prop_def],value:interpretedValue])
-          }
-        }
-        else {
-          criteria.add([defn:[qparam:global_prop_def.prop.replaceAll('\\.','_'),contextTree:global_prop_def],value:interpretedValue])
-        }
-      }else{
-        log.error("Could not interpret global filter ${global_prop_def}.. ignoring!")
-      }
-    }
-
     def hql_builder_context = new java.util.HashMap();
     hql_builder_context.declared_scopes = [:];
     hql_builder_context.query_clauses = []

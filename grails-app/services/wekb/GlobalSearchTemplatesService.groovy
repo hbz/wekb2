@@ -96,8 +96,6 @@ class GlobalSearchTemplatesService {
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'automaticUpdate'],
                                 ],
                         ],
-                        qbeGlobals: [
-                        ],
                         qbeResults: [
                                 [heading: 'Description', property: 'description', link: true],
                                 [heading: 'Package', property: 'pkg.name', link: true],
@@ -182,8 +180,6 @@ class GlobalSearchTemplatesService {
                                         hide: true
                                 ],
                         ],
-                        qbeGlobals: [
-                        ],
                         qbeResults: [
                                 [heading: 'Description', property: 'description', link: true],
                                 [heading: 'Title', property: 'tipp.name', link: true],
@@ -239,10 +235,6 @@ class GlobalSearchTemplatesService {
                                         default    : [type: 'query', query: 'select r from RefdataValue where r.value=:v and r.owner.description=:o', params: ['Current', RCConstants.KBCOMPONENT_STATUS]]
                                 ]
                         ],
-                        qbeGlobals: [
-                              /*  ['ctxtp' : 'filter', 'prop': 'status', 'comparator': 'eq', 'value': 'Current', 'negate': false, 'prompt': 'Only Current',
-                                 'qparam': 'qp_onlyCurrent', 'default': 'on', 'cat': RCConstants.KBCOMPONENT_STATUS, 'type': 'java.lang.Object']*/
-                        ],
                         qbeResults: [
                                 [heading: 'Type', property: 'niceName'],
                                 [heading: 'Name/Title', property: 'name', sort: 'name', link: true],
@@ -287,8 +279,6 @@ class GlobalSearchTemplatesService {
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'status'],
                                 ],
                         ],
-                        qbeGlobals: [
-                        ],
                         qbeResults: [
                                 [heading: 'Name/Title', property: 'name', sort: 'name', link: true],
                                 [heading: 'Status', property: 'status?.value', sort: 'status'],
@@ -323,8 +313,6 @@ class GlobalSearchTemplatesService {
                                         placeholder: 'Identifier Value',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'value'],
                                 ],
-                        ],
-                        qbeGlobals: [
                         ],
                         qbeResults: [
                                 [heading: 'Namespace', property: 'namespace.value', sort: 'namespace.value'],
@@ -402,9 +390,6 @@ class GlobalSearchTemplatesService {
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'family', 'wildcard': 'B']
                                 ],
                         ],
-
-                        qbeGlobals: [
-                        ],
                         qbeResults: [
                                 [heading: 'Name', property: 'name', sort: 'name'],
                                 [heading: 'Value', property: 'value', link: true, sort: 'value'],
@@ -480,10 +465,6 @@ class GlobalSearchTemplatesService {
                                         // II: Default not yet implemented
                                         default    : [type: 'query', query: 'select r from RefdataValue where r.value=:v and r.owner.description=:o', params: ['Current', RCConstants.KBCOMPONENT_STATUS]]
                                 ],
-                        ],
-                        qbeGlobals: [
-                                /*['ctxtp' : 'filter', 'prop': 'status.value', 'comparator': 'eq', 'value': 'Current', 'negate': false, 'prompt': 'Only Current',
-                                 'qparam': 'qp_onlyCurrent', 'default': 'on']*/
                         ],
                         qbeResults: [
                                 [heading: 'Name', property: 'name', sort: 'name', link: true],
@@ -660,14 +641,10 @@ class GlobalSearchTemplatesService {
                                         hide       : true
                                 ],
                         ],
-                        qbeGlobals: [
-                                /*['ctxtp' : 'filter', 'prop': 'status', 'comparator': 'eq', 'value': 'Current', 'negate': false, 'prompt': 'Only Current',
-                                 'qparam': 'qp_onlyCurrent', 'default': 'on', 'cat': RCConstants.KBCOMPONENT_STATUS, 'type': 'java.lang.Object']*/
-                        ],
                         qbeResults: [
                                 [heading: 'Name', property: 'name', sort: 'name', link: true],
-                                [heading: 'Provider', property: 'provider?.name', link: true],
-                                [heading: 'Nominal Platform', property: 'nominalPlatform?.name', link: true],
+                                [heading: 'Provider', property: 'provider?.name', sort: 'provider?.name', link: true],
+                                [heading: 'Nominal Platform', property: 'nominalPlatform?.name', sort: 'nominalPlatform?.name', link: true],
                                 [heading: 'Content Type', property: 'contentType?.value', sort: 'contentType'],
                                 [heading: 'Scope', property: 'scope', sort: 'scope'],
                                 [heading: 'Last Updated', property: 'lastUpdated', sort: 'lastUpdated'],
@@ -1027,15 +1004,11 @@ class GlobalSearchTemplatesService {
                                 ],
 
                         ],
-                        qbeGlobals: [
-                                /*['ctxtp' : 'filter', 'prop': 'status', 'comparator': 'eq', 'value': 'Current', 'negate': false, 'prompt': 'Only Current',
-                                 'qparam': 'qp_onlyCurrent', 'default': 'on', 'cat': RCConstants.KBCOMPONENT_STATUS, 'type': 'java.lang.Object']*/
-                        ],
                         qbeResults: [
                                 [heading: 'Name', property: 'name', sort: 'name', link: true],
-                                [heading: 'Provider', property: 'provider?.name', link: true],
-                                [heading: 'Nominal Platform', property: 'nominalPlatform?.name', link: true],
-                                [heading: 'Curatory Groups', property: 'curatoryGroups.curatoryGroup', link: true],
+                                [heading: 'Provider', property: 'provider?.name', sort: 'provider?.name', link: true],
+                                [heading: 'Nominal Platform', property: 'nominalPlatform?.name', sort: 'nominalPlatform?.name', link: true],
+                                [heading: 'Curatory Groups', property: 'curatoryGroupsCuratoryGroup', link: true],
                                 [heading: 'Content Type', property: 'contentType?.value', sort: 'contentType'],
                                 [heading: 'Product IDs', property: 'anbieterProduktIDs'],
                                 [heading: 'Titles', property: 'currentTippCount', sort: 'currentTippCount'],
@@ -1210,14 +1183,10 @@ class GlobalSearchTemplatesService {
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'counterR5SushiApiSupported'],
                                 ],
                         ],
-                        qbeGlobals: [
-                              /*  ['ctxtp' : 'filter', 'prop': 'status', 'comparator': 'eq', 'value': 'Current', 'negate': false, 'prompt': 'Only Current',
-                                 'qparam': 'qp_onlyCurrent', 'default': 'on', 'cat': RCConstants.KBCOMPONENT_STATUS, 'type': 'java.lang.Object']*/
-                        ],
                         qbeResults: [
                                 [heading: 'Name/Title', property: 'name', sort: 'name', link: true],
                                 [heading: 'Primary URL', property: 'primaryUrl', sort: 'primaryUrl', outGoingLink: true],
-                                [heading: 'Provider', property: 'provider.name', link: true],
+                                [heading: 'Provider', property: 'provider?.name', sort: 'provider?.name', link: true],
                                 [heading: 'Current Titles', property: 'currentTippCount'],
                                 [heading: 'Current Packages', property: 'packagesCount'],
                                 [heading: 'Last Updated', property: 'lastUpdated', sort: 'lastUpdated'],
@@ -1250,9 +1219,6 @@ class GlobalSearchTemplatesService {
                                         placeholder: 'Category Description En',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'desc_en']
                                 ],
-                        ],
-                        qbeGlobals: [
-                               /* ['ctxtp': 'filter', 'prop': 'desc', 'comparator': 'ilike', 'value': 'Combo.%', 'negate': true]*/
                         ],
                         qbeResults: [
                                 [heading: 'Description', sort: 'desc', property: 'desc', link: true],
@@ -1300,8 +1266,6 @@ class GlobalSearchTemplatesService {
                                         placeholder: 'Refdata Category',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'owner']
                                 ],
-                        ],
-                        qbeGlobals: [
                         ],
                         qbeResults: [
                                 [heading: 'Value', sort: 'value', property: 'value', link: true],
@@ -1372,10 +1336,6 @@ class GlobalSearchTemplatesService {
                                         placeholder: 'Frequencys',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'frequency'],
                                 ],
-                        ],
-                        qbeGlobals: [
-                              /*  ['ctxtp' : 'filter', 'prop': 'status', 'comparator': 'eq', 'value': 'Current', 'negate': false, 'prompt': 'Only Current',
-                                 'qparam': 'qp_onlyCurrent', 'default': 'on', 'cat': RCConstants.KBCOMPONENT_STATUS, 'type': 'java.lang.Object']*/
                         ],
                         qbeResults: [
                                 [heading: 'Name/Title', property: 'name', sort: 'name', link: true],
@@ -1592,10 +1552,6 @@ class GlobalSearchTemplatesService {
                                         default    : [type: 'query', query: 'select r from RefdataValue where r.value=:v and r.owner.description=:o', params: ['Current', RCConstants.KBCOMPONENT_STATUS]]
                                 ],
                         ],
-                       /* qbeGlobals: [
-                                ['ctxtp' : 'filter', 'prop': 'status', 'comparator': 'eq', 'value': 'Current', 'negate': false, 'prompt': 'Only Current',
-                                 'qparam': 'qp_onlyCurrent', 'default': 'on', 'cat': RCConstants.KBCOMPONENT_STATUS, 'type': 'java.lang.Object']
-                        ],*/
                         qbeResults: [
                                 [heading: 'Title', property: 'name', link: true],
                                 [heading: 'Type', property: 'publicationType?.value', sort: 'publicationType.value'],
@@ -1853,8 +1809,6 @@ class GlobalSearchTemplatesService {
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'passwordExpired'],
                                 ],
                         ],
-                        qbeGlobals: [
-                        ],
                         qbeResults: [
                                 [heading: 'Username', property: 'username', link: true, sort: 'username'],
                                 [heading: 'Enabled', property: 'enabled', sort: 'enabled'],
@@ -1887,9 +1841,6 @@ class GlobalSearchTemplatesService {
                                         placeholder: 'Type of Job',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'type']
                                 ],
-                        ],
-                        qbeGlobals: [
-                                ['ctxtp': 'filter', 'prop': 'ownerId', 'comparator': 'eq', 'value': '__USERID', 'default': 'on', 'qparam': 'qp_owner', 'type': 'java.lang.Long', 'hidden': true]
                         ],
                         qbeResults: [
                                 [heading: 'Description', property: 'description', link: true],

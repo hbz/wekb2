@@ -188,11 +188,20 @@ class SearchService {
                         if(result.qbetemplate.baseclass != 'wekb.RefdataValue' && cobj?.class?.name == 'wekb.RefdataValue' ) {
                             cobj = cobj.value
                         }
+                        else if(sp == 'curatoryGroupsCuratoryGroup') {
+                            if(cobj instanceof Package){
+                                cobj = CuratoryGroupPackage.findAllByPkg(cobj)?.curatoryGroup
+                            }else if(cobj instanceof Platform){
+                                cobj = CuratoryGroupPlatform.findAllByPlatform(cobj)?.curatoryGroup
+                            }else if(cobj instanceof Org){
+                                cobj = CuratoryGroupOrg.findAllByOrg(cobj)?.curatoryGroup
+                            }else if(cobj instanceof KbartSource){
+                                cobj = CuratoryGroupKbartSource.findAllByKbartSource(cobj)?.curatoryGroup
+                            }
+                        }
                         else {
                             if ( cobj && (cobj.hasProperty(sp) || (cobj.respondsTo(sp)?.size() > 0))) {
-                                println('sp')
-                                println(sp)
-                                println(cobj?.class?.name)
+
                                 def oobj = cobj
 
                                 cobj = cobj[sp]

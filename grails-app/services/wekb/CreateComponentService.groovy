@@ -706,7 +706,7 @@ class CreateComponentService {
 
                     if(user.curatoryGroupUsers) {
                         user.curatoryGroupUsers.curatoryGroup.each { CuratoryGroup cg ->
-                            if (!(curatoryGroups && cg in kbartSource.curatoryGroups.curatoryGroup)) {
+                            if (!(kbartSource.curatoryGroups && cg in kbartSource.curatoryGroups.curatoryGroup)) {
                                 new CuratoryGroupKbartSource(kbartSource: kbartSource, curatoryGroup: cg).save()
                             }
                         }
