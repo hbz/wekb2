@@ -546,23 +546,6 @@ abstract class KBComponent implements Auditable{
   }
 
 
-  /**
-   * Similar to the respondsTo method but checks for methods properties and combos.
-   */
-  @Transient
-  static boolean has(Object ob, String op){
-    // The flag value.
-    boolean hasOp = false
-    if (ob){
-      // Check properties.
-      hasOp = ob.hasProperty(op) ||
-          (ob.respondsTo(op)?.size() > 0) ||
-          (ob instanceof KBComponent && ob.allComboPropertyNames.contains(op))
-    }
-    hasOp
-  }
-
-
   @Transient
   String getDisplayName(){
     return name

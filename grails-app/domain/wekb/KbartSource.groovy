@@ -10,7 +10,6 @@ import java.sql.Timestamp
 
 class KbartSource extends AbstractBase implements Auditable {
 
-    String uuid
     String name
     String url
 
@@ -268,4 +267,84 @@ class KbartSource extends AbstractBase implements Auditable {
         result
     }
 
+    String toString(){
+        "${name ?: ''}".toString()
+    }
+
+
+    @Transient
+    String getNiceName(){
+        "${this.class.getSimpleName()}"
+    }
+
+
+    @Transient
+    String getDisplayName(){
+        return name
+    }
+
+    def expunge(){
+        log.debug("Component expunge")
+        def result = [deleteType: this.class.name, deleteId: this.id]
+        this.delete(failOnError: true)
+        result
+    }
+
+    void retire(def context = null){
+        log.debug("KBComponent::retire")
+        // Set the status to retired.
+        setStatus(RDStore.KBC_STATUS_RETIRED)
+        save(flush: true, failOnError: true)
+    }
+
+
+    void setActive(context){
+        setStatus(RDStore.KBC_STATUS_CURRENT)
+        save(flush: true, failOnError: true)
+    }
+
+
+    void setExpected(context){
+        setStatus(RDStore.KBC_STATUS_EXPECTED)
+        save(flush: true, failOnError: true)
+    }
+
+
+    @Transient
+    boolean isRetired(){
+        return (getStatus() == RDStore.KBC_STATUS_RETIRED)
+    }
+
+
+    @Transient
+    boolean isDeleted(){
+        return (getStatus() == RDStore.KBC_STATUS_DELETED)
+    }
+
+
+    @Transient
+    boolean isCurrent(){
+        return (getStatus() == RDStore.KBC_STATUS_CURRENT)
+    }
+
+
+    @Transient
+    boolean isExpected(){
+        return (getStatus() == RDStore.KBC_STATUS_EXPECTED)
+    }
+
+    @Override
+    def beforeInsert() {
+        return null
+    }
+
+    @Override
+    def beforeUpdate() {
+        return null
+    }
+
+    @Override
+    def beforeDelete() {
+        return null
+    }
 }
