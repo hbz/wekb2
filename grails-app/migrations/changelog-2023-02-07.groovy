@@ -281,18 +281,14 @@ databaseChangeLog = {
     }
 
     changeSet(author: "djebeniani (generated)", id: "1675376747887-31") {
-        addForeignKeyConstraint(baseColumnNames: "kbart_source_id", baseTableName: "curatory_group_component", constraintName: "FKkg594iwbdpv0uxrisvwlpom3e", deferrable: "false", initiallyDeferred: "false", referencedColumnNames: "ks_id", referencedTableName: "kbart_source", validate: "true")
-    }
-
-    changeSet(author: "djebeniani (generated)", id: "1675376747887-32") {
         addForeignKeyConstraint(baseColumnNames: "pkg_kbart_source_fk", baseTableName: "package", constraintName: "FKnxq0sr4gt78r22yme1a4p1gef", deferrable: "false", initiallyDeferred: "false", referencedColumnNames: "ks_id", referencedTableName: "kbart_source", validate: "true")
     }
 
-    changeSet(author: "djebeniani (generated)", id: "1675376747887-33") {
+    changeSet(author: "djebeniani (generated)", id: "1675376747887-32") {
         dropForeignKeyConstraint(baseTableName: "kbcomponent", constraintName: "fkdcqidy0a8vve7weaha2woqu8u")
     }
 
-    changeSet(author: "djebeniani (generated)", id: "1675376747887-34") {
+    changeSet(author: "djebeniani (generated)", id: "1675376747887-33") {
         dropColumn(columnName: "kbc_source_fk", tableName: "kbcomponent")
     }
 

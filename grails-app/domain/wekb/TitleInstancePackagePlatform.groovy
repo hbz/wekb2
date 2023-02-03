@@ -226,8 +226,8 @@ class TitleInstancePackagePlatform extends KBComponent {
   @Transient
   public String getTitleID(){
       String result = null
-      if(pkg.source && pkg.source.targetNamespace){
-        result = getIdentifierValue(pkg.source.targetNamespace.value)
+      if(pkg.kbartSource && pkg.kbartSource.targetNamespace){
+        result = getIdentifierValue(pkg.kbartSource.targetNamespace.value)
       }else if(hostPlatform.titleNamespace){
         result = getIdentifierValue(hostPlatform.titleNamespace.value)
       }
