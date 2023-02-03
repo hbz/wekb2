@@ -2,7 +2,6 @@ package wekb
 
 import wekb.annotations.RefdataAnnotation
 import wekb.helper.RCConstants
-import wekb.auth.User
 import wekb.helper.RDStore
 
 import javax.persistence.Transient
@@ -25,7 +24,7 @@ class CuratoryGroup extends KBComponent {
     packages: Package,
     platforms: Platform,
     orgs: Org,
-    sources: Source
+    sources: KbartSource
   ]
 
   static mappedByCombo = [
