@@ -40,11 +40,11 @@
                         <td>${pkg.provider?.name}</td>
                         <td>
                             <g:if test="${pkg.curatoryGroups.size() > 0}">
-                                <g:each in="${pkg.curatoryGroups}" var="cg" status="c">
+                                <g:each in="${pkg.curatoryGroups}" var="curatoryGroupPackage" status="c">
                                     <g:if test="${c > 0}"><br></g:if>
-                                    ${cg.name}
-                                    <g:if test="${cg.type}">
-                                        (${cg.type.value})
+                                    ${curatoryGroupPackage.curatoryGroup.name}
+                                    <g:if test="${curatoryGroupPackage.curatoryGroup.type}">
+                                        (${curatoryGroupPackage.curatoryGroup.type.value})
                                     </g:if>
                                 </g:each>
                             </g:if>

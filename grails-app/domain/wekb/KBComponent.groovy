@@ -577,14 +577,6 @@ abstract class KBComponent implements Auditable{
     Combo.executeUpdate("delete from Combo as c where c.fromComponent=:component or c.toComponent=:component", [component: this])
     ComponentVariantName.executeUpdate("delete from ComponentVariantName as c where c.owner=:component", [component: this])
 
-   if (this instanceof CuratoryGroup){
-      User.withTransaction {
-         this.users.each{ User user ->
-            user.removeFromCuratoryGroups(this)
-          user.save()
-          }
-        }
-    }
     KBComponent.executeUpdate("delete from TippPrice where tipp=:component", [component: this])
     this.delete(failOnError: true)
     result

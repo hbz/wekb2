@@ -9,11 +9,11 @@
     <h2 class="ui header">Curated By</h2>
 
     <div class="ui bulleted list">
-        <g:each in="${curatoryGroups}" var="cg">
-            <div class="item">${cg.name}
+        <g:each in="${curatoryGroups}" var="curatoryGroupPackage">
+            <div class="item">${curatoryGroupPackage.curatoryGroup.name}
                 <g:if test="${params.curationOverride == 'true' && springSecurityService.isLoggedIn() && SpringSecurityUtils.ifAnyGranted("ROLE_ADMIN")}">
                     <g:link controller="ajaxHtml" action="unlinkManyToMany" class="ui right floated negative mini button"
-                            params="['curationOverride': params.curationOverride, '__property':'curatoryGroups', '__context':d.getClass().name + ':' + d.id, '__itemToRemove' : cg.getClass().name + ':' + cg.id]">Unlink Curatory Group</g:link>
+                            params="['curationOverride': params.curationOverride, '__property':'curatoryGroups', '__context':d.getClass().name + ':' + d.id, '__itemToRemove' : curatoryGroupPackage.getClass().name + ':' + curatoryGroupPackage.id]">Unlink Curatory Group</g:link>
                 </g:if>
             </div>
         </g:each>

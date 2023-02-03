@@ -28,11 +28,6 @@ class Org extends KBComponent {
     ]
   }
 
-
-  static manyByCombo = [
-    curatoryGroups   : CuratoryGroup
-  ]
-
 /*  static mappedByCombo = [
     providedPackages : 'provider',
     providedPlatforms: 'provider'
@@ -46,7 +41,8 @@ class Org extends KBComponent {
     roles: RefdataValue,
     contacts: Contact,
     ids: Identifier,
-    variantNames        : ComponentVariantName
+    variantNames        : ComponentVariantName,
+    curatoryGroups   : CuratoryGroupOrg
   ]
 
   static mapping = {

@@ -68,10 +68,8 @@ class Platform extends KBComponent {
   static hasMany = [
           roles: RefdataValue,
           ids: Identifier,
-          tipps: TitleInstancePackagePlatform]
-
-  static manyByCombo = [
-    curatoryGroups: CuratoryGroup
+          tipps: TitleInstancePackagePlatform,
+          curatoryGroups   : CuratoryGroupPlatform
   ]
 
  /* static mappedByCombo = [

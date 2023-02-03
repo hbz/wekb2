@@ -615,7 +615,7 @@ class AdminController {
                     "and (p.kbartSource.lastRun is null or (p.kbartSource.lastRun < current_date)) order by ${params.sort} ${params.order}").each { Package p ->
       if (p.kbartSource.needsUpdate()) {
         if(curatoryGroupFilter){
-         if(curatoryGroupFilter in p.curatoryGroups) {
+         if(p.curatoryGroups && curatoryGroupFilter in p.curatoryGroups.curatoryGroup) {
            pkgs << p
          }
         }else {
@@ -649,7 +649,7 @@ class AdminController {
       UpdatePackageInfo updatePackageInfo = p.getLastSuccessfulAutoUpdateInfo()
       if ((updatePackageInfo && updatePackageInfo.countKbartRows > p.tippCount) || !updatePackageInfo || (p.currentTippCount < p.deletedTippCount)) {
         if (curatoryGroupFilter) {
-          if (curatoryGroupFilter in p.curatoryGroups) {
+          if(p.curatoryGroups && curatoryGroupFilter in p.curatoryGroups.curatoryGroup) {
             pkgs << p
           }
         } else {

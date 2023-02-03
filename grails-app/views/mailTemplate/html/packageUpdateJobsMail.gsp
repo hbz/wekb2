@@ -50,8 +50,8 @@
                     ${autoUpdate.pkg.provider?.name}
                 </td>
                 <td>
-                     <g:each in="${autoUpdate.pkg.curatoryGroups}" var="cg">
-                        ${cg.name}
+                     <g:each in="${autoUpdate.pkg.curatoryGroups}" var="curatoryGroupPackage">
+                        ${curatoryGroupPackage.curatoryGroup.name}
                     </g:each>
                 </td>
                 <td>

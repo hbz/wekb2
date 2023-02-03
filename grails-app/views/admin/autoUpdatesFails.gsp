@@ -52,8 +52,8 @@ until <g:formatDate date="${new java.util.Date()}" format="${message(code: 'defa
                         ${autoUpdate.pkg.provider?.name}
                     </td>
                     <td>
-                        <g:each in="${autoUpdate.pkg.curatoryGroups}" var="cg">
-                            ${cg.name}
+                        <g:each in="${autoUpdate.pkg.curatoryGroups}" var="cgp">
+                            ${cgp.curatoryGroup.name}
                         </g:each>
                     </td>
                     <td>

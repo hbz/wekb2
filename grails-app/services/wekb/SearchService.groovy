@@ -178,7 +178,7 @@ class SearchService {
             result.qbetemplate.qbeConfig.qbeResults.each { rh ->
                 def ppath = rh.property.split(/\./)
                 def cobj = r
-                def final_oid = cobj instanceof KBComponent ? cobj.uuid : cobj.class.name + ':' + cobj.id
+                def final_oid = cobj.hasProperty('uuid') ? cobj.uuid : cobj.class.name + ':' + cobj.id
 
                 if (!params.hide || (params.hide instanceof String ? (params.hide != rh.qpEquiv) : !params.hide.contains(rh.qpEquiv))) {
 
@@ -189,7 +189,10 @@ class SearchService {
                             cobj = cobj.value
                         }
                         else {
-                            if ( cobj && KBComponent.has(cobj, sp)) {
+                            if ( cobj && (cobj.hasProperty(sp) || (cobj.respondsTo(sp)?.size() > 0))) {
+                                println('sp')
+                                println(sp)
+                                println(cobj?.class?.name)
                                 def oobj = cobj
 
                                 cobj = cobj[sp]
@@ -200,7 +203,7 @@ class SearchService {
 
                                 if (ppath.size() > 1 && idx == ppath.size()-2) {
                                     if (cobj && sp != 'class') {
-                                        final_oid = cobj instanceof KBComponent ? cobj.uuid : cobj.class.name + ':' + cobj.id
+                                        final_oid = cobj.hasProperty('uuid') ? cobj.uuid : cobj.class.name + ':' + cobj.id
                                     }
                                     else {
                                         final_oid = null

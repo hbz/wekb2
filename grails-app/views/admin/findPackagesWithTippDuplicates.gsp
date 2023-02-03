@@ -48,8 +48,8 @@
                     ${pkg.nominalPlatform}
                 </td>
                 <td>
-                    <g:each in="${pkg.curatoryGroups}" var="curatoryGroup">
-                        ${curatoryGroup.name}
+                    <g:each in="${pkg.curatoryGroups}" var="curatoryGroupPackage">
+                        ${curatoryGroupPackage.curatoryGroup.name}
                     </g:each>
                 </td>
                 <td>

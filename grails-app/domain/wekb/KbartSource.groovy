@@ -30,7 +30,7 @@ class KbartSource {
     Date lastUpdated
 
     static hasMany = [
-            curatoryGroups: CuratoryGroupComponent
+            curatoryGroups: CuratoryGroupKbartSource
     ]
 
     static belongsTo = [pkg: Package]

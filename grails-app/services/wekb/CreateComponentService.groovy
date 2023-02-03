@@ -196,7 +196,15 @@ class CreateComponentService {
                                 }else {
                                     if(user.curatoryGroupUsers) {
                                         user.curatoryGroupUsers.curatoryGroup.each { CuratoryGroup cg ->
-                                            result.newobj.curatoryGroups.add(cg)
+                                            if(result.newobj instanceof Package){
+                                                new CuratoryGroupPackage(pkg:  result.newobj, curatoryGroup: cg).save()
+                                            }else if(result.newobj instanceof Platform){
+                                                new CuratoryGroupPlatform(platform: result.newobj, curatoryGroup: cg).save()
+                                            }else if(result.newobj instanceof Org){
+                                                new CuratoryGroupOrg(org: result.newobj, curatoryGroup: cg).save()
+                                            }else if(result.newobj instanceof KbartSource){
+                                                new CuratoryGroupKbartSource(kbartSource: result.newobj, curatoryGroup: cg).save()
+                                            }
                                         }
                                     }
                                 }
@@ -345,7 +353,8 @@ class CreateComponentService {
                                         current_combo.delete()
                                     }
 
-                                    def new_combo = new Combo(fromComponent: pkg, toComponent: provider, type: combo_type).save()
+                                    pkg.provider = provider
+                                    pkg.save()
 
                                 }
                             }
@@ -363,7 +372,8 @@ class CreateComponentService {
                                         current_combo.delete()
                                     }
 
-                                    def new_combo = new Combo(fromComponent: pkg, toComponent: platform, type: combo_type).save()
+                                    pkg.nominalPlatform = platform
+                                    pkg.save()
 
                                 }
                             }
@@ -558,11 +568,8 @@ class CreateComponentService {
 
                             if(user.curatoryGroupUsers) {
                                 user.curatoryGroupUsers.curatoryGroup.each { CuratoryGroup cg ->
-                                    if (!(cg in pkg.curatoryGroups)) {
-                                        def combo_type = RefdataCategory.lookup(RCConstants.COMBO_TYPE, 'Package.CuratoryGroups')
-
-                                        def new_combo = new Combo(fromComponent: pkg, toComponent: cg, type: combo_type).save()
-
+                                    if (!(pkg.curatoryGroups && cg in pkg.curatoryGroups.curatoryGroup)) {
+                                        new CuratoryGroupPackage(pkg: pkg, curatoryGroup: cg).save()
                                     }
                                 }
                             }
@@ -699,10 +706,8 @@ class CreateComponentService {
 
                     if(user.curatoryGroupUsers) {
                         user.curatoryGroupUsers.curatoryGroup.each { CuratoryGroup cg ->
-                            if (!(cg in kbartSource.curatoryGroups)) {
-                                def combo_type = RefdataCategory.lookup(RCConstants.COMBO_TYPE, 'KbartSource.CuratoryGroups')
-
-                                def new_combo = new Combo(fromComponent: kbartSource, toComponent: cg, type: combo_type).save()
+                            if (!(curatoryGroups && cg in kbartSource.curatoryGroups.curatoryGroup)) {
+                                new CuratoryGroupKbartSource(kbartSource: kbartSource, curatoryGroup: cg).save()
                             }
                         }
                     }

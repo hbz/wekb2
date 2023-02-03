@@ -12,27 +12,17 @@ class CuratoryGroup extends KBComponent {
   RefdataValue type
 
   static hasMany = [
-          curatoryGroupUsers: CuratoryGroupUser
+          curatoryGroupUsers: CuratoryGroupUser,
+          packages: CuratoryGroupPackage,
+          platforms: CuratoryGroupPlatform,
+          orgs: CuratoryGroupOrg,
+          sources: CuratoryGroupKbartSource
   ]
 
   static mapping = {
     includes KBComponent.mapping
     type column: 'cg_type_rv_fk'
   }
-
-  static manyByCombo = [
-    packages: Package,
-    platforms: Platform,
-    orgs: Org,
-    sources: KbartSource
-  ]
-
-  static mappedByCombo = [
-    packages: 'curatoryGroups',
-    platforms: 'curatoryGroups',
-    orgs: 'curatoryGroups',
-    sources: 'curatoryGroups'
-  ]
 
   static constraints = {
     name (validator: { val, obj ->

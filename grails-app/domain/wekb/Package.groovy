@@ -55,7 +55,8 @@ class Package extends KBComponent {
           ids: Identifier,
           updatePackageInfos: UpdatePackageInfo,
           tipps: TitleInstancePackagePlatform,
-          variantNames        : ComponentVariantName
+          variantNames        : ComponentVariantName,
+          curatoryGroups   : CuratoryGroupPackage
   ]
 
   static mapping = {

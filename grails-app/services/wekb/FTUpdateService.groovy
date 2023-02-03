@@ -125,10 +125,10 @@ class FTUpdateService {
 
         if(kbc.respondsTo('getCuratoryGroups')) {
           result.curatoryGroups = []
-          kbc.curatoryGroups?.each { KBComponent cg ->
-            result.curatoryGroups.add([name: cg.name,
-                                       type: cg.type?.value,
-                                       curatoryGroup: cg.getLogEntityId()])
+          kbc.curatoryGroups?.each {
+            result.curatoryGroups.add([name: it.curatoryGroup.name,
+                                       type: it.curatoryGroup.type?.value,
+                                       curatoryGroup: it.curatoryGroup.getLogEntityId()])
           }
         }
 
@@ -193,10 +193,10 @@ class FTUpdateService {
 
         if(kbc.respondsTo('getCuratoryGroups')) {
           result.curatoryGroups = []
-          kbc.curatoryGroups?.each { KBComponent cg ->
-            result.curatoryGroups.add([name: cg.name,
-                                       type: cg.type?.value,
-                                       curatoryGroup: cg.getLogEntityId()])
+          kbc.curatoryGroups?.each {
+            result.curatoryGroups.add([name: it.curatoryGroup.name,
+                                       type: it.curatoryGroup.type?.value,
+                                       curatoryGroup: it.curatoryGroup.getLogEntityId()])
           }
         }
 
@@ -247,10 +247,10 @@ class FTUpdateService {
 
         if(kbc.respondsTo('getCuratoryGroups')) {
           result.curatoryGroups = []
-          kbc.curatoryGroups?.each { KBComponent cg ->
-            result.curatoryGroups.add([name: cg.name,
-                                       type: cg.type?.value,
-                                       curatoryGroup: cg.getLogEntityId()])
+          kbc.curatoryGroups?.each {
+            result.curatoryGroups.add([name: it.curatoryGroup.name,
+                                       type: it.curatoryGroup.type?.value,
+                                       curatoryGroup: it.curatoryGroup.getLogEntityId()])
           }
         }
 
@@ -308,10 +308,10 @@ class FTUpdateService {
         result.componentType = kbc.class.simpleName
 
         result.curatoryGroups = []
-        kbc.pkg?.curatoryGroups?.each { KBComponent cg ->
-          result.curatoryGroups.add([name: cg.name,
-                                     type: cg.type?.value,
-                                       curatoryGroup: cg.getLogEntityId()])
+        kbc.pkg?.curatoryGroups?.each {
+          result.curatoryGroups.add([name: it.curatoryGroup.name,
+                                     type: it.curatoryGroup.type?.value,
+                                       curatoryGroup: it.curatoryGroup.getLogEntityId()])
         }
 
         result.titleType = kbc.niceName ?: 'Unknown'
