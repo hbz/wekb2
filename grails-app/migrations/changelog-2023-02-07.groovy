@@ -264,4 +264,36 @@ databaseChangeLog = {
         }
     }
 
+    changeSet(author: "djebeniani (generated)", id: "1675376747887-27") {
+        addNotNullConstraint(columnDataType: "varchar(255)", columnName: "ks_name", tableName: "kbart_source", validate: "true")
+    }
+
+    changeSet(author: "djebeniani (generated)", id: "1675376747887-28") {
+        addNotNullConstraint(columnDataType: "varchar(255)", columnName: "ks_uuid", tableName: "kbart_source", validate: "true")
+    }
+
+    changeSet(author: "djebeniani (generated)", id: "1675376747887-29") {
+        addNotNullConstraint(columnDataType: "bigint", columnName: "ks_version", tableName: "kbart_source", validate: "true")
+    }
+
+    changeSet(author: "djebeniani (generated)", id: "1675376747887-30") {
+        addForeignKeyConstraint(baseColumnNames: "ks_status_rv_fk", baseTableName: "kbart_source", constraintName: "FK2hig6gmiu8vadu2yap0ji9x0p", deferrable: "false", initiallyDeferred: "false", referencedColumnNames: "rdv_id", referencedTableName: "refdata_value", validate: "true")
+    }
+
+    changeSet(author: "djebeniani (generated)", id: "1675376747887-31") {
+        addForeignKeyConstraint(baseColumnNames: "kbart_source_id", baseTableName: "curatory_group_component", constraintName: "FKkg594iwbdpv0uxrisvwlpom3e", deferrable: "false", initiallyDeferred: "false", referencedColumnNames: "ks_id", referencedTableName: "kbart_source", validate: "true")
+    }
+
+    changeSet(author: "djebeniani (generated)", id: "1675376747887-32") {
+        addForeignKeyConstraint(baseColumnNames: "pkg_kbart_source_fk", baseTableName: "package", constraintName: "FKnxq0sr4gt78r22yme1a4p1gef", deferrable: "false", initiallyDeferred: "false", referencedColumnNames: "ks_id", referencedTableName: "kbart_source", validate: "true")
+    }
+
+    changeSet(author: "djebeniani (generated)", id: "1675376747887-33") {
+        dropForeignKeyConstraint(baseTableName: "kbcomponent", constraintName: "fkdcqidy0a8vve7weaha2woqu8u")
+    }
+
+    changeSet(author: "djebeniani (generated)", id: "1675376747887-34") {
+        dropColumn(columnName: "kbc_source_fk", tableName: "kbcomponent")
+    }
+
 }
