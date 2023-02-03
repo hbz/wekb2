@@ -240,7 +240,7 @@ databaseChangeLog = {
 
     changeSet(author: "djebeniani (generated)", id: "1675376747887-25") {
         addColumn(tableName: "package") {
-            column(name: "pkg_kbart_source_fk", type: "TEXT")
+            column(name: "pkg_kbart_source_fk", type: "BIGINT")
         }
     }
 
