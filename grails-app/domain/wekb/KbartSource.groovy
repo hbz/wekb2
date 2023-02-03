@@ -1,12 +1,14 @@
 package wekb
 
+import grails.plugins.orm.auditable.Auditable
+import wekb.base.AbstractBase
 import wekb.helper.RCConstants
 import wekb.helper.RDStore
 
 import javax.persistence.Transient
 import java.sql.Timestamp
 
-class KbartSource {
+class KbartSource extends AbstractBase implements Auditable {
 
     String uuid
     String name
