@@ -44,7 +44,6 @@ class CreateController {
               /* Extras needed for the refdata */
               result.refdata_properties = classExaminationService.getRefdataPropertyNames(result.newclassname)
               result.displayobjclassname_short = result.displayobj.class.simpleName
-              result.isComponent = (result.displayobj instanceof KBComponent)
             }
           }
           catch (Exception e) {

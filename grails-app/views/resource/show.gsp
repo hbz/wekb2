@@ -3,8 +3,12 @@
 <html>
 <head>
     <meta name="layout" content="public_semui"/>
-    <title>we:kb : Show ${displayobj.getDomainName() ?: 'Component'}
-        (${displayobj.getShowName()})
+    <title>we:kb : Show
+    <g:if test="${displayobj}">
+        ${displayobj} (${displayobj.getShowName()})
+    </g:if><g:else>
+        Component
+    </g:else>
     </title>
 </head>
 

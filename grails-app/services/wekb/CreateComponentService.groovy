@@ -188,7 +188,7 @@ class CreateComponentService {
                                 }
                             }
 
-                            if (result.newobj.respondsTo("getCuratoryGroups")) {
+                            if (result.newobj.hasProperty('curatoryGroups')) {
                                 log.debug("Set CuratoryGroups..");
                                 if(user.isAdmin() || user.getSuperUserStatus()) {
                                     result.message = "Object was not assigned to a curator group because you are admin or superuser!!!!"

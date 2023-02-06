@@ -58,7 +58,7 @@ class RefdataCategory extends AbstractI10n {
     desc_en (nullable:true, blank:false)
   }
 
-  String getLogEntityId() {
+  String getOID() {
     "${this.class.name}:${id}"
   }
 

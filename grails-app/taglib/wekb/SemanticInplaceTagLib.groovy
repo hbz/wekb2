@@ -322,7 +322,7 @@ class SemanticInplaceTagLib {
         out << "<input type=\"hidden\" value=\"${attrs.value ?: ''}\" name=\"${attrs.name}\" data-domain=\"${attrs.baseClass}\" "
 
         if ((attrs.value != null) && (attrs.value instanceof String && attrs.value.length() > 0)) {
-            def o = genericOIDService.resolveOID2(attrs.value)
+            def o = genericOIDService.resolveOID(attrs.value)
             out << "data-displayValue=\"${o.toString()}\" "
         }
 
@@ -392,7 +392,7 @@ class SemanticInplaceTagLib {
                 }
 
                 if ((attrs.value != null) && (attrs.value instanceof String && attrs.value.length() > 0)) {
-                    def o = genericOIDService.resolveOID2(attrs.value)
+                    def o = genericOIDService.resolveOID(attrs.value)
                     out << "data-value=\"${o.id.toString()}\" "
                 }
 

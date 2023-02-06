@@ -30,9 +30,9 @@ class SearchService {
 
         log.debug("Cleaned: ${cleaned_params}");
 
-        if ( params.refOid && !params.refOid.endsWith('null')) {
-            result.refOid = params.refOid
-            result.refObject = KBComponent.get(Long.valueOf(params.refOid.split(':')[1]))
+        if ( params.refOID && !params.refOID.endsWith('null')) {
+            result.refOID = params.refOID
+            result.refObject = genericOIDService.resolveOID(result.refOID)
         }
 
         result.max = params.max ? Integer.parseInt(params.max) : user ? user.defaultPageSizeAsInteger : 10
@@ -138,7 +138,6 @@ class SearchService {
                         // Add any refdata property names for this class to the result.
                         result.refdata_properties = classExaminationService.getRefdataPropertyNames(result.displayobjclassname)
                         result.displayobjclassname_short = result.displayobj.class.simpleName
-                        result.isComponent = (result.displayobj instanceof KBComponent)
 
                         //result.acl = gokbAclService.readAclSilently(result.displayobj)
 

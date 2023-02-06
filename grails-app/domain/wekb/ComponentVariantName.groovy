@@ -41,7 +41,7 @@ class ComponentVariantName {
       lastUpdated(nullable:true, blank:true)
   }
 
-  String getLogEntityId() {
+  String getOID() {
       "${this.class.name}:${id}"
   }
 

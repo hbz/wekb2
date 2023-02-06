@@ -296,7 +296,7 @@ public class HQLBuilder {
       case 'eq':
         hql_builder_context.query_clauses.add("${crit.defn.contextTree.negate?'not ':''}${scoped_property} = :${crit.defn.qparam}");
         if ( crit.defn.type=='lookup' ) {
-          def value = hql_builder_context.genericOIDService.resolveOID2(crit.value)
+          def value = hql_builder_context.genericOIDService.resolveOID(crit.value)
           value = (crit.defn.propType == 'Boolean') ? (value == RDStore.YN_YES ? true : false) : value
           hql_builder_context.bindvars[crit.defn.qparam] = value
         }
@@ -341,7 +341,7 @@ public class HQLBuilder {
         if ( crit.defn.type=='lookup') {
 
           if(crit.defn.baseClass == 'wekb.RefdataValue') {
-            def value = hql_builder_context.genericOIDService.resolveOID2(crit.value)
+            def value = hql_builder_context.genericOIDService.resolveOID(crit.value)
             if(value && value.class.getSimpleName() == 'RefdataValue') {
               hql_builder_context.query_clauses.add("${crit.defn.contextTree.negate ? 'not ' : ''} exists (select ${crit.defn.qparam} from ${scoped_property} as ${crit.defn.qparam} where ${crit.defn.qparam} = :${crit.defn.qparam} ) ");
               hql_builder_context.bindvars[crit.defn.qparam] = value

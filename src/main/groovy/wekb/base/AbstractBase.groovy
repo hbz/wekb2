@@ -58,4 +58,8 @@ abstract class AbstractBase {
     abstract def beforeUpdate() /* { beforeUpdateHandler() } */
 
     abstract def beforeDelete() /* { beforeDeleteHandler() } */
+
+    String getOID(){
+        "${this.class.name}:${id}"
+    }
 }

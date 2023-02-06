@@ -61,8 +61,7 @@ class Combo implements Auditable {
     lastUpdated (nullable:true, blank:false)
   }
 
-  @Override
-  String getLogEntityId() {
+  String getOID() {
       "${this.class.name}:${id}"
   }
 

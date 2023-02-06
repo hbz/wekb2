@@ -615,17 +615,17 @@ class GlobalSearchTemplatesService {
                                         type       : 'lookup',
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.YN,
-                                        prompt     : 'KbartSource Automatic Updates',
+                                        prompt     : 'Source Automatic Updates',
                                         qparam     : 'qp_source_automaticUpdates',
-                                        placeholder: 'KbartSource Automatic Updates',
+                                        placeholder: 'Source Automatic Updates',
                                         propType   : 'Boolean',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'kbartSource.automaticUpdates'],
                                 ],
 
                                 [
-                                        prompt     : 'KbartSource ID',
+                                        prompt     : 'Source ID',
                                         qparam     : 'qp_source_id',
-                                        placeholder: 'KbartSource ID',
+                                        placeholder: 'Source ID',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'kbartSource.id', 'type': 'java.lang.Long'],
                                         hide       : true
                                 ],
@@ -680,9 +680,9 @@ class GlobalSearchTemplatesService {
                                         hide       : true
                                 ],
                                 [
-                                        prompt     : 'KbartSource ID',
+                                        prompt     : 'Source ID',
                                         qparam     : 'qp_source_id',
-                                        placeholder: 'KbartSource ID',
+                                        placeholder: 'Source ID',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'kbartSource.id', 'type': 'java.lang.Long'],
                                         hide       : true
                                 ],
@@ -728,9 +728,9 @@ class GlobalSearchTemplatesService {
                                         type       : 'lookup',
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.YN,
-                                        prompt     : 'KbartSource Automatic Updates',
+                                        prompt     : 'Source Automatic Updates',
                                         qparam     : 'qp_source_automaticUpdates',
-                                        placeholder: 'KbartSource Automatic Updates',
+                                        placeholder: 'Source Automatic Updates',
                                         propType   : 'Boolean',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'kbartSource.automaticUpdates'],
                                 ],
@@ -1293,9 +1293,9 @@ class GlobalSearchTemplatesService {
                 qbeConfig: [
                         qbeForm   : [
                                 [
-                                        prompt     : 'Name of KbartSource',
+                                        prompt     : 'Name of Source',
                                         qparam     : 'qp_name',
-                                        placeholder: 'Name of KbartSource',
+                                        placeholder: 'Name of Source',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'name']
                                 ],
                                 [

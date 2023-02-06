@@ -13,55 +13,52 @@ class AccessService {
     SpringSecurityService springSecurityService
 
     List allowedBaseClasses = ['wekb.CuratoryGroup',
-                               'wekb.system.JobResult',
-                               'wekb.IdentifierNamespace',
                                'wekb.Identifier',
+                               'wekb.KbartSource',
                                'wekb.Org',
                                'wekb.Package',
                                'wekb.Platform',
-                               'wekb.ReviewRequest',
                                'wekb.TitleInstancePackagePlatform',
-                               'wekb.KbartSource',
                                'wekb.UpdatePackageInfo',
                                'wekb.UpdateTippInfo']
 
-    List allowedToCreate = ['wekb.Org',
+    List allowedToCreate = ['wekb.KbartSource',
+                            'wekb.Org',
                             'wekb.Package',
                             'wekb.Platform',
-                            'wekb.TitleInstancePackagePlatform',
-                            'wekb.KbartSource',]
+                            'wekb.TitleInstancePackagePlatform',]
 
-    List allowedPublicShow = ['UpdatePackageInfo',
-                              'UpdateTippInfo',
-                              'CuratoryGroup',
+    List allowedPublicShow = ['CuratoryGroup',
                               'Identifier',
+                              'KbartSource',
                               'Org',
                               'Package',
                               'Platform',
-                              'Source',
-                              'TitleInstancePackagePlatform']
+                              'TitleInstancePackagePlatform',
+                              'UpdatePackageInfo',
+                              'UpdateTippInfo']
 
-    List allowedComponentSearch = ["g:updatePackageInfos",
-                                   "g:updateTippInfos",
-                                   "g:curatoryGroups",
+    List allowedComponentSearch = ["g:curatoryGroups",
                                    "g:identifiers",
                                    "g:orgs",
                                    "g:packages",
                                    "g:platforms",
+                                   "g:sources",
                                    "g:tipps",
                                    "g:tippsOfPkg",
-                                   "g:sources"]
+                                   "g:updatePackageInfos",
+                                   "g:updateTippInfos"]
 
-    List allowedInlineSearch = ["g:updatePackageInfos",
-                                "g:updateTippInfos",
-                                "g:curatoryGroups",
+    List allowedInlineSearch = ["g:curatoryGroups",
                                 "g:identifiers",
                                 "g:orgs",
                                 "g:packages",
                                 "g:platforms",
+                                "g:sources",
                                 "g:tipps",
                                 "g:tippsOfPkg",
-                                "g:sources"]
+                                "g:updatePackageInfos",
+                                "g:updateTippInfos"]
 
 
     boolean checkEditableObject(Object o, GrailsParameterMap grailsParameterMap) {
@@ -74,12 +71,12 @@ class AccessService {
         if (SpringSecurityUtils.ifAnyGranted("ROLE_EDITOR, ROLE_ADMIN, ROLE_SUPERUSER")) {
             def curatedObj = null
             if(o instanceof Identifier){
-                curatedObj = o.reference.respondsTo("getCuratoryGroups") ? o.reference : ( o.reference.hasProperty('pkg') ? o.reference.pkg : null )
+                curatedObj = o.reference.hasProperty('curatoryGroups') ? o.reference : ( o.reference.hasProperty('pkg') ? o.reference.pkg : null )
             }else if(o instanceof Contact){
                 curatedObj = o.org
             }
             else {
-                curatedObj = o.respondsTo("getCuratoryGroups") ? o : ( o.hasProperty('pkg') ? o.pkg : null )
+                curatedObj = o.hasProperty('curatoryGroups') ? o : ( o.hasProperty('pkg') ? o.pkg : null )
             }
 
             User user = springSecurityService.currentUser

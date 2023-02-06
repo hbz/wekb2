@@ -73,12 +73,12 @@ class WorkflowController{
 
             qresult.recset.each{
               def oid_to_action = "${it.class.name}:${it.id}"
-              result.objects_to_action.add(genericOIDService.resolveOID2(oid_to_action))
+              result.objects_to_action.add(genericOIDService.resolveOID(oid_to_action))
             }
           }
         }
       }else if(params.component){
-        def component = genericOIDService.resolveOID2(params.component)
+        def component = genericOIDService.resolveOID(params.component)
         if(component){
           result.objects_to_action.add(component)
         }
@@ -88,7 +88,7 @@ class WorkflowController{
         params.each{ p ->
           if ((p.key.startsWith('bulk:')) && (p.value) && (p.value instanceof String)){
             def oid_to_action = p.key.substring(5)
-            result.objects_to_action.add(genericOIDService.resolveOID2(oid_to_action))
+            result.objects_to_action.add(genericOIDService.resolveOID(oid_to_action))
           }
         }
       }

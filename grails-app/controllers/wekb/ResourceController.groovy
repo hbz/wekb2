@@ -21,21 +21,38 @@ class ResourceController {
 
     log.debug("ResourceController::show ${params}");
     def result = ['params':params]
-    def oid = params.id
+    String oid = ''
     def displayobj = null
     Boolean read_perm = false
 
     if (params.type && params.id) {
       oid = "wekb." + params.type + ":" + params.id
-    } else if (params.int('id')) {
-      displayobj = KBComponent.get(params.int('id'))
-      oid = (displayobj ? (displayobj.class.name + ":" + params.id) : null)
     }
 
-    if (oid) {
-      displayobj = KBComponent.findByUuid(oid)
+    if (oid || params.id) {
 
-      if (!displayobj) {
+      if(CuratoryGroup.findByUuid(params.id)){
+        displayobj = CuratoryGroup.findByUuid(params.id)
+      }else if(Identifier.findByUuid(params.id)){
+        displayobj = Identifier.findByUuid(params.id)
+      }else if(KbartSource.findByUuid(params.id)){
+        displayobj = KbartSource.findByUuid(params.id)
+      }else if(Org.findByUuid(params.id)){
+        displayobj = Org.findByUuid(params.id)
+      }else if(Package.findByUuid(params.id)){
+        displayobj = Package.findByUuid(params.id)
+      }else if(Platform.findByUuid(params.id)){
+        displayobj = Platform.findByUuid(params.id)
+      }else if(TitleInstancePackagePlatform.findByUuid(params.id)){
+        displayobj = TitleInstancePackagePlatform.findByUuid(params.id)
+      }else if(UpdatePackageInfo.findByUuid(params.id)){
+        displayobj = UpdatePackageInfo.findByUuid(params.id)
+      }else if(UpdateTippInfo.findByUuid(params.id)){
+        displayobj = UpdateTippInfo.findByUuid(params.id)
+      }
+
+      println(displayobj)
+      if (oid && !displayobj) {
         displayobj = genericOIDService.resolveOID(oid)
       }
 
@@ -54,8 +71,6 @@ class ResourceController {
 
           result.displayobjclassname_short = displayobj.class.simpleName
 
-          //result.isComponent = (displayobj instanceof KBComponent)
-
           result.displayobj = displayobj
 
           if (springSecurityService.isLoggedIn()) {
@@ -70,7 +85,7 @@ class ResourceController {
               // Need to figure out whether the current user has curatorial rights (or is an admin).
               // Defaults to true as not all components have curatorial groups defined.
 
-              def curatedObj = displayobj.respondsTo("getCuratoryGroups") ? displayobj : (displayobj.hasProperty('pkg') ? displayobj.pkg : false)
+              def curatedObj = displayobj.hasProperty('curatoryGroups') ? displayobj : (displayobj.hasProperty('pkg') ? displayobj.pkg : false)
 
               if (curatedObj && curatedObj.curatoryGroups && curatedObj.niceName != 'User' && user.curatoryGroupUsers) {
                 def cur = user.curatoryGroupUsers.curatoryGroup.id.intersect(curatedObj.curatoryGroups.curatoryGroup.id) ?: []

@@ -14,7 +14,7 @@
         <div class="content">
 
                     <g:link class="display-inline" controller="search" action="inlineSearch"
-                            params="[s_controllerName: controllerName, s_actionName: actionName, objectUUID: params.id, max: params.max, offset: params.offset, sort: params.sort, order: params.order, qbe: 'g:packages', qp_source_id: d.id, inline: true, refOid: d.getLogEntityId(), hide: ['qp_source', 'qp_source_id']]"
+                            params="[s_controllerName: controllerName, s_actionName: actionName, objectUUID: params.id, max: params.max, offset: params.offset, sort: params.sort, order: params.order, qbe: 'g:packages', qp_source_id: d.id, inline: true, refOID: d.getOID(), hide: ['qp_source', 'qp_source_id']]"
                             id="">Packages on this Source</g:link>
 
         </div>

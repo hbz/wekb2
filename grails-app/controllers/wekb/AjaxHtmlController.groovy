@@ -39,7 +39,7 @@ class AjaxHtmlController {
   def addToCollection() {
     log.debug("AjaxController::addToCollection ${params}")
     User user = springSecurityService.currentUser
-    def contextObj = resolveOID2(params.__context)
+    def contextObj = resolveOID3(params.__context)
     def new_obj = null
     def errors = []
     GrailsClass domain_class = grailsApplication.getArtefact('Domain',params.__newObjectClass)
@@ -95,12 +95,12 @@ class AjaxHtmlController {
                     // Set ref property
                     log.debug("set assoc ${p.name} to lookup of OID ${params[p.name]}")
                     // if ( key == __new__ then we need to create a new instance )
-                    new_obj[p.name] = resolveOID2(params[p.name])
+                    new_obj[p.name] = resolveOID3(params[p.name])
                   }
                   else {
                     // Add to collection
                     log.debug("add to collection ${p.name} for OID ${params[p.name]}")
-                    new_obj[p.name].add(resolveOID2(params[p.name]))
+                    new_obj[p.name].add(resolveOID3(params[p.name]))
                   }
                 }
                 else {
@@ -134,7 +134,7 @@ class AjaxHtmlController {
 
             if (params.__refdataName && params.__refdataValue) {
               log.debug("set refdata "+ params.__refdataName +" for component ${contextObj}")
-              def refdata = resolveOID2(params.__refdataValue)
+              def refdata = resolveOID3(params.__refdataValue)
               new_obj[params.__refdataName] = refdata
             }
 
@@ -196,7 +196,7 @@ class AjaxHtmlController {
                 log.debug("Testing ${hbc} -> ${params[hbc]}")
                 if ( params[hbc] ) {
                   log.debug("Setting ${hbc} to ${params[hbc]}")
-                  new_obj[hbc] = resolveOID2(params[hbc])
+                  new_obj[hbc] = resolveOID3(params[hbc])
                 }
               }
               if( new_obj.validate() ) {
@@ -256,9 +256,9 @@ class AjaxHtmlController {
   def addToStdCollection() {
     log.debug("addToStdCollection(${params})")
     // Adds a link to a collection that is not mapped through a join object
-    def contextObj = resolveOID2(params.__context)
+    def contextObj = resolveOID3(params.__context)
     def user = springSecurityService.currentUser
-    def relatedObj = resolveOID2(params.__relatedObject)
+    def relatedObj = resolveOID3(params.__relatedObject)
     def result = ['result': 'OK', 'params': params]
     if (relatedObj != null && contextObj != null) {
       def editable = checkEditable(contextObj)
@@ -305,14 +305,14 @@ class AjaxHtmlController {
   @Secured(['ROLE_EDITOR', 'IS_AUTHENTICATED_FULLY'])
   def unlinkManyToMany() {
     log.debug("unlinkManyToMany(${params})")
-    def contextObj = resolveOID2(params.__context)
+    def contextObj = resolveOID3(params.__context)
     def user = springSecurityService.currentUser
     def result = ['result': 'OK', 'params': params]
     if (contextObj) {
       def editable = checkEditable(contextObj)
 
       if (editable || contextObj.id == user.id) {
-        def item_to_remove = resolveOID2(params.__itemToRemove)
+        def item_to_remove = resolveOID3(params.__itemToRemove)
         if ( item_to_remove ) {
           if ( ( item_to_remove != null ) && ( item_to_remove.hasProperty('hasByCombo') ) && ( item_to_remove.hasByCombo != null ) ) {
             item_to_remove.hasByCombo.keySet().each { hbc ->
@@ -320,7 +320,7 @@ class AjaxHtmlController {
               log.debug("here's the data: "+ item_to_remove[hbc])
               if (item_to_remove[hbc]==contextObj) {
                 log.debug("context found")
-                //item_to_remove[hbc]=resolveOID2(null)
+                //item_to_remove[hbc]=resolveOID3(null)
                 if(item_to_remove.respondsTo('deleteParent')) {
                   log.debug("deleteParent()")
                   item_to_remove.deleteParent()
@@ -394,7 +394,7 @@ class AjaxHtmlController {
   @Secured(['ROLE_EDITOR', 'IS_AUTHENTICATED_FULLY'])
   def unlinkManyToOne() {
     log.debug("unlinkManyToOne(${params})")
-    def contextObj = resolveOID2(params.__context)
+    def contextObj = resolveOID3(params.__context)
     def result = ['result': 'OK', 'params': params]
     if (contextObj) {
       def editable = checkEditable(contextObj)
@@ -436,7 +436,7 @@ class AjaxHtmlController {
   def delete() {
     log.debug("delete(${params}), referer: ${request.getHeader('referer')}")
     // Adds a link to a collection that is not mapped through a join object
-    def contextObj = resolveOID2(params.__context)
+    def contextObj = resolveOID3(params.__context)
     def user = springSecurityService.currentUser
     def result = ['result': 'OK', 'params': params]
 
@@ -474,7 +474,7 @@ class AjaxHtmlController {
     redirect(url: redirect_to)
   }
 
-  private def resolveOID2(oid) {
+  private def resolveOID3(oid) {
     def oid_components = oid.split(':')
     def result = null
     def domain_class=null
@@ -1066,9 +1066,9 @@ class AjaxHtmlController {
     @Secured(['ROLE_EDITOR', 'IS_AUTHENTICATED_FULLY'])
     def addUserToCuratoryGroup() {
         log.debug("addUserToCuratoryGroup(${params})")
-        User contextObj = resolveOID2(params.__user)
+        User contextObj = resolveOID3(params.__user)
         def user = springSecurityService.currentUser
-        CuratoryGroup curatoryGroup = resolveOID2(params.__curatoryGroup)
+        CuratoryGroup curatoryGroup = resolveOID3(params.__curatoryGroup)
         if (curatoryGroup != null && contextObj != null) {
             if (user.isAdmin()) {
                 if (!CuratoryGroupUser.findByUserAndCuratoryGroup(contextObj, curatoryGroup)) {
@@ -1093,9 +1093,9 @@ class AjaxHtmlController {
     @Secured(['ROLE_EDITOR', 'IS_AUTHENTICATED_FULLY'])
     def addRoleToUser() {
         log.debug("addRoleToUser(${params})")
-        User contextObj = resolveOID2(params.__user)
+        User contextObj = resolveOID3(params.__user)
         def user = springSecurityService.currentUser
-        Role role = resolveOID2(params.__role)
+        Role role = resolveOID3(params.__role)
         if (role != null && contextObj != null) {
             if (user.isAdmin()) {
                 if (!UserRole.findByUserAndRole(contextObj, role)) {

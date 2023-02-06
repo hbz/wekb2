@@ -5,7 +5,7 @@
 
 
 <div class="ui inverted blue right floated segment">
-    <g:if test="${d instanceof wekb.KBComponent}">
+    <g:if test="${d.hasProperty('curatoryGroups')}">
     <h2 class="ui header">Curated By</h2>
 
     <div class="ui bulleted list">
@@ -48,11 +48,11 @@
     <sec:ifNotLoggedIn>
         <div style="margin-top:10px;">
             <g:link controller="resource" action="showLogin" class="ui icon inverted button"
-                    id="${d instanceof wekb.KBComponent ? d.uuid : d.class.name + ':' + d.id}"><i class="edit icon"></i> Edit (Login required)</g:link>
+                    id="${d.hasProperty('uuid') ? d.uuid : d.class.name + ':' + d.id}"><i class="edit icon"></i> Edit (Login required)</g:link>
         </div>
     </sec:ifNotLoggedIn>
     <sec:ifLoggedIn>
-        <g:if test="${(d.respondsTo("getCuratoryGroups") || d instanceof wekb.KBComponent) && !((request.curator != null ? request.curator.size() > 0 : true))}">
+        <g:if test="${(d.hasProperty('curatoryGroups')) && !((request.curator != null ? request.curator.size() > 0 : true))}">
             <div class="ui segment">
                 <h4 class="ui header">Info</h4>
 
@@ -60,7 +60,7 @@
             </div>
         </g:if>
         <sec:ifAnyGranted roles="ROLE_ADMIN">
-            <g:if test="${d.respondsTo("getCuratoryGroups")}">
+            <g:if test="${d.hasProperty('curatoryGroups')}">
                 <div class="ui segment">
                     <h4 class="ui header">Warning</h4>
 

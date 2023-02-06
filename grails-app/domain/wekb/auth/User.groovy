@@ -69,7 +69,7 @@ class User {
 
   }
 
-  String getLogEntityId() {
+  String getOID() {
       "${this.class.name}:${id}"
   }
 

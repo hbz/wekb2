@@ -263,7 +263,7 @@ class KbartSource extends AbstractBase implements Auditable {
 
     @Transient
     public List<Package> getPackages() {
-        def result = Package.findAllBySource(this)
+        def result = Package.findAllByKbartSource(this)
         result
     }
 

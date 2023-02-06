@@ -56,7 +56,7 @@ class RefdataValue  extends AbstractI10n {
     value_en (nullable:true, blank:true)
   }
 
-  String getLogEntityId() {
+  String getOID() {
       "${this.class.name}:${id}"
   }
 

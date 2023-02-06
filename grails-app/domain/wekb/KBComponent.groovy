@@ -52,7 +52,7 @@ abstract class KBComponent implements Auditable{
     ]
   }
 
-  String getLogEntityId(){
+  String getOID(){
     "${this.class.name}:${id}"
   }
 

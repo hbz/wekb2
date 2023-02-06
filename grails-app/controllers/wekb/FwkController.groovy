@@ -14,7 +14,7 @@ class FwkController {
     log.debug("FwkController::history...");
     def result = [:]
 
-    def obj = resolveOID2(params.id)
+    def obj = resolveOID(params.id)
     
     if(obj && obj.isReadable()) {
 
@@ -282,7 +282,7 @@ class FwkController {
     valueMaps
   }
 
-  def resolveOID2(oid) {
+  def resolveOID(oid) {
     def oid_components = oid.split(':');
     def result = null;
     def domain_class=null;

@@ -97,10 +97,10 @@ class FTUpdateService {
         result.updater = 'pkg'
         result.titleCount = kbc.currentTippCount
         result.cpname = kbc.provider?.name
-        result.provider = kbc.provider ? kbc.provider.getLogEntityId() : ""
+        result.provider = kbc.provider ? kbc.provider.getOID() : ""
         result.providerName = kbc.provider?.name ?: ""
         result.providerUuid = kbc.provider?.uuid ?: ""
-        result.nominalPlatform = kbc.nominalPlatform ? kbc.nominalPlatform.getLogEntityId() : ""
+        result.nominalPlatform = kbc.nominalPlatform ? kbc.nominalPlatform.getOID() : ""
         result.nominalPlatformName = kbc.nominalPlatform?.name ?: ""
         result.nominalPlatformUuid = kbc.nominalPlatform?.uuid ?: ""
         result.scope = kbc.scope ? kbc.scope.value : ""
@@ -123,12 +123,12 @@ class FTUpdateService {
           }
         }
 
-        if(kbc.respondsTo('getCuratoryGroups')) {
+        if(kbc.hasProperty('curatoryGroups')) {
           result.curatoryGroups = []
           kbc.curatoryGroups?.each {
             result.curatoryGroups.add([name: it.curatoryGroup.name,
                                        type: it.curatoryGroup.type?.value,
-                                       curatoryGroup: it.curatoryGroup.getLogEntityId()])
+                                       curatoryGroup: it.curatoryGroup.getOID()])
           }
         }
 
@@ -191,12 +191,12 @@ class FTUpdateService {
           result.roles.add(role.value)
         }
 
-        if(kbc.respondsTo('getCuratoryGroups')) {
+        if(kbc.hasProperty('curatoryGroups')) {
           result.curatoryGroups = []
           kbc.curatoryGroups?.each {
             result.curatoryGroups.add([name: it.curatoryGroup.name,
                                        type: it.curatoryGroup.type?.value,
-                                       curatoryGroup: it.curatoryGroup.getLogEntityId()])
+                                       curatoryGroup: it.curatoryGroup.getOID()])
           }
         }
 
@@ -240,17 +240,17 @@ class FTUpdateService {
         result.sortname = generateSortName(kbc.name)
         result.updater = 'platform'
         result.cpname = kbc.provider?.name
-        result.provider = kbc.provider ? kbc.provider.getLogEntityId() : ""
+        result.provider = kbc.provider ? kbc.provider.getOID() : ""
         result.providerName = kbc.provider ? kbc.provider.name : ""
         result.providerUuid = kbc.provider ? kbc.provider.uuid : ""
         result.lastUpdatedDisplay = dateFormatService.formatIsoTimestamp(kbc.lastUpdated)
 
-        if(kbc.respondsTo('getCuratoryGroups')) {
+        if(kbc.hasProperty('curatoryGroups')) {
           result.curatoryGroups = []
           kbc.curatoryGroups?.each {
             result.curatoryGroups.add([name: it.curatoryGroup.name,
                                        type: it.curatoryGroup.type?.value,
-                                       curatoryGroup: it.curatoryGroup.getLogEntityId()])
+                                       curatoryGroup: it.curatoryGroup.getOID()])
           }
         }
 
@@ -311,7 +311,7 @@ class FTUpdateService {
         kbc.pkg?.curatoryGroups?.each {
           result.curatoryGroups.add([name: it.curatoryGroup.name,
                                      type: it.curatoryGroup.type?.value,
-                                       curatoryGroup: it.curatoryGroup.getLogEntityId()])
+                                       curatoryGroup: it.curatoryGroup.getOID()])
         }
 
         result.titleType = kbc.niceName ?: 'Unknown'
@@ -358,13 +358,13 @@ class FTUpdateService {
         }*/
 
         if (kbc.pkg) {
-          result.tippPackage = kbc.pkg.getLogEntityId()
+          result.tippPackage = kbc.pkg.getOID()
           result.tippPackageName = kbc.pkg.name
           result.tippPackageUuid = kbc.pkg.uuid
         }
 
         if (kbc.hostPlatform) {
-          result.hostPlatform = kbc.hostPlatform.getLogEntityId()
+          result.hostPlatform = kbc.hostPlatform.getOID()
           result.hostPlatformName = kbc.hostPlatform.name
           result.hostPlatformUuid = kbc.hostPlatform.uuid
         }
@@ -376,7 +376,7 @@ class FTUpdateService {
         // variant names
         result.altname = []
 /*        if (kbc.title) {
-          result.tippTitle = kbc.title.getLogEntityId()
+          result.tippTitle = kbc.title.getOID()
           result.tippTitleName = kbc.title.name
           result.tippTitleUuid = kbc.title.uuid
           result.tippTitleMedium = kbc.title.medium.value
