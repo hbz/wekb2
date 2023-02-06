@@ -279,4 +279,64 @@ databaseChangeLog = {
             rollback {}
         }
     }
+
+    changeSet(author: "djebeniani (modified)", id: "1675416844263-25") {
+        grailsChange {
+            change {
+                Integer countDelete = sql.executeUpdate("delete from combo where combo_type_rv_fk = (Select rdv_id from refdata_value where rdv_owner = (SELECT rdc_id FROM refdata_category WHERE rdc_description = 'Combo.Type') and rdv_value = 'Source.CuratoryGroups')")
+
+                confirm("delete combos with Source.CuratoryGroups type: ${countDelete}")
+                changeSet.setComments("delete combos with Source.CuratoryGroups type: ${countDelete}")
+            }
+            rollback {}
+        }
+    }
+
+    changeSet(author: "djebeniani (modified)", id: "1675416844263-26") {
+        grailsChange {
+            change {
+                Integer countDelete = sql.executeUpdate("delete from combo where combo_type_rv_fk = (Select rdv_id from refdata_value where rdv_owner = (SELECT rdc_id FROM refdata_category WHERE rdc_description = 'Combo.Type') and rdv_value = 'Org.CuratoryGroups')")
+
+                confirm("delete combos with Org.CuratoryGroups type: ${countDelete}")
+                changeSet.setComments("delete combos with Org.CuratoryGroups type: ${countDelete}")
+            }
+            rollback {}
+        }
+    }
+
+    changeSet(author: "djebeniani (modified)", id: "1675416844263-27") {
+        grailsChange {
+            change {
+                Integer countDelete = sql.executeUpdate("delete from combo where combo_type_rv_fk = (Select rdv_id from refdata_value where rdv_owner = (SELECT rdc_id FROM refdata_category WHERE rdc_description = 'Combo.Type') and rdv_value = 'Package.CuratoryGroups')")
+
+                confirm("delete combos with Package.CuratoryGroups type: ${countDelete}")
+                changeSet.setComments("delete combos with Package.CuratoryGroups type: ${countDelete}")
+            }
+            rollback {}
+        }
+    }
+
+    changeSet(author: "djebeniani (modified)", id: "1675416844263-28") {
+        grailsChange {
+            change {
+                Integer countDelete = sql.executeUpdate("delete from combo where combo_type_rv_fk = (Select rdv_id from refdata_value where rdv_owner = (SELECT rdc_id FROM refdata_category WHERE rdc_description = 'Combo.Type') and rdv_value = 'Platform.CuratoryGroups')")
+
+                confirm("delete combos with Platform.CuratoryGroups type: ${countDelete}")
+                changeSet.setComments("delete combos with Platform.CuratoryGroups type: ${countDelete}")
+            }
+            rollback {}
+        }
+    }
+
+    changeSet(author: "djebeniani (modified)", id: "1675416844263-29") {
+        grailsChange {
+            change {
+                Integer countDelete = sql.executeUpdate("delete from combo where combo_type_rv_fk = (Select rdv_id from refdata_value where rdv_owner = (SELECT rdc_id FROM refdata_category WHERE rdc_description = 'Combo.Type') and rdv_value = 'KBComponent.Ids')")
+
+                confirm("delete combos with KBComponent.Ids type: ${countDelete}")
+                changeSet.setComments("delete combos with KBComponent.Ids type: ${countDelete}")
+            }
+            rollback {}
+        }
+    }
 }
