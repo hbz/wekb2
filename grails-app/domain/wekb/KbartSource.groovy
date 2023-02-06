@@ -96,6 +96,21 @@ class KbartSource extends AbstractBase implements Auditable {
         })
     }
 
+    @Override
+    def beforeInsert() {
+        super.beforeInsertHandler()
+    }
+
+    @Override
+    def beforeUpdate() {
+        super.beforeUpdateHandler()
+    }
+
+    @Override
+    def beforeDelete() {
+        super.beforeDeleteHandler()
+    }
+
     static def refdataFind(params) {
         def result = [];
         def status_deleted = RDStore.KBC_STATUS_DELETED
@@ -196,21 +211,13 @@ class KbartSource extends AbstractBase implements Auditable {
             "Yearly"   : 365,
     ]
 
-    @Transient
-    def availableActions() {
-        [
-                [code: 'method::deleteSoft', label: 'Delete KbartSource', perm: 'delete'],
-                [code: 'setStatus::Removed', label: 'Remove KbartSource', perm: 'delete'],
-        ]
-    }
+    public void deleteSoft() {
+        setStatus(RDStore.KBC_STATUS_DELETED)
+        save()
 
-    public void deleteSoft(context) {
-        // Call the delete method on the superClass.
-        super.deleteSoft(context)
-
-        Package.findAllBySource(this).each {
+        Package.findAllByKbartSource(this).each {
             it.kbartSource = null
-            it.save(flush: true, failOnError: true)
+            it.save()
         }
 
     }
@@ -288,63 +295,5 @@ class KbartSource extends AbstractBase implements Auditable {
         def result = [deleteType: this.class.name, deleteId: this.id]
         this.delete(failOnError: true)
         result
-    }
-
-    void retire(def context = null){
-        log.debug("KBComponent::retire")
-        // Set the status to retired.
-        setStatus(RDStore.KBC_STATUS_RETIRED)
-        save(flush: true, failOnError: true)
-    }
-
-
-    void setActive(context){
-        setStatus(RDStore.KBC_STATUS_CURRENT)
-        save(flush: true, failOnError: true)
-    }
-
-
-    void setExpected(context){
-        setStatus(RDStore.KBC_STATUS_EXPECTED)
-        save(flush: true, failOnError: true)
-    }
-
-
-    @Transient
-    boolean isRetired(){
-        return (getStatus() == RDStore.KBC_STATUS_RETIRED)
-    }
-
-
-    @Transient
-    boolean isDeleted(){
-        return (getStatus() == RDStore.KBC_STATUS_DELETED)
-    }
-
-
-    @Transient
-    boolean isCurrent(){
-        return (getStatus() == RDStore.KBC_STATUS_CURRENT)
-    }
-
-
-    @Transient
-    boolean isExpected(){
-        return (getStatus() == RDStore.KBC_STATUS_EXPECTED)
-    }
-
-    @Override
-    def beforeInsert() {
-        return null
-    }
-
-    @Override
-    def beforeUpdate() {
-        return null
-    }
-
-    @Override
-    def beforeDelete() {
-        return null
     }
 }
