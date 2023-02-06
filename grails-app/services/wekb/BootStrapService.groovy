@@ -29,13 +29,6 @@ class BootStrapService {
         log.info("Create manually with create index norm_id_value_idx on kbcomponent(kbc_normname(64),id_namespace_fk,class)");
 
 
-        // Add our custom metaclass methods for all KBComponents.
-        alterDefaultMetaclass()
-
-        // TODO: 2023 check is important?
-        // Add Custom APIs.
-        //addCustomApis()
-
         // Add a custom check to see if this is an ajax request.
         HttpServletRequest.metaClass.isAjax = {
             'XMLHttpRequest' == delegate.getHeader('X-Requested-With')
@@ -62,12 +55,6 @@ class BootStrapService {
                         new CuratoryGroup(name: grailsApplication.config.wekb.defaultCuratoryGroup).save(flush: true, failOnError: true);
             }
         }
-
-        log.info("Fix missing Combo status");
-
-        def status_active = RefdataCategory.lookup(RCConstants.COMBO_STATUS, Combo.STATUS_ACTIVE)
-        int num_c = Combo.executeUpdate("update Combo set status = :status where status is null", [status: status_active])
-        log.debug("${num_c} combos updated");
 
 
         log.info("Ensure default Identifier namespaces")
@@ -148,37 +135,6 @@ class BootStrapService {
 
         log.info("Checking for missing component statistics")
         ComponentStatisticService.updateCompStats()
-    }
-
-    /*private void addCustomApis() {
-
-        log.info("addCustomApis()")
-        (grailsApplication.getArtefacts("Domain")*.clazz).each { Class<?> c ->
-
-            // SO: Changed this to use the APIs 'applicableFor' method that is used to check whether,
-            // to add to the class or not. This defaults to "true". Have overriden on the GrailsDomainHelperApi utils
-            // and moved the selective code there. This means that *ALL* domain classes will still receive the methods in the
-            // apiClasses.
-
-            // log.debug("Considering ${c}")
-            grailsApplication.config.apiClasses.each { String className ->
-                // log.debug("Adding methods to ${c.name} from ${className}");
-                // Add the api methods.
-                A_Api.addMethods(c, Class.forName(className))
-            }
-        }
-    }*/
-
-    def alterDefaultMetaclass = {
-
-        // Inject helpers to Domain classes.
-        log.info("alterDefaultMetaclass()")
-        grailsApplication.domainClasses.each { GrailsClass domainClass ->
-
-            // Extend the domain class.
-            DomainClassExtender.extend(domainClass)
-
-        }
     }
 
     def destroy = {

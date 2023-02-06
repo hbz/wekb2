@@ -96,69 +96,6 @@ class CleanupService {
   }
 
   @Transactional
-  def deleteNoUrlPlatforms(Job j = null) {
-    log.debug("Delete platforms without URL")
-
-    def status_deleted = RefdataCategory.lookupOrCreate(RCConstants.KBCOMPONENT_STATUS, 'Deleted')
-    def status_current = RefdataCategory.lookupOrCreate(RCConstants.KBCOMPONENT_STATUS, 'Current')
-
-    def delete_candidates = Platform.executeQuery('from Platform as plt where plt.primaryUrl IS NULL and plt.status <> ?', [status_deleted])
-
-    delete_candidates.each { ptr ->
-      def repl_crit = Platform.createCriteria()
-      def orig_plt = repl_crit.list () {
-        isNotNull('primaryUrl')
-        eq ('name', ptr.name)
-        eq ('status', status_current)
-      }
-
-      if ( orig_plt?.size() == 1 ) {
-        log.debug("Found replacement platform for ${ptr}")
-        def new_plt = orig_plt[0]
-
-        def old_from_combos = Combo.executeQuery("from Combo where fromComponent = :fromCom", [fromCom: ptr])
-        def old_to_combos = Combo.executeQuery("from Combo where toComponent = :toCom", [toCom: ptr])
-
-        old_from_combos.each { oc ->
-          def existing_new = Combo.executeQuery("from Combo where type = :type and fromComponent = :fromCom and toComponent = :toCom",[type: oc.type, fromCom: new_plt,toCom:  oc.toComponent])
-
-          if (existing_new?.size() == 0 && oc.toComponent != new_plt) {
-            oc.fromComponent = new_plt
-            oc.save(flush:true)
-          }
-          else {
-            log.debug("New Combo already exists, or would link item to itself.. deleting instead!")
-            oc.status = RefdataCategory.lookup(RCConstants.COMBO_STATUS, Combo.STATUS_DELETED)
-            oc.save(flush:true)
-          }
-        }
-
-        old_to_combos.each { oc ->
-          def existing_new = Combo.executeQuery("from Combo where  = :type and fromComponent = :fromCom and toComponent = :toCom",[type: oc.type,toCom: new_plt,fromCom: oc.fromComponent])
-
-          if (existing_new?.size() == 0 && oc.fromComponent != new_plt) {
-            oc.toComponent = new_plt
-            oc.save(flush:true)
-          }
-          else {
-            log.debug("New Combo already exists, or would link item to itself.. deleting instead!")
-            oc.status = RefdataCategory.lookup(RCConstants.COMBO_STATUS, Combo.STATUS_DELETED)
-            oc.save(flush:true)
-          }
-        }
-
-        ptr.name = "${ptr.name} DELETED"
-        ptr.deleteSoft()
-      }
-      else {
-        log.debug("Could not find a valid replacement for platform ${ptr}")
-      }
-
-    }
-    j.endTime = new Date();
-  }
-
-  @Transactional
   def ensureUuids(Job j = null)  {
     log.debug("GOKb missing uuid check..")
     def ctr = 0
@@ -215,8 +152,6 @@ class CleanupService {
       while (remaining.size() > 0) {
         def batch = remaining.take(50)
         remaining = remaining.drop(50)
-
-        Combo.executeUpdate("delete from Combo as c where c.fromComponent.id IN (:component) or c.toComponent.id IN (:component)", [component: batch])
         ComponentVariantName.executeUpdate("delete from ComponentVariantName as c where c.owner.id IN (:component)", [component: batch]);
 
         TippPrice.executeUpdate("delete from TippPrice as cp where cp.tipp.id IN (:component)", [component: batch])

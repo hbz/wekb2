@@ -187,25 +187,6 @@ class AjaxHtmlController {
                 errors.addAll(messageService.processValidationErrorsToListForFlashError(new_obj.errors, request.locale))
               }
             }
-
-            // Special combo processing
-            if ( ( new_obj != null ) &&
-                ( new_obj.hasProperty('hasByCombo') ) && ( new_obj.hasByCombo != null ) ) {
-              log.debug("Processing hasByCombo properties...${new_obj.hasByCombo}")
-              new_obj.hasByCombo.keySet().each { hbc ->
-                log.debug("Testing ${hbc} -> ${params[hbc]}")
-                if ( params[hbc] ) {
-                  log.debug("Setting ${hbc} to ${params[hbc]}")
-                  new_obj[hbc] = resolveOID3(params[hbc])
-                }
-              }
-              if( new_obj.validate() ) {
-                new_obj.save(flush:true, failOnError:true)
-              }
-              else {
-                errors.addAll(messageService.processValidationErrorsToListForFlashError(new_obj.errors, request.locale))
-              }
-            }
           }
         }
         else {
@@ -314,21 +295,6 @@ class AjaxHtmlController {
       if (editable || contextObj.id == user.id) {
         def item_to_remove = resolveOID3(params.__itemToRemove)
         if ( item_to_remove ) {
-          if ( ( item_to_remove != null ) && ( item_to_remove.hasProperty('hasByCombo') ) && ( item_to_remove.hasByCombo != null ) ) {
-            item_to_remove.hasByCombo.keySet().each { hbc ->
-              log.debug("Testing ${hbc}")
-              log.debug("here's the data: "+ item_to_remove[hbc])
-              if (item_to_remove[hbc]==contextObj) {
-                log.debug("context found")
-                //item_to_remove[hbc]=resolveOID3(null)
-                if(item_to_remove.respondsTo('deleteParent')) {
-                  log.debug("deleteParent()")
-                  item_to_remove.deleteParent()
-                }
-                log.debug("tried removal: ${item_to_remove[hbc]}")
-              }
-            }
-          }
           log.debug("${params}")
           log.debug("removing: ${item_to_remove} from ${params.__property} for ${contextObj}")
 
@@ -891,60 +857,6 @@ class AjaxHtmlController {
     else if (!tcs) {
       def vname = message(code:'TIPPCoverageStatement.label')
       result.message = "TIPPCoverageStatement with id ${params.id} not found!".toString()
-      flash.error = message(code:'default.not.found.message', args:[vname, params.id])
-    }
-
-    def redirect_to = request.getHeader('referer')
-
-    if (params.redirect) {
-      redirect_to = params.redirect
-    } else if ((params.tab) && (params.tab.length() > 0)) {
-      redirect_to = "${redirect_to}#${params.tab}"
-    }
-
-    redirect(url: redirect_to)
-  }
-
-  /**
-   *  deleteCombo : Used to delete a combo object.
-   * @param id : The id of the combo object
-   */
-
-  @Transactional
-  @Secured(['ROLE_EDITOR', 'IS_AUTHENTICATED_FULLY'])
-  def deleteCombo() {
-    def result = ['result': "OK", 'params': params]
-    Combo c = Combo.get(params.id)
-    def user = springSecurityService.currentUser
-
-    if (c && c.fromComponent) {
-      def owner = c.fromComponent
-      def editable = checkEditable(owner)
-
-      if (editable) {
-        log.debug("Delete combo..")
-
-        if ( params.propagate == "true") {
-          c.fromComponent.lastSeen = new Date().getTime()
-        }
-
-        if (params.keepLink) {
-          c.status = RefdataCategory.lookup(RCConstants.COMBO_STATUS, Combo.STATUS_DELETED)
-        }
-        else{
-          c.delete(flush:true)
-        }
-      }
-      else {
-        def fcomp = (c.fromComponent?.logEntityId ?: "Combo ${params.id}")
-        result.message = "Not deleting combo.. no edit permissions on ${fcomp}!".toString()
-        flash.error = message(code:'combo.fromComponent.denied.label', args:[fcomp])
-        log.debug("Not deleting combo.. no edit permissions on fromComponent!")
-      }
-    }
-    else {
-      result.message = "Unable to reference Combo!"
-      def vname = message(code:'combo.label')
       flash.error = message(code:'default.not.found.message', args:[vname, params.id])
     }
 

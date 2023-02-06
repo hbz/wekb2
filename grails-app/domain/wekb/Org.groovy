@@ -28,11 +28,6 @@ class Org extends KBComponent {
     ]
   }
 
-/*  static mappedByCombo = [
-    providedPackages : 'provider',
-    providedPlatforms: 'provider'
-  ]*/
-
   static mappedBy = [
           variantNames        : 'owner'
   ]

@@ -1,4 +1,4 @@
-<%@ page import="wekb.TitleInstancePackagePlatform; wekb.Identifier; wekb.Combo; wekb.helper.RDStore; wekb.Package; wekb.Org;" %>
+<%@ page import="wekb.TitleInstancePackagePlatform; wekb.Identifier; wekb.helper.RDStore; wekb.Package; wekb.Org;" %>
 <dl>
     <dt class="control-label">Identifier Namespace</dt>
     <dd>${d.namespace?.value}</dd>

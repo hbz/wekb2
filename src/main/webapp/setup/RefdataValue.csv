@@ -12,17 +12,6 @@ Update.Type;New Title;New Title;New Title
 Update.Type;Changed Title;Changed Title;Changed Title
 Update.Type;Removed Title;Removed Title;Removed Title
 Update.Type;Failed Title;Failed Title;Failed Title
-Combo.Status;Active;Active;Active
-Combo.Status;Deleted;Deleted;Deleted
-Combo.Status;Expired;Expired;Expired
-Combo.Status;Superseded;Superseded;Superseded
-Combo.Type;KBComponent.Ids;KBComponent.Ids;KBComponent.Ids
-Combo.Type;Office.CuratoryGroups;Office.CuratoryGroups;Office.CuratoryGroups
-Combo.Type;Office.Org;Office.Org;Office.Org
-Combo.Type;Org.CuratoryGroups;Org.CuratoryGroups;Org.CuratoryGroups
-Combo.Type;Package.CuratoryGroups;Package.CuratoryGroups;Package.CuratoryGroups
-Combo.Type;Platform.CuratoryGroups;Platform.CuratoryGroups;Platform.CuratoryGroups
-Combo.Type;Source.CuratoryGroups;Source.CuratoryGroups;Source.CuratoryGroups
 Contact.Content.Type;E-Mail;E-Mail;E-Mail
 Contact.Content.Type;Fax;Fax;Fax
 Contact.Content.Type;Phone;Phone;Phone

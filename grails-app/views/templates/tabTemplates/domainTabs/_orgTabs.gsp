@@ -13,7 +13,7 @@
         <semui:tabsItemWithoutLink tab="titles" activeTab="${params.activeTab}" counts="${d.getCurrentTippCount()}">
             Titles
         </semui:tabsItemWithoutLink>
-        <semui:tabsItemWithoutLink tab="platforms" activeTab="${params.activeTab}" counts="${d.getCombosByPropertyNameAndStatus('providedPlatforms', 'Active').size()}">
+        <semui:tabsItemWithoutLink tab="platforms" activeTab="${params.activeTab}" counts="${d.getProvidedPlatforms().size()}">
             Platforms
         </semui:tabsItemWithoutLink>
     </semui:tabs>

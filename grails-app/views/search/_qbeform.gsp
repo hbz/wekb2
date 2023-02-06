@@ -63,7 +63,7 @@
                     <g:if test="${fld.type == 'lookup'}">
                         <div class="ui field">
                             <semui:simpleReferenceDropdown
-                                    id="refdata_combo_${params.inline ? 'inline_' : ''}${fld.qparam}"
+                                    id="refdata_${params.inline ? 'inline_' : ''}${fld.qparam}"
                                     name="${fld.qparam}"
                                     baseClass="${fld.baseClass}"
                                     filter1="${fld.filter1 ?: ''}"
@@ -119,7 +119,7 @@
                         <g:if test="${field.type == 'lookup'}">
                             <div class="ui field">
                                 <semui:simpleReferenceDropdown
-                                        id="refdata_combo_${params.inline ? 'inline_' : ''}${field.qparam}"
+                                        id="refdata_${params.inline ? 'inline_' : ''}${field.qparam}"
                                         name="${field.qparam}"
                                         baseClass="${field.baseClass}"
                                         filter1="${field.filter1 ?: ''}"

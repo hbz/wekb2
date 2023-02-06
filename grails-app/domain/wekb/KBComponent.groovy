@@ -46,9 +46,7 @@ abstract class KBComponent implements Auditable{
         'shortcode',
         'systemComponent',
         'insertBenchmark',
-        'componentHash',
-        'incomingCombos',
-        'outgoingCombos'
+        'componentHash'
     ]
   }
 
@@ -206,9 +204,6 @@ abstract class KBComponent implements Auditable{
 
   String lastUpdateComment
 
-  Set outgoingCombos = []
-  Set incomingCombos = []
-
   // Timestamps
   Date dateCreated
   Date lastUpdated
@@ -237,14 +232,10 @@ abstract class KBComponent implements Auditable{
 
 
   static mappedBy = [
-      outgoingCombos      : 'fromComponent',
-      incomingCombos      : 'toComponent'
   ]
 
 
   static hasMany = [
-      outgoingCombos      : Combo,
-      incomingCombos      : Combo
   ]
 
 
@@ -269,8 +260,6 @@ abstract class KBComponent implements Auditable{
     componentHash column: 'kbc_component_hash', index: 'kbc_component_hash_idx'
     bucketHash column: 'kbc_bucket_hash', index: 'kbc_bucket_hash_idx'
     componentDiscriminator column: 'kbc_component_descriminator'
-    incomingCombos batchSize: 10
-    outgoingCombos batchSize: 10
     //dateCreatedYearMonth formula: "DATE_FORMAT(kbc_date_created, '%Y-%m')"
     //lastUpdatedYearMonth formula: "DATE_FORMAT(kbc_last_updated, '%Y-%m')"
   }
@@ -486,41 +475,6 @@ abstract class KBComponent implements Auditable{
   }
 
 
-  @Transient
-  List<Combo> getCombosByPropertyNameAndStatus(propertyName, status){
-    // log.debug("KBComponent::getCombosByPropertyNameAndStatus::${propertyName}|${status}")
-    def combos
-    def status_ref
-    def hql_query
-    def hql_params = [:]
-    if (this.getId() != null){
-      // Unsaved components can't have combo relations
-      RefdataValue type = RefdataCategory.lookupOrCreate(RCConstants.COMBO_TYPE, getComboTypeValue(propertyName))
-      if (status && status != "null") status_ref = RefdataCategory.lookupOrCreate(RCConstants.COMBO_STATUS, status)
-      hql_query = "from Combo where type = :type "
-      hql_params.type = type
-      if (isComboReverse(propertyName)){
-        hql_query += " and toComponent = :toComp"
-        hql_params.toComp = this
-      }
-      else{
-        hql_query += " and fromComponent = :fromComp"
-        hql_params.fromComp = this
-      }
-      if (status_ref){
-        hql_query += " and status = :status"
-        hql_params.status = status_ref
-      }
-      combos = Combo.executeQuery(hql_query, hql_params)
-      //       log.debug("Qry: ${hql_query}, Params:${hql_params} : result.size=${combos?.size()}")
-    }
-    else{
-      log.debug("This.id == null")
-    }
-    return combos
-  }
-
-
   @Override
   boolean equals(Object obj){
     Object o = ClassUtils.deproxy(obj)
@@ -557,7 +511,6 @@ abstract class KBComponent implements Auditable{
     log.debug("Component expunge")
     def result = [deleteType: this.class.name, deleteId: this.id]
     log.debug("Removing all components")
-    Combo.executeUpdate("delete from Combo as c where c.fromComponent=:component or c.toComponent=:component", [component: this])
     ComponentVariantName.executeUpdate("delete from ComponentVariantName as c where c.owner=:component", [component: this])
 
     KBComponent.executeUpdate("delete from TippPrice where tipp=:component", [component: this])
@@ -576,7 +529,6 @@ abstract class KBComponent implements Auditable{
       def batch = remaining.take(50)
       remaining = remaining.drop(50)
 
-      Combo.executeUpdate("delete from Combo as c where c.fromComponent.id IN (:component) or c.toComponent.id IN (:component)", [component: batch])
       ComponentVariantName.executeUpdate("delete from ComponentVariantName as c where c.owner.id IN (:component)", [component: batch])
       TippPrice.executeUpdate("delete from TippPrice as cp where cp.tipp.id IN (:component)", [component: batch])
       result.num_expunged += KBComponent.executeUpdate("delete KBComponent as c where c.id IN (:component)", [component: batch])

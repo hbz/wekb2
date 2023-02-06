@@ -22,12 +22,7 @@ class RDStore {
     public static final KBC_STATUS_RETIRED    = getRefdataValue('Retired', RCConstants.KBCOMPONENT_STATUS)
     public static final KBC_STATUS_REMOVED    = getRefdataValue('Removed', RCConstants.KBCOMPONENT_STATUS)
 
-
-    public static final COMBO_TYPE_KB_IDS = getRefdataValue('KBComponent.Ids', RCConstants.COMBO_TYPE)
-
     public static final CONTACT_CONTENT_TYPE_EMAIL = getRefdataValue('E-Mail', RCConstants.CONTACT_CONTENT_TYPE)
-
-
 
     public static final CURRENCY_EUR = getRefdataValue('EUR', RCConstants.CURRENCY)
     public static final CURRENCY_USD = getRefdataValue('USD', RCConstants.CURRENCY)

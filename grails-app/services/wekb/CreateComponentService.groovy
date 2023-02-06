@@ -167,27 +167,6 @@ class CreateComponentService {
                         } else {
                             result.newobj.save()
 
-                            log.debug("Setting combos..");
-
-                            if (result.newobj instanceof KBComponent) {
-                                // The save completed OK.. if we want to be really cool, we can now loop through the properties
-                                // and set any combos on the object
-                                boolean changed=false
-                                params.each { p ->
-                                    def combo_properties = result.newobj.getComboTypeValue(p.key)
-
-                                    if ( combo_properties != null ) {
-                                        log.debug("Deal with a combo doodah ${p.key}:${p.value}");
-                                        if ( ( p.value != "") && ( p.value != null ) ) {
-                                            def related_item = genericOIDService.resolveOID(p.value);
-                                            result.newobj[p.key] = related_item
-                                            changed = true
-                                        }
-                                    }
-                                    result.newobj.save()
-                                }
-                            }
-
                             if (result.newobj.hasProperty('curatoryGroups')) {
                                 log.debug("Set CuratoryGroups..");
                                 if(user.isAdmin() || user.getSuperUserStatus()) {
@@ -229,8 +208,6 @@ class CreateComponentService {
         Map colMap = [:]
         Set<String> globalErrors = []
         List<Package> packageList = []
-        RefdataValue combo_type_id = RefdataCategory.lookup(RCConstants.COMBO_TYPE, 'KBComponent.Ids')
-        RefdataValue combo_type_status = RefdataCategory.lookup(RCConstants.COMBO_STATUS, Combo.STATUS_ACTIVE)
 
         InputStream fileContent = tsvFile.getInputStream()
         List<String> rows = fileContent.text.split('\n')
@@ -346,13 +323,6 @@ class CreateComponentService {
                             Org provider = Org.findByUuid(cols[colMap.provider_uuid].trim())
                             if (provider){
                                 if(!(pkg.provider && pkg.provider == provider)){
-                                    def combo_type = RefdataCategory.lookup(RCConstants.COMBO_TYPE, 'Package.Provider')
-                                    def current_combo = Combo.findByFromComponentAndType(pkg, combo_type)
-
-                                    if (current_combo) {
-                                        current_combo.delete()
-                                    }
-
                                     pkg.provider = provider
                                     pkg.save()
 
@@ -365,13 +335,6 @@ class CreateComponentService {
                             Platform platform = Platform.findByUuid(cols[colMap.nominal_platform_uuid].trim())
                             if (platform){
                                 if(!(pkg.nominalPlatform && pkg.nominalPlatform == platform)){
-                                    def combo_type = RefdataCategory.lookup(RCConstants.COMBO_TYPE, 'Package.NominalPlatform')
-                                    def current_combo = Combo.findByFromComponentAndType(pkg, combo_type)
-
-                                    if (current_combo) {
-                                        current_combo.delete()
-                                    }
-
                                     pkg.nominalPlatform = platform
                                     pkg.save()
 

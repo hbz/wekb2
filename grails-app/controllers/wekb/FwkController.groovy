@@ -10,7 +10,8 @@ import org.springframework.security.access.annotation.Secured
 @Secured(['IS_AUTHENTICATED_FULLY'])
 class FwkController {
 
-  def history() { 
+  //TODO: REMOVE COMBO
+ /* def history() {
     log.debug("FwkController::history...");
     def result = [:]
 
@@ -300,6 +301,6 @@ class FwkController {
       log.error("resolve OID failed to identify a domain class. Input was ${oid_components}");
     }
     result
-  }
+  }*/
 
 }

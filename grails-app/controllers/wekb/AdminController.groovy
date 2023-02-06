@@ -149,20 +149,6 @@ class AdminController {
     redirect(controller: 'admin', action: 'jobs');
   }
 
-  def cleanupPlatforms() {
-    Job j = concurrencyManagerService.createJob { Job j ->
-      cleanupService.deleteNoUrlPlatforms(j)
-    }.startOrQueue()
-
-    log.debug("Triggering cleanup task. Started job #${j.uuid}")
-
-    j.description = "Platform Cleanup"
-    j.type = RefdataCategory.lookupOrCreate(RCConstants.JOB_TYPE, 'PlatformCleanup')
-    j.startTime = new Date()
-
-    redirect(controller: 'admin', action: 'jobs');
-  }
-
   def recalculateStats() {
     Job j = concurrencyManagerService.createJob {
       componentStatisticService.updateCompStats(12, 0, true)

@@ -16,9 +16,6 @@ class RCConstants {
 
     public static final String UPDATE_TYPE = "Update.Type"
 
-    public static final String COMBO_STATUS = "Combo.Status"
-    public static final String COMBO_TYPE = "Combo.Type"
-
     public static final String CONTACT_CONTENT_TYPE   = 'Contact.Content.Type'
     public static final String CONTACT_TYPE           = 'Contact.Type'
 

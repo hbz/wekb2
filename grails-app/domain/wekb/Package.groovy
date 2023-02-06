@@ -285,18 +285,6 @@ class Package extends KBComponent {
     def result = [];
 
     if (this.id) {
-      def status_deleted = RefdataCategory.lookupOrCreate(RCConstants.KBCOMPONENT_STATUS, 'Deleted')
-
-      // select tipp, accessStartDate, 'Added' from tipps UNION select tipp, accessEndDate, 'Removed' order by date
-
-//       def additions = TitleInstancePackagePlatform.executeQuery('select tipp, tipp.accessStartDate, \'Added\' ' +
-//                        'from TitleInstancePackagePlatform as tipp, Combo as c '+
-//                        'where c.fromComponent=? and c.toComponent=tipp and tipp.accessStartDate is not null order by tipp.dateCreated DESC',
-//                       [this], [max:n]);
-//       def deletions = TitleInstancePackagePlatform.executeQuery('select tipp, tipp.accessEndDate, \'Removed\' ' +
-//                        'from TitleInstancePackagePlatform as tipp, Combo as c '+
-//                        'where c.fromComponent= :pkg and c.toComponent=tipp and tipp.accessEndDate is not null order by tipp.lastUpdated DESC',
-//                        [pkg: this], [max:n]);
 
       def changes = TitleInstancePackagePlatform.executeQuery('select tipp from TitleInstancePackagePlatform as tipp ' +
         'where tipp.pkg = :pkg ',

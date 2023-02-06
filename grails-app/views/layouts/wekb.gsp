@@ -161,8 +161,6 @@
                                         onclick="return confirm('Are you sure?')">Recalculate Statistics</g:link>
                                 <g:link class="item" controller="admin" action="expungeRemovedComponents"
                                         onclick="return confirm('Are you sure?')">Expunge Removed Component</g:link>
-                                <g:link class="item" controller="admin" action="cleanupPlatforms"
-                                        onclick="return confirm('Are you sure?')">Deprecate Platforms Without URLs</g:link>
                                 <g:link class="item" controller="admin" action="ensureUuids"
                                         onclick="return confirm('Are you sure?')">Ensure UUIDs</g:link>
                                 <g:link class="item" controller="admin" action="autoUpdatePackages"
