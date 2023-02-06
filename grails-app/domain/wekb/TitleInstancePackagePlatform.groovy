@@ -5,6 +5,7 @@ import wekb.annotations.KbartAnnotation
 import wekb.annotations.RefdataAnnotation
 import wekb.helper.RCConstants
 import groovy.util.logging.Slf4j
+import wekb.helper.RDStore
 
 import javax.persistence.Transient
 import java.text.SimpleDateFormat
@@ -195,16 +196,16 @@ class TitleInstancePackagePlatform extends KBComponent {
   String getNiceName() {
     if (publicationType) {
       switch (publicationType) {
-        case RefdataCategory.lookup(RCConstants.TIPP_PUBLICATION_TYPE, "Serial"):
+        case RDStore.TIPP_PUBLIC_TYPE_SERIAL:
           return "Journal"
           break;
-        case RefdataCategory.lookup(RCConstants.TIPP_PUBLICATION_TYPE, "Monograph"):
+        case RDStore.TIPP_PUBLIC_TYPE_MONO:
           return "Book"
           break;
-        case RefdataCategory.lookup(RCConstants.TIPP_PUBLICATION_TYPE, "Database"):
+        case RDStore.TIPP_PUBLIC_TYPE_DB:
           return "Database"
           break;
-        case RefdataCategory.lookup(RCConstants.TIPP_PUBLICATION_TYPE, "Other"):
+        case RDStore.TIPP_PUBLIC_TYPE_OTHER:
           return "Other"
           break;
         default:
@@ -246,18 +247,18 @@ class TitleInstancePackagePlatform extends KBComponent {
 
   @Transient
   public String getListPriceInEUR(){
-    RefdataValue listType = RefdataCategory.lookup(RCConstants.PRICE_TYPE, 'list')
+    RefdataValue listType = RDStore.PRICE_TYPE_LIST
 
-    RefdataValue currency = RefdataCategory.lookup(RCConstants.CURRENCY, 'EUR')
+    RefdataValue currency = RDStore.CURRENCY_EUR
 
     return retrievePriceOfCategory(listType, currency)
   }
 
   @Transient
   public String getListPriceInUSD(){
-    RefdataValue listType = RefdataCategory.lookup(RCConstants.PRICE_TYPE, 'list')
+    RefdataValue listType = RDStore.PRICE_TYPE_LIST
 
-    RefdataValue currency = RefdataCategory.lookup(RCConstants.CURRENCY, 'USD')
+    RefdataValue currency = RDStore.CURRENCY_USD
 
     return retrievePriceOfCategory(listType, currency)
   }
@@ -265,27 +266,27 @@ class TitleInstancePackagePlatform extends KBComponent {
 
   @Transient
   public String getListPriceInGBP(){
-    RefdataValue listType = RefdataCategory.lookup(RCConstants.PRICE_TYPE, 'list')
+    RefdataValue listType = RDStore.PRICE_TYPE_LIST
 
-    RefdataValue currency = RefdataCategory.lookup(RCConstants.CURRENCY, 'GBP')
+    RefdataValue currency = RDStore.CURRENCY_GBP
 
     return retrievePriceOfCategory(listType, currency)
   }
 
   @Transient
   public String getOAAPCPriceInEUR(){
-    RefdataValue listType = RefdataCategory.lookup(RCConstants.PRICE_TYPE, 'open access apc')
+    RefdataValue listType = RDStore.PRICE_TYPE_OA_APC
 
-    RefdataValue currency = RefdataCategory.lookup(RCConstants.CURRENCY, 'EUR')
+    RefdataValue currency = RDStore.CURRENCY_EUR
 
     return retrievePriceOfCategory(listType, currency)
   }
 
   @Transient
   public String getOAAPCPriceInUSD(){
-    RefdataValue listType = RefdataCategory.lookup(RCConstants.PRICE_TYPE, 'open access apc')
+    RefdataValue listType = RDStore.PRICE_TYPE_OA_APC
 
-    RefdataValue currency = RefdataCategory.lookup(RCConstants.CURRENCY, 'USD')
+    RefdataValue currency = RDStore.CURRENCY_USD
 
     return retrievePriceOfCategory(listType, currency)
   }
@@ -293,9 +294,9 @@ class TitleInstancePackagePlatform extends KBComponent {
 
   @Transient
   public String getOAAPCPriceInGBP(){
-    RefdataValue listType = RefdataCategory.lookup(RCConstants.PRICE_TYPE, 'open access apc')
+    RefdataValue listType = RDStore.PRICE_TYPE_OA_APC
 
-    RefdataValue currency = RefdataCategory.lookup(RCConstants.CURRENCY, 'GBP')
+    RefdataValue currency = RDStore.CURRENCY_GBP
 
     return retrievePriceOfCategory(listType, currency)
   }

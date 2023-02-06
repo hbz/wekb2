@@ -83,7 +83,7 @@ class CleanupService {
 
     log.debug("Process remove candidates");
 
-    def status_removed = RefdataCategory.lookupOrCreate(RCConstants.KBCOMPONENT_STATUS, 'Removed')
+    def status_removed = RDStore.KBC_STATUS_REMOVED
 
     def removed_candidates = KBComponent.executeQuery('select kbc.id from KBComponent as kbc where kbc.status=:removedStatus',[removedStatus: status_removed])
 

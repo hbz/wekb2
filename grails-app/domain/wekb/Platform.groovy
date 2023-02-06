@@ -108,7 +108,7 @@ class Platform extends KBComponent {
     name(validator: { val, obj ->
       if (obj.hasChanged('name')) {
         if (val && val.trim()) {
-          def status_deleted = RefdataCategory.lookup(RCConstants.KBCOMPONENT_STATUS, 'Deleted')
+          def status_deleted = RDStore.KBC_STATUS_DELETED
           def dupes = Platform.findAllByNameIlikeAndStatusNotEqual(val, status_deleted);
           if (dupes?.size() > 0 && dupes.any {it != obj}) {
             return ['notUnique']
@@ -179,30 +179,13 @@ class Platform extends KBComponent {
     log.debug("platform::retire");
     // Call the delete method on the superClass.
     log.debug("Updating platform status to retired");
-    this.status = RefdataCategory.lookupOrCreate(RCConstants.KBCOMPONENT_STATUS, 'Retired');
-    this.save();
-
-    /*// Delete the tipps too as a TIPP should not exist without the associated,
-    // package.
-    log.debug("Retiring tipps")
-
-    tipps.each { def t ->
-      log.debug("deroxy ${t} ${t.class.name}");
-
-      // SO: There are 2 deproxy methods. One in the static context that takes in an argument and one,
-      // against an instance which attempts to deproxy this component. Calling deproxy(t) here will invoke the method
-      // against the current package. this.deproxy(t).
-      // So Package.deproxy(t) or t.deproxy() should work...
-      def tipp = Package.deproxy(t)
-      log.debug("Retiring tipp ${tipp.id}");
-      tipp.status = RefdataCategory.lookupOrCreate(RCConstants.KBCOMPONENT_STATUS, 'Retired');
-      tipp.save()
-    }*/
+    this.status = RDStore.KBC_STATUS_RETIRED
+    this.save()
   }
 
   @Transient
   public getCurrentTippCount() {
-    def refdata_current = RefdataCategory.lookupOrCreate(RCConstants.KBCOMPONENT_STATUS, 'Current')
+    def refdata_current = RDStore.KBC_STATUS_CURRENT
     int result = TitleInstancePackagePlatform.executeQuery("select count(t.id) from TitleInstancePackagePlatform as t where t.hostPlatform = :plt and t.status = :status"
             , [plt: this, status: refdata_current])[0]
 

@@ -58,7 +58,7 @@ class Org extends KBComponent {
     name(validator: { val, obj ->
       if (obj.hasChanged('name')) {
         if (val && val.trim()) {
-          def status_deleted = RefdataCategory.lookup(RCConstants.KBCOMPONENT_STATUS, 'Deleted')
+          def status_deleted = RDStore.YN_YES
           def dupes = Org.findAllByNameIlikeAndStatusNotEqual(val, status_deleted);
           if (dupes?.size() > 0 && dupes.any { it != obj }) {
             return ['notUnique']
@@ -111,7 +111,7 @@ class Org extends KBComponent {
 
     @Transient
     public getCurrentTippCount() {
-        def refdata_current = RefdataCategory.lookupOrCreate(RCConstants.KBCOMPONENT_STATUS, 'Current')
+        def refdata_current = RDStore.KBC_STATUS_CURRENT
 
         int result = 0
         if (getProvidedPackages()) {

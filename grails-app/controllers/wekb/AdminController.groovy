@@ -359,7 +359,7 @@ class AdminController {
 
     String query = 'from Package as pkg where pkg.status != :status'
 
-    RefdataValue status_deleted = RefdataCategory.lookupOrCreate(RCConstants.KBCOMPONENT_STATUS, 'Deleted')
+    RefdataValue status_deleted = RDStore.KBC_STATUS_DELETED
 
     params.offset = params.offset ?: 0
     params.max = params.max ? Integer.parseInt(params.max) : user.defaultPageSizeAsInteger

@@ -275,7 +275,7 @@ class CreateComponentService {
 
         rows.remove(0)
 
-        RefdataValue status_deleted = RefdataCategory.lookup(RCConstants.KBCOMPONENT_STATUS, 'Deleted')
+        RefdataValue status_deleted = RDStore.KBC_STATUS_DELETED
         List identifiers = []
         List sources = []
 

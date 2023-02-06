@@ -111,7 +111,7 @@ class Package extends KBComponent {
     name(validator: { val, obj ->
       if (obj.hasChanged('name')) {
         if (val && val.trim()) {
-          def status_deleted = RefdataCategory.lookup(RCConstants.KBCOMPONENT_STATUS, 'Deleted')
+          def status_deleted = RDStore.KBC_STATUS_DELETED
           def dupes = Package.findAllByNameIlikeAndStatusNotEqual(val, status_deleted);
 
           if (dupes?.size() > 0 && dupes.any { it != obj }) {
@@ -222,7 +222,7 @@ class Package extends KBComponent {
     log.debug("package::retire");
     // Call the delete method on the superClass.
     log.debug("Updating package status to retired");
-    def retired_status = RefdataCategory.lookupOrCreate(RCConstants.KBCOMPONENT_STATUS, 'Retired');
+    def retired_status = RDStore.KBC_STATUS_RETIRED
     this.status = retired_status
     this.save();
 

@@ -12,6 +12,7 @@ import wekb.helper.RCConstants
 import grails.converters.JSON
 import groovy.util.logging.Slf4j
 import org.springframework.security.access.annotation.Secured
+import wekb.helper.RDStore
 
 import java.security.SecureRandom
 
@@ -216,7 +217,7 @@ class ApiController {
 
   def sushiSources() {
     Map<String, Object> result = [:]
-    RefdataValue yes = RefdataCategory.lookup(RCConstants.YN, 'Yes')
+    RefdataValue yes = RDStore.YN_YES
     //Set<Platform> counter4Platforms = Platform.findAllByCounterR4SushiApiSupportedAndCounterR5SushiApiSupportedNotEqual(yes, yes).toSet(), counter5Platforms = Platform.findAllByCounterR5SushiApiSupported(yes).toSet()
     Set counter4Platforms = Platform.executeQuery("select plat.uuid, plat.counterR4SushiServerUrl, plat.statisticsUpdate.value from Platform plat where plat.counterR4SushiApiSupported = :r4support and plat.counterR5SushiApiSupported != :r5support and plat.counterR4SushiServerUrl is not null", [r4support: yes, r5support: yes]).toSet()
     Set counter5Platforms = Platform.executeQuery("select plat.uuid, plat.counterR5SushiServerUrl, plat.statisticsUpdate.value from Platform plat where plat.counterR5SushiApiSupported = :r5support and plat.counterR5SushiServerUrl is not null", [r5support: yes]).toSet()
