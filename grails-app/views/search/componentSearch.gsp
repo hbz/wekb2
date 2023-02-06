@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta name="layout" content="public_semui"/>
+    <meta name="layout" content="wekb"/>
     <title>we:kb : Search <g:if test="${qbetemplate}">${qbetemplate.title}</g:if><g:if
             test="${refObject}">for ${refObject.niceName}</g:if></title>
 </head>

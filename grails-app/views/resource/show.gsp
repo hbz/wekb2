@@ -2,7 +2,7 @@
 <%@ page import="wekb.TitleInstancePackagePlatform; wekb.helper.RDStore;" %>
 <html>
 <head>
-    <meta name="layout" content="public_semui"/>
+    <meta name="layout" content="wekb"/>
     <title>we:kb : Show
     <g:if test="${displayobj}">
         ${displayobj} (${displayobj.getShowName()})

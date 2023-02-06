@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
     <head>
-        <meta name="layout" content="public_semui"/>
+        <meta name="layout" content="wekb"/>
         <title>we:kb : Privacy Notice</title>
     </head>
 

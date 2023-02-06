@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta name="layout" content="public_semui"/>
+    <meta name="layout" content="wekb"/>
     <title>we:kb : Packages Changes</title>
 </head>
 

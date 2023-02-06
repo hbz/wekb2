@@ -1,7 +1,7 @@
 <%@ page import="wekb.helper.RDStore; wekb.RefdataValue;" contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
-    <meta name="layout" content="public_semui"/>
+    <meta name="layout" content="wekb"/>
     <title>we:kb : Change History for Package: ${pkg.name}</title>
 </head>
 

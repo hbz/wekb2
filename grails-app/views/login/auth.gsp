@@ -1,7 +1,7 @@
 <g:set var='securityConfig' value='${applicationContext.springSecurityService.securityConfig}'/>
 <html>
 <head>
-    <meta name="layout" content="public_semui"/>
+    <meta name="layout" content="wekb"/>
     <title>we:kb : Login</title>
 </head>
 

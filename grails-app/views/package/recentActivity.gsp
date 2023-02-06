@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta name="layout" content="public_semui"/>
+    <meta name="layout" content="wekb"/>
     <title>we:kb : Package Recent Activity</title>
 </head>
 
@@ -13,7 +13,7 @@
 
     <div class="content">
 
-        <g:render template="/apptemplates/secondTemplates/recentActivity" model="[recentActivitys: recentActivitys]"/>
+        <g:render template="/templates/recentActivity" model="[recentActivitys: recentActivitys]"/>
 
     </div>
 </div>

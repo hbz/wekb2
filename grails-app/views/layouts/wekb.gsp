@@ -244,7 +244,7 @@
             <br>
             <br>
 
-            <g:render template="/layouts/footer_semui"/>
+            <g:render template="/layouts/footer"/>
         </div>
     </div>
 </body>
