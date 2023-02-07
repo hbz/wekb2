@@ -564,7 +564,7 @@ class AdminController {
 
     List<Long> tippsIds = TitleInstancePackagePlatform.executeQuery("select id from TitleInstancePackagePlatform where (url is null or url = '') and status != :removed", [deleted: RDStore.KBC_STATUS_REMOVED])
 
-    Integer tippsToRemoved = tippsIds ? KBComponent.executeUpdate("update KBComponent set status = :removed, lastUpdated = :currentDate where id in (:tippIds) and status != :removed", [removed: RDStore.KBC_STATUS_REMOVED, tippIds: tippsIds, currentDate: new Date()]) : 0
+    Integer tippsToRemoved = tippsIds ? TitleInstancePackagePlatform.executeUpdate("update TitleInstancePackagePlatform set status = :removed, lastUpdated = :currentDate where id in (:tippIds) and status != :removed", [removed: RDStore.KBC_STATUS_REMOVED, tippIds: tippsIds, currentDate: new Date()]) : 0
 
     flash.message = "Tipp without Url: ${tippsIds.size()}, Set tipps to removed: ${tippsToRemoved}"
 
@@ -737,7 +737,7 @@ class AdminController {
         for (int offset = 0; offset < tippUuidsNotInIndex.size(); offset += max) {
 
           List tippUuidsToProcess = tippUuidsNotInIndex.drop(offset).take(max)
-            def res = KBComponent.executeUpdate("update KBComponent set lastUpdated = :currentDate where uuid IN (:uuidList)", [uuidList: tippUuidsToProcess, currentDate: currentDate])
+            def res = TitleInstancePackagePlatform.executeUpdate("update TitleInstancePackagePlatform set lastUpdated = :currentDate where uuid IN (:uuidList)", [uuidList: tippUuidsToProcess, currentDate: currentDate])
             log.info("Updated lastUpdated of ${res} components")
           }
           sess.flush()

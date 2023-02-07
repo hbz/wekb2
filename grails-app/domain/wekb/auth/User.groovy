@@ -4,7 +4,6 @@ package wekb.auth
 import groovy.util.logging.Slf4j
 import wekb.CuratoryGroup
 import wekb.CuratoryGroupUser
-import wekb.KBComponent
 import wekb.RefdataValue
 import wekb.helper.BeanStore
 import wekb.system.SavedSearch

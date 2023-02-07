@@ -75,9 +75,7 @@ class Identifier {
   def afterInsert (){
     log.debug("afterSave for ${this}")
     def ref = this.getReference()
-    if(ref instanceof KBComponent){
       cascadingUpdateService.update(this, dateCreated)
-    }
 
   }
 
@@ -97,9 +95,7 @@ class Identifier {
   def afterUpdate(){
     log.debug("afterUpdate for ${this}")
     def ref = this.getReference()
-    if(ref instanceof KBComponent){
       cascadingUpdateService.update(this, lastUpdated)
-    }
 
   }
   public String getName() {

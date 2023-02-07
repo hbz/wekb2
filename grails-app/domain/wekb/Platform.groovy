@@ -1,6 +1,8 @@
 package wekb
 
+import grails.plugins.orm.auditable.Auditable
 import wekb.annotations.RefdataAnnotation
+import wekb.base.AbstractBase
 import wekb.helper.RCConstants
 import groovy.util.logging.Slf4j
 import wekb.helper.RDStore
@@ -8,7 +10,15 @@ import wekb.helper.RDStore
 import javax.persistence.Transient
 
 @Slf4j
-class Platform extends KBComponent {
+class Platform  extends AbstractBase implements Auditable {
+
+
+  String name
+  RefdataValue status
+
+  // Timestamps
+  Date dateCreated
+  Date lastUpdated
 
   String primaryUrl
 
@@ -73,7 +83,17 @@ class Platform extends KBComponent {
   ]
 
   static mapping = {
-    includes KBComponent.mapping
+    id column: 'plat_id'
+    version column: 'plat_version'
+
+    uuid column: 'plat_uuid'
+    name column: 'plat_name'
+
+    lastUpdated column: 'plat_last_updated'
+    dateCreated column: 'plat_date_created'
+
+    status column: 'plat_status_rv_fk'
+
     primaryUrl column: 'plat_primary_url', index: 'platform_primary_url_idx'
     ipAuthentication column: 'plat_auth_by_ip_fk_rv'
     shibbolethAuthentication column: 'plat_auth_by_shib_fk_rv'
@@ -137,6 +157,21 @@ class Platform extends KBComponent {
     provider(nullable: true, blank: false)
   }
 
+  @Override
+  def beforeInsert() {
+    super.beforeInsertHandler()
+  }
+
+  @Override
+  def beforeUpdate() {
+    super.beforeUpdateHandler()
+  }
+
+  @Override
+  def beforeDelete() {
+    super.beforeDeleteHandler()
+  }
+
   static def refdataFind(params) {
     def result = [];
     def status_deleted = RDStore.KBC_STATUS_DELETED
@@ -160,27 +195,6 @@ class Platform extends KBComponent {
     }
 
     result
-  }
-
-  def availableActions() {
-    [
-      /*[code: 'platform::replacewith', label: 'Replace platform with...', perm: 'admin'],*/
-      [code: 'method::deleteSoft', label: 'Delete Platform', perm: 'delete'],
-      /*[code: 'method::retire', label: 'Retire Platform (with hosted TIPPs)', perm: 'admin']*/
-    ]
-  }
-
-  /**
-   *{*    name:'name',
-   *    platformUrl:'platformUrl',
-   *}*/
-
-  public void retire(context) {
-    log.debug("platform::retire");
-    // Call the delete method on the superClass.
-    log.debug("Updating platform status to retired");
-    this.status = RDStore.KBC_STATUS_RETIRED
-    this.save()
   }
 
   @Transient
@@ -210,5 +224,13 @@ class Platform extends KBComponent {
   @Transient
   def  getHostedPackages(){
     Package.executeQuery('select p from Package as p where nominalPlatform = :nominalPlatform', [nominalPlatform: this])
+  }
+
+  def expunge(){
+    log.debug("Component expunge")
+    def result = [deleteType: this.class.name, deleteId: this.id]
+    log.debug("Removing all components")
+    this.delete(failOnError: true)
+    result
   }
 }

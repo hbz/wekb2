@@ -24,7 +24,7 @@
                        value="${d.class.name}:${d.id}"/>
                 <input type="hidden" name="__newObjectClass"
                        value="wekb.ComponentLanguage"/>
-                <input type="hidden" name="__recip" value="kbcomponent"/>
+                <input type="hidden" name="__recip" value="tipp"/>
                 <input type="hidden" name="curationOverride" value="${params.curationOverride}"/>
 
                 <div class="field">

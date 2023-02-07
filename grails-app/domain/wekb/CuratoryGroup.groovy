@@ -1,12 +1,22 @@
 package wekb
 
+import grails.plugins.orm.auditable.Auditable
 import wekb.annotations.RefdataAnnotation
+import wekb.base.AbstractBase
 import wekb.helper.RCConstants
 import wekb.helper.RDStore
 
 import javax.persistence.Transient
 
-class CuratoryGroup extends KBComponent {
+class CuratoryGroup extends AbstractBase implements Auditable {
+
+
+  String name
+  RefdataValue status
+
+  // Timestamps
+  Date dateCreated
+  Date lastUpdated
 
   @RefdataAnnotation(cat = RCConstants.CURATORY_GROUP_TYPE)
   RefdataValue type
@@ -20,7 +30,16 @@ class CuratoryGroup extends KBComponent {
   ]
 
   static mapping = {
-    includes KBComponent.mapping
+    id column: 'cg_id'
+    version column: 'cg_version'
+
+    uuid column: 'cg_uuid'
+    name column: 'cg_name'
+
+    lastUpdated column: 'cg_last_updated'
+    dateCreated column: 'cg_date_created'
+
+    status column: 'cg_status_rv_fk'
     type column: 'cg_type_rv_fk'
   }
 
@@ -42,7 +61,7 @@ class CuratoryGroup extends KBComponent {
     type (nullable:true, blank:false)
   }
 
-  @Override
+
   public String getNiceName() {
     return "Curatory Group";
   }
@@ -63,24 +82,19 @@ class CuratoryGroup extends KBComponent {
     result
   }
 
+  @Override
   def beforeInsert() {
-    this.generateShortcode()
-    this.generateNormname()
-    //this.generateComponentHash()
-    this.generateUuid()
-    this.ensureDefaults()
+    super.beforeInsertHandler()
   }
 
-  @Transient
-  def availableActions() {
-    [
-            [code: 'method::deleteSoft', label: 'Delete Curatory Group', perm: 'delete'],
-    ]
+  @Override
+  def beforeUpdate() {
+    super.beforeUpdateHandler()
   }
 
-  public void deleteSoft(context) {
-    // Call the delete method on the superClass.
-    super.deleteSoft(context)
+  @Override
+  def beforeDelete() {
+    super.beforeDeleteHandler()
   }
 
   @Transient
@@ -91,6 +105,23 @@ class CuratoryGroup extends KBComponent {
   public String getShowName() {
     return this.name
   }
+
+  String toString(){
+    "${name ?: ''}".toString()
+  }
+
+  @Transient
+  String getDisplayName(){
+    return name
+  }
+
+  def expunge(){
+    log.debug("Component expunge")
+    def result = [deleteType: this.class.name, deleteId: this.id]
+    this.delete(failOnError: true)
+    result
+  }
+
 
 }
 

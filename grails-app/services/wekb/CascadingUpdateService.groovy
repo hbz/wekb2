@@ -5,8 +5,26 @@ import grails.gorm.transactions.Transactional
 @Transactional
 class CascadingUpdateService {
 
-    void update(KBComponent obj, Date lastUpdated) {
-        KBComponent.executeUpdate("update KBComponent kbc set kbc.lastUpdated = :lastUpdated where kbc = :obj", [
+    void update(CuratoryGroup obj, Date lastUpdated) {
+        CuratoryGroup.executeUpdate("update CuratoryGroup cg set cg.lastUpdated = :lastUpdated where cg = :obj", [
+                lastUpdated: lastUpdated, obj: obj
+        ])
+    }
+
+    void update(Org obj, Date lastUpdated) {
+        Org.executeUpdate("update Org org set org.lastUpdated = :lastUpdated where org = :obj", [
+                lastUpdated: lastUpdated, obj: obj
+        ])
+    }
+
+    void update(Package obj, Date lastUpdated) {
+        Package.executeUpdate("update Package pkg set pkg.lastUpdated = :lastUpdated where pkg = :obj", [
+                lastUpdated: lastUpdated, obj: obj
+        ])
+    }
+
+    void update(Platform obj, Date lastUpdated) {
+        Platform.executeUpdate("update Platform plt set plt.lastUpdated = :lastUpdated where plt = :obj", [
                 lastUpdated: lastUpdated, obj: obj
         ])
     }
@@ -41,7 +59,8 @@ class CascadingUpdateService {
     }
 
     void update(ComponentVariantName obj, Date lastUpdated) {
-        if (obj.owner) { update(obj.owner, lastUpdated) }
+        if (obj.pkg) { update(obj.pkg, lastUpdated) }
+        if (obj.org) { update(obj.org, lastUpdated) }
     }
 
     void update(PackageArchivingAgency obj, Date lastUpdated) {

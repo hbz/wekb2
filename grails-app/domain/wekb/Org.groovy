@@ -1,5 +1,7 @@
 package wekb
 
+import grails.plugins.orm.auditable.Auditable
+import wekb.base.AbstractBase
 import wekb.helper.RCConstants
 import groovy.util.logging.Slf4j
 import wekb.helper.RDStore
@@ -7,7 +9,15 @@ import wekb.helper.RDStore
 import javax.persistence.Transient
 
 @Slf4j
-class Org extends KBComponent {
+class Org extends AbstractBase implements Auditable {
+
+
+  String name
+  RefdataValue status
+
+  // Timestamps
+  Date dateCreated
+  Date lastUpdated
 
   RefdataValue mission
   String homepage
@@ -17,19 +27,7 @@ class Org extends KBComponent {
 
   Set variantNames = []
 
-  def availableActions() {
-    [
-     /* [code: 'org::deprecateReplace', label: 'Replace Publisher With...'],
-     */
-      [code: 'method::deleteSoft', label: 'Delete Provider', perm: 'delete'],
-      [code: 'method::retire', label: 'Retire Provider', perm: 'admin'],
-      [code: 'method::setCurrent', label: 'Set Provider Current'],
-      [code: 'setStatus::Removed', label: 'Remove Provider', perm: 'delete'],
-    ]
-  }
-
   static mappedBy = [
-          variantNames        : 'owner'
   ]
 
   static hasMany = [
@@ -41,8 +39,18 @@ class Org extends KBComponent {
   ]
 
   static mapping = {
-    includes KBComponent.mapping
+    id column: 'org_id'
+    version column: 'org_version'
+
+    uuid column: 'org_uuid'
+    name column: 'org_name'
+
+    lastUpdated column: 'org_last_updated'
+    dateCreated column: 'org_date_created'
+
+    status column: 'org_status_rv_fk'
     mission column: 'org_mission_fk_rv'
+
     homepage column: 'org_homepage'
     metadataDownloaderURL column: 'org_metadata_downloader_url', type: 'text'
     kbartDownloaderURL column: 'org_kbart_downloader_url', type: 'text'
@@ -70,6 +78,21 @@ class Org extends KBComponent {
     })
   }
 
+  @Override
+  def beforeInsert() {
+    super.beforeInsertHandler()
+  }
+
+  @Override
+  def beforeUpdate() {
+    super.beforeUpdateHandler()
+  }
+
+  @Override
+  def beforeDelete() {
+    super.beforeDeleteHandler()
+  }
+
   static def refdataFind(params) {
     def result = [];
     def status_deleted = RDStore.KBC_STATUS_DELETED
@@ -95,7 +118,7 @@ class Org extends KBComponent {
     result
   }
 
-  @Override
+
   public String getNiceName() {
     return "Provider";
   }
@@ -130,5 +153,14 @@ class Org extends KBComponent {
   @Transient
   def getProvidedPlatforms(){
     Platform.executeQuery('select p from Platform as p where provider = :provider', [provider: this])
+  }
+
+  def expunge(){
+    log.debug("Component expunge")
+    def result = [deleteType: this.class.name, deleteId: this.id]
+    log.debug("Removing all components")
+    ComponentVariantName.executeUpdate("delete from ComponentVariantName as c where c.owner=:component", [component: this])
+    this.delete(failOnError: true)
+    result
   }
 }

@@ -5,7 +5,10 @@ class ComponentVariantName {
 
   def cascadingUpdateService
 
-  KBComponent owner
+  Org org
+  Package pkg
+
+
   RefdataValue variantType
   RefdataValue locale
   RefdataValue status
@@ -19,7 +22,8 @@ class ComponentVariantName {
   static mapping = {
         id column:'cvn_id'
         version column:'cvn_version'
-        owner column:'cvn_kbc_fk'
+        org column:'cvn_org_fk'
+        pkg column:'cvn_pkg_fk'
         variantName column:'cvn_variant_name'
         normVariantName column:'cvn_norm_variant_name', index:'cvn_norm_variant_name_idx'
         variantType column:'cvn_type_rv_fk'
@@ -39,13 +43,17 @@ class ComponentVariantName {
 
       dateCreated(nullable:true, blank:true)
       lastUpdated(nullable:true, blank:true)
+
+      org(nullable:true, blank:false)
+      pkg(nullable:true, blank:false)
   }
 
   String getOID() {
       "${this.class.name}:${id}"
   }
 
-  static belongsTo = [owner: KBComponent]
+  static belongsTo = [org: Org,
+                    pkg: Package]
 
   def beforeInsert() {
     // Generate the any necessary values.

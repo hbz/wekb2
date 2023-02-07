@@ -50,7 +50,7 @@
                                         <g:if test="${c.link}">
                                             <g:link controller="resource"
                                                     action="show"
-                                                    id="${element instanceof wekb.KBComponent ? element.uuid : element.class.name + ':' + element.id}">
+                                                    id="${element.hasProperty('uuid') ? element.uuid : element.class.name + ':' + element.id}">
                                                 ${element.name}
                                             </g:link>
                                         </g:if><g:else>
@@ -175,7 +175,7 @@
                                                 <g:if test="${c.link}">
                                                     <g:link controller="resource"
                                                             action="show"
-                                                            id="${element instanceof wekb.KBComponent ? element.uuid : element.class.name + ':' + element.id}">
+                                                            id="${element.hasProperty('uuid') ? element.uuid : element.class.name + ':' + element.id}">
                                                         ${element.name}
                                                     </g:link>
                                                 </g:if><g:else>

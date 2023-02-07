@@ -1,4 +1,3 @@
-<%@ page import="wekb.KBComponent" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,7 +10,7 @@
 
 <g:if test="${qbetemplate}">
     <h1 class="ui header">Search ${qbetemplate.title ?: ''} <g:if test="${refObject}">for ${refObject.niceName}: <g:link
-            controller="resource" action="show" id="${refObject instanceof wekb.KBComponent ? refObject.uuid : refObject.id}">${refObject.name}</g:link></g:if></h1>
+            controller="resource" action="show" id="${refObject.hasProperty('uuid') ? refObject.uuid : refObject.id}">${refObject.name}</g:link></g:if></h1>
 </g:if>
 <g:else>
     <h1 class="ui header">Search</h1>

@@ -1,6 +1,8 @@
 package wekb
 
+import grails.plugins.orm.auditable.Auditable
 import wekb.annotations.RefdataAnnotation
+import wekb.base.AbstractBase
 import wekb.helper.RCConstants
 import wekb.helper.RDStore
 import groovy.time.TimeCategory
@@ -9,10 +11,23 @@ import groovy.util.logging.Slf4j
 import javax.persistence.Transient
 
 @Slf4j
-class Package extends KBComponent {
+class Package  extends AbstractBase implements Auditable {
 
-    Org provider
-    Platform nominalPlatform
+  String name
+  String normname
+
+  RefdataValue status
+
+  // Timestamps
+  Date dateCreated
+  Date lastUpdated
+
+  String description
+
+  String lastUpdateComment
+
+  Org provider
+  Platform nominalPlatform
 
   // Refdata
   @RefdataAnnotation(cat = RCConstants.PACKAGE_SCOPE)
@@ -44,7 +59,6 @@ class Package extends KBComponent {
   KbartSource kbartSource
 
   static mappedBy = [
-          variantNames        : 'owner'
   ]
 
   static hasMany = [
@@ -60,16 +74,32 @@ class Package extends KBComponent {
   ]
 
   static mapping = {
-    includes KBComponent.mapping
+    id column: 'pkg_id'
+    version column: 'pkg_version'
+
+    uuid column: 'pkg_uuid'
+    name column: 'pkg_name'
+
+    lastUpdated column: 'pkg_last_updated'
+    dateCreated column: 'pkg_date_created'
+
+    status column: 'pkg_status_rv_fk'
     scope column: 'pkg_scope_rv_fk'
     breakable column: 'pkg_breakable_rv_fk'
     consistent column: 'pkg_consistent_rv_fk'
     paymentType column: 'pkg_payment_type_rv_fk'
+
+    openAccess column: 'pkg_open_access_rv_fk'
+    file column: 'pkg_file_rv_fk'
+    editingStatus column: 'pkg_editing_status_rv_fk'
+    contentType column: 'pkg_content_type_rv_fk'
+
     globalNote column: 'pkg_global_note'
     descriptionURL column: 'pkg_descr_url'
-    openAccess column: 'pkg_open_access'
-    file column: 'pkg_file'
-    editingStatus column: 'pkg_editing_status_rv_fk'
+
+    description column: 'pkg_description', type: 'text'
+    lastUpdateComment column: 'pkg_last_update_comment'
+    normname column: 'pkg_normname', type: 'text', index: 'pkg_normname_idx'
 
     ddcs             joinTable: [
             name:   'package_dewey_decimal_classification',
@@ -132,6 +162,21 @@ class Package extends KBComponent {
     provider (nullable: true, blank: false)
     kbartSource (nullable: true, blank: false)
 
+  }
+
+  @Override
+  def beforeInsert() {
+    super.beforeInsertHandler()
+  }
+
+  @Override
+  def beforeUpdate() {
+    super.beforeUpdateHandler()
+  }
+
+  @Override
+  def beforeDelete() {
+    super.beforeDeleteHandler()
   }
 
   static def refdataFind(params) {
@@ -206,8 +251,8 @@ class Package extends KBComponent {
 
 
   public void deleteSoft(context) {
-    // Call the delete method on the superClass.
-    super.deleteSoft(context)
+    setStatus(RDStore.KBC_STATUS_DELETED)
+    save()
 
     // Delete the tipps too as a TIPP should not exist without the associated,
     // package.
@@ -218,8 +263,8 @@ class Package extends KBComponent {
   }
 
 
-  public void retire(context) {
-    log.debug("package::retire");
+  public void retireWithTipps(context) {
+    log.debug("package::retireWithTipps");
     // Call the delete method on the superClass.
     log.debug("Updating package status to retired");
     def retired_status = RDStore.KBC_STATUS_RETIRED
@@ -255,22 +300,6 @@ class Package extends KBComponent {
 
     Date now = new Date()
     TitleInstancePackagePlatform.executeUpdate("update TitleInstancePackagePlatform as t set t.status = :cur, t.lastUpdateComment = 'Current via Package action current', t.lastUpdated = :now where t.status != :cur and t.pkg = :pkg", [cur: currentStatus, pkg: this, now: now])
-  }
-
-
-  @Transient
-  def availableActions() {
-    [
-      [code: 'manualKbartImport', label: 'Manual KBART Import'],
-
-      [code: 'method::currentWithTipps', label: 'Mark the package as current (with all Titles)'],
-      [code: 'method::deleteSoft', label: 'Mark the package as deleted (with all Titles)', perm: 'delete'],
-      [code: 'method::retire', label: 'Mark the package as retired (with all Titles)'],
-      [code: 'method::removeWithTipps', label: 'Remove the package (with all Titles)', perm: 'delete'],
-      /*[code: 'verifyTitleList', label: 'Verify Title List'],*/
-      [code: 'packageUrlUpdate', label: 'Trigger Update (Changed Titles)'],
-      [code: 'packageUrlUpdateAllTitles', label: 'Trigger Update (all Titles)'],
-    ]
   }
 
 
@@ -489,4 +518,11 @@ class Package extends KBComponent {
     updatePackageInfo
   }
 
+  def expunge(){
+    log.debug("Component expunge")
+    def result = [deleteType: this.class.name, deleteId: this.id]
+    log.debug("Removing all components")
+    this.delete(failOnError: true)
+    result
+  }
 }

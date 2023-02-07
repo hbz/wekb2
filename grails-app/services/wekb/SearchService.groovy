@@ -127,10 +127,6 @@ class SearchService {
                     def display_start_time = System.currentTimeMillis();
                     if ( result.displayobj != null ) {
 
-/*                        if ( result.displayobj.class.name == "wekb.ComponentWatch"  && result.displayobj.component?.id ) {
-                            result.displayobj = KBComponent.get(result.displayobj.component?.id)
-                        }*/
-
                         result.displayobjclassname = result.displayobj.class.name
                         result.displaytemplate = displayTemplateService.getTemplateInfo(result.displayobjclassname)
                         result.__oid = "${result.displayobjclassname}:${result.displayobj.id}"

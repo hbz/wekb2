@@ -1,8 +1,10 @@
 package wekb
 
+import grails.plugins.orm.auditable.Auditable
 import wekb.annotations.HbzKbartAnnotation
 import wekb.annotations.KbartAnnotation
 import wekb.annotations.RefdataAnnotation
+import wekb.base.AbstractBase
 import wekb.helper.RCConstants
 import groovy.util.logging.Slf4j
 import wekb.helper.RDStore
@@ -11,7 +13,14 @@ import javax.persistence.Transient
 import java.text.SimpleDateFormat
 
 @Slf4j
-class TitleInstancePackagePlatform extends KBComponent {
+class TitleInstancePackagePlatform  extends AbstractBase implements Auditable {
+
+  String name
+  RefdataValue status
+
+  // Timestamps
+  Date dateCreated
+  Date lastUpdated
 
   def cascadingUpdateService
 
@@ -115,7 +124,17 @@ class TitleInstancePackagePlatform extends KBComponent {
   }
 
   static mapping = {
-    includes KBComponent.mapping
+    id column: 'tipp_id'
+    version column: 'tipp_version'
+
+    uuid column: 'tipp_uuid'
+    name column: 'tipp_name', type: 'text', index: 'tipp_name_idx'
+
+    lastUpdated column: 'tipp_last_updated'
+    dateCreated column: 'tipp_date_created'
+
+    status column: 'tipp_status_rv_fk'
+
     note column: 'tipp_note', type: 'text'
     accessType column: 'tipp_access_type'
     accessStartDate column: 'tipp_access_start_date', index: 'tipp_access_start_date_idx'
@@ -145,6 +164,22 @@ class TitleInstancePackagePlatform extends KBComponent {
             key:    'tipp_fk',
             column: 'ddc_rv_fk', type:   'BIGINT'
     ], lazy: false
+  }
+
+  @Override
+  def beforeInsert() {
+    super.beforeInsertHandler()
+  }
+
+  @Override
+  def beforeUpdate() {
+    super.beforeUpdateHandler()
+  }
+
+  @Override
+  def beforeDelete() {
+    super.beforeDeleteHandler()
+    cascadingUpdateService.update(this, lastUpdated)
   }
 
   static constraints = {
@@ -181,18 +216,7 @@ class TitleInstancePackagePlatform extends KBComponent {
     pkg (nullable: true, blank: false)
   }
 
-  def availableActions() {
-    [[code: 'setStatus::Retired', label: 'Mark the title as retired'],
-     /*[code: 'tipp::retire', label: 'Retire (with Date)'],*/
-     [code: 'setStatus::Deleted', label: 'Mark the title as deleted', perm: 'delete'],
-     [code: 'setStatus::Removed', label: 'Remove the title', perm: 'delete'],
-     [code: 'setStatus::Expected', label: 'Mark the title as expected'],
-     [code: 'setStatus::Current', label: 'Mark the title as current'],
-     /*[code: 'tipp::move', label: 'Move TIPP']*/
-    ]
-  }
 
-  @Override
   String getNiceName() {
     if (publicationType) {
       switch (publicationType) {
@@ -218,7 +242,7 @@ class TitleInstancePackagePlatform extends KBComponent {
     }
   }
 
-  @Override
+
   @Transient
   String getDisplayName() {
     return name ?: "${pkg?.name} / ${this.name} / ${hostPlatform?.name}"
@@ -326,12 +350,6 @@ class TitleInstancePackagePlatform extends KBComponent {
 
   }
 
-  def beforeDelete (){
-    log.debug("beforeDelete for ${this}")
-    cascadingUpdateService.update(this, lastUpdated)
-
-  }
-
   def afterUpdate(){
     log.debug("afterUpdate for ${this}")
     cascadingUpdateService.update(this, lastUpdated)
@@ -411,5 +429,13 @@ class TitleInstancePackagePlatform extends KBComponent {
             }
         }
     }
+
+  def expunge(){
+    log.debug("Component expunge")
+    def result = [deleteType: this.class.name, deleteId: this.id]
+    log.debug("Removing all components")
+    this.delete(failOnError: true)
+    result
+  }
 
 }
