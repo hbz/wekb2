@@ -1,17 +1,14 @@
 package wekb
 
 import wekb.annotations.RefdataAnnotation
+import wekb.base.AbstractBase
 import wekb.helper.RCConstants
 
-
-
-
-class TIPPCoverageStatement {
-
+class TIPPCoverageStatement extends AbstractBase {
 
   def cascadingUpdateService
 
-  TitleInstancePackagePlatform owner
+  TitleInstancePackagePlatform tipp
 
   Date startDate
   Date endDate
@@ -30,23 +27,26 @@ class TIPPCoverageStatement {
   RefdataValue coverageDepth
 
   static belongsTo = [
-    owner: TitleInstancePackagePlatform
+    tipp: TitleInstancePackagePlatform
   ]
 
   static mapping = {
-    owner column: 'owner_id', index: 'tipp_owner_idx' //TODO adapt to naming convention
-    startDate column:'tipp_start_date', index: 'tipp_start_date_idx'
-    startVolume column:'tipp_start_volume'
-    startIssue column:'tipp_start_issue'
-    endDate column:'tipp_end_date', index: 'tipp_end_date_idx'
-    endVolume column:'tipp_end_volume'
-    endIssue column:'tipp_end_issue'
-    embargo column:'tipp_embargo'
-    coverageNote column:'tipp_coverage_note',type: 'text'
-    coverageDepth column:'tipp_coverage_depth'
+    id column: 'tcs_id'
+    version column: 'tcs_version'
+    uuid column: 'tcs_uuid'
+    tipp column: 'tcs_tipp_fk', index: 'tcs_tipp_idx'
+    startDate column:'tcs_start_date', index: 'tcs_start_date_idx'
+    startVolume column:'tcs_start_volume'
+    startIssue column:'tcs_start_issue'
+    endDate column:'tcs_end_date', index: 'tcs_end_date_idx'
+    endVolume column:'tcs_end_volume'
+    endIssue column:'tcs_end_issue'
+    embargo column:'tcs_embargo'
+    coverageNote column:'tcs_note',type: 'text'
+    coverageDepth column:'tcs_depth'
 
-    dateCreated column:'tipp_coverage_date_created'
-    lastUpdated column:'tipp_coverage_last_updated'
+    dateCreated column:'tcs_date_created'
+    lastUpdated column:'tcs_last_updated'
   }
 
   static constraints = {
@@ -67,14 +67,23 @@ class TIPPCoverageStatement {
     dateCreated(nullable:true, blank:true)
     lastUpdated(nullable:true, blank:true)
 
-    owner (nullable:true, blank:false)
+    tipp (nullable:true, blank:false)
   }
 
   def afterInsert (){
     log.debug("afterSave for ${this}")
-    this.owner?.lastUpdateComment = "Coverage Statement ${this.id} created"
     cascadingUpdateService.update(this, dateCreated)
 
+  }
+
+  @Override
+  def beforeInsert() {
+    super.beforeInsertHandler()
+  }
+
+  @Override
+  def beforeUpdate() {
+    super.beforeUpdateHandler()
   }
 
   def beforeDelete (){
@@ -85,7 +94,6 @@ class TIPPCoverageStatement {
 
   def afterUpdate(){
     log.debug("afterUpdate for ${this}")
-    this.owner?.lastUpdateComment = "Coverage Statement ${this.id} created"
     cascadingUpdateService.update(this, lastUpdated)
 
   }

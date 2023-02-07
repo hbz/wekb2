@@ -23,6 +23,7 @@ class SavedSearch {
 
   static mapping = {
     id column: 'ss_id'
+    version column: 'ss_version'
     name column: 'ss_name'
     owner column: 'ss_owner_fk'
     searchDescriptor column: 'ss_search_descriptor', type:'text'

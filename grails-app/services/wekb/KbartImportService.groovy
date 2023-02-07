@@ -2070,7 +2070,7 @@ class KbartImportService {
 
         }
         //log.debug("before coverages II")
-        if (tipp.publicationType != RDStore.TIPP_PUBLIC_TYPE_SERIAL && TIPPCoverageStatement.findByOwner(tipp)) {
+        if (tipp.publicationType != RDStore.TIPP_PUBLIC_TYPE_SERIAL && TIPPCoverageStatement.findByTipp(tipp)) {
             //log.debug("in coverage statements block")
             com.k_int.ClassUtils.setStringIfDifferent(tipp, 'note', tipp.coverageStatements[0].coverageNote)
             if (tipp.coverageStatements.size() > 0) {

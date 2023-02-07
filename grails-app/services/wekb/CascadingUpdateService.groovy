@@ -77,6 +77,6 @@ class CascadingUpdateService {
     }
 
     void update(TIPPCoverageStatement obj, Date lastUpdated) {
-        if (obj.owner) { update(obj.owner, lastUpdated) }
+        if (obj.tipp) { update(obj.tipp, lastUpdated) }
     }
 }

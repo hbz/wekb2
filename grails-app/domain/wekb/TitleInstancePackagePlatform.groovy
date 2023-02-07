@@ -115,7 +115,7 @@ class TitleInstancePackagePlatform  extends AbstractBase implements Auditable {
   ]
 
   static mappedBy = [
-    coverageStatements: 'owner',
+    coverageStatements: 'tipp',
     prices              : 'tipp'
   ]
 
@@ -149,10 +149,14 @@ class TitleInstancePackagePlatform  extends AbstractBase implements Auditable {
     supersedingPublicationTitleId column: 'tipp_superseding_publication_title_id', index: 'tipp_superseding_publication_type_idx'
     lastChangedExternal column: 'tipp_last_change_ext', index: 'tipp_last_changed_ext_idx'
     medium column: 'tipp_medium_rv_fk', index: 'tipp_medium_idx'
-    series column: 'series', type: 'text'
-    url column: 'url', type: 'text', index: 'tipp_url_idx'
-    subjectArea column: 'subject_area', type: 'text', index: 'tipp_subject_area_idx'
+    series column: 'tipp_series', type: 'text'
+    url column: 'tipp_url', type: 'text', index: 'tipp_url_idx'
+    subjectArea column: 'tipp_subject_area', type: 'text', index: 'tipp_subject_area_idx'
     openAccess column: 'tipp_open_access_rv_fk', index: 'tipp_open_access_idx'
+
+    publisherName column: 'tipp_publisher_name'
+    dateFirstOnline column: 'tipp_date_first_online'
+    dateFirstInPrint column: 'tipp_date_first_in_print'
 
     pkg column: 'tipp_pkg_fk', index: 'tipp_pkg_idx'
     hostPlatform column: 'tipp_host_platform_fk', index: 'tipp_host_platform_idx'

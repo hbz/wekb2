@@ -117,10 +117,6 @@ class RefdataValue  extends AbstractI10n {
     return null
   }
 
-  //  def availableActions() {
-  //    [ [ code:'object::delete' , label: 'Delete' ] ]
-  //  }
-
   static RefdataValue construct(Map<String, Object> map) {
 
     withTransaction {

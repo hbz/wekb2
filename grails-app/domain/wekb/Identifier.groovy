@@ -47,7 +47,6 @@ class Identifier {
   }
 
   static mapping = {
-    table("identifier_new")
     id column: 'id_id'
     version column: 'id_version'
     value column: 'id_value', index: 'id_value_idx'

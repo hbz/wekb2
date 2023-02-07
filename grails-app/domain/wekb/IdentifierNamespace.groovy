@@ -21,6 +21,8 @@ class IdentifierNamespace {
   Date lastUpdated
 
   static mapping = {
+    id column:'idns_id'
+    version column:'idns_version'
     name column:'idns_name'
     value column:'idns_value'
     targetType column:'idns_targettype'
@@ -89,12 +91,6 @@ class IdentifierNamespace {
     return Identifier.executeQuery("select count(value) from Identifier where namespace = :namespace", [namespace: this])[0]
   }
 
-  @Transient
-  def availableActions() {
-    [
-            [code: 'deleteIdentifierNamespace', label: 'Delete Namespace', perm: 'su']
-    ]
-  }
 
   @Transient
   userAvailableActions(){

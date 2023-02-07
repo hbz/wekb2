@@ -152,7 +152,8 @@ class CleanupService {
       while (remaining.size() > 0) {
         def batch = remaining.take(50)
         remaining = remaining.drop(50)
-        ComponentVariantName.executeUpdate("delete from ComponentVariantName as c where c.owner.id IN (:component)", [component: batch]);
+        ComponentVariantName.executeUpdate("delete from ComponentVariantName as c where c.org.id IN (:component)", [component: batch]);
+        ComponentVariantName.executeUpdate("delete from ComponentVariantName as c where c.pkg.id IN (:component)", [component: batch]);
 
         TippPrice.executeUpdate("delete from TippPrice as cp where cp.tipp.id IN (:component)", [component: batch])
 

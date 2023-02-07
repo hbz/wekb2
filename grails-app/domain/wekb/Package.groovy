@@ -47,9 +47,6 @@ class Package  extends AbstractBase implements Auditable {
   @RefdataAnnotation(cat = RCConstants.PACKAGE_FILE)
   RefdataValue file
 
-  @RefdataAnnotation(cat = RCConstants.PACKAGE_EDITING_STATUS)
-  RefdataValue editingStatus
-
   String globalNote
 
   String descriptionURL
@@ -91,7 +88,6 @@ class Package  extends AbstractBase implements Auditable {
 
     openAccess column: 'pkg_open_access_rv_fk'
     file column: 'pkg_file_rv_fk'
-    editingStatus column: 'pkg_editing_status_rv_fk'
     contentType column: 'pkg_content_type_rv_fk'
 
     globalNote column: 'pkg_global_note'
@@ -128,6 +124,8 @@ class Package  extends AbstractBase implements Auditable {
   }
 
   static constraints = {
+    description(nullable: true, blank: true)
+    lastUpdateComment(nullable: true, blank: true)
     scope(nullable: true, blank: false)
     breakable(nullable: true, blank: false)
     consistent(nullable: true, blank: false)
@@ -136,7 +134,6 @@ class Package  extends AbstractBase implements Auditable {
     openAccess (nullable: true, blank: true)
     contentType (nullable: true, blank: true)
     file (nullable: true, blank: true)
-    editingStatus (nullable: true, blank: true)
     descriptionURL(nullable: true, blank: true)
     name(validator: { val, obj ->
       if (obj.hasChanged('name')) {
@@ -305,7 +302,7 @@ class Package  extends AbstractBase implements Auditable {
 
   @Transient
   private static getCoverageStatements(Long tipp_id) {
-    def result = TIPPCoverageStatement.executeQuery("from TIPPCoverageStatement as tcs where tcs.owner.id = :tipp", ['tipp': tipp_id], [readOnly: true])
+    def result = TIPPCoverageStatement.executeQuery("from TIPPCoverageStatement as tcs where tcs.tipp.id = :tipp", ['tipp': tipp_id], [readOnly: true])
     result
   }
 

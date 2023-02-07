@@ -54,7 +54,15 @@ class AjaxHtmlController {
           if (params.__newObjectClass == "wekb.ComponentVariantName"){
 
             def norm_variant = TextUtils.normaliseString(params.variantName)
-            def existing_variants = ComponentVariantName.findByNormVariantNameAndOwner(norm_variant, contextObj)
+
+            def existing_variants
+
+            if(contextObj instanceof Package){
+              existing_variants = ComponentVariantName.findByNormVariantNameAndPkg(norm_variant, contextObj)
+            }
+            if(contextObj instanceof Org){
+              existing_variants = ComponentVariantName.findByNormVariantNameAndOrg(norm_variant, contextObj)
+            }
 
             if (existing_variants){
               log.debug("found dupes!")
@@ -710,7 +718,7 @@ class AjaxHtmlController {
     def user = springSecurityService.currentUser
 
     if ( variant != null) {
-      def owner = variant.owner
+      def owner = variant.pkg ?: variant.org
       def editable = checkEditable(owner)
 
       if (editable) {
@@ -795,7 +803,6 @@ class AjaxHtmlController {
         def variantName = variant.variantName
 
         variant.delete()
-        variantOwner.lastUpdateComment = "Deleted Alternate Name ${variantName}."
         variantOwner.save(flush: true)
 
         result.owner_oid = "${variantOwner.class.name}:${variantOwner.id}"
@@ -835,14 +842,13 @@ class AjaxHtmlController {
     def result = ['result':'OK', 'params': params]
     def user = springSecurityService.currentUser
     def tcs = TIPPCoverageStatement.get(params.id)
-    def tipp = tcs.owner
+    def tipp = tcs.tipp
 
     if ( tcs != null) {
       def editable = checkEditable(tipp)
 
       if (editable) {
         tcs.delete()
-        tipp.lastUpdateComment = "Deleted Coverage Statement."
         tipp.save(flush: true)
       }
       else {

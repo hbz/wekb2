@@ -414,16 +414,6 @@ class CreateComponentService {
                             }
                         }
 
-                        /* if (colMap.editing_status != null) {
-                            String value = cols[colMap.editing_status].trim()
-                            if (value) {
-                              RefdataValue refdataValue = RefdataCategory.lookup(RCConstants.PACKAGE_EDITING_STATUS, value)
-                              if (refdataValue)
-                                pkg.editingStatus = refdataValue
-                            }
-                          }*/
-
-
                         if (colMap.national_ranges && cols[colMap.national_ranges]) {
                             List<String> national_ranges = cols[colMap.national_ranges].split(',')
                             national_ranges.each { String value ->

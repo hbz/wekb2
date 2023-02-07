@@ -133,7 +133,6 @@ class FTUpdateService {
         }
 
         result.status = kbc.status?.value
-        result.editingStatus = kbc.editingStatus?.value
         result.identifiers = []
         kbc.ids.each { idc ->
           result.identifiers.add([namespace    : idc.namespace.value,
