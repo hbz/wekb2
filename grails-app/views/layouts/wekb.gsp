@@ -96,6 +96,7 @@
                         <div class="item">
                             <div class="header">Admin Views</div>
                             <div class="menu">
+                                <g:link class="item" controller="admin" action="index">Admin Dashboard</g:link>
                                 <g:link class="item" controller="search" action="componentSearch"
                                         params="[qbe: 'g:users']">User Management</g:link>
                                 <g:link class="item" controller="admin" action="jobs">Manage Jobs</g:link>
@@ -115,71 +116,13 @@
                                         action="tippIdentifiersWithSameNameSpace">Title Identifiers with same Identifier Namespace</g:link>
                             </div>
                         </div>
-                        <div class="item">
-                            <div class="header"> Admin Search</div>
-                            <div class="menu">
-                                <g:link class="item" controller="search" action="componentSearch"
-                                        params="[qbe: 'g:updatePackageInfos']">Update Package Infos</g:link>
-                                <g:link class="item" controller="search" action="componentSearch"
-                                params="[qbe: 'g:updateTippInfos']">Update Title Infos</g:link>
-                                <g:link class="item" controller="search" action="componentSearch"
-                                        params="[qbe: 'g:identifiers']">Identifiers</g:link>
-                                <g:link class="item" controller="search" action="componentSearch"
-                                        params="[qbe: 'g:namespaces']">Identifier Namespaces</g:link>
-                                <g:link class="item" controller="search" action="componentSearch"
-                                        params="[qbe: 'g:jobResults']">Job Infos</g:link>
-                                <g:link class="item" controller="search" action="componentSearch"
-                                        params="[qbe: 'g:refdataCategories']">Refdata Categories</g:link>
-                                <g:link class="item" controller="search" action="componentSearch"
-                                        params="[qbe: 'g:refdataValues']">Refdata Values</g:link>
 
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="header"> Admin Create
-                            </div>
-                            <div class="menu">
-                                <g:link class="item" controller="create" action="index"
-                                        params="[tmpl: 'wekb.IdentifierNamespace']">Identifier Namespace</g:link>
-                                <g:link class="item" controller="create" action="index"
-                                        params="[tmpl: 'wekb.RefdataCategory']">Refdata Category</g:link>
-                                <g:link class="item" controller="create" action="index"
-                                        params="[tmpl: 'wekb.RefdataValue']">Refdata Value</g:link>
-                                <g:link class="item" controller="create" action="index"
-                                         params="[tmpl: 'wekb.CuratoryGroup']">Curatory Group</g:link>
-                                <g:link class="item" controller="create" action="index"
-                                        params="[tmpl: 'wekb.Org']">Provider</g:link>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="header"> Admin Jobs</div>
-                            <div class="menu">
-                                <g:link class="item" controller="admin" action="updateTextIndexes"
-                                        onclick="return confirm('Are you sure?')">Update Free Text Indexes</g:link>
-                                %{--              <g:link class="item" controller="admin" action="resetTextIndexes" onclick="return confirm('Are you sure?')"><i class="fa fa-angle-double-right fa-fw"></i> Reset Free Text Indexes</g:link>--}%
-                                <g:link class="item" controller="admin" action="recalculateStats"
-                                        onclick="return confirm('Are you sure?')">Recalculate Statistics</g:link>
-                                <g:link class="item" controller="admin" action="expungeRemovedComponents"
-                                        onclick="return confirm('Are you sure?')">Expunge Removed Component</g:link>
-                                <g:link class="item" controller="admin" action="ensureUuids"
-                                        onclick="return confirm('Are you sure?')">Ensure UUIDs</g:link>
-                                <g:link class="item" controller="admin" action="autoUpdatePackages"
-                                        onclick="return confirm('Are you sure?')">Auto Update All Packages (Last Changed)</g:link>
-                                <g:link class="item" controller="admin" action="autoUpdatePackagesAllTitles"
-                                        onclick="return confirm('Are you sure?')">Auto Update All Packages</g:link>
-                                %{-- <g:link class="item" controller="admin" action="cleanupTippIdentifersWithSameNamespace"
-                                         onclick="return confirm('Are you sure?')">Cleanup Tipp Identifers with same Namespace</g:link>--}%
-                                <g:link class="item" controller="admin" action="setTippsWithoutUrlToDeleted"
-                                        onclick="return confirm('Are you sure?')">Set Tipps without Url to deleted</g:link>
-                            </div>
-                        </div>
 
                 <div class="item">
-                    <div class="header">Infos</div>
+                    <div class="header">Frontend</div>
 
                     <div class="menu">
                         <g:link class="item" controller="frontend" action="index">Frontend</g:link>
-                        <g:link class="item" controller="admin" action="about">Operating environment</g:link>
                     </div>
                 </div>
 

@@ -43,20 +43,6 @@ class AdminController {
           "wekbdeletedcomponents": "DeletedKBComponent"
   ]
 
-  def ensureUuids() {
-
-    Job j = concurrencyManagerService.createJob { Job j ->
-      cleanupService.ensureUuids(j)
-    }.startOrQueue()
-
-    j.description = "Ensure UUIDs for components"
-    j.type = RefdataCategory.lookupOrCreate(RCConstants.JOB_TYPE, 'EnsureUUIDs')
-    j.startTime = new Date()
-
-    redirect(controller: 'admin', action: 'jobs');
-
-  }
-
   def updateTextIndexes() {
     log.debug("Call to update indexe");
 
@@ -572,7 +558,7 @@ class AdminController {
   }
 
   @Secured(['ROLE_ADMIN', 'IS_AUTHENTICATED_FULLY'])
-  def about() {
+  def index() {
     def result = [:]
     def dbmQuery = (sessionFactory.currentSession.createSQLQuery(
             'SELECT filename, id, dateexecuted from databasechangelog order by orderexecuted desc limit 1'

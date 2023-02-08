@@ -294,7 +294,6 @@ Job.Type;CleanupRemovedComponents;CleanupRemovedComponents;CleanupRemovedCompone
 Job.Type;CleanupRejectedComponents;CleanupRejectedComponents;CleanupRejectedComponents
 Job.Type;DeleteTIWithoutHistory;DeleteTIWithoutHistory;DeleteTIWithoutHistory
 Job.Type;EnrichmentService;EnrichmentService;EnrichmentService
-Job.Type;EnsureUUIDs;EnsureUUIDs;EnsureUUIDs
 Job.Type;GeneratePackageTypes;GeneratePackageTypes;GeneratePackageTypes
 Job.Type;GenerateTIPPCoverage;GenerateTIPPCoverage;GenerateTIPPCoverage
 Job.Type;IdentifierCleanup;IdentifierCleanup;IdentifierCleanup
