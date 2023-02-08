@@ -78,7 +78,7 @@ databaseChangeLog = {
         grailsChange {
             change {
 
-                Integer countUpdate = sql.executeUpdate('''update platform set plat_provider_fk = (select combo_to_fk from combo where combo_type_rv_fk = (Select rdv_id from refdata_value where rdv_owner = (SELECT rdc_id FROM refdata_category WHERE rdc_description = 'Combo.Type') and rdv_value = 'Platform.Provider') and combo_from_fk = kbc_id and combo_type_rv_fk = (Select rdv_id from refdata_value where rdv_owner = (SELECT rdc_id FROM refdata_category WHERE rdc_description = 'Combo.Type') and rdv_value = 'Platform.Provider')) where plat_provider_fk is null''')
+                Integer countUpdate = sql.executeUpdate('''update platform set plat_provider_fk = (select combo_to_fk from combo where combo_type_rv_fk = (Select rdv_id from refdata_value where rdv_owner = (SELECT rdc_id FROM refdata_category WHERE rdc_description = 'Combo.Type') and rdv_value = 'Platform.Provider') and combo_from_fk = kbc_id) where plat_provider_fk is null''')
 
                 confirm("set plat_provider_fk from platform: ${countUpdate}")
                 changeSet.setComments("set plat_provider_fk from platform: ${countUpdate}")

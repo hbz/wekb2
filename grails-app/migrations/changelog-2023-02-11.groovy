@@ -533,4 +533,16 @@ databaseChangeLog = {
         dropColumn(columnName: "pkg_editing_status_rv_fk", tableName: "package")
     }
 
+    changeSet(author: "djebeniani (modified)", id: "1675787881561-89") {
+        grailsChange {
+            change {
+                sql.executeUpdate('''update tippcoverage_statement set tcs_uuid = (select gen_random_uuid()) where tcs_uuid is null;''')
+            }
+            rollback {}
+        }
+    }
+
+    changeSet(author: "djebeniani (generated)", id: "1675787881561-90") {
+        addNotNullConstraint(columnDataType: "varchar(255)", columnName: "tcs_uuid", tableName: "tippcoverage_statement", validate: "true")
+    }
 }
