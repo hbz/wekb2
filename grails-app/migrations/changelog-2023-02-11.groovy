@@ -608,4 +608,28 @@ databaseChangeLog = {
             rollback {}
         }
     }
+
+    changeSet(author: "djebeniani (modified)", id: "1675787881561-96") {
+        grailsChange {
+            change {
+
+                Integer countUpdate = sql.executeUpdate('''delete from title_instance_package_platform where tipp_pkg_fk is null''')
+                confirm("delete title_instance_package_platform where tipp_pkg_fk is null: ${countUpdate}")
+                changeSet.setComments("delete title_instance_package_platform where tipp_pkg_fk is null: ${countUpdate}")
+            }
+            rollback {}
+        }
+    }
+
+    changeSet(author: "djebeniani (modified)", id: "1675787881561-97") {
+        grailsChange {
+            change {
+
+                Integer countUpdate = sql.executeUpdate('''delete from title_instance_package_platform where tipp_host_platform_fk is null''')
+                confirm("delete title_instance_package_platform where tipp_host_platform_fk is null: ${countUpdate}")
+                changeSet.setComments("delete title_instance_package_platform where tipp_host_platform_fk is null: ${countUpdate}")
+            }
+            rollback {}
+        }
+    }
 }
