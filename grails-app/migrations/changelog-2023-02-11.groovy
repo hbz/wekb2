@@ -613,6 +613,187 @@ databaseChangeLog = {
         grailsChange {
             change {
 
+                Integer countUpdate = sql.executeUpdate('''delete from identifier where id_tipp_fk in (select tipp_id from title_instance_package_platform where (tipp_pkg_fk is null))''')
+                confirm("delete identifier where (tipp_pkg_fk is null): ${countUpdate}")
+                changeSet.setComments("delete identifier where (tipp_pkg_fk is null): ${countUpdate}")
+            }
+            rollback {}
+        }
+    }
+    changeSet(author: "djebeniani (modified)", id: "1675787881561-97") {
+        grailsChange {
+            change {
+
+                Integer countUpdate = sql.executeUpdate('''delete from tippcoverage_statement where tcs_tipp_fk in (select tipp_id from title_instance_package_platform where (tipp_pkg_fk is null))''')
+                confirm("delete tippcoverage_statement where (tipp_pkg_fk is null): ${countUpdate}")
+                changeSet.setComments("delete tippcoverage_statement where (tipp_pkg_fk is null): ${countUpdate}")
+            }
+            rollback {}
+        }
+    }
+
+
+    changeSet(author: "djebeniani (modified)", id: "1675787881561-98") {
+        grailsChange {
+            change {
+
+                Integer countUpdate = sql.executeUpdate('''delete from component_language where cl_tipp_fk in (select tipp_id from title_instance_package_platform where (tipp_pkg_fk is null))''')
+                confirm("delete component_language where (tipp_pkg_fk is null): ${countUpdate}")
+                changeSet.setComments("delete component_language where (tipp_pkg_fk is null): ${countUpdate}")
+            }
+            rollback {}
+        }
+    }
+
+    changeSet(author: "djebeniani (modified)", id: "1675787881561-99") {
+        grailsChange {
+            change {
+
+                Integer countUpdate = sql.executeUpdate('''delete from tipp_price where tp_tipp_fk in (select tipp_id from title_instance_package_platform where (tipp_pkg_fk is null))''')
+                confirm("delete tipp_price where (tipp_pkg_fk is null): ${countUpdate}")
+                changeSet.setComments("delete tipp_price where (tipp_pkg_fk is null): ${countUpdate}")
+            }
+            rollback {}
+        }
+    }
+
+    changeSet(author: "djebeniani (modified)", id: "1675787881561-100") {
+        grailsChange {
+            change {
+
+                Integer countUpdate = sql.executeUpdate('''delete from update_tipp_info where uti_tipp_fk in (select tipp_id from title_instance_package_platform where (tipp_pkg_fk is null))''')
+                confirm("delete update_tipp_info where (tipp_pkg_fk is null): ${countUpdate}")
+                changeSet.setComments("delete update_tipp_info where (tipp_pkg_fk is null): ${countUpdate}")
+            }
+            rollback {}
+        }
+    }
+
+    changeSet(author: "djebeniani (modified)", id: "1675787881561-101") {
+        grailsChange {
+            change {
+
+                Integer countUpdate = sql.executeUpdate('''delete from identifier where id_tipp_fk in (select tipp_id from title_instance_package_platform where (tipp_host_platform_fk is null))''')
+                confirm("delete identifier where (tipp_host_platform_fk is null): ${countUpdate}")
+                changeSet.setComments("delete identifier where (tipp_host_platform_fk is null): ${countUpdate}")
+            }
+            rollback {}
+        }
+    }
+    changeSet(author: "djebeniani (modified)", id: "1675787881561-102") {
+        grailsChange {
+            change {
+
+                Integer countUpdate = sql.executeUpdate('''delete from tippcoverage_statement where tcs_tipp_fk in (select tipp_id from title_instance_package_platform where (tipp_host_platform_fk is null))''')
+                confirm("delete tippcoverage_statement where (tipp_host_platform_fk is null): ${countUpdate}")
+                changeSet.setComments("delete tippcoverage_statement where (tipp_host_platform_fk is null): ${countUpdate}")
+            }
+            rollback {}
+        }
+    }
+
+
+    changeSet(author: "djebeniani (modified)", id: "1675787881561-103") {
+        grailsChange {
+            change {
+
+                Integer countUpdate = sql.executeUpdate('''delete from component_language where cl_tipp_fk in (select tipp_id from title_instance_package_platform where (tipp_host_platform_fk is null))''')
+                confirm("delete component_language where (tipp_host_platform_fk is null): ${countUpdate}")
+                changeSet.setComments("delete component_language where (tipp_host_platform_fk is null): ${countUpdate}")
+            }
+            rollback {}
+        }
+    }
+
+    changeSet(author: "djebeniani (modified)", id: "1675787881561-104") {
+        grailsChange {
+            change {
+
+                Integer countUpdate = sql.executeUpdate('''delete from tipp_price where tp_tipp_fk in (select tipp_id from title_instance_package_platform where (tipp_host_platform_fk is null))''')
+                confirm("delete tipp_price where (tipp_host_platform_fk is null): ${countUpdate}")
+                changeSet.setComments("delete tipp_price where (tipp_host_platform_fk is null): ${countUpdate}")
+            }
+            rollback {}
+        }
+    }
+
+    changeSet(author: "djebeniani (modified)", id: "1675787881561-105") {
+        grailsChange {
+            change {
+
+                Integer countUpdate = sql.executeUpdate('''delete from update_tipp_info where uti_tipp_fk in (select tipp_id from title_instance_package_platform where (tipp_host_platform_fk is null))''')
+                confirm("delete update_tipp_info where (tipp_host_platform_fk is null): ${countUpdate}")
+                changeSet.setComments("delete update_tipp_info where (tipp_host_platform_fk is null): ${countUpdate}")
+            }
+            rollback {}
+        }
+    }
+
+    changeSet(author: "djebeniani (modified)", id: "1675787881561-106") {
+        grailsChange {
+            change {
+
+                Integer countUpdate = sql.executeUpdate('''delete from identifier where id_tipp_fk in (select tipp_id from title_instance_package_platform where (tipp_url is null))''')
+                confirm("delete identifier where (tipp_url is null): ${countUpdate}")
+                changeSet.setComments("delete identifier where (tipp_url is null): ${countUpdate}")
+            }
+            rollback {}
+        }
+    }
+    changeSet(author: "djebeniani (modified)", id: "1675787881561-107") {
+        grailsChange {
+            change {
+
+                Integer countUpdate = sql.executeUpdate('''delete from tippcoverage_statement where tcs_tipp_fk in (select tipp_id from title_instance_package_platform where (tipp_url is null))''')
+                confirm("delete tippcoverage_statement where (tipp_url is null): ${countUpdate}")
+                changeSet.setComments("delete tippcoverage_statement where (tipp_url is null): ${countUpdate}")
+            }
+            rollback {}
+        }
+    }
+
+
+    changeSet(author: "djebeniani (modified)", id: "1675787881561-108") {
+        grailsChange {
+            change {
+
+                Integer countUpdate = sql.executeUpdate('''delete from component_language where cl_tipp_fk in (select tipp_id from title_instance_package_platform where (tipp_url is null))''')
+                confirm("delete component_language where (tipp_url is null): ${countUpdate}")
+                changeSet.setComments("delete component_language where (tipp_url is null): ${countUpdate}")
+            }
+            rollback {}
+        }
+    }
+
+    changeSet(author: "djebeniani (modified)", id: "1675787881561-109") {
+        grailsChange {
+            change {
+
+                Integer countUpdate = sql.executeUpdate('''delete from tipp_price where tp_tipp_fk in (select tipp_id from title_instance_package_platform where (tipp_url is null))''')
+                confirm("delete tipp_price where (tipp_url is null): ${countUpdate}")
+                changeSet.setComments("delete tipp_price where (tipp_url is null): ${countUpdate}")
+            }
+            rollback {}
+        }
+    }
+
+    changeSet(author: "djebeniani (modified)", id: "1675787881561-110") {
+        grailsChange {
+            change {
+
+                Integer countUpdate = sql.executeUpdate('''delete from update_tipp_info where uti_tipp_fk in (select tipp_id from title_instance_package_platform where (tipp_url is null))''')
+                confirm("delete update_tipp_info where (tipp_url is null): ${countUpdate}")
+                changeSet.setComments("delete update_tipp_info where (tipp_url is null): ${countUpdate}")
+            }
+            rollback {}
+        }
+    }
+
+
+    changeSet(author: "djebeniani (modified)", id: "1675787881561-111") {
+        grailsChange {
+            change {
+
                 Integer countUpdate = sql.executeUpdate('''delete from title_instance_package_platform where tipp_pkg_fk is null''')
                 confirm("delete title_instance_package_platform where tipp_pkg_fk is null: ${countUpdate}")
                 changeSet.setComments("delete title_instance_package_platform where tipp_pkg_fk is null: ${countUpdate}")
@@ -621,13 +802,25 @@ databaseChangeLog = {
         }
     }
 
-    changeSet(author: "djebeniani (modified)", id: "1675787881561-97") {
+    changeSet(author: "djebeniani (modified)", id: "1675787881561-112") {
         grailsChange {
             change {
 
                 Integer countUpdate = sql.executeUpdate('''delete from title_instance_package_platform where tipp_host_platform_fk is null''')
                 confirm("delete title_instance_package_platform where tipp_host_platform_fk is null: ${countUpdate}")
                 changeSet.setComments("delete title_instance_package_platform where tipp_host_platform_fk is null: ${countUpdate}")
+            }
+            rollback {}
+        }
+    }
+
+    changeSet(author: "djebeniani (modified)", id: "1675787881561-113") {
+        grailsChange {
+            change {
+
+                Integer countUpdate = sql.executeUpdate('''delete from title_instance_package_platform where tipp_url is null''')
+                confirm("delete title_instance_package_platform where tipp_url is null: ${countUpdate}")
+                changeSet.setComments("delete title_instance_package_platform where tipp_url is null: ${countUpdate}")
             }
             rollback {}
         }
