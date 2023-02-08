@@ -109,6 +109,24 @@
     </dd>
 </dl>
 
+<dl>
+    <dt class="control-label">
+        Free Trial
+    </dt>
+    <dd>
+        <semui:xEditableRefData owner="${d}" field="freeTrial" config="${RCConstants.YN}"/>
+    </dd>
+</dl>
+
+<dl>
+    <dt class="control-label">
+        Free Trial Phase
+    </dt>
+    <dd>
+        <semui:xEditable owner="${d}" field="freeTrialPhase"/>
+    </dd>
+</dl>
+
 
 <g:if test="${controllerName != 'create'}">
     <dl>

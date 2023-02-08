@@ -47,6 +47,11 @@ class Package  extends AbstractBase implements Auditable {
   @RefdataAnnotation(cat = RCConstants.PACKAGE_FILE)
   RefdataValue file
 
+  @RefdataAnnotation(cat = RCConstants.YN)
+  RefdataValue freeTrial
+
+  String freeTrialPhase
+
   String globalNote
 
   String descriptionURL
@@ -93,8 +98,11 @@ class Package  extends AbstractBase implements Auditable {
     globalNote column: 'pkg_global_note'
     descriptionURL column: 'pkg_descr_url'
 
+    freeTrial column: 'pkg_free_trial_rv_fk'
+
+    freeTrialPhase column: 'pkg_free_trial_phase', type: 'text'
     description column: 'pkg_description', type: 'text'
-    lastUpdateComment column: 'pkg_last_update_comment'
+    lastUpdateComment column: 'pkg_last_update_comment', type: 'text'
     normname column: 'pkg_normname', type: 'text', index: 'pkg_normname_idx'
 
     ddcs             joinTable: [
@@ -124,6 +132,9 @@ class Package  extends AbstractBase implements Auditable {
   }
 
   static constraints = {
+    freeTrial(nullable: true, blank: false)
+    freeTrialPhase(nullable: true, blank: true)
+
     description(nullable: true, blank: true)
     lastUpdateComment(nullable: true, blank: true)
     scope(nullable: true, blank: false)
