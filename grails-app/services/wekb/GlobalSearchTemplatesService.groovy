@@ -485,8 +485,8 @@ class GlobalSearchTemplatesService {
                 baseclass   : 'wekb.Package',
                 title       : 'Packages',
                 group       : 'Secondary',
-                defaultSort : 'name',
-                defaultOrder: 'asc',
+                defaultSort : 'lastUpdated',
+                defaultOrder: 'desc',
                 qbeConfig   : [
                         qbeForm   : [
                                 [
@@ -642,7 +642,7 @@ class GlobalSearchTemplatesService {
                                 ],
                         ],
                         qbeResults: [
-                                [heading: 'Name', property: 'name', sort: 'name', link: true],
+                                [heading: 'Package', property: 'name', sort: 'name', link: true],
                                 [heading: 'Provider', property: 'provider?.name', sort: 'provider?.name', link: true],
                                 [heading: 'Nominal Platform', property: 'nominalPlatform?.name', sort: 'nominalPlatform?.name', link: true],
                                 [heading: 'Content Type', property: 'contentType?.value', sort: 'contentType'],

@@ -80,6 +80,9 @@ class SearchService {
             // Looked up a template from somewhere, see if we can execute a search
             if ( result.qbetemplate) {
 
+                params.sort = params.sort ?: result.qbetemplate.defaultSort
+                params.order = params.order ?: result.qbetemplate.defaultOrder
+
                 Class target_class = Class.forName(result.qbetemplate.baseclass);
                 def read_perm = accessService.checkReadable(result.qbetemplate.baseclass)
 
@@ -155,8 +158,6 @@ class SearchService {
             }
         }
 
-        def apiresponse = ['count': result.reccount, 'max': result.max, 'offset': result.offset, records: []]
-
         result.new_recset = []
         log.debug("Create new recset..")
         result.recset.each { r ->
@@ -168,7 +169,6 @@ class SearchService {
             response_record.oid = "${r.class.name}:${r.id}"
             response_record.obj = r
             response_record.cols = []
-            def api_record = ['oid': response_record.oid]
 
             result.qbetemplate.qbeConfig.qbeResults.each { rh ->
                 def ppath = rh.property.split(/\./)
@@ -219,11 +219,6 @@ class SearchService {
                             }
                         }
                     }
-                    if( responseFormat == 'json' || responseFormat == 'xml' ) {
-                        api_record['oid'] = response_record.oid
-                        api_record["${rh.heading}"] = cobj ?: null
-                    }
-                    else {
 
                         String jumpToLink = null
                         if(rh.jumpToLink) {
@@ -235,15 +230,10 @@ class SearchService {
                                 value: (cobj != null ? (cobj) : '-Empty-'),
                                 outGoingLink: rh.outGoingLink ?: null,
                                 jumpToLink: jumpToLink ?: null])
-                    }
                 }
             }
-            if( responseFormat == 'json' || responseFormat == 'xml' ) {
-                apiresponse.records.add(api_record)
-            }
-            else {
-                result.new_recset.add(response_record)
-            }
+
+            result.new_recset.add(response_record)
         }
         log.debug("Finished new recset!")
 
@@ -251,6 +241,7 @@ class SearchService {
         result.remove('jumpToPage')
         result.withoutJump.remove('jumpToPage')
 
-        [result: result, apiresponse: apiresponse]
+
+        [result: result]
     }
 }

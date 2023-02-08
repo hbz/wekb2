@@ -29,7 +29,6 @@ class SearchController {
     def index() {
         log.debug("SearchController::index ${params}")
         def result = [:]
-        def apiresponse = null
 
         def esclient = ESWrapperService.getClient()
 
@@ -137,23 +136,6 @@ class SearchController {
 
                     }
                 }
-                /*if ( ( response.format == 'json' ) || ( response.format == 'xml' ) ) {
-                    apiresponse = [:]
-                    apiresponse.count = result.resultsTotal
-                    apiresponse.max = result.max
-                    apiresponse.offset = result.offset
-                    apiresponse.records = []
-                    result.hits.each { r ->
-                        def response_record = [:]
-                        response_record.id = r.id
-                        response_record.score = r.score
-                        response_record.name = r.getSourceAsMap().name
-                        response_record.identifiers = r.getSourceAsMap().identifiers
-                        response_record.altNames = r.getSourceAsMap().altname
-
-                        apiresponse.records.add(response_record);
-                    }
-                }*/
             }
         }
         finally {
@@ -167,8 +149,6 @@ class SearchController {
 
         withFormat {
             html result
-            /*json { render apiresponse as JSON }
-            xml { render apiresponse as XML }*/
         }
     }
 
