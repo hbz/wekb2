@@ -545,4 +545,67 @@ databaseChangeLog = {
     changeSet(author: "djebeniani (generated)", id: "1675787881561-90") {
         addNotNullConstraint(columnDataType: "varchar(255)", columnName: "tcs_uuid", tableName: "tippcoverage_statement", validate: "true")
     }
+
+
+    changeSet(author: "djebeniani (modified)", id: "1675787881561-91") {
+        grailsChange {
+            change {
+
+                Integer countUpdate = sql.executeUpdate('''update component_variant_name set cvn_type_rv_fk = null where cvn_type_rv_fk = (Select rdv_id from refdata_value where rdv_owner = (SELECT rdc_id FROM refdata_category WHERE rdc_description = 'KBComponentVariantName.VariantType') and rdv_value = 'Authorized')''')
+                confirm("set cvn_type_rv_fk from component_variant_name: ${countUpdate}")
+                changeSet.setComments("set cvn_type_rv_fk from component_variant_name: ${countUpdate}")
+            }
+            rollback {}
+        }
+    }
+
+    changeSet(author: "djebeniani (modified)", id: "1675787881561-92") {
+        grailsChange {
+            change {
+
+                Integer countUpdate = sql.executeUpdate('''update component_variant_name set cvn_type_rv_fk = null where cvn_type_rv_fk = (Select rdv_id from refdata_value where rdv_owner = (SELECT rdc_id FROM refdata_category WHERE rdc_description = 'KBComponentVariantName.VariantType') and rdv_value = 'Minor Change')''')
+                confirm("set cvn_type_rv_fk from component_variant_name: ${countUpdate}")
+                changeSet.setComments("set cvn_type_rv_fk from component_variant_name: ${countUpdate}")
+            }
+            rollback {}
+        }
+    }
+
+    changeSet(author: "djebeniani (modified)", id: "1675787881561-93") {
+        grailsChange {
+            change {
+
+                Integer countUpdate = sql.executeUpdate('''update component_variant_name set cvn_type_rv_fk = null where cvn_type_rv_fk = (Select rdv_id from refdata_value where rdv_owner = (SELECT rdc_id FROM refdata_category WHERE rdc_description = 'KBComponentVariantName.VariantType') and rdv_value = 'Misspelling')''')
+                confirm("set cvn_type_rv_fk from component_variant_name: ${countUpdate}")
+                changeSet.setComments("set cvn_type_rv_fk from component_variant_name: ${countUpdate}")
+            }
+            rollback {}
+        }
+    }
+
+    changeSet(author: "djebeniani (modified)", id: "1675787881561-94") {
+        grailsChange {
+            change {
+
+                Integer countUpdate = sql.executeUpdate('''update component_variant_name set cvn_type_rv_fk = null where cvn_type_rv_fk = (Select rdv_id from refdata_value where rdv_owner = (SELECT rdc_id FROM refdata_category WHERE rdc_description = 'KBComponentVariantName.VariantType') and rdv_value = 'Nickname')''')
+                confirm("set cvn_type_rv_fk from component_variant_name: ${countUpdate}")
+                changeSet.setComments("set cvn_type_rv_fk from component_variant_name: ${countUpdate}")
+            }
+            rollback {}
+        }
+    }
+
+    changeSet(author: "djebeniani (modified)", id: "1675787881561-95") {
+        grailsChange {
+            change {
+
+                sql.execute("delete from refdata_value where rdv_owner = (SELECT rdc_id FROM refdata_category WHERE rdc_description = 'KBComponentVariantName.VariantType') and rdv_value = 'Authorized'")
+                sql.execute("delete from refdata_value where rdv_owner = (SELECT rdc_id FROM refdata_category WHERE rdc_description = 'KBComponentVariantName.VariantType') and rdv_value = 'Minor Change'")
+                sql.execute("delete from refdata_value where rdv_owner = (SELECT rdc_id FROM refdata_category WHERE rdc_description = 'KBComponentVariantName.VariantType') and rdv_value = 'Misspelling'")
+                sql.execute("delete from refdata_value where rdv_owner = (SELECT rdc_id FROM refdata_category WHERE rdc_description = 'KBComponentVariantName.VariantType') and rdv_value = 'Nickname'")
+
+            }
+            rollback {}
+        }
+    }
 }
