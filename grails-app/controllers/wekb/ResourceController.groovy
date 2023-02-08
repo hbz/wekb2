@@ -28,32 +28,34 @@ class ResourceController {
     if (params.type && params.id) {
       oid = "wekb." + params.type + ":" + params.id
     }
+    if(!oid && params.id && params.id.startsWith('wekb.')){
+      oid = params.id
+    }
 
     if (oid || params.id) {
 
-      if(CuratoryGroup.findByUuid(params.id)){
-        displayobj = CuratoryGroup.findByUuid(params.id)
-      }else if(Identifier.findByUuid(params.id)){
-        displayobj = Identifier.findByUuid(params.id)
-      }else if(KbartSource.findByUuid(params.id)){
-        displayobj = KbartSource.findByUuid(params.id)
-      }else if(Org.findByUuid(params.id)){
-        displayobj = Org.findByUuid(params.id)
-      }else if(Package.findByUuid(params.id)){
-        displayobj = Package.findByUuid(params.id)
-      }else if(Platform.findByUuid(params.id)){
-        displayobj = Platform.findByUuid(params.id)
-      }else if(TitleInstancePackagePlatform.findByUuid(params.id)){
-        displayobj = TitleInstancePackagePlatform.findByUuid(params.id)
-      }else if(UpdatePackageInfo.findByUuid(params.id)){
-        displayobj = UpdatePackageInfo.findByUuid(params.id)
-      }else if(UpdateTippInfo.findByUuid(params.id)){
-        displayobj = UpdateTippInfo.findByUuid(params.id)
-      }
-
-      println(displayobj)
-      if (oid && !displayobj) {
+      if (oid) {
         displayobj = genericOIDService.resolveOID(oid)
+      }else {
+        if (CuratoryGroup.findByUuid(params.id)) {
+          displayobj = CuratoryGroup.findByUuid(params.id)
+        } else if (Identifier.findByUuid(params.id)) {
+          displayobj = Identifier.findByUuid(params.id)
+        } else if (KbartSource.findByUuid(params.id)) {
+          displayobj = KbartSource.findByUuid(params.id)
+        } else if (Org.findByUuid(params.id)) {
+          displayobj = Org.findByUuid(params.id)
+        } else if (Package.findByUuid(params.id)) {
+          displayobj = Package.findByUuid(params.id)
+        } else if (Platform.findByUuid(params.id)) {
+          displayobj = Platform.findByUuid(params.id)
+        } else if (TitleInstancePackagePlatform.findByUuid(params.id)) {
+          displayobj = TitleInstancePackagePlatform.findByUuid(params.id)
+        } else if (UpdatePackageInfo.findByUuid(params.id)) {
+          displayobj = UpdatePackageInfo.findByUuid(params.id)
+        } else if (UpdateTippInfo.findByUuid(params.id)) {
+          displayobj = UpdateTippInfo.findByUuid(params.id)
+        }
       }
 
       if (displayobj) {
