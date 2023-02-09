@@ -40,9 +40,6 @@ class CreateController {
 
             if (params.tmpl) {
               result.displaytemplate = displayTemplateService.getTemplateInfo(params.tmpl)
-
-              /* Extras needed for the refdata */
-              result.refdata_properties = classExaminationService.getRefdataPropertyNames(result.newclassname)
               result.displayobjclassname_short = result.displayobj.class.simpleName
             }
           }

@@ -35,7 +35,7 @@
                 <g:else>
                     <div id="formCreateProcess">
                         <g:render template="/templates/domains/${displaytemplate.rendername}"
-                                  model="${[d: displayobj, rd: refdata_properties, dtype: displayobjclassname_short]}"/>
+                                  model="${[d: displayobj, dtype: displayobjclassname_short]}"/>
 
                         <button id="save-btn" class="ui black button" type="button">Create and Edit </button>
                     </div>

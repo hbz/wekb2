@@ -41,7 +41,6 @@ class CreateComponentService {
 
             GrailsClass newclass = grailsApplication.getArtefact("Domain",params.cls)
             PersistentEntity pent = grailsApplication.mappingContext.getPersistentEntity(params.cls)
-            // def refdata_properties = classExaminationService.getRefdataPropertyNames(params.cls)
             log.debug("Got entity ${pent} for ${newclass.name}")
 
             if ( newclass ) {

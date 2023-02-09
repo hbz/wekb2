@@ -221,6 +221,11 @@ class Platform  extends AbstractBase implements Auditable {
     return this.name
   }
 
+  String toString(){
+    "${name ?: ''}".toString()
+  }
+
+
   @Transient
   def  getHostedPackages(){
     Package.executeQuery('select p from Package as p where nominalPlatform = :nominalPlatform', [nominalPlatform: this])

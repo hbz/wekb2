@@ -63,7 +63,6 @@ class ResourceController {
         if ((displayobj.class.simpleName in accessService.allowedPublicShow) || (springSecurityService.isLoggedIn() && SpringSecurityUtils.ifAnyGranted("ROLE_ADMIN"))) {
 
           result.displayobjclassname = displayobj.class.name
-          //result.__oid = "${result.displayobjclassname}:${displayobj.id}"
 
           log.debug("Looking up display template for ${result.displayobjclassname}")
 
@@ -97,9 +96,6 @@ class ResourceController {
               }
 
               result.editable = accessService.checkEditableObject(displayobj, params)
-
-              // Add any refdata property names for this class to the result.
-              //result.refdata_properties = classExaminationService.getRefdataPropertyNames(result.displayobjclassname)
 
             } else {
               flash.error = "You have no permission to view this resource."

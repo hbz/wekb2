@@ -494,12 +494,6 @@ abstract class KBComponent implements Auditable{
   }
 
 
-  @Transient
-  String getDisplayName(){
-    return name
-  }
-
-
 
   def expunge(){
     log.debug("Component expunge")

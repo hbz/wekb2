@@ -127,6 +127,10 @@ class Org extends AbstractBase implements Auditable {
     return this.name
   }
 
+  String toString(){
+    "${name ?: ''}".toString()
+  }
+
     @Transient
     public getCurrentTippCount() {
         def refdata_current = RDStore.KBC_STATUS_CURRENT

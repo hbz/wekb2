@@ -105,11 +105,6 @@ class CuratoryGroup extends AbstractBase implements Auditable {
     "${name ?: ''}".toString()
   }
 
-  @Transient
-  String getDisplayName(){
-    return name
-  }
-
   def expunge(){
     log.debug("Component expunge")
     def result = [deleteType: this.class.name, deleteId: this.id]

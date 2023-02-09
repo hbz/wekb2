@@ -467,6 +467,10 @@ class Package  extends AbstractBase implements Auditable {
     return this.name
   }
 
+  String toString(){
+    "${name ?: ''}".toString()
+  }
+
   @Transient
   public String getAnbieterProduktIDs() {
     IdentifierNamespace namespace = IdentifierNamespace.findByValueAndTargetType("Anbieter_Produkt_ID", RDStore.IDENTIFIER_NAMESPACE_TARGET_TYPE_PACKAGE)

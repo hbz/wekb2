@@ -132,13 +132,8 @@ class SearchService {
 
                         result.displayobjclassname = result.displayobj.class.name
                         result.displaytemplate = displayTemplateService.getTemplateInfo(result.displayobjclassname)
-                        result.__oid = "${result.displayobjclassname}:${result.displayobj.id}"
 
-                        // Add any refdata property names for this class to the result.
-                        result.refdata_properties = classExaminationService.getRefdataPropertyNames(result.displayobjclassname)
                         result.displayobjclassname_short = result.displayobj.class.simpleName
-
-                        //result.acl = gokbAclService.readAclSilently(result.displayobj)
 
                         if ( result.displaytemplate == null ) {
                             log.error("Unable to locate display template for class ${result.displayobjclassname} (oid ${params.displayoid})");
@@ -201,8 +196,8 @@ class SearchService {
 
                                 cobj = cobj[sp]
 
-                                if ( sp == 'name' && !cobj && oobj.respondsTo('getDisplayName')) {
-                                    cobj = oobj.displayName
+                                if ( sp == 'name' && !cobj && oobj.respondsTo('getShowName')) {
+                                    cobj = oobj.getShowName()
                                 }
 
                                 if (ppath.size() > 1 && idx == ppath.size()-2) {

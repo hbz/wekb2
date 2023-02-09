@@ -64,7 +64,7 @@
             <g:if test="${displaytemplate != null}">
                 <!-- Using display template ${displaytemplate.rendername} -->
                     <g:render template="/templates/domains/${displaytemplate.rendername}"
-                              model="${[d: displayobj, rd: refdata_properties, dtype: displayobjclassname_short]}"/>
+                              model="${[d: displayobj, dtype: displayobjclassname_short]}"/>
             </g:if>
         </div>
     </div>

@@ -734,8 +734,8 @@ class AjaxHtmlController {
           if(variant.owner.name){
             variant_name = owner.name
           }
-          else if (owner?.respondsTo('getDisplayName') && owner.getDisplayName()){
-            variant_name = owner.getDisplayName()?.trim()
+          else if (owner?.respondsTo('getShowName') && owner.getShowName()){
+            variant_name = owner.getShowName()?.trim()
           }
           else if(owner?.respondsTo('getName') ) {
             variant_name = owner?.getName()?.trim()

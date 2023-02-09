@@ -246,12 +246,6 @@ class TitleInstancePackagePlatform  extends AbstractBase implements Auditable {
     }
   }
 
-
-  @Transient
-  String getDisplayName() {
-    return name ?: "${pkg?.name} / ${this.name} / ${hostPlatform?.name}"
-  }
-
   @Transient
   public String getTitleID(){
       String result = null
@@ -367,6 +361,10 @@ class TitleInstancePackagePlatform  extends AbstractBase implements Auditable {
 
   public String getShowName() {
     return this.name
+  }
+
+  String toString(){
+    "${name ?: ''}".toString()
   }
 
     @Transient
