@@ -89,7 +89,7 @@ class ResourceController {
 
               def curatedObj = displayobj.hasProperty('curatoryGroups') ? displayobj : (displayobj.hasProperty('pkg') ? displayobj.pkg : false)
 
-              if (curatedObj && curatedObj.curatoryGroups && curatedObj.niceName != 'User' && user.curatoryGroupUsers) {
+              if (curatedObj && curatedObj.curatoryGroups && !(curatedObj instanceof User) && user.curatoryGroupUsers) {
                 def cur = user.curatoryGroupUsers.curatoryGroup.id.intersect(curatedObj.curatoryGroups.curatoryGroup.id) ?: []
                 request.curator = cur
               } else {

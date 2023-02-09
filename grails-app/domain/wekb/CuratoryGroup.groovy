@@ -61,11 +61,6 @@ class CuratoryGroup extends AbstractBase implements Auditable {
     type (nullable:true, blank:false)
   }
 
-
-  public String getNiceName() {
-    return "Curatory Group";
-  }
-
   static def refdataFind(params) {
     def result = [];
     def status_deleted = RDStore.KBC_STATUS_DELETED

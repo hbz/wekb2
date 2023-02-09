@@ -3,13 +3,13 @@
 <head>
     <meta name="layout" content="wekb"/>
     <title>we:kb : Search <g:if test="${qbetemplate}">${qbetemplate.title}</g:if><g:if
-            test="${refObject}">for ${refObject.niceName}</g:if></title>
+            test="${refObject}">for ${refObject.getDomainName()}</g:if></title>
 </head>
 
 <body>
 
 <g:if test="${qbetemplate}">
-    <h1 class="ui header">Search ${qbetemplate.title ?: ''} <g:if test="${refObject}">for ${refObject.niceName}: <g:link
+    <h1 class="ui header">Search ${qbetemplate.title ?: ''} <g:if test="${refObject}">for ${refObject.getDomainName()}: <g:link
             controller="resource" action="show" id="${refObject.hasProperty('uuid') ? refObject.uuid : refObject.id}">${refObject.name}</g:link></g:if></h1>
 </g:if>
 <g:else>

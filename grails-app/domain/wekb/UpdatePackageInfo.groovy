@@ -102,11 +102,6 @@ class UpdatePackageInfo {
         }
     }
 
-
-    public String getNiceName() {
-        return "Package Update Infos";
-    }
-
     @Transient
     public String getDomainName() {
         return "Package Update Infos"

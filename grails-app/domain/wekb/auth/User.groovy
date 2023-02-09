@@ -219,10 +219,6 @@ class User {
     return "${username}${displayName && displayName.size() > 0 ? ' / '+ displayName : ''}".toString();
   }
 
-  public String getNiceName() {
-    return "User";
-  }
-
   int getDefaultPageSizeAsInteger() {
     long value = defaultPageSize ?: 10
     return value.intValue()

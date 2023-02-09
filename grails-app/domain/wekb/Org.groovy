@@ -118,11 +118,6 @@ class Org extends AbstractBase implements Auditable {
     result
   }
 
-
-  public String getNiceName() {
-    return "Provider";
-  }
-
   @Transient
   public String getDomainName() {
     return "Provider"

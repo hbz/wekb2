@@ -12,6 +12,7 @@ import org.elasticsearch.client.RestHighLevelClient
 import org.elasticsearch.xcontent.XContentType
 import org.hibernate.Session
 import org.hibernate.SessionFactory
+import wekb.helper.RDStore
 import wekb.system.FTControl
 
 import java.text.Normalizer
@@ -313,10 +314,10 @@ class FTUpdateService {
                                        curatoryGroup: it.curatoryGroup.getOID()])
         }
 
-        result.titleType = kbc.niceName ?: 'Unknown'
+        result.titleType = kbc.getTitleType() ?: 'Unknown'
         result.lastUpdatedDisplay = dateFormatService.formatIsoTimestamp(kbc.lastUpdated)
         result.url = kbc.url
-        if (kbc.niceName == 'Journal') {
+        if (kbc.publicationType == RDStore.TIPP_PUBLIC_TYPE_SERIAL) {
           result.coverage = []
           ArrayList<TIPPCoverageStatement> coverage_src = kbc.coverageStatements
           coverage_src.each { TIPPCoverageStatement tcs ->

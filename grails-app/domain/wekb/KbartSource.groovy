@@ -278,13 +278,6 @@ class KbartSource extends AbstractBase implements Auditable {
         "${name ?: ''}".toString()
     }
 
-
-    @Transient
-    String getNiceName(){
-        "${this.class.getSimpleName()}"
-    }
-
-
     @Transient
     String getDisplayName(){
         return name

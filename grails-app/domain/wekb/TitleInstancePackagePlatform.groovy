@@ -221,7 +221,7 @@ class TitleInstancePackagePlatform  extends AbstractBase implements Auditable {
   }
 
 
-  String getNiceName() {
+  String getTitleType() {
     if (publicationType) {
       switch (publicationType) {
         case RDStore.TIPP_PUBLIC_TYPE_SERIAL:

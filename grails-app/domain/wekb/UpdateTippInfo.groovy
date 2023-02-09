@@ -83,10 +83,6 @@ class UpdateTippInfo {
         }
     }
 
-    public String getNiceName() {
-        return "Title Update Infos";
-    }
-
     @Transient
     public String getDomainName() {
         return "Title Update Infos"

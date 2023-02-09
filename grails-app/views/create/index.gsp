@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta name="layout" content="wekb"/>
-    <title>we:kb : Create New ${displayobj?.getNiceName() ?: 'Component'}</title>
+    <title>we:kb : Create New ${displayobj?.getDomainName() ?: 'Component'}</title>
 </head>
 
 <body>
@@ -11,7 +11,7 @@
 </div>
 
 <h1 class="ui header">
-    Create new ${displayobj?.getNiceName() ?: 'Component'}
+    Create new ${displayobj?.getDomainName() ?: 'Component'}
 
     <g:if test="${displayobj instanceof wekb.Package}">
         <div class="ui right floated buttons">
