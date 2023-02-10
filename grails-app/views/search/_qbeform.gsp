@@ -6,6 +6,7 @@
 <g:elseif test="${params.inline}">
     <g:form method="get" class="ui form" controller="search" action="componentSearch" id="${params.id}">
         <input type="hidden" name="qbe" value="${params.qbe}"/>
+        <input type="hidden" name="hideResetButton" value="${true}"/>
 
         <g:each in="${hide}" var="hidden_var">
             <input type="hidden" name="hide" value="${hidden_var}"/>
@@ -156,8 +157,10 @@
         </g:if>
         <g:else>
             <div class="ui right floated buttons">
+                <g:if test="${!hideResetButton}">
                 <g:link class="ui button" controller="${controllerName}" action="${actionName}"
                         params="[id: params.id, qbe: params.qbe]">Reset</g:link>
+                </g:if>
                 <button class="ui button black" type="submit" value="Search"
                         name="searchAction">Filter</button>
 

@@ -44,7 +44,6 @@ class GlobalSearchTemplatesService {
         Map result = [
                 baseclass: 'wekb.UpdatePackageInfo',
                 title    : 'Package Update Infos',
-                group    : 'Secondary',
                 defaultSort : 'startTime',
                 defaultOrder: 'desc',
                 qbeConfig: [
@@ -123,7 +122,6 @@ class GlobalSearchTemplatesService {
         Map result = [
                 baseclass: 'wekb.UpdateTippInfo',
                 title    : 'Title Update Infos',
-                group    : 'Secondary',
                 defaultSort : 'startTime',
                 defaultOrder: 'desc',
                 qbeConfig: [
@@ -200,7 +198,6 @@ class GlobalSearchTemplatesService {
         Map result = [
                 baseclass: 'wekb.KBComponent',
                 title    : 'Components',
-                group    : 'Secondary',
                 qbeConfig: [
                         // For querying over associations and joins, here we will need to set up scopes to be referenced in the qbeForm config
                         // Until we need them tho, they are omitted. qbeForm entries with no explicit scope are at the root object.
@@ -249,7 +246,6 @@ class GlobalSearchTemplatesService {
         Map result = [
                 baseclass: 'wekb.CuratoryGroup',
                 title    : 'Curatory Groups',
-                group    : 'Secondary',
                 defaultSort : 'name',
                 defaultOrder: 'asc',
                 qbeConfig: [
@@ -293,7 +289,6 @@ class GlobalSearchTemplatesService {
         Map result = [
                 baseclass: 'wekb.Identifier',
                 title    : 'Identifiers',
-                group    : 'Tertiary',
                 defaultSort : 'value',
                 defaultOrder: 'asc',
                 qbeConfig: [
@@ -330,7 +325,6 @@ class GlobalSearchTemplatesService {
         Map result = [
                 baseclass   : 'wekb.system.JobResult',
                 title       : 'Job Results',
-                group       : 'Secondary',
                 defaultSort : 'id',
                 defaultOrder: 'desc',
                 qbeConfig   : [
@@ -363,7 +357,6 @@ class GlobalSearchTemplatesService {
         Map result = [
                 baseclass: 'wekb.IdentifierNamespace',
                 title    : 'Identifier Namespaces',
-                group    : 'Tertiary',
                 defaultSort : 'name',
                 defaultOrder: 'asc',
                 qbeConfig: [
@@ -406,7 +399,6 @@ class GlobalSearchTemplatesService {
         Map result = [
                 baseclass   : 'wekb.Org',
                 title       : 'Providers',
-                group       : 'Secondary',
                 defaultSort : 'name',
                 defaultOrder: 'asc',
                 qbeConfig   : [
@@ -484,7 +476,6 @@ class GlobalSearchTemplatesService {
         Map result = [
                 baseclass   : 'wekb.Package',
                 title       : 'Packages',
-                group       : 'Secondary',
                 defaultSort : 'lastUpdated',
                 defaultOrder: 'desc',
                 qbeConfig   : [
@@ -667,7 +658,6 @@ class GlobalSearchTemplatesService {
         Map result = [
                 baseclass   : 'wekb.Package',
                 title       : 'Packages',
-                group       : 'Secondary',
                 defaultSort : 'name',
                 defaultOrder: 'asc',
                 qbeConfig   : [
@@ -1027,7 +1017,6 @@ class GlobalSearchTemplatesService {
         Map result = [
                 baseclass   : 'wekb.Platform',
                 title       : 'Platforms',
-                group       : 'Secondary',
                 defaultSort : 'name',
                 defaultOrder: 'asc',
                 qbeConfig   : [
@@ -1201,7 +1190,6 @@ class GlobalSearchTemplatesService {
         Map result = [
                 baseclass: 'wekb.RefdataCategory',
                 title    : 'Refdata Categories ',
-                group    : 'Secondary',
                 defaultSort : 'desc',
                 defaultOrder: 'asc',
                 qbeConfig: [
@@ -1239,7 +1227,6 @@ class GlobalSearchTemplatesService {
         Map result = [
                 baseclass: 'wekb.RefdataValue',
                 title    : 'Refdata Values ',
-                group    : 'Secondary',
                 defaultSort : 'value',
                 defaultOrder: 'asc',
                 qbeConfig: [
@@ -1287,7 +1274,6 @@ class GlobalSearchTemplatesService {
         Map result = [
                 baseclass: 'wekb.KbartSource',
                 title    : 'Source',
-                group    : 'Secondary',
                 defaultSort : 'name',
                 defaultOrder: 'asc',
                 qbeConfig: [
@@ -1357,7 +1343,6 @@ class GlobalSearchTemplatesService {
         Map result = [
                 baseclass: 'wekb.TitleInstancePackagePlatform',
                 title    : 'Titles',
-                group    : 'Secondary',
                 defaultSort : 'name',
                 defaultOrder: 'asc',
                 qbeConfig: [
@@ -1572,7 +1557,6 @@ class GlobalSearchTemplatesService {
         Map result = [
                 baseclass: 'wekb.TitleInstancePackagePlatform',
                 title    : 'Titles',
-                group    : 'Secondary',
                 defaultSort : 'name',
                 defaultOrder: 'asc',
                 qbeConfig: [
@@ -1751,7 +1735,6 @@ class GlobalSearchTemplatesService {
         Map result = [
                 baseclass   : 'wekb.auth.User',
                 title       : 'Users',
-                group       : 'Admin',
                 defaultSort : 'username',
                 defaultOrder: 'asc',
                 qbeConfig   : [
@@ -1827,7 +1810,6 @@ class GlobalSearchTemplatesService {
         Map result = [
                 baseclass   : 'wekb.system.JobResult',
                 title       : 'User Jobs',
-                group       : 'Secondary',
                 defaultSort : 'id',
                 defaultOrder: 'desc',
                 qbeConfig   : [

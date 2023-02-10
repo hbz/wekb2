@@ -190,10 +190,10 @@ public class HQLBuilder {
 
   static def processQryContextType(hql_builder_context,crit, baseclass) {
     List l =  crit.defn.contextTree.prop.split("\\.")
-    processQryContextType(hql_builder_context, crit, l, 'o', baseclass)
+    processQryContextType(hql_builder_context, crit, l, 'o', baseclass, baseclass)
   }
 
-  static def processQryContextType(hql_builder_context,crit, proppath, parent_scope, the_class) {
+  static def processQryContextType(hql_builder_context,crit, proppath, parent_scope, the_class, baseclass) {
 
     // log.debug("processQryContextType.... ${proppath}");
 
@@ -213,7 +213,7 @@ public class HQLBuilder {
           
           // Standard association, just make a bind variable..
           establishScope(hql_builder_context, parent_scope, head, newscope)
-          processQryContextType(hql_builder_context,crit, proppath, newscope, target_class)
+          processQryContextType(hql_builder_context,crit, proppath, newscope, target_class, baseclass)
       }
     }
     else {
@@ -221,7 +221,7 @@ public class HQLBuilder {
       // If this is an ordinary property, add the operation. If it's a special, the make the extra joins
       log.debug("Standard property ${proppath}...");
       // The property is a standard property
-      addQueryClauseFor(crit,hql_builder_context,parent_scope+'.'+proppath[0])
+      addQueryClauseFor(crit,hql_builder_context,parent_scope+'.'+proppath[0], baseclass)
     }
   }
 
@@ -230,8 +230,7 @@ public class HQLBuilder {
     hql_builder_context.declared_scopes[newscope_name] = "${parent_scope}.${property_to_join} as ${newscope_name}" 
   }
 
-  static def addQueryClauseFor(crit, hql_builder_context, scoped_property) {
-
+  static def addQueryClauseFor(crit, hql_builder_context, scoped_property, baseclass) {
     switch ( crit.defn.contextTree.comparator ) {
       case 'eq':
         hql_builder_context.query_clauses.add("${crit.defn.contextTree.negate?'not ':''}${scoped_property} = :${crit.defn.qparam}");
@@ -290,8 +289,25 @@ public class HQLBuilder {
           if(crit.defn.baseClass == 'wekb.CuratoryGroup') {
             def value = CuratoryGroup.get(crit.value)
             if(value) {
-              hql_builder_context.query_clauses.add("${crit.defn.contextTree.negate ? 'not ' : ''} exists (select ${crit.defn.qparam} from CuratoryGroup as ${crit.defn.qparam} where ${crit.defn.qparam} = ${scoped_property} and ${crit.defn.qparam} = :${crit.defn.qparam} ) ");
-              hql_builder_context.bindvars[crit.defn.qparam] = value
+              if(baseclass.toString() == 'class wekb.Org') {
+                hql_builder_context.query_clauses.add("${crit.defn.contextTree.negate ? 'not ' : ''} exists ( select cgo from CuratoryGroupOrg cgo where cgo.org = o and cgo.curatoryGroup = :curGroup) ");
+                hql_builder_context.bindvars.curGroup = value
+              }else if(baseclass.toString() == 'class wekb.Platform') {
+                hql_builder_context.query_clauses.add("${crit.defn.contextTree.negate ? 'not ' : ''} exists (select cgp from CuratoryGroupPlatform cgp where cgp.platform = o and cgp.curatoryGroup = :curGroup) ");
+                hql_builder_context.bindvars.curGroup = value
+              }else if(baseclass.toString() == 'class wekb.Package') {
+                hql_builder_context.query_clauses.add("${crit.defn.contextTree.negate ? 'not ' : ''} exists (select cgp from CuratoryGroupPackage cgp where cgp.pkg = o and cgp.curatoryGroup = :curGroup) ");
+                hql_builder_context.bindvars.curGroup = value
+              }else if(baseclass.toString() == 'class wekb.User') {
+                hql_builder_context.query_clauses.add("${crit.defn.contextTree.negate ? 'not ' : ''} exists (select cgu from CuratoryGroupUser cgu where cgu.user = o and cgu.curatoryGroup = :curGroup) ");
+                hql_builder_context.bindvars.curGroup = value
+              }else if(baseclass.toString() == 'class wekb.KbartSource') {
+                hql_builder_context.query_clauses.add("${crit.defn.contextTree.negate ? 'not ' : ''} exists (select cgk from CuratoryGroupKbartSource cgk where cgk.kbartSource = o and cgk.curatoryGroup = :curGroup) ");
+                hql_builder_context.bindvars.curGroup = value
+              }else if(baseclass.toString() == 'class wekb.TitleInstancePackagePlatform') {
+                hql_builder_context.query_clauses.add("${crit.defn.contextTree.negate ? 'not ' : ''} exists (select cgp from CuratoryGroupPackage cgp where cgp.pkg = o.pkg and cgp.curatoryGroup = :curGroup) ");
+                hql_builder_context.bindvars.curGroup = value
+              }
             }
           }
         }

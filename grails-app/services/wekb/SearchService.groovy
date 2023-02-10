@@ -26,6 +26,10 @@ class SearchService {
             result.init = true
         }
 
+        if ( params.hideResetButton ) {
+            result.hideResetButton = true
+        }
+
         def cleaned_params = params.findAll { it.value && it.value != "" }
 
         log.debug("Cleaned: ${cleaned_params}");

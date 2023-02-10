@@ -15,7 +15,7 @@ public class DisplayTemplateService {
     globalDisplayTemplates.put('wekb.Platform',[rendername:'platform' ])
     globalDisplayTemplates.put('wekb.RefdataCategory',[rendername:'rdc' ])
     globalDisplayTemplates.put('wekb.RefdataValue',[rendername:'rdv', noCreate:true ])
-    globalDisplayTemplates.put('wekb.KbartSource',[rendername:'kbartSource' ])
+    globalDisplayTemplates.put('wekb.KbartSource',[rendername:'kbart_source' ])
     globalDisplayTemplates.put('wekb.TitleInstancePackagePlatform',[rendername:'tipp'])
     globalDisplayTemplates.put('wekb.UpdatePackageInfo',[rendername:'update_package_info', noCreate:true])
     globalDisplayTemplates.put('wekb.UpdateTippInfo',[rendername:'update_tipp_info', noCreate:true])

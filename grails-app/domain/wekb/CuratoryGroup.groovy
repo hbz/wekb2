@@ -112,6 +112,69 @@ class CuratoryGroup extends AbstractBase implements Auditable {
     result
   }
 
+  @Transient
+  public getCurrentTippCount() {
+    def refdata_current = RDStore.KBC_STATUS_CURRENT
+
+    int result = 0
+    if (getProvidedPackages()) {
+      result = TitleInstancePackagePlatform.executeQuery("select count(t.id) from TitleInstancePackagePlatform as t where t.pkg in (:pkgs) and t.status = :status"
+              , [pkgs: getProvidedPackages(), status: refdata_current])[0]
+    }
+
+    result
+  }
+
+  public getRetiredTippCount() {
+    def refdata_current = RDStore.KBC_STATUS_RETIRED
+
+    int result = 0
+    if (getProvidedPackages()) {
+      result = TitleInstancePackagePlatform.executeQuery("select count(t.id) from TitleInstancePackagePlatform as t where t.pkg in (:pkgs) and t.status = :status"
+              , [pkgs: getProvidedPackages(), status: refdata_current])[0]
+    }
+
+    result
+  }
+
+  public getExpectedTippCount() {
+    def refdata_current = RDStore.KBC_STATUS_EXPECTED
+
+    int result = 0
+    if (getProvidedPackages()) {
+      result = TitleInstancePackagePlatform.executeQuery("select count(t.id) from TitleInstancePackagePlatform as t where t.pkg in (:pkgs) and t.status = :status"
+              , [pkgs: getProvidedPackages(), status: refdata_current])[0]
+    }
+
+    result
+  }
+
+  public getDeletedTippCount() {
+    def refdata_current = RDStore.KBC_STATUS_DELETED
+
+    int result = 0
+    if (getProvidedPackages()) {
+      result = TitleInstancePackagePlatform.executeQuery("select count(t.id) from TitleInstancePackagePlatform as t where t.pkg in (:pkgs) and t.status = :status"
+              , [pkgs: getProvidedPackages(), status: refdata_current])[0]
+    }
+
+    result
+  }
+
+  @Transient
+  def getProvidedPackages(){
+    Package.executeQuery('select p from Package as p where exists ( select cgp from CuratoryGroupPackage cgp where cgp.pkg = p and cgp.curatoryGroup = :curGroup)', [curGroup: this])
+  }
+
+  @Transient
+  def getProvidedPlatforms(){
+    Platform.executeQuery('select p from Platform as p where exists ( select cgp from CuratoryGroupPlatform cgp where cgp.platform = p and cgp.curatoryGroup = :curGroup)', [curGroup: this])
+  }
+
+  @Transient
+  def getProvidedOrgs(){
+    Platform.executeQuery('select o from Org as o where exists ( select cgo from CuratoryGroupOrg cgo where cgo.org = p and cgo.curatoryGroup = :curGroup)', [curGroup: this])
+  }
 
 }
 

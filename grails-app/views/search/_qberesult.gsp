@@ -21,7 +21,7 @@
         <tr>
             <th>#</th>
             <g:each in="${qbeConfig.qbeResults}" var="c">
-                <g:if test="${!params.hide || !params.hide.contains(c.qpEquiv)}">
+                <g:if test="${!params.hide || !(c.qpEquiv && params.hide && (params.hide.contains(c.qpEquiv)))}">
                     <g:set var="colcode" value="${baseClass + '.' + c.heading}"/>
                     <g:set var="colmsg" value="${message(code: colcode, default: c.heading)}"/>
                     <g:if test="${c.sort}">
@@ -129,7 +129,7 @@
                 <g:each in="${qbeConfig.qbeResults}" var="c">
                     <g:set var="colcode" value="${baseClass + '.' + c.heading}"/>
                     <g:set var="colmsg" value="${message(code: colcode, default: c.heading)}"/>
-                    <g:if test="${!params.hide || !params.hide.contains(c.qpEquiv)}">
+                    <g:if test="${!params.hide || !(c.qpEquiv && params.hide && (params.hide.contains(c.qpEquiv)))}">
                         <g:if test="${c.sort}">
                             <semui:sortableColumn property="${c.sort}" title="${colmsg == colcode ? c.heading : colmsg}"
                                                   params="${params}"/>

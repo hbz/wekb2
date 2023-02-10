@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta name="layout" content="wekb"/>
-    <title>we:kb : Packages</title>
+    <title>we:kb</title>
 </head>
 
 <body>

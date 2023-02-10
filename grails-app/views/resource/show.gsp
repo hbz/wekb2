@@ -80,7 +80,7 @@
 
         <div class="sixteen wide column">
             <g:if test="${displaytemplate != null}">
-                <g:if test="${displaytemplate.rendername in ["org", "package", "platform", "kbartSource", "tipp"]}">
+                <g:if test="${displaytemplate.rendername in ["curatory_group", "org", "package", "platform", "kbart_source", "tipp"]}">
                     <g:render template="/templates/tabTemplates/domainTabs/${displaytemplate.rendername}Tabs"
                               model="${[d: displayobj]}"/>
                 </g:if>
