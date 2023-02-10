@@ -4,10 +4,11 @@
 <head>
 
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title><g:layoutTitle default="we:kb"/></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
-    <link rel="shortcut icon" href="${resource(dir: 'images', file: 'favicon.ico')}">
+    <link rel="shortcut icon" href="${resource(dir: 'images', file: 'favicon.ico')}" type="image/x-icon">
 
     <g:javascript> var spotlightSearchUrl="${g.createLink(controller: 'search', action: 'spotlightSearch')}";</g:javascript>
     <g:javascript> var ajaxLookUp="${g.createLink(controller: 'ajaxJson', action: 'lookup')}";</g:javascript>
