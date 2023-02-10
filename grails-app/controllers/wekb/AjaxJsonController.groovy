@@ -13,7 +13,6 @@ class AjaxJsonController {
      * @param addEmpty : Add an empty row at the start of the list
      * @param filter1 : A status value string which should be filtered out after the query has been executed
      */
-    @Secured(['ROLE_USER', 'IS_AUTHENTICATED_FULLY'])
     def lookup() {
         log.debug("AjaxJsonController::lookup ${params}");
         def result = [:]
