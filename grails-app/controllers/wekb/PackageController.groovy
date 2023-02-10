@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile
 
 import java.util.concurrent.ExecutorService
 
+@Secured(['IS_AUTHENTICATED_FULLY'])
 class PackageController {
 
     SpringSecurityService springSecurityService

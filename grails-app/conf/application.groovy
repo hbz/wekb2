@@ -67,7 +67,6 @@ grails.plugin.springsecurity.filterChain.chainMap = [
         [pattern: '/**/images/**',        filters: 'none'],
         [pattern: '/**/favicon.ico',      filters: 'none'],
         [pattern: '/error',               filters: 'none'],
-        [pattern: '/ajaxSupport/**',      filters: 'JOINED_FILTERS,-exceptionTranslationFilter'],
         [pattern: '/fwk/**',              filters: 'JOINED_FILTERS,-exceptionTranslationFilter'],
         [pattern: '/api/**',              filters: 'JOINED_FILTERS,-exceptionTranslationFilter'],
         [pattern: '/**',                  filters: 'JOINED_FILTERS,-basicAuthenticationFilter,-basicExceptionTranslationFilter,-restTokenValidationFilter,-restExceptionTranslationFilter'],
@@ -75,30 +74,27 @@ grails.plugin.springsecurity.filterChain.chainMap = [
 
 grails.plugin.springsecurity.controllerAnnotations.staticRules = [
         [pattern: '/admin/**',                access: ['ROLE_ADMIN', 'IS_AUTHENTICATED_FULLY']],
-        [pattern: '/file/**',                 access: ['ROLE_ADMIN', 'IS_AUTHENTICATED_FULLY']],
-        [pattern: '/info',                    access: ['ROLE_ADMIN', 'IS_AUTHENTICATED_FULLY']],
         [pattern: '/monitoring/**',           access: ['ROLE_SUPERUSER', 'IS_AUTHENTICATED_FULLY']],
+
         [pattern: '/login/auth',              access: ['permitAll']],
         [pattern: '/',                        access: ['permitAll']],
         [pattern: '/index',                   access: ['permitAll']],
-        [pattern: '/notFound',                access: ['permitAll']],
-        [pattern: '/index.gsp',               access: ['permitAll']],
-        [pattern: '/public/**',               access: ['permitAll']],
-        [pattern: '/static/**',               access: ['permitAll']],
         [pattern: '/public',                  access: ['permitAll']],
+        [pattern: '/public/**',               access: ['permitAll']],
+
+
+        [pattern: '/static/**',               access: ['permitAll']],
         [pattern: '/error',                   access: ['permitAll']],
         [pattern: '/error/**',                access: ['permitAll']],
-        [pattern: '/home/**',                 access: ['ROLE_USER']],
+
         [pattern: '/assets/**',               access: ['permitAll']],
         [pattern: '/**/js/**',                access: ['permitAll']],
         [pattern: '/**/css/**',               access: ['permitAll']],
         [pattern: '/**/images/**',            access: ['permitAll']],
         [pattern: '/**/favicon.ico',          access: ['permitAll']],
+
+        [pattern: '/home/**',                 access: ['ROLE_USER']],
         [pattern: '/fwk/**',                  access: ['ROLE_USER']],
-        [pattern: '/user/**',                 access: ['ROLE_SUPERUSER', 'IS_AUTHENTICATED_FULLY']],
-        [pattern: '/user/search',             access: ['ROLE_ADMIN', 'IS_AUTHENTICATED_FULLY']],
-        [pattern: '/user/edit/**',            access: ['ROLE_ADMIN', 'IS_AUTHENTICATED_FULLY']],
-        [pattern: '/role/**',                 access: ['ROLE_SUPERUSER', 'IS_AUTHENTICATED_FULLY']],
         //NEW
         [pattern: '/search/**',          access: ['permitAll']],
         [pattern: '/resource/**',        access: ['permitAll']],

@@ -80,7 +80,7 @@ dependencies {
 
     profile "org.grails.profiles:web"
 
-    runtimeOnly "com.bertramlabs.plugins:asset-pipeline-grails:3.4.7"
+    implementation "com.bertramlabs.plugins:asset-pipeline-grails:3.4.7"
 
 
     //NO DEFAULT dependencies
