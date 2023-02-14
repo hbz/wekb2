@@ -34,29 +34,53 @@
                 </div>
             </g:if>
 
-            <g:if test="${displayobj.respondsTo('availableActions') && editable}">
+            <g:if test="${editable}">
+
+                <g:set var="workflowService" bean="workflowService"/>
 
                 <g:set var="object" value="${displayobj.class.name}:${displayobj.id}"/>
 
-                <div class="ui right floated buttons">
-                    <semui:actionsDropdown text="Available actions">
-                        <g:each var="action" in="${displayobj.userAvailableActions().sort { it.label }}">
-                            <g:if test="${action.code in ["packageUrlUpdate", "packageUrlUpdateAllTitles"]}">
-                                <g:if test="${displayobj.kbartSource}">
-                                    <semui:actionsDropdownItem controller="workflow" action="action"
-                                                               params="[component: object, selectedBulkAction: action.code, curationOverride: params.curationOverride]"
-                                                               text="${action.label}"/>
-                                </g:if>
-                            </g:if>
-                            <g:else>
-                                <semui:actionsDropdownItem controller="workflow" action="action"
-                                                           params="[component: object, selectedBulkAction: action.code, curationOverride: params.curationOverride]"
-                                                           text="${action.label}"/>
-                            </g:else>
+                <g:set var="availableActions" value="${workflowService.availableActions(displayobj.class.name)}"/>
+                <g:if test="${availableActions}">
+                    <div class="ui right floated buttons">
+                        <semui:actionsDropdown text="Available actions">
+                            <g:set var="availableActionsGroupBy"
+                                   value="${availableActions.sort { it.group }.groupBy { it.group }}"/>
 
-                        </g:each>
-                    </semui:actionsDropdown>
-                </div>
+                            <g:each var="availableActionsGroupByGroup" in="${availableActionsGroupBy}" status="i">
+                                <g:each var="action" in="${availableActionsGroupByGroup.value.sort { it.label }}">
+                                    <g:if test="${action.onlyAdmin}">
+                                        <sec:ifAnyGranted roles="ROLE_ADMIN">
+                                            <semui:actionsDropdownItem description="(Admin)" controller="workflow"
+                                                                       action="action"
+                                                                       params="[component: object, selectedAction: action.code, curationOverride: params.curationOverride]"
+                                                                       text="${action.label}"/>
+                                        </sec:ifAnyGranted>
+                                    </g:if>
+                                    <g:else>
+                                        <g:if test="${action.code in ["packageUrlUpdate", "packageUrlUpdateAllTitles"]}">
+                                            <g:if test="${displayobj.kbartSource}">
+                                                <semui:actionsDropdownItem controller="workflow" action="action"
+                                                                           params="[component: object, selectedAction: action.code, curationOverride: params.curationOverride]"
+                                                                           text="${action.label}"/>
+                                            </g:if>
+                                        </g:if>
+                                        <g:else>
+                                            <semui:actionsDropdownItem controller="workflow" action="action"
+                                                                       params="[component: object, selectedAction: action.code, curationOverride: params.curationOverride]"
+                                                                       text="${action.label}"/>
+                                        </g:else>
+                                    </g:else>
+                                </g:each>
+
+                                <g:if test="${availableActionsGroupBy.size() > 1 && i < availableActionsGroupBy.size()-1}">
+                                    <div class="divider"></div>
+                                </g:if>
+
+                            </g:each>
+                        </semui:actionsDropdown>
+                    </div>
+                </g:if>
             </g:if>
 
             <h1 class="ui header">${displayobj.getDomainName()}: ${displayobj.getShowName()}</h1>

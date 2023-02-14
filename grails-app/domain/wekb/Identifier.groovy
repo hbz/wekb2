@@ -2,14 +2,12 @@ package wekb
 
 
 import groovy.util.logging.Slf4j
+import wekb.helper.BeanStore
 
 import javax.persistence.Transient
 
 @Slf4j
 class Identifier {
-
-
-  def cascadingUpdateService
 
   IdentifierNamespace namespace
   String value
@@ -74,13 +72,13 @@ class Identifier {
   def afterInsert (){
     log.debug("afterSave for ${this}")
     def ref = this.getReference()
-      cascadingUpdateService.update(this, dateCreated)
+    BeanStore.getCascadingUpdateService().update(this, dateCreated)
 
   }
 
   def beforeDelete (){
     log.debug("beforeDelete for ${this}")
-    cascadingUpdateService.update(this, lastUpdated)
+    BeanStore.getCascadingUpdateService().update(this, lastUpdated)
 
   }
 
@@ -94,7 +92,7 @@ class Identifier {
   def afterUpdate(){
     log.debug("afterUpdate for ${this}")
     def ref = this.getReference()
-      cascadingUpdateService.update(this, lastUpdated)
+      BeanStore.getCascadingUpdateService().update(this, lastUpdated)
 
   }
   public String getName() {

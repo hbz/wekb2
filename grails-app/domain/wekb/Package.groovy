@@ -259,15 +259,17 @@ class Package  extends AbstractBase implements Auditable {
 
 
   public void deleteSoft(context) {
-    setStatus(RDStore.KBC_STATUS_DELETED)
-    save()
+    Package.withTransaction {
+      setStatus(RDStore.KBC_STATUS_DELETED)
+      save()
+    }
 
     // Delete the tipps too as a TIPP should not exist without the associated,
     // package.
     Date now = new Date()
 
     def deleted_status =  RDStore.KBC_STATUS_DELETED
-    TitleInstancePackagePlatform.executeUpdate("update TitleInstancePackagePlatform as t set t.status = :del, t.lastUpdateComment = 'Deleted via Package action delete', t.lastUpdated = :now where t.status != :del and t.pkg = :pkg", [del: deleted_status, pkg: this, now: now])
+    TitleInstancePackagePlatform.executeUpdate("update TitleInstancePackagePlatform as t set t.status = :del, t.lastUpdated = :now where t.status != :del and t.pkg = :pkg", [del: deleted_status, pkg: this, now: now])
   }
 
 
@@ -276,38 +278,42 @@ class Package  extends AbstractBase implements Auditable {
     // Call the delete method on the superClass.
     log.debug("Updating package status to retired");
     def retired_status = RDStore.KBC_STATUS_RETIRED
-    this.status = retired_status
-    this.save();
+    Package.withTransaction {
+      this.status = retired_status
+      this.save()
+    }
 
-    // Delete the tipps too as a TIPP should not exist without the associated,
-    // package.
-    log.debug("Retiring tipps");
+    log.debug("Retiring tipps")
     Date now = new Date()
-    TitleInstancePackagePlatform.executeUpdate("update TitleInstancePackagePlatform as t set t.status = :ret, t.lastUpdateComment = 'Retired via Package action retire', t.lastUpdated = :now where t.status != :ret and t.pkg = :pkg", [ret: retired_status, pkg: this, now: now])
+    TitleInstancePackagePlatform.executeUpdate("update TitleInstancePackagePlatform as t set t.status = :ret, t.lastUpdated = :now where t.status != :ret and t.pkg = :pkg", [ret: retired_status, pkg: this, now: now])
   }
 
   public void removeWithTipps(context) {
     log.debug("package::removeWithTipps");
     log.debug("Updating package status to removed");
     def removedStatus = RDStore.KBC_STATUS_REMOVED
-    this.status = removedStatus
-    this.save()
+    Package.withTransaction {
+      this.status = removedStatus
+      this.save()
+    }
 
     log.debug("removed tipps")
 
     Date now = new Date()
-    TitleInstancePackagePlatform.executeUpdate("update TitleInstancePackagePlatform as t set t.status = :rev, t.lastUpdateComment = 'Removed via Package action remove', t.lastUpdated = :now where t.status != :rev and t.pkg = :pkg", [rev: removedStatus, pkg: this, now: now])
+    TitleInstancePackagePlatform.executeUpdate("update TitleInstancePackagePlatform as t set t.status = :rev, t.lastUpdated = :now where t.status != :rev and t.pkg = :pkg", [rev: removedStatus, pkg: this, now: now])
   }
 
   public void currentWithTipps(context) {
     log.debug("package::currentWithTipps");
     log.debug("Updating package status to current");
     def currentStatus = RDStore.KBC_STATUS_CURRENT
-    this.status = currentStatus
-    this.save()
+    Package.withTransaction {
+      this.status = currentStatus
+      this.save()
+    }
 
     Date now = new Date()
-    TitleInstancePackagePlatform.executeUpdate("update TitleInstancePackagePlatform as t set t.status = :cur, t.lastUpdateComment = 'Current via Package action current', t.lastUpdated = :now where t.status != :cur and t.pkg = :pkg", [cur: currentStatus, pkg: this, now: now])
+    TitleInstancePackagePlatform.executeUpdate("update TitleInstancePackagePlatform as t set t.status = :cur, t.lastUpdated = :now where t.status != :cur and t.pkg = :pkg", [cur: currentStatus, pkg: this, now: now])
   }
 
 

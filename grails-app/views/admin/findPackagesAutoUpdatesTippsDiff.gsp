@@ -106,12 +106,12 @@
                 <td>
                     <g:set var="object" value="${pkg.class.name}:${pkg.id}"/>
                     <g:link class="ui button" controller="workflow" action="action"
-                            params="[component: object, selectedBulkAction: 'packageUrlUpdate', curationOverride: true]">Trigger Update (Changed Titles) </g:link>
+                            params="[component: object, selectedAction: 'packageUrlUpdate', curationOverride: true]">Trigger Update (Changed Titles) </g:link>
 
                     <br>
                     <br>
                     <g:link class="ui button black" controller="workflow" action="action"
-                            params="[component: object, selectedBulkAction: 'packageUrlUpdateAllTitles', curationOverride: true]">Trigger Update (all Titles)</g:link>
+                            params="[component: object, selectedAction: 'packageUrlUpdateAllTitles', curationOverride: true]">Trigger Update (all Titles)</g:link>
                 </td>
             </tr>
         </g:each>

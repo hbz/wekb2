@@ -10,39 +10,50 @@ class WorkflowController{
 
   def genericOIDService
   def springSecurityService
-  def reviewRequestService
-  def dateFormatService
   GlobalSearchTemplatesService globalSearchTemplatesService
-  ExportService exportService
-  AutoUpdatePackagesService autoUpdatePackagesService
-  AccessService accessService
-  KbartImportService kbartImportService
-  ExecutorService executorService
 
-  def actionConfig = [
-      'deleteIdentifierNamespace'        : [actionType: 'process', method: 'deleteIdentifierNamespace'],
+  WorkflowService workflowService
 
-      'manualKbartImport'  : [actionType: 'redirectToView', view: 'kbartImport', controller: 'package'],
 
-      'method::deleteSoft'     : [actionType: 'simple'],
-      'method::retire'         : [actionType: 'simple'],
-      'method::removeWithTipps' : [actionType: 'simple'],
-      'method::currentWithTipps': [actionType: 'simple'],
-      'method::setCurrent'      : [actionType: 'simple'],
+  @Secured(['ROLE_EDITOR', 'IS_AUTHENTICATED_FULLY'])
+  def action(){
+    log.debug("WorkflowController::action(${params})")
+    def result = [:]
+    result.ref = request.getHeader('referer')
 
-      'packageUrlUpdate'       : [actionType: 'process', method: 'triggerSourceUpdate'],
-      'packageUrlUpdateAllTitles':[actionType:'process', method: 'triggerSourceUpdateAllTitles'],
+    result.objects_to_action = []
 
-      'setStatus::Retired'     : [actionType: 'simple'],
-      'setStatus::Current'     : [actionType: 'simple'],
-      'setStatus::Expected'    : [actionType: 'simple'],
-      'setStatus::Deleted'     : [actionType: 'simple'],
-      'setStatus::Removed'     : [actionType: 'simple'],
-  ]
+    if(params.component){
+      def component = genericOIDService.resolveOID(params.component)
+      if(component){
+        result.objects_to_action.add(component)
+      }
+    }
 
+    if(params.selectedAction){
+      result.selectedAction = params.selectedAction
+    }
+
+      try {
+          result = workflowService.processAction(result, params)
+      }catch (Exception e) {
+          log.error("Problem by processAction : ${e.message}")
+          println("Problem by processAction : ${e.printStackTrace()}")
+          flash.error = "The operation could not be performed. An unexpected error has occurred. Try again later."
+      }
+
+      if(result.error){
+          flash.error = result.error
+      }
+      if(result.success){
+          flash.success = result.success
+      }
+
+    redirect(url: result.ref)
+  }
 
   @Secured(['ROLE_USER', 'IS_AUTHENTICATED_FULLY'])
-  def action(){
+  def actionOld(){
     log.debug("WorkflowController::action(${params})")
     def result = [:]
     result.ref = request.getHeader('referer')
@@ -69,7 +80,7 @@ class WorkflowController{
             log.debug("Execute query")
             // doQuery(result.qbetemplate, params, result)
             def target_class = grailsApplication.getArtefact("Domain", qresult.qbetemplate.baseclass)
-            com.k_int.HQLBuilder.build(grailsApplication, qresult.qbetemplate, params, qresult, target_class, genericOIDService)
+            HQLBuilder.build(grailsApplication, qresult.qbetemplate, params, qresult, target_class, genericOIDService)
 
             qresult.recset.each{
               def oid_to_action = "${it.class.name}:${it.id}"
@@ -168,81 +179,5 @@ class WorkflowController{
       log.warn("Unable to locate action config for ${params.selectedBulkAction}")
       redirect(url: result.ref)
     }
-  }
-
-  private def triggerSourceUpdateAllTitles(packages_to_update) {
-    triggerSourceUpdate(packages_to_update, true)
-  }
-
-  private def triggerSourceUpdate(packages_to_update, boolean allTitles=false) {
-    log.info("triggerSourceUpdate for Packages ${packages_to_update}..")
-    def user = springSecurityService.currentUser
-    def pars = [:]
-    def denied = false
-
-    boolean userAdmin = user.isAdmin()
-
-    if (packages_to_update.size() > 1){
-      flash.error = "Please select a single Package to update!"
-    }
-    else{
-      packages_to_update.each{ ptv ->
-        def pkgObj = Package.get(ptv.id)
-
-        if (pkgObj && pkgObj.kbartSource?.url){
-
-          if (accessService.checkEditableObject(pkgObj, userAdmin)) {
-            Set<Thread> threadSet = Thread.getAllStackTraces().keySet()
-            Thread[] threadArray = threadSet.toArray(new Thread[threadSet.size()])
-            boolean processRunning = false
-            threadArray.each { Thread thread ->
-              if (thread.name == 'triggerSourceUpdate' + pkgObj.id) {
-                processRunning = true
-              }
-            }
-
-            if(processRunning){
-              flash.error = 'A package update is already in progress. Please wait this has finished.'
-            }else {
-              executorService.execute({
-                Package aPackage = Package.get(pkgObj.id)
-                Thread.currentThread().setName('triggerSourceUpdate_' + pkgObj.id)
-                autoUpdatePackagesService.startAutoPackageUpdate(aPackage, !allTitles)
-              })
-
-              flash.success = "The package update for Package '${pkgObj.name}' was started. This runs in the background. When the update has gone through, you will see this on the Auto Update Info of the package tab."
-            }
-
-          }
-          else{
-            flash.error = "No permissions to update this Package!"
-          }
-        }
-        else if (!pkgObj){
-          flash.error = "Unable to reference provided Package!"
-        }
-        else{
-          flash.error = "Please check the Package KbartSource for validity!"
-        }
-      }
-    }
-    log.debug('triggerSourceUpdate() done - redirecting')
-    redirect(url: request.getHeader('referer'))
-  }
-
-  @Secured(['ROLE_SUPERUSER', 'IS_AUTHENTICATED_FULLY'])
-  def deleteIdentifierNamespace(identifierNamespaces) {
-    log.info("deleteIdentifierNamespace ${identifierNamespaces}..")
-    identifierNamespaces.each { idn ->
-      IdentifierNamespace identifierNamespace = IdentifierNamespace.get(idn.id)
-      if(!Platform.findByTitleNamespace(identifierNamespace) && !KbartSource.findByTargetNamespace(identifierNamespace) && !Identifier.findByNamespace(identifierNamespace)){
-        identifierNamespace.delete(flush: true)
-      }else {
-        flash.error = "Identifier Namespace is linked with identifier or org or source or platform! Please unlink first!"
-      }
-
-
-    }
-    redirect(url: request.getHeader('referer'))
   }
 }

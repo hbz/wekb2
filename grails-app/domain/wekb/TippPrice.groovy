@@ -1,10 +1,9 @@
 package wekb
 
+import wekb.helper.BeanStore
+
 
 class TippPrice {
-
-
-  def cascadingUpdateService
 
   TitleInstancePackagePlatform tipp
   RefdataValue priceType
@@ -101,19 +100,19 @@ class TippPrice {
 
   def afterInsert (){
     log.debug("afterSave for ${this}")
-    cascadingUpdateService.update(this, dateCreated)
+    BeanStore.getCascadingUpdateService().update(this, dateCreated)
 
   }
 
   def beforeDelete (){
     log.debug("beforeDelete for ${this}")
-    cascadingUpdateService.update(this, lastUpdated)
+    BeanStore.getCascadingUpdateService().update(this, lastUpdated)
 
   }
 
   def afterUpdate(){
     log.debug("afterUpdate for ${this}")
-    cascadingUpdateService.update(this, lastUpdated)
+    BeanStore.getCascadingUpdateService().update(this, lastUpdated)
 
   }
 

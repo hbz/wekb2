@@ -42,6 +42,13 @@ class SemanticTagLib {
         if (this.pageScope.variables?.actionName == attrs.action && !attrs.notActive) {
             aClass = aClass + ' active'
         }
+        if (attrs.icon && attrs.icon != '') {
+            linkBody += '<i class="' + attrs.icon +' icon"></i>'
+        }
+
+        if (attrs.description && attrs.description != '') {
+            linkBody += '<span class="description">' + attrs.description +'</span>'
+        }
 
         def linkParams = [
                 class: aClass,

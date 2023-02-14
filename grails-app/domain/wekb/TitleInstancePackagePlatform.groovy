@@ -5,6 +5,7 @@ import wekb.annotations.HbzKbartAnnotation
 import wekb.annotations.KbartAnnotation
 import wekb.annotations.RefdataAnnotation
 import wekb.base.AbstractBase
+import wekb.helper.BeanStore
 import wekb.helper.RCConstants
 import groovy.util.logging.Slf4j
 import wekb.helper.RDStore
@@ -21,8 +22,6 @@ class TitleInstancePackagePlatform  extends AbstractBase implements Auditable {
   // Timestamps
   Date dateCreated
   Date lastUpdated
-
-  def cascadingUpdateService
 
   Package pkg
   Platform hostPlatform
@@ -183,7 +182,7 @@ class TitleInstancePackagePlatform  extends AbstractBase implements Auditable {
   @Override
   def beforeDelete() {
     super.beforeDeleteHandler()
-    cascadingUpdateService.update(this, lastUpdated)
+    BeanStore.getCascadingUpdateService().update(this, lastUpdated)
   }
 
   static constraints = {
@@ -344,13 +343,13 @@ class TitleInstancePackagePlatform  extends AbstractBase implements Auditable {
 
   def afterInsert (){
     log.debug("afterSave for ${this}")
-    cascadingUpdateService.update(this, dateCreated)
+    BeanStore.getCascadingUpdateService().update(this, dateCreated)
 
   }
 
   def afterUpdate(){
     log.debug("afterUpdate for ${this}")
-    cascadingUpdateService.update(this, lastUpdated)
+      BeanStore.getCascadingUpdateService().update(this, lastUpdated)
 
   }
 

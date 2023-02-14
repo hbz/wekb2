@@ -2,11 +2,10 @@ package wekb
 
 import wekb.annotations.RefdataAnnotation
 import wekb.base.AbstractBase
+import wekb.helper.BeanStore
 import wekb.helper.RCConstants
 
 class TIPPCoverageStatement extends AbstractBase {
-
-  def cascadingUpdateService
 
   TitleInstancePackagePlatform tipp
 
@@ -72,7 +71,7 @@ class TIPPCoverageStatement extends AbstractBase {
 
   def afterInsert (){
     log.debug("afterSave for ${this}")
-    cascadingUpdateService.update(this, dateCreated)
+    BeanStore.getCascadingUpdateService().update(this, dateCreated)
 
   }
 
@@ -88,13 +87,13 @@ class TIPPCoverageStatement extends AbstractBase {
 
   def beforeDelete (){
     log.debug("beforeDelete for ${this}")
-    cascadingUpdateService.update(this, lastUpdated)
+    BeanStore.getCascadingUpdateService().update(this, lastUpdated)
 
   }
 
   def afterUpdate(){
     log.debug("afterUpdate for ${this}")
-    cascadingUpdateService.update(this, lastUpdated)
+    BeanStore.getCascadingUpdateService().update(this, lastUpdated)
 
   }
 

@@ -1,9 +1,8 @@
 package wekb
 
+import wekb.helper.BeanStore
+
 class ComponentVariantName {
-
-
-  def cascadingUpdateService
 
   Org org
   Package pkg
@@ -66,19 +65,19 @@ class ComponentVariantName {
 
     def afterInsert() {
         log.debug("afterSave for ${this}")
-        cascadingUpdateService.update(this, dateCreated)
+        BeanStore.getCascadingUpdateService().update(this, dateCreated)
 
     }
 
     def beforeDelete (){
         log.debug("beforeDelete for ${this}")
-        cascadingUpdateService.update(this, lastUpdated)
+        BeanStore.getCascadingUpdateService().update(this, lastUpdated)
 
     }
 
     def afterUpdate() {
         log.debug("afterUpdate for ${this}")
-        cascadingUpdateService.update(this, lastUpdated)
+        BeanStore.getCascadingUpdateService().update(this, lastUpdated)
 
     }
 }

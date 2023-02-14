@@ -1,11 +1,10 @@
 package wekb
 
 import wekb.annotations.RefdataAnnotation
+import wekb.helper.BeanStore
 import wekb.helper.RCConstants
 
 class ComponentLanguage {
-
-    def cascadingUpdateService
 
     @RefdataAnnotation(cat = RCConstants.KBCOMPONENT_LANGUAGE)
     RefdataValue language
@@ -34,19 +33,19 @@ class ComponentLanguage {
 
     def afterInsert (){
         log.debug("afterSave for ${this}")
-        cascadingUpdateService.update(this, dateCreated)
+        BeanStore.getCascadingUpdateService().update(this, dateCreated)
 
     }
 
     def beforeDelete (){
         log.debug("beforeDelete for ${this}")
-        cascadingUpdateService.update(this, lastUpdated)
+        BeanStore.getCascadingUpdateService().update(this, lastUpdated)
 
     }
 
     def afterUpdate(){
         log.debug("afterUpdate for ${this}")
-        cascadingUpdateService.update(this, lastUpdated)
+        BeanStore.getCascadingUpdateService().update(this, lastUpdated)
 
     }
 }
