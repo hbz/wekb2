@@ -92,7 +92,7 @@ class AjaxHtmlController {
           }
 
           if (errors.size() == 0) {
-            new_obj = domain_class.getClazz().newInstance()
+            new_obj = domain_class.getClazz().getDeclaredConstructor().newInstance()
             PersistentEntity pent = grailsApplication.mappingContext.getPersistentEntity(domain_class.fullName)
 
             pent.getPersistentProperties().each { p -> // list of PersistentProperties
@@ -155,9 +155,6 @@ class AjaxHtmlController {
               if ( new_obj.validate() ) {
                 new_obj.save(flush:true)
                 log.debug("Saved OK")
-                if (contextObj.respondsTo("lastUpdateComment")){
-                  contextObj.lastUpdateComment = "Added new connected ${new_obj.class.simpleName}(ID: ${new_obj.id})."
-                }
                 contextObj.save(flush: true)
               }
               else {
@@ -1067,5 +1064,155 @@ class AjaxHtmlController {
 
         redirect(controller:'resource', action:'show', id: userObject.class.name+':'+userObject.id, params: [activeTab: params.activeTab])
     }
+
+  @Transactional
+  @Secured(['ROLE_EDITOR', 'IS_AUTHENTICATED_FULLY'])
+  def removeCuratoryGroupFromObject() {
+    log.debug("removeCuratoryGroup(${params})")
+    CuratoryGroup curatoryGroup = resolveOID3(params.__curatoryGroup)
+    boolean fail = false
+
+    if (params.__contextObjectClass) {
+      if (curatoryGroup) {
+        def editable = accessService.checkEditableObject(curatoryGroup, params)
+
+        if (editable) {
+          switch (params.__contextObjectClass) {
+            case KbartSource.class.name:
+              KbartSource kbartSource = KbartSource.findById(params.contextObject)
+              if (kbartSource) {
+                CuratoryGroupKbartSource curatoryGroupKbartSource = CuratoryGroupKbartSource.findByKbartSourceAndCuratoryGroup(kbartSource, curatoryGroup)
+                if (curatoryGroupKbartSource) {
+                  curatoryGroupKbartSource.delete()
+                }
+              } else {
+                fail = true
+              }
+              break
+            case Org.class.name:
+              Org org = Org.findById(params.contextObject)
+              if (org) {
+                CuratoryGroupOrg curatoryGroupOrg = CuratoryGroupOrg.findByOrgAndCuratoryGroup(org, curatoryGroup)
+                if (curatoryGroupOrg) {
+                  curatoryGroupOrg.delete()
+                }
+              } else {
+                fail = true
+              }
+              break
+            case Package.class.name:
+              Package pkg = Package.findById(params.contextObject)
+              if (pkg) {
+                CuratoryGroupPackage curatoryGroupPackage = CuratoryGroupPackage.findByPkgAndCuratoryGroup(pkg, curatoryGroup)
+                if (curatoryGroupPackage) {
+                  curatoryGroupPackage.delete()
+                }
+              } else {
+                fail = true
+              }
+              break
+            case Platform.class.name:
+              Platform platform = Platform.findById(params.contextObject)
+              if (platform) {
+                CuratoryGroupPlatform curatoryGroupPlatform = CuratoryGroupPlatform.findByPlatformAndCuratoryGroup(platform, curatoryGroup)
+                if (curatoryGroupPlatform) {
+                  curatoryGroupPlatform.delete()
+                }
+              } else {
+                fail = true
+              }
+              break
+          }
+        } else {
+          flash.error = message(code: 'default.noPermissons')
+        }
+      } else {
+        flash.error = message(code: 'component.notFound.forLink')
+      }
+    } else {
+      fail = true
+    }
+
+    if (fail) {
+      flash.error = message(code: 'default.action.fail')
+    }
+
+    redirect(url: request.getHeader('referer'))
+  }
+
+  @Transactional
+  @Secured(['ROLE_EDITOR', 'IS_AUTHENTICATED_FULLY'])
+  def addCuratoryGroupToObject() {
+    log.debug("addUserToCuratoryGroup(${params})")
+    CuratoryGroup curatoryGroup = resolveOID3(params.__curatoryGroup)
+    boolean fail = false
+
+    if (params.__contextObjectClass) {
+      if (curatoryGroup) {
+        def editable = accessService.checkEditableObject(curatoryGroup, params)
+
+        if (editable) {
+          switch (params.__contextObjectClass) {
+            case KbartSource.class.name:
+              KbartSource kbartSource = KbartSource.findById(params.contextObject)
+              if (kbartSource) {
+                CuratoryGroupKbartSource curatoryGroupKbartSource = new CuratoryGroupKbartSource(kbartSource: kbartSource, curatoryGroup: curatoryGroup)
+                if (!curatoryGroupKbartSource.save()) {
+                  fail = true
+                }
+              } else {
+                fail = true
+              }
+              break
+            case Org.class.name:
+              Org org = Org.findById(params.contextObject)
+              if (org) {
+                CuratoryGroupOrg curatoryGroupOrg = new CuratoryGroupOrg(org: org, curatoryGroup: curatoryGroup)
+                if (!curatoryGroupOrg.save()) {
+                  fail = true
+                }
+              } else {
+                fail = true
+              }
+              break
+            case Package.class.name:
+              Package pkg = Package.findById(params.contextObject)
+              if (pkg) {
+                CuratoryGroupPackage curatoryGroupPackage = new CuratoryGroupPackage(pkg: pkg, curatoryGroup: curatoryGroup)
+                if (!curatoryGroupPackage.save()) {
+                  fail = true
+                }
+              } else {
+                fail = true
+              }
+              break
+            case Platform.class.name:
+              Platform platform = Platform.findById(params.contextObject)
+              if (platform) {
+                CuratoryGroupPlatform curatoryGroupPlatform = new CuratoryGroupPlatform(platform: platform, curatoryGroup: curatoryGroup)
+                if (!curatoryGroupPlatform.save()) {
+                  fail = true
+                }
+              } else {
+                fail = true
+              }
+              break
+          }
+        } else {
+          flash.error = message(code: 'default.noPermissons')
+        }
+      } else {
+        flash.error = message(code: 'component.notFound.forLink')
+      }
+    } else {
+      fail = true
+    }
+
+    if (fail) {
+      flash.error = message(code: 'default.action.fail')
+    }
+
+    redirect(url: request.getHeader('referer'))
+  }
 
 }

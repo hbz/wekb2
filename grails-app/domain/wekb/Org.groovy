@@ -162,4 +162,13 @@ class Org extends AbstractBase implements Auditable {
     this.delete(failOnError: true)
     result
   }
+
+  @Transient
+  public List<CuratoryGroup> getCuratoryGroupObjects() {
+    List<CuratoryGroup> curatoryGroups
+    if(this.curatoryGroups.size() > 0){
+      curatoryGroups = this.curatoryGroups.curatoryGroup
+    }
+    return curatoryGroups
+  }
 }

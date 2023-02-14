@@ -1,26 +1,26 @@
 <%@ page import="grails.plugin.springsecurity.SpringSecurityUtils; wekb.CuratoryGroup; wekb.TitleInstancePackagePlatform;" %>
 <g:set var="curatoryGroups"
-       value="${(d instanceof TitleInstancePackagePlatform && d.pkg) ? d.pkg.curatoryGroups : (d.hasProperty('curatoryGroups') ? d.curatoryGroups : [])}"/>
+       value="${(d instanceof TitleInstancePackagePlatform && d.pkg) ? d.pkg.getCuratoryGroupObjects() : (d.respondsTo('getCuratoryGroupObjects') ? d.getCuratoryGroupObjects() : [])}"/>
 <wekb:serviceInjection/>
 
 <g:set var="isUserLoggedIn" scope="page" value="${springSecurityService.isLoggedIn()}"/>
 
 <div class="ui card">
-    <g:if test="${curatoryGroups}">
+    <g:if test="${curatoryGroups || d.hasProperty('curatoryGroups')}">
         <div class="content">
             <div class="header">Curated By</div>
         </div>
 
         <div class="content">
             <div class="ui bulleted list">
-                <g:each in="${curatoryGroups}" var="curatoryGroupPackage">
+                <g:each in="${curatoryGroups.sort{it.name}}" var="curatoryGroup">
                     <div class="item">
-                        <g:link controller="resource" action="show" id="${curatoryGroupPackage.curatoryGroup.uuid}">${curatoryGroupPackage.curatoryGroup.name}</g:link>
+                        <g:link controller="resource" action="show" id="${curatoryGroup.uuid}">${curatoryGroup.name}</g:link>
 
                     <g:if test="${params.curationOverride == 'true' && isUserLoggedIn && SpringSecurityUtils.ifAnyGranted("ROLE_ADMIN")}">
-                        <g:link controller="ajaxHtml" action="unlinkManyToMany"
+                        <g:link controller="ajaxHtml" action="removeCuratoryGroupFromObject"
                                 class="ui right floated negative mini button"
-                                params="['curationOverride': params.curationOverride, '__property': 'curatoryGroups', '__context': d.getClass().name + ':' + d.id, '__itemToRemove': curatoryGroupPackage.getClass().name + ':' + curatoryGroupPackage.id]">Unlink Curatory Group</g:link>
+                                params="['curationOverride': params.curationOverride, '__contextObjectClass': d.getClass().name, 'contextObject': d.id,'__curatoryGroup': curatoryGroup.class.name+':'+curatoryGroup.id]">Unlink</g:link>
                     </g:if>
                     </div>
                 </g:each>
@@ -31,16 +31,16 @@
                 </g:if>
             </div>
 
-            <g:if test="${(params.curationOverride == 'true' || !curatoryGroups) && !(d instanceof CuratoryGroup) && !(d instanceof TitleInstancePackagePlatform) && isUserLoggedIn && SpringSecurityUtils.ifAnyGranted("ROLE_ADMIN")}">
+            <g:if test="${(params.curationOverride == 'true') && d.hasProperty('curatoryGroups') && !(d instanceof CuratoryGroup) && isUserLoggedIn && SpringSecurityUtils.ifAnyGranted("ROLE_ADMIN")}">
                 <div class="ui segment">
-                    <g:form controller="ajaxHtml" action="addToStdCollection" class="ui form">
-                        <input type="hidden" name="__context" value="${d.getClass().name}:${d.id}"/>
-                        <input type="hidden" name="__property" value="curatoryGroups"/>
+                    <g:form controller="ajaxHtml" action="addCuratoryGroupToObject" class="ui form">
+                        <input type="hidden" name="__contextObjectClass" value="${d.getClass().name}"/>
+                        <input type="hidden" name="contextObject" value="${d.id}"/>
                         <input type="hidden" name="curationOverride" value="${params.curationOverride}"/>
 
                         <div class="field">
                             <label>Select a Curatory Group to link with this component</label>
-                            <semui:simpleReferenceDropdown name="__relatedObject"
+                            <semui:simpleReferenceDropdown name="__curatoryGroup"
                                                            baseClass="wekb.CuratoryGroup"
                                                            filter1="Current"/>
                         </div>

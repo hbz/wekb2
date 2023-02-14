@@ -91,25 +91,6 @@ class IdentifierNamespace {
     return Identifier.executeQuery("select count(value) from Identifier where namespace = :namespace", [namespace: this])[0]
   }
 
-
-  @Transient
-  userAvailableActions(){
-    def user = BeanStore.getSpringSecurityService().currentUser
-    def allActions = []
-    def result = []
-    if (this.respondsTo('availableActions')){
-      allActions = this.availableActions()
-      allActions.each{ ao ->
-        if (ao.perm in ["delete", "admin", "su"] && !user.hasRole('ROLE_SUPERUSER')) {
-        }
-        else{
-          result.add(ao)
-        }
-      }
-    }
-    result
-  }
-
   @Transient
   public String getDomainName() {
     return "Identifier Namespace"
