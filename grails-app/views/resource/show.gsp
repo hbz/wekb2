@@ -3,9 +3,9 @@
 <html>
 <head>
     <meta name="layout" content="wekb"/>
-    <title>we:kb : Show
+    <title>we:kb :
     <g:if test="${displayobj}">
-        ${displayobj} (${displayobj.getShowName()})
+        ${displayobj.getDomainName()}: ${displayobj.getShowName()}
     </g:if><g:else>
         Component
     </g:else>
