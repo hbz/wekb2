@@ -45,7 +45,7 @@ class CreateComponentService {
 
             if ( newclass ) {
                 try {
-                    result.newobj = newclass.newInstance()
+                    result.newobj = newclass.getDeclaredConstructor().newInstance()
                     log.debug("got newInstance...");
 
                     params.each { p ->

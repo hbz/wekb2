@@ -876,7 +876,7 @@ class ESSearchService{
             contextPath = context
           }
           else if (component_type) {
-            def obj_cls = Class.forName("wekb.${component_type}").newInstance()
+            def obj_cls = Class.forName("wekb.${component_type}").getDeclaredConstructor().newInstance()
             contextPath = obj_cls.restPath
           }
 
@@ -991,7 +991,7 @@ class ESSearchService{
         'curatoryGroups': false
     ]
 
-    def obj_cls = Class.forName("wekb.${record.source.componentType}").newInstance()
+    def obj_cls = Class.forName("wekb.${record.source.componentType}").getDeclaredConstructor().newInstance()
 
     if (obj_cls) {
 

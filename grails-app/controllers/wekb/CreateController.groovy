@@ -34,7 +34,7 @@ class CreateController {
         if (newclass) {
           log.debug("Got new class")
           try {
-            result.displayobj = newclass.newInstance()
+            result.displayobj = newclass.getDeclaredConstructor().newInstance()
             log.debug("Got new instance");
             result.editable = true
 
