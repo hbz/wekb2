@@ -26,7 +26,7 @@ class KbartImportService {
     public static final DateTimeFormatter datetimeformatter = DateTimeFormatter.ofPattern("" + "[uuuu-MM-dd' 'HH:mm:ss.SSS]" + "[uuuu-MM-dd'T'HH:mm:ss'Z']").withResolverStyle(ResolverStyle.STRICT)
 
 
-    Platform platformUpsertDTO(platformDTO) {
+    /*Platform platformUpsertDTO(platformDTO) {
         // Ideally this should be done on platformUrl, but we fall back to name here
 
         def result = null
@@ -157,17 +157,17 @@ class KbartImportService {
                 result.save()
             }
 
-            /*if (!result && !skip) {
+            *//*if (!result && !skip) {
                 log.debug("Creating new platform for: ${platformDTO}")
                 result = new Platform(name: platformDTO.name, normname: KBComponent.generateNormname(platformDTO.name), primaryUrl: (viable_url ? platformDTO.primaryUrl : null), uuid: platformDTO.uuid ?: null).save(flush: true, failOnError: true)
                 
-            }*/
+            }*//*
         }
 
         result
-    }
+    }*/
 
-    Package packageUpsertDTO(packageHeaderDTO) {
+/*    Package packageUpsertDTO(packageHeaderDTO) {
         log.info("Upsert package with header ${packageHeaderDTO}")
         RefdataValue status_deleted = RDStore.KBC_STATUS_DELETED
         String pkg_normname = Package.generateNormname(packageHeaderDTO.name)
@@ -179,7 +179,7 @@ class KbartImportService {
         Package result = packageHeaderDTO.uuid ? Package.findByUuid(packageHeaderDTO.uuid) : null
         boolean changed = false
 
-        /*if (!result && name_candidates.size() > 0 && packageHeaderDTO.identifiers?.size() > 0) {
+        *//*if (!result && name_candidates.size() > 0 && packageHeaderDTO.identifiers?.size() > 0) {
             log.debug("Got ${name_candidates.size()} matches by name. Checking against identifiers!")
             name_candidates.each { mp ->
                 if (mp.ids.size() > 0) {
@@ -225,9 +225,9 @@ class KbartImportService {
             changed |= ClassUtils.setStringIfDifferent(result, 'name', packageHeaderDTO.name)
 
 
-        }*/
+        }*//*
 
-/*        if (!result) {
+*//*        if (!result) {
             log.debug("Did not find a match via name, trying existing variantNames..")
             def variant_normname = TextUtils.normaliseString(packageHeaderDTO.name)
             def variant_candidates = Package.executeQuery("select distinct p from Package as p join p.variantNames as v where v.normVariantName = ? and p.status <> ? ", [variant_normname, status_deleted])
@@ -236,10 +236,10 @@ class KbartImportService {
                 result = variant_candidates[0]
                 log.debug("Package matched via existing variantName.")
             }
-        }*/
+        }*//*
 
         //variantNames not in ygorJson
-        /*if (!result && packageHeaderDTO.variantNames?.size() > 0) {
+        *//*if (!result && packageHeaderDTO.variantNames?.size() > 0) {
             log.debug("Did not find a match via existing variantNames, trying supplied variantNames..")
             packageHeaderDTO.variantNames.each {
 
@@ -259,9 +259,9 @@ class KbartImportService {
                     }
                 }
             }
-        }*/
+        }*//*
 
-/*        if (!result) {
+*//*        if (!result) {
             log.debug("No existing package matched. Creating new package..")
             result = new Package(name: packageHeaderDTO.name, normname: pkg_normname)
             created = true
@@ -276,17 +276,17 @@ class KbartImportService {
                 log.debug("No curator!")
                 return result
             }
-        }*/
+        }*//*
 
         //not in ygorJson
-        /*changed |= ClassUtils.setRefdataIfPresent(packageHeaderDTO.status, result, 'status')
+        *//*changed |= ClassUtils.setRefdataIfPresent(packageHeaderDTO.status, result, 'status')
         changed |= ClassUtils.setRefdataIfPresent(packageHeaderDTO.scope, result, 'scope')
         changed |= ClassUtils.setRefdataIfPresent(packageHeaderDTO.breakable, result, 'breakable')
         changed |= ClassUtils.setRefdataIfPresent(packageHeaderDTO.consistent, result, 'consistent')
         changed |= ClassUtils.setRefdataIfPresent(packageHeaderDTO.paymentType, result, 'paymentType')
         changed |= ClassUtils.setRefdataIfPresent(packageHeaderDTO.file, result, 'file')
         changed |= ClassUtils.setRefdataIfPresent(packageHeaderDTO.openAccess, result, 'openAccess')
-        changed |= ClassUtils.setRefdataIfPresent(packageHeaderDTO.contentType, result, 'contentType')*/
+        changed |= ClassUtils.setRefdataIfPresent(packageHeaderDTO.contentType, result, 'contentType')*//*
 
         // Platform
         Platform platform = null
@@ -356,7 +356,7 @@ class KbartImportService {
         }
 
         // CuratoryGroups
-/*        if(packageHeaderDTO.curatoryGroups) {
+*//*        if(packageHeaderDTO.curatoryGroups) {
             packageHeaderDTO.curatoryGroups.each {
                 def cg = null
                 def cgname = null
@@ -386,9 +386,9 @@ class KbartImportService {
                     changed = true
                 }
             }
-        }*/
+        }*//*
 
-        /*if (packageHeaderDTO.source) {
+        *//*if (packageHeaderDTO.source) {
             def src = null
             if (packageHeaderDTO.source instanceof Integer) {
                 src = KbartSource.get(packageHeaderDTO.source)
@@ -437,9 +437,9 @@ class KbartImportService {
                 result.source = src
                 changed = true
             }
-        }*/
+        }*//*
 
-        /*if (packageHeaderDTO.ddcs) {
+        *//*if (packageHeaderDTO.ddcs) {
             packageHeaderDTO.ddcs.each{ String ddc ->
                 RefdataValue refdataValue = RefdataCategory.lookup(RCConstants.DDC, ddc)
 
@@ -447,13 +447,13 @@ class KbartImportService {
                     result.addToDdcs(refdataValue)
                 }
             }
-        }*/
+        }*//*
 
         result.save()
         result
-    }
+    }*/
 
-    TitleInstancePackagePlatform tippUpsertDTO(tipp_dto, def user = null, LinkedHashMap tippsWithCoverage, List<Long> tippDuplicates = []) {
+    /*TitleInstancePackagePlatform tippUpsertDTO(tipp_dto, def user = null, LinkedHashMap tippsWithCoverage, List<Long> tippDuplicates = []) {
         def result = null
         log.info("tippUpsertDTO(${tipp_dto})")
         Package pkg = null
@@ -874,7 +874,7 @@ class KbartImportService {
             log.debug("Not able to reference TIPP: ${tipp_dto}")
         }
         result
-    }
+    }*/
 
     LinkedHashMap tippImportForUpdate(Map tippMap, LinkedHashMap tippsWithCoverage, List<Long> tippDuplicates = [], UpdatePackageInfo updatePackageInfo, List kbartRowsToCreateTipps, IdentifierNamespace identifierNamespace) {
         LinkedHashMap result = [newTipp: false, removedTipp: false, tippObject: null, updatePackageInfo: updatePackageInfo,
@@ -1386,16 +1386,16 @@ class KbartImportService {
             def parsedStart = TextUtils.completeDateString(coverage[0].startDate)
             def parsedEnd = TextUtils.completeDateString(coverage[0].endDate, false)
 
-            com.k_int.ClassUtils.setStringIfDifferent(tipp.coverageStatements[0], 'startIssue', coverage[0].startIssue)
-            com.k_int.ClassUtils.setStringIfDifferent(tipp.coverageStatements[0], 'endIssue', coverage[0].endIssue)
-            com.k_int.ClassUtils.setStringIfDifferent(tipp.coverageStatements[0], 'startVolume', coverage[0].startVolume)
-            com.k_int.ClassUtils.setStringIfDifferent(tipp.coverageStatements[0], 'endVolume', coverage[0].endVolume)
-            com.k_int.ClassUtils.setDateIfPresent(parsedStart, tipp.coverageStatements[0], 'startDate', true)
-            com.k_int.ClassUtils.setDateIfPresent(parsedEnd, tipp.coverageStatements[0], 'endDate', true)
-            com.k_int.ClassUtils.setStringIfDifferent(tipp.coverageStatements[0], 'embargo', coverage[0].embargo)
-            com.k_int.ClassUtils.setStringIfDifferent(tipp.coverageStatements[0], 'coverageNote', coverage[0].coverageNote)
+            ClassUtils.setStringIfDifferent(tipp.coverageStatements[0], 'startIssue', coverage[0].startIssue)
+            ClassUtils.setStringIfDifferent(tipp.coverageStatements[0], 'endIssue', coverage[0].endIssue)
+            ClassUtils.setStringIfDifferent(tipp.coverageStatements[0], 'startVolume', coverage[0].startVolume)
+            ClassUtils.setStringIfDifferent(tipp.coverageStatements[0], 'endVolume', coverage[0].endVolume)
+            ClassUtils.setDateIfPresent(parsedStart, tipp.coverageStatements[0], 'startDate', true)
+            ClassUtils.setDateIfPresent(parsedEnd, tipp.coverageStatements[0], 'endDate', true)
+            ClassUtils.setStringIfDifferent(tipp.coverageStatements[0], 'embargo', coverage[0].embargo)
+            ClassUtils.setStringIfDifferent(tipp.coverageStatements[0], 'coverageNote', coverage[0].coverageNote)
             if(cov_depth) {
-                com.k_int.ClassUtils.setRefdataIfDifferent(cov_depth.value, tipp.coverageStatements[0], 'coverageDepth', RCConstants.TIPPCOVERAGESTATEMENT_COVERAGE_DEPTH, true)
+                ClassUtils.setRefdataIfDifferent(cov_depth.value, tipp.coverageStatements[0], 'coverageDepth', RCConstants.TIPPCOVERAGESTATEMENT_COVERAGE_DEPTH, true)
             }
         }
         else if(countNewCoverages == 0 && countTippCoverages > 0){
@@ -1925,7 +1925,7 @@ class KbartImportService {
 
         // KBART -> status -> status -> status
         if (tipp.status != RDStore.KBC_STATUS_REMOVED && tippMap.status == "Removed") {
-            com.k_int.ClassUtils.setRefdataIfDifferent(tippMap.status, tipp, 'status', RCConstants.KBCOMPONENT_STATUS, false)
+            ClassUtils.setRefdataIfDifferent(tippMap.status, tipp, 'status', RCConstants.KBCOMPONENT_STATUS, false)
             result.removedTipp = true
 
             updatePackageInfo = updatePackageInfo.refresh()
@@ -2072,7 +2072,7 @@ class KbartImportService {
         //log.debug("before coverages II")
         if (tipp.publicationType != RDStore.TIPP_PUBLIC_TYPE_SERIAL && TIPPCoverageStatement.findByTipp(tipp)) {
             //log.debug("in coverage statements block")
-            com.k_int.ClassUtils.setStringIfDifferent(tipp, 'note', tipp.coverageStatements[0].coverageNote)
+            ClassUtils.setStringIfDifferent(tipp, 'note', tipp.coverageStatements[0].coverageNote)
             if (tipp.coverageStatements.size() > 0) {
                 def cStsIDs = tipp.coverageStatements.id.clone()
                 cStsIDs.each {
