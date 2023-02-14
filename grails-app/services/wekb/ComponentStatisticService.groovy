@@ -77,7 +77,7 @@ class ComponentStatisticService {
             if( existing_stats.size() == 1 ) {
               existing_stats[0].numTotal = stats_total_count
               existing_stats[0].numNew = stats_new_count
-              existing_stats[0].save(failOnError: true, flush:true)
+              existing_stats[0].save()
 
               stats_updated++
             }
@@ -86,7 +86,7 @@ class ComponentStatisticService {
             }
           }
           else {
-            def new_statsline = new ComponentStatistic(componentType: c, month: period_month, year: period_year, numTotal: stats_total_count, numNew: stats_new_count).save(failOnError: true, flush:true)
+            def new_statsline = new ComponentStatistic(componentType: c, month: period_month, year: period_year, numTotal: stats_total_count, numNew: stats_new_count).save()
 
             new_stats_created++
           }

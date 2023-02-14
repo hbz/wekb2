@@ -153,7 +153,7 @@ class AjaxHtmlController {
               new_obj[params.__recip] = contextObj
               log.debug("Saving ${new_obj}")
               if ( new_obj.validate() ) {
-                new_obj.save(flush:true)
+                new_obj.save()
                 log.debug("Saved OK")
                 contextObj.save(flush: true)
               }
@@ -166,7 +166,7 @@ class AjaxHtmlController {
               log.debug("Saving ${new_obj}")
 
               if ( new_obj.validate() ) {
-                new_obj.save(flush:true)
+                new_obj.save()
                 log.debug("New Object Saved OK")
               }
               else {
@@ -174,7 +174,7 @@ class AjaxHtmlController {
               }
 
               if ( contextObj.validate() ) {
-                  contextObj.save(flush:true)
+                  contextObj.save()
                 log.debug("Context Object Saved OK")
               }
               else {
@@ -185,7 +185,7 @@ class AjaxHtmlController {
               // Stand alone object.. Save it!
               log.debug("Saving stand alone reference object")
               if ( new_obj.validate() ) {
-                new_obj.save(flush:true, failOnError:true)
+                new_obj.save()
                 log.debug("Saved OK (${new_obj.class.name} ${new_obj.id})")
               }
               else {
@@ -252,7 +252,7 @@ class AjaxHtmlController {
       if (editable || user.id == contextObj.id) {
         if (!contextObj["${params.__property}"].contains(relatedObj)) {
           contextObj["${params.__property}"].add (relatedObj)
-          contextObj.save(flush:true, failOnError:true)
+          contextObj.save()
           log.debug("Saved: ${contextObj.id}")
           result.context = contextObj
         }else{
@@ -317,7 +317,7 @@ class AjaxHtmlController {
           }
 
           if (item_to_remove.hasProperty('fromComponent') && item_to_remove.fromComponent == contextObj) {
-            item_to_remove.delete(flush:true)
+            item_to_remove.delete()
           }
           else {
 
@@ -331,7 +331,7 @@ class AjaxHtmlController {
               flash.error = messageService.processValidationErrorsToListForFlashError(item_to_remove.errors, request.locale)
             }
             else {
-              item_to_remove.save(flush:true)
+              item_to_remove.save()
             }
           }
         } else {
@@ -415,7 +415,7 @@ class AjaxHtmlController {
           contextObj.deleteSoft()
         }
         else {
-          contextObj.delete(flush:true)
+          contextObj.delete()
         }
         log.debug("Item deleted.")
       }
@@ -524,7 +524,7 @@ class AjaxHtmlController {
         }
 
         if (target_object.validate()) {
-          target_object.save(flush:true)
+          target_object.save()
         }
         else {
           errors = messageService.processValidationErrors(target_object.errors, request.locale)
@@ -738,7 +738,7 @@ class AjaxHtmlController {
             variant_name = owner?.getName()?.trim()
           }
 
-          def new_variant = new ComponentVariantName(owner:owner,variantName:variant_name).save(flush:true)
+          def new_variant = new ComponentVariantName(owner:owner,variantName:variant_name).save()
 
         }else{
             log.debug("Found existing variant name: ${current_name_as_variant}")
@@ -748,7 +748,7 @@ class AjaxHtmlController {
         owner.name = variant.variantName
 
         if (owner.validate()) {
-          owner.save(flush:true)
+          owner.save()
           result.new_name = variant.owner.name
         }
         else {
