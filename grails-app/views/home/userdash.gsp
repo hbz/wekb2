@@ -11,23 +11,47 @@
 <h1 class="ui header">My User Dashboard (${springSecurityService.currentUser?.displayName ?: springSecurityService.currentUser?.username})</h1>
 
 <div class="ui segment">
-    <h3 class="ui header">Saved Searchs</h3>
+    <h3 class="ui header">Saved Searchs (${saved_items.size()})</h3>
 
     <div class="content">
-        <g:if test="${saved_items.size() > 8}">
-            <g:link controller="savedItems" action="index">All Saved Searchs (${saved_items.size()})</g:link>
-            <g:set var="saved_items" value="${saved_items.take(8)}"/>
+        <g:if test="${saved_items.size() > 10 && !removeMax}">
+            <g:link controller="home" action="userdash" params="[removeMax: true]">Show all Saved Searchs (${saved_items.size()})</g:link>
+            <g:set var="saved_items" value="${saved_items.take(10)}"/>
             <br><br>
         </g:if>
 
-        <g:each in="${saved_items}" var="itm">
+        <table class="ui selectable striped sortable celled table">
+            <thead>
+            <tr>
+                <th>#</th>
+                <semui:sortableColumn property="name" title="Name of Search"/>
+                <semui:sortableColumn property="dateCreated" title="Date Created"/>
+                <th>Jump to search</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+        <g:each in="${saved_items}" var="itm" status="i">
             <g:set var="savedParams" value="${itm.toParam()}"/>
-            <div class="col-md-3 center-block center-text">
-                <i class="fa fa-search fa-fw"></i>
-                <g:link controller="${savedParams.controller ?: 'search'}" action="${savedParams.action ?: 'index'}"
-                        params="${savedParams}">${itm.name}</g:link>
-            </div>
+            <tr>
+                <td>${i+1}</td>
+                <td>
+                    <semui:xEditable owner="${itm}" field="name" required="true"/>
+                </td>
+                <td><g:formatDate format="${message(code: 'default.date.format.noZ')}"
+                                  date="${itm.dateCreated}"/>
+                </td>
+                <td>
+                    <g:link controller="${savedParams.controller ?: 'search'}" action="${savedParams.action ?: 'index'}"
+                            params="${savedParams}" class="ui black button" target="_blank">
+                        <i class="icon search"></i>
+                        ${itm.name}</g:link>
+                </td>
+                <td><g:link controller="home" action="userdash" params="[removeSearch: true, search_id: itm.id]" class="ui red button icon"><i class="icon trash"></i>Remove Search</g:link></td>
+            </tr>
         </g:each>
+            </tbody>
+        </table>
     </div>
 </div>
 

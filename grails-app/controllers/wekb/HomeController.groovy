@@ -3,7 +3,6 @@ package wekb
 import grails.plugin.springsecurity.SpringSecurityService
 import org.springframework.security.crypto.password.PasswordEncoder
 import wekb.auth.User
-import wekb.helper.RCConstants
 import org.hibernate.SessionFactory
 import org.springframework.security.access.annotation.Secured
 import wekb.system.SavedSearch
@@ -45,7 +44,24 @@ class HomeController {
     def result = [:]
     result.user = springSecurityService.currentUser
 
-    result.saved_items = SavedSearch.executeQuery('Select ss from SavedSearch as ss where ss.owner = :user order by name',[user: result.user])
+    result.editable = true
+
+    result.removeMax = params.removeMax ?: false
+
+    if(params.removeSearch){
+      SavedSearch.withTransaction {
+        SavedSearch savedSearch = SavedSearch.findById(params.search_id)
+        if(savedSearch && savedSearch.owner == result.user){
+          savedSearch.delete()
+          flash.sussess = 'Saved search has been deleted!'
+        }
+      }
+    }
+
+    params.sort = params.sort ?: 'name'
+    params.order = params.order ?: 'desc'
+
+    result.saved_items = SavedSearch.executeQuery('Select ss from SavedSearch as ss where ss.owner = :user',[user: result.user], [sort: params.sort, order: params.order])
 
     result
   }
@@ -81,19 +97,21 @@ class HomeController {
 
   @Secured(['ROLE_USER', 'IS_AUTHENTICATED_FULLY'])
   def changePass() {
-    if ( params.newpass == params.repeatpass ) {
+    if ( params.newpass != '' && params.newpass == params.repeatpass ) {
       User user = springSecurityService.currentUser
-      if ( passwordEncoder.isPasswordValid(user.password, params.origpass, null) ) {
-        user.password = params.newpass
-        user.save(flush:true, failOnError:true);
+      if (passwordEncoder.matches(params.origpass, user.password)) {
+        User.withTransaction {
+          user.password = params.newpass
+          user.save()
+        }
         flash.success = "Password Changed!"
       }
       else {
-        flash.error = "Existing password does not match: not changing"
+        flash.error = "Existing password does not match: Not changing!"
       }
     }
     else {
-      flash.error = "New password does not match repeat password: not changing"
+      flash.error = "New password does not match repeat password: Not changing"
     }
     redirect(action:'profile')
   }

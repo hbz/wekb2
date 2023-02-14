@@ -171,7 +171,7 @@
 
                         <div class="menu">
                             <div class="header">
-                                Save as:
+                                Save this Search as:
                             </div>
 
                             <div class="ui left input">

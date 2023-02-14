@@ -2,9 +2,14 @@ package wekb
 
 import grails.converters.JSON
 import grails.gorm.transactions.Transactional
+import grails.web.mvc.FlashScope
 import grails.web.servlet.mvc.GrailsParameterMap
+import org.grails.web.servlet.mvc.GrailsWebRequest
+import org.grails.web.util.WebUtils
 import wekb.auth.User
 import wekb.system.SavedSearch
+
+import javax.servlet.http.HttpServletRequest
 
 @Transactional
 class SearchService {
@@ -15,12 +20,20 @@ class SearchService {
     ClassExaminationService classExaminationService
     AccessService accessService
 
+    FlashScope getCurrentFlashScope() {
+        GrailsWebRequest grailsWebRequest = WebUtils.retrieveGrailsWebRequest()
+        HttpServletRequest request = grailsWebRequest.getCurrentRequest()
+
+        grailsWebRequest.attributes.getFlashScope(request)
+    }
+
     def doQuery (qbetemplate, params, result) {
         def target_class = grailsApplication.getArtefact("Domain",qbetemplate.baseclass);
         HQLBuilder.build(grailsApplication, qbetemplate, params, result, target_class, genericOIDService)
     }
 
     Map search(User user = null, Map result, GrailsParameterMap params, String responseFormat = null){
+        FlashScope flash = getCurrentFlashScope()
 
         if ( params.init ) {
             result.init = true
@@ -60,12 +73,17 @@ class SearchService {
 
             try {
                 log.debug("Saving..");
-                def saved_search = new SavedSearch(name:params.searchName,owner:user,searchDescriptor:(defn as JSON).toString())
-                saved_search.save(flush:true, failOnError:true)
+                def saved_search = new SavedSearch(name: params.searchName, owner:user, searchDescriptor:(defn as JSON).toString())
+                if(saved_search.save()){
+                    flash.success = 'This search has been saved. You can find them under your user dashboard and access them from there at any time.'
+                }else {
+                    flash.error = 'This search has not been saved. Try again later.'
+                }
+                params.remove('searchAction')
                 log.debug("Saved.. ${saved_search.id}");
             }
             catch ( Exception e ) {
-                log.error("Problem",e);
+                log.error("Problem to save SavedSearch",e);
             }
         }
 
