@@ -30,15 +30,15 @@
             <div class="content wekb-inline-lists">
                 <g:form action="changePass" class="ui form">
                     <dl>
-                        <dt class="dt-label">Original Password :</dt>
+                        <dt class="dt-label">Original Password:</dt>
                         <dd><input  name="origpass" type="password"/></dd>
                     </dl>
                     <dl>
-                        <dt class="dt-label">New Password :</dt>
+                        <dt class="dt-label">New Password:</dt>
                         <dd><input  name="newpass" type="password"/></dd>
                     </dl>
                     <dl>
-                        <dt class="dt-label">Repeat New Password :</dt>
+                        <dt class="dt-label">Repeat New Password:</dt>
                         <dd><input  name="repeatpass" type="password"/></dd>
                     </dl>
 
@@ -52,7 +52,7 @@
             <div class="content wekb-inline-lists">
                 <dl>
                     <dt class="control-label">Default Page Size :</dt>
-                    <dd><semui:xEditable owner="${user}" field="defaultPageSize"/></dd>
+                    <dd><semui:xEditableDropDown owner="${user}" field="defaultPageSize" dataLink="getProfilPageSizeList"/></dd>
                 </dl>
             </div>
         </semui:card>

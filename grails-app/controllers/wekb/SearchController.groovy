@@ -46,7 +46,7 @@ class SearchController {
                 }
 
                 User user = springSecurityService.getCurrentUser()
-                result.max = params.max ? Integer.parseInt(params.max) : (user ? user.defaultPageSizeAsInteger : 50)
+                result.max = params.max ? Integer.parseInt(params.max) : (user ? user.defaultPageSizeAsInteger : 10)
                 result.offset = params.offset ? Integer.parseInt(params.offset) : 0
 
                 def query_str = buildQuery(searchParams);
@@ -169,7 +169,7 @@ class SearchController {
                 searchParams.name = searchParams.name.replace(':',"")
 
                 //User user = springSecurityService.getCurrentUser()
-                //result.max = params.max ? Integer.parseInt(params.max) : (user ? user.defaultPageSizeAsInteger : 50)
+                //result.max = params.max ? Integer.parseInt(params.max) : (user ? user.defaultPageSizeAsInteger : 10)
                 //result.offset = params.offset ? Integer.parseInt(params.offset) : 0
 
                 def query_str = buildQuery(searchParams)

@@ -60,5 +60,15 @@ class AjaxJsonController {
         render result as JSON
     }
 
+    @Secured(['ROLE_USER', 'IS_AUTHENTICATED_FULLY'])
+    def getProfilPageSizeList() {
+        List result = [
+                [value: 10, text: '10'],
+                [value: 25, text: '25'],
+                [value: 50, text: '50'],
+                [value: 100, text: '100'],
+        ]
+        render result as JSON
+    }
 
 }

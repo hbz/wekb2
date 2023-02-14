@@ -84,7 +84,7 @@ class SemanticInplaceTagLib {
             if (body) {
                 out << body()
             } else {
-                String content = (attrs.owner?."${attrs.field}" ? renderObjectValue(attrs.owner."${attrs.field}") : "")
+                String content = (renderObjectValue(attrs.owner."${attrs.field}"))
                 if(content){
                     out << content
                 }else {
@@ -97,7 +97,7 @@ class SemanticInplaceTagLib {
             if (body) {
                 out << body()
             } else {
-                String content = (attrs.owner?."${attrs.field}" ? renderObjectValue(attrs.owner."${attrs.field}") : "")
+                String content = (renderObjectValue(attrs.owner."${attrs.field}"))
                 if(content){
                     out << content
                 }else {
@@ -196,7 +196,7 @@ class SemanticInplaceTagLib {
             if (body) {
                 out << body()
             } else {
-                def content = (attrs.owner?."${attrs.field}" ? renderObjectValue(attrs.owner."${attrs.field}") : "")
+                def content = (renderObjectValue(attrs.owner."${attrs.field}"))
                 out << "${content ?: 'Empty'}"
             }
         }
@@ -278,6 +278,51 @@ class SemanticInplaceTagLib {
             out << renderObjectValue(attrs.owner[attrs.field])
         }
 
+    }
+
+    def xEditableDropDown = { attrs, body ->
+        try {
+            boolean editable = isEditable(request.getAttribute('editable'), attrs.overwriteEditable)
+            def owner    = attrs.owner
+            String field = attrs.field
+
+            if ( editable ) {
+                String oid 			= "${owner.class.name}:${owner.id}"
+                String update_link 	= createLink(controller:'ajaxHtml', action: 'editableSetValue').encodeAsHTML()
+                String data_link 	= createLink(controller:'ajaxJson', action: attrs.dataLink).encodeAsHTML()
+                String id 			= attrs.id ?: "${oid}:${field}"
+                String emptyText    = ' data-emptytext="' + ( attrs.emptytext ?: 'Edit' ) + '"'
+
+                out << '<span>'
+
+                String oldValue = ''
+                if ((owner[field] == null) || (owner[field] == 'Unknown') || (owner[field].toString().length() == 0)) {
+                }  else {
+                    oldValue = owner[field]
+                }
+
+                // Output an editable link
+                out << "<a href=\"#\" id=\"${id}\" class=\"xEditableManyToOne\""
+
+                out <<  " data-value=\"${oldValue}\" data-pk=\"${oid}\" data-type=\"select\" " +
+                        " data-name=\"${field}\" data-source=\"${data_link}\" data-url=\"${update_link}\" ${emptyText}>"
+
+                out << "${oldValue}</a></span>"
+            }
+            else {
+
+                String oldValue = ''
+                if ((owner[field] == null) || (owner[field] == 'Unknown') || (owner[field].toString().length() == 0)) {
+                }  else {
+                    oldValue = owner[field]
+                }
+                out << ' data-oldvalue="' + oldValue.encodeAsHTML() + '">'
+                out << oldValue.encodeAsHTML()
+            }
+        }
+        catch ( Throwable e ) {
+            log.error( "Problem processing editable dropdown (or value)",e)
+        }
     }
 
     def renderObjectValue(value) {
@@ -400,7 +445,7 @@ class SemanticInplaceTagLib {
                 if (body) {
                     out << body()
                 } else {
-                    String content = (attrs.owner?."${attrs.field}" ? renderObjectValue(attrs.owner."${attrs.field}") : "")
+                    String content = (renderObjectValue(attrs.owner."${attrs.field}"))
                     if(content){
                         out << content
                     }else {
@@ -420,7 +465,7 @@ class SemanticInplaceTagLib {
             if (body) {
                 out << body()
             } else {
-                String content = (attrs.owner?."${attrs.field}" ? renderObjectValue(attrs.owner."${attrs.field}") : "")
+                String content = (renderObjectValue(attrs.owner."${attrs.field}"))
                 if(content){
                     out << g.link(content, controller: 'resource', action: 'show', id: attrs.owner."${attrs.field}".uuid)
                 }else {

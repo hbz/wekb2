@@ -4,10 +4,6 @@
 
 <g:if test="${d.id != null}">
     <dl>
-        <dt class="control-label">User Name</dt>
-        <dd>${d.username}</dd>
-    </dl>
-    <dl>
         <dt class="control-label">Display Name</dt>
         <dd><semui:xEditable owner="${d}" field="displayName"/></dd>
     </dl>
