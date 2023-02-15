@@ -39,160 +39,6 @@ class GlobalSearchTemplatesService {
         result
     }
 
-    Map updatePackageInfos() {
-        Map result = [
-                baseclass: 'wekb.UpdatePackageInfo',
-                title    : 'Package Update Infos',
-                defaultSort : 'startTime',
-                defaultOrder: 'desc',
-                qbeConfig: [
-                        qbeForm   : [
-                                [
-                                        prompt     : 'Package ID',
-                                        qparam     : 'qp_pkg_id',
-                                        placeholder: 'Package ID',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'pkg.id', 'type': 'java.lang.Long'],
-                                        hide       : true
-                                ],
-
-                                [
-                                        type       : 'lookup',
-                                        baseClass  : 'wekb.CuratoryGroup',
-                                        prompt     : 'Curatory Group',
-                                        qparam     : 'qp_curgroups',
-                                        placeholder: 'Curatory Group',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'pkg.curatoryGroups.curatoryGroup'],
-                                        hide       : true
-                                ],
-
-                                [
-                                        type       : 'lookup',
-                                        baseClass  : 'wekb.Package',
-                                        prompt     : 'Package',
-                                        qparam     : 'qp_pkg',
-                                        placeholder: 'Package',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'pkg']
-                                ],
-                                [
-                                        type       : 'lookup',
-                                        baseClass  : 'wekb.RefdataValue',
-                                        filter1    : RCConstants.UPDATE_STATUS,
-                                        prompt     : 'Status',
-                                        qparam     : 'qp_status',
-                                        placeholder: 'Type',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'status'],
-                                ],
-
-                                [
-                                        type       : 'lookup',
-                                        baseClass  : 'wekb.RefdataValue',
-                                        filter1    : RCConstants.YN,
-                                        prompt     : 'Automatic Update',
-                                        qparam     : 'qp_automaticUpdate',
-                                        placeholder: 'Automatic Update',
-                                        propType   : 'Boolean',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'automaticUpdate'],
-                                ],
-                        ],
-                        qbeResults: [
-                                [heading: 'Description', property: 'description', link: true],
-                                [heading: 'Package', property: 'pkg.name', link: true],
-                                [heading: 'Status', property: 'status', sort: 'status.value'],
-                                [heading: 'Automatic Update', property: 'automaticUpdate', sort: 'automaticUpdate'],
-                                [heading: 'Start Time', property: 'startTime', sort: 'startTime'],
-                                [heading: 'End Time', property: 'endTime', sort: 'endTime'],
-                                [heading: 'Only Last Changed Update', property: 'onlyRowsWithLastChanged', sort: 'onlyRowsWithLastChanged'],
-                                [heading: 'Titles in we:kb before update', property: 'countPreviouslyTippsInWekb', sort: 'countPreviouslyTippsInWekb'],
-                                [heading: 'Titles in we:kb after update', property: 'countNowTippsInWekb', sort: 'countNowTippsInWekb'],
-                                [heading: 'Rows in KBART-File', property: 'countKbartRows', sort: 'countKbartRows'],
-                                [heading: 'Processed KBART Rows', property: 'countProcessedKbartRows', sort: 'countProcessedKbartRows'],
-                                [heading: 'Changed Titles ', property: 'countChangedTipps', sort: 'countChangedTipps', jumpToLink: '/search/componentSearch/wekb.UpdatePackageInfo:objectID?qbe=g:updateTippInfos&qp_aup_id=objectID&&qp_type_value=Changed Title'],
-                                [heading: 'Removed Titles ', property: 'countRemovedTipps', sort: 'countRemovedTipps', jumpToLink: '/search/componentSearch/wekb.UpdatePackageInfo:objectID?qbe=g:updateTippInfos&qp_aup_id=objectID&&qp_type_value=Removed Title'],
-                                [heading: 'New Titles', property: 'countNewTipps', sort: 'countNewTipps', jumpToLink: '/search/componentSearch/wekb.UpdatePackageInfo:objectID?qbe=g:updateTippInfos&qp_aup_id=objectID&&qp_type_value=New Title'],
-                                [heading: 'Invalid Titles', property: 'countInValidTipps', sort: 'countInValidTipps', jumpToLink: '/search/componentSearch/wekb.UpdatePackageInfo:objectID?qbe=g:updateTippInfos&qp_aup_id=objectID&&qp_type_value=Failed Title'],
-
-                        ]
-                ]
-        ]
-        result
-    }
-
-    Map updateTippInfos() {
-        Map result = [
-                baseclass: 'wekb.UpdateTippInfo',
-                title    : 'Title Update Infos',
-                defaultSort : 'startTime',
-                defaultOrder: 'desc',
-                qbeConfig: [
-                        qbeForm   : [
-                                [
-                                        qparam     : 'qp_aup_id',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'updatePackageInfo.id', 'type': 'java.lang.Long'],
-                                        hide       : true
-                                ],
-                                [
-                                        qparam     : 'qp_tipp_id',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'tipp.id', 'type': 'java.lang.Long'],
-                                        hide       : true
-                                ],
-                                [
-                                        prompt     : 'KBART Field',
-                                        qparam     : 'qp_kbartProperty',
-                                        placeholder: 'KBART Field',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'kbartProperty']
-                                ],
-                                [
-                                        prompt     : 'Old Value',
-                                        qparam     : 'qp_oldValue',
-                                        placeholder: 'Old Value',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'oldValue']
-                                ],
-                                [
-                                        prompt     : 'New Value',
-                                        qparam     : 'qp_newValue',
-                                        placeholder: 'New Value',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'newValue']
-                                ],
-                                [
-                                        type       : 'lookup',
-                                        baseClass  : 'wekb.RefdataValue',
-                                        filter1    : RCConstants.UPDATE_TYPE,
-                                        prompt     : 'Type',
-                                        qparam     : 'qp_type',
-                                        placeholder: 'Type',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'type'],
-                                ],
-                                [
-                                        type       : 'lookup',
-                                        baseClass  : 'wekb.RefdataValue',
-                                        filter1    : RCConstants.UPDATE_STATUS,
-                                        prompt     : 'Status',
-                                        qparam     : 'qp_status',
-                                        placeholder: 'Type',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'status'],
-                                ],
-                                [
-                                        qparam     : 'qp_type_value',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'type.value'],
-                                        hide: true
-                                ],
-                        ],
-                        qbeResults: [
-                                [heading: 'Description', property: 'description', link: true],
-                                [heading: 'Title', property: 'tipp.name', link: true],
-                                [heading: 'Status', property: 'status', sort: 'status.value'],
-                                [heading: 'Type', property: 'type', sort: 'type.value'],
-                                [heading: 'KBART Field', property: 'kbartProperty', sort: 'kbartProperty'],
-                                [heading: 'New Value', property: 'newValue'],
-                                [heading: 'Old Value', property: 'oldValue'],
-                                [heading: 'Start Time', property: 'startTime', sort: 'startTime'],
-                                [heading: 'End Time', property: 'endTime', sort: 'endTime'],
-                        ]
-                ]
-        ]
-        result
-    }
-
     Map curatoryGroups() {
         Map result = [
                 baseclass: 'wekb.CuratoryGroup',
@@ -202,7 +48,7 @@ class GlobalSearchTemplatesService {
                 qbeConfig: [
                         qbeForm   : [
                                 [
-                                        prompt     : 'Name or Title',
+                                        prompt     : 'Name',
                                         qparam     : 'qp_name',
                                         placeholder: 'Name of Curatory Group',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'name']
@@ -227,9 +73,11 @@ class GlobalSearchTemplatesService {
                                 ],
                         ],
                         qbeResults: [
-                                [heading: 'Name/Title', property: 'name', sort: 'name', link: true],
+                                [heading: 'Name', property: 'name', sort: 'name', link: true],
+                                [heading: 'Last Updated', property: 'lastUpdated', sort: 'lastUpdated'],
                                 [heading: 'Status', property: 'status?.value', sort: 'status'],
-                                [heading: 'Last Updated', property: 'lastUpdated', sort: 'lastUpdated']
+                                [heading: 'Type', property: 'type?.value', sort: 'type']
+
                         ]
                 ]
         ]
@@ -354,39 +202,7 @@ class GlobalSearchTemplatesService {
                 defaultOrder: 'asc',
                 qbeConfig   : [
                         qbeForm   : [
-                                [
-                                        prompt     : 'Name or Title',
-                                        qparam     : 'qp_name',
-                                        placeholder: 'Name or title of item',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'name', 'wildcard': 'R']
-                                ],
-                                [
-                                        prompt     : 'Identifier',
-                                        qparam     : 'qp_identifier',
-                                        placeholder: 'Identifier Value',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'ids.value'],
-                                        hide       : false
-                                ],
-
-                                [
-                                        type       : 'lookup',
-                                        baseClass  : 'wekb.RefdataValue',
-                                        filter1    : RCConstants.ORG_ROLE,
-                                        prompt     : 'Role',
-                                        qparam     : 'qp_roles',
-                                        placeholder: 'Role',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'roles'],
-                                ],
-                                [
-                                        type       : 'lookup',
-                                        baseClass  : 'wekb.CuratoryGroup',
-                                        prompt     : 'Curatory Group',
-                                        qparam     : 'qp_curgroup',
-                                        placeholder: 'Curatory Group',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'curatoryGroups.curatoryGroup'],
-                                        hide       : false
-                                ],
-                                //FOR My Components Area
+                                //Hidden Fields
                                 [
                                         type       : 'lookup',
                                         baseClass  : 'wekb.CuratoryGroup',
@@ -396,7 +212,27 @@ class GlobalSearchTemplatesService {
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'curatoryGroups.curatoryGroup'],
                                         hide       : true
                                 ],
-
+                                //General Fields
+                                [
+                                        prompt     : 'Name',
+                                        qparam     : 'qp_name',
+                                        placeholder: 'Name',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'name', 'wildcard': 'R']
+                                ],
+                                [
+                                        prompt     : 'Identifier',
+                                        qparam     : 'qp_identifier',
+                                        placeholder: 'Identifier Value',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'ids.value']
+                                ],
+                                [
+                                        type       : 'lookup',
+                                        baseClass  : 'wekb.CuratoryGroup',
+                                        prompt     : 'Curatory Group',
+                                        qparam     : 'qp_curgroup',
+                                        placeholder: 'Curatory Group',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'curatoryGroups.curatoryGroup']
+                                ],
                                 [
                                         type       : 'lookup',
                                         baseClass  : 'wekb.RefdataValue',
@@ -404,18 +240,27 @@ class GlobalSearchTemplatesService {
                                         prompt     : 'Status',
                                         qparam     : 'qp_status',
                                         placeholder: 'Component Status',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'status'],
-                                        // II: Default not yet implemented
-                                        default    : [type: 'query', query: 'select r from RefdataValue where r.value=:v and r.owner.description=:o', params: ['Current', RCConstants.KBCOMPONENT_STATUS]]
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'status']
                                 ],
+                                [
+                                        type       : 'lookup',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.ORG_ROLE,
+                                        prompt     : 'Role',
+                                        qparam     : 'qp_roles',
+                                        placeholder: 'Role',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'roles'],
+                                ],
+
                         ],
                         qbeResults: [
                                 [heading: 'Name', property: 'name', sort: 'name', link: true],
                                 [heading: 'Homepage', property: 'homepage', sort: 'homepage', outGoingLink: true],
-                                [heading: 'Status', sort: 'status', property: 'status?.value'],
-                                [heading: 'Misson', sort: 'misson', property: 'misson?.value'],
-                                [heading: 'Current Titles', property: 'currentTippCount'],
                                 [heading: 'Last Updated', property: 'lastUpdated', sort: 'lastUpdated'],
+                                [heading: 'Status', sort: 'status', property: 'status.value'],
+                                [heading: 'Misson', sort: 'misson', property: 'misson.value'],
+                                [heading: 'Current Titles', property: 'currentTippCount']
+
                         ]
                 ]
         ]
@@ -431,6 +276,30 @@ class GlobalSearchTemplatesService {
                 defaultOrder: 'desc',
                 qbeConfig   : [
                         qbeForm   : [
+
+                                //HIDE FIELDS
+                                [
+                                        prompt     : 'Provider ID',
+                                        qparam     : 'qp_provider_id',
+                                        placeholder: 'Provider ID',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'provider.id', 'type': 'java.lang.Long'],
+                                        hide       : true
+                                ],
+                                [
+                                        prompt     : 'Platform ID',
+                                        qparam     : 'qp_platform_id',
+                                        placeholder: 'Platform ID',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'nominalPlatform.id', 'type': 'java.lang.Long'],
+                                        hide       : true
+                                ],
+                                [
+                                        prompt     : 'Source ID',
+                                        qparam     : 'qp_source_id',
+                                        placeholder: 'Source ID',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'kbartSource.id', 'type': 'java.lang.Long'],
+                                        hide       : true
+                                ],
+                                //General Fields
                                 [
                                         prompt     : 'Name of Package',
                                         qparam     : 'qp_name',
@@ -442,7 +311,34 @@ class GlobalSearchTemplatesService {
                                         qparam     : 'qp_identifier',
                                         placeholder: 'Identifier Value',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'ids.value'],
-                                        hide       : false
+
+                                ],
+                                [
+                                        type       : 'lookup',
+                                        baseClass  : 'wekb.Org',
+                                        prompt     : 'Provider',
+                                        qparam     : 'qp_provider',
+                                        placeholder: 'Provider',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'provider'],
+
+                                ],
+                                [
+                                        type       : 'lookup',
+                                        baseClass  : 'wekb.CuratoryGroup',
+                                        prompt     : 'Curatory Group',
+                                        qparam     : 'qp_curgroup',
+                                        placeholder: 'Curatory Group',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'curatoryGroups.curatoryGroup'],
+
+                                ],
+                                [
+                                        type       : 'lookup',
+                                        baseClass  : 'wekb.Platform',
+                                        prompt     : 'Platform',
+                                        qparam     : 'qp_platform',
+                                        placeholder: 'Platform',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'nominalPlatform'],
+
                                 ],
                                 [
                                         type       : 'lookup',
@@ -451,9 +347,7 @@ class GlobalSearchTemplatesService {
                                         prompt     : 'Status',
                                         qparam     : 'qp_status',
                                         placeholder: 'Component Status',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'status'],
-                                        // II: Default not yet implemented
-                                        default    : [type: 'query', query: 'select r from RefdataValue where r.value=:v and r.owner.description=:o', params: ['Current', RCConstants.KBCOMPONENT_STATUS]]
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'status']
                                 ],
                                 [
                                         type       : 'lookup',
@@ -493,40 +387,6 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'wekb.Org',
-                                        prompt     : 'Provider',
-                                        qparam     : 'qp_provider',
-                                        placeholder: 'Provider',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'provider'],
-                                        hide       : false
-                                ],
-                                [
-                                        prompt     : 'Provider ID',
-                                        qparam     : 'qp_provider_id',
-                                        placeholder: 'Provider ID',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'provider.id', 'type': 'java.lang.Long'],
-                                        hide       : true
-                                ],
-                                [
-                                        type       : 'lookup',
-                                        baseClass  : 'wekb.CuratoryGroup',
-                                        prompt     : 'Curatory Group',
-                                        qparam     : 'qp_curgroup',
-                                        placeholder: 'Curatory Group',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'curatoryGroups.curatoryGroup'],
-                                        hide       : false
-                                ],
-                                [
-                                        type       : 'lookup',
-                                        baseClass  : 'wekb.Platform',
-                                        prompt     : 'Platform',
-                                        qparam     : 'qp_platform',
-                                        placeholder: 'Platform',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'nominalPlatform'],
-                                        hide       : false
-                                ],
-                                [
-                                        type       : 'lookup',
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.PAA_ARCHIVING_AGENCY,
                                         prompt     : 'Package Archiving Agency',
@@ -534,25 +394,6 @@ class GlobalSearchTemplatesService {
                                         placeholder: 'Package Archiving Agency',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'paas.archivingAgency']
                                 ],
-                                [
-                                        prompt     : 'Platform ID',
-                                        qparam     : 'qp_platform_id',
-                                        placeholder: 'Platform ID',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'nominalPlatform.id', 'type': 'java.lang.Long'],
-                                        hide       : true
-                                ],
-
-                                [
-                                        type       : 'lookup',
-                                        baseClass  : 'wekb.KbartSource',
-                                        prompt     : 'Source',
-                                        qparam     : 'qp_source',
-                                        placeholder: 'Source',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'kbartSource'],
-                                        hide       : false,
-                                        notShowInPublic       : true
-                                ],
-
                                 [
                                         type       : 'lookup',
                                         baseClass  : 'wekb.RefdataValue',
@@ -564,13 +405,58 @@ class GlobalSearchTemplatesService {
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'kbartSource.automaticUpdates'],
                                 ],
 
+                                //Package Filter
                                 [
-                                        prompt     : 'Source ID',
-                                        qparam     : 'qp_source_id',
-                                        placeholder: 'Source ID',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'kbartSource.id', 'type': 'java.lang.Long'],
-                                        hide       : true
+                                        type       : 'lookup',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.PACKAGE_BREAKABLE,
+                                        prompt     : 'Breakable Type',
+                                        qparam     : 'qp_breakable',
+                                        placeholder: 'Breakable Type',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'breakable'],
+                                        advancedSearch: [title: "More filter options ...", category: 'Package']
                                 ],
+                                [
+                                        type       : 'lookup',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.PACKAGE_CONSISTENT,
+                                        prompt     : 'Consistent Type',
+                                        qparam     : 'qp_consistent',
+                                        placeholder: 'Consistent Type',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'consistent'],
+                                        advancedSearch: [title: "More filter options ...", category: 'Package']
+                                ],
+                                [
+                                        type       : 'lookup',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.PACKAGE_PAYMENT_TYPE,
+                                        prompt     : 'Paid',
+                                        qparam     : 'qp_paymentType',
+                                        placeholder: 'Paid',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'paymentType'],
+                                        advancedSearch: [title: "More filter options ...", category: 'Package']
+                                ],
+                                [
+                                        type       : 'lookup',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.PACKAGE_FILE,
+                                        prompt     : 'File',
+                                        qparam     : 'qp_file',
+                                        placeholder: 'File',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'file'],
+                                        advancedSearch: [title: "More filter options ...", category: 'Package']
+                                ],
+                                [
+                                        type       : 'lookup',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.YN,
+                                        prompt     : 'Free Trial',
+                                        qparam     : 'qp_freeTrial',
+                                        placeholder: 'Free Trial',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'freeTrial'],
+                                        advancedSearch: [title: "More filter options ...", category: 'Package']
+                                ],
+
 
                                 //FOR My Components Area
                                 [
@@ -645,7 +531,7 @@ class GlobalSearchTemplatesService {
                                         qparam     : 'qp_identifier',
                                         placeholder: 'Identifier Value',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'ids.value'],
-                                        hide       : false
+
                                 ],
                                 [
                                         type       : 'lookup',
@@ -654,7 +540,7 @@ class GlobalSearchTemplatesService {
                                         qparam     : 'qp_curgroup',
                                         placeholder: 'Curatory Group',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'curatoryGroups.curatoryGroup'],
-                                        hide       : false
+
                                 ],
                                 [
                                         type       : 'lookup',
@@ -663,7 +549,7 @@ class GlobalSearchTemplatesService {
                                         qparam     : 'qp_provider',
                                         placeholder: 'Provider',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'provider'],
-                                        hide       : false
+
                                 ],
                                 [
                                         type       : 'lookup',
@@ -694,8 +580,6 @@ class GlobalSearchTemplatesService {
                                         qparam     : 'qp_status',
                                         placeholder: 'Component Status',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'status'],
-                                        // II: Default not yet implemented
-                                        default    : [type: 'query', query: 'select r from RefdataValue where r.value=:v and r.owner.description=:o', params: ['Current', RCConstants.KBCOMPONENT_STATUS]],
                                         advancedSearch: [title: "Search Packages by ...", category: 'Package']
                                 ],
                                 [
@@ -762,8 +646,6 @@ class GlobalSearchTemplatesService {
                                         qparam     : 'qp_status_tipp',
                                         placeholder: 'Status',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'tipps.status'],
-                                        // II: Default not yet implemented
-                                        default    : [type: 'query', query: 'select r from RefdataValue where r.value=:v and r.owner.description=:o', params: ['Current', RCConstants.KBCOMPONENT_STATUS]],
                                         advancedSearch: [title: "Search Titles by ...", category: 'Title']
                                 ],
                                 [
@@ -972,39 +854,7 @@ class GlobalSearchTemplatesService {
                 defaultOrder: 'asc',
                 qbeConfig   : [
                         qbeForm   : [
-                                [
-                                        prompt     : 'Name or Title',
-                                        qparam     : 'qp_name',
-                                        placeholder: 'Name or title of item',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'name']
-                                ],
-                                [
-                                        prompt     : 'Platform URL',
-                                        qparam     : 'qp_url',
-                                        placeholder: 'Platform URL',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'primaryUrl']
-                                ],
-                                [
-                                        type       : 'lookup',
-                                        baseClass  : 'wekb.RefdataValue',
-                                        filter1    : RCConstants.KBCOMPONENT_STATUS,
-                                        prompt     : 'Status',
-                                        qparam     : 'qp_status',
-                                        placeholder: 'Component Status',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'status'],
-                                        // II: Default not yet implemented
-                                        default    : [type: 'query', query: 'select r from RefdataValue where r.value=:v and r.owner.description=:o', params: ['Current', RCConstants.KBCOMPONENT_STATUS]]
-                                ],
-                                [
-                                        type       : 'lookup',
-                                        baseClass  : 'wekb.CuratoryGroup',
-                                        prompt     : 'Curatory Group',
-                                        qparam     : 'qp_curgroup',
-                                        placeholder: 'Curatory Group',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'curatoryGroups.curatoryGroup'],
-                                        hide       : false
-                                ],
-                                //FOR My Components Area
+                                //Hidden Fields
                                 [
                                         type       : 'lookup',
                                         baseClass  : 'wekb.CuratoryGroup',
@@ -1015,32 +865,50 @@ class GlobalSearchTemplatesService {
                                         hide       : true
                                 ],
                                 [
-                                        type       : 'lookup',
-                                        baseClass  : 'wekb.Org',
-                                        prompt     : 'Provider',
-                                        qparam     : 'qp_provider',
-                                        placeholder: 'Provider',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'provider'],
-                                        hide       : false
-                                ],
-                                [
                                         prompt     : 'Provider ID',
                                         qparam     : 'qp_provider_id',
                                         placeholder: 'Provider ID',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'provider.id', 'type': 'java.lang.Long'],
                                         hide       : true
                                 ],
-
+                                //General Fields
                                 [
-                                        filter1    : 'all',
-                                        type       : 'lookup',
-                                        baseClass  : 'wekb.IdentifierNamespace',
-                                        prompt     : 'Title Namespace',
-                                        qparam     : 'qp_titleNamespace',
-                                        placeholder: 'Title Namespace',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'titleNamespace'],
+                                        prompt     : 'Name',
+                                        qparam     : 'qp_name',
+                                        placeholder: 'Name',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'name']
                                 ],
-
+                                [
+                                        type       : 'lookup',
+                                        baseClass  : 'wekb.CuratoryGroup',
+                                        prompt     : 'Curatory Group',
+                                        qparam     : 'qp_curgroup',
+                                        placeholder: 'Curatory Group',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'curatoryGroups.curatoryGroup']
+                                ],
+                                [
+                                        type       : 'lookup',
+                                        baseClass  : 'wekb.Org',
+                                        prompt     : 'Provider',
+                                        qparam     : 'qp_provider',
+                                        placeholder: 'Provider',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'provider'],
+                                ],
+                                [
+                                        type       : 'lookup',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.KBCOMPONENT_STATUS,
+                                        prompt     : 'Status',
+                                        qparam     : 'qp_status',
+                                        placeholder: 'Component Status',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'status']
+                                ],
+                                [
+                                        prompt     : 'Platform URL',
+                                        qparam     : 'qp_url',
+                                        placeholder: 'Platform URL',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'primaryUrl']
+                                ],
                                 [
                                         type       : 'lookup',
                                         baseClass  : 'wekb.RefdataValue',
@@ -1124,13 +992,13 @@ class GlobalSearchTemplatesService {
                                 ],
                         ],
                         qbeResults: [
-                                [heading: 'Name/Title', property: 'name', sort: 'name', link: true],
+                                [heading: 'Name', property: 'name', sort: 'name', link: true],
                                 [heading: 'Primary URL', property: 'primaryUrl', sort: 'primaryUrl', outGoingLink: true],
                                 [heading: 'Provider', property: 'provider?.name', sort: 'provider?.name', link: true],
-                                [heading: 'Current Titles', property: 'currentTippCount'],
-                                [heading: 'Current Packages', property: 'packagesCount'],
                                 [heading: 'Last Updated', property: 'lastUpdated', sort: 'lastUpdated'],
                                 [heading: 'Status', property: 'status?.value', sort: 'status'],
+                                [heading: 'Current Titles', property: 'currentTippCount'],
+                                [heading: 'Current Packages', property: 'packagesCount'],
                         ]
                 ]
         ]
@@ -1229,10 +1097,21 @@ class GlobalSearchTemplatesService {
                 defaultOrder: 'asc',
                 qbeConfig: [
                         qbeForm   : [
+                                //Hidden Fields
                                 [
-                                        prompt     : 'Name of Source',
+                                        type       : 'lookup',
+                                        baseClass  : 'wekb.CuratoryGroup',
+                                        prompt     : 'Curatory Group',
+                                        qparam     : 'qp_curgroups',
+                                        placeholder: 'Curatory Group',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'curatoryGroups.curatoryGroup'],
+                                        hide       : true
+                                ],
+                                //General Fields
+                                [
+                                        prompt     : 'Name',
                                         qparam     : 'qp_name',
-                                        placeholder: 'Name of Source',
+                                        placeholder: 'Name',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'name']
                                 ],
                                 [
@@ -1242,17 +1121,16 @@ class GlobalSearchTemplatesService {
                                         qparam     : 'qp_curgroup',
                                         placeholder: 'Curatory Group',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'curatoryGroups.curatoryGroup'],
-                                        hide       : false
+
                                 ],
-                                //FOR My Components Area
                                 [
                                         type       : 'lookup',
-                                        baseClass  : 'wekb.CuratoryGroup',
-                                        prompt     : 'Curatory Group',
-                                        qparam     : 'qp_curgroups',
-                                        placeholder: 'Curatory Group',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'curatoryGroups.curatoryGroup'],
-                                        hide       : true
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.KBCOMPONENT_STATUS,
+                                        prompt     : 'Status',
+                                        qparam     : 'qp_status',
+                                        placeholder: 'Status',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'status']
                                 ],
                                 [
                                         type       : 'lookup',
@@ -1275,15 +1153,15 @@ class GlobalSearchTemplatesService {
                                 ],
                         ],
                         qbeResults: [
-                                [heading: 'Name/Title', property: 'name', sort: 'name', link: true],
+                                [heading: 'Name', property: 'name', sort: 'name', link: true],
+                                [heading: 'Package', property: 'pkg', link: true, sort: 'pkg.name'],
                                 [heading: 'Url', property: 'url', sort: 'url', outGoingLink: true],
-                                [heading: 'automatic Updates', property: 'automaticUpdates'],
-                                [heading: 'Packages', property: 'packages', link: true],
-                                [heading: 'Frequency', property: 'frequency?.value'],
-                                [heading: 'Last Run', property: 'lastRun', sort: 'lastRun'],
-                                [heading: 'Next Run', property: 'nextUpdateTimestamp'],
-                                [heading: 'Identifier Namespace', property: 'targetNamespace?.value'],
+                                [heading: 'Last Updated', property: 'lastUpdated', sort: 'lastUpdated'],
                                 [heading: 'Status', property: 'status?.value', sort: 'status'],
+                                [heading: 'automatic Updates', property: 'automaticUpdates'],
+                                [heading: 'Frequency', property: 'frequency?.value', sort: 'frequency'],
+                                [heading: 'Last Run', property: 'lastRun', sort: 'lastRun'],
+                                [heading: 'Next Run', property: 'nextUpdateTimestamp']
                         ]
                 ]
         ]
@@ -1298,7 +1176,7 @@ class GlobalSearchTemplatesService {
                 defaultOrder: 'asc',
                 qbeConfig: [
                         qbeForm   : [
-
+                                //Hidden Fields
                                 [
                                         prompt     : 'Status ID',
                                         qparam     : 'qp_status_id',
@@ -1335,6 +1213,16 @@ class GlobalSearchTemplatesService {
                                         hide       : true
                                 ],
                                 [
+                                        type       : 'lookup',
+                                        baseClass  : 'wekb.CuratoryGroup',
+                                        prompt     : 'Curatory Group',
+                                        qparam     : 'qp_curgroups',
+                                        placeholder: 'Curatory Group',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'pkg.curatoryGroups.curatoryGroup'],
+                                        hide       : true
+                                ],
+                                //General Fields
+                                [
                                         prompt     : 'Title',
                                         qparam     : 'qp_title',
                                         placeholder: 'Title',
@@ -1345,8 +1233,7 @@ class GlobalSearchTemplatesService {
                                         prompt     : 'Identifier',
                                         qparam     : 'qp_identifier',
                                         placeholder: 'Identifier Value',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'ids.value'],
-                                        hide       : false
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'ids.value']
                                 ],
                                 [
                                         prompt     : 'Url',
@@ -1361,7 +1248,7 @@ class GlobalSearchTemplatesService {
                                         qparam     : 'qp_provider',
                                         placeholder: 'Provider',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'pkg.provider'],
-                                        hide       : false
+
                                 ],
                                 [
                                         type       : 'lookup',
@@ -1386,17 +1273,7 @@ class GlobalSearchTemplatesService {
                                         qparam     : 'qp_curgroup',
                                         placeholder: 'Curatory Group',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'pkg.curatoryGroups.curatoryGroup'],
-                                        hide       : false
-                                ],
-                                //FOR My Components Area
-                                [
-                                        type       : 'lookup',
-                                        baseClass  : 'wekb.CuratoryGroup',
-                                        prompt     : 'Curatory Group',
-                                        qparam     : 'qp_curgroups',
-                                        placeholder: 'Curatory Group',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'pkg.curatoryGroups.curatoryGroup'],
-                                        hide       : true
+
                                 ],
                                 [
                                         prompt     : 'Publisher',
@@ -1483,13 +1360,11 @@ class GlobalSearchTemplatesService {
                                         prompt     : 'Status',
                                         qparam     : 'qp_status',
                                         placeholder: 'Status',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'status'],
-                                        // II: Default not yet implemented
-                                        default    : [type: 'query', query: 'select r from RefdataValue where r.value=:v and r.owner.description=:o', params: ['Current', RCConstants.KBCOMPONENT_STATUS]]
-                                ],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'status']
+                                ]
                         ],
                         qbeResults: [
-                                [heading: 'Title', property: 'name', link: true],
+                                [heading: 'Title', property: 'name', link: true, sort: 'name'],
                                 [heading: 'Type', property: 'publicationType?.value', sort: 'publicationType.value'],
                                 [heading: 'Medium', property: 'medium?.value', sort: 'medium.value'],
                                 [heading: 'Package', qpEquiv: 'qp_pkg_id', property: 'pkg.name', sort: 'pkg.name', link: true],
@@ -1564,7 +1439,7 @@ class GlobalSearchTemplatesService {
                                         qparam     : 'qp_identifier',
                                         placeholder: 'Identifier Value',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'ids.value'],
-                                        hide       : false
+
                                 ],
                                 [
                                         prompt     : 'Url',
@@ -1651,9 +1526,7 @@ class GlobalSearchTemplatesService {
                                         prompt     : 'Status',
                                         qparam     : 'qp_status',
                                         placeholder: 'Status',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'status'],
-                                        // II: Default not yet implemented
-                                        default    : [type: 'query', query: 'select r from RefdataValue where r.value=:v and r.owner.description=:o', params: ['Current', RCConstants.KBCOMPONENT_STATUS]]
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'status']
                                 ],
                                 //FOR My Components Area
                                 [
@@ -1751,6 +1624,7 @@ class GlobalSearchTemplatesService {
                                 [heading: 'API-User', property: 'apiUserStatus'],
                                 [heading: 'Admin', property: 'adminStatus'],
                                 [heading: 'Super-User', property: 'superUserStatus'],
+                                [heading: 'Last Updated', property: 'lastUpdated', sort: 'lastUpdated']
                         ]
                 ]
         ]
@@ -1783,6 +1657,160 @@ class GlobalSearchTemplatesService {
                                 [heading: 'Start Time', property: 'startTime', sort: 'startTime'],
                                 [heading: 'End Time', property: 'endTime', sort: 'endTime'],
                                 [heading: 'Curatory Group', property: 'curatoryGroup'],
+                        ]
+                ]
+        ]
+        result
+    }
+
+    Map updatePackageInfos() {
+        Map result = [
+                baseclass: 'wekb.UpdatePackageInfo',
+                title    : 'Package Update Infos',
+                defaultSort : 'startTime',
+                defaultOrder: 'desc',
+                qbeConfig: [
+                        qbeForm   : [
+                                [
+                                        prompt     : 'Package ID',
+                                        qparam     : 'qp_pkg_id',
+                                        placeholder: 'Package ID',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'pkg.id', 'type': 'java.lang.Long'],
+                                        hide       : true
+                                ],
+
+                                [
+                                        type       : 'lookup',
+                                        baseClass  : 'wekb.CuratoryGroup',
+                                        prompt     : 'Curatory Group',
+                                        qparam     : 'qp_curgroups',
+                                        placeholder: 'Curatory Group',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'pkg.curatoryGroups.curatoryGroup'],
+                                        hide       : true
+                                ],
+
+                                [
+                                        type       : 'lookup',
+                                        baseClass  : 'wekb.Package',
+                                        prompt     : 'Package',
+                                        qparam     : 'qp_pkg',
+                                        placeholder: 'Package',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'pkg']
+                                ],
+                                [
+                                        type       : 'lookup',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.UPDATE_STATUS,
+                                        prompt     : 'Status',
+                                        qparam     : 'qp_status',
+                                        placeholder: 'Type',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'status'],
+                                ],
+
+                                [
+                                        type       : 'lookup',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.YN,
+                                        prompt     : 'Automatic Update',
+                                        qparam     : 'qp_automaticUpdate',
+                                        placeholder: 'Automatic Update',
+                                        propType   : 'Boolean',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'automaticUpdate'],
+                                ],
+                        ],
+                        qbeResults: [
+                                [heading: 'Description', property: 'description', link: true],
+                                [heading: 'Package', property: 'pkg.name', link: true],
+                                [heading: 'Status', property: 'status', sort: 'status.value'],
+                                [heading: 'Automatic Update', property: 'automaticUpdate', sort: 'automaticUpdate'],
+                                [heading: 'Start Time', property: 'startTime', sort: 'startTime'],
+                                [heading: 'End Time', property: 'endTime', sort: 'endTime'],
+                                [heading: 'Only Last Changed Update', property: 'onlyRowsWithLastChanged', sort: 'onlyRowsWithLastChanged'],
+                                [heading: 'Titles in we:kb before update', property: 'countPreviouslyTippsInWekb', sort: 'countPreviouslyTippsInWekb'],
+                                [heading: 'Titles in we:kb after update', property: 'countNowTippsInWekb', sort: 'countNowTippsInWekb'],
+                                [heading: 'Rows in KBART-File', property: 'countKbartRows', sort: 'countKbartRows'],
+                                [heading: 'Processed KBART Rows', property: 'countProcessedKbartRows', sort: 'countProcessedKbartRows'],
+                                [heading: 'Changed Titles ', property: 'countChangedTipps', sort: 'countChangedTipps', jumpToLink: '/search/componentSearch/wekb.UpdatePackageInfo:objectID?qbe=g:updateTippInfos&qp_aup_id=objectID&&qp_type_value=Changed Title'],
+                                [heading: 'Removed Titles ', property: 'countRemovedTipps', sort: 'countRemovedTipps', jumpToLink: '/search/componentSearch/wekb.UpdatePackageInfo:objectID?qbe=g:updateTippInfos&qp_aup_id=objectID&&qp_type_value=Removed Title'],
+                                [heading: 'New Titles', property: 'countNewTipps', sort: 'countNewTipps', jumpToLink: '/search/componentSearch/wekb.UpdatePackageInfo:objectID?qbe=g:updateTippInfos&qp_aup_id=objectID&&qp_type_value=New Title'],
+                                [heading: 'Invalid Titles', property: 'countInValidTipps', sort: 'countInValidTipps', jumpToLink: '/search/componentSearch/wekb.UpdatePackageInfo:objectID?qbe=g:updateTippInfos&qp_aup_id=objectID&&qp_type_value=Failed Title'],
+
+                        ]
+                ]
+        ]
+        result
+    }
+
+    Map updateTippInfos() {
+        Map result = [
+                baseclass: 'wekb.UpdateTippInfo',
+                title    : 'Title Update Infos',
+                defaultSort : 'startTime',
+                defaultOrder: 'desc',
+                qbeConfig: [
+                        qbeForm   : [
+                                [
+                                        qparam     : 'qp_aup_id',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'updatePackageInfo.id', 'type': 'java.lang.Long'],
+                                        hide       : true
+                                ],
+                                [
+                                        qparam     : 'qp_tipp_id',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'tipp.id', 'type': 'java.lang.Long'],
+                                        hide       : true
+                                ],
+                                [
+                                        prompt     : 'KBART Field',
+                                        qparam     : 'qp_kbartProperty',
+                                        placeholder: 'KBART Field',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'kbartProperty']
+                                ],
+                                [
+                                        prompt     : 'Old Value',
+                                        qparam     : 'qp_oldValue',
+                                        placeholder: 'Old Value',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'oldValue']
+                                ],
+                                [
+                                        prompt     : 'New Value',
+                                        qparam     : 'qp_newValue',
+                                        placeholder: 'New Value',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'newValue']
+                                ],
+                                [
+                                        type       : 'lookup',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.UPDATE_TYPE,
+                                        prompt     : 'Type',
+                                        qparam     : 'qp_type',
+                                        placeholder: 'Type',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'type'],
+                                ],
+                                [
+                                        type       : 'lookup',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.UPDATE_STATUS,
+                                        prompt     : 'Status',
+                                        qparam     : 'qp_status',
+                                        placeholder: 'Type',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'status'],
+                                ],
+                                [
+                                        qparam     : 'qp_type_value',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'type.value'],
+                                        hide: true
+                                ],
+                        ],
+                        qbeResults: [
+                                [heading: 'Description', property: 'description', link: true],
+                                [heading: 'Title', property: 'tipp.name', link: true],
+                                [heading: 'Status', property: 'status', sort: 'status.value'],
+                                [heading: 'Type', property: 'type', sort: 'type.value'],
+                                [heading: 'KBART Field', property: 'kbartProperty', sort: 'kbartProperty'],
+                                [heading: 'New Value', property: 'newValue'],
+                                [heading: 'Old Value', property: 'oldValue'],
+                                [heading: 'Start Time', property: 'startTime', sort: 'startTime'],
+                                [heading: 'End Time', property: 'endTime', sort: 'endTime'],
                         ]
                 ]
         ]
