@@ -418,7 +418,7 @@ class SemanticInplaceTagLib {
 
             if (owner != null && owner[attrs.field] != null) {
                 String urlWithClassAndID = null
-                if(!(owner[attrs.field] instanceof wekb.KBComponent))
+                if(!(owner.hasProperty('uuid')))
                     urlWithClassAndID = "${ClassUtils.deproxy(owner[attrs.field]).class.name}" + ':' + owner[attrs.field].id
 
                 follow_link = createLink(controller: 'resource', action: 'show', id: urlWithClassAndID ?: owner[attrs.field].uuid)

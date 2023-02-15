@@ -26,8 +26,6 @@ class BootStrapService {
         log.info("Database migration plugin updateOnStart: ${grailsApplication.config.grails.plugin.databasemigration.updateOnStart}")
 
         log.info("\n\n\n **WARNING** \n\n\n - Automatic create of component identifiers index is no longer part of the domain model");
-        log.info("Create manually with create index norm_id_value_idx on kbcomponent(kbc_normname(64),id_namespace_fk,class)");
-
 
         // Add a custom check to see if this is an ajax request.
         HttpServletRequest.metaClass.isAjax = {
