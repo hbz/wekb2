@@ -13,17 +13,20 @@
 
         <div class="content">
             <div class="ui bulleted list">
-                <g:each in="${curatoryGroups.sort{it.name}}" var="curatoryGroup">
-                    <div class="item">
-                        <g:link controller="resource" action="show" id="${curatoryGroup.uuid}">${curatoryGroup.name}</g:link>
+                <g:if test="${curatoryGroups}">
+                    <g:each in="${curatoryGroups.sort { it.name }}" var="curatoryGroup">
+                        <div class="item">
+                            <g:link controller="resource" action="show"
+                                    id="${curatoryGroup.uuid}">${curatoryGroup.name}</g:link>
 
-                    <g:if test="${params.curationOverride == 'true' && isUserLoggedIn && SpringSecurityUtils.ifAnyGranted("ROLE_ADMIN")}">
-                        <g:link controller="ajaxHtml" action="removeCuratoryGroupFromObject"
-                                class="ui right floated negative mini button"
-                                params="['curationOverride': params.curationOverride, '__contextObjectClass': d.getClass().name, 'contextObject': d.id,'__curatoryGroup': curatoryGroup.class.name+':'+curatoryGroup.id]">Unlink</g:link>
-                    </g:if>
-                    </div>
-                </g:each>
+                            <g:if test="${params.curationOverride == 'true' && isUserLoggedIn && SpringSecurityUtils.ifAnyGranted("ROLE_ADMIN")}">
+                                <g:link controller="ajaxHtml" action="removeCuratoryGroupFromObject"
+                                        class="ui right floated negative mini button"
+                                        params="['curationOverride': params.curationOverride, '__contextObjectClass': d.getClass().name, 'contextObject': d.id, '__curatoryGroup': curatoryGroup.class.name + ':' + curatoryGroup.id]">Unlink</g:link>
+                            </g:if>
+                        </div>
+                    </g:each>
+                </g:if>
 
 
                 <g:if test="${!curatoryGroups}">
