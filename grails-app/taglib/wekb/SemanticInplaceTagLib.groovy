@@ -78,6 +78,10 @@ class SemanticInplaceTagLib {
             if (attrs.maxlength) {
                 out << " data-maxlength=\"${attrs.maxlength}\" "
             }
+            if (attrs.disabled) {
+                out << " data-disabled=\"${attrs.disabled}\" "
+            }
+
 
             out << ">"
 
@@ -93,18 +97,20 @@ class SemanticInplaceTagLib {
             }
             out << "</span>"
         } else {
-            out << "<span class=\"${attrs.class ?: ''}\">"
-            if (body) {
-                out << body()
-            } else {
-                String content = (renderObjectValue(attrs.owner."${attrs.field}"))
-                if(content){
-                    out << content
-                }else {
-                    out << "Empty"
+            if (!attrs.disabled) {
+                out << "<span class=\"${attrs.class ?: ''}\">"
+                if (body) {
+                    out << body()
+                } else {
+                    String content = (renderObjectValue(attrs.owner."${attrs.field}"))
+                    if (content) {
+                        out << content
+                    } else {
+                        out << "Empty"
+                    }
                 }
+                out << '</span>'
             }
-            out << '</span>'
         }
 
         if (attrs.outGoingLink && attrs.field && attrs.owner[attrs.field]) {
@@ -121,8 +127,8 @@ class SemanticInplaceTagLib {
 
     def xEditableRefData = { attrs, body ->
 
-        User user = springSecurityService.currentUser
-        boolean isAdmin = user?.hasRole("ROLE_ADMIN")
+       /* User user = springSecurityService.currentUser
+        boolean isAdmin = user?.hasRole("ROLE_ADMIN")*/
 
         boolean editable = isEditable(request.getAttribute('editable'), attrs.overwriteEditable)
 
@@ -158,6 +164,10 @@ class SemanticInplaceTagLib {
                 out << " data-required=\"${attrs.required}\" "
             }
 
+            if (attrs.disabled) {
+                out << " data-disabled=\"${attrs.disabled}\" "
+            }
+
             def attributes
            /* attributes = attrs.collect({ k, v ->
 
@@ -184,20 +194,22 @@ class SemanticInplaceTagLib {
             // If the caller specified an rdc attribute then they are describing a refdata category.
             // We want to add a link to the category edit page IF the annotation is editable.
 
-            if (isAdmin) {
+            /*if (isAdmin) {
                 RefdataCategory rdc = RefdataCategory.findByDesc(config)
                 if (rdc) {
                     out << '&nbsp;&nbsp;<a href="' + createLink(controller: 'resource', action: 'show', id: 'wekb.RefdataCategory:' + rdc.id) + '"title="Jump to RefdataCategory"><i class="ui icon eye"></i></a><br/>'
                 }
-            }
+            }*/
 
             out << "</span>"
         } else {
-            if (body) {
-                out << body()
-            } else {
-                def content = (renderObjectValue(attrs.owner."${attrs.field}"))
-                out << "${content ?: 'Empty'}"
+            if (!attrs.disabled) {
+                if (body) {
+                    out << body()
+                } else {
+                    def content = (renderObjectValue(attrs.owner."${attrs.field}"))
+                    out << "${content ?: 'Empty'}"
+                }
             }
         }
 
@@ -234,7 +246,7 @@ class SemanticInplaceTagLib {
             // Output an editable link
             out << "<span id=\"${id}\" "
 
-            out << 'class="xEditableManyToOne"'
+            out << 'class="xEditableManyToOne" '
 
             if ((owner != null) && (owner.id != null)) {
                 out << "data-pk=\"${oid}\" "
@@ -244,6 +256,10 @@ class SemanticInplaceTagLib {
 
             if (attrs.required) {
                 out << " data-required=\"${attrs.required}\" "
+            }
+
+            if (attrs.disabled) {
+                out << " data-disabled=\"${attrs.disabled}\" "
             }
 
             def attributes
@@ -266,7 +282,9 @@ class SemanticInplaceTagLib {
 
             // Here we can register different ways of presenting object references. The most pressing need to be
             // outputting a span containing an icon for refdata fields.
-            out << renderObjectValue(owner[field])
+            if (!attrs.disabled) {
+                out << renderObjectValue(owner[field])
+            }
 
             out << "</span>"
 
@@ -275,7 +293,9 @@ class SemanticInplaceTagLib {
 
             out << "</span>"
         } else {
-            out << renderObjectValue(attrs.owner[attrs.field])
+            if (!attrs.disabled) {
+                out << renderObjectValue(attrs.owner[attrs.field])
+            }
         }
 
     }
@@ -436,6 +456,10 @@ class SemanticInplaceTagLib {
                     out << " data-required=\"${attrs.required}\" "
                 }
 
+                if (attrs.disabled) {
+                    out << " data-disabled=\"${attrs.disabled}\" "
+                }
+
                 if ((attrs.value != null) && (attrs.value instanceof String && attrs.value.length() > 0)) {
                     def o = genericOIDService.resolveOID(attrs.value)
                     out << "data-value=\"${o.id.toString()}\" "
@@ -462,14 +486,16 @@ class SemanticInplaceTagLib {
                 out << ' &nbsp; <a href="' + follow_link + '" title="Jump to resource"><i class="ui share square icon"></i></a>'
             }
         } else {
-            if (body) {
-                out << body()
-            } else {
-                String content = (renderObjectValue(attrs.owner."${attrs.field}"))
-                if(content){
-                    out << g.link(content, controller: 'resource', action: 'show', id: attrs.owner."${attrs.field}".uuid)
-                }else {
-                    out << "Empty"
+            if (!attrs.disabled) {
+                if (body) {
+                    out << body()
+                } else {
+                    String content = (renderObjectValue(attrs.owner."${attrs.field}"))
+                    if (content) {
+                        out << g.link(content, controller: 'resource', action: 'show', id: attrs.owner."${attrs.field}".uuid)
+                    } else {
+                        out << "Empty"
+                    }
                 }
             }
         }

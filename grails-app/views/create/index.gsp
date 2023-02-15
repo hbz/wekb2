@@ -74,17 +74,6 @@
        });
    });
 
-/*      var hash = window.location.hash;
-      hash && $('ul.nav a[href="' + hash + '"]').tab('show');
-
-      $('.nav-tabs > li > a').not('.disabled').click(function (e) {
-        $(this).tab('show');
-        var scrollmem = $('body').scrollTop();
-        console.log("scrollTop");
-        window.location.hash = this.hash;
-        $('html,body').scrollTop(scrollmem);
-      });*/
-
 </g:javascript>
 </body>
 </html>

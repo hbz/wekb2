@@ -43,32 +43,32 @@
     </dt>
     <dd>
         <semui:xEditableManyToOne owner="${d}" field="titleNamespace" baseClass="wekb.IdentifierNamespace"
-                                  filter1="TitleInstancePackagePlatform">${(d.titleNamespace?.name) ?: d.titleNamespace?.value}</semui:xEditableManyToOne>
+                                  filter1="TitleInstancePackagePlatform" disabled="${createObject}">${(d.titleNamespace?.name) ?: d.titleNamespace?.value}</semui:xEditableManyToOne>
     </dd>
 </dl>
 <dl>
     <dt class="control-label">IP Auth Supported
     <dd><semui:xEditableRefData owner="${d}" field="ipAuthentication"
-                                config="${RCConstants.PLATFORM_IP_AUTH}"/></dd>
+                                config="${RCConstants.PLATFORM_IP_AUTH}" disabled="${createObject}"/></dd>
 </dl>
 <dl>
     <dt class="control-label">Open Athens Supported</dt>
     <dd><semui:xEditableRefData owner="${d}" field="openAthens"
-                                config="${RCConstants.YN}"/></dd>
+                                config="${RCConstants.YN}" disabled="${createObject}"/></dd>
 </dl>
 <dl>
     <dt class="control-label">Shibboleth Supported</dt>
     <dd><semui:xEditableRefData owner="${d}" field="shibbolethAuthentication"
-                                config="${RCConstants.YN}"/></dd>
+                                config="${RCConstants.YN}" disabled="${createObject}"/></dd>
 </dl>
 <dl>
     <dt class="control-label">User/Pass Supported</dt>
     <dd><semui:xEditableRefData owner="${d}" field="passwordAuthentication"
-                                config="${RCConstants.YN}"/></dd>
+                                config="${RCConstants.YN}" disabled="${createObject}"/></dd>
 </dl>
 <dl>
     <dt class="control-label">Proxy Supported</dt>
     <dd><semui:xEditableRefData owner="${d}" field="proxySupported"
-                                config="${RCConstants.YN}"/></dd>
+                                config="${RCConstants.YN}" disabled="${createObject}"/></dd>
 </dl>
 

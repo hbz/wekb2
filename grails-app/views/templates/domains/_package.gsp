@@ -4,7 +4,7 @@
         Name
     </dt>
     <dd>
-        <semui:xEditable owner="${d}" field="name" required="true"/>
+        <semui:xEditable owner="${d}" field="name" required="true" />
     </dd>
 </dl>
 <dl>
@@ -14,7 +14,7 @@
 
 <dl>
     <dt class="control-label">Source</dt>
-    <dd><semui:xEditableManyToOne owner="${d}" field="kbartSource" baseClass="wekb.KbartSource"/></dd>
+    <dd><semui:xEditableManyToOne owner="${d}" field="kbartSource" baseClass="wekb.KbartSource" disabled="${createObject}"/></dd>
 </dl>
 
 <dl>
@@ -28,24 +28,25 @@
         <semui:xEditableRefData owner="${d}" field="status" config="${RCConstants.KBCOMPONENT_STATUS}"/>
     </dd>
 </dl>
-<dl>
-    <dt class="control-label">Last Update Comment</dt>
-    <dd><semui:xEditable owner="${d}" field="lastUpdateComment" overwriteEditable="false"/>
-        <g:if test="${controllerName != 'create' && (d.getCountManualUpdateInfos() > 0 || d.getCountAutoUpdateInfos() > 0)}">
+<g:if test="${controllerName != 'create' && (d.getCountManualUpdateInfos() > 0 || d.getCountAutoUpdateInfos() > 0)}">
+    <dl>
+        <dt class="control-label">Last Update Comment</dt>
+        <dd><semui:xEditable owner="${d}" field="lastUpdateComment" overwriteEditable="false"/>
             <br>
             <br>
-            <g:link class="ui mini black button" id="${d.id}" controller="package" action="packageChangeHistory">Change History</g:link>
-        </g:if>
-    </dd>
-</dl>
+            <g:link class="ui mini black button" id="${d.id}" controller="package"
+                    action="packageChangeHistory">Change History</g:link>
+        </dd>
+    </dl>
+</g:if>
 <dl>
     <dt class="control-label">Description</dt>
-    <dd><semui:xEditable owner="${d}" type="textarea" field="description"/></dd>
+    <dd><semui:xEditable owner="${d}" type="textarea" field="description" disabled="${createObject}"/></dd>
 
 </dl>
 <dl>
     <dt class="control-label">Description URL</dt>
-    <dd><semui:xEditable owner="${d}" field="descriptionURL" validation="url" outGoingLink="true"/>
+    <dd><semui:xEditable owner="${d}" field="descriptionURL" validation="url" outGoingLink="true" disabled="${createObject}"/>
     </dd>
 </dl>
 
@@ -54,7 +55,7 @@
         Global Note
     </dt>
     <dd>
-        <semui:xEditable owner="${d}" field="globalNote"/>
+        <semui:xEditable owner="${d}" field="globalNote" disabled="${createObject}"/>
     </dd>
 </dl>
 
@@ -63,7 +64,7 @@
         Breakable
     </dt>
     <dd>
-        <semui:xEditableRefData owner="${d}" field="breakable" config="${RCConstants.PACKAGE_BREAKABLE}"/>
+        <semui:xEditableRefData owner="${d}" field="breakable" config="${RCConstants.PACKAGE_BREAKABLE}" disabled="${createObject}"/>
     </dd>
 </dl>
 <dl>
@@ -72,7 +73,7 @@
     </dt>
     <dd>
         <semui:xEditableRefData owner="${d}" field="contentType"
-                         config="${RCConstants.PACKAGE_CONTENT_TYPE}"/>
+                         config="${RCConstants.PACKAGE_CONTENT_TYPE}" disabled="${createObject}"/>
     </dd>
 </dl>
 <dl>
@@ -80,7 +81,7 @@
         File
     </dt>
     <dd>
-        <semui:xEditableRefData owner="${d}" field="file" config="${RCConstants.PACKAGE_FILE}"/>
+        <semui:xEditableRefData owner="${d}" field="file" config="${RCConstants.PACKAGE_FILE}" disabled="${createObject}"/>
     </dd>
 </dl>
 <dl>
@@ -88,7 +89,7 @@
         Open Access
     </dt>
     <dd>
-        <semui:xEditableRefData owner="${d}" field="openAccess" config="${RCConstants.PACKAGE_OPEN_ACCESS}"/>
+        <semui:xEditableRefData owner="${d}" field="openAccess" config="${RCConstants.PACKAGE_OPEN_ACCESS}" disabled="${createObject}"/>
     </dd>
 </dl>
 <dl>
@@ -97,7 +98,7 @@
     </dt>
     <dd>
         <semui:xEditableRefData owner="${d}" field="paymentType"
-                         config="${RCConstants.PACKAGE_PAYMENT_TYPE}"/>
+                         config="${RCConstants.PACKAGE_PAYMENT_TYPE}" disabled="${createObject}"/>
     </dd>
 </dl>
 <dl>
@@ -105,7 +106,7 @@
         Scope
     </dt>
     <dd>
-        <semui:xEditableRefData owner="${d}" field="scope" config="${RCConstants.PACKAGE_SCOPE}"/>
+        <semui:xEditableRefData owner="${d}" field="scope" config="${RCConstants.PACKAGE_SCOPE}" disabled="${createObject}"/>
     </dd>
 </dl>
 
@@ -114,7 +115,7 @@
         Free Trial
     </dt>
     <dd>
-        <semui:xEditableRefData owner="${d}" field="freeTrial" config="${RCConstants.YN}"/>
+        <semui:xEditableRefData owner="${d}" field="freeTrial" config="${RCConstants.YN}" disabled="${createObject}"/>
     </dd>
 </dl>
 
@@ -123,7 +124,7 @@
         Free Trial Phase
     </dt>
     <dd>
-        <semui:xEditable owner="${d}" field="freeTrialPhase"/>
+        <semui:xEditable owner="${d}" field="freeTrialPhase" disabled="${createObject}"/>
     </dd>
 </dl>
 

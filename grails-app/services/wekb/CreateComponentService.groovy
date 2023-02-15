@@ -1,5 +1,8 @@
 package wekb
 
+import grails.web.mvc.FlashScope
+import org.grails.web.servlet.mvc.GrailsWebRequest
+import org.grails.web.util.WebUtils
 import wekb.helper.RCConstants
 import wekb.helper.RDStore
 import grails.core.GrailsClass
@@ -14,6 +17,7 @@ import org.grails.datastore.mapping.model.types.OneToOne
 import org.springframework.context.i18n.LocaleContextHolder
 import org.springframework.web.multipart.MultipartFile
 
+import javax.servlet.http.HttpServletRequest
 import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneId
@@ -29,6 +33,8 @@ class CreateComponentService {
     AccessService accessService
     
     Map process(Map result, GrailsParameterMap params) {
+
+        FlashScope flash = getCurrentFlashScope()
         // II: Defaulting this to true - don't like it much, but we need to be able to create a title without any
         // props being set... not ideal, but issue closing.
         boolean propertyWasSet = true
@@ -45,7 +51,7 @@ class CreateComponentService {
 
             if ( newclass ) {
                 try {
-                    result.newobj = newclass.getDeclaredConstructor().newInstance()
+                    result.newobj = newclass.getClazz().getDeclaredConstructor().newInstance()
                     log.debug("got newInstance...");
 
                     params.each { p ->
@@ -119,7 +125,15 @@ class CreateComponentService {
                         result.errors=["Please fill in at least one piece of information to create the component."]
                     } else {
 
-                        log.debug("Saving..");
+                        log.debug("Saving..")
+
+                        if(result.newobj.hasProperty('uuid')){
+                            result.newobj.uuid = UUID.randomUUID().toString()
+                        }
+                        if(result.newobj.hasProperty('normname')){
+                            result.newobj.normname = result.newobj.generateNormname(result.newobj.name)
+                        }
+
                         if ( !result.newobj.validate() ) {
                             result.errors = []
 
@@ -169,7 +183,7 @@ class CreateComponentService {
                             if (result.newobj.hasProperty('curatoryGroups')) {
                                 log.debug("Set CuratoryGroups..");
                                 if(user.isAdmin() || user.getSuperUserStatus()) {
-                                    result.message = "Object was not assigned to a curator group because you are admin or superuser!!!!"
+                                    flash.message = "Object was not assigned to a curator group because you are admin or superuser!!!!"
 
                                 }else {
                                     if(user.curatoryGroupUsers) {
@@ -679,5 +693,12 @@ class CreateComponentService {
 
 
         [packages: packages, rowsCount: rows.size(), errors: globalErrors]
+    }
+
+    FlashScope getCurrentFlashScope() {
+        GrailsWebRequest grailsWebRequest = WebUtils.retrieveGrailsWebRequest()
+        HttpServletRequest request = grailsWebRequest.getCurrentRequest()
+
+        grailsWebRequest.attributes.getFlashScope(request)
     }
 }

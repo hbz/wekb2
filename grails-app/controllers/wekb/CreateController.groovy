@@ -34,9 +34,10 @@ class CreateController {
         if (newclass) {
           log.debug("Got new class")
           try {
-            result.displayobj = newclass.getDeclaredConstructor().newInstance()
+            result.displayobj = newclass.getClazz().getDeclaredConstructor().newInstance()
             log.debug("Got new instance");
             result.editable = true
+            result.createObject = true
 
             if (params.tmpl) {
               result.displaytemplate = displayTemplateService.getTemplateInfo(params.tmpl)

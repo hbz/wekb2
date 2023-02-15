@@ -42,7 +42,7 @@
     </dt>
     <dd>
         <semui:xEditableRefData owner="${d}" field="defaultSupplyMethod"
-                                config="${RCConstants.SOURCE_DATA_SUPPLY_METHOD}"/>
+                                config="${RCConstants.SOURCE_DATA_SUPPLY_METHOD}" disabled="${createObject}"/>
     </dd>
 </dl>
 <dl>
@@ -51,7 +51,7 @@
     </dt>
     <dd>
         <semui:xEditableRefData owner="${d}" field="defaultDataFormat"
-                                config="${RCConstants.SOURCE_DATA_FORMAT}"/>
+                                config="${RCConstants.SOURCE_DATA_FORMAT}" disabled="${createObject}"/>
     </dd>
 </dl>
 %{--<dl>
@@ -70,7 +70,7 @@
         Automated Updates
     </dt>
     <dd>
-        <semui:xEditableBoolean owner="${d}" field="automaticUpdates"/>
+        <semui:xEditableBoolean owner="${d}" field="automaticUpdates" disabled="${createObject}"/>
     </dd>
 </dl>
 <dl>
@@ -80,7 +80,7 @@
     <dd>
         <semui:xEditableManyToOne owner="${d}" field="targetNamespace"
                                   baseClass="wekb.IdentifierNamespace"
-                                  filter1="TitleInstancePackagePlatform">${d.targetNamespace}</semui:xEditableManyToOne>
+                                  filter1="TitleInstancePackagePlatform" disabled="${createObject}">${d.targetNamespace}</semui:xEditableManyToOne>
     </dd>
 </dl>
 <dl>
@@ -88,7 +88,7 @@
         KBART has additional fields for we:kb
     </dt>
     <dd>
-        <semui:xEditableBoolean owner="${d}" field="kbartHasWekbFields" overwriteEditable="false"/>
+        <semui:xEditableBoolean owner="${d}" field="kbartHasWekbFields" overwriteEditable="false" disabled="${createObject}"/>
     </dd>
 </dl>
 <dl>
@@ -97,7 +97,7 @@
     </dt>
     <dd>
         <sec:ifAnyGranted roles="ROLE_SUPERUSER">
-            <semui:xEditable owner="${d}" type="date" field="lastChangedInKbart">${d.lastChangedInKbart}</semui:xEditable>
+            <semui:xEditable owner="${d}" type="date" field="lastChangedInKbart" disabled="${createObject}">${d.lastChangedInKbart}</semui:xEditable>
         </sec:ifAnyGranted>
         <sec:ifNotGranted roles="ROLE_SUPERUSER">
             <g:formatDate format="${message(code: 'default.date.format.notime')}"
@@ -111,10 +111,10 @@
     </dt>
     <dd>
         <sec:ifAnyGranted roles="ROLE_SUPERUSER">
-            <semui:xEditable owner="${d}" type="date" field="lastRun">${d.lastRun}</semui:xEditable>
+            <semui:xEditable owner="${d}" type="date" field="lastRun" disabled="${createObject}">${d.lastRun}</semui:xEditable>
         </sec:ifAnyGranted>
         <sec:ifNotGranted roles="ROLE_SUPERUSER">
-            <semui:xEditable owner="${d}" type="date" field="lastRun" overwriteEditable="false">${d.lastRun}</semui:xEditable>
+            <semui:xEditable owner="${d}" type="date" field="lastRun" overwriteEditable="false" disabled="${createObject}">${d.lastRun}</semui:xEditable>
         </sec:ifNotGranted>
 
     </dd>
@@ -124,29 +124,31 @@
         Last Update Url
     </dt>
     <dd>
-        <semui:xEditable owner="${d}" field="lastUpdateUrl" overwriteEditable="${false}" outGoingLink="true"/>
+        <semui:xEditable owner="${d}" field="lastUpdateUrl" overwriteEditable="${false}" outGoingLink="true" disabled="${createObject}"/>
     </dd>
 </dl>
-<dl>
-    <dt class="control-label">
-        Next Run
-    </dt>
-    <dd>
-        ${d.getNextUpdateTimestamp()}
-    </dd>
-</dl>
+<g:if test="${controllerName != 'create'}">
+    <dl>
+        <dt class="control-label">
+            Next Run
+        </dt>
+        <dd>
+            ${d.getNextUpdateTimestamp()}
+        </dd>
+    </dl>
 
-<dl>
-    <dt class="control-label">
-        Anticipated Run Times
-    </dt>
-    <dd>
-        <div class="ui bulleted list">
-            <g:each in="${d.getAllNextUpdateTimestamp()}" var="updateDate">
-                <div class="item">${updateDate}</div>
-            </g:each>
-        </div>
-    </dd>
-</dl>
+    <dl>
+        <dt class="control-label">
+            Anticipated Run Times
+        </dt>
+        <dd>
+            <div class="ui bulleted list">
+                <g:each in="${d.getAllNextUpdateTimestamp()}" var="updateDate">
+                    <div class="item">${updateDate}</div>
+                </g:each>
+            </div>
+        </dd>
+    </dl>
+</g:if>
 
 
