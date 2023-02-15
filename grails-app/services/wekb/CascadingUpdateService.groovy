@@ -70,7 +70,7 @@ class CascadingUpdateService {
     void update(TitleInstancePackagePlatform obj, Date lastUpdated) {
         if (obj.pkg && !obj.kbartImportRunning) {
             update(obj.pkg, lastUpdated)
-            TitleInstancePackagePlatform.executeUpdate("update TitleInstancePackagePlatform tipp set kbc.lastUpdated = :lastUpdated where tipp = :obj", [
+            TitleInstancePackagePlatform.executeUpdate("update TitleInstancePackagePlatform tipp set tipp.lastUpdated = :lastUpdated where tipp = :obj", [
                     lastUpdated: lastUpdated, obj: obj
             ])
         }

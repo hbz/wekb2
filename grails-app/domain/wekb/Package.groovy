@@ -175,6 +175,7 @@ class Package  extends AbstractBase implements Auditable {
   @Override
   def beforeInsert() {
     super.beforeInsertHandler()
+    generateNormname()
   }
 
   @Override
@@ -185,6 +186,20 @@ class Package  extends AbstractBase implements Auditable {
   @Override
   def beforeDelete() {
     super.beforeDeleteHandler()
+  }
+
+  static def generateNormname(str_to_norm){
+    def r = TextUtils.norm2(str_to_norm)
+    if (r.length() == 0){
+      r = null
+    }
+    return r
+  }
+
+
+  protected def generateNormname(){
+    log.debug("checking for normname")
+    this.normname = generateNormname(name)
   }
 
   static def refdataFind(params) {
