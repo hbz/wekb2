@@ -44,17 +44,6 @@ class BootStrapService {
 
         refdataCats()
 
-        CuratoryGroup.withTransaction() {
-            if (grailsApplication.config.wekb.defaultCuratoryGroup != null && grailsApplication.config.wekb.defaultCuratoryGroup != "") {
-
-                log.info("Ensure curatory group: ${grailsApplication.config.wekb.defaultCuratoryGroup}");
-
-                def local_cg = CuratoryGroup.findByName(grailsApplication.config.wekb.defaultCuratoryGroup) ?:
-                        new CuratoryGroup(name: grailsApplication.config.wekb.defaultCuratoryGroup).save(flush: true, failOnError: true);
-            }
-        }
-
-
         log.info("Ensure default Identifier namespaces")
         def namespaces = [
                 [value: 'cup', name: 'cup', targetType: 'TitleInstancePackagePlatform'],

@@ -21,7 +21,6 @@ logSql = true
 formatSql = true
 
 wekb.anonymizeUsers = false
-wekb.defaultCuratoryGroup = 'Local'
 wekb.es.cluster = 'gokbes'
 wekb.es.host = 'localhost'
 wekb.ftupdate_enabled = false

@@ -77,9 +77,9 @@ databaseChangeLog = {
         addNotNullConstraint(columnDataType: "varchar(255)", columnName: "pkg_name", tableName: "package", validate: "true")
     }
 
-    changeSet(author: "djebeniani (generated)", id: "1675787881561-19") {
+/*    changeSet(author: "djebeniani (generated)", id: "1675787881561-19") {
         addNotNullConstraint(columnDataType: "clob", columnName: "pkg_normname", tableName: "package", validate: "true")
-    }
+    }*/
 
     changeSet(author: "djebeniani (generated)", id: "1675787881561-20") {
         addNotNullConstraint(columnDataType: "bigint", columnName: "pkg_status_rv_fk", tableName: "package", validate: "true")
