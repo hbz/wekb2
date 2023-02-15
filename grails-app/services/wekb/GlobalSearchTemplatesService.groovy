@@ -10,7 +10,6 @@ class GlobalSearchTemplatesService {
 
     @javax.annotation.PostConstruct
     def init() {
-        globalSearchTemplates.put('components', components())
         globalSearchTemplates.put('curatoryGroups', curatoryGroups())
         globalSearchTemplates.put('identifiers', identifiers())
         globalSearchTemplates.put('jobResults', jobResults())
@@ -188,54 +187,6 @@ class GlobalSearchTemplatesService {
                                 [heading: 'Old Value', property: 'oldValue'],
                                 [heading: 'Start Time', property: 'startTime', sort: 'startTime'],
                                 [heading: 'End Time', property: 'endTime', sort: 'endTime'],
-                        ]
-                ]
-        ]
-        result
-    }
-
-    Map components() {
-        Map result = [
-                baseclass: 'wekb.KBComponent',
-                title    : 'Components',
-                qbeConfig: [
-                        // For querying over associations and joins, here we will need to set up scopes to be referenced in the qbeForm config
-                        // Until we need them tho, they are omitted. qbeForm entries with no explicit scope are at the root object.
-                        qbeForm   : [
-                                [
-                                        prompt     : 'Name or Title',
-                                        qparam     : 'qp_name',
-                                        placeholder: 'Name or title of item',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'name']
-                                ],
-                                [
-                                        prompt     : 'ID',
-                                        qparam     : 'qp_id',
-                                        placeholder: 'ID of item',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'id', 'type': 'java.lang.Long']
-                                ],
-                                [
-                                        prompt     : 'SID',
-                                        qparam     : 'qp_sid',
-                                        placeholder: 'SID for item',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'ids.value']
-                                ],
-                                [
-                                        type       : 'lookup',
-                                        baseClass  : 'wekb.RefdataValue',
-                                        filter1    : RCConstants.KBCOMPONENT_STATUS,
-                                        prompt     : 'Status',
-                                        qparam     : 'qp_status',
-                                        placeholder: 'Component Status',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'status'],
-                                        // II: Default not yet implemented
-                                        default    : [type: 'query', query: 'select r from RefdataValue where r.value=:v and r.owner.description=:o', params: ['Current', RCConstants.KBCOMPONENT_STATUS]]
-                                ]
-                        ],
-                        qbeResults: [
-                                [heading: 'Type', property: 'niceName'],
-                                [heading: 'Name/Title', property: 'name', sort: 'name', link: true],
-                                [heading: 'Status', property: 'status?.value', sort: 'status'],
                         ]
                 ]
         ]
