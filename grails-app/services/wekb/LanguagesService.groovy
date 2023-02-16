@@ -21,7 +21,7 @@ class LanguagesService {
    */
   static void initialize(){
     try {
-      String uriString = "${Holders.grailsApplication.config.wekb.languagesUrl}/api/listIso639two"
+      String uriString = "${Holders.grailsApplication.config.getProperty('wekb.languagesUrl', String)}/api/listIso639two"
       URI microserviceUrl = new URI(uriString)
       def httpBuilder = new HTTPBuilder(microserviceUrl)
       httpBuilder.request(GET) { request ->

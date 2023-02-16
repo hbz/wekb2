@@ -336,10 +336,6 @@ MembershipRole;Member;Member;Member
 MembershipStatus;Approved;Approved;Approved
 MembershipStatus;Pending;Pending;Pending
 MembershipStatus;Rejected/Revoked;Rejected/Revoked;Rejected/Revoked
-Org.Mission;Academic;Academic;Academic
-Org.Mission;Commercial;Commercial;Commercial
-Org.Mission;Community Agency;Community Agency;Community Agency
-Org.Mission;Consortium;Consortium;Consortium
 Org.Role;Broker;Broker;Broker
 Org.Role;Content Provider;Content Provider;Content Provider
 Org.Role;Issuing Body;Issuing Body;Issuing Body

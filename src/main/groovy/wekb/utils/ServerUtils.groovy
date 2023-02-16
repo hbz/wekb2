@@ -17,7 +17,7 @@ class ServerUtils {
 
         if (! Environment.isDevelopmentMode()) {
 
-            switch (Holders.grailsApplication.config.systemId) {
+            switch (Holders.grailsApplication.config.getProperty('systemId', String)) {
                 case 'we:kb-Dev':
                     return SERVER_DEV
                     break
@@ -37,7 +37,7 @@ class ServerUtils {
 
         if (! Environment.isDevelopmentMode()) {
 
-            switch (Holders.grailsApplication.config.systemId) {
+            switch (Holders.grailsApplication.config.getProperty('systemId', String)) {
                 case 'we:kb-Dev':
                     return 'we:kb-Dev'
                     break

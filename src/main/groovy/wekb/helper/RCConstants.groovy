@@ -49,7 +49,6 @@ class RCConstants {
     public static final String MEMBERSHIP_ROLE = "MembershipRole"
     public static final String MEMBERSHIP_STATUS = "MembershipStatus"
 
-    public static final String ORG_MISSION = "Org.Mission"
     public static final String ORG_ROLE = "Org.Role"
 
     public static final String PACKAGE_BREAKABLE = "Package.Breakable"

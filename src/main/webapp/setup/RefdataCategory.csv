@@ -22,7 +22,6 @@ KBComponentVariantName.Status;KBComponent VariantName Status;KBComponent Variant
 KBComponentVariantName.VariantType;KBComponent VariantName VariantType;KBComponent VariantName VariantType
 MembershipRole;Membership Role;Membership Role
 MembershipStatus;Membership Status;Membership Status
-Org.Mission;Org Mission;Org Mission
 Org.Role;Org Role;Org Role
 Package.Breakable;Package Breakable;Package Breakable
 Package.Consistent;Package Consistent;Package Consistent
@@ -63,5 +62,4 @@ TitleInstancePackagePlatform.Medium;TitleInstancePackagePlatform Medium;TitleIns
 TitleInstancePackagePlatform.OpenAccess;Tipp Open Access;Tipp Open Access
 TitleInstancePackagePlatform.Primary;TitleInstancePackagePlatform Primary;TitleInstancePackagePlatform Primary
 TitleInstancePackagePlatform.PublicationType;TitleInstancePackagePlatform Publication Type;TitleInstancePackagePlatform Publication Type
-UserOrganisation.Mission;UserOrganisation Mission;UserOrganisation Mission
 YN;YN;YN
