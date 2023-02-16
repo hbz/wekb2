@@ -4,7 +4,7 @@
         Name
     </dt>
     <dd>
-        <semui:xEditable owner="${d}" field="name" required="true" />
+        <semui:xEditable owner="${d}" field="name" required="true"/>
     </dd>
 </dl>
 <dl>
@@ -14,7 +14,8 @@
 
 <dl>
     <dt class="control-label">Source</dt>
-    <dd><semui:xEditableManyToOne owner="${d}" field="kbartSource" baseClass="wekb.KbartSource" disabled="${createObject}"/></dd>
+    <dd><semui:xEditableManyToOne owner="${d}" field="kbartSource" baseClass="wekb.KbartSource"
+                                  disabled="${createObject}"/></dd>
 </dl>
 
 <dl>
@@ -46,7 +47,8 @@
 </dl>
 <dl>
     <dt class="control-label">Description URL</dt>
-    <dd><semui:xEditable owner="${d}" field="descriptionURL" validation="url" outGoingLink="true" disabled="${createObject}"/>
+    <dd><semui:xEditable owner="${d}" field="descriptionURL" validation="url" outGoingLink="true"
+                         disabled="${createObject}"/>
     </dd>
 </dl>
 
@@ -64,7 +66,8 @@
         Breakable
     </dt>
     <dd>
-        <semui:xEditableRefData owner="${d}" field="breakable" config="${RCConstants.PACKAGE_BREAKABLE}" disabled="${createObject}"/>
+        <semui:xEditableRefData owner="${d}" field="breakable" config="${RCConstants.PACKAGE_BREAKABLE}"
+                                disabled="${createObject}"/>
     </dd>
 </dl>
 <dl>
@@ -73,7 +76,7 @@
     </dt>
     <dd>
         <semui:xEditableRefData owner="${d}" field="contentType"
-                         config="${RCConstants.PACKAGE_CONTENT_TYPE}" disabled="${createObject}"/>
+                                config="${RCConstants.PACKAGE_CONTENT_TYPE}" disabled="${createObject}"/>
     </dd>
 </dl>
 <dl>
@@ -81,7 +84,8 @@
         File
     </dt>
     <dd>
-        <semui:xEditableRefData owner="${d}" field="file" config="${RCConstants.PACKAGE_FILE}" disabled="${createObject}"/>
+        <semui:xEditableRefData owner="${d}" field="file" config="${RCConstants.PACKAGE_FILE}"
+                                disabled="${createObject}"/>
     </dd>
 </dl>
 <dl>
@@ -89,7 +93,8 @@
         Open Access
     </dt>
     <dd>
-        <semui:xEditableRefData owner="${d}" field="openAccess" config="${RCConstants.PACKAGE_OPEN_ACCESS}" disabled="${createObject}"/>
+        <semui:xEditableRefData owner="${d}" field="openAccess" config="${RCConstants.PACKAGE_OPEN_ACCESS}"
+                                disabled="${createObject}"/>
     </dd>
 </dl>
 <dl>
@@ -98,7 +103,7 @@
     </dt>
     <dd>
         <semui:xEditableRefData owner="${d}" field="paymentType"
-                         config="${RCConstants.PACKAGE_PAYMENT_TYPE}" disabled="${createObject}"/>
+                                config="${RCConstants.PACKAGE_PAYMENT_TYPE}" disabled="${createObject}"/>
     </dd>
 </dl>
 <dl>
@@ -106,25 +111,8 @@
         Scope
     </dt>
     <dd>
-        <semui:xEditableRefData owner="${d}" field="scope" config="${RCConstants.PACKAGE_SCOPE}" disabled="${createObject}"/>
-    </dd>
-</dl>
-
-<dl>
-    <dt class="control-label">
-        Free Trial
-    </dt>
-    <dd>
-        <semui:xEditableRefData owner="${d}" field="freeTrial" config="${RCConstants.YN}" disabled="${createObject}"/>
-    </dd>
-</dl>
-
-<dl>
-    <dt class="control-label">
-        Free Trial Phase
-    </dt>
-    <dd>
-        <semui:xEditable owner="${d}" field="freeTrialPhase" disabled="${createObject}"/>
+        <semui:xEditableRefData owner="${d}" field="scope" config="${RCConstants.PACKAGE_SCOPE}"
+                                disabled="${createObject}"/>
     </dd>
 </dl>
 
@@ -150,6 +138,27 @@
             </g:if>
         </dd>
     </dl>
+</g:if>
+
+<dl>
+    <dt class="control-label">
+        Free Trial
+    </dt>
+    <dd>
+        <semui:xEditableRefData owner="${d}" field="freeTrial" config="${RCConstants.YN}" disabled="${createObject}"/>
+    </dd>
+</dl>
+
+<dl>
+    <dt class="control-label">
+        Free Trial Phase
+    </dt>
+    <dd>
+        <semui:xEditable owner="${d}" field="freeTrialPhase" disabled="${createObject}"/>
+    </dd>
+</dl>
+
+<g:if test="${controllerName != 'create'}">
     <dl>
         <dt class="control-label">
             Archiving Agency
@@ -170,13 +179,13 @@
                     <tr>
                         <td>${i + 1}</td>
                         <td><semui:xEditableRefData owner="${paa}" field="archivingAgency"
-                                             config="${RCConstants.PAA_ARCHIVING_AGENCY}"/>
+                                                    config="${RCConstants.PAA_ARCHIVING_AGENCY}"/>
                         <td><semui:xEditableRefData owner="${paa}" field="openAccess"
-                                             config="${RCConstants.PAA_OPEN_ACCESS}"/>
+                                                    config="${RCConstants.PAA_OPEN_ACCESS}"/>
                         </td>
                         <td>
                             <semui:xEditableRefData owner="${paa}" field="postCancellationAccess"
-                                             config="${RCConstants.PAA_POST_CANCELLATION_ACCESS}"/>
+                                                    config="${RCConstants.PAA_POST_CANCELLATION_ACCESS}"/>
                         </td>
                         <td>
                             <g:if test="${editable}">
@@ -210,24 +219,26 @@
             <input type="hidden" name="__newObjectClass" value="wekb.PackageArchivingAgency"/>
             <input type="hidden" name="__recip" value="pkg"/>
             <input type="hidden" name="curationOverride" value="${params.curationOverride}"/>
+
             <div class="field">
-                              <label>Archiving Agency</label>
-                <semui:simpleReferenceDropdown  name="archivingAgency"
-                                              baseClass="wekb.RefdataValue"
-                                              filter1="${RCConstants.PAA_ARCHIVING_AGENCY}"/>
-            </div>
-            <div class="field">
-                              <label>Open Access</label>
-                <semui:simpleReferenceDropdown  name="openAccess"
-                                              baseClass="wekb.RefdataValue"
-                                              filter1="${RCConstants.PAA_OPEN_ACCESS}"/>
+                <label>Archiving Agency</label>
+                <semui:simpleReferenceDropdown name="archivingAgency"
+                                               baseClass="wekb.RefdataValue"
+                                               filter1="${RCConstants.PAA_ARCHIVING_AGENCY}"/>
             </div>
 
             <div class="field">
-                              <label>Post-Cancellation Access (PCA)</label>
-                <semui:simpleReferenceDropdown  name="postCancellationAccess"
-                                              baseClass="wekb.RefdataValue"
-                                              filter1="${RCConstants.PAA_POST_CANCELLATION_ACCESS}"/>
+                <label>Open Access</label>
+                <semui:simpleReferenceDropdown name="openAccess"
+                                               baseClass="wekb.RefdataValue"
+                                               filter1="${RCConstants.PAA_OPEN_ACCESS}"/>
+            </div>
+
+            <div class="field">
+                <label>Post-Cancellation Access (PCA)</label>
+                <semui:simpleReferenceDropdown name="postCancellationAccess"
+                                               baseClass="wekb.RefdataValue"
+                                               filter1="${RCConstants.PAA_POST_CANCELLATION_ACCESS}"/>
             </div>
         </g:form>
     </semui:modal>
