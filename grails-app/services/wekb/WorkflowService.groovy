@@ -3,7 +3,10 @@ package wekb
 import grails.gorm.transactions.Transactional
 import grails.plugin.springsecurity.SpringSecurityService
 import grails.web.mapping.LinkGenerator
+import wekb.auth.User
+import wekb.auth.UserRole
 import wekb.helper.RCConstants
+import wekb.system.SavedSearch
 import wekb.utils.ServerUtils
 
 import java.util.concurrent.ExecutorService
@@ -50,9 +53,9 @@ class WorkflowService {
             case Package.class.name:
                 [
                         [code: 'objectMethod::currentWithTipps', label: 'Mark the package as current (with all Titles)', message: '', onlyAdmin: false, group: 2],
-                        [code: 'objectMethod::deleteSoft', label: 'Mark the package as deleted (with all Titles)', perm: 'delete', message: '', onlyAdmin: false, group: 2],
+                        [code: 'objectMethod::deleteSoft', label: 'Mark the package as deleted (with all Titles)', message: '', onlyAdmin: false, group: 2],
                         [code: 'objectMethod::retireWithTipps', label: 'Mark the package as retired (with all Titles)', message: '', onlyAdmin: false, group: 2],
-                        [code: 'objectMethod::removeWithTipps', label: 'Remove the package (with all Titles)', perm: 'delete', message: '', onlyAdmin: false, group: 5],
+                        [code: 'objectMethod::removeWithTipps', label: 'Remove the package (with all Titles)', message: '', onlyAdmin: false, group: 5],
 
                         [code: 'workFlowMethod::manualKbartImport', label: 'Manual KBART Import', message: '', onlyAdmin: false, group: 1],
                         [code: 'workFlowMethod::updatePackageFromKbartSource', label: 'Trigger KBART Update (Changed Titles)', message: '', onlyAdmin: false, group: 1],
@@ -72,6 +75,11 @@ class WorkflowService {
                         [code: 'workFlowSetStatus::Removed', label: 'Remove the title', message: '', onlyAdmin: false, group: 2],
                         [code: 'workFlowSetStatus::Expected', label: 'Mark the title as expected', message: '', onlyAdmin: false, group: 1],
                         [code: 'workFlowSetStatus::Current', label: 'Mark the title as current', message: '', onlyAdmin: false, group: 1]
+                ]
+                break
+            case User.class.name:
+                [
+                        [code: 'workFlowMethod::deleteUser', label: 'Delete', message: '', onlyAdmin: true, group: 1],
                 ]
                 break
             default:
@@ -200,6 +208,33 @@ class WorkflowService {
 
         result.ref = grailsLinkGenerator.link(controller: 'resource', action: 'show', id: identifierNamespace.class.name+':'+identifierNamespace.id, absolute: true)
         result
+    }
+
+    private Map deleteUser(User user){
+        log.info("Deleting user ${user.id} ..")
+        Map result = [:]
+
+        Long userID = user.id
+
+        SavedSearch.executeUpdate("delete from SavedSearch where owner = :utd", [utd: user])
+        UserRole.removeAll(user)
+        CuratoryGroupUser.findAllByUser(user).each {
+            it.delete()
+        }
+
+        log.info("Deleting user object ..")
+        user.delete()
+
+        log.info("Done")
+
+        if(User.get(userID)){
+            result.error = "User can not deleted!"
+        }else {
+            result.ref = grailsLinkGenerator.link(controller: "search", action: "componentSearch", params: [qbe: 'g:users'], absolute: true)
+        }
+
+        result
+
     }
 
 }

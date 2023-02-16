@@ -233,17 +233,4 @@ class User {
     return this.username
   }
 
-  boolean deleteUser(){
-    log.debug("Deleting user ${this.id} ..")
-
-      SavedSearch.executeUpdate("delete from SavedSearch where owner = :utd", [utd: this])
-      UserRole.removeAll(this)
-
-      log.debug("Deleting user object ..")
-      this.delete()
-
-      log.debug("Done")
-
-  }
-
 }
