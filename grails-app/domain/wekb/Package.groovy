@@ -318,6 +318,19 @@ class Package  extends AbstractBase implements Auditable {
     TitleInstancePackagePlatform.executeUpdate("update TitleInstancePackagePlatform as t set t.status = :rev, t.lastUpdated = :now where t.status != :rev and t.pkg = :pkg", [rev: removedStatus, pkg: this, now: now])
   }
 
+  public void removeOnlyTipps(context) {
+    log.debug("package::removeOnlyTipps")
+    Date now = new Date()
+    def removedStatus = RDStore.KBC_STATUS_REMOVED
+    Package.withTransaction {
+      this.lastUpdated = now
+      this.save()
+    }
+
+    log.debug("removed tipps")
+    TitleInstancePackagePlatform.executeUpdate("update TitleInstancePackagePlatform as t set t.status = :rev, t.lastUpdated = :now where t.status != :rev and t.pkg = :pkg", [rev: removedStatus, pkg: this, now: now])
+  }
+
   public void currentWithTipps(context) {
     log.debug("package::currentWithTipps");
     log.debug("Updating package status to current");
