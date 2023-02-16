@@ -43,7 +43,7 @@
     </dt>
     <dd>
         <semui:xEditableRefData owner="${d}" field="defaultSupplyMethod"
-                                config="${RCConstants.SOURCE_DATA_SUPPLY_METHOD}" disabled="${createObject}"/>
+                                config="${RCConstants.SOURCE_DATA_SUPPLY_METHOD}"/>
     </dd>
 </dl>
 <dl>
@@ -52,7 +52,7 @@
     </dt>
     <dd>
         <semui:xEditableRefData owner="${d}" field="defaultDataFormat"
-                                config="${RCConstants.SOURCE_DATA_FORMAT}" disabled="${createObject}"/>
+                                config="${RCConstants.SOURCE_DATA_FORMAT}"/>
     </dd>
 </dl>
 %{--<dl>
@@ -71,7 +71,7 @@
         Automated Updates
     </dt>
     <dd>
-        <semui:xEditableBoolean owner="${d}" field="automaticUpdates" disabled="${createObject}"/>
+        <semui:xEditableBoolean owner="${d}" field="automaticUpdates"/>
     </dd>
 </dl>
 <dl>
