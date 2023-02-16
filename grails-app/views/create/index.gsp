@@ -27,7 +27,7 @@
                 <g:if test="${displaytemplate.noCreate}">
                     <div id="content">
                         <div style="padding:20px">
-                            <span class="alert alert-danger"
+                            <span class="ui red label"
                                   style="font-weight:bold;">Components of this type cannot be created in a standalone context.</span>
                         </div>
                     </div>

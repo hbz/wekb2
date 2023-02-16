@@ -50,6 +50,18 @@
             <semui:message message="${qbetemplate.message}"/>
         </g:if>
 
+        <sec:ifAnyGranted roles="ROLE_ADMIN">
+            <div class="ui right floated buttons">
+                <semui:actionsDropdown text="Available actions">
+                    <semui:actionsDropdownItem description="(Admin)" controller="create" action="index"
+                                               params="[tmpl: qbetemplate.baseclass]"
+                                               text="Create new ${qbetemplate.title}"/>
+                </semui:actionsDropdown>
+            </div>
+            <br>
+            <br>
+        </sec:ifAnyGranted>
+
         <g:render template="qbeform"
                   model="${[formdefn: qbetemplate.qbeConfig?.qbeForm, 'hide': (hide), cfg: qbetemplate.qbeConfig]}"/>
 

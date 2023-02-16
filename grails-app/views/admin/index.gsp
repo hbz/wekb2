@@ -43,6 +43,8 @@
                         params="[tmpl: 'wekb.CuratoryGroup']">Curatory Group</g:link>
                 <g:link class="item" controller="create" action="index"
                         params="[tmpl: 'wekb.Org']">Provider</g:link>
+                <g:link class="item" controller="create" action="index"
+                        params="[tmpl: 'wekb.auth.User']">User</g:link>
             </div>
         </div>
         <div class="column">

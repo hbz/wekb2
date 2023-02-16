@@ -2,54 +2,55 @@
 
 <g:set var="userIsAdmin" value="${springSecurityService.currentUser.isAdmin()}"/>
 
-<g:if test="${d.id != null}">
+<dl>
+    <dt class="control-label">Display Name</dt>
+    <dd><semui:xEditable owner="${d}" field="displayName"/></dd>
+</dl>
+<g:if test="${d == springSecurityService.currentUser || userIsAdmin}">
     <dl>
-        <dt class="control-label">Display Name</dt>
-        <dd><semui:xEditable owner="${d}" field="displayName"/></dd>
+        <dt class="control-label">Email</dt>
+        <dd>
+            <semui:xEditable owner="${d}" field="email" validation="email"/>
+        </dd>
     </dl>
-    <g:if test="${d == springSecurityService.currentUser || userIsAdmin}">
+    <dl>
+        <dt class="control-label">Username</dt>
+        <dd>
+            <semui:xEditable owner="${d}" field="username"/>
+        </dd>
+    </dl>
+
+    <g:if test="${userIsAdmin}">
         <dl>
-            <dt class="control-label">Email</dt>
+            <dt class="control-label">Enabled</dt>
             <dd>
-                <semui:xEditable owner="${d}" field="email" validation="email"/>
+                <semui:xEditableBoolean owner="${d}" field="enabled"/>
             </dd>
         </dl>
         <dl>
-            <dt class="control-label">Username</dt>
+            <dt class="control-label">Account Expired</dt>
             <dd>
-                <semui:xEditable owner="${d}" field="username"/>
+                <semui:xEditableBoolean owner="${d}" field="accountExpired"/>
             </dd>
         </dl>
+        <dl>
+            <dt class="control-label">Account Locked</dt>
+            <dd>
+                <semui:xEditableBoolean owner="${d}" field="accountLocked"/>
+            </dd>
+        </dl>
+        <dl>
+            <dt class="control-label">Password Expired</dt>
+            <dd>
+                <semui:xEditableBoolean owner="${d}" field="passwordExpired"/>
+            </dd>
+        </dl>
+    </g:if>
 
-        <g:if test="${userIsAdmin}">
-            <dl>
-                <dt class="control-label">Enabled</dt>
-                <dd>
-                    <semui:xEditableBoolean owner="${d}" field="enabled"/>
-                </dd>
-            </dl>
-            <dl>
-                <dt class="control-label">Account Expired</dt>
-                <dd>
-                    <semui:xEditableBoolean owner="${d}" field="accountExpired"/>
-                </dd>
-            </dl>
-            <dl>
-                <dt class="control-label">Account Locked</dt>
-                <dd>
-                    <semui:xEditableBoolean owner="${d}" field="accountLocked"/>
-                </dd>
-            </dl>
-            <dl>
-                <dt class="control-label">Password Expired</dt>
-                <dd>
-                    <semui:xEditableBoolean owner="${d}" field="passwordExpired"/>
-                </dd>
-            </dl>
-        </g:if>
-
+    <g:if test="${d.id != null}">
         <semui:tabs>
-            <semui:tabsItemWithoutLink tab="curatoryGroupUsers" defaultTab="curatoryGroupUsers" activeTab="${params.activeTab}" counts="${d.curatoryGroupUsers.size()}">
+            <semui:tabsItemWithoutLink tab="curatoryGroupUsers" defaultTab="curatoryGroupUsers"
+                                       activeTab="${params.activeTab}" counts="${d.curatoryGroupUsers.size()}">
                 Curatory Groups
             </semui:tabsItemWithoutLink>
             <g:if test="${userIsAdmin}">
@@ -96,7 +97,8 @@
 
             <g:if test="${userIsAdmin}">
 
-                <a class="ui right floated black button" href="#" onclick="$('#addCuratoryGroup').modal('show');">Add a Curatory Group</a>
+                <a class="ui right floated black button" href="#"
+                   onclick="$('#addCuratoryGroup').modal('show');">Add a Curatory Group</a>
 
                 <br>
                 <br>
@@ -107,9 +109,9 @@
                         <input type="hidden" name="activeTab" value="curatoryGroupUsers"/>
 
                         <div class="field">
-                        <semui:simpleReferenceDropdown name="__curatoryGroup"
-                                                       baseClass="wekb.CuratoryGroup"
-                                                       filter1="Current"/>
+                            <semui:simpleReferenceDropdown name="__curatoryGroup"
+                                                           baseClass="wekb.CuratoryGroup"
+                                                           filter1="Current"/>
                         </div>
 
                     </g:form>
@@ -117,7 +119,8 @@
             </g:if>
         </semui:tabsItemContent>
     </g:if>
-
+</g:if>
+<g:if test="${d.id != null}">
     <g:if test="${userIsAdmin}">
         <semui:tabsItemContent tab="roles" activeTab="${params.activeTab}">
             <table class="ui selectable striped sortable celled table">
@@ -148,7 +151,8 @@
 
             <g:if test="${userIsAdmin}">
 
-                <a class="ui right floated black button" href="#" onclick="$('#addRoleToUser').modal('show');">Add Role</a>
+                <a class="ui right floated black button" href="#"
+                   onclick="$('#addRoleToUser').modal('show');">Add Role</a>
 
                 <br>
                 <br>
