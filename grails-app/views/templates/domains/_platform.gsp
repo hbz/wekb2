@@ -72,3 +72,8 @@
                                 config="${RCConstants.YN}" disabled="${createObject}"/></dd>
 </dl>
 
+<dl>
+    <dt class="control-label">Counter Registry Api Uuid</dt>
+    <dd><semui:xEditable owner="${d}" field="counterRegistryApiUuid" disabled="${createObject}"/></dd>
+</dl>
+

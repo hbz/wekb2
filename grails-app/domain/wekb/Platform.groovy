@@ -75,6 +75,8 @@ class Platform  extends AbstractBase implements Auditable {
 
   Org provider
 
+  String counterRegistryApiUuid
+
   static hasMany = [
           roles: RefdataValue,
           ids: Identifier,
@@ -117,6 +119,8 @@ class Platform  extends AbstractBase implements Auditable {
 
     provider column: 'plat_provider_fk'
 
+    counterRegistryApiUuid column: 'plat_counter_registry_api_uuid'
+
   }
 
   static constraints = {
@@ -153,6 +157,8 @@ class Platform  extends AbstractBase implements Auditable {
     proxySupported(nullable: true, blank: false)
     titleNamespace(nullable: true)
     lastAuditDate (nullable: true)
+
+    counterRegistryApiUuid(nullable: true, blank: false)
 
     provider(nullable: true, blank: false)
   }

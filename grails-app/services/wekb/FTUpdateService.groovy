@@ -294,6 +294,8 @@ class FTUpdateService {
         result.statisticsAdminPortalUrl = kbc.statisticsAdminPortalUrl
         result.statisticsUpdate = kbc.statisticsUpdate?.value
         result.proxySupported = kbc.proxySupported?.value
+
+        result.counterRegistryApiUuid = kbc.counterRegistryApiUuid
         
         result
       }

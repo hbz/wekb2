@@ -8,4 +8,10 @@ databaseChangeLog = {
         dropColumn(columnName: "org_mission_fk_rv", tableName: "org")
     }
 
+    changeSet(author: "djebeniani (generated)", id: "1676554743429-3") {
+        addColumn(tableName: "platform") {
+            column(name: "plat_counter_registry_api_uuid", type: "varchar(255)")
+        }
+    }
+
 }
