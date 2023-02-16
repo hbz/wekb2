@@ -22,14 +22,6 @@
 </dl>
 <dl>
     <dt class="control-label">
-        Mission
-    </dt>
-    <dd>
-        <semui:xEditableRefData owner="${d}" field="mission" config="${RCConstants.ORG_MISSION}"/>
-    </dd>
-</dl>
-<dl>
-    <dt class="control-label">
         Homepage
     </dt>
     <dd>

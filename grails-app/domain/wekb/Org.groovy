@@ -19,7 +19,6 @@ class Org extends AbstractBase implements Auditable {
   Date dateCreated
   Date lastUpdated
 
-  RefdataValue mission
   String homepage
 
   String metadataDownloaderURL
@@ -49,7 +48,6 @@ class Org extends AbstractBase implements Auditable {
     dateCreated column: 'org_date_created'
 
     status column: 'org_status_rv_fk'
-    mission column: 'org_mission_fk_rv'
 
     homepage column: 'org_homepage'
     metadataDownloaderURL column: 'org_metadata_downloader_url', type: 'text'
@@ -59,7 +57,6 @@ class Org extends AbstractBase implements Auditable {
   }
 
   static constraints = {
-    mission(nullable: true, blank: true)
     homepage(nullable: true, blank: true)
     metadataDownloaderURL(nullable: true, blank: true)
     kbartDownloaderURL(nullable: true, blank: true)
