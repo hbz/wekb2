@@ -12,12 +12,13 @@
         Status
     </dt>
     <dd>
-        <sec:ifAnyGranted roles="ROLE_SUPERUSER">
-            <semui:xEditableRefData owner="${d}" field="status" config="${RCConstants.KBCOMPONENT_STATUS}"/>
-        </sec:ifAnyGranted>
-        <sec:ifNotGranted roles="ROLE_SUPERUSER">
-            ${d.status?.value ?: 'Not Set'}
-        </sec:ifNotGranted>
+        <semui:xEditableRefData owner="${d}" field="status" config="${RCConstants.KBCOMPONENT_STATUS}"/>
+        %{--  <sec:ifAnyGranted roles="ROLE_SUPERUSER">
+              <semui:xEditableRefData owner="${d}" field="status" config="${RCConstants.KBCOMPONENT_STATUS}"/>
+          </sec:ifAnyGranted>
+          <sec:ifNotGranted roles="ROLE_SUPERUSER">
+              ${d.status?.value ?: 'Not Set'}
+          </sec:ifNotGranted>--}%
     </dd>
 </dl>
 <dl>
