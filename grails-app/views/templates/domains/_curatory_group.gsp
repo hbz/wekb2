@@ -10,12 +10,12 @@
                                 required="true"/></dd>
 </dl>
 
-<g:if test="${d.id != null}">
-    <dl>
-        <dt class="control-label">Status</dt>
-        <dd><semui:xEditableRefData owner="${d}" field="status" config="${RCConstants.KBCOMPONENT_STATUS}"/></dd>
-    </dl>
+<dl>
+    <dt class="control-label">Status</dt>
+    <dd><semui:xEditableRefData owner="${d}" field="status" config="${RCConstants.KBCOMPONENT_STATUS}"/></dd>
+</dl>
 
+<g:if test="${d.id != null}">
     <sec:ifAnyGranted roles='ROLE_ADMIN'>
         <dl>
             <dt class="control-label">Members</dt>
