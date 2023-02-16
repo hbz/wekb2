@@ -21,6 +21,14 @@
     </dl>
 
     <g:if test="${userIsAdmin}">
+        <g:if test="${controllerName == 'create'}">
+            <dl>
+                <dt class="control-label">Password</dt>
+                <dd>
+                    <semui:xEditable owner="${d}" field="password" type="password"/>
+                </dd>
+            </dl>
+        </g:if>
         <dl>
             <dt class="control-label">Enabled</dt>
             <dd>

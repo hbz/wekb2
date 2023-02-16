@@ -101,6 +101,8 @@ class CreateComponentService {
                                     LocalDateTime ldt = LocalDateTime.ofInstant(instant, ZoneId.of("GMT"))
 
                                     result.newobj[p.key] = Date.from(ldt.atZone(ZoneId.systemDefault()).toInstant())
+                                }else if ( pprop.getType().name == 'boolean' ) {
+                                    result.newobj[p.key] = (p.value == '1') ? true : false
                                 }
                                 propertyWasSet = propertyWasSet || (p.value != null)
                             }
