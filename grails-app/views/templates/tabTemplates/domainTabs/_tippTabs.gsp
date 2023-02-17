@@ -4,7 +4,7 @@
 
         <g:if test="${d.publicationType?.value == 'Serial'}">
             <semui:tabsItemWithoutLink tab="tippcoverage"
-                                       class="active">
+                                       class="active"  counts="${d.coverageStatements.size()}">
                 Coverage
             </semui:tabsItemWithoutLink>
         </g:if>
