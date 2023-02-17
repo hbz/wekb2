@@ -336,7 +336,7 @@ class ExportService {
 
         List<Long> tippIDs = TitleInstancePackagePlatform.executeQuery(query, queryParams, [readOnly: true])
 
-        int max = 500
+        int max = 10000
         TitleInstancePackagePlatform.withSession { Session sess ->
             for (int offset = 0; offset < tippIDs.size(); offset += max) {
                 List tippAttributes = TitleInstancePackagePlatform.executeQuery(hqlQuery, [tippIDs: tippIDs.drop(offset).take(max)], [readOnly: true])
