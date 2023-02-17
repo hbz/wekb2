@@ -477,11 +477,13 @@ class GlobalSearchTemplatesService {
                                 [heading: 'Scope', property: 'scope', sort: 'scope'],
                                 [heading: 'Last Updated', property: 'lastUpdated', sort: 'lastUpdated'],
                                 [heading: 'Status', property: 'status?.value', sort: 'status'],
-                                [heading: 'Titles', property: 'currentTippCount', sort: 'currentTippCount'],
-                               //[heading: 'T', property: 'tippDuplicatesByURLCount'],
+                                [heading: 'Current Titles', property: 'currentTippCount', sort: 'currentTippCount'],
+                                [heading: 'Retired Titles', property: 'retiredTippCount', sort: 'retiredTippCount'],
+                                [heading: 'Expected Titles', property: 'expectedTippCount', sort: 'expectedTippCount'],
+                                [heading: 'Deleted Titles', property: 'deletedTippCount', sort: 'deletedTippCount'],
                                 [heading: 'Product IDs', property: 'anbieterProduktIDs'],
                                 [heading: 'Source', property: 'kbartSource?.name', link: true, sort: 'kbartSource.name'],
-                                [heading: 'Automatic Updates', property: 'kbartSource?.automaticUpdates']
+                                [heading: 'Automatic Updates', property: 'kbartSource?.automaticUpdates', link: true]
                         ],
                         actions   : [
                         ]
@@ -834,9 +836,12 @@ class GlobalSearchTemplatesService {
                                 [heading: 'Curatory Groups', property: 'curatoryGroupsCuratoryGroup', link: true],
                                 [heading: 'Content Type', property: 'contentType?.value', sort: 'contentType'],
                                 [heading: 'Product IDs', property: 'anbieterProduktIDs'],
-                                [heading: 'Titles', property: 'currentTippCount', sort: 'currentTippCount'],
+                                [heading: 'Current Titles', property: 'currentTippCount', sort: 'currentTippCount'],
+                                [heading: 'Retired Titles', property: 'retiredTippCount', sort: 'retiredTippCount'],
+                                [heading: 'Expected Titles', property: 'expectedTippCount', sort: 'expectedTippCount'],
+                                [heading: 'Deleted Titles', property: 'deletedTippCount', sort: 'deletedTippCount'],
                                 [heading: 'Last Updated', property: 'lastUpdated', sort: 'lastUpdated'],
-                                [heading: 'Automatic Updates', property: 'kbartSource?.automaticUpdates']
+                                [heading: 'Automatic Updates', property: 'kbartSource?.automaticUpdates', link: true]
                         ],
                         actions   : [
                         ]

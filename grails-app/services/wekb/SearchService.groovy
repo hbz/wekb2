@@ -178,7 +178,7 @@ class SearchService {
         result.new_recset = []
         log.debug("Create new recset..")
         result.recset.each { r ->
-            if(params.sort == 'currentTippCount'){
+            if(params.sort in ['currentTippCount', 'deletedTippCount', 'retiredTippCount', 'expectedTippCount']){
                 r = r[0]
             }
 
