@@ -704,10 +704,16 @@ class KbartProcessService {
                                     break
                                 case "preceding_publication_title_id": colMap.preceding_publication_title_id = c
                                     break
+                                case "superseding_publication_title_id": colMap.superseding_publication_title_id = c
+                                    break
                                 case "access_type": colMap.access_type = c
                                     break
 
                                     //beginn with headercolumn spec for wekb
+                                case "oa_type": colMap.oa_type = c
+                                    break
+                                case "ddc": colMap.ddc = c
+                                    break
                                 case "medium": colMap.medium = c
                                     break
                                 case "doi_identifier": colMap.doi_identifier = c
