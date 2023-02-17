@@ -6,13 +6,13 @@
                                    defaultTab="currentTipps" activeTab="${params.activeTab}">
             Current Titles
         </semui:tabsItemWithoutLink>
-        <semui:tabsItemWithoutLink tab="retiredTipps" counts="${d.getRetiredTippCount()}"
-                                   activeTab="${params.activeTab}">
-            Retired Titles
-        </semui:tabsItemWithoutLink>
         <semui:tabsItemWithoutLink tab="expectedTipps" counts="${d.getExpectedTippCount()}"
                                    activeTab="${params.activeTab}">
             Expected Titles
+        </semui:tabsItemWithoutLink>
+        <semui:tabsItemWithoutLink tab="retiredTipps" counts="${d.getRetiredTippCount()}"
+                                   activeTab="${params.activeTab}">
+            Retired Titles
         </semui:tabsItemWithoutLink>
         <semui:tabsItemWithoutLink tab="deletedTipps" counts="${d.getDeletedTippCount()}"
                                    activeTab="${params.activeTab}">
