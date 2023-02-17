@@ -166,7 +166,7 @@ wekb.languagesUrl = 'http://localhost:8070'
 wekb.ftupdate_enabled = true
 wekb.packageUpdate.enabled = false
 
-wekb.es.cluster = 'gokbg3-test'
+wekb.es.cluster = 'wekb-test'
 wekb.es.indices = [
         tipps             : 'wekbtipps',
         orgs              : 'wekborgs',
