@@ -1,5 +1,6 @@
 package wekb
 
+import org.apache.poi.xssf.usermodel.XSSFWorkbook
 import wekb.helper.RCConstants
 import wekb.helper.RDStore
 import wekb.utils.ServerUtils
@@ -177,13 +178,9 @@ class PublicController {
 
     String export_date = dateFormatService.formatDate(new Date());
 
-    String filename = "wekb_package_${pkg.name.toLowerCase()}_${export_date}.tsv"
+    String filename = "wekb_package_${pkg.name.toLowerCase()}_${export_date}"
 
     try {
-      response.setContentType('text/tab-separated-values');
-      response.setHeader("Content-disposition", "attachment; filename=\"${filename}\"")
-
-      ServletOutputStream out = response.outputStream
 
       List status = []
 
@@ -207,12 +204,40 @@ class PublicController {
 
       Map<String,List> export = exportService.exportPackageTippsAsTSVNew(pkg, status)
 
-      out.withWriter { writer ->
-        writer.write("we:kb Export : Provider (${pkg.provider?.name}) : Package (${pkg.name}) : ${export_date}\n");
-        writer.write(exportService.generateSeparatorTableString(export.titleRow, export.rows, '\t'))
+      if(params.exportFormat == 'xcel') {
+        response.setHeader("Content-disposition", "attachment; filename=${filename}.xlsx")
+        response.contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        Map sheetData = [:]
+
+        List columnData = []
+
+        export.rows.each { row ->
+          List rowData = []
+          row.each {
+            Map rowMap = [:]
+            rowMap.field = it
+            rowData << rowMap
+          }
+          columnData << rowData
+        }
+
+        XSSFWorkbook workbook = exportService.generateXLSXWorkbook('Package_Export', export.titleRow, columnData)
+        workbook.write(response.outputStream)
+        response.outputStream.flush()
+        response.outputStream.close()
+        return
+      }else {
+        response.setContentType('text/tab-separated-values');
+        response.setHeader("Content-disposition", "attachment; filename=${filename}.tsv")
+
+        ServletOutputStream out = response.outputStream
+        out.withWriter { writer ->
+          writer.write("we:kb Export : Provider (${pkg.provider?.name}) : Package (${pkg.name}) : ${export_date}\n");
+          writer.write(exportService.generateSeparatorTableString(export.titleRow, export.rows, '\t'))
+        }
+        out.flush()
+        out.close()
       }
-      out.flush()
-      out.close()
       return
 
     }

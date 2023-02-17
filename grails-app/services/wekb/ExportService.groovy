@@ -1,5 +1,10 @@
 package wekb
 
+import org.apache.poi.ooxml.POIXMLProperties
+import org.apache.poi.ss.usermodel.CellStyle
+import org.apache.poi.xssf.usermodel.XSSFCellStyle
+import org.apache.poi.xssf.usermodel.XSSFDataFormat
+import org.apache.poi.xssf.usermodel.XSSFFont
 import wekb.tools.UrlToolkit
 import wekb.helper.RCConstants
 import wekb.helper.RDStore
@@ -277,6 +282,7 @@ class ExportService {
                 " 'doiIdentifier',"+
                 " tipp.subjectArea, " +
                 " 'languages', " +
+                " 'ddcs', " +
                 " (select value from RefdataValue where id = tipp.accessType), " +
                 " (select value from RefdataValue where id = cs.coverageDepth), " +
                 " 'pkg.name', " +
@@ -484,6 +490,15 @@ class ExportService {
                                         row.add("")
                                     }
                                     break;
+                                case 'ddcs':
+                                    TitleInstancePackagePlatform titleInstancePackagePlatform = TitleInstancePackagePlatform.get(tippID)
+
+                                    if (titleInstancePackagePlatform.ddcs.size() > 0) {
+                                        row.add(sanitize(titleInstancePackagePlatform.ddcs.join(';')))
+                                    } else {
+                                        row.add("")
+                                    }
+                                    break;
                                 case 'pkg.name':
                                         row.add(sanitize(pkg.name))
                                     break;
@@ -578,6 +593,7 @@ class ExportService {
          'doi_identifier',
          'subject_area',
          'language',
+         'ddc',
          'access_type',
          'coverage_depth',
          'package_name',
@@ -618,5 +634,67 @@ class ExportService {
          'preceding_publication_title_id',
          'superseding_publication_title_id',
          'embargo_info']
+    }
+
+    XSSFWorkbook generateXLSXWorkbook(String sheetTile, List titleRow, List columnData) {
+        XSSFWorkbook wb = new XSSFWorkbook()
+        XSSFSheet sheet = wb.createSheet(sheetTile)
+        POIXMLProperties xmlProps = wb.getProperties()
+        POIXMLProperties.CoreProperties coreProps = xmlProps.getCoreProperties()
+        coreProps.setCreator('wekb')
+
+        XSSFCellStyle bold = wb.createCellStyle()
+        XSSFFont font = wb.createFont()
+        font.setBold(true)
+        bold.setFont(font)
+        XSSFCellStyle lb = wb.createCellStyle()
+        lb.setWrapText(true)
+
+        Row headerRow = sheet.createRow(0)
+        headerRow.setHeightInPoints(16.75f)
+        titleRow.eachWithIndex{ titleName, int i ->
+            Cell cell = headerRow.createCell(i)
+            cell.setCellValue(titleName)
+        }
+        sheet.createFreezePane(0,1)
+
+        try {
+            int rownum = 1
+            Row row
+            Cell cell
+            CellStyle numberStyle = wb.createCellStyle();
+            XSSFDataFormat df = wb.createDataFormat();
+            numberStyle.setDataFormat(df.getFormat("#,##0.00"));
+            columnData.each { rowData ->
+                int cellnum = 0
+                row = sheet.createRow(rownum)
+                rowData.each { cellData ->
+                    cell = row.createCell(cellnum++)
+                    if (cellData.field instanceof String) {
+                        cell.setCellValue((String) cellData.field)
+                        if (cellData.field.contains('\n'))
+                            cell.setCellStyle(lb)
+                    } else if (cellData.field instanceof Integer) {
+                        cell.setCellValue((Integer) cellData.field)
+                    } else if (cellData.field instanceof Double || cellData.field instanceof BigDecimal) {
+                        cell.setCellValue((Double) cellData.field)
+                        cell.setCellStyle(numberStyle)
+                    }
+                }
+                rownum++
+            }
+            for (int i = 0; i < titleRow.size(); i++) {
+                try {
+                    sheet.autoSizeColumn(i)
+                }
+                catch (Exception e) {
+                    log.error("Null pointer exception in column ${i}")
+                }
+            }
+        }
+        catch (ClassCastException e) {
+            log.error("Data delivered in inappropriate structure!")
+        }
+        wb
     }
 }
