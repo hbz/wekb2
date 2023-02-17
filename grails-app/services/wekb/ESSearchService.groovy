@@ -595,7 +595,7 @@ class ESSearchService{
         searchSourceBuilder.query(scrollQuery)
         searchSourceBuilder.size(scrollSize)
         //SearchRequest searchRequest = new SearchRequest(usedComponentTypes.values() as String[])
-        SearchRequest searchRequest = new SearchRequest(grailsApplication.config.wekb.es.searchApi.indices as String[])
+        SearchRequest searchRequest = new SearchRequest(grailsApplication.config.getProperty('wekb.es.searchApi', Map).indices as String[])
         //searchRequest.scroll("1m")
         // ... set scroll interval to 15 minutes, reason: ERMS-3460
         //SearchRequest searchRequest = new SearchRequest(grailsApplication.config.wekb.es.index)
@@ -761,7 +761,7 @@ class ESSearchService{
 
         try {
 
-          SearchRequest searchRequest = new SearchRequest(grailsApplication.config.wekb.es.searchApi.indices as String[])
+          SearchRequest searchRequest = new SearchRequest(grailsApplication.config.getProperty('wekb.es.searchApi', Map).indices as String[])
           SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder()
 
           searchSourceBuilder.query(exactQuery)
@@ -1249,44 +1249,5 @@ class ESSearchService{
     log.debug("Destroy")
   }
 
-
-  /**
-   * Tunnels the full query string to Elasticsearch and returns the full Elasticsearch result. Only GET operations
-   * are possible. The purpose of this endpoint is not to need to open the Elasticsearch port (usually 9200) for the
-   * outside world, in order to prevent non-GET operations.
-   * @param params The params necessary for this operation.
-   * @param params.q The query string for Elasticsearch
-   * @param params.size Optional parameter: The maximum size of the result.
-   * @return The exact Json response of the Elasticsearch GET operation.
-   * @throws Exception Any exception occuring.
-   */
-  def getApiTunnel(def params) throws Exception{
-    if (!params || !params.q){
-      return null
-    }
-
-    params.q = URLEncoder.encode(params.q, "UTF-8")
-
-    int port = grailsApplication.config.wekb.es.searchApi.port
-    def indices = grailsApplication.config.wekb.es.searchApi.indices
-    String host = grailsApplication.config.wekb.es.host
-    String url = "http://${host}:${port}/${indices.join(',')}/_search?q=${params.q}"
-    if (params.size){
-      url = url + "&size=${params.size}"
-    }
-    HTTPBuilder httpBuilder = new HTTPBuilder(url)
-    httpBuilder.request(Method.GET){ req ->
-      response.success = { resp, html ->
-        return html
-      }
-      response.failure = { resp ->
-        return [
-            'error': "Could not process Elasticsearch request.",
-            'status': resp.statusLine,
-            'message': resp.message
-        ]
-      }
-    }
-  }
 
 }

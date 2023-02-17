@@ -1,6 +1,6 @@
 package wekb
 
-
+import grails.core.GrailsApplication
 import wekb.helper.RDStore
 import wekb.utils.ServerUtils
 import grails.plugins.mail.MailService
@@ -8,6 +8,7 @@ import grails.plugins.mail.MailService
 class SendJobInfosJob {
 
   MailService mailService
+  GrailsApplication grailsApplication
 
   static triggers = {
     // Cron timer.
@@ -15,7 +16,7 @@ class SendJobInfosJob {
   }
 
   def execute() {
-    if (grailsApplication.config.wekb.sendJobInfosJob) {
+    if (grailsApplication.config.getProperty('wekb.sendJobInfosJob', Boolean)) {
       log.debug("Beginning scheduled send job infos job.")
       sendPackageUpdateInfosJob()
       log.info("send job infos job completed.")

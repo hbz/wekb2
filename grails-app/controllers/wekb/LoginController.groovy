@@ -162,7 +162,7 @@ class LoginController {
                             mailService.sendMail {
                                 to user.email
                                 from 'laser@hbz-nrw.de'
-                                subject grailsApplication.config.systemId + ' - Password Reset'
+                                subject grailsApplication.config.getProperty('systemId', String) + ' - Password Reset'
                                 body (view: '/mailTemplate/text/resetPassword', model: [newPassword: newPassword])
                             }
                             emailSent = true

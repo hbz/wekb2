@@ -53,14 +53,14 @@ class SearchController {
 
                 log.debug("Searching for ${query_str}");
 
-                def typing_field = grailsApplication.config.wekb.es.globalSearch.typingField ?: 'componentType'
+                def typing_field = grailsApplication.config.getProperty('wekb.es.globalSearch.typingField', String) ?: 'componentType'
 
                 //QueryBuilder esQuery = QueryBuilders.queryStringQuery(query_str)
 
-                log.debug("Using indices ${grailsApplication.config.wekb.es.globalSearch.indices.join(", ")}")
+                log.debug("Using indices ${grailsApplication.config.getProperty('wekb.es.globalSearch', Map).indices.join(", ")}")
 
                 SearchResponse searchResponse
-                SearchRequest searchRequest = new SearchRequest(grailsApplication.config.wekb.es.globalSearch.indices as String[])
+                SearchRequest searchRequest = new SearchRequest(grailsApplication.config.getProperty('wekb.es.globalSearch', Map).indices as String[])
                 SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder()
 
                 params.sort = params.sort ?: "sortname"
@@ -178,10 +178,10 @@ class SearchController {
 
                 //def typing_field = grailsApplication.config.wekb.es.globalSearch.typingField ?: 'componentType'
 
-                log.debug("Using indices ${grailsApplication.config.wekb.es.globalSearch.indices.join(", ")}")
+                log.debug("Using indices ${grailsApplication.config.getProperty('wekb.es.globalSearch', Map).indices.join(", ")}")
 
                 SearchResponse searchResponse
-                SearchRequest searchRequest = new SearchRequest(grailsApplication.config.wekb.es.globalSearch.indices as String[])
+                SearchRequest searchRequest = new SearchRequest(grailsApplication.config.getProperty('wekb.es.globalSearch', Map).indices as String[])
                 SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder()
 
                 params.sort = params.sort ?: "sortname"

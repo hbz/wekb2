@@ -230,6 +230,6 @@ class ApiController {
   def esconfig () {
 
     // If etag matches then we can just return the 304 to denote that the resource is unchanged.
-    render grailsApplication.config.wekb.es.searchApi as JSON
+    render grailsApplication.config.getProperty('wekb.es.searchApi', Map) as JSON
   }
 }

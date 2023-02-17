@@ -21,9 +21,9 @@ class BootStrapService {
     ESWrapperService ESWrapperService
 
     def init() {
-        log.info("Database: ${grailsApplication.config.dataSource.url}")
-        log.info("Database datasource dbCreate: ${grailsApplication.config.dataSource.dbCreate}")
-        log.info("Database migration plugin updateOnStart: ${grailsApplication.config.grails.plugin.databasemigration.updateOnStart}")
+        log.info("Database: ${grailsApplication.config.getProperty('dataSource.url', String)}")
+        log.info("Database datasource dbCreate: ${grailsApplication.config.getProperty('dataSource.dbCreate', String)}")
+        log.info("Database migration plugin updateOnStart: ${grailsApplication.config.getProperty('grails.plugin.databasemigration.updateOnStart', String)}")
 
         log.info("\n\n\n **WARNING** \n\n\n - Automatic create of component identifiers index is no longer part of the domain model");
 
@@ -171,7 +171,7 @@ class BootStrapService {
 
 
     def anonymizeUsers() {
-        if(grailsApplication.config.wekb.anonymizeUsers) {
+        if(grailsApplication.config.getProperty('wekb.anonymizeUsers', Boolean)) {
             log.info("anonymizeUsers")
             User.findAll().each { User user ->
 
@@ -194,7 +194,7 @@ class BootStrapService {
 
 
     def ensureEsIndices() {
-        def esIndices = grailsApplication.config.wekb.es.indices?.values()
+        def esIndices = grailsApplication.config.getProperty('wekb.es.indices', Map)?.values()
         for (String indexName in esIndices) {
             try {
                 ESWrapperService.createIndex(indexName)

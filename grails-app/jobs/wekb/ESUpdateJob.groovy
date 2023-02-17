@@ -1,11 +1,14 @@
 package wekb
 
+import grails.core.GrailsApplication
+
 class ESUpdateJob {
 
   // Allow only one run at a time.
   static concurrent = false
 
   def FTUpdateService
+  GrailsApplication grailsApplication
 
   static triggers = {
     // Cron timer.
@@ -13,7 +16,7 @@ class ESUpdateJob {
   }
 
   def execute() {
-    if ( grailsApplication.config.wekb.ftupdate_enabled ) {
+    if ( grailsApplication.config.getProperty('wekb.ftupdate_enabled', Boolean) ) {
       log.info ("Beginning scheduled es update job.")
       FTUpdateService.updateFTIndexes()
       log.info ("ESUpdateJob completed.")

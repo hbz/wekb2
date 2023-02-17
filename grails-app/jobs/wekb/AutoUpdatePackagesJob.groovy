@@ -1,5 +1,6 @@
 package wekb
 
+import grails.core.GrailsApplication
 import wekb.AutoUpdatePackagesService
 
 import java.util.concurrent.ExecutorService
@@ -7,6 +8,7 @@ import java.util.concurrent.ExecutorService
 class AutoUpdatePackagesJob {
 
   AutoUpdatePackagesService autoUpdatePackagesService
+  GrailsApplication grailsApplication
 
   ExecutorService executorService
   // Allow only one run at a time.
@@ -19,7 +21,7 @@ class AutoUpdatePackagesJob {
   }
 
   def execute() {
-    if (grailsApplication.config.wekb.packageUpdate.enabled) {
+    if (grailsApplication.config.getProperty('wekb.packageUpdate.enabled', Boolean)) {
       log.debug("Beginning scheduled auto update packages job.")
 
         autoUpdatePackagesService.findPackageToUpdateAndUpdate(true)

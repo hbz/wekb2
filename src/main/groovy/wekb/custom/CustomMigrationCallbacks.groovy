@@ -28,22 +28,22 @@ class CustomMigrationCallbacks {
             if(!Environment.isDevelopmentMode()) {
                 println '-        dumping current database ..'
 
-                def dataSource = grailsApplication.config.dataSource
+                def dataSource = grailsApplication.config.getProperty('dataSource', String)
                 URI uri = new URI(dataSource.url.substring(5))
 
-                String backupFile = grailsApplication.config.deployBackupLocation + "/wekb-backup-${(new SimpleDateFormat('yyyy-MM-dd-HH:mm:ss')).format(new Date())}.sql"
+                String backupFile = grailsApplication.config.getProperty('deployBackupLocation', String) + "/wekb-backup-${(new SimpleDateFormat('yyyy-MM-dd-HH:mm:ss')).format(new Date())}.sql"
 
                 Map<String, String> config = [
                         dbname: "${uri.getScheme()}://${dataSource.username}:${dataSource.password}@${uri.getHost()}:${uri.getPort()}${uri.getRawPath()}",
                         schema: "public",
                         file  : "${backupFile}"
                 ]
-                println '-           pg_dump: ' + grailsApplication.config.pgDumpPath
+                println '-           pg_dump: ' + grailsApplication.config.getProperty('pgDumpPath', String)
                 println '-            source: ' + database
                 println '-            target: ' + backupFile
 
                 try {
-                    String cmd = grailsApplication.config.pgDumpPath + ' -x ' + (config.collect { '--' + it.key + '=' + it.value }).join(' ')
+                    String cmd = grailsApplication.config.getProperty('pgDumpPath', String) + ' -x ' + (config.collect { '--' + it.key + '=' + it.value }).join(' ')
 
                     cmd.execute().waitForProcessOutput(System.out, System.err)
 

@@ -88,8 +88,8 @@
         <tr><td>JVM version</td><td>${System.getProperty('java.version')}</td></tr>
         <tr><td>Reloading active</td><td>${grails.util.Environment.reloadingAgentEnabled}</td></tr>
         <tr><td>Build Date</td><td><g:meta name="build.time"/></td></tr>
-        <tr><td>ES Cluster</td><td>${grailsApplication.config.wekb.es?.cluster}</td></tr>
-        <tr><td>ES Index</td><td>${grailsApplication.config.wekb.es?.indices?.values().join(", ")}</td></tr>
+        <tr><td>ES Cluster</td><td>${grailsApplication.config.getProperty('wekb.es.cluster', String)}</td></tr>
+        <tr><td>ES Index</td><td>${grailsApplication.config.getProperty('wekb.es.indices', Map).values().join(", ")}</td></tr>
     </table>
 </div>
 
@@ -100,9 +100,9 @@
         <table class="ui selectable striped sortable celled table">
         <tbody>
         <tr><td>DBM version</td><td>${dbmVersion[0]} : ${dbmVersion[1]} -------> ${wekb.utils.DateUtils.getSDF_NoZ().format(dbmVersion[2])}</td></tr>
-        <tr><td>DBM updateOnStart</td><td>${grailsApplication.config.grails.plugin.databasemigration.updateOnStart}</td>
+        <tr><td>DBM updateOnStart</td><td>${grailsApplication.config.getProperty('grails.plugin.databasemigration.updateOnStart', Boolean)}</td>
         </tr>
-        <tr><td>DataSource.dbCreate</td><td>${grailsApplication.config.dataSource.dbCreate}</td></tr>
+        <tr><td>DataSource.dbCreate</td><td>${grailsApplication.config.getProperty('dataSource.dbCreate', Boolean)}</td></tr>
         <tbody>
     </table>
 </div>
