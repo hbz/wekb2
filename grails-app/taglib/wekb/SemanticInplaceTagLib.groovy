@@ -355,6 +355,9 @@ class SemanticInplaceTagLib {
                 case Boolean.class:
                     result = (value == true ? 'Yes' : 'No')
                     break;
+                case Float.class:
+                    result = value
+                    break;
                 case Date.class:
                     def sdf = new java.text.SimpleDateFormat('yyyy-MM-dd')
                     result = sdf.format(value)
