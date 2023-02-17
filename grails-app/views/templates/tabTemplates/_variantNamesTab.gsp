@@ -24,9 +24,9 @@
                 <td><semui:xEditableRefData owner="${v}" field="locale" config="${RCConstants.KBCOMPONENT_VARIANTNAME_LOCAL}" overWriteEditable="${editable}"/></td>
                   <g:if test="${ editable && showActions }">
                     <td>
-                              <g:link controller="ajaxHtml" action="authorizeVariant" id="${v.id}" params="[tab: 'variantNames']">Make Authorized</g:link>,
+                              <g:link controller="ajaxHtml" action="authorizeVariant" id="${v.id}" params="[activeTab: 'variantNames']">Make Authorized</g:link>,
                               <g:link controller="ajaxHtml" class="confirm-click" data-confirm-message="Are you sure you wish to delete this Variant?"
-                                      action="deleteVariant" id="${v.id}" params="[tab: 'variantNames']">Delete</g:link>
+                                      action="deleteVariant" id="${v.id}" params="[activeTab: 'variantNames']">Delete</g:link>
                     </td>
                   </g:if>
               </tr>

@@ -6,7 +6,7 @@
             <g:if test="${editable}">
                 <g:link controller="ajaxHtml"
                         action="deleteLanguage" id="${componentLanguage.id}"
-                        params="[tab: 'languages', curationOverride: params.curationOverride]">Delete</g:link>
+                        params="[activeTab: 'languages', curationOverride: params.curationOverride]">Delete</g:link>
             </g:if>
             </div>
         </g:each>

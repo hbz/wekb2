@@ -274,8 +274,8 @@ class AjaxHtmlController {
 
     def redirect_to = request.getHeader('referer')
 
-    if (params.tab && params.tab.length() > 0) {
-      redirect_to = "${redirect_to}#${params.tab}"
+    if (params.activeTab && params.activeTab.length() > 0) {
+      redirect_to = "${redirect_to}#${params.activeTab}"
     }
     redirect(url: redirect_to)
   }
@@ -351,8 +351,8 @@ class AjaxHtmlController {
 
     def redirect_to = request.getHeader('referer')
 
-    if (params.tab && params.tab.length() > 0) {
-      redirect_to = "${redirect_to}#${params.tab}"
+    if (params.activeTab && params.activeTab.length() > 0) {
+      redirect_to = "${redirect_to}#${params.activeTab}"
     }
     redirect(url: redirect_to)
   }
@@ -388,8 +388,8 @@ class AjaxHtmlController {
 
     def redirect_to = request.getHeader('referer')
 
-    if (params.tab && params.tab.length() > 0) {
-      redirect_to = "${redirect_to}#${params.tab}"
+    if (params.activeTab && params.activeTab.length() > 0) {
+      redirect_to = "${redirect_to}#${params.activeTab}"
     }
     redirect(url: redirect_to)
   }
@@ -434,8 +434,8 @@ class AjaxHtmlController {
     if ( params.redirect ) {
       redirect_to = params.redirect
     }
-    else if ( ( params.tab ) && ( params.tab.length() > 0 ) ) {
-      redirect_to = "${redirect_to}#${params.tab}"
+    else if ( ( params.activeTab ) && ( params.activeTab.length() > 0 ) ) {
+      redirect_to = "${redirect_to}#${params.activeTab}"
     }
 
     redirect(url: redirect_to)
@@ -622,8 +622,8 @@ class AjaxHtmlController {
 
     if (params.redirect) {
       redirect_to = params.redirect
-    } else if ((params.tab) && (params.tab.length() > 0)) {
-      redirect_to = "${redirect_to}#${params.tab}"
+    } else if ((params.activeTab) && (params.activeTab.length() > 0)) {
+      redirect_to = "${redirect_to}#${params.activeTab}"
     }
 
     redirect(url: redirect_to)
@@ -771,8 +771,8 @@ class AjaxHtmlController {
 
     if (params.redirect) {
       redirect_to = params.redirect
-    } else if ((params.tab) && (params.tab.length() > 0)) {
-      redirect_to = "${redirect_to}#${params.tab}"
+    } else if ((params.activeTab) && (params.activeTab.length() > 0)) {
+      redirect_to = "${redirect_to}#${params.activeTab}"
     }
 
     redirect(url: redirect_to)
@@ -820,8 +820,8 @@ class AjaxHtmlController {
 
     if (params.redirect) {
       redirect_to = params.redirect
-    } else if ((params.tab) && (params.tab.length() > 0)) {
-      redirect_to = "${redirect_to}#${params.tab}"
+    } else if ((params.activeTab) && (params.activeTab.length() > 0)) {
+      redirect_to = "${redirect_to}#${params.activeTab}"
     }
 
     redirect(url: redirect_to)
@@ -863,8 +863,8 @@ class AjaxHtmlController {
 
     if (params.redirect) {
       redirect_to = params.redirect
-    } else if ((params.tab) && (params.tab.length() > 0)) {
-      redirect_to = "${redirect_to}#${params.tab}"
+    } else if ((params.activeTab) && (params.activeTab.length() > 0)) {
+      redirect_to = "${redirect_to}#${params.activeTab}"
     }
 
     redirect(url: redirect_to)
@@ -895,8 +895,8 @@ class AjaxHtmlController {
 
     if (params.redirect) {
       redirect_to = params.redirect
-    } else if ((params.tab) && (params.tab.length() > 0)) {
-      redirect_to = "${redirect_to}#${params.tab}"
+    } else if ((params.activeTab) && (params.activeTab.length() > 0)) {
+      redirect_to = "${redirect_to}#${params.activeTab}"
     }
 
     redirect(url: redirect_to)
@@ -931,8 +931,8 @@ class AjaxHtmlController {
 
     if (params.redirect) {
       redirect_to = params.redirect
-    } else if ((params.tab) && (params.tab.length() > 0)) {
-      redirect_to = "${redirect_to}#${params.tab}"
+    } else if ((params.activeTab) && (params.activeTab.length() > 0)) {
+      redirect_to = "${redirect_to}#${params.activeTab}"
     }
 
     redirect(url: redirect_to)

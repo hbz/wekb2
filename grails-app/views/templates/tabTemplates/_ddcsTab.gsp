@@ -19,7 +19,7 @@
                     <g:if test="${editable}">
                         <td><g:link controller='ajaxHtml'
                                 action='unlinkManyToMany'
-                                params="${["__context": "${d.class.name}:${d.id}", "__property": "ddcs", "__itemToRemove": "${ddc.getClass().name}:${ddc.id}", tab: 'ddcs']}">Delete</g:link>
+                                params="${["__context": "${d.class.name}:${d.id}", "__property": "ddcs", "__itemToRemove": "${ddc.getClass().name}:${ddc.id}", activeTab: 'ddcs']}">Delete</g:link>
                         </td>
                     </g:if>
                 </tr>
@@ -37,7 +37,7 @@
 
                         <semui:modal id="ddcModal" title="Add Dewey Decimal Classification">
 
-                            <g:form class="ui form" controller="ajaxHtml" action="addToStdCollection" params="[tab: 'ddcs']">
+                            <g:form class="ui form" controller="ajaxHtml" action="addToStdCollection" params="[activeTab: 'ddcs']">
                                 <input type="hidden" name="__context" value="${d.class.name}:${d.id}"/>
                                 <input type="hidden" name="__property" value="ddcs"/>
                                 <input type="hidden" name="object" value="${d.getClass().name}:${d.id}"/>

@@ -26,7 +26,7 @@
                             <td>
                                     <g:link controller="ajaxHtml" class="confirm-click"
                                             data-confirm-message="Are you sure you wish to delete this Price?"
-                                            action="deletePrice" params="[id: somePrice.id, tab: 'prices', curationOverride: params.curationOverride]">Delete</g:link>
+                                            action="deletePrice" params="[id: somePrice.id, activeTab: 'prices', curationOverride: params.curationOverride]">Delete</g:link>
 
                             </td>
                         </g:if>
@@ -43,7 +43,7 @@
 
                         <semui:modal id="pricesModal" title="Add Price">
 
-                            <g:form controller="ajaxHtml" action="addToCollection" params="[tab: 'prices']" class="ui form">
+                            <g:form controller="ajaxHtml" action="addToCollection" params="[activeTab: 'prices']" class="ui form">
                                 <input type="hidden" name="__context"
                                        value="${d.class.name}:${d.id}"/>
                                 <input type="hidden" name="__newObjectClass"

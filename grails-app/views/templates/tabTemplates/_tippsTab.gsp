@@ -65,5 +65,5 @@
 </table>
 
 <g:if test="${tippsCount ?: 0 > 0}">
-        <semui:paginate controller="public" action="packageContent" params="${params+[tab: tab]}" max="${max}" total="${tippsCount}"/>
+        <semui:paginate controller="public" action="packageContent" params="${params+[activeTab: tab]}" max="${max}" total="${tippsCount}"/>
 </g:if>
