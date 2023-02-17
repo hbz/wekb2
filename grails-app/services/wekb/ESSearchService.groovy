@@ -349,7 +349,7 @@ class ESSearchService{
 
   private void addStatusQuery(query, errors, status) {
     if (!status){
-      query.must(QueryBuilders.termQuery('status', 'Current'))
+      //query.must(QueryBuilders.termQuery('status', 'Current'))
       return
     }
     QueryBuilder statusQuery = QueryBuilders.boolQuery()
