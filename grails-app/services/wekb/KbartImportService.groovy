@@ -876,7 +876,7 @@ class KbartImportService {
         result
     }*/
 
-    LinkedHashMap tippImportForUpdate(Map tippMap, LinkedHashMap tippsWithCoverage, List<Long> tippDuplicates = [], UpdatePackageInfo updatePackageInfo, List kbartRowsToCreateTipps, IdentifierNamespace identifierNamespace) {
+    LinkedHashMap tippImportForUpdate(Map tippMap, LinkedHashMap tippsWithCoverage, HashSet<Long> tippDuplicates = [], UpdatePackageInfo updatePackageInfo, List kbartRowsToCreateTipps, IdentifierNamespace identifierNamespace) {
         LinkedHashMap result = [newTipp: false, removedTipp: false, tippObject: null, updatePackageInfo: updatePackageInfo,
                                 tippsWithCoverage: tippsWithCoverage, kbartRowsToCreateTipps: kbartRowsToCreateTipps, tippDuplicates: tippDuplicates]
         log.info("Begin tippImportForUpdate")
@@ -985,7 +985,7 @@ class KbartImportService {
                                             if (index == 0) {
                                                 tipp = titleInstancePackagePlatform
                                             } else {
-                                                result.tippDuplicates << titleInstancePackagePlatform.id
+                                                result.tippDuplicates.add(titleInstancePackagePlatform.id)
                                             }
                                         }
 

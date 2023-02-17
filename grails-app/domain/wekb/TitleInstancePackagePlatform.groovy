@@ -189,11 +189,11 @@ class TitleInstancePackagePlatform  extends AbstractBase implements Auditable {
     note(nullable: true, blank: true)
     accessType (nullable: true, blank: true)
     accessStartDate(nullable: true, blank: false)
-    accessEndDate(validator: { val, obj ->
+/*    accessEndDate(validator: { val, obj ->
       if (obj.accessStartDate && val && (obj.hasChanged('accessEndDate') || obj.hasChanged('accessStartDate')) && obj.accessStartDate > val) {
         return ['accessEndDate.endPriorToStart']
       }
-    })
+    })*/
     url(nullable: true, blank: true)
     firstAuthor(nullable: true, blank: true)
     publicationType(nullable: true, blank: true)

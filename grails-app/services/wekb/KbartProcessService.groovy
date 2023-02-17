@@ -111,11 +111,11 @@ class KbartProcessService {
         int previouslyTipps = existing_tipp_ids.size()
 
         LinkedHashMap tippsWithCoverage = [:]
-        List<Long> tippDuplicates = []
+        HashSet<Long> tippDuplicates = new HashSet<Long>()
         List setTippsNotToDeleted = []
         Map errors = [global: [], tipps: []]
 
-        List<Long> tippsFound = []
+        HashSet<Long> tippsFound = new HashSet<Long>()
         List invalidKbartRowsForTipps = []
         int removedTipps = 0
         int newTipps = 0
@@ -259,7 +259,7 @@ class KbartProcessService {
                                             if(updateTipp) {
                                                 updateTipp.lastUpdated = new Date()
                                                 updateTipp = updateTipp.save()
-                                                tippsFound << updateTipp.id
+                                                tippsFound.add(updateTipp.id)
                                             }
                                         }
 
@@ -380,13 +380,24 @@ class KbartProcessService {
             if(!onlyRowsWithLastChanged && tippDuplicates.size() > 0){
                 log.info("remove tippDuplicates -> ${tippDuplicates.size()}: ${tippDuplicates}")
 
-                tippDuplicates.each {
-                    if(!(it in tippsFound)){
-                        TitleInstancePackagePlatform.executeUpdate("update TitleInstancePackagePlatform set status = :removed, lastUpdated = :currentDate where id = (:tippId) and status != :removed", [removed: RDStore.KBC_STATUS_REMOVED, tippId: it, currentDate: new Date()])
+                int maxDuplicates = 20000
+                int idxDuplicates = 0
+                int tippDuplicatesCount = tippDuplicates.size()
 
-                        TitleInstancePackagePlatform tipp = TitleInstancePackagePlatform.get(it)
-                        UpdateTippInfo.withTransaction {
-                            updatePackageInfo.refresh()
+                for (int offset = 0; offset < tippDuplicatesCount; offset += maxDuplicates) {
+                    def tippDuplicatesTippsFromWekbToProcess = tippDuplicates.drop(offset).take(maxDuplicates)
+
+                    tippDuplicatesTippsFromWekbToProcess.each { tippID ->
+                        if(!(tippID in tippsFound)){
+                            idxDuplicates++
+                            log.info("removeTippsFromWekb cause tippDuplicates (#$idxDuplicates of $tippDuplicatesCount): tippID ${tippID}")
+
+                            KBComponent.executeUpdate("update KBComponent set status = :removed, lastUpdated = :currentDate where id = (:tippId) and status != :removed", [removed: RDStore.KBC_STATUS_REMOVED, tippId: tippID, currentDate: new Date()])
+
+                            StatelessSession session = sessionFactory.openStatelessSession()
+                            Transaction tx = session.beginTransaction()
+
+                            TitleInstancePackagePlatform tipp = TitleInstancePackagePlatform.get(tippID)
                             UpdateTippInfo updateTippInfo = new UpdateTippInfo(
                                     description: "Remove Title '${tipp.name}' because is a duplicate in wekb!",
                                     tipp: tipp,
@@ -398,8 +409,16 @@ class KbartProcessService {
                                     newValue: 'Removed',
                                     tippProperty: 'status',
                                     kbartProperty: 'status',
-                                    updatePackageInfo: updatePackageInfo
-                            ).save()
+                                    updatePackageInfo: updatePackageInfo,
+                                    lastUpdated: new Date(),
+                                    dateCreated: new Date(),
+                                    uuid: UUID.randomUUID().toString()
+                            )
+                            session.insert(updateTippInfo)
+
+                            tx.commit()
+                            session.close()
+
                             removedTipps++
                         }
                     }
@@ -497,7 +516,10 @@ class KbartProcessService {
                         [package: pkg, status: listStatus])
 
 
-                List<Long> deleteTippsFromWekb = existingTippsAfterImport - tippsFound
+                HashSet<Long> existingTippsAfterImportHashSet = new HashSet<Long>(existingTippsAfterImport)
+
+                HashSet<Long> deleteTippsFromWekb = existingTippsAfterImportHashSet - tippsFound
+
 
                 log.info("deleteTippsFromWekb: ${deleteTippsFromWekb.size()}")
                 if(deleteTippsFromWekb.size() > 0){
@@ -507,7 +529,7 @@ class KbartProcessService {
                     int deletedCount = deleteTippsFromWekb.size()
 
                     for (int offset = 0; offset < deletedCount; offset += maxDeleted) {
-                        List deleteTippsFromWekbToProcess = deleteTippsFromWekb.drop(offset).take(maxDeleted)
+                        def deleteTippsFromWekbToProcess = deleteTippsFromWekb.drop(offset).take(maxDeleted)
                         TitleInstancePackagePlatform.executeUpdate("update TitleInstancePackagePlatform set status = :deleted, lastUpdated = :currentDate where id in (:tippIDs) and status != :deleted", [deleted: RDStore.KBC_STATUS_DELETED, tippIDs: deleteTippsFromWekbToProcess, currentDate: new Date()])
                     }
 
