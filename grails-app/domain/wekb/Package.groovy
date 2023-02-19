@@ -52,8 +52,6 @@ class Package  extends AbstractBase implements Auditable {
 
   String freeTrialPhase
 
-  String globalNote
-
   String descriptionURL
 
   Set variantNames = []
@@ -95,7 +93,6 @@ class Package  extends AbstractBase implements Auditable {
     file column: 'pkg_file_rv_fk'
     contentType column: 'pkg_content_type_rv_fk'
 
-    globalNote column: 'pkg_global_note'
     descriptionURL column: 'pkg_descr_url'
 
     freeTrial column: 'pkg_free_trial_rv_fk'
@@ -141,7 +138,6 @@ class Package  extends AbstractBase implements Auditable {
     breakable(nullable: true, blank: false)
     consistent(nullable: true, blank: false)
     paymentType(nullable: true, blank: false)
-    globalNote(nullable: true, blank: true)
     openAccess (nullable: true, blank: true)
     contentType (nullable: true, blank: true)
     file (nullable: true, blank: true)

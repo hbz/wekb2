@@ -14,4 +14,8 @@ databaseChangeLog = {
         }
     }
 
+    changeSet(author: "djebeniani (generated)", id: "1676554743429-4") {
+        dropColumn(columnName: "pkg_global_note", tableName: "package")
+    }
+
 }

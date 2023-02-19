@@ -42,14 +42,6 @@ class ManagementService {
             [
                     type       : 'lookup',
                     baseClass  : 'wekb.RefdataValue',
-                    filter1    : RCConstants.PACKAGE_GLOBAL,
-                    prompt     : 'Global Note',
-                    bParam     : 'pkg_batch_globalNote',
-                    bProp       : 'globalNote'
-            ],
-            [
-                    type       : 'lookup',
-                    baseClass  : 'wekb.RefdataValue',
                     filter1    : RCConstants.PACKAGE_BREAKABLE,
                     prompt     : 'Breakable',
                     bParam     : 'pkg_batch_breakable',

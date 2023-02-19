@@ -54,15 +54,6 @@
 
 <dl>
     <dt class="control-label">
-        Global Note
-    </dt>
-    <dd>
-        <semui:xEditable owner="${d}" field="globalNote" disabled="${createObject}"/>
-    </dd>
-</dl>
-
-<dl>
-    <dt class="control-label">
         Breakable
     </dt>
     <dd>
