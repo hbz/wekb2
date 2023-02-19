@@ -2128,7 +2128,7 @@ class KbartImportService {
         }
 
         // KBART -> title_id  -> identifiers
-        if (tippMap.title_id) {
+        if (tippMap.title_id && identifierNamespace) {
                 result.changedTipp = createOrUpdateIdentifierForTipp(result, tipp, identifierNamespace.value, tippMap.title_id, 'title_id', updatePackageInfo)
                 identifierNameSpacesExistOnTipp << identifierNamespace.value
         }
@@ -2264,8 +2264,8 @@ class KbartImportService {
 
         int counterNewTippsToProcess = tippMaps.size()
 
-        def dataSource = Holders.grailsApplication.mainContext.getBean('dataSource')
-        Sql sql = new Sql(dataSource)
+        //def dataSource = Holders.grailsApplication.mainContext.getBean('dataSource')
+        //Sql sql = new Sql(dataSource)
 
         int max = 500
         int idx = 0
@@ -2425,7 +2425,7 @@ class KbartImportService {
                     }
 
                     // KBART -> title_id  -> identifiers
-                    if (tippMap.kbartRowMap.title_id) {
+                    if (tippMap.kbartRowMap.title_id && identifierNamespace) {
                             result.changedTipp = createOrUpdateIdentifierForTipp(result, tipp, identifierNamespace.value, tippMap.kbartRowMap.title_id, 'title_id', updatePackageInfo)
                     }
 

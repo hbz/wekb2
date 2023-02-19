@@ -201,7 +201,7 @@ class KbartProcessService {
                             try {
 
                                 Map tippErrorMap = [:]
-                                def validation_result = kbartImportValidationService.tippValidateForAutoUpdate(kbartRow)
+                                def validation_result = kbartImportValidationService.tippValidateForKbart(kbartRow)
                                 if (!validation_result.valid) {
                                     if (!invalidKbartRowsForTipps.contains(kbartRow.rowIndex)) {
                                         invalidKbartRowsForTipps << kbartRow.rowIndex
