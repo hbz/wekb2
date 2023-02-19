@@ -30,7 +30,7 @@ class KbartProcessService {
         List kbartRows = []
         String lastUpdateURL = ""
         Date startTime = new Date()
-        UpdatePackageInfo updatePackageInfo = new UpdatePackageInfo(pkg: pkg, startTime: startTime, status: RDStore.UPDATE_STATUS_SUCCESSFUL, description: "Starting Update package.", onlyRowsWithLastChanged: onlyRowsWithLastChanged, automaticUpdate: false)
+        UpdatePackageInfo updatePackageInfo = new UpdatePackageInfo(pkg: pkg, startTime: startTime, status: RDStore.UPDATE_STATUS_SUCCESSFUL, description: "Starting Update package.", onlyRowsWithLastChanged: onlyRowsWithLastChanged, automaticUpdate: false, kbartHasWekbFields: false).save()
         try {
             kbartRows = kbartProcess(tsvFile, lastUpdateURL, updatePackageInfo)
 
@@ -55,15 +55,15 @@ class KbartProcessService {
         } catch (Exception exception) {
             log.error("Error by kbartImportManual: ${exception.message}" + exception.printStackTrace())
             UpdatePackageInfo.withTransaction {
-                UpdatePackageInfo updatePackageFail = new UpdatePackageInfo()
-                updatePackageFail.description = "An error occurred while processing the KBART file. More information can be seen in the system log."
-                updatePackageFail.status = RDStore.UPDATE_STATUS_FAILED
-                updatePackageFail.startTime = startTime
-                updatePackageFail.endTime = new Date()
-                updatePackageFail.pkg = pkg
-                updatePackageFail.onlyRowsWithLastChanged = onlyRowsWithLastChanged
-                updatePackageFail.automaticUpdate = false
-                updatePackageFail.save()
+                //UpdatePackageInfo updatePackageFail = new UpdatePackageInfo()
+                updatePackageInfo.description = "An error occurred while processing the KBART file. More information can be seen in the system log."
+                updatePackageInfo.status = RDStore.UPDATE_STATUS_FAILED
+                updatePackageInfo.startTime = startTime
+                updatePackageInfo.endTime = new Date()
+                updatePackageInfo.pkg = pkg
+                updatePackageInfo.onlyRowsWithLastChanged = onlyRowsWithLastChanged
+                updatePackageInfo.automaticUpdate = false
+                updatePackageInfo.save()
             }
         }
         log.info("End kbartImportManual ${pkg.name}")
@@ -138,7 +138,7 @@ class KbartProcessService {
             int idx = 0
 
             if(onlyRowsWithLastChanged){
-                if(headerOfKbart.containsKey("last_changed")) {
+                if(headerOfKbart.containsKey("last_changed") && (pkg.kbartSource)) {
                     LocalDate currentLastChangedInKbart = convertToLocalDateViaInstant(lastChangedInKbart)
                     LocalDate lastUpdated = convertToLocalDateViaInstant(pkg.kbartSource.lastRun)
                     if(currentLastChangedInKbart && currentLastChangedInKbart.isBefore(lastUpdated)){

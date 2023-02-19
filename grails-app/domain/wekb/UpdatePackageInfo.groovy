@@ -92,7 +92,8 @@ class UpdatePackageInfo {
 
     static belongsTo = [pkg: Package]
 
-    def beforeInsert(){
+    def beforeValidate (){
+        log.debug("beforeValidate for ${this}")
         generateUuid()
     }
 

@@ -73,7 +73,8 @@ class UpdateTippInfo {
     static belongsTo = [updatePackageInfo: UpdatePackageInfo,
                         tipp: TitleInstancePackagePlatform]
 
-    def beforeInsert(){
+    def beforeValidate (){
+        log.debug("beforeValidate for ${this}")
         generateUuid()
     }
 

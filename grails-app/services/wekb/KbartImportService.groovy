@@ -1569,6 +1569,7 @@ class KbartImportService {
             }
             // refdata setStringIfDifferent(tipp, 'coverageDepth', c.coverageDepth)
         }*/
+        tipp.save()
         log.debug("createOrUpdateCoverageForTipp End")
     }
 
@@ -2337,6 +2338,7 @@ class KbartImportService {
                         hostPlatform: tippMap.hostPlatform
                         )
                 if (tipp) {
+                    tipp.kbartImportRunning = true
                     tipp.save()
                 } else {
                     log.error("TIPP creation failed!")
@@ -2344,7 +2346,6 @@ class KbartImportService {
                 if (!tipp) {
                     log.error("TIPP creation failed!")
                 } else {
-                    tipp.kbartImportRunning = true
 
                     Map result = [newTipp: true]
 
@@ -2514,10 +2515,10 @@ class KbartImportService {
                 log.error("createTippBatch: -> ${tippMap.kbartRowMap}:" + e.toString())
             }
 
-                    if (idx % 250 == 0) {
+                   /* if (idx % 250 == 0) {
                         log.info("Clean up");
                         cleanupService.cleanUpGorm()
-                    }
+                    }*/
                 }
                 sess.flush()
                 sess.clear()

@@ -80,10 +80,10 @@ class AutoUpdatePackagesService {
             String lastUpdateURL = ""
             Date startTime = new Date()
             if (pkg.status in [RDStore.KBC_STATUS_REMOVED, RDStore.KBC_STATUS_DELETED]) {
-                UpdatePackageInfo updatePackageInfo = new UpdatePackageInfo(pkg: pkg, startTime: startTime, endTime: new Date(), status: RDStore.UPDATE_STATUS_SUCCESSFUL, description: "Package status is ${pkg.status.value}. Update for this package is not starting.", onlyRowsWithLastChanged: onlyRowsWithLastChanged, automaticUpdate: true)
+                UpdatePackageInfo updatePackageInfo = new UpdatePackageInfo(pkg: pkg, startTime: startTime, endTime: new Date(), status: RDStore.UPDATE_STATUS_SUCCESSFUL, description: "Package status is ${pkg.status.value}. Update for this package is not starting.", onlyRowsWithLastChanged: onlyRowsWithLastChanged, automaticUpdate: true, kbartHasWekbFields: false)
                 updatePackageInfo.save()
             } else {
-                UpdatePackageInfo updatePackageInfo = new UpdatePackageInfo(pkg: pkg, startTime: startTime, status: RDStore.UPDATE_STATUS_SUCCESSFUL, description: "Starting Update package.", onlyRowsWithLastChanged: onlyRowsWithLastChanged, automaticUpdate: true)
+                UpdatePackageInfo updatePackageInfo = new UpdatePackageInfo(pkg: pkg, startTime: startTime, status: RDStore.UPDATE_STATUS_SUCCESSFUL, description: "Starting Update package.", onlyRowsWithLastChanged: onlyRowsWithLastChanged, automaticUpdate: true).save()
                 try {
                     if (pkg.kbartSource && pkg.kbartSource.url) {
                         List<URL> updateUrls
@@ -140,30 +140,30 @@ class AutoUpdatePackagesService {
                         }
                     }else {
                         UpdatePackageInfo.withTransaction {
-                            UpdatePackageInfo updatePackageFail = new UpdatePackageInfo()
-                            updatePackageFail.description = "No url define in the source of the package."
-                            updatePackageFail.status = RDStore.UPDATE_STATUS_FAILED
-                            updatePackageFail.startTime = startTime
-                            updatePackageFail.endTime = new Date()
-                            updatePackageFail.pkg = pkg
-                            updatePackageFail.onlyRowsWithLastChanged = onlyRowsWithLastChanged
-                            updatePackageFail.automaticUpdate = true
-                            updatePackageFail.save()
+                            //UpdatePackageInfo updatePackageFail = new UpdatePackageInfo()
+                            updatePackageInfo.description = "No url define in the source of the package."
+                            updatePackageInfo.status = RDStore.UPDATE_STATUS_FAILED
+                            updatePackageInfo.startTime = startTime
+                            updatePackageInfo.endTime = new Date()
+                            updatePackageInfo.pkg = pkg
+                            updatePackageInfo.onlyRowsWithLastChanged = onlyRowsWithLastChanged
+                            updatePackageInfo.automaticUpdate = true
+                            updatePackageInfo.save()
                         }
                     }
 
                 } catch (Exception exception) {
                     log.error("Error by startAutoPackageUapdate: ${exception.message}" + exception.printStackTrace())
                     UpdatePackageInfo.withTransaction {
-                        UpdatePackageInfo updatePackageFail = new UpdatePackageInfo()
-                        updatePackageFail.description = "An error occurred while processing the KBART file. More information can be seen in the system log. File from URL: ${lastUpdateURL}"
-                        updatePackageFail.status = RDStore.UPDATE_STATUS_FAILED
-                        updatePackageFail.startTime = startTime
-                        updatePackageFail.endTime = new Date()
-                        updatePackageFail.pkg = pkg
-                        updatePackageFail.onlyRowsWithLastChanged = onlyRowsWithLastChanged
-                        updatePackageFail.automaticUpdate = true
-                        updatePackageFail.save()
+                        //UpdatePackageInfo updatePackageFail = new UpdatePackageInfo()
+                        updatePackageInfo.description = "An error occurred while processing the KBART file. More information can be seen in the system log. File from URL: ${lastUpdateURL}"
+                        updatePackageInfo.status = RDStore.UPDATE_STATUS_FAILED
+                        updatePackageInfo.startTime = startTime
+                        updatePackageInfo.endTime = new Date()
+                        updatePackageInfo.pkg = pkg
+                        updatePackageInfo.onlyRowsWithLastChanged = onlyRowsWithLastChanged
+                        updatePackageInfo.automaticUpdate = true
+                        updatePackageInfo.save()
                     }
                 }
             }
