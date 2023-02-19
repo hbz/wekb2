@@ -156,7 +156,7 @@ environments:
             headers:
                 enabled: false
         javamelody:
-            disabled: false
+            disabled: true
     production:
         dataSource:
             dbCreate: none #update // none because of database migration
