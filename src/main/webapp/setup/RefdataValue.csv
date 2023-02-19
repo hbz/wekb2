@@ -336,11 +336,7 @@ MembershipRole;Member;Member;Member
 MembershipStatus;Approved;Approved;Approved
 MembershipStatus;Pending;Pending;Pending
 MembershipStatus;Rejected/Revoked;Rejected/Revoked;Rejected/Revoked
-Org.Role;Broker;Broker;Broker
 Org.Role;Content Provider;Content Provider;Content Provider
-Org.Role;Issuing Body;Issuing Body;Issuing Body
-Org.Role;Licensee;Licensee;Licensee
-Org.Role;Licensor;Licensor;Licensor
 Org.Role;Platform Provider;Platform Provider;Platform Provider
 Org.Role;Publisher;Publisher;Publisher
 Org.Role;Vendor;Vendor;Vendor
