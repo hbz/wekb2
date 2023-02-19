@@ -45,6 +45,15 @@
 
     <semui:tabsItemContent tab="currentTipps" defaultTab="currentTipps" activeTab="${params.activeTab}">
 
+        <g:if test="${editable}">
+            <div class="ui right floated buttons">
+                <g:link class="ui button black" controller="create" action="index"
+                        params="[tmpl: 'wekb.TitleInstancePackagePlatform', linkwithPkg: d.id, linkwithPlatform: d.nominalPlatform?.id]">Add new Title for this package</g:link>
+            </div>
+            <br>
+            <br>
+        </g:if>
+
         <div class="content">
             <g:link class="display-inline" controller="search" action="inlineSearch"
                     params="[s_controllerName: controllerName, s_actionName: actionName, objectUUID: params.id, max: params.max, offset: params.offset, sort: params.sort, order: params.order, qbe: 'g:tippsOfPkg', qp_pkg_id: d.id, inline: true, refOID: d.getOID(), hide: ['qp_pkg_id', 'qp_pkg'], qp_status: RefdataValue.class.name + ':' + RDStore.KBC_STATUS_CURRENT.id, activeTab: 'currentTipps']"

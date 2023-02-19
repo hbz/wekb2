@@ -42,6 +42,21 @@ class CreateController {
             if (params.tmpl) {
               result.displaytemplate = displayTemplateService.getTemplateInfo(params.tmpl)
               result.displayobjclassname_short = result.displayobj.class.simpleName
+
+              if(result.displayobjclassname_short == TitleInstancePackagePlatform.class.simpleName)
+              {
+                if(params.linkwithPkg){
+                  result.displayobj.pkg = Package.get(params.linkwithPkg)
+                }
+                if(params.linkwithPlatform){
+                  result.displayobj.hostPlatform = Platform.get(params.linkwithPlatform)
+                }
+
+                if(params.linkwithStatus){
+                  result.displayobj.status = RefdataValue.get(params.linkwithStatus)
+                }
+              }
+
             }
           }
           catch (Exception e) {
