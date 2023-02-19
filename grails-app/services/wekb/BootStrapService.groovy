@@ -106,10 +106,10 @@ class BootStrapService {
                     ns_obj.targetType = targetType
                 }
 
-                ns_obj.save(flush: true)
+                ns_obj.save()
             } else {
                 ns.targetType = targetType
-                ns_obj = new IdentifierNamespace(ns).save(flush: true, failOnError: true)
+                ns_obj = new IdentifierNamespace(ns).save(failOnError: true)
             }
 
             log.info("Ensured ${ns_obj}!")

@@ -452,7 +452,7 @@ class AdminController {
       list.eachWithIndex { TitleInstancePackagePlatform titleInstancePackagePlatform, int index ->
         if(index != 0){
           titleInstancePackagePlatform.status = RDStore.KBC_STATUS_REMOVED
-          titleInstancePackagePlatform.save(flush: true)
+          titleInstancePackagePlatform.save()
           countRemoved++
         }
       }

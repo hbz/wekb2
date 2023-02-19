@@ -155,7 +155,7 @@ class AjaxHtmlController {
               if ( new_obj.validate() ) {
                 new_obj.save()
                 log.debug("Saved OK")
-                contextObj.save(flush: true)
+                contextObj.save()
               }
               else {
                 errors.addAll(messageService.processValidationErrorsToListForFlashError(new_obj.errors, request.locale))
@@ -308,7 +308,7 @@ class AjaxHtmlController {
           log.debug("remove successful?: ${remove_result}")
           log.debug("child ${item_to_remove} removed: "+ contextObj[params.__property])
 
-          if (contextObj.save(flush: true, failOnError: true)) {
+          if (contextObj.save(failOnError: true)) {
             log.debug("Saved context object ${contextObj.class.name}")
           }
           else {
@@ -369,7 +369,7 @@ class AjaxHtmlController {
       if (editable) {
           contextObj[params.__property] = null
 
-          if (contextObj.save(flush: true, failOnError: true)) {
+          if (contextObj.save(failOnError: true)) {
             log.debug("Saved context object ${contextObj.class.name}")
           }
           else {
@@ -596,7 +596,7 @@ class AjaxHtmlController {
         log.debug("Saving... after assignment ${params.name} = ${target[params.name]}")
 
         if ( target.validate() ) {
-          target = target.merge(flush: true, failOnError: true)
+          target = target.merge(failOnError: true)
 
           if ( params.resultProp ) {
             result = value ? value[params.resultProp] : ''
@@ -665,7 +665,7 @@ class AjaxHtmlController {
             }else if (!ident) {
                 ident = new Identifier(namespace: ns, value: params.identifierValue)
                 ident.setReference(owner)
-                boolean success = ident.save(flush: true) //needed to trigger afterInsert() temp solution
+                boolean success = ident.save() //needed to trigger afterInsert() temp solution
                 if (success){
                   flash.success = message(code:'identifier.create.success')
                 } else {
@@ -800,7 +800,7 @@ class AjaxHtmlController {
         def variantName = variant.variantName
 
         variant.delete()
-        variantOwner.save(flush: true)
+        variantOwner.save()
 
         result.owner_oid = "${variantOwner.class.name}:${variantOwner.id}"
         result.deleted_variant = "${variantName}"
@@ -846,7 +846,7 @@ class AjaxHtmlController {
 
       if (editable) {
         tcs.delete()
-        tipp.save(flush: true)
+        tipp.save()
       }
       else {
         result.message = "This TIPP is not editable!"
@@ -887,7 +887,7 @@ class AjaxHtmlController {
 
       if (editable) {
         log.debug("Delete Price..")
-        c.delete(flush: true)
+        c.delete()
       }
     }
 
@@ -955,13 +955,13 @@ class AjaxHtmlController {
             if (contentType == RDStore.CONTACT_CONTENT_TYPE_EMAIL) {
                 if (content ==~ /[_A-Za-z0-9-]+(.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(.[A-Za-z0-9]+)*(.[A-Za-z]{2,})/) {
                     contact = new Contact(org: owner, content: content, contentType: contentType, language: language, type: type)
-                    contact.save(flush: true)
+                    contact.save()
                 } else {
                     flash.error = message(code: 'contact.email.validation.fail')
                 }
             } else {
                 contact = new Contact(org: owner, content: content, contentType: contentType, language: language, type: type)
-                contact.save(flush: true)
+                contact.save()
             }
         }
         else {

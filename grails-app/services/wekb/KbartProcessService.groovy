@@ -872,7 +872,7 @@ class KbartProcessService {
                     updatePackageInfo.description = description
                     updatePackageInfo.status = RDStore.UPDATE_STATUS_FAILED
                     updatePackageInfo.endTime = new Date()
-                    updatePackageInfo.save(flush: true)
+                    updatePackageInfo.save()
                 }
 
             }

@@ -616,14 +616,14 @@ class CreateComponentService {
                             if (map.value != "" && identifier.value != map.value) {
                                 identifier = identifier.refresh()
                                 identifier.value = map.value
-                                identifier.save(flush: true)
+                                identifier.save()
                             }
                             found = true
                         }
                     }
                     if (!found && map.value != "") {
                         Identifier identifier = new Identifier(namespace: namespace, value: map.value, pkg: aPackage)
-                        identifier.save(flush: true)
+                        identifier.save()
                     }
                 }
         }
@@ -670,7 +670,7 @@ class CreateComponentService {
                     kbartSource.targetNamespace = IdentifierNamespace.get(map.targetNamespace)
                 }
 
-                if (kbartSource.save(flush: true) || kbartSource.isAttached()) {
+                if (kbartSource.save() || kbartSource.isAttached()) {
 
                     if(user.curatoryGroupUsers) {
                         user.curatoryGroupUsers.curatoryGroup.each { CuratoryGroup cg ->
@@ -682,7 +682,7 @@ class CreateComponentService {
                     if (kbartSource != aPackage.kbartSource) {
                         aPackage = aPackage.refresh()
                         aPackage.kbartSource = kbartSource
-                        aPackage.save(flush: true)
+                        aPackage.save()
                     }
                 }
             }
