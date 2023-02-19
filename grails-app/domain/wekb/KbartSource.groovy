@@ -34,16 +34,12 @@ class KbartSource extends AbstractBase implements Auditable {
             curatoryGroups: CuratoryGroupKbartSource
     ]
 
-    static belongsTo = [pkg: Package]
-
     static mapping = {
         id column: 'ks_id'
         version column: 'ks_version'
 
         uuid column: 'ks_uuid'
         name column: 'ks_name'
-
-        pkg column: 'ks_pkg_fk', index: 'ks_pkg_idx'
 
         lastUpdated column: 'ks_last_updated'
         dateCreated column: 'ks_date_created'
@@ -64,8 +60,6 @@ class KbartSource extends AbstractBase implements Auditable {
     }
 
     static constraints = {
-        pkg (nullable: true, blank: false)
-
         dateCreated (nullable: true, blank: false)
         lastUpdated (nullable: true, blank: false)
 
