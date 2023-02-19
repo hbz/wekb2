@@ -55,7 +55,7 @@ class WorkflowService {
                         [code: 'objectMethod::currentWithTipps', label: 'Mark the package as current (with all Titles)', message: '', onlyAdmin: false, group: 2],
                         [code: 'objectMethod::deleteSoft', label: 'Mark the package as deleted (with all Titles)', message: '', onlyAdmin: false, group: 2],
                         [code: 'objectMethod::retireWithTipps', label: 'Mark the package as retired (with all Titles)', message: '', onlyAdmin: false, group: 2],
-                        [code: 'objectMethod::removeOnlyTipps', label: 'Remove onlay all Titles', message: '', onlyAdmin: false, group: 5],
+                        [code: 'objectMethod::removeOnlyTipps', label: 'Remove only all Titles', message: '', onlyAdmin: false, group: 5],
                         [code: 'objectMethod::removeWithTipps', label: 'Remove the package (with all Titles)', message: '', onlyAdmin: false, group: 6],
 
                         [code: 'workFlowMethod::manualKbartImport', label: 'Manual KBART Import', message: '', onlyAdmin: false, group: 1],
