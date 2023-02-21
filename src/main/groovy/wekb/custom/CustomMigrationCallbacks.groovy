@@ -28,7 +28,7 @@ class CustomMigrationCallbacks {
             if(!Environment.isDevelopmentMode()) {
                 println '-        dumping current database ..'
 
-                def dataSource = grailsApplication.config.getProperty('dataSource', String)
+                Map dataSource = grailsApplication.config.getProperty('dataSource', Map) as Map
                 URI uri = new URI(dataSource.url.substring(5))
 
                 String backupFile = grailsApplication.config.getProperty('deployBackupLocation', String) + "/wekb-backup-${(new SimpleDateFormat('yyyy-MM-dd-HH:mm:ss')).format(new Date())}.sql"
