@@ -38,7 +38,7 @@
                     ${(params.offset ? params.offset.toInteger() : 0) + i + 1}
                 </td>
                 <td>
-                    <g:link controller="resource" action="show" id="${pkg.uuid}">
+                    <g:link controller="resource" action="show" id="${pkg.getOID()}">
                         ${pkg.name}
                     </g:link>
                 </td>
@@ -46,7 +46,7 @@
                     ${pkg.provider}
                 </td>
                 <td>
-                    <g:link controller="resource" action="show" id="${pkg.kbartSource.uuid}">
+                    <g:link controller="resource" action="show" id="${pkg.kbartSource.getOID()}">
                         ${pkg.kbartSource.name}
                     </g:link>
                     <br>
@@ -74,7 +74,7 @@
                     ${pkg.getTippCount()}
                 </td>
                 <td>
-                    <g:set var="object" value="${pkg.class.name}:${pkg.id}"/>
+                    <g:set var="object" value="${pkg.getOID()}"/>
                     <g:link class="ui button" controller="workflow" action="action"
                             params="[component: object, selectedAction: 'packageUrlUpdate', curationOverride: true]">Trigger Update (Changed Titles) </g:link>
 

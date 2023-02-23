@@ -6,7 +6,7 @@
     <dd>
         <g:if test="${d.updatePackageInfo}">
             <g:link controller="resource" action="show"
-                    id="${d.updatePackageInfo.class.name}:${d.updatePackageInfo.id}">
+                    id="${d.updatePackageInfo.getOID()}">
                 ${(d.updatePackageInfo.pkg.name) ?: 'Empty'}
             </g:link>
         </g:if>
@@ -20,7 +20,7 @@
     <dd>
         <g:if test="${d.tipp}">
             <g:link controller="resource" action="show"
-                    id="${d.tipp.uuid}">
+                    id="${d.tipp.getOID()}">
                 ${(d.tipp.name) ?: 'Empty'}
             </g:link>
         </g:if>

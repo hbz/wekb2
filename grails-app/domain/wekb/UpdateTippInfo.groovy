@@ -92,4 +92,8 @@ class UpdateTippInfo {
     public String getShowName() {
         return this.tipp.name
     }
+
+    String getOID(){
+        "${this.class.name}:${id}"
+    }
 }

@@ -64,7 +64,7 @@
                 <tr>
                     <td>${++counter}</td>
                     <td>
-                        <g:link controller="resource" action="show" id="${row_obj.class.name}:${row_obj.id}">
+                        <g:link controller="resource" action="show" id="${row_obj.getOID()}">
                             ${row_obj.status.value}
                         </g:link>
                     </td>

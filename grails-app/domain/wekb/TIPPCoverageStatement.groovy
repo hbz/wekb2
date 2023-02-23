@@ -97,4 +97,8 @@ class TIPPCoverageStatement extends AbstractBase {
 
   }
 
+  String getOID(){
+    "${this.class.name}:${id}"
+  }
+
 }

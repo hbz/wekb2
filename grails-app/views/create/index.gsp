@@ -55,7 +55,7 @@
                },
                success: function(data, config) {
                    if(data && data.newobj && data.newobj.id) {
-                       var urlID = data.newobj.uuid ? data.newobj.uuid : data.objectClassName+':'+data.newobj.id;
+                       var urlID = data.objectClassName+':'+data.newobj.id;
                        window.location.href = "${g.createLink(controller: 'resource', action: 'show')}/"+urlID;
                    } else if(data && data.errors){
                        config.error.call(this, data.errors);

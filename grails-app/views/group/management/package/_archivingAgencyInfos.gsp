@@ -94,7 +94,7 @@
                                                 <g:if test="${editable}">
                                                     <g:link controller='ajaxHtml'
                                                             action='delete'
-                                                            params="${["__context": "${paa.class.name}:${paa.id}", curationOverride: params.curationOverride]}">Delete</g:link>
+                                                            params="${["__context": "${paa.getOID()}", curationOverride: params.curationOverride]}">Delete</g:link>
                                                 </g:if>
                                             </td>
                                         </tr>
@@ -104,7 +104,7 @@
                             </g:if>
                         </td>
                         <td>
-                            <g:link class="ui icon button" controller="resource" action="show" id="${row_obj.uuid}">
+                            <g:link class="ui icon button" controller="resource" action="show" id="${row_obj.getOID()}">
                                 <i class="edit icon"></i>
                             </g:link>
                         </td>

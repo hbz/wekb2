@@ -30,7 +30,7 @@
                                     <g:if test="${editable}">
                                         <g:link controller='ajaxHtml'
                                                 action='unlinkManyToMany'
-                                                params="${["__context": "${row_obj.class.name}:${row_obj.id}", "__property": "nationalRanges", "__itemToRemove": "${nationalRange.getClass().name}:${nationalRange.id}"]}">Delete</g:link>
+                                                params="${["__context": "${row_obj.getOID()}", "__property": "nationalRanges", "__itemToRemove": "${nationalRange.getOID()}"]}">Delete</g:link>
                                     </g:if>
                                     </div>
                                 </g:each>
@@ -48,7 +48,7 @@
                                     <g:if test="${editable}">
                                         <g:link controller='ajaxHtml'
                                                 action='unlinkManyToMany'
-                                                params="${["__context": "${row_obj.class.name}:${row_obj.id}", "__property": "regionalRanges", "__itemToRemove": "${regionalRange.getClass().name}:${regionalRange.id}"]}">Delete</g:link>
+                                                params="${["__context": "${row_obj.getOID()}", "__property": "regionalRanges", "__itemToRemove": "${regionalRange.getOID()}"]}">Delete</g:link>
                                     </g:if>
                                     </div>
                                 </g:each>
@@ -59,7 +59,7 @@
                         </g:else>
                     </td>
                     <td>
-                        <g:link class="ui icon button" controller="resource" action="show" id="${row_obj.uuid}">
+                        <g:link class="ui icon button" controller="resource" action="show" id="${row_obj.getOID()}">
                             <i class="edit icon"></i>
                         </g:link>
                     </td>

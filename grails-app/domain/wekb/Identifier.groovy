@@ -147,5 +147,9 @@ class Identifier {
     return this.value
   }
 
+  String getOID(){
+    "${this.class.name}:${id}"
+  }
+
 
 }

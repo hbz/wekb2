@@ -24,13 +24,13 @@
                     <td>
                             <semui:xEditable owner="${identifier}" field="value" />
                             &nbsp;
-                            <g:link controller="resource" action="show" id="${identifier.class.name}:${identifier.id}" title="Jump to resource"><i class="fas fa-eye"></i></g:link>
+                            <g:link controller="resource" action="show" id="${identifier.getOID()}" title="Jump to resource"><i class="fas fa-eye"></i></g:link>
                     </td>
                     <g:if test="${editable}">
                         <td>
                             <g:link controller='ajaxHtml'
                                     action='delete'
-                                    params="${["__context": "${identifier.class.name}:${identifier.id}", 'activeTab': activeTab, curationOverride: params.curationOverride]}"
+                                    params="${["__context": "${identifier.getOID()}", 'activeTab': activeTab, curationOverride: params.curationOverride]}"
                                     class="confirm-click btn-delete"
                                     title="Delete this link"
                                     data-confirm-message="Are you sure you wish to delete this Identifier (${identifier.namespace.value}: ${identifier.value})?">Delete</g:link>

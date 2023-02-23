@@ -74,7 +74,7 @@
                                             <g:if test="${editable}">
                                                 <td><g:link controller='ajaxHtml'
                                                             action='unlinkManyToMany'
-                                                            params="${["__context": "${row_obj.class.name}:${row_obj.id}", "__property": "ddcs", "__itemToRemove": "${ddc.getClass().name}:${ddc.id}", activeTab: 'ddcs']}">Delete</g:link>
+                                                            params="${["__context": "${row_obj.getOID()}", "__property": "ddcs", "__itemToRemove": "${ddc.getOID()}", activeTab: 'ddcs']}">Delete</g:link>
                                                 </td>
                                             </g:if>
                                         </tr>
@@ -84,7 +84,7 @@
                             </g:if>
                         </td>
                         <td>
-                            <g:link class="ui icon button" controller="resource" action="show" id="${row_obj.uuid}">
+                            <g:link class="ui icon button" controller="resource" action="show" id="${row_obj.getOID()}">
                                 <i class="edit icon"></i>
                             </g:link>
                         </td>

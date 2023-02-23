@@ -17,7 +17,7 @@
                     <g:each in="${curatoryGroups.sort { it.name }}" var="curatoryGroup">
                         <div class="item">
                             <g:link controller="resource" action="show"
-                                    id="${curatoryGroup.uuid}">${curatoryGroup.name}</g:link>
+                                    id="${curatoryGroup.getOID()}">${curatoryGroup.name}</g:link>
 
                             <g:if test="${params.curationOverride == 'true' && isUserLoggedIn && SpringSecurityUtils.ifAnyGranted("ROLE_ADMIN")}">
                                 <g:link controller="ajaxHtml" action="removeCuratoryGroupFromObject"
@@ -58,7 +58,7 @@
     <sec:ifNotLoggedIn>
         <div class="content center aligned">
             <g:link controller="resource" action="showLogin" class="ui icon black button"
-                    id="${d.hasProperty('uuid') ? d.uuid : d.class.name + ':' + d.id}"><i
+                    id="${d.getOID()}"><i
                     class="edit icon"></i> Edit (Login required)</g:link>
         </div>
     </sec:ifNotLoggedIn>
@@ -81,7 +81,7 @@
                         <g:link class="ui button green"
                                 controller="${params.controller}"
                                 action="${params.action}"
-                                id="${displayobj.class.name}:${displayobj.id}"
+                                id="${displayobj.getOID()}"
                                 params="${(request.param ?: [:])}">
                             Disable admin override
                         </g:link>
@@ -90,7 +90,7 @@
                         <g:link class="ui button red"
                                 controller="${params.controller}"
                                 action="${params.action}"
-                                id="${displayobj.class.name}:${displayobj.id}"
+                                id="${displayobj.getOID()}"
                                 params="${(request.param ?: [:]) + ["curationOverride": true]}">
                             Enable admin override
                         </g:link>

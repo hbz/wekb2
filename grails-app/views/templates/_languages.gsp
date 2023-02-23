@@ -21,7 +21,7 @@
         <semui:modal id="languageModal" title="Add Language">
             <g:form controller="ajaxHtml" action="addToCollection" class="ui form">
                 <input type="hidden" name="__context"
-                       value="${d.class.name}:${d.id}"/>
+                       value="${d.getOID()}"/>
                 <input type="hidden" name="__newObjectClass"
                        value="wekb.ComponentLanguage"/>
                 <input type="hidden" name="__recip" value="tipp"/>

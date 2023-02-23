@@ -118,5 +118,9 @@ class UpdatePackageInfo {
         result
     }
 
+    String getOID(){
+        "${this.class.name}:${id}"
+    }
+
 
 }

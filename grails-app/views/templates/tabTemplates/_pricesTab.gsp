@@ -45,7 +45,7 @@
 
                             <g:form controller="ajaxHtml" action="addToCollection" params="[activeTab: 'prices']" class="ui form">
                                 <input type="hidden" name="__context"
-                                       value="${d.class.name}:${d.id}"/>
+                                       value="${d.getOID()}"/>
                                 <input type="hidden" name="__newObjectClass"
                                        value="wekb.TippPrice"/>
                                 <input type="hidden" name="__recip" value="tipp"/>

@@ -18,7 +18,7 @@
         <g:else>
             <g:if test="${d.pkg}">
                 <g:link controller="resource" action="show"
-                        id="${d.pkg.uuid}">
+                        id="${d.pkg.getOID()}">
                     ${(d.pkg.name) ?: 'Empty'}
                 </g:link>
             </g:if>
@@ -38,7 +38,7 @@
         <g:else>
             <g:if test="${d.hostPlatform}">
                 <g:link controller="resource" action="show"
-                        id="${d.hostPlatform.uuid}">${d.hostPlatform.name}</g:link>
+                        id="${d.hostPlatform.getOID()}">${d.hostPlatform.name}</g:link>
             </g:if>
             <g:else>Empty</g:else>
         </g:else>

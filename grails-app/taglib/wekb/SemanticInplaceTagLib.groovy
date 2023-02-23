@@ -18,7 +18,7 @@ class SemanticInplaceTagLib {
         if (editable) {
             def owner = ClassUtils.deproxy(attrs.owner)
 
-            def oid = owner.id != null ? "${owner.class.name}:${owner.id}" : ''
+            def oid = owner.id != null ? "${owner.getOID()}" : ''
             def id = attrs.id ?: "${oid}:${attrs.field}"
             def dformat = attrs."data-format" ?: 'yyyy-mm-dd'
 
@@ -233,7 +233,7 @@ class SemanticInplaceTagLib {
 
             def data_link = createLink(controller: 'ajaxJson', action: 'getRefdata', params: [id: 'boolean', format: 'json'])
             def update_link = createLink(controller: 'ajaxHtml', action: 'genericSetRel', params: [type: 'boolean', curationOverride: params.curationOverride])
-            def oid = owner.id != null ? "${owner.class.name}:${owner.id}" : ''
+            def oid = owner.id != null ? "${owner.getOID()}" : ''
             def id = attrs.remove("id") ?: "${oid}:${attrs.field}"
             def field = attrs.remove("field")
             //attrs['class'] = ["xEditableManyToOne"]
@@ -421,7 +421,7 @@ class SemanticInplaceTagLib {
         if (editable) {
             def owner = ClassUtils.deproxy(attrs.owner)
 
-            def oid = attrs.owner.id != null ? "${owner.class.name}:${owner.id}" : ''
+            def oid = attrs.owner.id != null ? "${owner.getOID()}" : ''
             def id = attrs.id ?: "${oid ?: owner.class.name}:${attrs.field}"
             def update_link = createLink(controller: 'ajaxHtml', action: 'genericSetRel', params: [curationOverride: params.curationOverride])
 
@@ -444,7 +444,7 @@ class SemanticInplaceTagLib {
                 if(!(owner.hasProperty('uuid')))
                     urlWithClassAndID = "${ClassUtils.deproxy(owner[attrs.field]).class.name}" + ':' + owner[attrs.field].id
 
-                follow_link = createLink(controller: 'resource', action: 'show', id: urlWithClassAndID ?: owner[attrs.field].uuid)
+                follow_link = createLink(controller: 'resource', action: 'show', id: owner[attrs.field].getOID())
             }
                 out << "<a href=\"#\" data-domain=\"${attrs.baseClass}\" id=\"${id}\" class=\"xEditableManyToOne\" "
 
@@ -482,7 +482,7 @@ class SemanticInplaceTagLib {
 
 
             if(controllerName != 'create' && attrs.owner && attrs.owner."${attrs.field}")
-                out << g.link('Unlink', controller: "ajaxHtml", action: "unlinkManyToOne", class: "ui right floated negative mini button", params: ['curationOverride': params.curationOverride, '__property': attrs.field, '__context': attrs.owner.getClass().name + ':' + attrs.owner.id])
+                out << g.link('Unlink', controller: "ajaxHtml", action: "unlinkManyToOne", class: "ui right floated negative mini button", params: ['curationOverride': params.curationOverride, '__property': attrs.field, '__context': attrs.owner.getOID()])
 
           if (follow_link) {
                 out << ' &nbsp; <a href="' + follow_link + '" title="Jump to resource"><i class="ui share square icon"></i></a>'
@@ -494,7 +494,7 @@ class SemanticInplaceTagLib {
                 } else {
                     String content = (renderObjectValue(attrs.owner."${attrs.field}"))
                     if (content) {
-                        out << g.link(content, controller: 'resource', action: 'show', id: attrs.owner."${attrs.field}".uuid)
+                        out << g.link(content, controller: 'resource', action: 'show', id: attrs.owner."${attrs.field}".getOID())
                     } else {
                         out << "Empty"
                     }

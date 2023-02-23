@@ -47,14 +47,14 @@
                                             <semui:xEditable owner="${identifier}" field="value"/>
                                             &nbsp;
                                             <g:link controller="resource" action="show"
-                                                    id="${identifier.class.name}:${identifier.id}"
+                                                    id="${identifier.getOID()}"
                                                     title="Jump to resource"><i class="fas fa-eye"></i></g:link>
                                         </td>
                                         <g:if test="${editable}">
                                             <td>
                                                 <g:link controller='ajaxHtml'
                                                         action='delete'
-                                                        params="${["__context": "${identifier.class.name}:${identifier.id}", 'tab': tab, curationOverride: params.curationOverride]}"
+                                                        params="${["__context": "${identifier.getOID()}", 'tab': tab, curationOverride: params.curationOverride]}"
                                                         class="confirm-click btn-delete"
                                                         title="Delete this link"
                                                         data-confirm-message="Are you sure you wish to delete this Identifier (${identifier.namespace.value}: ${identifier.value})?">Delete</g:link>
@@ -75,7 +75,7 @@
                             <g:form controller="ajaxHtml" action="addIdentifier" class="ui form">
                                 <input type="hidden" name="activeTab" value="identifiers"/>
 
-                                <input type="hidden" name="__context" value="${row_obj.class.name}:${row_obj.id}"/>
+                                <input type="hidden" name="__context" value="${row_obj.getOID()}"/>
 
                                 <div class="field">
                                     <label>Identifier Namespace</label>
@@ -94,7 +94,7 @@
                         </semui:modal>
                     </td>
                     <td>
-                        <g:link class="ui icon button" controller="resource" action="show" id="${row_obj.uuid}">
+                        <g:link class="ui icon button" controller="resource" action="show" id="${row_obj.getOID()}">
                             <i class="edit icon"></i>
                         </g:link>
                     </td>

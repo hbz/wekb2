@@ -56,4 +56,8 @@ class PackageArchivingAgency {
         BeanStore.getCascadingUpdateService().update(this, lastUpdated)
 
     }
+
+    String getOID(){
+        "${this.class.name}:${id}"
+    }
 }

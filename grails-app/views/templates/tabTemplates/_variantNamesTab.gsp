@@ -44,7 +44,7 @@
 
               <g:form controller="ajaxHtml" action="addToCollection" class="ui form">
                 <input type="hidden" name="__context"
-                       value="${d.class.name}:${d.id}" />
+                       value="${d.getOID()}" />
                 <input type="hidden" name="__newObjectClass"
                        value="wekb.ComponentVariantName" />
                 <input type="hidden" name="__recip" value="${wekb.ComponentVariantName.getAttributeName(d)}" />

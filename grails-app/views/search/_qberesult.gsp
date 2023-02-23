@@ -50,7 +50,7 @@
                                         <g:if test="${c.link}">
                                             <g:link controller="resource"
                                                     action="show"
-                                                    id="${element.hasProperty('uuid') ? element.uuid : element.class.name + ':' + element.id}">
+                                                    id="${element.getOID()}">
                                                 ${element.name}
                                             </g:link>
                                         </g:if><g:else>
@@ -175,7 +175,7 @@
                                                 <g:if test="${c.link}">
                                                     <g:link controller="resource"
                                                             action="show"
-                                                            id="${element.hasProperty('uuid') ? element.uuid : element.class.name + ':' + element.id}">
+                                                            id="${element.getOID()}">
                                                         ${element.name}
                                                     </g:link>
                                                 </g:if><g:else>

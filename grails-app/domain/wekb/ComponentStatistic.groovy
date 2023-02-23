@@ -37,4 +37,8 @@ class ComponentStatistic {
     lastUpdated column:'cs_last_updated'
   }
 
+  String getOID(){
+    "${this.class.name}:${id}"
+  }
+
 }

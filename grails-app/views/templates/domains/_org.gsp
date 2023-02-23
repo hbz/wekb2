@@ -58,7 +58,7 @@
                     <g:if test="${editable}">
                         <g:link controller='ajaxHtml'
                                 action='unlinkManyToMany'
-                                params="${["__context": "${d.class.name}:${d.id}", "__property": "roles", "__itemToRemove": "${t.getClass().name}:${t.id}"]}">Delete</g:link>
+                                params="${["__context": "${d.getOID()}", "__property": "roles", "__itemToRemove": "${t.getOID()}"]}">Delete</g:link>
                     </g:if>
                 </div>
             </g:each>
@@ -108,7 +108,7 @@
                             <g:if test="${editable}">
                                 <g:link controller='ajaxHtml'
                                         action='delete'
-                                        params="${["__context": "${contact.class.name}:${contact.id}", curationOverride: params.curationOverride]}">Delete</g:link>
+                                        params="${["__context": "${contact.getOID()}", curationOverride: params.curationOverride]}">Delete</g:link>
                             </g:if>
                         </td>
                     </tr>
@@ -131,7 +131,7 @@
     <semui:modal id="contactModal" title="Add Contact">
 
         <g:form controller="ajaxHtml" action="addContact" class="ui form">
-            <input type="hidden" name="__context" value="${d.class.name}:${d.id}"/>
+            <input type="hidden" name="__context" value="${d.getOID()}"/>
             <input type="hidden" name="__newObjectClass" value="wekb.Contact"/>
             <input type="hidden" name="__recip" value="org"/>
             <input type="hidden" name="activeTab" value="contact"/>
@@ -166,7 +166,7 @@
     <semui:modal id="rolesModal" title="Add Role">
 
         <g:form controller="ajaxHtml" action="addToStdCollection" class="ui form">
-            <input type="hidden" name="__context" value="${d.class.name}:${d.id}"/>
+            <input type="hidden" name="__context" value="${d.getOID()}"/>
             <input type="hidden" name="__property" value="roles"/>
             <input type="hidden" name="curationOverride" value="${params.curationOverride}"/>
             <div class="field">

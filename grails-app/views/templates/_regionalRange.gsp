@@ -6,7 +6,7 @@
             <g:if test="${editable}">
                 <g:link controller='ajaxHtml'
                         action='unlinkManyToMany'
-                        params="${["__context": "${d.class.name}:${d.id}", "__property": "regionalRanges", "__itemToRemove": "${regionalRange.getClass().name}:${regionalRange.id}"]}">Delete</g:link>
+                        params="${["__context": "${d.getOID()}", "__property": "regionalRanges", "__itemToRemove": "${regionalRange.getOID()}"]}">Delete</g:link>
             </g:if>
             </div>
         </g:each>
@@ -20,7 +20,7 @@
 
         <semui:modal id="regionalRangesModal" title="Add Regional Range">
             <g:form controller="ajaxHtml" action="addToStdCollection" class="ui form">
-                <input type="hidden" name="__context" value="${d.class.name}:${d.id}"/>
+                <input type="hidden" name="__context" value="${d.getOID()}"/>
                 <input type="hidden" name="__property" value="regionalRanges"/>
                 <input type="hidden" name="curationOverride" value="${params.curationOverride}"/>
 

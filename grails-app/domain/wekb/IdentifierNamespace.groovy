@@ -99,4 +99,8 @@ class IdentifierNamespace {
   public String getShowName() {
     return this.name
   }
+
+  String getOID(){
+    "${this.class.name}:${id}"
+  }
 }

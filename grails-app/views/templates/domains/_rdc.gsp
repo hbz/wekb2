@@ -89,7 +89,7 @@
         <semui:modal id="rdvModal" title="Add Refdata Value">
             <g:form controller="ajaxHtml" action="addToCollection" class="ui form">
                 <input type="hidden" name="__context"
-                       value="${d.getClass().name}:${d.id}"/>
+                       value="${d.getOID()}"/>
                 <input type="hidden" name="__newObjectClass"
                        value="wekb.RefdataValue"/>
                 <input type="hidden" name="__recip" value="owner"/>

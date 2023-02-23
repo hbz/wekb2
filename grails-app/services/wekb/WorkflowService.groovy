@@ -193,7 +193,7 @@ class WorkflowService {
             result.error = "Please check the Package KbartSource for validity!"
         }
 
-        result.ref = grailsLinkGenerator.link(controller: 'resource', action: 'show', id: pkg.uuid, absolute: true)
+        result.ref = grailsLinkGenerator.link(controller: 'resource', action: 'show', id: pkg.getOID(), absolute: true)
 
         result
     }

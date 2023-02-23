@@ -183,14 +183,14 @@ class SearchService {
             }
 
             def response_record = [:]
-            response_record.oid = "${r.class.name}:${r.id}"
+            response_record.oid = "${r.getOID()}"
             response_record.obj = r
             response_record.cols = []
 
             result.qbetemplate.qbeConfig.qbeResults.each { rh ->
                 def ppath = rh.property.split(/\./)
                 def cobj = r
-                def final_oid = cobj.hasProperty('uuid') ? cobj.uuid : cobj.class.name + ':' + cobj.id
+                def final_oid = cobj.getOID()
 
                 if (!params.hide || (params.hide instanceof String ? (params.hide != rh.qpEquiv) : !params.hide.contains(rh.qpEquiv))) {
 
@@ -224,7 +224,7 @@ class SearchService {
 
                                 if (ppath.size() > 1 && idx == ppath.size()-2) {
                                     if (cobj && sp != 'class') {
-                                        final_oid = cobj.hasProperty('uuid') ? cobj.uuid : cobj.class.name + ':' + cobj.id
+                                        final_oid = cobj.getOID()
                                     }
                                     else {
                                         final_oid = null

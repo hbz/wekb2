@@ -83,7 +83,7 @@
                     <g:each in="${d.curatoryGroupUsers.sort { it.curatoryGroup.name }}" var="curatoryGroupUser">
                         <tr>
                             <td><g:link controller="resource" action="show"
-                                        id="${curatoryGroupUser.curatoryGroup.getClass().name}:${curatoryGroupUser.curatoryGroup.id}">${curatoryGroupUser.curatoryGroup.name}</g:link></td>
+                                        id="${curatoryGroupUser.curatoryGroup.getOID()}">${curatoryGroupUser.curatoryGroup.name}</g:link></td>
                             <g:if test="${userIsAdmin}">
                                 <td>
                                     <g:link controller="ajaxHtml" action="removeCuratoryGroupFromUser"
@@ -113,7 +113,7 @@
 
                 <semui:modal id="addCuratoryGroup" title="Add a Curatory Group">
                     <g:form controller="ajaxHtml" action="addUserToCuratoryGroup" class="ui form">
-                        <input type="hidden" name="__user" value="${d.getClass().name}:${d.id}"/>
+                        <input type="hidden" name="__user" value="${d.getOID()}"/>
                         <input type="hidden" name="activeTab" value="curatoryGroupUsers"/>
 
                         <div class="field">
@@ -167,7 +167,7 @@
 
                 <semui:modal id="addRoleToUser" title="Add Role">
                     <g:form controller="ajaxHtml" action="addRoleToUser" class="ui form">
-                        <input type="hidden" name="__user" value="${d.getClass().name}:${d.id}"/>
+                        <input type="hidden" name="__user" value="${d.getOID()}"/>
                         <input type="hidden" name="activeTab" value="roles"/>
 
                         <div class="field">

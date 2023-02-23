@@ -655,7 +655,7 @@ class AjaxHtmlController {
                 // Does the current owner.name exist in a variant? If not, we should create one so we don't loose the info
                 def current_name_as_variant = owner.variantNames.find { it.variantName == owner.name }
 
-                result.owner = "${owner.class.name}:${owner.id}"
+                result.owner = "${owner.getOID()}"
 
                 if (current_name_as_variant == null) {
                     log.debug("No variant name found for current name: ${owner.name} ")

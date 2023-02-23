@@ -122,4 +122,7 @@ class Contact{
 
     }
 
+    String getOID(){
+        "${this.class.name}:${id}"
+    }
 }

@@ -46,13 +46,13 @@
         <g:each in="${tippIDs.sort { it.name }}" var="component">
             <tr>
                 <td>
-                    <g:link controller="resource" action="show" id="${component.uuid}">
+                    <g:link controller="resource" action="show" id="${component.getOID()}">
                         ${component.name}
                     </g:link> <b>(${component.status?.value})</b>
                 </td>
                 <td>
                     <g:if test="${component.pkg}">
-                        <g:link controller="resource" action="show" id="${component.pkg.uuid}">
+                        <g:link controller="resource" action="show" id="${component.pkg.getOID()}">
                             ${component.pkg.name}
                         </g:link>
                     </g:if>
@@ -62,7 +62,7 @@
                     <td>
                         <g:link controller='ajaxHtml'
                                 action='delete'
-                                params="${["__context": "${identifierOfComponent.class.name}:${identifierOfComponent.id}", 'activeTab': 'identifiers', curationOverride: params.curationOverride]}"
+                                params="${["__context": "${identifierOfComponent.getOID()}", 'activeTab': 'identifiers', curationOverride: params.curationOverride]}"
                                 class="confirm-click btn-delete"
                                 title="Delete this link"
                                 data-confirm-message="Are you sure you wish to delete this Identifier from the title ${component}?">Delete</g:link>
@@ -88,7 +88,7 @@
         <g:each in="${pkgIDs.sort { it.name }}" var="component">
             <tr>
                 <td>
-                    <g:link controller="resource" action="show" id="${component.uuid}">
+                    <g:link controller="resource" action="show" id="${component.getOID()}">
                         ${component.name}
                     </g:link> <b>(${component.status?.value})</b>
                 </td>
@@ -97,7 +97,7 @@
                     <td>
                         <g:link controller='ajaxHtml'
                                 action='delete'
-                                params="${["__context": "${identifierOfComponent.class.name}:${identifierOfComponent.id}", 'activeTab': 'identifiers', curationOverride: params.curationOverride]}"
+                                params="${["__context": "${identifierOfComponent.getOID()}", 'activeTab': 'identifiers', curationOverride: params.curationOverride]}"
                                 class="confirm-click btn-delete"
                                 title="Delete this link"
                                 data-confirm-message="Are you sure you wish to delete this Identifier from the title ${component}?">Delete</g:link>
@@ -129,7 +129,7 @@
                         </g:link> <b>(${component.status?.value})</b>
                     </g:if>
                     <g:else>
-                        <g:link controller="resource" action="show" id="${component.uuid}">
+                        <g:link controller="resource" action="show" id="${component.getOID()}">
                             ${component.name}
                         </g:link> <b>(${component.status?.value})</b>
                     </g:else>
@@ -139,7 +139,7 @@
                     <td>
                         <g:link controller='ajaxHtml'
                                 action='delete'
-                                params="${["__context": "${identifierOfComponent.class.name}:${identifierOfComponent.id}", 'activeTab': 'identifiers', curationOverride: params.curationOverride]}"
+                                params="${["__context": "${identifierOfComponent.getOID()}", 'activeTab': 'identifiers', curationOverride: params.curationOverride]}"
                                 class="confirm-click btn-delete"
                                 title="Delete this link"
                                 data-confirm-message="Are you sure you wish to delete this Identifier from the title ${component}?">Delete</g:link>

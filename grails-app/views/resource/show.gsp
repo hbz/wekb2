@@ -38,7 +38,7 @@
 
                 <g:set var="workflowService" bean="workflowService"/>
 
-                <g:set var="object" value="${displayobj.class.name}:${displayobj.id}"/>
+                <g:set var="object" value="${displayobj.getOID()}"/>
 
                 <g:set var="availableActions" value="${workflowService.availableActions(displayobj.class.name)}"/>
                 <g:if test="${availableActions}">

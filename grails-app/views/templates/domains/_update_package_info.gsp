@@ -6,7 +6,7 @@
     <dd>
         <g:if test="${d.pkg}">
             <g:link controller="resource" action="show"
-                    id="${d.pkg.uuid}">
+                    id="${d.pkg.getOID()}">
                 ${(d.pkg.name) ?: 'Empty'}
             </g:link>
         </g:if>

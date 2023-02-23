@@ -10,7 +10,7 @@
 
 <g:if test="${qbetemplate}">
     <h1 class="ui header">Search ${qbetemplate.title ?: ''} <g:if test="${refObject}">for ${refObject.getDomainName()}: <g:link
-            controller="resource" action="show" id="${refObject.hasProperty('uuid') ? refObject.uuid : refObject.id}">${refObject.name}</g:link></g:if></h1>
+            controller="resource" action="show" id="${refObject.getOID()}">${refObject.name}</g:link></g:if></h1>
 </g:if>
 <g:else>
     <h1 class="ui header">Search</h1>

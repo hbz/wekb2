@@ -39,12 +39,12 @@ until <g:formatDate date="${new java.util.Date()}" format="${message(code: 'defa
                         ${i + 1}
                     </td>
                     <td>
-                        <g:link controller="resource" action="show" id="${autoUpdate.class.name}:${autoUpdate.uuid}">
+                        <g:link controller="resource" action="show" id="${autoUpdate.getOID()}">
                         ${autoUpdate.description}
                         </g:link>
                     </td>
                     <td>
-                        <g:link controller="resource" action="show" id="${autoUpdate.pkg.uuid}">
+                        <g:link controller="resource" action="show" id="${autoUpdate.pkg.getOID()}">
                         ${autoUpdate.pkg.name}
                         </g:link>
                     </td>

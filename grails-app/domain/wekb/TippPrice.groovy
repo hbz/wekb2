@@ -116,4 +116,8 @@ class TippPrice {
 
   }
 
+  String getOID(){
+    "${this.class.name}:${id}"
+  }
+
 }

@@ -56,7 +56,7 @@
                             ${(params.offset ? params.offset.toInteger() : 0) + i + 1}
                         </td>
                         <td>
-                            <g:link controller="resource" action="show" id="${t.uuid}">
+                            <g:link controller="resource" action="show" id="${t.getOID()}">
                                 ${t.name} <b>(${t.status.value})</b>
                             </g:link>
                         </td>
@@ -65,14 +65,14 @@
                                 <g:each in="${t.ids.sort { it.namespace.value }}" var="id">
                                     <li><strong>${id.namespace.value}</strong>:<g:link controller="resource"
                                                                                        action="show"
-                                                                                       id="${id.class.name}:${id.id}">${id.value}</g:link>
+                                                                                       id="${id.getOID()}">${id.value}</g:link>
                                     </li>
                                 </g:each>
                             </ul>
                         </td>
                         <td>
                             <g:link controller="resource" action="show"
-                                    id="${t.hostPlatform?.uuid}">
+                                    id="${t.hostPlatform.getOID()}">
                                 ${t.hostPlatform?.name}
                             </g:link>
                         </td>
@@ -120,7 +120,7 @@
                             ${(params.offset ? params.offset.toInteger() : 0) + i + 1}
                         </td>
                         <td>
-                            <g:link controller="resource" action="show" id="${t.uuid}">
+                            <g:link controller="resource" action="show" id="${t.getOID()}">
                                 ${t.name}
                             </g:link> <b>(${t.status.value})</b>
                         </td>
@@ -129,14 +129,14 @@
                                 <g:each in="${t.ids.sort { it.namespace.value }}" var="id">
                                     <li><strong>${id.namespace.value}</strong>:<g:link controller="resource"
                                                                                        action="show"
-                                                                                       id="${id.class.name}:${id.id}">${id.value}</g:link>
+                                                                                       id="${id.getOID()}">${id.value}</g:link>
                                     </li>
                                 </g:each>
                             </ul>
                         </td>
                         <td>
                             <g:link controller="resource" action="show"
-                                    id="${t.hostPlatform?.uuid}">
+                                    id="${t.hostPlatform.getOID()}">
                                 ${t.hostPlatform?.name}
                             </g:link>
                         </td>
@@ -180,7 +180,7 @@
                         ${(params.offset ? params.offset.toInteger() : 0) + i + 1}
                     </td>
                     <td>
-                        <g:link controller="resource" action="show" id="${t.uuid}">
+                        <g:link controller="resource" action="show" id="${t.getOID()}">
                             ${t.name} <b>(${t.status.value})</b>
                         </g:link>
                     </td>
@@ -189,14 +189,14 @@
                             <g:each in="${t.ids.sort { it.namespace.value }}" var="id">
                                 <li><strong>${id.namespace.value}</strong>:<g:link controller="resource"
                                                                                    action="show"
-                                                                                   id="${id.class.name}:${id.id}">${id.value}</g:link>
+                                                                                   id="${id.getOID()}">${id.value}</g:link>
                                 </li>
                             </g:each>
                         </ul>
                     </td>
                     <td>
                         <g:link controller="resource" action="show"
-                                id="${t.hostPlatform?.uuid}">
+                                id="${t.hostPlatform.getOID()}">
                             ${t.hostPlatform?.name}
                         </g:link>
                     </td>

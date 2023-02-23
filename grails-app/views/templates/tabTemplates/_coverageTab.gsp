@@ -79,7 +79,7 @@
 
 		<g:form controller="ajaxHtml" action="addToCollection" params="[activeTab: 'tippcoverage']" class="ui form">
 			<input type="hidden" name="__context"
-				   value="${d.class.name}:${d.id}"/>
+				   value="${d.getOID()}"/>
 			<input type="hidden" name="__newObjectClass"
 				   value="wekb.TIPPCoverageStatement"/>
 			<input type="hidden" name="__recip" value="owner"/>

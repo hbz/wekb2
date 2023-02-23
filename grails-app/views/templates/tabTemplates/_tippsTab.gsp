@@ -31,20 +31,20 @@
                 ${ (params.offset ? params.offset.toInteger(): 0)  + i + 1 }
             </td>
             <td>
-                <g:link controller="resource" action="show" id="${t.uuid}">
+                <g:link controller="resource" action="show" id="${t.getOID()}">
                     ${t.name}
                 </g:link>
             </td>
             <td>
                 <div class="ui bulleted list">
                     <g:each in="${t.ids.sort{it.namespace.value}}" var="id">
-                        <div class="item"><strong>${id.namespace.value}</strong>:<g:link controller="resource" action="show" id="${id.uuid}">  ${id.value}</g:link></div>
+                        <div class="item"><strong>${id.namespace.value}</strong>:<g:link controller="resource" action="show" id="${id.getOID()}">  ${id.value}</g:link></div>
                     </g:each>
                 </div>
             </td>
             <td>
                 <g:link controller="resource" action="show"
-                        id="${t.hostPlatform?.uuid}">
+                        id="${t.hostPlatform.getOID()}">
                     ${t.hostPlatform?.name}
                 </g:link>
             </td>

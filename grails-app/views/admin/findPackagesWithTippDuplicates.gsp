@@ -37,7 +37,7 @@
                     ${(params.offset ? params.offset.toInteger() : 0) + i + 1}
                 </td>
                 <td>
-                    <g:link controller="resource" action="show" id="${pkg.uuid}">
+                    <g:link controller="resource" action="show" id="${pkg.getOID()}">
                         ${pkg.name}
                     </g:link>
                 </td>

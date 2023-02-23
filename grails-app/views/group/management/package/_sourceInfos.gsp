@@ -84,7 +84,7 @@
                             </td>
                             <td>
                                 <g:link class="ui icon button" controller="resource" action="show"
-                                        id="${row_obj.kbartSource.uuid}">
+                                        id="${row_obj.kbartSource.getOID()}">
                                     <i class="edit icon"></i>
                                 </g:link>
                             </td>
@@ -101,7 +101,7 @@
                             <td></td>
                         </g:else>
                         <td>
-                            <g:link class="ui icon button" controller="resource" action="show" id="${row_obj.uuid}">
+                            <g:link class="ui icon button" controller="resource" action="show" id="${row_obj.getOID()}">
                                 <i class="edit icon"></i>
                             </g:link>
                         </td>
