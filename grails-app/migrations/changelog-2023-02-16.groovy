@@ -63,5 +63,14 @@ databaseChangeLog = {
         }
     }
 
+    changeSet(author: "djebeniani (modified)", id: "1676554743429-10") {
+        grailsChange {
+            change {
+                sql.executeUpdate('''alter table kbcomponent drop column last_updated_by_id;''')
+            }
+            rollback {}
+        }
+    }
+
 
 }
