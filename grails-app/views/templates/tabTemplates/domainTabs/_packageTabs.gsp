@@ -48,7 +48,7 @@
         <g:if test="${editable}">
             <div class="ui right floated buttons">
                 <g:link class="ui button black" controller="create" action="index"
-                        params="[tmpl: 'wekb.TitleInstancePackagePlatform', linkwithPkg: d.id, linkwithPlatform: d.nominalPlatform?.id]">Add new Title for this package</g:link>
+                        params="[tmpl: 'wekb.TitleInstancePackagePlatform', linkwithPkg: d.id, linkwithPlatform: d.nominalPlatform?.id]">Create new title for this package</g:link>
             </div>
             <br>
             <br>

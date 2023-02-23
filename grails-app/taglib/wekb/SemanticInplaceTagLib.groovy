@@ -464,8 +464,7 @@ class SemanticInplaceTagLib {
                 }
 
                 if ((attrs.value != null) && (attrs.value instanceof String && attrs.value.length() > 0)) {
-                    def o = genericOIDService.resolveOID(attrs.value)
-                    out << "data-value=\"${o.id.toString()}\" "
+                    out << "data-value=\"${attrs.value}\" "
                 }
 
                 out << "data-type=\"select\" data-name=\"${attrs.field}\" data-source=\"${data_link}\" data-url=\"${update_link}\" ${emptyText}>"
@@ -482,7 +481,7 @@ class SemanticInplaceTagLib {
                 out << "</a>"
 
 
-            if(attrs.owner && attrs.owner."${attrs.field}")
+            if(controllerName != 'create' && attrs.owner && attrs.owner."${attrs.field}")
                 out << g.link('Unlink', controller: "ajaxHtml", action: "unlinkManyToOne", class: "ui right floated negative mini button", params: ['curationOverride': params.curationOverride, '__property': attrs.field, '__context': attrs.owner.getClass().name + ':' + attrs.owner.id])
 
           if (follow_link) {

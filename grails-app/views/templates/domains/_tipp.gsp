@@ -13,7 +13,7 @@
     </dt>
     <dd>
         <g:if test="${controllerName == 'create'}">
-            <semui:xEditableManyToOne owner="${d}" field="pkg" baseClass="wekb.Package" required="true"/>
+            <semui:xEditableManyToOne value="${d.pkg ? d.pkg.getOID(): null}" owner="${d}" field="pkg" baseClass="wekb.Package" required="true"/>
         </g:if>
         <g:else>
             <g:if test="${d.pkg}">
@@ -32,7 +32,7 @@
     </dt>
     <dd>
         <g:if test="${controllerName == 'create'}">
-            <semui:xEditableManyToOne owner="${d}" field="hostPlatform" baseClass="wekb.Platform"
+            <semui:xEditableManyToOne value="${d.hostPlatform ? d.hostPlatform.getOID(): null}" owner="${d}" field="hostPlatform" baseClass="wekb.Platform"
                                       required="true"/>
         </g:if>
         <g:else>

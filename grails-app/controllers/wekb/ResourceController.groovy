@@ -19,7 +19,6 @@ class ResourceController {
     log.debug("ResourceController::show ${params}")
     User user = springSecurityService.currentUser
 
-    log.debug("ResourceController::show ${params}");
     def result = ['params':params]
     String oid = ''
     def displayobj = null
