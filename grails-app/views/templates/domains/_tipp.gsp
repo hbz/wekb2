@@ -54,6 +54,20 @@
 </dl>
 <dl>
     <dt class="control-label">
+        Status
+    </dt>
+    <dd>
+        <semui:xEditableRefData owner="${d}" field="status" config="${RCConstants.KBCOMPONENT_STATUS}"/>
+        %{--  <sec:ifAnyGranted roles="ROLE_SUPERUSER">
+              <semui:xEditableRefData owner="${d}" field="status" config="${RCConstants.KBCOMPONENT_STATUS}"/>
+          </sec:ifAnyGranted>
+          <sec:ifNotGranted roles="ROLE_SUPERUSER">
+              ${d.status?.value ?: 'Not Set'}
+          </sec:ifNotGranted>--}%
+    </dd>
+</dl>
+<dl>
+    <dt class="control-label">
         Publication Type
     </dt>
     <dd>
@@ -65,7 +79,7 @@
         Medium
     </dt>
     <dd>
-        <semui:xEditableRefData owner="${d}" field="medium" config="${RCConstants.TIPP_MEDIUM}" disabled="${createObject}"/>
+        <semui:xEditableRefData owner="${d}" field="medium" config="${RCConstants.TIPP_MEDIUM}" />
     </dd>
 </dl>
 <dl>
@@ -81,7 +95,7 @@
         First Author
     </dt>
     <dd>
-        <semui:xEditable owner="${d}" field="firstAuthor" disabled="${createObject}"/>
+        <semui:xEditable owner="${d}" field="firstAuthor" />
     </dd>
 </dl>
 <dl>
@@ -89,7 +103,7 @@
         First Editor
     </dt>
     <dd>
-        <semui:xEditable owner="${d}" field="firstEditor" disabled="${createObject}"/>
+        <semui:xEditable owner="${d}" field="firstEditor" />
     </dd>
 </dl>
 <dl>
@@ -97,7 +111,7 @@
         Publisher Name
     </dt>
     <dd>
-        <semui:xEditable owner="${d}" field="publisherName" disabled="${createObject}"/>
+        <semui:xEditable owner="${d}" field="publisherName" />
     </dd>
 </dl>
 <dl>
@@ -106,7 +120,7 @@
     </dt>
     <dd>
         <semui:xEditable owner="${d}" type="date"
-                         field="dateFirstInPrint" disabled="${createObject}"/>
+                         field="dateFirstInPrint" />
     </dd>
 </dl>
 <dl>
@@ -115,7 +129,7 @@
     </dt>
     <dd>
         <semui:xEditable owner="${d}" type="date"
-                         field="dateFirstOnline" disabled="${createObject}"/>
+                         field="dateFirstOnline" />
     </dd>
 </dl>
 <dl>
@@ -124,7 +138,7 @@
     </dt>
     <dd>
         <semui:xEditable owner="${d}" type="date"
-                         field="accessStartDate" disabled="${createObject}"/>
+                         field="accessStartDate" />
     </dd>
 </dl>
 <dl>
@@ -133,7 +147,7 @@
     </dt>
     <dd>
         <semui:xEditable owner="${d}" type="date"
-                         field="accessEndDate" disabled="${createObject}"/>
+                         field="accessEndDate" />
     </dd>
 </dl>
 <dl>
@@ -141,7 +155,7 @@
         Volume Number
     </dt>
     <dd>
-        <semui:xEditable owner="${d}" field="volumeNumber" disabled="${createObject}"/>
+        <semui:xEditable owner="${d}" field="volumeNumber" />
     </dd>
 </dl>
 <dl>
@@ -149,7 +163,7 @@
         Edition
     </dt>
     <dd>
-        <semui:xEditable owner="${d}" field="editionStatement" disabled="${createObject}"/>
+        <semui:xEditable owner="${d}" field="editionStatement" />
     </dd>
 </dl>
 <dl>
@@ -158,7 +172,7 @@
     </dt>
     <dd>
         <semui:xEditableRefData owner="${d}" field="accessType"
-                                config="${RCConstants.TIPP_ACCESS_TYPE}" disabled="${createObject}"/>
+                                config="${RCConstants.TIPP_ACCESS_TYPE}" />
     </dd>
 </dl>
 <dl>
@@ -166,21 +180,7 @@
         Notes
     </dt>
     <dd>
-        <semui:xEditable owner="${d}" field="note" disabled="${createObject}"/>
-    </dd>
-</dl>
-<dl>
-    <dt class="control-label">
-        Status
-    </dt>
-    <dd>
-        <semui:xEditableRefData owner="${d}" field="status" config="${RCConstants.KBCOMPONENT_STATUS}"/>
-        %{--  <sec:ifAnyGranted roles="ROLE_SUPERUSER">
-              <semui:xEditableRefData owner="${d}" field="status" config="${RCConstants.KBCOMPONENT_STATUS}"/>
-          </sec:ifAnyGranted>
-          <sec:ifNotGranted roles="ROLE_SUPERUSER">
-              ${d.status?.value ?: 'Not Set'}
-          </sec:ifNotGranted>--}%
+        <semui:xEditable owner="${d}" field="note" />
     </dd>
 </dl>
 <dl>
@@ -188,7 +188,7 @@
         Last Changed
     </dt>
     <dd>
-        <semui:xEditable owner="${d}" field="lastChangedExternal" type="date" disabled="${createObject}"/>
+        <semui:xEditable owner="${d}" field="lastChangedExternal" type="date" />
     </dd>
 
 </dl>
@@ -199,7 +199,7 @@
         This information comes from KBART import
     </dt>
     <dd>
-        <semui:xEditableBoolean owner="${d}" field="fromKbartImport" disabled="${createObject}"/>
+        <semui:xEditableBoolean owner="${d}" field="fromKbartImport" />
     </dd>
 </dl>
 </sec:ifAnyGranted>
