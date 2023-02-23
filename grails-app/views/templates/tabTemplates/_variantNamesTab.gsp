@@ -48,7 +48,7 @@
                 <input type="hidden" name="__newObjectClass"
                        value="wekb.ComponentVariantName" />
                 <input type="hidden" name="__recip" value="${wekb.ComponentVariantName.getAttributeName(d)}" />
-                <input type="hidden" name="tab" value="variantNames" />
+                <input type="hidden" name="activeTab" value="variantNames" />
                   <input type="hidden" name="curationOverride" value="${params.curationOverride}"/>
                   <div class="field">
                               <label>Variant Name</label>
