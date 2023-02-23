@@ -12,9 +12,9 @@
         Status
     </dt>
     <dd>
-        <semui:xEditableRefData owner="${d}" field="status" config="${RCConstants.KBCOMPONENT_STATUS}"/>
+        <semui:xEditableRefData owner="${d}" field="status" config="${RCConstants.COMPONENT_STATUS}"/>
       %{--  <sec:ifAnyGranted roles="ROLE_SUPERUSER">
-            <semui:xEditableRefData owner="${d}" field="status" config="${RCConstants.KBCOMPONENT_STATUS}"/>
+            <semui:xEditableRefData owner="${d}" field="status" config="${RCConstants.COMPONENT_STATUS}"/>
         </sec:ifAnyGranted>
         <sec:ifNotGranted roles="ROLE_SUPERUSER">
             ${d.status?.value ?: 'Not Set'}

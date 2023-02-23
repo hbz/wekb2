@@ -18,4 +18,50 @@ databaseChangeLog = {
         dropColumn(columnName: "pkg_global_note", tableName: "package")
     }
 
+    changeSet(author: "djebeniani (modified)", id: "1676554743429-5") {
+        grailsChange {
+            change {
+                sql.executeUpdate('''update refdata_category set rdc_description = 'Component.Language' where rdc_description = 'KBComponent.Language';''')
+            }
+            rollback {}
+        }
+    }
+
+    changeSet(author: "djebeniani (modified)", id: "1676554743429-6") {
+        grailsChange {
+            change {
+                sql.executeUpdate('''update refdata_category set rdc_description = 'Component.Status' where rdc_description = 'KBComponent.Status';''')
+            }
+            rollback {}
+        }
+    }
+
+    changeSet(author: "djebeniani (modified)", id: "1676554743429-7") {
+        grailsChange {
+            change {
+                sql.executeUpdate('''update refdata_category set rdc_description = 'ComponentVariantName.Locale' where rdc_description = 'KBComponentVariantName.Locale';''')
+            }
+            rollback {}
+        }
+    }
+
+    changeSet(author: "djebeniani (modified)", id: "1676554743429-8") {
+        grailsChange {
+            change {
+                sql.executeUpdate('''update refdata_category set rdc_description = 'ComponentVariantName.Status' where rdc_description = 'KBComponentVariantName.Status';''')
+            }
+            rollback {}
+        }
+    }
+
+    changeSet(author: "djebeniani (modified)", id: "1676554743429-9") {
+        grailsChange {
+            change {
+                sql.executeUpdate('''update refdata_category set rdc_description = 'ComponentVariantName.VariantType' where rdc_description = 'KBComponentVariantName.VariantType';''')
+            }
+            rollback {}
+        }
+    }
+
+
 }

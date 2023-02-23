@@ -28,7 +28,7 @@ class ManagementService {
             [
                     type       : 'lookup',
                     baseClass  : 'wekb.RefdataValue',
-                    filter1    : RCConstants.KBCOMPONENT_STATUS,
+                    filter1    : RCConstants.COMPONENT_STATUS,
                     prompt     : 'Status',
                     bParam     : 'pkg_batch_status',
                     bProp       : 'status'

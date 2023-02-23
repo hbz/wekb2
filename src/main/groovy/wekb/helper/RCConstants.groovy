@@ -30,7 +30,7 @@ class RCConstants {
 
     public static final String DDC = "DDC"
 
-    public static final String DELETED_KBCOMPONENT_STATUS = "DeletedKBComponent.Status"
+    public static final String DELETED_COMPONENT_STATUS = "DeletedComponent.Status"
 
     public static final String IDENTIFIER_NAMESPACE_TARGET_TYPE = "IdentifierNamespace.TargetType"
 
@@ -38,13 +38,13 @@ class RCConstants {
 
     public static final String JOB_TYPE = "Job.Type"
 
-    public static final String KBCOMPONENT_LANGUAGE = "KBComponent.Language"
-    public static final String KBCOMPONENT_STATUS   = "KBComponent.Status"
+    public static final String COMPONENT_LANGUAGE = "Component.Language"
+    public static final String COMPONENT_STATUS   = "Component.Status"
 
 
-    public static final String KBCOMPONENT_VARIANTNAME_VARIANT_TYPE = "ComponentVariantName.VariantType"
-    public static final String KBCOMPONENT_VARIANTNAME_LOCAL = "ComponentVariantName.Locale"
-    public static final String KBCOMPONENT_VARIANTNAME_STATUS = "ComponentVariantName.Status"
+    public static final String COMPONENT_VARIANTNAME_VARIANT_TYPE = "ComponentVariantName.VariantType"
+    public static final String COMPONENT_VARIANTNAME_LOCAL = "ComponentVariantName.Locale"
+    public static final String COMPONENT_VARIANTNAME_STATUS = "ComponentVariantName.Status"
 
     public static final String MEMBERSHIP_ROLE = "MembershipRole"
     public static final String MEMBERSHIP_STATUS = "MembershipStatus"

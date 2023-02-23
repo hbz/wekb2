@@ -65,7 +65,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'lookup',
                                         baseClass  : 'wekb.RefdataValue',
-                                        filter1    : RCConstants.KBCOMPONENT_STATUS,
+                                        filter1    : RCConstants.COMPONENT_STATUS,
                                         prompt     : 'Status',
                                         qparam     : 'qp_status',
                                         placeholder: 'Component Status',
@@ -236,7 +236,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'lookup',
                                         baseClass  : 'wekb.RefdataValue',
-                                        filter1    : RCConstants.KBCOMPONENT_STATUS,
+                                        filter1    : RCConstants.COMPONENT_STATUS,
                                         prompt     : 'Status',
                                         qparam     : 'qp_status',
                                         placeholder: 'Component Status',
@@ -343,7 +343,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'lookup',
                                         baseClass  : 'wekb.RefdataValue',
-                                        filter1    : RCConstants.KBCOMPONENT_STATUS,
+                                        filter1    : RCConstants.COMPONENT_STATUS,
                                         prompt     : 'Status',
                                         qparam     : 'qp_status',
                                         placeholder: 'Component Status',
@@ -577,7 +577,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'lookup',
                                         baseClass  : 'wekb.RefdataValue',
-                                        filter1    : RCConstants.KBCOMPONENT_STATUS,
+                                        filter1    : RCConstants.COMPONENT_STATUS,
                                         prompt     : 'Status',
                                         qparam     : 'qp_status',
                                         placeholder: 'Component Status',
@@ -643,7 +643,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'lookup',
                                         baseClass  : 'wekb.RefdataValue',
-                                        filter1    : RCConstants.KBCOMPONENT_STATUS,
+                                        filter1    : RCConstants.COMPONENT_STATUS,
                                         prompt     : 'Status',
                                         qparam     : 'qp_status_tipp',
                                         placeholder: 'Status',
@@ -722,7 +722,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'lookup',
                                         baseClass  : 'wekb.RefdataValue',
-                                        filter1    : RCConstants.KBCOMPONENT_LANGUAGE,
+                                        filter1    : RCConstants.COMPONENT_LANGUAGE,
                                         prompt     : 'Language',
                                         qparam     : 'qp_language_tipp',
                                         placeholder: 'Language',
@@ -902,7 +902,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'lookup',
                                         baseClass  : 'wekb.RefdataValue',
-                                        filter1    : RCConstants.KBCOMPONENT_STATUS,
+                                        filter1    : RCConstants.COMPONENT_STATUS,
                                         prompt     : 'Status',
                                         qparam     : 'qp_status',
                                         placeholder: 'Component Status',
@@ -1131,7 +1131,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'lookup',
                                         baseClass  : 'wekb.RefdataValue',
-                                        filter1    : RCConstants.KBCOMPONENT_STATUS,
+                                        filter1    : RCConstants.COMPONENT_STATUS,
                                         prompt     : 'Status',
                                         qparam     : 'qp_status',
                                         placeholder: 'Status',
@@ -1352,7 +1352,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'lookup',
                                         baseClass  : 'wekb.RefdataValue',
-                                        filter1    : RCConstants.KBCOMPONENT_LANGUAGE,
+                                        filter1    : RCConstants.COMPONENT_LANGUAGE,
                                         prompt     : 'Language',
                                         qparam     : 'qp_language',
                                         placeholder: 'Language',
@@ -1361,7 +1361,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'lookup',
                                         baseClass  : 'wekb.RefdataValue',
-                                        filter1    : RCConstants.KBCOMPONENT_STATUS,
+                                        filter1    : RCConstants.COMPONENT_STATUS,
                                         prompt     : 'Status',
                                         qparam     : 'qp_status',
                                         placeholder: 'Status',
@@ -1518,7 +1518,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'lookup',
                                         baseClass  : 'wekb.RefdataValue',
-                                        filter1    : RCConstants.KBCOMPONENT_LANGUAGE,
+                                        filter1    : RCConstants.COMPONENT_LANGUAGE,
                                         prompt     : 'Language',
                                         qparam     : 'qp_language',
                                         placeholder: 'Language',
@@ -1527,7 +1527,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'lookup',
                                         baseClass  : 'wekb.RefdataValue',
-                                        filter1    : RCConstants.KBCOMPONENT_STATUS,
+                                        filter1    : RCConstants.COMPONENT_STATUS,
                                         prompt     : 'Status',
                                         qparam     : 'qp_status',
                                         placeholder: 'Status',

@@ -19,9 +19,9 @@
                 <td>
                   ${v.variantName}
                 </td>
-                <td><semui:xEditableRefData owner="${v}" field="status" config="${RCConstants.KBCOMPONENT_VARIANTNAME_STATUS}" overWriteEditable="${editable}"/></td>
-                <td><semui:xEditableRefData owner="${v}" field="variantType" config="${RCConstants.KBCOMPONENT_VARIANTNAME_VARIANT_TYPE}" overWriteEditable="${editable}"/></td>
-                <td><semui:xEditableRefData owner="${v}" field="locale" config="${RCConstants.KBCOMPONENT_VARIANTNAME_LOCAL}" overWriteEditable="${editable}"/></td>
+                <td><semui:xEditableRefData owner="${v}" field="status" config="${RCConstants.COMPONENT_VARIANTNAME_STATUS}" overWriteEditable="${editable}"/></td>
+                <td><semui:xEditableRefData owner="${v}" field="variantType" config="${RCConstants.COMPONENT_VARIANTNAME_VARIANT_TYPE}" overWriteEditable="${editable}"/></td>
+                <td><semui:xEditableRefData owner="${v}" field="locale" config="${RCConstants.COMPONENT_VARIANTNAME_LOCAL}" overWriteEditable="${editable}"/></td>
                   <g:if test="${ editable && showActions }">
                     <td>
                               <g:link controller="ajaxHtml" action="authorizeVariant" id="${v.id}" params="[activeTab: 'variantNames']">Make Authorized</g:link>,
@@ -47,7 +47,7 @@
                        value="${d.class.name}:${d.id}" />
                 <input type="hidden" name="__newObjectClass"
                        value="wekb.ComponentVariantName" />
-                <input type="hidden" name="__recip" value="owner" />
+                <input type="hidden" name="__recip" value="${wekb.ComponentVariantName.getAttributeName(d)}" />
                 <input type="hidden" name="tab" value="variantNames" />
                   <input type="hidden" name="curationOverride" value="${params.curationOverride}"/>
                   <div class="field">
@@ -59,13 +59,13 @@
                               <label>Locale</label>
                   <semui:simpleReferenceDropdown  name="locale"
                                                 baseClass="wekb.RefdataValue"
-                                                filter1="${RCConstants.KBCOMPONENT_VARIANTNAME_LOCAL}" />
+                                                filter1="${RCConstants.COMPONENT_VARIANTNAME_LOCAL}" />
                   </div>
                   <div class="field">
                                 <label>Variant Type</label>
                   <semui:simpleReferenceDropdown  name="variantType"
                                                 baseClass="wekb.RefdataValue"
-                                                filter1="${RCConstants.KBCOMPONENT_VARIANTNAME_VARIANT_TYPE}" />
+                                                filter1="${RCConstants.COMPONENT_VARIANTNAME_VARIANT_TYPE}" />
                   </div>
               </g:form>
             </semui:modal>

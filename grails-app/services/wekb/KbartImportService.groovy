@@ -703,7 +703,7 @@ class KbartImportService {
                     }
 
                     tipp_dto.language.each{ String lan ->
-                        RefdataValue refdataValue = RefdataCategory.lookup(RCConstants.KBCOMPONENT_LANGUAGE, lan)
+                        RefdataValue refdataValue = RefdataCategory.lookup(RCConstants.COMPONENT_LANGUAGE, lan)
                         if(refdataValue){
                             if(!ComponentLanguage.findByTippAndLanguage(tipp, refdataValue)){
                                 ComponentLanguage componentLanguage = new ComponentLanguage(tipp: tipp, language: refdataValue)
@@ -738,7 +738,7 @@ class KbartImportService {
                 com.k_int.ClassUtils.setDateIfPresent(tipp_dto.lastChanged, tipp, 'lastChangedExternal', true)
 
                 // KBART -> status -> status -> status
-                com.k_int.ClassUtils.setRefdataIfDifferent(tipp_dto.status, tipp, 'status', RCConstants.KBCOMPONENT_STATUS, false)
+                com.k_int.ClassUtils.setRefdataIfDifferent(tipp_dto.status, tipp, 'status', RCConstants.COMPONENT_STATUS, false)
 
                 // KBART -> listprice_eur, listprice_usd, listprice_gbp
                 if (tipp_dto.prices) {
@@ -1120,7 +1120,7 @@ class KbartImportService {
      */
     TitleInstancePackagePlatform tippCreate(tipp_fields = [:]) {
 
-        RefdataValue tipp_status = tipp_fields.status ? RefdataCategory.lookup(RCConstants.KBCOMPONENT_STATUS, tipp_fields.status) : null
+        RefdataValue tipp_status = tipp_fields.status ? RefdataCategory.lookup(RCConstants.COMPONENT_STATUS, tipp_fields.status) : null
 
         RefdataValue tipp_medium = null
         if (tipp_fields.medium) {
@@ -1926,7 +1926,7 @@ class KbartImportService {
 
         // KBART -> status -> status -> status
         if (tipp.status != RDStore.KBC_STATUS_REMOVED && tippMap.status == "Removed") {
-            ClassUtils.setRefdataIfDifferent(tippMap.status, tipp, 'status', RCConstants.KBCOMPONENT_STATUS, false)
+            ClassUtils.setRefdataIfDifferent(tippMap.status, tipp, 'status', RCConstants.COMPONENT_STATUS, false)
             result.removedTipp = true
 
             updatePackageInfo = updatePackageInfo.refresh()
@@ -1944,7 +1944,7 @@ class KbartImportService {
                     updatePackageInfo: updatePackageInfo
             ).save()
         } else {
-            result.changedTipp = checkAndSetByChangedValue(result, tipp, 'RefDataValue', updatePackageInfo, tippMap, "status", "status", false, RCConstants.KBCOMPONENT_STATUS)
+            result.changedTipp = checkAndSetByChangedValue(result, tipp, 'RefDataValue', updatePackageInfo, tippMap, "status", "status", false, RCConstants.COMPONENT_STATUS)
         }
         log.debug("after save")
         // KBART -> publication_title -> name
@@ -2186,7 +2186,7 @@ class KbartImportService {
             }
             List languages = tippMap.language.split(',')
             languages.each { String lan ->
-                RefdataValue refdataValue = RefdataCategory.lookup(RCConstants.KBCOMPONENT_LANGUAGE, lan)
+                RefdataValue refdataValue = RefdataCategory.lookup(RCConstants.COMPONENT_LANGUAGE, lan)
                 if (refdataValue) {
                     if (!ComponentLanguage.findByTippAndLanguage(tipp, refdataValue)) {
                         ComponentLanguage componentLanguage = new ComponentLanguage(tipp: tipp, language: refdataValue)
@@ -2280,7 +2280,7 @@ class KbartImportService {
 
             try {
 
-                RefdataValue tipp_status = tippMap.status ? RefdataCategory.lookup(RCConstants.KBCOMPONENT_STATUS, tippMap.status) : null
+                RefdataValue tipp_status = tippMap.status ? RefdataCategory.lookup(RCConstants.COMPONENT_STATUS, tippMap.status) : null
 
                 RefdataValue tipp_medium = null
                 if (tippMap.medium) {
@@ -2450,7 +2450,7 @@ class KbartImportService {
                     if (tippMap.kbartRowMap.language) {
                         List languages = tippMap.kbartRowMap.language.split(',')
                         languages.each { String lan ->
-                            RefdataValue refdataValue = RefdataCategory.lookup(RCConstants.KBCOMPONENT_LANGUAGE, lan)
+                            RefdataValue refdataValue = RefdataCategory.lookup(RCConstants.COMPONENT_LANGUAGE, lan)
                             if (refdataValue) {
                                 if (!ComponentLanguage.findByTippAndLanguage(tipp, refdataValue)) {
                                     ComponentLanguage componentLanguage = new ComponentLanguage(tipp: tipp, language: refdataValue)

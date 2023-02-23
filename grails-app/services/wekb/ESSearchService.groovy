@@ -194,8 +194,9 @@ class ESSearchService{
                   subEntry.buckets.each { bucket ->
                     bucket.each { bi ->
                       String display = "Unknown"
-                      if (bi.getKey().startsWith('wekb') && KBComponent.get(bi.getKey().split(':')[1].toLong())) {
-                        display = KBComponent.get(bi.getKey().split(':')[1].toLong()).name
+                      if (bi.getKey().startsWith('wekb')) {
+                        def displayobj = genericOIDService.resolveOID(bi.getKey())
+                        display = displayobj ? displayobj.name : 'Unknown'
                       }
                       facet_values.add([term: bi.getKey(), display: display, count: bi.getDocCount()])
                     }
@@ -205,8 +206,9 @@ class ESSearchService{
                 entry.buckets.each { bucket ->
                   bucket.each { bi ->
                     String display = "Unknown"
-                    if (bi.getKey().startsWith('wekb') && KBComponent.get(bi.getKey().split(':')[1].toLong())) {
-                      display = KBComponent.get(bi.getKey().split(':')[1].toLong()).name
+                    if (bi.getKey().startsWith('wekb')) {
+                      def displayobj = genericOIDService.resolveOID(bi.getKey())
+                      display = displayobj ? displayobj.name : 'Unknown'
                     }
                     facet_values.add([term: bi.getKey(), display: display, count: bi.getDocCount()])
                   }
@@ -1024,7 +1026,7 @@ class ESSearchService{
           domainMapping['_embedded']['ids'] = mapIdentifiers(val)
         }
         else if (!toSkip && (field == "status")) {
-          domainMapping[field] = [id: RefdataCategory.lookup("KBComponent.${field}", val).id, name: val]
+          domainMapping[field] = [id: RefdataCategory.lookup("Component.${field}", val).id, name: val]
         }
         else if (esMapping[field] == false) {
           log.debug("Skipping field ${field}!")

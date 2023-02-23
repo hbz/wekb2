@@ -11,15 +11,15 @@ CuratoryGroup.Type;CuratoryGroup Type;CuratoryGroup Type
 Currency;Currency;Currency
 DCType;DCType;DCType
 DDC;Dewey-Dezimalklassifikation;Dewey Decimal Classification
-DeletedKBComponent.Status;DeletedKBComponent Status;DeletedKBComponent Status
+DeletedComponent.Status;DeletedComponent Status;DeletedComponent Status
 IdentifierNamespace.TargetType;Identifier Namespace Target Type;Identifier Namespace Target Type
 ingest.filetype;ingest filetype;ingest filetype
 Job.Type;Job Type;Job Type
-KBComponent.Language;KBComponent Language;KBComponent Language
-KBComponent.Status;KBComponent Status;KBComponent Status
-KBComponentVariantName.Locale;KBComponent VariantName Locale;KBComponent VariantName Locale
-KBComponentVariantName.Status;KBComponent VariantName Status;KBComponent VariantName Status
-KBComponentVariantName.VariantType;KBComponent VariantName VariantType;KBComponent VariantName VariantType
+Component.Language;Component Language;Component Language
+Component.Status;Component Status;Component Status
+ComponentVariantName.Locale;Component VariantName Locale;Component VariantName Locale
+ComponentVariantName.Status;Component VariantName Status;Component VariantName Status
+ComponentVariantName.VariantType;Component VariantName VariantType;Component VariantName VariantType
 MembershipRole;Membership Role;Membership Role
 MembershipStatus;Membership Status;Membership Status
 Org.Role;Org Role;Org Role

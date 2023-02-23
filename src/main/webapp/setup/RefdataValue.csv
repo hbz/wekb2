@@ -278,7 +278,7 @@ Currency;USD;USD;USD
 DCType;Admin;Admin;Admin
 DCType;Standard;Standard;Standard
 DCType;Support;Support;Support
-DeletedKBComponent.Status;Permanently Deleted;Permanently Deleted;Permanently Deleted
+DeletedComponent.Status;Permanently Deleted;Permanently Deleted;Permanently Deleted
 IdentifierNamespace.TargetType;Org;Org;Org
 IdentifierNamespace.TargetType;Package;Package;Package
 IdentifierNamespace.TargetType;TitleInstancePackagePlatform;TitleInstancePackagePlatform;TitleInstancePackagePlatform
@@ -310,27 +310,27 @@ Job.Type;TitleCrossRef;TitleCrossRef;TitleCrossRef
 Job.Type;Undefined;Undefined;Undefined
 Job.Type;Unknown;Unknown;Unknown
 Job.Type;UpdateFreeTextIndexes;UpdateFreeTextIndexes;UpdateFreeTextIndexes
-KBComponent.Status;Current;Current;Current
-KBComponent.Status;Deleted;Deleted;Deleted
-KBComponent.Status;Expected;Expected;Expected
-KBComponent.Status;Retired;Retired;Retired
-KBComponent.Status;Removed;Removed;Removed
-KBComponentVariantName.Locale;de;de;de
-KBComponentVariantName.Locale;en;en;en
-KBComponentVariantName.Locale;en_GB;en_GB;en_GB
-KBComponentVariantName.Locale;en_US;en_US;en_US
-KBComponentVariantName.Locale;es;es;es
-KBComponentVariantName.Locale;fr;fr;sa
-KBComponentVariantName.Locale;it;it;it
-KBComponentVariantName.Locale;la;la;la
-KBComponentVariantName.Locale;pt;pt;pt
-KBComponentVariantName.Locale;ru;ru;ru
-KBComponentVariantName.Status;Current;Current;Current
-KBComponentVariantName.Status;Deleted;Deleted;Deleted
-KBComponentVariantName.Status;Expected;Expected;Expected
-KBComponentVariantName.Status;Retired;Retired;Retired
-KBComponentVariantName.VariantType;Acronym;Acronym;Acronym
-KBComponentVariantName.VariantType;Alternate Title;Alternate Title;Alternate Title
+Component.Status;Current;Current;Current
+Component.Status;Deleted;Deleted;Deleted
+Component.Status;Expected;Expected;Expected
+Component.Status;Retired;Retired;Retired
+Component.Status;Removed;Removed;Removed
+ComponentVariantName.Locale;de;de;de
+ComponentVariantName.Locale;en;en;en
+ComponentVariantName.Locale;en_GB;en_GB;en_GB
+ComponentVariantName.Locale;en_US;en_US;en_US
+ComponentVariantName.Locale;es;es;es
+ComponentVariantName.Locale;fr;fr;sa
+ComponentVariantName.Locale;it;it;it
+ComponentVariantName.Locale;la;la;la
+ComponentVariantName.Locale;pt;pt;pt
+ComponentVariantName.Locale;ru;ru;ru
+ComponentVariantName.Status;Current;Current;Current
+ComponentVariantName.Status;Deleted;Deleted;Deleted
+ComponentVariantName.Status;Expected;Expected;Expected
+ComponentVariantName.Status;Retired;Retired;Retired
+ComponentVariantName.VariantType;Acronym;Acronym;Acronym
+ComponentVariantName.VariantType;Alternate Title;Alternate Title;Alternate Title
 MembershipRole;Administrator;Administrator;Administrator
 MembershipRole;Member;Member;Member
 MembershipStatus;Approved;Approved;Approved

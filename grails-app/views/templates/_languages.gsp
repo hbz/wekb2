@@ -32,7 +32,7 @@
 
                     <semui:simpleReferenceDropdown name="language"
                                                    baseClass="wekb.RefdataValue"
-                                                   filter1="${RCConstants.KBCOMPONENT_LANGUAGE}"/>
+                                                   filter1="${RCConstants.COMPONENT_LANGUAGE}"/>
                 </div>
             </g:form>
         </semui:modal>

@@ -744,7 +744,7 @@ class AjaxHtmlController {
             log.debug("Found existing variant name: ${current_name_as_variant}")
         }
 
-        variant.variantType = RefdataCategory.lookupOrCreate(RCConstants.KBCOMPONENT_VARIANTNAME_VARIANT_TYPE, 'Authorized')
+        variant.variantType = RefdataCategory.lookupOrCreate(RCConstants.COMPONENT_VARIANTNAME_VARIANT_TYPE, 'Authorized')
         owner.name = variant.variantName
 
         if (owner.validate()) {

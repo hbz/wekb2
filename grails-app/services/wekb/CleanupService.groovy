@@ -159,7 +159,7 @@ class CleanupService {
               oldLastUpdated: kbComponent.lastUpdated,
               oldId: kbComponent.id,
               componentType: kbComponent.class.simpleName,
-              status: RefdataCategory.lookup(RCConstants.DELETED_KBCOMPONENT_STATUS, "Permanently Deleted"))
+              status: RefdataCategory.lookup(RCConstants.DELETED_COMPONENT_STATUS, "Permanently Deleted"))
 
       if(!deletedKBComponent.save()){
         return false

@@ -11,7 +11,7 @@ class DeletedKBComponent {
 
     String componentType
 
-    @RefdataAnnotation(cat = RCConstants.DELETED_KBCOMPONENT_STATUS)
+    @RefdataAnnotation(cat = RCConstants.DELETED_COMPONENT_STATUS)
     RefdataValue status
 
     // Timestamps

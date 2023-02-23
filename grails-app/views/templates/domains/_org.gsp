@@ -12,9 +12,9 @@
         Status
     </dt>
     <dd>
-        <semui:xEditableRefData owner="${d}" field="status" config="${RCConstants.KBCOMPONENT_STATUS}"/>
+        <semui:xEditableRefData owner="${d}" field="status" config="${RCConstants.COMPONENT_STATUS}"/>
         %{--  <sec:ifAnyGranted roles="ROLE_SUPERUSER">
-              <semui:xEditableRefData owner="${d}" field="status" config="${RCConstants.KBCOMPONENT_STATUS}"/>
+              <semui:xEditableRefData owner="${d}" field="status" config="${RCConstants.COMPONENT_STATUS}"/>
           </sec:ifAnyGranted>
           <sec:ifNotGranted roles="ROLE_SUPERUSER">
               ${d.status?.value ?: 'Not Set'}
@@ -102,7 +102,7 @@
                         </td>
                         <td>
                             <semui:xEditableRefData owner="${contact}" field="language"
-                                                    config="${RCConstants.KBCOMPONENT_LANGUAGE}"/>
+                                                    config="${RCConstants.COMPONENT_LANGUAGE}"/>
                         </td>
                         <td>
                             <g:if test="${editable}">
@@ -145,7 +145,7 @@
                     <label>Language</label>
                 <semui:simpleReferenceDropdown name="language"
                                                baseClass="wekb.RefdataValue"
-                                               filter1="${RCConstants.KBCOMPONENT_LANGUAGE}"/>
+                                               filter1="${RCConstants.COMPONENT_LANGUAGE}"/>
             </div>
             <div class="field">
                     <label>Content Type</label>

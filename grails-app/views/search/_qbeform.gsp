@@ -71,6 +71,16 @@
                                     value="${params[fld.qparam]}"/>
                         </div>
                     </g:if>
+                    <g:elseif test="${fld.type == 'dropDownGroup'}">
+                        <div class="ui field">
+                            <semui:simpleReferenceDropdown
+                                    id="refdata_${params.inline ? 'inline_' : ''}${fld.qparam}"
+                                    name="${fld.qparam}"
+                                    baseClass="${fld.baseClass}"
+                                    filter1="${fld.filter1 ?: ''}"
+                                    value="${params[fld.qparam]}"/>
+                        </div>
+                    </g:elseif>
                     <g:else>
                         <div class="${fld.contextTree.wildcard != null ? 'ui labeled input' : ''}">
                             <g:if test="${fld.contextTree.wildcard == 'B' || fld.contextTree.wildcard == 'L'}"><div

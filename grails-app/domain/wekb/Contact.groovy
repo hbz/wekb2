@@ -21,7 +21,7 @@ class Contact{
     @RefdataAnnotation(cat = RCConstants.CONTACT_TYPE)
     RefdataValue type
 
-    @RefdataAnnotation(cat = RCConstants.KBCOMPONENT_LANGUAGE)
+    @RefdataAnnotation(cat = RCConstants.COMPONENT_LANGUAGE)
     RefdataValue language
     
     static mapping = {

@@ -6,7 +6,7 @@ import wekb.helper.RCConstants
 
 class ComponentLanguage {
 
-    @RefdataAnnotation(cat = RCConstants.KBCOMPONENT_LANGUAGE)
+    @RefdataAnnotation(cat = RCConstants.COMPONENT_LANGUAGE)
     RefdataValue language
 
     Date dateCreated

@@ -55,7 +55,7 @@
                             </td>
                             <td>
                                 <semui:xEditableRefData owner="${row_obj.kbartSource}" field="status"
-                                                        config="${RCConstants.KBCOMPONENT_STATUS}"
+                                                        config="${RCConstants.COMPONENT_STATUS}"
                                                         overwriteEditable="false"/>
                             </td>
                             <td>

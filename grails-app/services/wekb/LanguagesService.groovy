@@ -15,7 +15,7 @@ class LanguagesService {
   static Map languages = [:]
 
   /**
-   * Fills the RefdataCategory given by {@link RCConstants.KBCOMPONENT_LANGUAGE} with a list of all language codes
+   * Fills the RefdataCategory given by {@link RCConstants.COMPONENT_LANGUAGE} with a list of all language codes
    * provided in the ISO-639-2 map specified by the referenced languages microservice. See
    * https://github.com/hbz/languages-microservice#get-the-whole-iso-639-2-list for details.
    */
@@ -38,7 +38,7 @@ class LanguagesService {
 
         Map<String, Object> map = [
                 token   : entry.key,
-                rdc     : RCConstants.KBCOMPONENT_LANGUAGE,
+                rdc     : RCConstants.COMPONENT_LANGUAGE,
                 value_de: entry.value.ger ?: null,
                 value_en: entry.value.eng ?: null,
                 hardData: true

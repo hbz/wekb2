@@ -12,7 +12,7 @@
 
 <dl>
     <dt class="control-label">Status</dt>
-    <dd><semui:xEditableRefData owner="${d}" field="status" config="${RCConstants.KBCOMPONENT_STATUS}"/></dd>
+    <dd><semui:xEditableRefData owner="${d}" field="status" config="${RCConstants.COMPONENT_STATUS}"/></dd>
 </dl>
 
 <g:if test="${d.id != null}">

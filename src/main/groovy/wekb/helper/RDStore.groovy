@@ -16,11 +16,11 @@ class RDStore {
     public static final UPDATE_TYPE_REMOVED_TITLE    = getRefdataValue('Removed Title', RCConstants.UPDATE_TYPE)
     public static final UPDATE_TYPE_FAILED_TITLE    = getRefdataValue('Failed Title', RCConstants.UPDATE_TYPE)
 
-    public static final KBC_STATUS_DELETED    = getRefdataValue('Deleted', RCConstants.KBCOMPONENT_STATUS)
-    public static final KBC_STATUS_CURRENT    = getRefdataValue('Current', RCConstants.KBCOMPONENT_STATUS)
-    public static final KBC_STATUS_EXPECTED    = getRefdataValue('Expected', RCConstants.KBCOMPONENT_STATUS)
-    public static final KBC_STATUS_RETIRED    = getRefdataValue('Retired', RCConstants.KBCOMPONENT_STATUS)
-    public static final KBC_STATUS_REMOVED    = getRefdataValue('Removed', RCConstants.KBCOMPONENT_STATUS)
+    public static final KBC_STATUS_DELETED    = getRefdataValue('Deleted', RCConstants.COMPONENT_STATUS)
+    public static final KBC_STATUS_CURRENT    = getRefdataValue('Current', RCConstants.COMPONENT_STATUS)
+    public static final KBC_STATUS_EXPECTED    = getRefdataValue('Expected', RCConstants.COMPONENT_STATUS)
+    public static final KBC_STATUS_RETIRED    = getRefdataValue('Retired', RCConstants.COMPONENT_STATUS)
+    public static final KBC_STATUS_REMOVED    = getRefdataValue('Removed', RCConstants.COMPONENT_STATUS)
 
     public static final CONTACT_CONTENT_TYPE_EMAIL = getRefdataValue('E-Mail', RCConstants.CONTACT_CONTENT_TYPE)
 

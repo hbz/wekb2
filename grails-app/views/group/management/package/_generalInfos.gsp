@@ -50,7 +50,7 @@
                         </td>
                         <td>
                             <semui:xEditableRefData owner="${row_obj}" field="status"
-                                                    config="${RCConstants.KBCOMPONENT_STATUS}"/>
+                                                    config="${RCConstants.COMPONENT_STATUS}"/>
                         </td>
                         <td>
                             <semui:xEditableRefData owner="${row_obj}" field="breakable"

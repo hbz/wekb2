@@ -392,7 +392,7 @@ class KbartProcessService {
                             idxDuplicates++
                             log.info("removeTippsFromWekb cause tippDuplicates (#$idxDuplicates of $tippDuplicatesCount): tippID ${tippID}")
 
-                            KBComponent.executeUpdate("update KBComponent set status = :removed, lastUpdated = :currentDate where id = (:tippId) and status != :removed", [removed: RDStore.KBC_STATUS_REMOVED, tippId: tippID, currentDate: new Date()])
+                            TitleInstancePackagePlatform.executeUpdate("update TitleInstancePackagePlatform set status = :removed, lastUpdated = :currentDate where id = (:tippId) and status != :removed", [removed: RDStore.KBC_STATUS_REMOVED, tippId: tippID, currentDate: new Date()])
 
                             StatelessSession session = sessionFactory.openStatelessSession()
                             Transaction tx = session.beginTransaction()

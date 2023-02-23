@@ -96,7 +96,7 @@ class Org extends AbstractBase implements Auditable {
     def status_filter = null
 
     if (params.filter1) {
-      status_filter = RefdataCategory.lookup(RCConstants.KBCOMPONENT_STATUS, params.filter1)
+      status_filter = RefdataCategory.lookup(RCConstants.COMPONENT_STATUS, params.filter1)
     }
 
     params.sort = 'name'

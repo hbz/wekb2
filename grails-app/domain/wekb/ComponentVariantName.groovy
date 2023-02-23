@@ -80,4 +80,35 @@ class ComponentVariantName {
         BeanStore.getCascadingUpdateService().update(this, lastUpdated)
 
     }
+
+    static String getAttributeName(def object) {
+        String name
+
+        name = object instanceof Org ?      'org' : name
+        name = object instanceof Package ?  'pkg' : name
+
+        name
+    }
+
+    void setReference(def owner) {
+        org  = owner instanceof Org ? owner : org
+        pkg  = owner instanceof Package ? owner : pkg
+    }
+
+    Object getReference() {
+        int refCount = 0
+        def ref
+
+        List<String> fks = ['org', 'pkg']
+        fks.each { fk ->
+            if (this."${fk}") {
+                refCount++
+                ref = this."${fk}"
+            }
+        }
+        if (refCount == 1) {
+            return ref
+        }
+        return null
+    }
 }
