@@ -383,7 +383,7 @@ class GlobalSearchTemplatesService {
                                         prompt     : 'DDC',
                                         qparam     : 'qp_ddc',
                                         placeholder: 'DDC',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'ddcs'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'ddcs'],
                                 ],
                                 [
                                         type       : 'lookup',
@@ -591,7 +591,7 @@ class GlobalSearchTemplatesService {
                                         prompt     : 'DDC',
                                         qparam     : 'qp_ddc',
                                         placeholder: 'DDC',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'ddcs'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'ddcs'],
                                         advancedSearch: [title: "Search Packages by ...", category: 'Package']
                                 ],
                                 [
@@ -718,7 +718,7 @@ class GlobalSearchTemplatesService {
                                         prompt     : 'DDC',
                                         qparam     : 'qp_ddc_tipp',
                                         placeholder: 'DDC',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'tipps.ddcs'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'tipps.ddcs'],
                                         advancedSearch: [title: "Search Titles by ...", category: 'Title']
                                 ],
                                 [
@@ -728,7 +728,7 @@ class GlobalSearchTemplatesService {
                                         prompt     : 'Language',
                                         qparam     : 'qp_language_tipp',
                                         placeholder: 'Language',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'tipps.languages'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'tipps.languages.language'],
                                         advancedSearch: [title: "Search Titles by ...", category: 'Title']
                                 ],
                                 //Platform Filter
@@ -1342,7 +1342,7 @@ class GlobalSearchTemplatesService {
                                         prompt     : 'DDC',
                                         qparam     : 'qp_ddc',
                                         placeholder: 'DDC',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'ddcs'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'ddcs'],
                                 ],
                                 [
                                         type       : 'lookup',
@@ -1360,7 +1360,7 @@ class GlobalSearchTemplatesService {
                                         prompt     : 'Language',
                                         qparam     : 'qp_language',
                                         placeholder: 'Language',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'languages'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'languages.language'],
                                 ],
                                 [
                                         type       : 'lookup',
@@ -1510,7 +1510,7 @@ class GlobalSearchTemplatesService {
                                         prompt     : 'DDC',
                                         qparam     : 'qp_ddc',
                                         placeholder: 'DDC',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'ddcs'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'ddcs'],
                                 ],
                                 [
                                         type       : 'lookup',
