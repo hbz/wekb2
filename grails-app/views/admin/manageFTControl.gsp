@@ -46,6 +46,7 @@
             <th>index</th>
             <th>type</th>
             <th>count index</th>
+            <th>diff DB and index</th>
             <th>count DB</th>
             <th>count status deleted in DB</th>
             <th>count status removed in DB</th>
@@ -58,6 +59,7 @@
                 <td>${indexInfo.name}</td>
                 <td>${indexInfo.type}</td>
                 <td>${indexInfo.countIndex}</td>
+                <td>${indexInfo.countDB-indexInfo.countIndex}</td>
                 <td>${indexInfo.countDB}</td>
                 <td>${indexInfo.countDeletedInDB}</td>
                 <td>${indexInfo.countRemovedInDB}</td>

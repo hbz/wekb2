@@ -37,4 +37,8 @@ class SavedSearch {
     return jsonSlurper
   }
 
+  String getOID(){
+    "${this.class.name}:${id}"
+  }
+
 }

@@ -34,6 +34,22 @@ class ESWrapperService {
   Map es_indices = [:]
   String es_host
 
+  static Map typePerIndex = [
+          "wekbtipps": "TitleInstancePackagePlatform",
+          "wekborgs": "Org" ,
+          "wekbpackages": "Package",
+          "wekbplatforms": "Platform",
+          "wekbdeletedcomponents": "DeletedKBComponent"
+  ]
+
+  static Map indicesPerType = [
+          "TitleInstancePackagePlatform" : "wekbtipps",
+          "Org" : "wekborgs",
+          "Package" : "wekbpackages",
+          "Platform" : "wekbplatforms",
+          "DeletedKBComponent": "wekbdeletedcomponents"
+  ]
+
 
   @javax.annotation.PostConstruct
   def init() {

@@ -102,13 +102,6 @@ class ESSearchService{
       ]
   ]
 
-  static Map indicesPerType = [
-      "TitleInstancePackagePlatform" : "wekbtipps",
-      "Org" : "wekborgs",
-      "Package" : "wekbpackages",
-      "Platform" : "wekbplatforms"
-  ]
-
 
   def search(params){
     search(params,reversemap)
@@ -661,8 +654,8 @@ class ESSearchService{
       }
     }
     for (def ct in usedComponentTypes.keySet()){
-      if (ct in indicesPerType.keySet()){
-        usedComponentTypes."${ct}" = indicesPerType.get(ct)
+      if (ct in ESWrapperService.indicesPerType.keySet()){
+        usedComponentTypes."${ct}" = ESWrapperService.indicesPerType.get(ct)
       }
       else{
         result.result = "ERROR"

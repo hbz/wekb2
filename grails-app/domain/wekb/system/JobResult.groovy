@@ -98,4 +98,8 @@ class JobResult {
   public String getShowName() {
     return this.id
   }
+
+  String getOID(){
+    "${this.class.name}:${id}"
+  }
 }
