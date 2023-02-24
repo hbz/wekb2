@@ -1,6 +1,8 @@
 %{--<g:set var="s_action" value="${s_action ?: 'componentSearch'}"/>
 <g:set var="s_controller" value="${s_controller ?: 'search'}"/>--}%
 
+<g:set var="dropdownService" bean="dropdownService"/>
+
 <g:if test="${hide.contains('SEARCH_FORM')}">
 </g:if>
 <g:elseif test="${params.inline}">
@@ -71,14 +73,20 @@
                                     value="${params[fld.qparam]}"/>
                         </div>
                     </g:if>
-                    <g:elseif test="${fld.type == 'dropDownGroup'}">
+                    <g:elseif test="${fld.type == 'dropDownGroup' && refObject}">
                         <div class="ui field">
-                            <semui:simpleReferenceDropdown
-                                    id="refdata_${params.inline ? 'inline_' : ''}${fld.qparam}"
-                                    name="${fld.qparam}"
-                                    baseClass="${fld.baseClass}"
-                                    filter1="${fld.filter1 ?: ''}"
-                                    value="${params[fld.qparam]}"/>
+                            <div class="ui fluid search selection clearable dropdown">
+                                <input type="hidden" name="${fld.qparam}" value="${params[fld.qparam]}">
+                                <i class="dropdown icon"></i>
+
+                                <div class="default text">Select ${fld.prompt}</div>
+
+                                <div class="menu">
+                                    <g:each in="${dropdownService.selectedDropDown(fld.dropDownType, refObject, params.qp_status_id)}" var="item">
+                                        <div class="item" data-value="${item}">${item}</div>
+                                    </g:each>
+                                </div>
+                            </div>
                         </div>
                     </g:elseif>
                     <g:else>

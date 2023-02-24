@@ -681,10 +681,12 @@ class GlobalSearchTemplatesService {
                                         advancedSearch: [title: "Search Titles by ...", category: 'Title']
                                 ],
                                 [
+                                        type     : 'dropDownGroup',
+                                        dropDownType  : 'publisher',
                                         prompt     : 'Publisher',
-                                        qparam     : 'qp_publisherName_tipp',
+                                        qparam     : 'qp_publisherName',
                                         placeholder: 'Publisher',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'tipps.publisherName'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'tipps.publisherName'],
                                         advancedSearch: [title: "Search Titles by ...", category: 'Title']
                                 ],
                                 [
@@ -1281,10 +1283,12 @@ class GlobalSearchTemplatesService {
 
                                 ],
                                 [
+                                        type     : 'dropDownGroup',
+                                        dropDownType  : 'publisher',
                                         prompt     : 'Publisher',
                                         qparam     : 'qp_publisherName',
                                         placeholder: 'Publisher',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'publisherName'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'publisherName'],
                                 ],
                                 [
                                         type       : 'lookup',
@@ -1434,10 +1438,12 @@ class GlobalSearchTemplatesService {
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'name'],
                                 ],
                                 [
+                                        type     : 'dropDownGroup',
+                                        dropDownType  : 'publisher',
                                         prompt     : 'Publisher',
                                         qparam     : 'qp_publisherName',
                                         placeholder: 'Publisher',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'publisherName'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'publisherName'],
                                 ],
                                 [
                                         prompt     : 'Identifier',
@@ -1522,7 +1528,7 @@ class GlobalSearchTemplatesService {
                                         prompt     : 'Language',
                                         qparam     : 'qp_language',
                                         placeholder: 'Language',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'languages'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'languages.language'],
                                 ],
                                 [
                                         type       : 'lookup',
