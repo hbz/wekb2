@@ -1337,7 +1337,7 @@ class GlobalSearchTemplatesService {
                                         prompt     : 'Subject Area',
                                         qparam     : 'qp_subjectArea_tipp',
                                         placeholder: 'Subject Area',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'tipps.subjectArea'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'subjectArea'],
                                 ],
                                 [
                                         type       : 'lookup',
@@ -1507,7 +1507,7 @@ class GlobalSearchTemplatesService {
                                         prompt     : 'Subject Area',
                                         qparam     : 'qp_subjectArea_tipp',
                                         placeholder: 'Subject Area',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'tipps.subjectArea'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'subjectArea'],
                                 ],
                                 [
                                         type       : 'lookup',
