@@ -10,5 +10,9 @@ class FTControl {
   static constraints = {
     lastId (nullable:true, blank:false)
   }
+
+  String getOID(){
+    "${this.class.name}:${id}"
+  }
 }
 

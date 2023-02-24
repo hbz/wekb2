@@ -35,13 +35,7 @@ class AdminController {
   GenericOIDService genericOIDService
   ExecutorService executorService
 
-  static Map typePerIndex = [
-          "wekbtipps": "TitleInstancePackagePlatform",
-          "wekborgs": "Org" ,
-          "wekbpackages": "Package",
-          "wekbplatforms": "Platform",
-          "wekbdeletedcomponents": "DeletedKBComponent"
-  ]
+
 
   def updateTextIndexes() {
     log.debug("Call to update indexe");
@@ -179,7 +173,6 @@ class AdminController {
     Map<String, Object> result = [:]
     log.debug("manageFTControl ...")
     result.ftControls = FTControl.list()
-    result.ftUpdateService = [:]
     result.editable = true
 
     /*Client esclient = ESWrapperService.getClient()
@@ -224,10 +217,11 @@ class AdminController {
         indexInfo.countIndex = ""
       }
 
-      String query = "select count(id) from ${typePerIndex.get(indice.value)}"
+      String query = "select count(id) from ${ESWrapperService.typePerIndex.get(indice.value)}"
       indexInfo.countDB = FTControl.executeQuery(query)[0]
       indexInfo.countDeletedInDB = FTControl.executeQuery(query+ " where status = :status", [status: RDStore.KBC_STATUS_DELETED])[0]
       indexInfo.countRemovedInDB = FTControl.executeQuery(query+ " where status = :status", [status: RDStore.KBC_STATUS_REMOVED])[0]
+
       result.indices << indexInfo
     }
 
@@ -251,7 +245,7 @@ class AdminController {
       ESWrapperService.createIndex(indexName)
 
       FTControl.withTransaction {
-        String domainClassName = typePerIndex.get(indexName)
+        String domainClassName = ESWrapperService.typePerIndex.get(indexName)
         if(indexName == 'wekbdeletedcomponents'){
           domainClassName = 'wekb.DeletedKBComponent'
         }

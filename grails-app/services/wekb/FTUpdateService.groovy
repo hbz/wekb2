@@ -29,14 +29,6 @@ class FTUpdateService {
 
   public static boolean running = false
 
-  static Map indicesPerType = [
-          "TitleInstancePackagePlatform" : "wekbtipps",
-          "Org" : "wekborgs",
-          "Package" : "wekbpackages",
-          "Platform" : "wekbplatforms",
-          "DeletedKBComponent": "wekbdeletedcomponents"
-  ]
-
 
   /**
    * Update ES.
@@ -549,10 +541,10 @@ class FTUpdateService {
             break
           }
           Object r = domain.get(r_id)
-          if (indicesPerType.get(r.class.simpleName)) {
+          if (ESWrapperService.indicesPerType.get(r.class.simpleName)) {
             log.debug("${r.id} ${domain.name} -- (rects)${r.lastUpdated} > (from)${from}")
             def idx_record = recgen_closure(r)
-            def es_index = indicesPerType.get(r.class.simpleName)
+            def es_index = ESWrapperService.indicesPerType.get(r.class.simpleName)
 
             if (idx_record != null) {
               def recid = idx_record['recid'].toString()
@@ -627,7 +619,7 @@ class FTUpdateService {
       log.error("Problem with FT index", e)
     }
     finally {
-      FlushRequest request = new FlushRequest(indicesPerType.get(domain.name))
+      FlushRequest request = new FlushRequest(ESWrapperService.indicesPerType.get(domain.name))
       FlushResponse flushResponse = esclient.indices().flush(request, RequestOptions.DEFAULT)
       esclient.close()
       log.info("Completed processing on ${domain.name} - saved ${count} records")

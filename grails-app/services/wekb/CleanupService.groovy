@@ -46,7 +46,7 @@ class CleanupService {
             def expunge_result = component.expunge();
             log.debug("${expunge_result}");
             DeleteRequest request = new DeleteRequest(
-                    ESSearchService.indicesPerType.get(component.class.simpleName),
+                    ESWrapperService.indicesPerType.get(component.class.simpleName),
                     c_id)
             DeleteResponse deleteResponse = esclient.delete(
                     request, RequestOptions.DEFAULT);
@@ -121,9 +121,9 @@ class CleanupService {
           KBComponent kbc = KBComponent.get(it)
           def oid = "${kbc.class.name}:${it}"
 
-          if(ESSearchService.indicesPerType.get(kbc.class.simpleName)) {
+          if(ESWrapperService.indicesPerType.get(kbc.class.simpleName)) {
             DeleteRequest request = new DeleteRequest(
-                    ESSearchService.indicesPerType.get(kbc.class.simpleName),
+                    ESWrapperService.indicesPerType.get(kbc.class.simpleName),
                     oid)
             DeleteResponse deleteResponse = esclient.delete(
                     request, RequestOptions.DEFAULT);
