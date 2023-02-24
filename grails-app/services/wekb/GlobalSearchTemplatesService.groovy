@@ -705,10 +705,12 @@ class GlobalSearchTemplatesService {
                                 ],
 
                                 [
+                                        type     : 'dropDownGroup',
+                                        dropDownType  : 'subjectArea',
                                         prompt     : 'Subject Area',
                                         qparam     : 'qp_subjectArea_tipp',
                                         placeholder: 'Subject Area',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'tipps.subjectArea'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'tipps.subjectArea'],
                                         advancedSearch: [title: "Search Titles by ...", category: 'Title']
                                 ],
                                 [
@@ -1330,10 +1332,12 @@ class GlobalSearchTemplatesService {
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'accessType'],
                                 ],
                                 [
+                                        type     : 'dropDownGroup',
+                                        dropDownType  : 'subjectArea',
                                         prompt     : 'Subject Area',
-                                        qparam     : 'qp_subjectArea',
+                                        qparam     : 'qp_subjectArea_tipp',
                                         placeholder: 'Subject Area',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'subjectArea'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'tipps.subjectArea'],
                                 ],
                                 [
                                         type       : 'lookup',
@@ -1498,10 +1502,12 @@ class GlobalSearchTemplatesService {
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'accessType'],
                                 ],
                                 [
+                                        type     : 'dropDownGroup',
+                                        dropDownType  : 'subjectArea',
                                         prompt     : 'Subject Area',
-                                        qparam     : 'qp_subjectArea',
+                                        qparam     : 'qp_subjectArea_tipp',
                                         placeholder: 'Subject Area',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'subjectArea'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'tipps.subjectArea'],
                                 ],
                                 [
                                         type       : 'lookup',
