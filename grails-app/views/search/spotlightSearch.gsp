@@ -6,7 +6,7 @@
                 "title": "${hit.getSourceAsMap().name}",
                 "url":   "${g.createLink(controller:"resource", action:"show", id:"${hit.getSourceAsMap().uuid}")}",
                 "category": "${hit.getSourceAsMap().componentType == 'TitleInstancePackagePlatform' ? hit.getSourceAsMap().titleType : hit.getSourceAsMap().componentType}",
-                "description" : "${hit.getSourceAsMap().status?.value}",
+                "description" : "${hit.getSourceAsMap().status}",
                 "hitsCount": "${hits.size()}",
                 "query": "${query}"
             }

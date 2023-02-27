@@ -89,7 +89,7 @@
 
         <g:each in="${['componentType']}" var="facet">
             <g:each in="${params.list(facet)}" var="fv">
-                <div class="ui label">Filter: ${fv == 'TitleInstancePackagePlatform' ? 'Titles' : fv}&nbsp; <g:link
+                <div class="ui label">Filter: ${fv == 'TitleInstancePackagePlatform' ? 'Titles' : (fv == 'Org' ? 'Provider' : fv)}&nbsp; <g:link
                         controller="${controller}" action="${action}" params="${removeFacet(params, facet, fv)}"><i
                             class="icon close"></i></g:link></div>
             </g:each>
@@ -149,7 +149,7 @@
                             </g:else>
                         </td>
                         <td>${hit.getSourceAsMap().componentType == 'TitleInstancePackagePlatform' ? hit.getSourceAsMap().titleType : (hit.getSourceAsMap().componentType == 'Org' ? 'Provider' : hit.getSourceAsMap().componentType)}</td>
-                        <td>${hit.getSourceAsMap().status?.value ?: 'Unknown'}</td>
+                        <td>${hit.getSourceAsMap().status ?: 'Unknown'}</td>
                     </tr>
                 </g:each>
                 </tbody>
