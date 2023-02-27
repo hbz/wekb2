@@ -72,7 +72,7 @@ class Identifier {
   def afterInsert (){
     log.debug("afterSave for ${this}")
     def ref = this.getReference()
-    BeanStore.getCascadingUpdateService().update(this, dateCreated)
+    BeanStore.getCascadingUpdateService().update(this, lastUpdated)
 
   }
 

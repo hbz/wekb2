@@ -100,7 +100,7 @@ class TippPrice {
 
   def afterInsert (){
     log.debug("afterSave for ${this}")
-    BeanStore.getCascadingUpdateService().update(this, dateCreated)
+    BeanStore.getCascadingUpdateService().update(this, lastUpdated)
 
   }
 
