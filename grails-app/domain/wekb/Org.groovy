@@ -152,9 +152,8 @@ class Org extends AbstractBase implements Auditable {
   }
 
   def expunge(){
-    log.debug("Component expunge")
+    log.info("Org expunge: "+this.id)
     def result = [deleteType: this.class.name, deleteId: this.id]
-    log.debug("Removing all components")
     ComponentVariantName.executeUpdate("delete from ComponentVariantName as c where c.org=:component", [component: this])
     this.delete(failOnError: true)
     result

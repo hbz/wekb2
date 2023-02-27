@@ -561,9 +561,9 @@ class Package  extends AbstractBase implements Auditable {
   }
 
   def expunge(){
-    log.debug("Component expunge")
+    log.info("Package expunge: "+this.id)
     def result = [deleteType: this.class.name, deleteId: this.id]
-    log.debug("Removing all components")
+    ComponentVariantName.executeUpdate("delete from ComponentVariantName as c where c.pkg=:component", [component: this])
     this.delete(failOnError: true)
     result
   }

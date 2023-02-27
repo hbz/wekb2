@@ -379,7 +379,7 @@ class TitleInstancePackagePlatform  extends AbstractBase implements Auditable {
     }
 
   def expunge(){
-    log.debug("Component expunge")
+    log.info("TIPP expunge: "+ this.id)
     def result = [deleteType: this.class.name, deleteId: this.id]
     log.debug("Removing all components")
     this.delete(failOnError: true)

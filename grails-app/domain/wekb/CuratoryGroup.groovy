@@ -106,7 +106,7 @@ class CuratoryGroup extends AbstractBase implements Auditable {
   }
 
   def expunge(){
-    log.debug("Component expunge")
+    log.info("CuratoryGroup expunge:"+ this.id)
     def result = [deleteType: this.class.name, deleteId: this.id]
     this.delete(failOnError: true)
     result
