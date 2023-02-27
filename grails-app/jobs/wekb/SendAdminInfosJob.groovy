@@ -92,13 +92,14 @@ class SendAdminInfosJob {
             indices << indexInfo
         }
 
+        try {
+            esclient.close()
+        }
+        catch (Exception e) {
+            log.error("Problem by Close ES Client", e)
+        }
+
         if (sendMail) {
-            try {
-                esclient.close()
-            }
-            catch (Exception e) {
-                log.error("Problem by Close ES Client", e)
-            }
 
             try {
                 mailService.sendMail {
