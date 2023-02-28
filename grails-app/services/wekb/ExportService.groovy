@@ -677,7 +677,7 @@ class ExportService {
                             cell.setCellStyle(lb)
                     } else if (cellData.field instanceof Integer) {
                         cell.setCellValue((Integer) cellData.field)
-                    } else if (cellData.field instanceof Double || cellData.field instanceof BigDecimal) {
+                    } else if (cellData.field instanceof Double || cellData.field instanceof BigDecimal || cellData.field instanceof Float) {
                         cell.setCellValue((Double) cellData.field)
                         cell.setCellStyle(numberStyle)
                     }
