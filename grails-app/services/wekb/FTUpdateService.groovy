@@ -496,7 +496,6 @@ class FTUpdateService {
 
   def updateES(domain, recgen_closure) {
     RestHighLevelClient esclient = ESWrapperService.getClient()
-    cleanUpGorm()
     def count = 0
     long currentTimestamp = 0
 

@@ -45,15 +45,17 @@ class SearchController {
                     searchParams.remove('name')
                 }
 
+                if(params.componentType){
+                    searchParams.componentType = params.componentType
+                }
+
                 User user = springSecurityService.getCurrentUser()
                 result.max = params.max ? Integer.parseInt(params.max) : (user ? user.defaultPageSizeAsInteger : 10)
                 result.offset = params.offset ? Integer.parseInt(params.offset) : 0
 
-                def query_str = buildQuery(searchParams);
+                def query_str = buildQuery(searchParams)
 
                 log.debug("Searching for ${query_str}");
-
-                def typing_field = grailsApplication.config.getProperty('wekb.es.globalSearch.typingField', String) ?: 'componentType'
 
                 //QueryBuilder esQuery = QueryBuilders.queryStringQuery(query_str)
 
@@ -74,7 +76,7 @@ class SearchController {
                 }
 
                 searchSourceBuilder.query(QueryBuilders.queryStringQuery(query_str))
-                searchSourceBuilder.aggregation(AggregationBuilders.terms('ComponentType').size(25).field(typing_field))
+                searchSourceBuilder.aggregation(AggregationBuilders.terms('Component Type').size(25).field('componentType'))
 
                 searchSourceBuilder.from(result.offset)
                 searchSourceBuilder.size(result.max)
@@ -176,8 +178,6 @@ class SearchController {
 
                 log.debug("Searching for ${query_str}")
 
-                //def typing_field = grailsApplication.config.wekb.es.globalSearch.typingField ?: 'componentType'
-
                 log.debug("Using indices ${grailsApplication.config.getProperty('wekb.es.globalSearch', Map).indices.join(", ")}")
 
                 SearchResponse searchResponse
@@ -195,7 +195,6 @@ class SearchController {
                 }
 
                 searchSourceBuilder.query(QueryBuilders.queryStringQuery(query_str))
-                //searchSourceBuilder.aggregation(AggregationBuilders.terms('ComponentType').size(25).field(typing_field))
 
                 searchSourceBuilder.from(result.offset)
                 searchSourceBuilder.size(result.max)
