@@ -81,7 +81,8 @@ class Platform  extends AbstractBase implements Auditable {
           roles: RefdataValue,
           ids: Identifier,
           tipps: TitleInstancePackagePlatform,
-          curatoryGroups   : CuratoryGroupPlatform
+          curatoryGroups   : CuratoryGroupPlatform,
+          federations : PlatformFederation,
   ]
 
   static mapping = {

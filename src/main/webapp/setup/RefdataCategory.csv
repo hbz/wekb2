@@ -37,6 +37,7 @@ Package.Scope;Package Scope;Package Scope
 PackageArchivingAgency.ArchivingAgency;Archiving Agency;Archiving Agency
 PackageArchivingAgency.OpenAccess;Open Access;Open Access
 PackageArchivingAgency.PostCancellationAccess;Post-Cancellation Access;Post-Cancellation Access
+Platform.Federation;Platform Federation;Platform Federation
 Platform.IPAuthentication;Platform IP Authentication;Platform IP Authentication
 Platform.Role;Platform Role;Platform Role
 Platform.Roles;Platform Roles;Platform Roles

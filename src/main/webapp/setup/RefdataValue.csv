@@ -415,6 +415,93 @@ PackageArchivingAgency.OpenAccess;Partly;Partly;Partly
 PackageArchivingAgency.PostCancellationAccess;Yes;Yes;Yes
 PackageArchivingAgency.PostCancellationAccess;No;No;No
 PackageArchivingAgency.PostCancellationAccess;Partly;Partly;Partly
+Platform.Federation;AAIEduHr;AAI@EduHr;AAI@EduHr
+Platform.Federation;AAIEduMK;AAIEduMK;AAIEduMK
+Platform.Federation;ACOnet Identity Federation;ACOnet Identity Federation;ACOnet Identity Federation
+Platform.Federation;AFIRE;AFIRE;AFIRE
+Platform.Federation;ARNaai;ARNaai;ARNaai
+Platform.Federation;ArnesAAI;ArnesAAI;ArnesAAI
+Platform.Federation;Australian Access Federation;Australian Access Federation (AAF);Australian Access Federation (AAF)
+Platform.Federation;AzScienceNet Federation;AzScienceNet Federation;AzScienceNet Federation
+Platform.Federation;Belnet Research and Education Federation;Belnet Research and Education Federation;Belnet Research and Education Federation
+Platform.Federation;BIF;BIF;BIF
+Platform.Federation;CAFe;CAFe;CAFe
+Platform.Federation;CAFMoz;CAFMoz;CAFMoz
+Platform.Federation;Canadian Access Federation;Canadian Access Federation (CAF);Canadian Access Federation (CAF)
+Platform.Federation;CARSI;CARSI;CARSI
+Platform.Federation;CIF;CIF;CIF
+Platform.Federation;COFRe;COFRe;COFRe
+Platform.Federation;COLFIRE;COLFIRE;COLFIRE
+Platform.Federation;CST Cloud Federation;CST Cloud Federation;CST Cloud Federation
+Platform.Federation;DFN-AAI;DFN-AAI;DFN-AAI
+Platform.Federation;Edugate;Edugate;Edugate
+Platform.Federation;eduID;eduID;eduID
+Platform.Federation;eduID.cz;eduID.cz;eduID.cz
+Platform.Federation;eduID.hu;eduID.hu (HREF Federation);eduID.hu (HREF Federation)
+Platform.Federation;eduID.lu;eduID.lu;eduID.lu
+Platform.Federation;eduIDM;eduIDM;eduIDM
+Platform.Federation;FEBAS;FEBAS;FEBAS
+Platform.Federation;Federasi.ID;Federasi.ID;Federasi.ID
+Platform.Federation;Fédération Éducation-Recherche;Fédération Éducation-Recherche;Fédération Éducation-Recherche
+Platform.Federation;FEDUrus AAI;FEDUrus AAI;FEDUrus AAI
+Platform.Federation;FEIDE;FEIDE;FEIDE
+Platform.Federation;FENIX;FENIX;FENIX
+Platform.Federation;FIDERN;FIDERN;FIDERN
+Platform.Federation;GakuNin;GakuNin;GakuNin
+Platform.Federation;GIF;GIF;GIF
+Platform.Federation;GRNET;GRNET;GRNET
+Platform.Federation;Haka;Haka;Haka
+Platform.Federation;Hong Kong Access Federation;Hong Kong Access Federation;Hong Kong Access Federation
+Platform.Federation;iAMRES;iAMRES;iAMRES
+Platform.Federation;IDEM;IDEM;IDEM
+Platform.Federation;Iden.tt;Iden.tt;Iden.tt
+Platform.Federation;INCA;INCA;INCA
+Platform.Federation;InCommon;InCommon;InCommon
+Platform.Federation;INFED;INFED;INFED
+Platform.Federation;IRFED;IRFED;IRFED
+Platform.Federation;IUCC Identity Federation;IUCC Identity Federation;IUCC Identity Federation
+Platform.Federation;KAFE;KAFE;KAFE
+Platform.Federation;KRENA IF;KRENA IF;KRENA IF
+Platform.Federation;LAIFE;LAIFE;LAIFE
+Platform.Federation;LEAF;LEAF;LEAF
+Platform.Federation;LIAF;LIAF;LIAF
+Platform.Federation;LIFE;LIFE;LIFE
+Platform.Federation;Litnet Federation;Litnet Federation;Litnet Federation
+Platform.Federation;Maeen;Maeen;Maeen
+Platform.Federation;MATE;MATE;MATE
+Platform.Federation;MINGA;MINGA;MINGA
+Platform.Federation;Mongolian University and Research organizations for Federation;Mongolian University and Research organizations for Federation (MURO);Mongolian University and Research organizations for Federation (MURO)
+Platform.Federation;Nigerian Identity Federation;Nigerian Identity Federation;Nigerian Identity Federation
+Platform.Federation;OMAN_KID;OMAN_KID;OMAN_KID
+Platform.Federation;OMREN Federation;OMREN Federation;OMREN Federation
+Platform.Federation;OpenAthens;OpenAthens;OpenAthens
+Platform.Federation;PEANO;PEANO;PEANO
+Platform.Federation;PKIFED;PKIFED;PKIFED
+Platform.Federation;Polish Identity Federation PIONIER.Id;Polish Identity Federation PIONIER.Id;Polish Identity Federation PIONIER.Id
+Platform.Federation;RAFIKI;RAFIKI;RAFIKI
+Platform.Federation;RASH;RASH;RASH
+Platform.Federation;RAUid;RAUid;RAUid
+Platform.Federation;RCTSaai;RCTSaai;RCTSaai
+Platform.Federation;RicerkaNet Identity Federation;RicerkaNet Identity Federation;RicerkaNet Identity Federation
+Platform.Federation;RIF;RIF;RIF
+Platform.Federation;RoEduNetID;RoEduNetID;RoEduNetID
+Platform.Federation;RUNNET AAI;RUNNET AAI;RUNNET AAI
+Platform.Federation;SafeID;SafeID;SafeID
+Platform.Federation;SIFULAN;SIFULAN;SIFULAN
+Platform.Federation;Singapore Access Federation;Singapore Access Federation (SGAF);Singapore Access Federation (SGAF)
+Platform.Federation;SIR;SIR;SIR
+Platform.Federation;South African Identity Federation;South African Identity Federation (SAFIRE);South African Identity Federation (SAFIRE)
+Platform.Federation;SURFconext;SURFconext;SURFconext
+Platform.Federation;SWAMID;SWAMID;SWAMID
+Platform.Federation;SWITCHaai;SWITCHaai;SWITCHaai
+Platform.Federation;TAAT;TAAT;TAAT
+Platform.Federation;TARENA Identity Federation;TARENA Identity Federation;TARENA Identity Federation
+Platform.Federation;ThaiIDF;ThaiIDF;ThaiIDF
+Platform.Federation;TIGERfed;TIGERfed;TIGERfed
+Platform.Federation;Tuakiri New Zealand Access Federation;Tuakiri New Zealand Access Federation;Tuakiri New Zealand Access Federation
+Platform.Federation;UK Access Management Federation;UK Access Management Federation;UK Access Management Federation
+Platform.Federation;WAYF;WAYF;WAYF
+Platform.Federation;YETKIM;YETKIM;YETKIM
 Platform.IPAuthentication;IPv4;IPv4;IPv4
 Platform.IPAuthentication;IPv4;IPv4;IPv4
 Platform.IPAuthentication;IPv6;IPv6;IPv6

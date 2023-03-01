@@ -62,6 +62,51 @@
     <dd><semui:xEditableRefData owner="${d}" field="shibbolethAuthentication"
                                 config="${RCConstants.YN}" /></dd>
 </dl>
+
+<g:if test="${controllerName != 'create' && d.shibbolethAuthentication && d.shibbolethAuthentication == wekb.helper.RDStore.YN_YES}">
+    <dl>
+        <dt class="control-label">
+            Federations
+        </dt>
+        <dd>
+            <table class="ui small selectable striped celled table">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Federation</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <g:each in="${d.federations?.sort { it.federationd?.value }}" var="federation" status="i">
+                    <tr>
+                        <td>${i + 1}</td>
+                        <td><semui:xEditableRefData owner="${federation}" field="federation"
+                                                    config="${RCConstants.PLATFORM_FEDERATION}"/>
+                        <td>
+                            <g:if test="${editable}">
+                                <g:link controller='ajaxHtml'
+                                        action='delete'
+                                        params="${["__context": "${federation.getOID()}", curationOverride: params.curationOverride]}">Delete</g:link>
+                            </g:if>
+                        </td>
+                    </tr>
+                </g:each>
+                </tbody>
+            </table>
+
+            <g:if test="${editable}">
+                <a class="ui right floated black button" href="#"
+                   onclick="$('#pfModal').modal('show');">Add Federation</a>
+
+                <br>
+                <br>
+            </g:if>
+        </dd>
+    </dl>
+</g:if>
+
+
 <dl>
     <dt class="control-label">User/Pass Supported</dt>
     <dd><semui:xEditableRefData owner="${d}" field="passwordAuthentication"
@@ -78,3 +123,22 @@
     <dd><semui:xEditable owner="${d}" field="counterRegistryApiUuid" /></dd>
 </dl>
 
+
+<g:if test="${editable && controllerName != 'create'}">
+    <semui:modal id="pfModal" title="Add Federation">
+
+        <g:form controller="ajaxHtml" action="addToCollection" class="ui form">
+            <input type="hidden" name="__context" value="${d.getOID()}"/>
+            <input type="hidden" name="__newObjectClass" value="wekb.PlatformFederation"/>
+            <input type="hidden" name="__recip" value="platform"/>
+            <input type="hidden" name="curationOverride" value="${params.curationOverride}"/>
+
+            <div class="field">
+                <label>Federation</label>
+                <semui:simpleReferenceDropdown name="federation"
+                                               baseClass="wekb.RefdataValue"
+                                               filter1="${RCConstants.PLATFORM_FEDERATION}"/>
+            </div>
+        </g:form>
+    </semui:modal>
+</g:if>
