@@ -73,7 +73,7 @@
                 <thead>
                 <tr>
                     <th>#</th>
-                    <th>Federation</th>
+                    <th>Federations</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -97,7 +97,7 @@
 
             <g:if test="${editable}">
                 <a class="ui right floated black button" href="#"
-                   onclick="$('#pfModal').modal('show');">Add Federation</a>
+                   onclick="$('#pfModal').modal('show');">Add Federations</a>
 
                 <br>
                 <br>
@@ -125,7 +125,7 @@
 
 
 <g:if test="${editable && controllerName != 'create'}">
-    <semui:modal id="pfModal" title="Add Federation">
+    <semui:modal id="pfModal" title="Add Federations">
 
         <g:form controller="ajaxHtml" action="addToCollection" class="ui form">
             <input type="hidden" name="__context" value="${d.getOID()}"/>
@@ -134,7 +134,7 @@
             <input type="hidden" name="curationOverride" value="${params.curationOverride}"/>
 
             <div class="field">
-                <label>Federation</label>
+                <label>Federations</label>
                 <semui:simpleReferenceDropdown name="federation"
                                                baseClass="wekb.RefdataValue"
                                                filter1="${RCConstants.PLATFORM_FEDERATION}"/>
