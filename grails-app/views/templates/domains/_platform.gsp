@@ -78,7 +78,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <g:each in="${d.federations?.sort { it.federationd?.value }}" var="federation" status="i">
+                <g:each in="${d.federations?.sort { it.federation?.value }}" var="federation" status="i">
                     <tr>
                         <td>${i + 1}</td>
                         <td><semui:xEditableRefData owner="${federation}" field="federation"
