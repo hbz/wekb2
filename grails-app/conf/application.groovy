@@ -55,7 +55,8 @@ grails.plugin.springsecurity.authority.className = 'wekb.auth.Role'
 
 grails.plugin.springsecurity.roleHierarchy = '''
     ROLE_YODA > ROLE_ADMIN
-    ROLE_ADMIN > ROLE_USER
+    ROLE_ADMIN > ROLE_API
+    ROLE_API > ROLE_USER
 '''
 
 // TODO: 2023 check filterChain and controllerAnnotations

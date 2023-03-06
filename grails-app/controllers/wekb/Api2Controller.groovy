@@ -1,14 +1,14 @@
 package wekb
 
+import org.springframework.security.access.annotation.Secured
 import wekb.helper.RCConstants
 import grails.converters.JSON
 import wekb.helper.RDStore
 
 import java.security.SecureRandom
 
+@Secured(['ROLE_API', 'IS_AUTHENTICATED_FULLY'])
 class Api2Controller {
-    def ESSearchService
-
     SecureRandom rand = new SecureRandom()
 
     /**
@@ -96,95 +96,6 @@ class Api2Controller {
         }
 
         apiReturn(result)
-    }
-
-    /**
-     * suggest : Get a list of autocomplete suggestions from ES
-     *
-     * @param max : Define result size
-     * @param offset : Define offset
-     * @param from : Define offset
-     * @param q : Search term
-     * @param componentType : Restrict search to specific component type (Package, Org, Platform, TIPP)
-     * @param role : Filter by Org role (only in context of componentType=Org)
-     * @return JSON Object
-     * */
-
-    def suggest() {
-        log.info("API Call: suggest - " + params)
-        def result = [:]
-        def searchParams = params
-
-        try {
-
-            if (params.q?.length() > 0) {
-                searchParams.suggest = params.q
-                searchParams.remove("q")
-
-                if (!searchParams.mapRecords) {
-                    searchParams.skipDomainMapping = true
-                } else {
-                    searchParams.remove("mapRecords")
-                }
-
-                result = ESSearchService.find(searchParams)
-            } else {
-                result.errors = ['fatal': "No query parameter 'q=' provided"]
-                result.result = "ERROR"
-            }
-
-        } finally {
-            if (result.errors) {
-                response.setStatus(400)
-            }
-        }
-
-        render result as JSON
-    }
-
-    /**
-     * find : Query the Elasticsearch index via ESSearchService
-     **/
-    def find() {
-        log.info("API Call: find - " + params)
-        def result = [:]
-        def searchParams = params
-
-        if (!searchParams.mapRecords) {
-            searchParams.skipDomainMapping = true
-        } else {
-            searchParams.remove("mapRecords")
-        }
-
-        try {
-            result = ESSearchService.find(searchParams)
-        }
-        finally {
-            if (result.errors) {
-                response.setStatus(400)
-            }
-        }
-        render result as JSON
-    }
-
-
-    /**
-     * scroll : Deliver huge amounts of Elasticsearch data
-     **/
-    def scroll() {
-        log.info("API Call: scroll - " + params)
-        def result = [:]
-        try {
-            result = ESSearchService.scroll(params)
-        }
-        catch (Exception e) {
-            result.result = "ERROR"
-            result.message = e.message
-            result.cause = e.cause
-            log.error("Could not process scroll request. Exception was: ${e.message}")
-            response.setStatus(400)
-        }
-        render result as JSON
     }
 
     def sushiSources() {
