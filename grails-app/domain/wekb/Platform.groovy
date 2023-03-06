@@ -240,6 +240,11 @@ class Platform  extends AbstractBase implements Auditable {
 
   def expunge(){
     log.info("Platform expunge: "+ this.id)
+
+    CuratoryGroupPlatform.executeUpdate("delete from CuratoryGroupPlatform where platform = :component", [component: this])
+    Identifier.executeUpdate("delete from Identifier where platform = :component", [component: this])
+    PlatformFederation.executeUpdate("delete from PlatformFederation where platform = :component", [component: this])
+
     def result = [deleteType: this.class.name, deleteId: this.id]
     log.debug("Removing all components")
     this.delete(failOnError: true)

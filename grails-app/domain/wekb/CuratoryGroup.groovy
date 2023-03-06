@@ -107,6 +107,13 @@ class CuratoryGroup extends AbstractBase implements Auditable {
 
   def expunge(){
     log.info("CuratoryGroup expunge:"+ this.id)
+
+    CuratoryGroupUser.executeUpdate("delete from CuratoryGroupUser where curatoryGroup = :component", [component: this])
+    CuratoryGroupKbartSource.executeUpdate("delete from CuratoryGroupKbartSource where curatoryGroup = :component", [component: this])
+    CuratoryGroupPlatform.executeUpdate("delete from CuratoryGroupPlatform where curatoryGroup = :component", [component: this])
+    CuratoryGroupPackage.executeUpdate("delete from CuratoryGroupPackage where curatoryGroup = :component", [component: this])
+    CuratoryGroupOrg.executeUpdate("delete from CuratoryGroupOrg where curatoryGroup = :component", [component: this])
+
     def result = [deleteType: this.class.name, deleteId: this.id]
     this.delete(failOnError: true)
     result

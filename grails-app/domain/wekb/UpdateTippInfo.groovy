@@ -28,6 +28,9 @@ class UpdateTippInfo {
     String newValue
     String oldValue
 
+    static belongsTo = [updatePackageInfo: UpdatePackageInfo,
+                        tipp: TitleInstancePackagePlatform]
+
     static mapping = {
         id          column:'uti_id'
         version     column:'uti_version'
@@ -69,9 +72,6 @@ class UpdateTippInfo {
         tipp (nullable: true, blank: false)
 
     }
-
-    static belongsTo = [updatePackageInfo: UpdatePackageInfo,
-                        tipp: TitleInstancePackagePlatform]
 
     def beforeValidate (){
         log.debug("beforeValidate for ${this}")

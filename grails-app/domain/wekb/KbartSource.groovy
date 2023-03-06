@@ -274,6 +274,9 @@ class KbartSource extends AbstractBase implements Auditable {
 
     def expunge(){
         log.info("KbartSource expunge: "+this.id)
+
+        CuratoryGroupKbartSource.executeUpdate("delete from CuratoryGroupKbartSource where kbartSource = :component", [component: this])
+
         def result = [deleteType: this.class.name, deleteId: this.id]
         this.delete(failOnError: true)
         result

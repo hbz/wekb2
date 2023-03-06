@@ -37,6 +37,10 @@ class UpdatePackageInfo {
     @RefdataAnnotation(cat = RCConstants.UPDATE_STATUS)
     RefdataValue status
 
+    static hasMany = [updateTippInfos: UpdateTippInfo]
+
+    static belongsTo = [pkg: Package]
+
     static mapping = {
         id          column:'upi_id'
         version     column:'upi_version'
@@ -87,10 +91,6 @@ class UpdatePackageInfo {
         onlyRowsWithLastChanged  (nullable:true)
         lastChangedInKbart (nullable:true, default: null)
     }
-
-    static hasMany = [updateTippInfos: UpdateTippInfo]
-
-    static belongsTo = [pkg: Package]
 
     def beforeValidate (){
         log.debug("beforeValidate for ${this}")

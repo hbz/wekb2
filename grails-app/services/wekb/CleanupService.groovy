@@ -15,18 +15,20 @@ import org.elasticsearch.client.RequestOptions
 import org.elasticsearch.xcontent.XContentType
 import wekb.ConcurrencyManagerService.Job
 
+@Transactional
 class CleanupService {
   SessionFactory sessionFactory
   ESWrapperService ESWrapperService
   DateFormatService dateFormatService
+  GenericOIDService genericOIDService
 
-  private def expungeByIds ( ids, Job j = null ) {
+  private def expungeByOIds ( oids, Job j = null ) {
 
     def result = [report: []]
     def esclient = ESWrapperService.getClient()
     def idx = 0
 
-    for (component_id in ids) {
+    for (component_oid in oids) {
 
       if ( Thread.currentThread().isInterrupted() ) {
         log.debug("Job cancelling ..")
@@ -37,13 +39,12 @@ class CleanupService {
       idx++
 
       try {
-        KBComponent.withNewTransaction {
-          log.debug("Expunging ${component_id}");
-          KBComponent component = KBComponent.get(component_id);
+          log.debug("Expunging ${component_oid}")
+          def component = genericOIDService.resolveOID(component_oid)
           String c_id = "${component.class.name}:${component.id}"
 
           if(recordDeletedKBComponent(component)) {
-            def expunge_result = component.expunge();
+            def expunge_result = component.expunge()
             log.debug("${expunge_result}");
             DeleteRequest request = new DeleteRequest(
                     ESWrapperService.indicesPerType.get(component.class.simpleName),
@@ -56,12 +57,11 @@ class CleanupService {
             log.debug("ES deleteResponse: ${deleteResponse}")
             result.report.add(expunge_result)
           }
-        }
         j?.setProgress(idx,ids.size())
       }
       catch ( Throwable t ) {
         log.error("problem",t);
-        j?.message("Problem expunging component with id ${component_id}".toString())
+        j?.message("Problem expunging component with id ${component_oid}".toString())
       }
 
     }
@@ -85,9 +85,33 @@ class CleanupService {
 
     def status_removed = RDStore.KBC_STATUS_REMOVED
 
-    def removed_candidates = KBComponent.executeQuery('select kbc.id from KBComponent as kbc where kbc.status=:removedStatus',[removedStatus: status_removed])
+    List removed_candidates = []
 
-    def result = expungeByIds(removed_candidates, j)
+    CuratoryGroup.findAllByStatus(status_removed).each {
+      removed_candidates << it.getOID()
+    }
+
+    KbartSource.findAllByStatus(status_removed).each {
+      removed_candidates << it.getOID()
+    }
+
+    Org.findAllByStatus(status_removed).each {
+      removed_candidates << it.getOID()
+    }
+
+    Package.findAllByStatus(status_removed).each {
+      removed_candidates << it.getOID()
+    }
+
+    Platform.findAllByStatus(status_removed).each {
+      removed_candidates << it.getOID()
+    }
+
+    TitleInstancePackagePlatform.findAllByStatus(status_removed).each {
+      removed_candidates << it.getOID()
+    }
+
+    def result = expungeByOIds(removed_candidates, j)
 
     log.debug("Done")
     j.endTime = new Date()
@@ -100,53 +124,6 @@ class CleanupService {
     def session = sessionFactory.currentSession
     session.flush()
     session.clear()
-  }
-
-  def expungeAll(List components, Job j = null) {
-    log.debug("Component bulk expunge");
-    def result = [num_requested: components.size(), num_expunged: 0]
-    log.debug("Expunging ${result.num_requested} components")
-    def esclient = ESWrapperService.getClient()
-    def remaining = components
-    try {
-      while (remaining.size() > 0) {
-        def batch = remaining.take(50)
-        remaining = remaining.drop(50)
-        ComponentVariantName.executeUpdate("delete from ComponentVariantName as c where c.org.id IN (:component)", [component: batch]);
-        ComponentVariantName.executeUpdate("delete from ComponentVariantName as c where c.pkg.id IN (:component)", [component: batch]);
-
-        TippPrice.executeUpdate("delete from TippPrice as cp where cp.tipp.id IN (:component)", [component: batch])
-
-        batch.each {
-          KBComponent kbc = KBComponent.get(it)
-          def oid = "${kbc.class.name}:${it}"
-
-          if(ESWrapperService.indicesPerType.get(kbc.class.simpleName)) {
-            DeleteRequest request = new DeleteRequest(
-                    ESWrapperService.indicesPerType.get(kbc.class.simpleName),
-                    oid)
-            DeleteResponse deleteResponse = esclient.delete(
-                    request, RequestOptions.DEFAULT);
-            if (deleteResponse.getResult() == DocWriteResponse.Result.NOT_FOUND) {
-              log.debug("ES doc not found ${oid}")
-            }
-            log.debug("ES deleteResponse: ${deleteResponse}")
-          }
-
-        }
-        result.num_expunged += KBComponent.executeUpdate("delete KBComponent as c where c.id IN (:component)", [component: batch])
-        j?.setProgress(result.num_expunged, result.num_requested)
-      }
-    }
-    finally {
-      try {
-        esclient.close()
-      }
-      catch (Exception e) {
-        log.error("Problem by Close ES Client", e)
-      }
-    }
-    result
   }
 
   private boolean recordDeletedKBComponent(KBComponent kbComponent){
