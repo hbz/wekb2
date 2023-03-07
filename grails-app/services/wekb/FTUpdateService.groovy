@@ -278,7 +278,7 @@ class FTUpdateService {
         result.proxySupported = kbc.proxySupported?.value
 
         result.counterRegistryApiUuid = kbc.counterRegistryApiUuid
-        
+
         result
       }
 
@@ -492,19 +492,19 @@ class FTUpdateService {
       log.info("updateES - ${domain.name}")
       def latest_ft_record = null
       def highest_id = 0
-      FTControl.withNewTransaction {
-        latest_ft_record = FTControl.findByDomainClassNameAndActivity(domain.name, 'ESIndex')
-        log.debug("result of findByDomain: ${domain} ${latest_ft_record}")
-        if (!latest_ft_record) {
-          latest_ft_record =
-                  new FTControl(domainClassName: domain.name, activity: 'ESIndex', lastTimestamp: 0, lastId: 0)
-                          .save()
-          log.debug("Create new FT control record, as none available for ${domain.name}")
-        } else {
-          log.debug("Got existing ftcontrol record for ${domain.name} max timestamp is ${latest_ft_record.lastTimestamp} which is " +
-                  "${new Date(latest_ft_record.lastTimestamp)}")
-        }
+
+      latest_ft_record = FTControl.findByDomainClassNameAndActivity(domain.name, 'ESIndex')
+      log.debug("result of findByDomain: ${domain} ${latest_ft_record}")
+      if (!latest_ft_record) {
+        latest_ft_record =
+                new FTControl(domainClassName: domain.name, activity: 'ESIndex', lastTimestamp: 0, lastId: 0)
+                        .save()
+        log.debug("Create new FT control record, as none available for ${domain.name}")
+      } else {
+        log.debug("Got existing ftcontrol record for ${domain.name} max timestamp is ${latest_ft_record.lastTimestamp} which is " +
+                "${new Date(latest_ft_record.lastTimestamp)}")
       }
+
       log.info("updateES ${domain.name} since ${latest_ft_record.lastTimestamp}")
 
       def total = 0
@@ -512,47 +512,54 @@ class FTUpdateService {
       def countq = domain.executeQuery("select count(o.id) from " + domain.name +
               " as o where (( o.lastUpdated > :ts ) OR ( o.dateCreated > :ts )) ", [ts: from], [readonly: true])[0]
       log.info("Will process ${countq} records")
-      def q = domain.executeQuery("select o.id from " + domain.name +
+      List<Long> idList = domain.executeQuery("select o.id from " + domain.name +
               " as o where ((o.lastUpdated > :ts ) OR ( o.dateCreated > :ts )) order by o.lastUpdated, o.id", [ts: from],
               [readonly: true])
       log.debug("Query completed.. processing rows...")
 
       currentTimestamp = System.currentTimeMillis()
 
+      boolean processFail = false
+
       BulkRequest bulkRequest = new BulkRequest()
       // while (results.next()) {
-      FTControl.withNewSession { Session session ->
-        for (r_id in q) {
-          if (Thread.currentThread().isInterrupted()) {
-            log.debug("Job cancelling ..")
-            running = false
-            break
-          }
-          Object r = domain.get(r_id)
-          if (ESWrapperService.indicesPerType.get(r.class.simpleName)) {
-            log.debug("${r.id} ${domain.name} -- (rects)${r.lastUpdated} > (from)${from}")
-            def idx_record = recgen_closure(r)
-            def es_index = ESWrapperService.indicesPerType.get(r.class.simpleName)
+      FTControl.withTransaction {
 
-            if (idx_record != null) {
-              def recid = idx_record['recid'].toString()
-              idx_record.remove('recid')
+        List<Long> todoList = idList.take(3000000)
+        List<List<Long>> bulks = todoList.collate(10000)
 
-              IndexRequest request = new IndexRequest(es_index)
-              request.id(recid)
-              String jsonString = idx_record as JSON
-              //String jsonString = JsonOutput.toJson(idx_record)
-              //println(jsonString)
-              request.source(jsonString, XContentType.JSON)
-
-              bulkRequest.add(request)
+        bulks.eachWithIndex { List<Long> bulk, int i ->
+          for (domain_id in bulk) {
+            if (Thread.currentThread().isInterrupted()) {
+              log.debug("Job cancelling ..")
+              running = false
+              break
             }
-            highest_id = r.id
-            count++
-            total++
+            Object r = domain.get(domain_id)
+            if (ESWrapperService.indicesPerType.get(r.class.simpleName)) {
+              log.debug("${r.id} ${domain.name} -- (rects)${r.lastUpdated} > (from)${from}")
+              def idx_record = recgen_closure(r)
+              def es_index = ESWrapperService.indicesPerType.get(r.class.simpleName)
+
+              if (idx_record != null) {
+                def recid = idx_record['recid'].toString()
+                idx_record.remove('recid')
+
+                IndexRequest request = new IndexRequest(es_index)
+                request.id(recid)
+                String jsonString = idx_record as JSON
+                //String jsonString = JsonOutput.toJson(idx_record)
+                //println(jsonString)
+                request.source(jsonString, XContentType.JSON)
+
+                bulkRequest.add(request)
+              }
+              highest_id = r.id
+              count++
+              total++
+            }
           }
-          if (count == 1000) {
-            count = 0
+          if (bulkRequest.numberOfActions()) {
             log.debug("interim:: processed ${total} out of ${countq} records (${domain.name})")
             BulkResponse bulkResponse = esclient.bulk(bulkRequest, RequestOptions.DEFAULT)
 
@@ -561,45 +568,23 @@ class FTUpdateService {
                 if (bulkItemResponse.isFailed()) {
                   BulkItemResponse.Failure failure = bulkItemResponse.getFailure()
                   log.debug("updateES ${domain.name}: ES Bulk operation has failure -> ${failure}")
+                  processFail = true
                 }
               }
-            }else{
-              bulkRequest = new BulkRequest()
             }
-            //log.debug("BulkResponse: ${bulkResponse}")
-            /*synchronized (this) {
-              Thread.yield()
-            }*/
-
-            session.flush()
-            session.clear()
+          }else {
+            log.debug( "updateES: ignored empty bulk")
           }
+          bulkRequest = new BulkRequest()
         }
 
-        if (count > 0) {
-          BulkResponse bulkResponse = esclient.bulk(bulkRequest, RequestOptions.DEFAULT)
-
-          if (bulkResponse.hasFailures()) {
-            for (BulkItemResponse bulkItemResponse : bulkResponse) {
-              if (bulkItemResponse.isFailed()) {
-                BulkItemResponse.Failure failure = bulkItemResponse.getFailure()
-                log.debug("updateES ${domain.name}: ES Bulk operation has failure -> ${failure}")
-              }
-            }
-          }
-          //session.flush()
-          log.debug("Final BulkResponse: ${bulkResponse}")
-        }
-        // update timestamp
-        FTControl.withNewTransaction {
+        if(!processFail) {
+          // update timestamp
           latest_ft_record = FTControl.get(latest_ft_record.id)
           latest_ft_record.lastTimestamp = currentTimestamp
           latest_ft_record.lastId = highest_id
           latest_ft_record.save()
         }
-
-        session.flush()
-        session.clear()
         log.info("final:: Processed ${total} out of ${countq} records for ${domain.name}.")
       }
     }
@@ -647,7 +632,7 @@ class FTUpdateService {
   private String generateSortName(String input_title) {
     if (!input_title) return null
     String s1 = Normalizer.normalize(input_title, Normalizer.Form.NFKD).trim().toLowerCase()
-   
+
 
     return s1.trim()
 
