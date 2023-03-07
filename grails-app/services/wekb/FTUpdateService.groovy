@@ -20,7 +20,6 @@ import java.text.Normalizer
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Future
 
-@Transactional
 class FTUpdateService {
 
   ESWrapperService ESWrapperService
@@ -496,9 +495,11 @@ class FTUpdateService {
       latest_ft_record = FTControl.findByDomainClassNameAndActivity(domain.name, 'ESIndex')
       log.debug("result of findByDomain: ${domain} ${latest_ft_record}")
       if (!latest_ft_record) {
-        latest_ft_record =
-                new FTControl(domainClassName: domain.name, activity: 'ESIndex', lastTimestamp: 0, lastId: 0)
-                        .save()
+        FTControl.withTransaction {
+          latest_ft_record =
+                  new FTControl(domainClassName: domain.name, activity: 'ESIndex', lastTimestamp: 0, lastId: 0)
+                          .save()
+        }
         log.debug("Create new FT control record, as none available for ${domain.name}")
       } else {
         log.debug("Got existing ftcontrol record for ${domain.name} max timestamp is ${latest_ft_record.lastTimestamp} which is " +
@@ -580,10 +581,12 @@ class FTUpdateService {
 
         if(!processFail) {
           // update timestamp
-          latest_ft_record = FTControl.get(latest_ft_record.id)
-          latest_ft_record.lastTimestamp = currentTimestamp
-          latest_ft_record.lastId = highest_id
-          latest_ft_record.save()
+          FTControl.withTransaction {
+            latest_ft_record = FTControl.get(latest_ft_record.id)
+            latest_ft_record.lastTimestamp = currentTimestamp
+            latest_ft_record.lastId = highest_id
+            latest_ft_record.save()
+          }
         }
         log.info("final:: Processed ${total} out of ${countq} records for ${domain.name}.")
       }
