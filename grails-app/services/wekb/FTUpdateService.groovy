@@ -1,6 +1,7 @@
 package wekb
 
 import grails.converters.JSON
+import grails.gorm.transactions.Transactional
 import org.elasticsearch.action.admin.indices.flush.FlushRequest
 import org.elasticsearch.action.admin.indices.flush.FlushResponse
 import org.elasticsearch.action.bulk.BulkItemResponse
@@ -19,6 +20,7 @@ import java.text.Normalizer
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Future
 
+@Transactional
 class FTUpdateService {
 
   ESWrapperService ESWrapperService
