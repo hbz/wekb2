@@ -200,14 +200,6 @@ class FTUpdateService {
                                   namespaceName: idc.namespace.name])
         }
         result.componentType = kbc.class.simpleName
-        result.platforms = []
-        kbc.providedPlatforms?.each { plt ->
-          def platform = [:]
-          platform.uuid = plt.uuid ?: ""
-          platform.url = plt.primaryUrl ?: ""
-          platform.name = plt.name ?: ""
-          result.platforms.add(platform)
-        }
 
         result.contacts = []
         kbc.contacts.each { Contact contact ->
@@ -246,10 +238,6 @@ class FTUpdateService {
           }
         }
 
-        result.altname = []
-        kbc.variantNames.each { vn ->
-          result.altname.add(vn.variantName)
-        }
         result.updater = 'platform'
         result.primaryUrl = kbc.primaryUrl
         result.status = kbc.status?.value
@@ -367,8 +355,7 @@ class FTUpdateService {
         result.titleHistory = []
         // publishers
         result.titlePublishers = []
-        // variant names
-        result.altname = []
+
 /*        if (kbc.title) {
           result.tippTitle = kbc.title.getOID()
           result.tippTitleName = kbc.title.name

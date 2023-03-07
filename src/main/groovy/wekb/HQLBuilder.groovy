@@ -146,15 +146,15 @@ public class HQLBuilder {
         fetch_hql += " order by currentTippCount ${hql_builder_context.order}";
       }
       else if(hql_builder_context.sort == 'deletedTippCount'){
-        fetch_hql = fetch_hql.replaceFirst(" o ", " o, (select count(t.id) from  org.gokb.cred.TitleInstancePackagePlatform as t where t.pkg = o.id and t.status = ${RDStore.KBC_STATUS_DELETED.id}) as deletedTippCount ")
+        fetch_hql = fetch_hql.replaceFirst(" o ", " o, (select count(t.id) from  wekb.TitleInstancePackagePlatform as t where t.pkg = o.id and t.status = ${RDStore.KBC_STATUS_DELETED.id}) as deletedTippCount ")
         fetch_hql += " order by deletedTippCount ${hql_builder_context.order}";
       }
       else if(hql_builder_context.sort == 'retiredTippCount'){
-        fetch_hql = fetch_hql.replaceFirst(" o ", " o, (select count(t.id) from  org.gokb.cred.TitleInstancePackagePlatform as t where t.pkg = o.id and t.status = ${RDStore.KBC_STATUS_RETIRED.id}) as retiredTippCount ")
+        fetch_hql = fetch_hql.replaceFirst(" o ", " o, (select count(t.id) from  wekb.TitleInstancePackagePlatform as t where t.pkg = o.id and t.status = ${RDStore.KBC_STATUS_RETIRED.id}) as retiredTippCount ")
         fetch_hql += " order by retiredTippCount ${hql_builder_context.order}";
       }
       else if(hql_builder_context.sort == 'expectedTippCount'){
-        fetch_hql = fetch_hql.replaceFirst(" o ", " o, (select count(t.id) from  org.gokb.cred.TitleInstancePackagePlatform as t where t.pkg = o.id and t.status = ${RDStore.KBC_STATUS_EXPECTED.id}) as expectedTippCount ")
+        fetch_hql = fetch_hql.replaceFirst(" o ", " o, (select count(t.id) from  wekb.TitleInstancePackagePlatform as t where t.pkg = o.id and t.status = ${RDStore.KBC_STATUS_EXPECTED.id}) as expectedTippCount ")
         fetch_hql += " order by expectedTippCount ${hql_builder_context.order}";
       }
       else {
