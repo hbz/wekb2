@@ -45,14 +45,14 @@ class FTUpdateService {
           Thread.currentThread().setName("FTUpdateServiceUpdateFTIndexes")
           doFTUpdate()
         })
-        log.debug("updateFTIndexes returning")
+        log.info("updateFTIndexes returning")
       }else{
-        log.debug("FT update already running")
+        log.info("FT update already running")
         return false
       }
     }
     else {
-      log.debug("FT update already running")
+      log.info("FT update already running")
       return false
     }
   }
@@ -62,7 +62,7 @@ class FTUpdateService {
 
     synchronized(this) {
       if ( running ) {
-        log.debug("Exiting FT update - one already running");
+        log.info("Exiting FT update - one already running");
         return false
       }
       else {
@@ -475,7 +475,7 @@ class FTUpdateService {
     }
 
     def elapsed = System.currentTimeMillis() - start_time;
-    log.debug("FTUpdate completed in ${elapsed}ms at ${new Date()} ")
+    log.info("FTUpdate completed in ${elapsed}ms at ${new Date()} ")
 
     running = false
     return true
@@ -561,20 +561,20 @@ class FTUpdateService {
             }
           }
           if (bulkRequest.numberOfActions()) {
-            log.debug("interim:: processed ${total} out of ${countq} records (${domain.name})")
+            log.info("interim:: processed ${total} out of ${countq} records (${domain.name})")
             BulkResponse bulkResponse = esclient.bulk(bulkRequest, RequestOptions.DEFAULT)
 
             if (bulkResponse.hasFailures()) {
               for (BulkItemResponse bulkItemResponse : bulkResponse) {
                 if (bulkItemResponse.isFailed()) {
                   BulkItemResponse.Failure failure = bulkItemResponse.getFailure()
-                  log.debug("updateES ${domain.name}: ES Bulk operation has failure -> ${failure}")
+                  log.error("updateES ${domain.name}: ES Bulk operation has failure -> ${failure}")
                   processFail = true
                 }
               }
             }
           }else {
-            log.debug( "updateES: ignored empty bulk")
+            log.info( "updateES: ignored empty bulk")
           }
           bulkRequest = new BulkRequest()
         }
@@ -613,7 +613,7 @@ class FTUpdateService {
 
   def clearDownAndInitES() {
     if (running == false) {
-      log.debug("Remove existing FTControl ..")
+      log.info("Remove existing FTControl ..")
       FTControl.withTransaction {
         def res = FTControl.executeUpdate("delete FTControl c")
         log.debug("Result: ${res}")
