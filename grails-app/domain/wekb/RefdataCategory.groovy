@@ -231,7 +231,7 @@ class RefdataCategory extends AbstractI10n {
       RefdataCategory rdc = RefdataCategory.findByDescIlike(token)
 
       if (!rdc) {
-        static_logger.debug("INFO: no match found; creating new refdata category for ( ${map})")
+        static_logger.info("INFO: no match found; creating new refdata category for ( ${map})")
         rdc = new RefdataCategory(desc: token)
       }
 

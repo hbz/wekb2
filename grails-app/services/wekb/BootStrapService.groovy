@@ -162,10 +162,10 @@ class BootStrapService {
             RefdataValue.construct(map)
         }
 
-        log.debug("Deleting any null refdata values")
+        log.info("Deleting any null refdata values")
         RefdataValue.executeUpdate('delete from RefdataValue where value is null')
 
-        log.debug("Languages Service initialize")
+        log.info("Languages Service initialize")
         LanguagesService.initialize()
     }
 

@@ -138,7 +138,7 @@ class RefdataValue  extends AbstractI10n {
       RefdataValue rdv = RefdataValue.findByOwnerAndValueIlike(cat, token)
 
       if (!rdv) {
-        static_logger.debug("INFO: no match found; creating new refdata value for ( ${token} @ ${rdc}, ${map} )")
+        static_logger.info("INFO: no match found; creating new refdata value for ( ${token} @ ${rdc}, ${map} )")
         rdv = new RefdataValue(owner: cat, value: token)
       }
 
