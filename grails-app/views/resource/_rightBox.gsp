@@ -19,7 +19,7 @@
                             <g:link controller="resource" action="show"
                                     id="${curatoryGroup.getOID()}">${curatoryGroup.name}</g:link>
 
-                            <g:if test="${params.curationOverride == 'true' && isUserLoggedIn && SpringSecurityUtils.ifAnyGranted("ROLE_ADMIN")}">
+                            <g:if test="${params.curationOverride == 'true' && d.hasProperty('curatoryGroups') && isUserLoggedIn && SpringSecurityUtils.ifAnyGranted("ROLE_ADMIN")}">
                                 <g:link controller="ajaxHtml" action="removeCuratoryGroupFromObject"
                                         class="ui right floated negative mini button"
                                         params="['curationOverride': params.curationOverride, '__contextObjectClass': d.getClass().name, 'contextObject': d.id, '__curatoryGroup': curatoryGroup.class.name + ':' + curatoryGroup.id]">Unlink</g:link>
@@ -71,7 +71,7 @@
             </div>
         </g:if>
         <sec:ifAnyGranted roles="ROLE_ADMIN">
-            <g:if test="${d.hasProperty('curatoryGroups')}">
+            <g:if test="${d.hasProperty('curatoryGroups') || d instanceof TitleInstancePackagePlatform}">
                 <div class="content">
                     <h4 class="ui header">Warning</h4>
 
