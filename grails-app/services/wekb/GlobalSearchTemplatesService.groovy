@@ -73,7 +73,7 @@ class GlobalSearchTemplatesService {
                                 ],
                         ],
                         qbeResults: [
-                                [heading: 'Name', property: 'name', sort: 'name', link: true],
+                                [heading: 'Curatory Group', property: 'name', sort: 'name', link: true],
                                 [heading: 'Last Updated', property: 'lastUpdated', sort: 'lastUpdated'],
                                 [heading: 'Status', property: 'status?.value', sort: 'status'],
                                 [heading: 'Type', property: 'type?.value', sort: 'type']
@@ -254,7 +254,7 @@ class GlobalSearchTemplatesService {
 
                         ],
                         qbeResults: [
-                                [heading: 'Name', property: 'name', sort: 'name', link: true],
+                                [heading: 'Provider', property: 'name', sort: 'name', link: true],
                                 [heading: 'Homepage', property: 'homepage', sort: 'homepage', outGoingLink: true],
                                 [heading: 'Last Updated', property: 'lastUpdated', sort: 'lastUpdated'],
                                 [heading: 'Status', sort: 'status', property: 'status.value'],
@@ -497,7 +497,7 @@ class GlobalSearchTemplatesService {
         Map result = [
                 baseclass   : 'wekb.Package',
                 title       : 'Packages',
-                defaultSort : 'name',
+                defaultSort : 'lastUpdated',
                 defaultOrder: 'asc',
                 qbeConfig   : [
                         qbeForm   : [
@@ -834,7 +834,7 @@ class GlobalSearchTemplatesService {
 
                         ],
                         qbeResults: [
-                                [heading: 'Name', property: 'name', sort: 'name', link: true],
+                                [heading: 'Package', property: 'name', sort: 'name', link: true],
                                 [heading: 'Provider', property: 'provider?.name', sort: 'provider?.name', link: true],
                                 [heading: 'Nominal Platform', property: 'nominalPlatform?.name', sort: 'nominalPlatform?.name', link: true],
                                 [heading: 'Curatory Groups', property: 'curatoryGroupsCuratoryGroup', link: true],
@@ -1001,7 +1001,7 @@ class GlobalSearchTemplatesService {
                                 ],
                         ],
                         qbeResults: [
-                                [heading: 'Name', property: 'name', sort: 'name', link: true],
+                                [heading: 'Platform', property: 'name', sort: 'name', link: true],
                                 [heading: 'Primary URL', property: 'primaryUrl', sort: 'primaryUrl', outGoingLink: true],
                                 [heading: 'Provider', property: 'provider?.name', sort: 'provider?.name', link: true],
                                 [heading: 'Last Updated', property: 'lastUpdated', sort: 'lastUpdated'],
@@ -1162,8 +1162,8 @@ class GlobalSearchTemplatesService {
                                 ],
                         ],
                         qbeResults: [
-                                [heading: 'Name', property: 'name', sort: 'name', link: true],
-                                [heading: 'Package', property: 'pkg', link: true, sort: 'pkg.name'],
+                                [heading: 'Source', property: 'name', sort: 'name', link: true],
+                                [heading: 'Packages', property: 'packages', link: true, sort: 'packages.name'],
                                 [heading: 'Url', property: 'url', sort: 'url', outGoingLink: true],
                                 [heading: 'Last Updated', property: 'lastUpdated', sort: 'lastUpdated'],
                                 [heading: 'Status', property: 'status?.value', sort: 'status'],
