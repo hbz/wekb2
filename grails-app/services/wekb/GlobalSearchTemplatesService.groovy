@@ -498,7 +498,7 @@ class GlobalSearchTemplatesService {
                 baseclass   : 'wekb.Package',
                 title       : 'Packages',
                 defaultSort : 'lastUpdated',
-                defaultOrder: 'asc',
+                defaultOrder: 'desc',
                 qbeConfig   : [
                         qbeForm   : [
                                 [
