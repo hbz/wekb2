@@ -176,14 +176,14 @@ class Package  extends AbstractBase implements Auditable {
 
   @Override
   def beforeUpdate() {
-    super.beforeUpdateHandler()
     generateNormname()
+    super.beforeUpdateHandler()
   }
 
   @Override
   def beforeDelete() {
-    super.beforeDeleteHandler()
     generateNormname()
+    super.beforeDeleteHandler()
   }
 
   static def generateNormname(str_to_norm){
