@@ -713,6 +713,14 @@ class GlobalSearchTemplatesService {
                                         advancedSearch: [title: "Search Titles by ...", category: 'Title']
                                 ],
                                 [
+                                        type     : 'dropDownGroup',
+                                        dropDownType  : 'dateFirstOnlineYear',
+                                        prompt     : 'Date First Online Year',
+                                        qparam     : 'qp_dateFirstOnlineYear',
+                                        placeholder: 'Date First Online Year',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eqYear', 'prop': 'dateFirstOnline'],
+                                ],
+                                [
                                         type       : 'lookup',
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.DDC,
@@ -1339,6 +1347,14 @@ class GlobalSearchTemplatesService {
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'subjectArea'],
                                 ],
                                 [
+                                        type     : 'dropDownGroup',
+                                        dropDownType  : 'dateFirstOnlineYear',
+                                        prompt     : 'Date First Online Year',
+                                        qparam     : 'qp_dateFirstOnlineYear',
+                                        placeholder: 'Date First Online Year',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eqYear', 'prop': 'dateFirstOnline'],
+                                ],
+                                [
                                         type       : 'lookup',
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.DDC,
@@ -1508,6 +1524,14 @@ class GlobalSearchTemplatesService {
                                         qparam     : 'qp_subjectArea_tipp',
                                         placeholder: 'Subject Area',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'subjectArea'],
+                                ],
+                                [
+                                        type     : 'dropDownGroup',
+                                        dropDownType  : 'dateFirstOnlineYear',
+                                        prompt     : 'Date First Online Year',
+                                        qparam     : 'qp_dateFirstOnlineYear',
+                                        placeholder: 'Date First Online Year',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eqYear', 'prop': 'dateFirstOnline'],
                                 ],
                                 [
                                         type       : 'lookup',

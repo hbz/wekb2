@@ -336,6 +336,12 @@ public class HQLBuilder {
         }
         break;
 
+      case 'eqYear':
+        hql_builder_context.query_clauses.add("${crit.defn.contextTree.negate?'not ':''}YEAR(${scoped_property}) = :${crit.defn.qparam}");
+        int base_value = Integer.parseInt(crit.value)
+        hql_builder_context.bindvars[crit.defn.qparam] = base_value
+        break;
+
       default:
         log.error("Unhandled comparator '${crit.defn.contextTree.comparator}'. crit: ${crit}");
     }

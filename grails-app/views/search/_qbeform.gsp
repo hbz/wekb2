@@ -73,7 +73,7 @@
                                     value="${params[fld.qparam]}"/>
                         </div>
                     </g:if>
-                    <g:elseif test="${fld.type == 'dropDownGroup' && refObject}">
+                    <g:elseif test="${fld.type == 'dropDownGroup'}">
                         <div class="ui field">
                             <div class="ui fluid search selection clearable dropdown">
                                 <input type="hidden" name="${fld.qparam}" value="${params[fld.qparam]}">
