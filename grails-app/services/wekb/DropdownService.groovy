@@ -12,22 +12,22 @@ class DropdownService {
 
         switch (dropDownType) {
             case 'series':
-                getAllPossibleSeriesByPackage(pkg, listStatus)
+                getAllPossibleSeries(pkg, listStatus)
                 break
             case 'subjectArea':
-                getAllPossibleSubjectAreasByPackage(pkg, listStatus)
+                getAllPossibleSubjectAreas(pkg, listStatus)
                 break
             case 'dateFirstOnlineYear':
-                getAllPossibleDateFirstOnlineYearByPackage(pkg, listStatus)
+                getAllPossibleDateFirstOnlineYear(pkg, listStatus)
                 break
             case 'ddc':
-                getAllPossibleDdcsByPackage(pkg, listStatus)
+                getAllPossibleDdcs(pkg, listStatus)
                 break
             case 'language':
-                getAllPossibleLanguagesByPackage(pkg, listStatus)
+                getAllPossibleLanguages(pkg, listStatus)
                 break
             case 'publisher':
-                getAllPossiblePublisherByPackage(pkg, listStatus)
+                getAllPossiblePublisher(pkg, listStatus)
                 break
             default:
                 []
@@ -36,7 +36,7 @@ class DropdownService {
     }
 
 
-    Set<RefdataValue> getAllPossibleCoverageDepthsByPackage(Package pkg, List listStatus) {
+    Set<RefdataValue> getAllPossibleCoverageDepths(Package pkg, List listStatus) {
 
         Set<RefdataValue> coverageDepths = []
 
@@ -45,7 +45,7 @@ class DropdownService {
         coverageDepths
     }
 
-    Set<String> getAllPossibleSeriesByPackage(Package pkg = null, List listStatus) {
+    Set<String> getAllPossibleSeries(Package pkg = null, List listStatus) {
         Set<String> series = []
 
         if(pkg) {
@@ -60,7 +60,7 @@ class DropdownService {
         series
     }
 
-    Set<RefdataValue> getAllPossibleDdcsByPackage(Package pkg = null, List listStatus) {
+    Set<RefdataValue> getAllPossibleDdcs(Package pkg = null, List listStatus) {
 
         Set<RefdataValue> ddcs = []
 
@@ -73,7 +73,7 @@ class DropdownService {
         ddcs
     }
 
-    Set<RefdataValue> getAllPossibleLanguagesByPackage(Package pkg = null, List listStatus) {
+    Set<RefdataValue> getAllPossibleLanguages(Package pkg = null, List listStatus) {
 
         Set<RefdataValue> languages = []
 
@@ -87,7 +87,7 @@ class DropdownService {
     }
 
 
-    Set<String> getAllPossibleSubjectAreasByPackage(Package pkg = null, List listStatus) {
+    Set<String> getAllPossibleSubjectAreas(Package pkg = null, List listStatus) {
 
         SortedSet<String> subjects = new TreeSet<String>()
         List<String> rawSubjects
@@ -112,7 +112,7 @@ class DropdownService {
     }
 
 
-    Set<String> getAllPossibleDateFirstOnlineYearByPackage(Package pkg = null, List listStatus) {
+    Set<String> getAllPossibleDateFirstOnlineYear(Package pkg = null, List listStatus) {
 
         Set<String> dateFirstOnlines = []
         if(pkg) {
@@ -128,7 +128,7 @@ class DropdownService {
     }
 
 
-    Set<String> getAllPossiblePublisherByPackage(Package pkg = null, List listStatus) {
+    Set<String> getAllPossiblePublisher(Package pkg = null, List listStatus) {
         Set<String> publishers = []
 
         if(pkg) {
