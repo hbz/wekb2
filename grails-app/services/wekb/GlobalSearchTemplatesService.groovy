@@ -718,7 +718,8 @@ class GlobalSearchTemplatesService {
                                         prompt     : 'Date First Online Year',
                                         qparam     : 'qp_dateFirstOnlineYear',
                                         placeholder: 'Date First Online Year',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eqYear', 'prop': 'dateFirstOnline'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eqYear', 'prop': 'tipps.dateFirstOnline'],
+                                        advancedSearch: [title: "Search Titles by ...", category: 'Title']
                                 ],
                                 [
                                         type       : 'lookup',

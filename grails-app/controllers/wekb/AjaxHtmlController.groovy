@@ -493,8 +493,9 @@ class AjaxHtmlController {
         if (errors.size() == 0) {
             resp = params.value
         } else {
-            def error_obj = errors[params.name] ? (errors[params.name].size() > 0 ? errors[params.name][0] : errors[params.name]) : errors['global'][0]
+
             log.error("Error msg: ${error_obj} (${error_obj.message})")
+            def error_obj = errors[params.name] ? (errors[params.name].size() > 0 ? errors[params.name][0] : errors[params.name]) : errors['global'][0]
 
             resp = error_obj.message
             response.setContentType('text/plain;charset=UTF-8')
