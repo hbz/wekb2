@@ -29,6 +29,11 @@
                                       params="${params}"/>
                 <semui:sortableColumn property="scope" title="Scope"
                                       params="${params}"/>
+                <semui:sortableColumn property="freeTrial" title="Free Trial"
+                                      params="${params}"/>
+                <semui:sortableColumn property="freeTrialPhase" title="Free Trial Phase"
+                                      params="${params}"/>
+
                 <th></th>
             </tr>
             </thead>
@@ -75,6 +80,13 @@
                         <td>
                             <semui:xEditableRefData owner="${row_obj}" field="scope"
                                                     config="${RCConstants.PACKAGE_SCOPE}"/>
+                        </td>
+                        <td>
+                            <semui:xEditableRefData owner="${row_obj}" field="freeTrial"
+                                                    config="${RCConstants.YN}"/>
+                        </td>
+                        <td>
+                            <semui:xEditable owner="${row_obj}" field="freeTrialPhase"/>
                         </td>
                         <td>
                             <g:link class="ui icon button" controller="resource" action="show" id="${row_obj.getOID()}">
