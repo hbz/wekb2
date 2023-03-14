@@ -58,7 +58,7 @@
                                         </sec:ifAnyGranted>
                                     </g:if>
                                     <g:else>
-                                        <g:if test="${action.code in ["packageUrlUpdate", "packageUrlUpdateAllTitles"]}">
+                                        <g:if test="${action.code in ["workFlowMethod::updatePackageFromKbartSource", "workFlowMethod::updatePackageAllTitlesFromKbartSource"]}">
                                             <g:if test="${displayobj.kbartSource}">
                                                 <semui:actionsDropdownItem controller="workflow" action="action"
                                                                            params="[component: object, selectedAction: action.code, curationOverride: params.curationOverride]"
