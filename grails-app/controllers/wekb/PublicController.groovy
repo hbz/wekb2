@@ -163,6 +163,8 @@ class PublicController {
     }
     catch ( Exception e ) {
       log.error("Problem with export",e);
+      flash.error = 'Kbart export not possible at the moment! '
+      redirect(url: request.getHeader('referer'))
     }
   }
 

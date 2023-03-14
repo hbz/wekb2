@@ -116,7 +116,7 @@ class AutoUpdatePackagesService {
 
                                 }
                                 catch (Exception e) {
-                                    log.info("get kbartFromUrl: ${e}")
+                                    log.error("get kbartFromUrl: ${e}")
                                     continue
                                 }
 
