@@ -119,14 +119,17 @@ public class HQLBuilder {
     // log.debug("HQL: ${hql}");
     log.debug("BindVars: ${hql_builder_context.bindvars}");
 
-    if(!hql_builder_context.bindvars.qp_status){
 
-      if(hql.contains('where')){
-        hql = hql + " and o.status != ${RDStore.KBC_STATUS_REMOVED.id}"
-      }else {
-        hql = hql + " where o.status != ${RDStore.KBC_STATUS_REMOVED.id}"
+    if(qbetemplate.baseclass in ["wekb.CuratoryGroup", "wekb.KbartSource", "wekb.Org", "wekb.Package", "wekb.Platform", "wekb.TitleInstancePackagePlatform"]) {
+      if (!hql_builder_context.bindvars.qp_status) {
+
+        if (hql.contains('where')) {
+          hql = hql + " and o.status != ${RDStore.KBC_STATUS_REMOVED.id}"
+        } else {
+          hql = hql + " where o.status != ${RDStore.KBC_STATUS_REMOVED.id}"
+        }
+
       }
-
     }
 
     String count_hql = null; //"select count (distinct o) ${hql}"
