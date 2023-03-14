@@ -7,6 +7,7 @@ import wekb.helper.RDStore
 
 import javax.persistence.Transient
 import java.sql.Timestamp
+import java.text.DateFormat
 import java.util.concurrent.TimeUnit
 
 class KbartSource extends AbstractBase implements Auditable {
@@ -140,14 +141,14 @@ class KbartSource extends AbstractBase implements Auditable {
             def interval = intervals.get(frequency.value)
             if (interval != null) {
                 Date due = getUpdateDay(interval)
-                if (today == due) {
+                if (today >= due) {
                     return true
                 }else {
-                    long diffInMillies = Math.abs(due.getTime() - lastRun.getTime())
+                   /* long diffInMillies = Math.abs(due.getTime() - lastRun.getTime())
                     long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS)
                     int diffToInterval = diff.toInteger()-interval
                     boolean lastUpdateDiff = diffToInterval > 0
-                    return lastUpdateDiff
+                    return lastUpdateDiff*/
                 }
             } else {
                 log.debug("KbartSource ${this.id} needsUpdate(): Frequency (${frequency}) is not null but intervals is null")
@@ -166,9 +167,9 @@ class KbartSource extends AbstractBase implements Auditable {
         cal.set(Calendar.YEAR, cal.get(Calendar.YEAR))
         cal.set(Calendar.DAY_OF_YEAR, 1)
         cal.set(Calendar.HOUR_OF_DAY, 20)
-        //cal.set(Calendar.MINUTE, 0)
-        //cal.set(Calendar.SECOND, 0)
-        //cal.set(Calendar.MILLISECOND, 0)
+        cal.set(Calendar.MINUTE, 0)
+        cal.set(Calendar.SECOND, 0)
+        cal.set(Calendar.MILLISECOND, 0)
         Date nextUpdate = cal.getTime()
         while (nextUpdate.before(today)) {
             cal.add(Calendar.DATE, interval)
@@ -185,9 +186,9 @@ class KbartSource extends AbstractBase implements Auditable {
         cal.set(Calendar.YEAR, cal.get(Calendar.YEAR))
         cal.set(Calendar.DAY_OF_YEAR, 1)
         cal.set(Calendar.HOUR_OF_DAY, 20)
-       // cal.set(Calendar.MINUTE, 0)
-        //cal.set(Calendar.SECOND, 0)
-        //cal.set(Calendar.MILLISECOND, 0)
+        cal.set(Calendar.MINUTE, 0)
+        cal.set(Calendar.SECOND, 0)
+        cal.set(Calendar.MILLISECOND, 0)
 
         Calendar cal2 = Calendar.getInstance()
         cal2.set(Calendar.YEAR, cal.get(Calendar.YEAR))
