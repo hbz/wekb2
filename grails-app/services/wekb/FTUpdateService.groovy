@@ -105,7 +105,7 @@ class FTUpdateService {
         result.contentType = kbc.contentType?.value
 
         if (kbc.kbartSource) {
-          result.kbartSource = [
+          result.source = [
             id              : kbc.kbartSource.id,
             name            : kbc.kbartSource.name,
             automaticUpdates: kbc.kbartSource.automaticUpdates,
@@ -113,7 +113,7 @@ class FTUpdateService {
             frequency       : kbc.kbartSource.frequency?.value,
           ]
           if (kbc.kbartSource.lastRun){
-            result.kbartSource.lastRun = dateFormatService.formatIsoTimestamp(kbc.kbartSource.lastRun)
+            result.source.lastRun = dateFormatService.formatIsoTimestamp(kbc.kbartSource.lastRun)
           }
         }
 
