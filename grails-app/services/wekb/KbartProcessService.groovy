@@ -830,8 +830,10 @@ class KbartProcessService {
                                     //rowMap."${entry.key}" = rowMap."${entry.key}" ? rowMap."${entry.key}".replaceAll(/\"/, "") : rowMap."${entry.key}"
                                     rowMap."${entry.key}" = rowMap."${entry.key}" ? rowMap."${entry.key}".replaceAll("\\x00", "") : rowMap."${entry.key}"
                                 }
-                                rowMap.rowIndex = r
-                                result << rowMap
+                                if(rowMap.publication_title != null) {
+                                    rowMap.rowIndex = r
+                                    result << rowMap
+                                }
                             }
                             //log.debug("End kbart processing rows ${countRows}")
                         }
