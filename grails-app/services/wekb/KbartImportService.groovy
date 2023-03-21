@@ -1153,7 +1153,7 @@ class KbartImportService {
 
     static RefdataValue determinePublicationType(String type) {
         if (type) {
-            switch (type) {
+            switch (type.trim()) {
                 case "serial":
                 case "Serial":
                 case "Journal":
@@ -1186,7 +1186,7 @@ class KbartImportService {
 
     static RefdataValue determineMediumRef(String medium) {
         if (medium) {
-            switch (medium.toLowerCase()) {
+            switch (medium.toLowerCase().trim()) {
                 case "a & i database":
                 case "abstract- & indexdatenbank":
                     return RefdataCategory.lookup(RCConstants.TIPP_MEDIUM, "A & I Database")

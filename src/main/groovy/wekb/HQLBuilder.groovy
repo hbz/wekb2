@@ -117,7 +117,20 @@ public class HQLBuilder {
 
     String hql = outputHqlWithoutSort(hql_builder_context, qbetemplate)
     // log.debug("HQL: ${hql}");
-    // log.debug("BindVars: ${hql_builder_context.bindvars}");
+    log.debug("BindVars: ${hql_builder_context.bindvars}");
+
+
+    if(qbetemplate.baseclass in ["wekb.CuratoryGroup", "wekb.KbartSource", "wekb.Org", "wekb.Package", "wekb.Platform", "wekb.TitleInstancePackagePlatform"]) {
+      if (!hql_builder_context.bindvars.qp_status) {
+
+        if (hql.contains('where')) {
+          hql = hql + " and o.status != ${RDStore.KBC_STATUS_REMOVED.id}"
+        } else {
+          hql = hql + " where o.status != ${RDStore.KBC_STATUS_REMOVED.id}"
+        }
+
+      }
+    }
 
     String count_hql = null; //"select count (distinct o) ${hql}"
     if ( qbetemplate.useDistinct == true ) {
@@ -146,15 +159,15 @@ public class HQLBuilder {
         fetch_hql += " order by currentTippCount ${hql_builder_context.order}";
       }
       else if(hql_builder_context.sort == 'deletedTippCount'){
-        fetch_hql = fetch_hql.replaceFirst(" o ", " o, (select count(t.id) from  org.gokb.cred.TitleInstancePackagePlatform as t where t.pkg = o.id and t.status = ${RDStore.KBC_STATUS_DELETED.id}) as deletedTippCount ")
+        fetch_hql = fetch_hql.replaceFirst(" o ", " o, (select count(t.id) from  wekb.TitleInstancePackagePlatform as t where t.pkg = o.id and t.status = ${RDStore.KBC_STATUS_DELETED.id}) as deletedTippCount ")
         fetch_hql += " order by deletedTippCount ${hql_builder_context.order}";
       }
       else if(hql_builder_context.sort == 'retiredTippCount'){
-        fetch_hql = fetch_hql.replaceFirst(" o ", " o, (select count(t.id) from  org.gokb.cred.TitleInstancePackagePlatform as t where t.pkg = o.id and t.status = ${RDStore.KBC_STATUS_RETIRED.id}) as retiredTippCount ")
+        fetch_hql = fetch_hql.replaceFirst(" o ", " o, (select count(t.id) from  wekb.TitleInstancePackagePlatform as t where t.pkg = o.id and t.status = ${RDStore.KBC_STATUS_RETIRED.id}) as retiredTippCount ")
         fetch_hql += " order by retiredTippCount ${hql_builder_context.order}";
       }
       else if(hql_builder_context.sort == 'expectedTippCount'){
-        fetch_hql = fetch_hql.replaceFirst(" o ", " o, (select count(t.id) from  org.gokb.cred.TitleInstancePackagePlatform as t where t.pkg = o.id and t.status = ${RDStore.KBC_STATUS_EXPECTED.id}) as expectedTippCount ")
+        fetch_hql = fetch_hql.replaceFirst(" o ", " o, (select count(t.id) from  wekb.TitleInstancePackagePlatform as t where t.pkg = o.id and t.status = ${RDStore.KBC_STATUS_EXPECTED.id}) as expectedTippCount ")
         fetch_hql += " order by expectedTippCount ${hql_builder_context.order}";
       }
       else {
@@ -324,6 +337,12 @@ public class HQLBuilder {
             }
           }
         }
+        break;
+
+      case 'eqYear':
+        hql_builder_context.query_clauses.add("${crit.defn.contextTree.negate?'not ':''}YEAR(${scoped_property}) = :${crit.defn.qparam}");
+        int base_value = Integer.parseInt(crit.value)
+        hql_builder_context.bindvars[crit.defn.qparam] = base_value
         break;
 
       default:

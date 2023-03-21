@@ -22,7 +22,7 @@
                         ${identifier.namespace.value}
                     </td>
                     <td>
-                            <semui:xEditable owner="${identifier}" field="value" />
+                            <semui:xEditable owner="${identifier}" field="value" outGoingLink="true"/>
                             &nbsp;
                             <g:link controller="resource" action="show" id="${identifier.getOID()}" title="Jump to resource"><i class="fas fa-eye"></i></g:link>
                     </td>

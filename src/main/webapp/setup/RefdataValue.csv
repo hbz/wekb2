@@ -279,7 +279,7 @@ DCType;Admin;Admin;Admin
 DCType;Standard;Standard;Standard
 DCType;Support;Support;Support
 DeletedComponent.Status;Permanently Deleted;Permanently Deleted;Permanently Deleted
-IdentifierNamespace.TargetType;Org;Org;Org
+IdentifierNamespace.TargetType;Org;Provider;Provider
 IdentifierNamespace.TargetType;Package;Package;Package
 IdentifierNamespace.TargetType;TitleInstancePackagePlatform;TitleInstancePackagePlatform;TitleInstancePackagePlatform
 ingest.filetype;cufts;cufts;cufts

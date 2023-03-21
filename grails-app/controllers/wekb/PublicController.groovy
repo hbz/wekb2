@@ -104,13 +104,13 @@ class PublicController {
 
 
     //for statistic panel
-    def query_params = [forbiddenStatus : [RDStore.KBC_STATUS_DELETED, RDStore.KBC_STATUS_REMOVED]]
+    def query_params = [forbiddenStatus : [RDStore.KBC_STATUS_REMOVED]]
 
     //List providerRoles = [RefdataCategory.lookup(RCConstants.ORG_ROLE, 'Content Provider'), RefdataCategory.lookup(RCConstants.ORG_ROLE, 'Platform Provider'), RefdataCategory.lookup(RCConstants.ORG_ROLE, 'Publisher')]
 
     //def query_params2 = [forbiddenStatus : [RDStore.KBC_STATUS_DELETED, RDStore.KBC_STATUS_REMOVED], roles: providerRoles]
 
-    def query_params2 = [forbiddenStatus : [RDStore.KBC_STATUS_DELETED, RDStore.KBC_STATUS_REMOVED]]
+    def query_params2 = [forbiddenStatus : [RDStore.KBC_STATUS_REMOVED]]
 
     result.componentsOfStatistic = ["Provider", "Package", "Platform", "CuratoryGroup", "TitleInstancePackagePlatform"]
 
@@ -163,6 +163,8 @@ class PublicController {
     }
     catch ( Exception e ) {
       log.error("Problem with export",e);
+      flash.error = 'Kbart export not possible at the moment! '
+      redirect(url: request.getHeader('referer'))
     }
   }
 

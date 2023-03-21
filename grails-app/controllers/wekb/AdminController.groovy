@@ -563,7 +563,7 @@ class AdminController {
   }
 
   def findPackagesNeedsAutoUpdates() {
-    log.debug("findPackagesWithTippDuplicates::${params}")
+    log.debug("findPackagesNeedsAutoUpdates::${params}")
     def result = [:]
 
     List pkgs = []

@@ -86,7 +86,21 @@ class ManagementService {
                     prompt     : 'Scope',
                     bParam     : 'pkg_batch_scope',
                     bProp       : 'scope'
-            ]
+            ],
+            [
+                    type       : 'lookup',
+                    baseClass  : 'wekb.RefdataValue',
+                    filter1    : RCConstants.YN,
+                    prompt     : 'Free Trial',
+                    bParam     : 'pkg_free_trial',
+                    bProp       : 'freeTrial'
+            ],
+            [
+                    prompt     : 'Free Trial Phase',
+                    bParam     : 'pkg_batch_freeTrialPhase',
+                    placeholder: 'Free Trial Phase',
+                    bProp       : 'freeTrialPhase'
+            ],
     ]
 
     static packageSourceInfosBatchForm = [

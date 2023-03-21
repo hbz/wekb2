@@ -73,10 +73,10 @@ class GlobalSearchTemplatesService {
                                 ],
                         ],
                         qbeResults: [
-                                [heading: 'Name', property: 'name', sort: 'name', link: true],
+                                [heading: 'Curatory Group', property: 'name', sort: 'name', link: true],
                                 [heading: 'Last Updated', property: 'lastUpdated', sort: 'lastUpdated'],
-                                [heading: 'Status', property: 'status?.value', sort: 'status'],
-                                [heading: 'Type', property: 'type?.value', sort: 'type']
+                                [heading: 'Status', property: 'status.value', sort: 'status'],
+                                [heading: 'Type', property: 'type.value', sort: 'type']
 
                         ]
                 ]
@@ -141,7 +141,7 @@ class GlobalSearchTemplatesService {
                         qbeResults: [
                                 [heading: 'Description', property: 'description', link: true],
                                 [heading: 'Component', property: 'linkedItem'],
-                                [heading: 'Type', property: 'type?.value', sort: 'type'],
+                                [heading: 'Type', property: 'type.value', sort: 'type'],
                                 [heading: 'Status', property: 'statusText'],
                                 [heading: 'Start Time', property: 'startTime', sort: 'startTime'],
                                 [heading: 'End Time', property: 'endTime', sort: 'endTime'],
@@ -254,11 +254,10 @@ class GlobalSearchTemplatesService {
 
                         ],
                         qbeResults: [
-                                [heading: 'Name', property: 'name', sort: 'name', link: true],
+                                [heading: 'Provider', property: 'name', sort: 'name', link: true],
                                 [heading: 'Homepage', property: 'homepage', sort: 'homepage', outGoingLink: true],
                                 [heading: 'Last Updated', property: 'lastUpdated', sort: 'lastUpdated'],
                                 [heading: 'Status', sort: 'status', property: 'status.value'],
-                                [heading: 'Misson', sort: 'misson', property: 'misson.value'],
                                 [heading: 'Current Titles', property: 'currentTippCount']
 
                         ]
@@ -471,19 +470,19 @@ class GlobalSearchTemplatesService {
                         ],
                         qbeResults: [
                                 [heading: 'Package', property: 'name', sort: 'name', link: true],
-                                [heading: 'Provider', property: 'provider?.name', sort: 'provider?.name', link: true],
-                                [heading: 'Nominal Platform', property: 'nominalPlatform?.name', sort: 'nominalPlatform?.name', link: true],
-                                [heading: 'Content Type', property: 'contentType?.value', sort: 'contentType'],
+                                [heading: 'Provider', property: 'provider.name', sort: 'provider.name', link: true],
+                                [heading: 'Nominal Platform', property: 'nominalPlatform.name', sort: 'nominalPlatform.name', link: true],
+                                [heading: 'Content Type', property: 'contentType.value', sort: 'contentType'],
                                 [heading: 'Scope', property: 'scope', sort: 'scope'],
                                 [heading: 'Last Updated', property: 'lastUpdated', sort: 'lastUpdated'],
-                                [heading: 'Status', property: 'status?.value', sort: 'status'],
+                                [heading: 'Status', property: 'status.value', sort: 'status'],
                                 [heading: 'Current Titles', property: 'currentTippCount', sort: 'currentTippCount'],
                                 [heading: 'Retired Titles', property: 'retiredTippCount', sort: 'retiredTippCount'],
                                 [heading: 'Expected Titles', property: 'expectedTippCount', sort: 'expectedTippCount'],
                                 [heading: 'Deleted Titles', property: 'deletedTippCount', sort: 'deletedTippCount'],
                                 [heading: 'Product IDs', property: 'anbieterProduktIDs'],
-                                [heading: 'Source', property: 'kbartSource?.name', link: true, sort: 'kbartSource.name'],
-                                [heading: 'Automatic Updates', property: 'kbartSource?.automaticUpdates', link: true]
+                                [heading: 'Source', property: 'kbartSource.name', link: true, sort: 'kbartSource.name'],
+                                [heading: 'Automatic Updates', property: 'kbartSource.automaticUpdates', link: true]
                         ],
                         actions   : [
                         ]
@@ -497,8 +496,8 @@ class GlobalSearchTemplatesService {
         Map result = [
                 baseclass   : 'wekb.Package',
                 title       : 'Packages',
-                defaultSort : 'name',
-                defaultOrder: 'asc',
+                defaultSort : 'lastUpdated',
+                defaultOrder: 'desc',
                 qbeConfig   : [
                         qbeForm   : [
                                 [
@@ -714,6 +713,15 @@ class GlobalSearchTemplatesService {
                                         advancedSearch: [title: "Search Titles by ...", category: 'Title']
                                 ],
                                 [
+                                        type     : 'dropDownGroup',
+                                        dropDownType  : 'dateFirstOnlineYear',
+                                        prompt     : 'Date First Online Year',
+                                        qparam     : 'qp_dateFirstOnlineYear',
+                                        placeholder: 'Date First Online Year',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eqYear', 'prop': 'tipps.dateFirstOnline'],
+                                        advancedSearch: [title: "Search Titles by ...", category: 'Title']
+                                ],
+                                [
                                         type       : 'lookup',
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.DDC,
@@ -834,18 +842,18 @@ class GlobalSearchTemplatesService {
 
                         ],
                         qbeResults: [
-                                [heading: 'Name', property: 'name', sort: 'name', link: true],
-                                [heading: 'Provider', property: 'provider?.name', sort: 'provider?.name', link: true],
-                                [heading: 'Nominal Platform', property: 'nominalPlatform?.name', sort: 'nominalPlatform?.name', link: true],
+                                [heading: 'Package', property: 'name', sort: 'name', link: true],
+                                [heading: 'Provider', property: 'provider.name', sort: 'provider.name', link: true],
+                                [heading: 'Nominal Platform', property: 'nominalPlatform.name', sort: 'nominalPlatform.name', link: true],
                                 [heading: 'Curatory Groups', property: 'curatoryGroupsCuratoryGroup', link: true],
-                                [heading: 'Content Type', property: 'contentType?.value', sort: 'contentType'],
+                                [heading: 'Content Type', property: 'contentType.value', sort: 'contentType'],
                                 [heading: 'Product IDs', property: 'anbieterProduktIDs'],
                                 [heading: 'Current Titles', property: 'currentTippCount', sort: 'currentTippCount'],
                                 [heading: 'Retired Titles', property: 'retiredTippCount', sort: 'retiredTippCount'],
                                 [heading: 'Expected Titles', property: 'expectedTippCount', sort: 'expectedTippCount'],
                                 [heading: 'Deleted Titles', property: 'deletedTippCount', sort: 'deletedTippCount'],
                                 [heading: 'Last Updated', property: 'lastUpdated', sort: 'lastUpdated'],
-                                [heading: 'Automatic Updates', property: 'kbartSource?.automaticUpdates', link: true]
+                                [heading: 'Automatic Updates', property: 'kbartSource.automaticUpdates', link: true]
                         ],
                         actions   : [
                         ]
@@ -1001,11 +1009,11 @@ class GlobalSearchTemplatesService {
                                 ],
                         ],
                         qbeResults: [
-                                [heading: 'Name', property: 'name', sort: 'name', link: true],
+                                [heading: 'Platform', property: 'name', sort: 'name', link: true],
                                 [heading: 'Primary URL', property: 'primaryUrl', sort: 'primaryUrl', outGoingLink: true],
-                                [heading: 'Provider', property: 'provider?.name', sort: 'provider?.name', link: true],
+                                [heading: 'Provider', property: 'provider.name', sort: 'provider.name', link: true],
                                 [heading: 'Last Updated', property: 'lastUpdated', sort: 'lastUpdated'],
-                                [heading: 'Status', property: 'status?.value', sort: 'status'],
+                                [heading: 'Status', property: 'status.value', sort: 'status'],
                                 [heading: 'Current Titles', property: 'currentTippCount'],
                                 [heading: 'Current Packages', property: 'packagesCount'],
                         ]
@@ -1162,13 +1170,13 @@ class GlobalSearchTemplatesService {
                                 ],
                         ],
                         qbeResults: [
-                                [heading: 'Name', property: 'name', sort: 'name', link: true],
-                                [heading: 'Package', property: 'pkg', link: true, sort: 'pkg.name'],
+                                [heading: 'Source', property: 'name', sort: 'name', link: true],
+                                [heading: 'Packages', property: 'packages', link: true, sort: 'packages.name'],
                                 [heading: 'Url', property: 'url', sort: 'url', outGoingLink: true],
                                 [heading: 'Last Updated', property: 'lastUpdated', sort: 'lastUpdated'],
-                                [heading: 'Status', property: 'status?.value', sort: 'status'],
+                                [heading: 'Status', property: 'status.value', sort: 'status'],
                                 [heading: 'automatic Updates', property: 'automaticUpdates'],
-                                [heading: 'Frequency', property: 'frequency?.value', sort: 'frequency'],
+                                [heading: 'Frequency', property: 'frequency.value', sort: 'frequency'],
                                 [heading: 'Last Run', property: 'lastRun', sort: 'lastRun'],
                                 [heading: 'Next Run', property: 'nextUpdateTimestamp']
                         ]
@@ -1340,6 +1348,14 @@ class GlobalSearchTemplatesService {
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'subjectArea'],
                                 ],
                                 [
+                                        type     : 'dropDownGroup',
+                                        dropDownType  : 'dateFirstOnlineYear',
+                                        prompt     : 'Date First Online Year',
+                                        qparam     : 'qp_dateFirstOnlineYear',
+                                        placeholder: 'Date First Online Year',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eqYear', 'prop': 'dateFirstOnline'],
+                                ],
+                                [
                                         type       : 'lookup',
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.DDC,
@@ -1378,13 +1394,13 @@ class GlobalSearchTemplatesService {
                         ],
                         qbeResults: [
                                 [heading: 'Title', property: 'name', link: true, sort: 'name'],
-                                [heading: 'Type', property: 'publicationType?.value', sort: 'publicationType.value'],
-                                [heading: 'Medium', property: 'medium?.value', sort: 'medium.value'],
+                                [heading: 'Type', property: 'publicationType.value', sort: 'publicationType.value'],
+                                [heading: 'Medium', property: 'medium.value', sort: 'medium.value'],
                                 [heading: 'First Author', property: 'firstAuthor', sort: 'firstAuthor'],
                                 [heading: 'Package', qpEquiv: 'qp_pkg_id', property: 'pkg.name', sort: 'pkg.name', link: true],
                                 [heading: 'Platform', qpEquiv: 'qp_plat_id', property: 'hostPlatform.name', sort: 'hostPlatform.name', link: true],
                                 [heading: 'Last Updated', property: 'lastUpdated', sort: 'lastUpdated'],
-                                [heading: 'Status', property: 'status?.value', sort: 'status.value'],
+                                [heading: 'Status', property: 'status.value', sort: 'status.value'],
                                 [heading: 'URL', property: 'url', sort: 'url', outGoingLink: true]
                         ]
                 ]
@@ -1511,6 +1527,14 @@ class GlobalSearchTemplatesService {
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'subjectArea'],
                                 ],
                                 [
+                                        type     : 'dropDownGroup',
+                                        dropDownType  : 'dateFirstOnlineYear',
+                                        prompt     : 'Date First Online Year',
+                                        qparam     : 'qp_dateFirstOnlineYear',
+                                        placeholder: 'Date First Online Year',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eqYear', 'prop': 'dateFirstOnline'],
+                                ],
+                                [
                                         type       : 'lookup',
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.DDC,
@@ -1560,12 +1584,12 @@ class GlobalSearchTemplatesService {
                         ],
                         qbeResults: [
                                 [heading: 'Title', property: 'name', link: true],
-                                [heading: 'Type', property: 'publicationType?.value', sort: 'publicationType.value'],
-                                [heading: 'Medium', property: 'medium?.value', sort: 'medium.value'],
+                                [heading: 'Type', property: 'publicationType.value', sort: 'publicationType.value'],
+                                [heading: 'Medium', property: 'medium.value', sort: 'medium.value'],
                                 [heading: 'First Author', property: 'firstAuthor', sort: 'firstAuthor'],
                                 [heading: 'Platform', qpEquiv: 'qp_plat_id', property: 'hostPlatform.name', sort: 'hostPlatform.name',  link: true],
                                 [heading: 'Last Updated', property: 'lastUpdated', sort: 'lastUpdated'],
-                                [heading: 'Status', property: 'status?.value', sort: 'status.value'],
+                                [heading: 'Status', property: 'status.value', sort: 'status.value'],
                                 [heading: 'URL', property: 'url', sort: 'url', outGoingLink: true]
                         ]
                 ]
@@ -1671,7 +1695,7 @@ class GlobalSearchTemplatesService {
                         qbeResults: [
                                 [heading: 'Description', property: 'description', link: true],
                                 [heading: 'Component', property: 'linkedItem'],
-                                [heading: 'Type', property: 'type?.value', sort: 'type'],
+                                [heading: 'Type', property: 'type.value', sort: 'type'],
                                 [heading: 'Status', property: 'statusText'],
                                 [heading: 'Start Time', property: 'startTime', sort: 'startTime'],
                                 [heading: 'End Time', property: 'endTime', sort: 'endTime'],

@@ -7,6 +7,8 @@ import wekb.helper.RDStore
 
 import javax.persistence.Transient
 import java.sql.Timestamp
+import java.text.DateFormat
+import java.util.concurrent.TimeUnit
 
 class KbartSource extends AbstractBase implements Auditable {
 
@@ -139,14 +141,20 @@ class KbartSource extends AbstractBase implements Auditable {
             def interval = intervals.get(frequency.value)
             if (interval != null) {
                 Date due = getUpdateDay(interval)
-                if (today == due) {
+                if (today >= due) {
                     return true
+                }else {
+                   /* long diffInMillies = Math.abs(due.getTime() - lastRun.getTime())
+                    long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS)
+                    int diffToInterval = diff.toInteger()-interval
+                    boolean lastUpdateDiff = diffToInterval > 0
+                    return lastUpdateDiff*/
                 }
             } else {
-                log.info("KbartSource needsUpdate(): Frequency (${frequency}) is not null but intervals is null")
+                log.debug("KbartSource ${this.id} needsUpdate(): Frequency (${frequency}) is not null but intervals is null")
             }
         } else {
-            log.info("KbartSource needsUpdate(): Frequency is null")
+            log.debug("KbartSource ${this.id} needsUpdate(): Frequency is null")
         }
         return false
     }
@@ -228,10 +236,10 @@ class KbartSource extends AbstractBase implements Auditable {
                 Date due = getUpdateDay(interval)
                 return due.toTimestamp()
             } else {
-                log.info("KbartSource needsUpdate(): Frequency (${frequency}) is not null but intervals is null")
+                log.debug("KbartSource ${this.id} needsUpdate(): Frequency (${frequency}) is not null but intervals is null")
             }
         } else {
-            log.info("KbartSource needsUpdate(): Frequency is null")
+            log.debug("KbartSource ${this.id} needsUpdate(): Frequency is null")
         }
         return null
     }

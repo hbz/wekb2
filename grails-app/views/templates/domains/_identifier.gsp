@@ -19,13 +19,13 @@
 
     Identifier.findAllByValue(d.value).each {
         if (it.tipp) {
-            tippIDs << it.tipp
+            tippIDs << it
         }
         if (it.pkg) {
-            pkgIDs << it.pkg
+            pkgIDs << it
         }
         if (it.org) {
-            orgIDs << it.org
+            orgIDs << it
         }
     }
 %>
@@ -37,35 +37,36 @@
         <tr>
             <th>Title</th>
             <th>Package</th>
+            <th>Namespace</th>
             <g:if test="${editable}">
                 <th>Actions</th>
             </g:if>
         </tr>
         </thead>
         <tbody>
-        <g:each in="${tippIDs.sort { it.name }}" var="component">
+        <g:each in="${tippIDs.sort { it.tipp.name }}" var="identifier">
             <tr>
                 <td>
-                    <g:link controller="resource" action="show" id="${component.getOID()}">
-                        ${component.name}
-                    </g:link> <b>(${component.status?.value})</b>
+                    <g:link controller="resource" action="show" id="${identifier.tipp.getOID()}">
+                        ${identifier.tipp.name}
+                    </g:link> <b>(${identifier.tipp.status?.value})</b>
                 </td>
                 <td>
-                    <g:if test="${component.pkg}">
-                        <g:link controller="resource" action="show" id="${component.pkg.getOID()}">
-                            ${component.pkg.name}
+                    <g:if test="${identifier.tipp.pkg}">
+                        <g:link controller="resource" action="show" id="${identifier.tipp.pkg.getOID()}">
+                            ${identifier.tipp.pkg.name}
                         </g:link>
                     </g:if>
                 </td>
-                <g:set var="identifierOfComponent" value="${Identifier.findByValueAndTipp(d.value, component)}"/>
-                <g:if test="${editable && identifierOfComponent}">
+                <td>${identifier.namespace?.value}</td>
+                <g:if test="${editable}">
                     <td>
                         <g:link controller='ajaxHtml'
                                 action='delete'
-                                params="${["__context": "${identifierOfComponent.getOID()}", 'activeTab': 'identifiers', curationOverride: params.curationOverride]}"
+                                params="${["__context": "${identifier.getOID()}", 'activeTab': 'identifiers', curationOverride: params.curationOverride]}"
                                 class="confirm-click btn-delete"
                                 title="Delete this link"
-                                data-confirm-message="Are you sure you wish to delete this Identifier from the title ${component}?">Delete</g:link>
+                                data-confirm-message="Are you sure you wish to delete this Identifier from the title ${identifier.tipp}?">Delete</g:link>
                     </td>
                 </g:if>
             </tr>
@@ -79,28 +80,29 @@
         <thead>
         <tr>
             <th>Package</th>
+            <th>Namespace</th>
             <g:if test="${editable}">
                 <th>Actions</th>
             </g:if>
         </tr>
         </thead>
         <tbody>
-        <g:each in="${pkgIDs.sort { it.name }}" var="component">
+        <g:each in="${pkgIDs.sort { it.pkg.name }}" var="identifier">
             <tr>
                 <td>
-                    <g:link controller="resource" action="show" id="${component.getOID()}">
-                        ${component.name}
-                    </g:link> <b>(${component.status?.value})</b>
+                    <g:link controller="resource" action="show" id="${identifier.pkg.getOID()}">
+                        ${identifier.pkg.name}
+                    </g:link> <b>(${identifier.pkg.status?.value})</b>
                 </td>
-                <g:set var="identifierOfComponent" value="${Identifier.findByValueAndPkg(d.value, component)}"/>
-                <g:if test="${editable && identifierOfComponent}">
+                <td>${identifier.namespace?.value}</td>
+                <g:if test="${editable}">
                     <td>
                         <g:link controller='ajaxHtml'
                                 action='delete'
-                                params="${["__context": "${identifierOfComponent.getOID()}", 'activeTab': 'identifiers', curationOverride: params.curationOverride]}"
+                                params="${["__context": "${identifier.getOID()}", 'activeTab': 'identifiers', curationOverride: params.curationOverride]}"
                                 class="confirm-click btn-delete"
                                 title="Delete this link"
-                                data-confirm-message="Are you sure you wish to delete this Identifier from the title ${component}?">Delete</g:link>
+                                data-confirm-message="Are you sure you wish to delete this Identifier from the title ${identifier.pkg}?">Delete</g:link>
                     </td>
                 </g:if>
             </tr>
@@ -114,35 +116,29 @@
         <thead>
         <tr>
             <th>Provider</th>
+            <th>Namespace</th>
             <g:if test="${editable}">
                 <th>Actions</th>
             </g:if>
         </tr>
         </thead>
         <tbody>
-        <g:each in="${orgIDs.sort { it.name }}" var="component">
+        <g:each in="${orgIDs.sort { it.org.name }}" var="identifier">
             <tr>
                 <td>
-                    <g:if test="${controllerName == 'public'}">
-                        <g:link controller="public" action="orgContent" id="${component.uuid}">
-                            ${component.name}
-                        </g:link> <b>(${component.status?.value})</b>
-                    </g:if>
-                    <g:else>
-                        <g:link controller="resource" action="show" id="${component.getOID()}">
-                            ${component.name}
-                        </g:link> <b>(${component.status?.value})</b>
-                    </g:else>
+                    <g:link controller="resource" action="show" id="${identifier.org.getOID()}">
+                        ${identifier.org.name}
+                    </g:link> <b>(${identifier.org.status?.value})</b>
                 </td>
-                <g:set var="identifierOfComponent" value="${Identifier.findByValueAndOrg(d.value, component)}"/>
-                <g:if test="${editable && identifierOfComponent}">
+                <td>${identifier.namespace?.value}</td>
+                <g:if test="${editable}">
                     <td>
                         <g:link controller='ajaxHtml'
                                 action='delete'
-                                params="${["__context": "${identifierOfComponent.getOID()}", 'activeTab': 'identifiers', curationOverride: params.curationOverride]}"
+                                params="${["__context": "${identifier.getOID()}", 'activeTab': 'identifiers', curationOverride: params.curationOverride]}"
                                 class="confirm-click btn-delete"
                                 title="Delete this link"
-                                data-confirm-message="Are you sure you wish to delete this Identifier from the title ${component}?">Delete</g:link>
+                                data-confirm-message="Are you sure you wish to delete this Identifier from the title ${identifier.org}?">Delete</g:link>
                     </td>
                 </g:if>
             </tr>

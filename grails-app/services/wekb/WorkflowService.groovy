@@ -34,7 +34,9 @@ class WorkflowService {
                 ]
                 break
             case Identifier.class.name:
-
+                [
+                        [code: 'workFlowMethod::deleteIdentifier', label: 'Delete Identifier', message: '', onlyAdmin: true],
+                ]
                 break
             case KbartSource.class.name:
                 [
@@ -208,6 +210,14 @@ class WorkflowService {
         }
 
         result.ref = grailsLinkGenerator.link(controller: 'resource', action: 'show', id: identifierNamespace.class.name+':'+identifierNamespace.id, absolute: true)
+        result
+    }
+
+    private Map deleteIdentifier(Identifier identifier) {
+        Map result = [:]
+        log.info("deleteIdentifier: ${identifier}..")
+        identifier.delete()
+
         result
     }
 

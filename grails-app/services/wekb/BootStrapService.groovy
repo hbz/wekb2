@@ -81,8 +81,14 @@ class BootStrapService {
 
 
                 [value: 'gnd-id', name: 'gnd-id', targetType: 'Org'],
-                [value: 'isil', name: 'ISIL', pattern: "^(?=[0-9A-Z-]{4,16}\$)[A-Z]{1,4}-[A-Z0-9]{1,11}(-[A-Z0-9]+)?\$",  targetType: 'Org'],
-                [value: 'zdb_ppn', name: 'EZB Anchor',  targetType: 'Org'],
+                [value: 'dbpedia', name: 'DBpedia', targetType: 'Org'],
+                [value: 'viaf', name: 'VIAF', targetType: 'Org'],
+                [value: 'loc id', name: 'LOC ID', targetType: 'Org'],
+                [value: 'isni', name: 'ISNI', targetType: 'Org'],
+                [value: 'ror id', name: 'ROR ID', targetType: 'Org'],
+                [value: 'wikidata id', name: 'Wikidata ID', targetType: 'Org'],
+                [value: 'crossref funder id', name: 'Crossref Funder ID', targetType: 'Org'],
+
         ]
 
         namespaces.each { ns ->
@@ -162,10 +168,10 @@ class BootStrapService {
             RefdataValue.construct(map)
         }
 
-        log.debug("Deleting any null refdata values")
+        log.info("Deleting any null refdata values")
         RefdataValue.executeUpdate('delete from RefdataValue where value is null')
 
-        log.debug("Languages Service initialize")
+        log.info("Languages Service initialize")
         LanguagesService.initialize()
     }
 

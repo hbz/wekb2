@@ -16,8 +16,10 @@ import org.grails.datastore.mapping.model.types.ManyToOne
 import org.grails.datastore.mapping.model.types.OneToOne
 import org.springframework.context.i18n.LocaleContextHolder
 import org.springframework.web.multipart.MultipartFile
+import wekb.utils.DateUtils
 
 import javax.servlet.http.HttpServletRequest
+import java.text.SimpleDateFormat
 import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneId
@@ -95,12 +97,22 @@ class CreateComponentService {
                                     result.newobj[p.key] = p.value?.trim() ?: null
                                 }
                                 else if ( pprop.getType().name == 'java.util.Date' && p.value) {
-                                    def sdf = new java.text.SimpleDateFormat("EEE MMM dd yyyy HH:mm:ss z", Locale.ENGLISH);
-                                    def incoming = p.value.substring(0,31) + ":" + p.value.substring(31, 33)
-                                    Instant instant = sdf.parse(incoming).toInstant()
-                                    LocalDateTime ldt = LocalDateTime.ofInstant(instant, ZoneId.of("GMT"))
+                                    SimpleDateFormat sdf = DateUtils.getSDF_NoTime()
 
-                                    result.newobj[p.key] = Date.from(ldt.atZone(ZoneId.systemDefault()).toInstant())
+                                    try {
+                                        if (p.value && p.value.size() > 0) {
+                                            // parse new date
+                                            def parsed_date = sdf.parse(p.value)
+                                            result.newobj[p.key] = parsed_date
+                                        } else {
+                                            // delete existing date
+                                            result.newobj[p.key] = null
+                                        }
+                                    }
+                                    catch (Exception e) {
+                                        log.error(e.toString())
+                                    }
+
                                 }else if ( pprop.getType().name == 'boolean' ) {
                                     result.newobj[p.key] = (p.value == '1') ? true : false
                                 }
@@ -211,7 +223,7 @@ class CreateComponentService {
                     }
                 }
                 catch ( Exception e ) {
-                    log.error("Problem",e);
+                    log.error("Problem process : ${params}-> ",e);
                     result.errors = ["Could not create component!"]
                 }
             }
@@ -699,8 +711,6 @@ class CreateComponentService {
 
     FlashScope getCurrentFlashScope() {
         GrailsWebRequest grailsWebRequest = WebUtils.retrieveGrailsWebRequest()
-        HttpServletRequest request = grailsWebRequest.getCurrentRequest()
-
-        grailsWebRequest.attributes.getFlashScope(request)
+        grailsWebRequest.getFlashScope()
     }
 }
