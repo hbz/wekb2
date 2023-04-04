@@ -140,8 +140,11 @@ class KbartSource extends AbstractBase implements Auditable {
             Date today = new Date()
             def interval = intervals.get(frequency.value)
             if (interval != null) {
-                Date due = getUpdateDay(interval)
-                if (today >= due) {
+                println("today: "+today)
+                Date due = getUpdateDay(interval, false)
+                println("due: "+due)
+                if (today == due) {
+                    println('true')
                     return true
                 }else {
                    /* long diffInMillies = Math.abs(due.getTime() - lastRun.getTime())
@@ -160,20 +163,24 @@ class KbartSource extends AbstractBase implements Auditable {
     }
 
 
-    def getUpdateDay(int interval) {
+    def getUpdateDay(int interval, boolean setAutoUpdateTime) {
         Date today = new Date()
         // calculate from each first day of the year to not create a lag over the years
         Calendar cal = Calendar.getInstance()
         cal.set(Calendar.YEAR, cal.get(Calendar.YEAR))
         cal.set(Calendar.DAY_OF_YEAR, 1)
-        cal.set(Calendar.HOUR_OF_DAY, 20)
-        cal.set(Calendar.MINUTE, 0)
-        cal.set(Calendar.SECOND, 0)
-        cal.set(Calendar.MILLISECOND, 0)
+        if(setAutoUpdateTime) {
+            cal.set(Calendar.HOUR_OF_DAY, 20)
+            cal.set(Calendar.MINUTE, 0)
+            cal.set(Calendar.SECOND, 0)
+            cal.set(Calendar.MILLISECOND, 0)
+        }
         Date nextUpdate = cal.getTime()
+        println("interval:"+interval )
         while (nextUpdate.before(today)) {
             cal.add(Calendar.DATE, interval)
             nextUpdate = cal.getTime()
+            println("nextUpdate:"+nextUpdate )
         }
         return nextUpdate
     }
@@ -233,7 +240,7 @@ class KbartSource extends AbstractBase implements Auditable {
         if (automaticUpdates && frequency != null) {
             def interval = intervals.get(frequency.value)
             if (interval != null) {
-                Date due = getUpdateDay(interval)
+                Date due = getUpdateDay(interval, true)
                 return due.toTimestamp()
             } else {
                 log.debug("KbartSource ${this.id} needsUpdate(): Frequency (${frequency}) is not null but intervals is null")
