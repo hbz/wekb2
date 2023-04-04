@@ -1,0 +1,3 @@
+.ui.fluid.container {
+  padding: 0 2em;
+}

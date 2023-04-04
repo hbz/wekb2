@@ -1,0 +1,7 @@
+/*******************************
+             Menu
+*******************************/
+
+@invertedSubMenuColor: #B5B5B5;
+
+@subMenuFontSize: 1em;

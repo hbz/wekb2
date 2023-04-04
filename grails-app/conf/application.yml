@@ -1,5 +1,8 @@
 ---
 grails:
+    config:
+        locations:
+            - ~/.grails/wekb2-config.groovy
     profile: web
     codegen:
         defaultPackage: wekb
@@ -30,19 +33,6 @@ spring:
                 - '**/*.gson'
                 - 'logback.groovy'
                 - '*.properties'
-environments:
-    development:
-        management:
-            endpoints:
-                enabled-by-default: true
-                web:
-                    base-path: '/actuator'
-                    exposure:
-                        include: '*'
-    production:
-        management:
-            endpoints:
-                enabled-by-default: false
 
 ---
 grails:
@@ -83,6 +73,9 @@ grails:
             maxsize: 1000
     controllers:
         defaultScope: singleton
+        upload:
+            maxFileSize: 50000000
+            maxRequestSize: 50000000
     converters:
         encoding: UTF-8
     views:
@@ -96,3 +89,91 @@ grails:
                 scriptlet: html
                 taglib: none
                 staticparts: none
+
+---
+environments:
+    development:
+        dataSource:
+            dbCreate: none # update // none because of database migration
+            url: jdbc:postgresql://pghost:5432/wekb_dev
+            username: username
+            password: password
+            driverClassName: org.postgresql.Driver
+            dialect: org.hibernate.dialect.PostgreSQLDialect
+            defaultTransactionIsolation: java.sql.Connection.TRANSACTION_READ_COMMITTED
+            pooled: true
+            properties:
+                maxActive: 100
+                minEvictableIdleTimeMillis: 1800000
+                timeBetweenEvictionRunsMillis: 1800000
+                numTestsPerEvictionRun: 3
+                testOnBorrow: true
+                testWhileIdle: true
+                testOnReturn: true
+                validationQuery: select 1
+                defaultTransactionIsolation: java.sql.Connection.TRANSACTION_READ_COMMITTED
+        grails:
+            logging:
+                plugin:
+                    springsecurity:
+                        debug:
+                            useFilter: true
+            mail:
+                port: 3025
+        cache:
+            headers:
+                enabled: false
+        wekb:
+            defaultCuratoryGroup: Local
+        logging:
+            config: 'grails-app/conf/logback-development.xml'
+    test:
+        dataSource:
+            dbCreate: none # create-drop // none because of database migration
+            url: jdbc:postgresql://pghost:5432/wekb_test
+            username: username
+            password: password
+            driverClassName: org.postgresql.Driver
+            dialect: org.hibernate.dialect.PostgreSQLDialect
+            defaultTransactionIsolation: java.sql.Connection.TRANSACTION_READ_COMMITTED
+            pooled: true
+            properties:
+                maxActive: 100
+                minEvictableIdleTimeMillis: 1800000
+                timeBetweenEvictionRunsMillis: 1800000
+                numTestsPerEvictionRun: 3
+                testOnBorrow: true
+                testWhileIdle: true
+                testOnReturn: true
+                validationQuery: select 1
+                defaultTransactionIsolation: java.sql.Connection.TRANSACTION_READ_COMMITTED
+        grails:
+            mail:
+                port: 3025
+        quartz:
+            pluginEnabled: false
+        cache:
+            headers:
+                enabled: false
+        javamelody:
+            disabled: true
+    production:
+        dataSource:
+            dbCreate: none #update // none because of database migration
+            url: jdbc:postgresql://localhost:5432/wekb_dev
+            username: username
+            password: password
+            driverClassName: org.postgresql.Driver
+            dialect: org.hibernate.dialect.PostgreSQLDialect
+            defaultTransactionIsolation: java.sql.Connection.TRANSACTION_READ_COMMITTED
+            pooled: true
+            properties:
+                maxActive: 100
+                minEvictableIdleTimeMillis: 1800000
+                timeBetweenEvictionRunsMillis: 1800000
+                numTestsPerEvictionRun: 3
+                testOnBorrow: true
+                testWhileIdle: true
+                testOnReturn: true
+                validationQuery: select 1
+                defaultTransactionIsolation: java.sql.Connection.TRANSACTION_READ_COMMITTED

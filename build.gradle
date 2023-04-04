@@ -1,3 +1,7 @@
+
+version "2.0"
+group "wekb"
+
 buildscript {
     repositories {
         maven { url "https://plugins.gradle.org/m2/" }
@@ -5,21 +9,34 @@ buildscript {
     }
     dependencies {
         classpath "org.grails:grails-gradle-plugin:$grailsGradlePluginVersion"
-        classpath "gradle.plugin.com.github.erdi.webdriver-binaries:webdriver-binaries-gradle-plugin:2.6"
         classpath "com.bertramlabs.plugins:asset-pipeline-gradle:3.4.7"
+        classpath 'org.grails.plugins:hibernate5:7.3.0'
+
+        //NOT DEFAULT
+        classpath "org.grails.plugins:database-migration:4.1.0"
+        classpath "com.gorylenko.gradle-git-properties:gradle-git-properties:2.4.1"
+        classpath 'org.quartz-scheduler:quartz:2.3.2'
     }
 }
-
-version "0.1"
-group "wekb"
 
 apply plugin:"eclipse"
 apply plugin:"idea"
 apply plugin:"war"
 apply plugin:"org.grails.grails-web"
-apply plugin:"com.github.erdi.webdriver-binaries"
 apply plugin:"org.grails.grails-gsp"
 apply plugin:"com.bertramlabs.asset-pipeline"
+
+//NOT DEFAULT
+apply plugin:"com.gorylenko.gradle-git-properties"
+
+// ---[ plugin: database migration ! before dependencies configuration ]---
+
+sourceSets {
+    main {
+        resources { srcDir 'grails-app/migrations' }
+    }
+}
+
 
 repositories {
     mavenCentral()
@@ -35,14 +52,17 @@ configurations {
 
 dependencies {
     developmentOnly("org.springframework.boot:spring-boot-devtools")
+    developmentOnly "org.springframework.boot:spring-boot-starter-tomcat" // implementation
+
     compileOnly "io.micronaut:micronaut-inject-groovy"
+
     console "org.grails:grails-console"
+
     implementation "org.springframework.boot:spring-boot-starter-logging"
     implementation "org.springframework.boot:spring-boot-starter-validation"
     implementation "org.springframework.boot:spring-boot-autoconfigure"
     implementation "org.grails:grails-core"
     implementation "org.springframework.boot:spring-boot-starter-actuator"
-    implementation "org.springframework.boot:spring-boot-starter-tomcat"
     implementation "org.grails:grails-web-boot"
     implementation "org.grails:grails-logging"
     implementation "org.grails:grails-plugin-rest"
@@ -55,19 +75,55 @@ dependencies {
     implementation "org.grails.plugins:async"
     implementation "org.grails.plugins:scaffolding"
     implementation "org.grails.plugins:events"
+    implementation 'org.grails.plugins:hibernate5'
     implementation "org.grails.plugins:gsp"
+
     profile "org.grails.profiles:web"
-    runtimeOnly "com.bertramlabs.plugins:asset-pipeline-grails:3.4.7"
-    testImplementation "io.micronaut:micronaut-inject-groovy"
-    testImplementation "org.grails:grails-gorm-testing-support"
-    testImplementation "org.mockito:mockito-core"
-    testImplementation "org.grails:grails-web-testing-support"
-    testImplementation "org.grails.plugins:geb"
-    testImplementation "org.seleniumhq.selenium:selenium-remote-driver:4.0.0"
-    testImplementation "org.seleniumhq.selenium:selenium-api:4.0.0"
-    testImplementation "org.seleniumhq.selenium:selenium-support:4.0.0"
-    testRuntimeOnly "org.seleniumhq.selenium:selenium-chrome-driver:4.0.0"
-    testRuntimeOnly "org.seleniumhq.selenium:selenium-firefox-driver:4.0.0"
+
+    implementation "com.bertramlabs.plugins:asset-pipeline-grails:3.4.7"
+
+
+    //NO DEFAULT dependencies
+
+    implementation 'org.elasticsearch:elasticsearch:7.16.3'                                 // 2022
+    implementation 'org.elasticsearch.client:elasticsearch-rest-high-level-client:7.16.3'   // 2022
+
+    implementation 'org.grails.plugins:spring-security-core:5.1.1'          // 2022
+    implementation 'org.grails.plugins:audit-logging:4.0.3'                 // 2021
+    implementation 'org.grails.plugins:database-migration:4.1.0', {         // 2022
+        exclude module: 'spring-boot-cli'
+    }
+    implementation 'org.grails.plugins:grails-executor:0.4'                 // 2016 : [deprecated]
+    implementation 'org.grails.plugins:mail:3.0.0'                          // 2021 : upgrade from 2.0.0
+    implementation 'org.grails.plugins:quartz:2.0.13'                       // 2019
+
+    implementation 'org.hibernate:hibernate-core:5.6.14.Final'              // 2022
+    implementation 'org.hibernate:hibernate-ehcache:5.6.14.Final'           // 2022 : + org.hibernate:hibernate-core:5.6.14.Final
+    implementation 'net.sf.ehcache:ehcache:2.10.9.2'                        // 2021
+
+
+    implementation 'com.github.albfernandez:juniversalchardet:2.4.0'        // 2020
+    implementation group: "org.apache.poi", name: "poi-ooxml", version: "5.0.0"
+    implementation 'org.codehaus.gpars:gpars:1.2.1'                         // 2014
+    implementation 'org.codehaus.janino:janino:3.1.9'                       // 2022 : logback
+    implementation 'org.liquibase:liquibase-core:4.11.0'                    // 2022 : + org.grails.plugins:database-migration
+    implementation 'org.quartz-scheduler:quartz:2.3.2'                      // 2019
+
+
+    // https://mvnrepository.com/artifact/org.grails.plugins/grails-melody-plugin
+    //not supported in Grails 5
+    //implementation 'org.grails.plugins:grails-melody-plugin:1.80.0' // 2019
+
+
+    implementation group: 'org.codehaus.groovy.modules.http-builder', name: 'http-builder', version: '0.7.1'
+
+    implementation 'dk.glasius:external-config:3.1.1'
+
+    // --------------------------------------------------
+
+    runtimeOnly 'org.apache.tomcat:tomcat-jdbc'
+    runtimeOnly 'javax.xml.bind:jaxb-api:2.3.1'                             // 2018 : [?]
+    runtimeOnly 'org.postgresql:postgresql:42.5.1'                          // 2022
 }
 
 bootRun {
@@ -76,7 +132,7 @@ bootRun {
         '-Dspring.output.ansi.enabled=always', 
         '-noverify', 
         '-XX:TieredStopAtLevel=1',
-        '-Xmx1024m')
+        '-Xmx2g')
     sourceResources sourceSets.main
     String springProfilesActive = 'spring.profiles.active'
     systemProperty springProfilesActive, System.getProperty(springProfilesActive)
@@ -88,34 +144,56 @@ tasks.withType(GroovyCompile) {
     }
 }
 
-tasks.withType(Test) {
-    useJUnitPlatform()
-}
-
-webdriverBinaries {
-    if (!System.getenv().containsKey('GITHUB_ACTIONS')) {
-        chromedriver {
-            version = '2.45.0'
-            fallbackTo32Bit = true
-        }
-        geckodriver '0.30.0'
-    }
-}
-
-tasks.withType(Test) {
-    systemProperty "geb.env", System.getProperty('geb.env')
-    systemProperty "geb.build.reportsDir", reporting.file("geb/integrationTest")
-    if (!System.getenv().containsKey('GITHUB_ACTIONS')) {
-        systemProperty 'webdriver.chrome.driver', System.getProperty('webdriver.chrome.driver')
-        systemProperty 'webdriver.gecko.driver', System.getProperty('webdriver.gecko.driver')
-    } else {
-        systemProperty 'webdriver.chrome.driver', "${System.getenv('CHROMEWEBDRIVER')}/chromedriver"
-        systemProperty 'webdriver.gecko.driver', "${System.getenv('GECKOWEBDRIVER')}/geckodriver"
-    }
-}
-
 
 assets {
     minifyJs = true
     minifyCss = true
+}
+
+buildProperties.doLast {
+    // Find the right file
+
+    File grailsBuildInfoFile = (File)it.outputs.files.files.find { it.name == 'grails.build.info' }
+    File grailsGitInfoFile = file("$buildDir/resources/main/git.properties")
+    if(!grailsBuildInfoFile) {
+        println "Build file not found!"
+        return // No need to continue if the file is not there
+    }
+
+    Properties properties = new Properties()
+    Properties gitProperties = new Properties()
+    // Read properties from the file
+
+    grailsBuildInfoFile.withInputStream {
+        properties.load(it)
+    }
+
+    if (!grailsGitInfoFile) {
+        println "Git file not found!"
+    }else {
+        grailsGitInfoFile.withInputStream {
+            gitProperties.load(it)
+        }
+    }
+
+    // Add new properties from various sources
+    properties.setProperty('build.time', new Date().format("yyyy-MM-dd HH:mm:ss"))
+    // Get a System property
+    properties.setProperty('build.java.version', System.getProperty('java.version'))
+    // Get the host name where the build was created
+    // properties.setProperty('build.host', InetAddress.localHost.hostName)
+
+    if(grailsGitInfoFile) {
+        properties.setProperty('build.git.revision', gitProperties.getProperty('git.commit.id.abbrev'))
+        properties.setProperty('build.git.branch', gitProperties.getProperty('git.branch'))
+    }
+    // Write the properties back to the file
+    grailsBuildInfoFile.withOutputStream {
+        properties.store(it,null)
+    }
+}
+
+war {
+    baseName = 'wekb'
+    archiveName = 'wekb.war'
 }
