@@ -111,6 +111,13 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
         [pattern: '/api/groups',              access: ['permitAll']]
 ]
 
+
+
+grails.plugin.springsecurity.ipRestrictions = [
+        [pattern: '/api/**', access: '193.30.112.31']
+]
+
+
 //--------------------------------------------------------------------------------------------------------------------
 
 // What URL patterns should be processed by the resources plugin
