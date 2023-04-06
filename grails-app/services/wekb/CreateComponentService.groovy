@@ -338,7 +338,7 @@ class CreateComponentService {
 
                     if (name && pkg == null) {
                         String pkg_normname = Package.generateNormname(name)
-                        pkg = new Package(name: name, normname: pkg_normname)
+                        pkg = new Package(name: name, normname: pkg_normname, uuid: UUID.randomUUID().toString(), status: RDStore.KBC_STATUS_CURRENT)
                         pkg.save()
                         newCreated = true
                     }
