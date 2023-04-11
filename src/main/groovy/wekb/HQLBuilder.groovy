@@ -6,6 +6,8 @@ import wekb.helper.RDStore
 import grails.util.GrailsClassUtils
 import groovy.util.logging.Slf4j
 
+import java.text.SimpleDateFormat
+
 @Slf4j
 public class HQLBuilder {
 
@@ -345,6 +347,32 @@ public class HQLBuilder {
         hql_builder_context.bindvars[crit.defn.qparam] = base_value
         break;
 
+      case 'greater':
+        hql_builder_context.query_clauses.add("${crit.defn.contextTree.negate?'not ':''} ${scoped_property} >= :${crit.defn.qparam}");
+        switch ( crit.defn.contextTree.type ) {
+          case 'java.util.Date':
+            hql_builder_context.bindvars[crit.defn.qparam] = parseDate(crit.value, ["yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd"])
+            break;
+          default:
+            hql_builder_context.bindvars[crit.defn.qparam] = crit.value.toString().trim();
+            break;
+        }
+        break;
+
+      case 'smaller':
+        hql_builder_context.query_clauses.add("${crit.defn.contextTree.negate?'not ':''}YEAR(${scoped_property}) <= :${crit.defn.qparam}");
+        switch ( crit.defn.contextTree.type ) {
+          case 'java.util.Date':
+            hql_builder_context.bindvars[crit.defn.qparam] = parseDate(crit.value, ["yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd"])
+            break;
+          default:
+            hql_builder_context.bindvars[crit.defn.qparam] = crit.value.toString().trim();
+            break;
+        }
+        break;
+
+
+
       default:
         log.error("Unhandled comparator '${crit.defn.contextTree.comparator}'. crit: ${crit}");
     }
@@ -385,7 +413,7 @@ public class HQLBuilder {
   static def buildFieldList(defns) {
     def result = new java.io.StringWriter()
     result.write('o.id');
-    result.write(',o.class');
+    //result.write(',o.class');
     defns.each { defn ->
       result.write(",o.");
       result.write(defn.property);
@@ -420,4 +448,17 @@ public class HQLBuilder {
     // log.debug("Returning ${result} ${result.class.name}");
     return result;
   }
+
+  private Date parseDate(String dateString, SimpleDateFormat... dateFormats){
+    for (SimpleDateFormat format in dateFormats){
+      try{
+        return format.parse(dateString)
+      }
+      catch (Exception e){
+        continue
+      }
+    }
+    return null
+  }
+
 }

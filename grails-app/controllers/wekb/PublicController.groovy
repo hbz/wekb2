@@ -95,7 +95,7 @@ class PublicController {
     def searchResult = [:]
 
     params.qbe = 'g:publicPackages'
-    searchResult = searchService.search(null, searchResult, params, response.format)
+    searchResult = searchService.search(null, searchResult, params)
 
     result = searchResult.result
 

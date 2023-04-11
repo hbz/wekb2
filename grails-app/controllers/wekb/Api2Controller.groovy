@@ -1,15 +1,19 @@
 package wekb
 
+import grails.plugin.springsecurity.SpringSecurityService
 import org.springframework.security.access.annotation.Secured
-import wekb.helper.RCConstants
+import wekb.auth.User
 import grails.converters.JSON
 import wekb.helper.RDStore
 
 import java.security.SecureRandom
 
-@Secured(['ROLE_API', 'IS_AUTHENTICATED_FULLY'])
+
 class Api2Controller {
     SecureRandom rand = new SecureRandom()
+
+    Api2Service api2Service
+    SpringSecurityService springSecurityService
 
     /**
      * Check if the api is up. Just return true.
@@ -55,7 +59,7 @@ class Api2Controller {
         ]
 
         def json = data as JSON
-        //  log.debug (json)
+        //log.debug("json:"+json.toString())
         render json
         //    render (text: "${params.callback}(${json})", contentType: "application/javascript", encoding: "UTF-8")
     }
@@ -63,25 +67,54 @@ class Api2Controller {
     def index() {
     }
 
+    def searchApi() {
+        log.debug("Api2Controller:searchApi ${params}")
 
-    def namespaces() {
+        Map<String, Object> result = checkPermisson()
 
-        def result = []
-        def all_ns = null
+        if(result.code == 'success') {
 
-        if (params.category && params.category?.trim().size() > 0) {
-            all_ns = IdentifierNamespace.findAllByFamily(params.category)
-        } else {
-            all_ns = IdentifierNamespace.findAll()
+            if (!params.componentType) {
+                return apiReturn([], "No componentType set!")
+            }
+
+            try {
+                result = api2Service.search(result, params)
+            } catch (Throwable e) {
+                result.code = 'error'
+                result.message = e.message
+                log.error("Problem by search api: ", e)
+            }
         }
 
-        all_ns.each { ns ->
-            result.add([value: ns.value, namespaceName: ns.name, category: ns.family ?: "", id: ns.id])
+
+        render result as JSON
+
+    }
+
+    def namespaces() {
+        Map<String, Object> result = checkPermisson()
+
+        if(result.code == 'success') {
+            def results = []
+            def all_ns = null
+
+            if (params.category && params.category?.trim().size() > 0) {
+                all_ns = IdentifierNamespace.findAllByFamily(params.category)
+            } else {
+                all_ns = IdentifierNamespace.findAll()
+            }
+
+            all_ns.each { ns ->
+                results.add([value: ns.value, namespaceName: ns.name, category: ns.family ?: "", id: ns.id])
+            }
+            result.results = results
         }
 
         apiReturn(result)
     }
 
+    @Secured(['ROLE_API', 'IS_AUTHENTICATED_FULLY'])
     def groups() {
 
         def result = []
@@ -99,15 +132,39 @@ class Api2Controller {
     }
 
     def sushiSources() {
-        Map<String, Object> result = [:]
+        Map<String, Object> result = checkPermisson()
         RefdataValue yes = RDStore.YN_YES
-        //Set<Platform> counter4Platforms = Platform.findAllByCounterR4SushiApiSupportedAndCounterR5SushiApiSupportedNotEqual(yes, yes).toSet(), counter5Platforms = Platform.findAllByCounterR5SushiApiSupported(yes).toSet()
-        Set counter4Platforms = Platform.executeQuery("select plat.uuid, plat.counterR4SushiServerUrl, plat.statisticsUpdate.value from Platform plat where plat.counterR4SushiApiSupported = :r4support and plat.counterR5SushiApiSupported != :r5support and plat.counterR4SushiServerUrl is not null", [r4support: yes, r5support: yes]).toSet()
-        Set counter5Platforms = Platform.executeQuery("select plat.uuid, plat.counterR5SushiServerUrl, plat.statisticsUpdate.value from Platform plat where plat.counterR5SushiApiSupported = :r5support and plat.counterR5SushiServerUrl is not null", [r5support: yes]).toSet()
-        result.counter4ApiSources = counter4Platforms.size() > 0 ? counter4Platforms : []
-        result.counter5ApiSources = counter5Platforms.size() > 0 ? counter5Platforms : []
+
+        if(result.code == 'success') {
+            //Set<Platform> counter4Platforms = Platform.findAllByCounterR4SushiApiSupportedAndCounterR5SushiApiSupportedNotEqual(yes, yes).toSet(), counter5Platforms = Platform.findAllByCounterR5SushiApiSupported(yes).toSet()
+            Set counter4Platforms = Platform.executeQuery("select plat.uuid, plat.counterR4SushiServerUrl, plat.statisticsUpdate.value from Platform plat where plat.counterR4SushiApiSupported = :r4support and plat.counterR5SushiApiSupported != :r5support and plat.counterR4SushiServerUrl is not null", [r4support: yes, r5support: yes]).toSet()
+            Set counter5Platforms = Platform.executeQuery("select plat.uuid, plat.counterR5SushiServerUrl, plat.statisticsUpdate.value from Platform plat where plat.counterR5SushiApiSupported = :r5support and plat.counterR5SushiServerUrl is not null", [r5support: yes]).toSet()
+            result.counter4ApiSources = counter4Platforms.size() > 0 ? counter4Platforms : []
+            result.counter5ApiSources = counter5Platforms.size() > 0 ? counter5Platforms : []
+        }
         render result as JSON
     }
 
+    private Map checkPermisson(){
+        Map result = [code: 'success']
+
+
+        if(!springSecurityService.loggedIn){
+            result.code = 'error'
+            result.message = 'Please log in!'
+            return result
+        }
+
+        User user = springSecurityService.getCurrentUser()
+
+        if(!user.apiUserStatus){
+            result.code = 'error'
+            result.message = 'This user does not have permission to access the api!'
+            return result
+        }
+
+        println(result)
+        return result
+    }
 
 }
