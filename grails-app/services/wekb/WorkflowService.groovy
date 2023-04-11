@@ -138,11 +138,12 @@ class WorkflowService {
                 }
                 break
             case "workFlowSetStatus":
-                log.debug("workFlowSetStatus: ${method_config[1]}")
+                log.debug("workFlowSetStatus: ${method_config[1]} for " + component )
                 RefdataValue status_to_set = RefdataCategory.lookup(RCConstants.COMPONENT_STATUS, method_config[1])
                 if (status_to_set) {
-                    def res = Package.executeUpdate("update ${component.class.name} as component set component.status = :st, component.lastUpdated = :currentDate where component = :component", [st: status_to_set, component: component, currentDate: new Date()])
-                    log.debug("Updated status of ${res} components")
+                    component.status = status_to_set
+                    component.save()
+                    log.debug("Updated status of components: ${component}")
                 }
                 break
             case "workFlowMethod":
