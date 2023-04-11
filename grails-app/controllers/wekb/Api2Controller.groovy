@@ -115,6 +115,33 @@ class Api2Controller {
     }
 
     @Secured(['ROLE_API', 'IS_AUTHENTICATED_FULLY'])
+    def refdataCategories() {
+
+        def result = []
+
+        RefdataCategory.list().each { RefdataCategory refdataCategory ->
+            Map refCatMap = ['id'     : refdataCategory.id,
+                             'desc'   : refdataCategory.desc,
+                             'desc_en': refdataCategory.desc_en,
+                             'desc_de': refdataCategory.desc_de]
+
+            refCatMap.refDataValues = []
+
+            refdataCategory.values.each { RefdataValue refdataValue ->
+                Map refValueMap = ['value'   : refdataValue.value,
+                                   'value_de': refdataValue.value_de,
+                                   'value_en': refdataValue.value_en]
+
+                refCatMap.refDataValues << refValueMap
+            }
+
+            result << refCatMap
+        }
+
+        apiReturn(result)
+    }
+
+    @Secured(['ROLE_API', 'IS_AUTHENTICATED_FULLY'])
     def groups() {
 
         def result = []
