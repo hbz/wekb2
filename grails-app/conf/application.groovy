@@ -109,6 +109,7 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
         [pattern: '/api/isUp',                access: ['permitAll']],
         [pattern: '/api/namespaces',          access: ['permitAll']],
         [pattern: '/api/groups',              access: ['permitAll']],
+        [pattern: '/api/refdataCategories',              access: ['permitAll']],
 
         [pattern: '/api2/**',                access: ['permitAll']],
 ]
