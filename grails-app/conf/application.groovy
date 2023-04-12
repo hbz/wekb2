@@ -116,7 +116,7 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 
 
 grails.plugin.springsecurity.ipRestrictions = [
-        [pattern: '/api/**', access: '193.30.112.31']
+        [pattern: '/api/**', access: ['193.30.112.31', '193.30.112.34', '10.1.1.240']],
 ]
 
 
