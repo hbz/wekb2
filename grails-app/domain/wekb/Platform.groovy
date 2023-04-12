@@ -191,7 +191,7 @@ class Platform  extends AbstractBase implements Auditable {
     params.sort = 'name'
 
     def ql = null;
-    ql = Platform.findAllByNameIlikeAndStatusNotEqual("${params.q}%", status_deleted, params)
+    ql = Platform.findAllByNameIlikeAndStatusNotEqual("%${params.q}%", status_deleted, params)
 
     if (ql) {
       ql.each { t ->
