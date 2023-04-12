@@ -21,7 +21,7 @@
     </dl>
 
     <g:if test="${userIsAdmin}">
-        <g:if test="${controllerName == 'create'}">
+        <g:if test="${true}">
             <dl>
                 <dt class="control-label">Password</dt>
                 <dd>
