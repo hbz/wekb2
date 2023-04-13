@@ -1,6 +1,7 @@
 package wekb
 
 import grails.plugin.springsecurity.SpringSecurityService
+import grails.web.servlet.mvc.GrailsParameterMap
 import org.springframework.security.access.annotation.Secured
 import wekb.auth.User
 import grails.converters.JSON
@@ -172,17 +173,28 @@ class Api2Controller {
         render result as JSON
     }
 
-    private Map checkPermisson(){
+    private Map checkPermisson(GrailsParameterMap params){
         Map result = [code: 'success']
-
+        User user
 
         if(!springSecurityService.loggedIn){
-            result.code = 'error'
-            result.message = 'Please log in!'
-            return result
+
+            if (params.username && params.password) {
+                user = springSecurityService.reauthenticate(params.username, params.password)
+
+                if(!user){
+                    result.code = 'error'
+                    result.message = 'Your login are not correct!'
+                    return result
+                }
+            }else {
+                result.code = 'error'
+                result.message = 'Please set your authentication to login!'
+                return result
+            }
         }
 
-        User user = springSecurityService.getCurrentUser()
+        user = springSecurityService.getCurrentUser()
 
         if(!user.apiUserStatus){
             result.code = 'error'
@@ -190,7 +202,6 @@ class Api2Controller {
             return result
         }
 
-        println(result)
         return result
     }
 
