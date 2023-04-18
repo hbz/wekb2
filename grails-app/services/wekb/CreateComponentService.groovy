@@ -548,7 +548,7 @@ class CreateComponentService {
 
                             if(user.curatoryGroupUsers) {
                                 user.curatoryGroupUsers.curatoryGroup.each { CuratoryGroup cg ->
-                                    if (!(pkg.curatoryGroups && cg in pkg.curatoryGroups.curatoryGroup)) {
+                                    if (!(pkg.curatoryGroups && cg.id in pkg.curatoryGroups.curatoryGroup.id)) {
                                         new CuratoryGroupPackage(pkg: pkg, curatoryGroup: cg).save()
                                     }
                                 }
@@ -652,6 +652,13 @@ class CreateComponentService {
                         sourceName = "${sourceName} ${dupes.size() + 1}"
                     }
 
+                    dupes.each {
+                        if(!Package.findByKbartSource(it)){
+                            it.status = RDStore.KBC_STATUS_REMOVED
+                            it.save()
+                        }
+                    }
+
                     kbartSource = new KbartSource(name: sourceName)
                 } else {
                     kbartSource = aPackage.kbartSource
@@ -686,7 +693,7 @@ class CreateComponentService {
 
                     if(user.curatoryGroupUsers) {
                         user.curatoryGroupUsers.curatoryGroup.each { CuratoryGroup cg ->
-                            if (!(kbartSource.curatoryGroups && cg in kbartSource.curatoryGroups.curatoryGroup)) {
+                            if (!(kbartSource.curatoryGroups && cg.id in kbartSource.curatoryGroups.curatoryGroup.id)) {
                                 new CuratoryGroupKbartSource(kbartSource: kbartSource, curatoryGroup: cg).save()
                             }
                         }
@@ -694,6 +701,10 @@ class CreateComponentService {
                     if (kbartSource != aPackage.kbartSource) {
                         aPackage = aPackage.refresh()
                         aPackage.kbartSource = kbartSource
+                        aPackage.lastUpdated = new Date()
+                        aPackage.save()
+                    }else {
+                        aPackage.lastUpdated = new Date()
                         aPackage.save()
                     }
                 }
