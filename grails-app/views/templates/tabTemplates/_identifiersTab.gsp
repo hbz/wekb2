@@ -32,10 +32,6 @@
                             <g:set value="${identifier.value ? (identifier.value.startsWith('http') ? identifier.value : 'https://portal.issn.org/resource/ISSN/'+identifier.value) : ""}"
                                    var="url"/>
                         </g:elseif>
-                        <g:elseif test="${identifier.namespace.value in ['isbn', 'pisbn']}">
-                            <g:set value="${identifier.value ? (identifier.value.startsWith('http') ? identifier.value : 'https://www.worldcat.org/de/search?q=isbn:'+identifier.value) : ""}"
-                                   var="url"/>
-                        </g:elseif>
                         <g:else>
                             <g:set value="${identifier.value ? (identifier.value.startsWith('http') ? identifier.value : "") : ""}"
                                    var="url"/>
