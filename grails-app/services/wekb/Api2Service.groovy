@@ -946,7 +946,7 @@ class Api2Service {
 
             result.federations = []
             object.federations.each { PlatformFederation platformFederation ->
-                result.federations.add([federation    : platformFederation.federation])
+                result.federations.add([federation    : platformFederation.federation?.value])
             }
 
             result
