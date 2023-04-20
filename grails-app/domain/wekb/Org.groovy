@@ -13,6 +13,8 @@ class Org extends AbstractBase implements Auditable {
 
 
   String name
+  String abbreviatedName
+
   RefdataValue status
 
   // Timestamps
@@ -43,6 +45,7 @@ class Org extends AbstractBase implements Auditable {
 
     uuid column: 'org_uuid'
     name column: 'org_name'
+    abbreviatedName column: 'org_abbreviated_name'
 
     lastUpdated column: 'org_last_updated'
     dateCreated column: 'org_date_created'
@@ -57,6 +60,7 @@ class Org extends AbstractBase implements Auditable {
   }
 
   static constraints = {
+    abbreviatedName(nullable: true, blank: true)
     homepage(nullable: true, blank: true)
     metadataDownloaderURL(nullable: true, blank: true)
     kbartDownloaderURL(nullable: true, blank: true)

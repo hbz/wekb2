@@ -175,6 +175,7 @@ class FTUpdateService {
         result.recid = "${kbc.class.name}:${kbc.id}"
         result.uuid = kbc.uuid
         result.name = kbc.name
+        result.abbreviatedName = kbc.abbreviatedName
         result.sortname = generateSortName(kbc.name)
         result.altname = []
         result.updater = 'org'

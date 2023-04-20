@@ -835,6 +835,7 @@ class Api2Service {
            result.uuid = object.uuid
             result.name = object.name
             result.sortname = generateSortName(object.name)
+            result.abbreviatedName = object.abbreviatedName
             result.status = object.status?.value
             result.componentType = object.class.simpleName
 
