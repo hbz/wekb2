@@ -104,6 +104,9 @@ class FTUpdateService {
         result.file = kbc.file?.value
         result.contentType = kbc.contentType?.value
 
+        result.freeTrial = kbc.freeTrial?.value
+        result.freeTrialPhase = kbc.freeTrialPhase
+
         if (kbc.kbartSource) {
           result.source = [
             id              : kbc.kbartSource.id,
@@ -172,6 +175,7 @@ class FTUpdateService {
         result.recid = "${kbc.class.name}:${kbc.id}"
         result.uuid = kbc.uuid
         result.name = kbc.name
+        result.abbreviatedName = kbc.abbreviatedName
         result.sortname = generateSortName(kbc.name)
         result.altname = []
         result.updater = 'org'
@@ -277,6 +281,11 @@ class FTUpdateService {
         result.proxySupported = kbc.proxySupported?.value
 
         result.counterRegistryApiUuid = kbc.counterRegistryApiUuid
+
+        result.federations = []
+        kbc.federations.each { PlatformFederation platformFederation ->
+          result.federations.add([ federation: platformFederation.federation?.value])
+        }
 
         result
       }

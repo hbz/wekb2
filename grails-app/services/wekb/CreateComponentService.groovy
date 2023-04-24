@@ -338,8 +338,8 @@ class CreateComponentService {
 
                     if (name && pkg == null) {
                         String pkg_normname = Package.generateNormname(name)
-                        pkg = new Package(name: name, normname: pkg_normname)
-                        pkg.save()
+                        pkg = new Package(name: name, normname: pkg_normname, uuid: UUID.randomUUID().toString(), status: RDStore.KBC_STATUS_CURRENT)
+                        pkg.save(flush: true)
                         newCreated = true
                     }
 
@@ -351,7 +351,7 @@ class CreateComponentService {
                             if (provider){
                                 if(!(pkg.provider && pkg.provider == provider)){
                                     pkg.provider = provider
-                                    pkg.save()
+                                    pkg.save(flush: true)
 
                                 }
                             }
@@ -363,7 +363,7 @@ class CreateComponentService {
                             if (platform){
                                 if(!(pkg.nominalPlatform && pkg.nominalPlatform == platform)){
                                     pkg.nominalPlatform = platform
-                                    pkg.save()
+                                    pkg.save(flush: true)
 
                                 }
                             }
@@ -510,7 +510,7 @@ class CreateComponentService {
                         }
 
 
-                        if (pkg.save() || pkg.isAttached()) {
+                        if (pkg.save(flush: true) || pkg.isAttached()) {
                             if (colMap.archiving_agency != null) {
                                 String value = cols[colMap.archiving_agency].trim()
                                 if (value) {
@@ -521,7 +521,7 @@ class CreateComponentService {
                                         if(!packageArchivingAgency) {
                                             packageArchivingAgency = new PackageArchivingAgency(archivingAgency: refdataValue, pkg: pkg)
                                         }
-                                        if (packageArchivingAgency.save()) {
+                                        if (packageArchivingAgency.save(flush: true)) {
                                             if (colMap.open_access_of_archiving_agency != null) {
                                                 String paaOp = cols[colMap.open_access_of_archiving_agency].trim()
                                                 if (paaOp) {
@@ -539,7 +539,7 @@ class CreateComponentService {
                                                         packageArchivingAgency.postCancellationAccess = refdataValuePaaPCA
                                                 }
                                             }
-                                            packageArchivingAgency.save()
+                                            packageArchivingAgency.save(flush: true)
                                         }
 
                                     }
@@ -548,8 +548,8 @@ class CreateComponentService {
 
                             if(user.curatoryGroupUsers) {
                                 user.curatoryGroupUsers.curatoryGroup.each { CuratoryGroup cg ->
-                                    if (!(pkg.curatoryGroups && cg in pkg.curatoryGroups.curatoryGroup)) {
-                                        new CuratoryGroupPackage(pkg: pkg, curatoryGroup: cg).save()
+                                    if (!(pkg.curatoryGroups && cg.id in pkg.curatoryGroups.curatoryGroup.id)) {
+                                        new CuratoryGroupPackage(pkg: pkg, curatoryGroup: cg).save(flush: true)
                                     }
                                 }
                             }
@@ -582,7 +582,7 @@ class CreateComponentService {
                                                 String charset = (('a'..'z') + ('0'..'9')).join()
                                                 String tokenValue = RandomStringUtils.random(255, charset.toCharArray())
                                                 if (!UpdateToken.findByPkg(pkg)) {
-                                                    UpdateToken newToken = new UpdateToken(pkg: pkg, updateUser: user, value: tokenValue).save()
+                                                    UpdateToken newToken = new UpdateToken(pkg: pkg, updateUser: user, value: tokenValue).save(flush: true)
                                                 }
                                             }*/
 
@@ -628,14 +628,14 @@ class CreateComponentService {
                             if (map.value != "" && identifier.value != map.value) {
                                 identifier = identifier.refresh()
                                 identifier.value = map.value
-                                identifier.save()
+                                identifier.save(flush: true)
                             }
                             found = true
                         }
                     }
                     if (!found && map.value != "") {
                         Identifier identifier = new Identifier(namespace: namespace, value: map.value, pkg: aPackage)
-                        identifier.save()
+                        identifier.save(flush: true)
                     }
                 }
         }
@@ -652,7 +652,14 @@ class CreateComponentService {
                         sourceName = "${sourceName} ${dupes.size() + 1}"
                     }
 
-                    kbartSource = new KbartSource(name: sourceName)
+                    dupes.each {
+                        if(!Package.findByKbartSource(it)){
+                            it.status = RDStore.KBC_STATUS_REMOVED
+                            it.save(flush: true)
+                        }
+                    }
+
+                    kbartSource = new KbartSource(name: sourceName, uuid: UUID.randomUUID().toString(), status: RDStore.KBC_STATUS_CURRENT, kbartHasWekbFields: false)
                 } else {
                     kbartSource = aPackage.kbartSource
                     def dupes = KbartSource.findAllByNameIlikeAndStatusNotEqual(aPackage.name, status_deleted)
@@ -681,21 +688,19 @@ class CreateComponentService {
                 if (map.targetNamespace) {
                     kbartSource.targetNamespace = IdentifierNamespace.get(map.targetNamespace)
                 }
-
-                if (kbartSource.save() || kbartSource.isAttached()) {
+                if (kbartSource.save(flush: true) || kbartSource.isAttached()) {
 
                     if(user.curatoryGroupUsers) {
                         user.curatoryGroupUsers.curatoryGroup.each { CuratoryGroup cg ->
-                            if (!(kbartSource.curatoryGroups && cg in kbartSource.curatoryGroups.curatoryGroup)) {
-                                new CuratoryGroupKbartSource(kbartSource: kbartSource, curatoryGroup: cg).save()
+                            if (!(kbartSource.curatoryGroups && cg.id in kbartSource.curatoryGroups.curatoryGroup.id)) {
+                                new CuratoryGroupKbartSource(kbartSource: kbartSource, curatoryGroup: cg).save(flush: true)
                             }
                         }
                     }
-                    if (kbartSource != aPackage.kbartSource) {
-                        aPackage = aPackage.refresh()
-                        aPackage.kbartSource = kbartSource
-                        aPackage.save()
-                    }
+                    aPackage = aPackage.refresh()
+                    aPackage.kbartSource = kbartSource
+                    aPackage.lastUpdated = new Date()
+                    aPackage.save(flush: true)
                 }
             }
         }

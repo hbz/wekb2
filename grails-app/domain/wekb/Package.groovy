@@ -212,7 +212,7 @@ class Package  extends AbstractBase implements Auditable {
     params.sort = 'name'
 
     def ql = null;
-    ql = Package.findAllByNameIlikeAndStatusNotEqual("${params.q}%", status_deleted, params)
+    ql = Package.findAllByNameIlikeAndStatusNotEqual("%${params.q}%", status_deleted, params)
 
     if (ql) {
       ql.each { t ->

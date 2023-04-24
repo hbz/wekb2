@@ -89,7 +89,7 @@ class PackageController {
         if(params.qp_pkg_id && pkg) {
             params.qbe = 'g:updatePackageInfos'
             params.hide = ['qp_pkg_id']
-            searchResult = searchService.search(searchResult.user, searchResult, params, response.format)
+            searchResult = searchService.search(searchResult.user, searchResult, params)
             searchResult.result.pkg = pkg
         }else {
             flash.error = "Unable to find the requested resource."

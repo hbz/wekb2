@@ -1,4 +1,6 @@
-<%@ page import="wekb.helper.RCConstants; wekb.helper.RDStore;" %>
+<%@ page import="grails.plugin.springsecurity.SpringSecurityUtils; wekb.helper.RCConstants; wekb.helper.RDStore;" %>
+<wekb:serviceInjection/>
+<g:set var="user" scope="page" value="${springSecurityService.currentUser}"/>
 
 <g:if test="${d}">
     <semui:tabs>
@@ -6,6 +8,11 @@
         <semui:tabsItemWithoutLink tab="statistic" defaultTab="statistic" activeTab="${params.activeTab}">
             Statistic
         </semui:tabsItemWithoutLink>
+        <g:if test="${user && (SpringSecurityUtils.ifAnyGranted("ROLE_ADMIN") || user.curatoryGroupUsers.curatoryGroup.id.intersect(d.curatoryGroups.curatoryGroup.id))}">
+            <semui:tabsItemWithoutLink tab="sushiApiInfo" activeTab="${params.activeTab}">
+                Sushi Api Key Information
+            </semui:tabsItemWithoutLink>
+        </g:if>
         <semui:tabsItemWithoutLink tab="titledetails" activeTab="${params.activeTab}" counts="${d.currentTippCount}">
             Hosted Titles
         </semui:tabsItemWithoutLink>
@@ -139,5 +146,30 @@
             </dl>
         </div>
     </semui:tabsItemContent>
+
+    <g:if test="${user && (SpringSecurityUtils.ifAnyGranted("ROLE_ADMIN") || user.curatoryGroupUsers.curatoryGroup.id.intersect(d.curatoryGroups.curatoryGroup.id))}">
+
+        <semui:tabsItemContent tab="sushiApiInfo" activeTab="${params.activeTab}">
+            <div class="content wekb-inline-lists">
+                <dl>
+                    <dt class="control-label">
+                        Sushi Api Authentication Method
+                    </dt>
+                    <dd>
+                        <semui:xEditableRefData owner="${d}" field="sushiApiAuthenticationMethod"
+                                                config="${RCConstants.PLATFORM_SUSHI_API_AUTH_METHOD}"/>
+                    </dd>
+                </dl>
+                <dl>
+                    <dt class="control-label">
+                        Central Api Key
+                    </dt>
+                    <dd>
+                        <semui:xEditable owner="${d}" field="centralApiKey"/>
+                    </dd>
+                </dl>
+            </div>
+        </semui:tabsItemContent>
+    </g:if>
 
 </g:if>

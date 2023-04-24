@@ -75,6 +75,7 @@ class RCConstants {
     public static final String PLATFORM_SOFTWARE = "Platform.Software"
     public static final String PLATFORM_STATISTICS_FORMAT = "Platform.Statistics.Format"
     public static final String PLATFORM_STATISTICS_UPDATE = "Platform.Statistics.Update"
+    public static final String PLATFORM_SUSHI_API_AUTH_METHOD = "Platform.Sushi.Api.Authentication.Method"
 
     public static final String PRICE_TYPE = "Price.type"
 
