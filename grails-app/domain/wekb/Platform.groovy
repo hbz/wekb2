@@ -71,6 +71,11 @@ class Platform  extends AbstractBase implements Auditable {
   @RefdataAnnotation(cat = RCConstants.YN)
   RefdataValue counterCertified
 
+  @RefdataAnnotation(cat = RCConstants.PLATFORM_SUSHI_API_AUTH_METHOD)
+  RefdataValue sushiApiAuthenticationMethod
+
+  String centralApiKey
+
   Date lastAuditDate
 
   Org provider
@@ -122,6 +127,9 @@ class Platform  extends AbstractBase implements Auditable {
 
     counterRegistryApiUuid column: 'plat_counter_registry_api_uuid'
 
+    sushiApiAuthenticationMethod column: 'plat_sushi_api_authentication_method'
+    centralApiKey column: 'plat_central_api_key', type: 'text'
+
   }
 
   static constraints = {
@@ -162,6 +170,8 @@ class Platform  extends AbstractBase implements Auditable {
     counterRegistryApiUuid(nullable: true, blank: false)
 
     provider(nullable: true, blank: false)
+    sushiApiAuthenticationMethod (nullable: true, blank: false)
+    centralApiKey(nullable: true, blank: true)
   }
 
   @Override

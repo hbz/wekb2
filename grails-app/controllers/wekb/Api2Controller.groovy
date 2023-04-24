@@ -71,7 +71,7 @@ class Api2Controller {
     def searchApi() {
         log.debug("Api2Controller:searchApi ${params}")
 
-        Map<String, Object> result = checkPermisson()
+        Map<String, Object> result = checkPermisson(params)
 
         if(result.code == 'success') {
 
@@ -94,7 +94,7 @@ class Api2Controller {
     }
 
     def namespaces() {
-        Map<String, Object> result = checkPermisson()
+        Map<String, Object> result = checkPermisson(params)
 
         if(result.code == 'success') {
             def results = []
@@ -160,20 +160,29 @@ class Api2Controller {
     }
 
     def sushiSources() {
-        Map<String, Object> result = checkPermisson()
+        Map<String, Object> result = checkPermisson(params, 'ROLE_SUSHI')
         RefdataValue yes = RDStore.YN_YES
 
         if(result.code == 'success') {
+            Set counter4Platforms = []
+            Set counter5Platforms = []
             //Set<Platform> counter4Platforms = Platform.findAllByCounterR4SushiApiSupportedAndCounterR5SushiApiSupportedNotEqual(yes, yes).toSet(), counter5Platforms = Platform.findAllByCounterR5SushiApiSupported(yes).toSet()
-            Set counter4Platforms = Platform.executeQuery("select plat.uuid, plat.counterR4SushiServerUrl, plat.statisticsUpdate.value from Platform plat where plat.counterR4SushiApiSupported = :r4support and plat.counterR5SushiApiSupported != :r5support and plat.counterR4SushiServerUrl is not null", [r4support: yes, r5support: yes]).toSet()
-            Set counter5Platforms = Platform.executeQuery("select plat.uuid, plat.counterR5SushiServerUrl, plat.statisticsUpdate.value from Platform plat where plat.counterR5SushiApiSupported = :r5support and plat.counterR5SushiServerUrl is not null", [r5support: yes]).toSet()
+
+            if(params.uuid){
+                counter4Platforms = Platform.executeQuery("select plat.uuid, plat.counterR4SushiServerUrl, plat.statisticsUpdate.value, sushiApiAuthenticationMethod.value, centralApiKey from Platform plat where plat.counterR4SushiApiSupported = :r4support and plat.counterR5SushiApiSupported != :r5support and plat.counterR4SushiServerUrl is not null and plat.uuid = :uuid", [r4support: yes, r5support: yes, uuid: params.uuid]).toSet()
+                counter5Platforms = Platform.executeQuery("select plat.uuid, plat.counterR5SushiServerUrl, plat.statisticsUpdate.value, sushiApiAuthenticationMethod.value, centralApiKey from Platform plat where plat.counterR5SushiApiSupported = :r5support and plat.counterR5SushiServerUrl is not null and plat.uuid = :uuid", [r5support: yes, uuid: params.uuid]).toSet()
+            }else {
+                counter4Platforms = Platform.executeQuery("select plat.uuid, plat.counterR4SushiServerUrl, plat.statisticsUpdate.value, sushiApiAuthenticationMethod.value, centralApiKey from Platform plat where plat.counterR4SushiApiSupported = :r4support and plat.counterR5SushiApiSupported != :r5support and plat.counterR4SushiServerUrl is not null", [r4support: yes, r5support: yes]).toSet()
+                counter5Platforms = Platform.executeQuery("select plat.uuid, plat.counterR5SushiServerUrl, plat.statisticsUpdate.value, sushiApiAuthenticationMethod.value, centralApiKey from Platform plat where plat.counterR5SushiApiSupported = :r5support and plat.counterR5SushiServerUrl is not null", [r5support: yes]).toSet()
+            }
+
             result.counter4ApiSources = counter4Platforms.size() > 0 ? counter4Platforms : []
             result.counter5ApiSources = counter5Platforms.size() > 0 ? counter5Platforms : []
         }
         render result as JSON
     }
 
-    private Map checkPermisson(GrailsParameterMap params){
+    private Map checkPermisson(GrailsParameterMap params, String checkRole = null){
         Map result = [code: 'success']
         User user
 
@@ -196,10 +205,18 @@ class Api2Controller {
 
         user = springSecurityService.getCurrentUser()
 
-        if(!user.apiUserStatus){
-            result.code = 'error'
-            result.message = 'This user does not have permission to access the api!'
-            return result
+        if(checkRole){
+            if (!user.hasRole('ROLE_SUSHI')) {
+                result.code = 'error'
+                result.message = 'This user does not have permission to access the api!'
+                return result
+            }
+        }else {
+            if (!user.apiUserStatus) {
+                result.code = 'error'
+                result.message = 'This user does not have permission to access the api!'
+                return result
+            }
         }
 
         return result

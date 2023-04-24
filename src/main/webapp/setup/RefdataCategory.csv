@@ -45,6 +45,7 @@ Platform.Service;Platform Service;Platform Service
 Platform.Software;Platform Software;Platform Software
 Platform.Statistics.Format;Platform Statistics Format;Platform Statistics Format
 Platform.Statistics.Update;Platform Statistics Update;Platform Statistics Update
+Platform.Sushi.Api.Authentication.Method;Platform Sushi Api Authentication Method;Platform Sushi Api Authentication Method
 Price.type;Price type;Price type
 RDFDataType;RDF Data Type;RDF Data Type
 ReviewRequest.Status;Review Request Status;Review Request Status
