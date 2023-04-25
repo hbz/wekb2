@@ -194,11 +194,11 @@ class Api2Controller {
         if(!springSecurityService.loggedIn){
 
             if (params.username && params.password) {
-                user = springSecurityService.reauthenticate(params.username, params.password)
+                springSecurityService.reauthenticate(params.username, params.password)
 
-                if(!user){
+                if(!springSecurityService.loggedIn){
                     result.code = 'error'
-                    result.message = 'Your login are not correct!'
+                    result.message = 'Your login is not correct!'
                     return result
                 }
             }else {
