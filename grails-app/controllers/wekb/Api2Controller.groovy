@@ -161,7 +161,7 @@ class Api2Controller {
         if(result.code == 'success') {
             def results = []
             CuratoryGroup.list().each {
-                result << [
+                results << [
                         'id'    : it.id,
                         'name'  : it.name,
                         'status': it.status?.value ?: null,
@@ -203,7 +203,7 @@ class Api2Controller {
     }
 
     private Map checkPermisson(GrailsParameterMap params, String checkRole = null){
-        Map result = [code: 'success']
+        Map result = [code: 'success', message: '']
         User user
 
         if(!springSecurityService.loggedIn){
