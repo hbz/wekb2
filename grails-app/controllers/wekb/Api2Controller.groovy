@@ -115,45 +115,50 @@ class Api2Controller {
         apiReturn(result)
     }
 
-    @Secured(['ROLE_API', 'IS_AUTHENTICATED_FULLY'])
     def refdataCategories() {
+        Map<String, Object> result = checkPermisson(params)
 
-        def result = []
+        if(result.code == 'success') {
+            def results = []
+            RefdataCategory.list().each { RefdataCategory refdataCategory ->
+                Map refCatMap = ['id'     : refdataCategory.id,
+                                 'desc'   : refdataCategory.desc,
+                                 'desc_en': refdataCategory.desc_en,
+                                 'desc_de': refdataCategory.desc_de]
 
-        RefdataCategory.list().each { RefdataCategory refdataCategory ->
-            Map refCatMap = ['id'     : refdataCategory.id,
-                             'desc'   : refdataCategory.desc,
-                             'desc_en': refdataCategory.desc_en,
-                             'desc_de': refdataCategory.desc_de]
+                refCatMap.refDataValues = []
 
-            refCatMap.refDataValues = []
+                refdataCategory.values.each { RefdataValue refdataValue ->
+                    Map refValueMap = ['value'   : refdataValue.value,
+                                       'value_de': refdataValue.value_de,
+                                       'value_en': refdataValue.value_en]
 
-            refdataCategory.values.each { RefdataValue refdataValue ->
-                Map refValueMap = ['value'   : refdataValue.value,
-                                   'value_de': refdataValue.value_de,
-                                   'value_en': refdataValue.value_en]
+                    refCatMap.refDataValues << refValueMap
+                }
 
-                refCatMap.refDataValues << refValueMap
+                results << refCatMap
+
             }
-
-            result << refCatMap
+            result.result = results
         }
 
         apiReturn(result)
     }
 
-    @Secured(['ROLE_API', 'IS_AUTHENTICATED_FULLY'])
     def groups() {
+        Map<String, Object> result = checkPermisson(params)
 
-        def result = []
-
-        CuratoryGroup.list().each {
-            result << [
-                    'id'    : it.id,
-                    'name'  : it.name,
-                    'status': it.status?.value ?: null,
-                    'uuid'  : it.uuid
-            ]
+        if(result.code == 'success') {
+            def results = []
+            CuratoryGroup.list().each {
+                result << [
+                        'id'    : it.id,
+                        'name'  : it.name,
+                        'status': it.status?.value ?: null,
+                        'uuid'  : it.uuid
+                ]
+            }
+            result.result = results
         }
 
         apiReturn(result)
