@@ -36,14 +36,13 @@
                 <div class="ui  link list">
                     <%-- App version --%>
                     <div class="item">
-                        <a target="_blank" class="content"
-                           href="https://github.com/hbz/wekb/releases">Version: ${grailsApplication.metadata['info.app.version']}</a>
+                       Version: ${grailsApplication.metadata['info.app.version']}
                     </div>
                     <g:if test="${grailsApplication.metadata['build.git.branch']}">
                     <%-- Git branch --%>
                         <div class="item">
                             <a target="_blank" class="content"
-                               href="https://github.com/hbz/wekb/tree/${grailsApplication.metadata['git.branch']}">
+                               href="https://github.com/hbz/wekb2/tree/${grailsApplication.metadata['git.branch']}">
                                 Branch: ${grailsApplication.metadata['build.git.branch']}
                             </a>
                         </div>
@@ -52,7 +51,7 @@
                     <%-- Git Commit --%>
                         <div class="item">
                             <a target="_blank" class="content"
-                               href="https://github.com/hbz/wekb/tree/${grailsApplication.metadata['build.git.revision']}">
+                               href="https://github.com/hbz/wekb2/tree/${grailsApplication.metadata['build.git.revision']}">
                                 Git Commit: ${grailsApplication.metadata['build.git.revision']}
                             </a>
                         </div>
