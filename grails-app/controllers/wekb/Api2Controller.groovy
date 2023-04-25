@@ -75,7 +75,7 @@ class Api2Controller {
 
         if(result.code == 'success') {
 
-            if (!params.componentType) {
+            if (!params.componentType && !params.uuid) {
                 result.code = 'error'
                 result.message = "No componentType set!"
             }else {

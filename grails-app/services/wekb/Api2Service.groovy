@@ -1089,19 +1089,21 @@ class Api2Service {
     private String checkAndGlobalSearchComponentType(String typeString) {
         String result = null
 
-        switch ('wekb.'+typeString.toLowerCase()) {
-            case Org.class.name.toLowerCase():
-                result = 'orgs'
-                break
-            case Package.class.name.toLowerCase():
-                result = 'packages'
-                break
-            case Platform.class.name.toLowerCase():
-                result = 'platforms'
-                break
-            case TitleInstancePackagePlatform.class.name.toLowerCase():
-                result = 'tipps'
-                break
+        if(typeString) {
+            switch ('wekb.' + typeString.toLowerCase()) {
+                case Org.class.name.toLowerCase():
+                    result = 'orgs'
+                    break
+                case Package.class.name.toLowerCase():
+                    result = 'packages'
+                    break
+                case Platform.class.name.toLowerCase():
+                    result = 'platforms'
+                    break
+                case TitleInstancePackagePlatform.class.name.toLowerCase():
+                    result = 'tipps'
+                    break
+            }
         }
 
         result
@@ -1165,6 +1167,30 @@ class Api2Service {
 
             result.searchTime = searchTime + ' ms'
             log.debug("Search completed after ${searchTime}");
+
+        }else if(params.uuid){
+            result.result = []
+
+            Object r
+
+            r = Package.findByUuid(params.uuid)
+            if (!r) {
+                r = Platform.findByUuid(params.uuid)
+            } else if (!r) {
+                r = Org.findByUuid(params.uuid)
+            } else if (!r) {
+                r = TitleInstancePackagePlatform.findByUuid(params.uuid)
+            }
+
+            if (r) {
+                LinkedHashMap<Object, Object> resultMap = mapDomainFieldsToSpecFields(r)
+
+                if (params.sortFields) {
+                    resultMap = resultMap.sort { it.key }
+                }
+
+                result.result.add(resultMap)
+            }
 
         } else {
             result.message = "This search is not allowed!"
@@ -1263,11 +1289,13 @@ class Api2Service {
                 }
             }
         }
-        if (parameterMap."${parameterMapFieldName}" instanceof String){
-            RefdataValue refdataValue = RefdataValue.executeQuery("from RefdataValue where LOWER(value) = LOWER(:value)", [value: parameterMap."${parameterMapFieldName}"])
+        else if (parameterMap."${parameterMapFieldName}" instanceof String){
+            List<RefdataValue> refdataValues = RefdataValue.executeQuery("from RefdataValue where LOWER(value) = LOWER(:value)", [value: parameterMap."${parameterMapFieldName}"])
 
-            if(refdataValue){
-                cleaned_params.put(cleanedFieldName, refdataValue)
+            if(refdataValues){
+                refdataValues.each {
+                    cleaned_params.put(cleanedFieldName, it)
+                }
             }
         }
     }
