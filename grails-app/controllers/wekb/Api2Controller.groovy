@@ -76,15 +76,16 @@ class Api2Controller {
         if(result.code == 'success') {
 
             if (!params.componentType) {
-                return apiReturn([], "No componentType set!")
-            }
-
-            try {
-                result = api2Service.search(result, params)
-            } catch (Throwable e) {
                 result.code = 'error'
-                result.message = e.message
-                log.error("Problem by search api: ", e)
+                result.message = "No componentType set!"
+            }else {
+                try {
+                    result = api2Service.search(result, params)
+                } catch (Throwable e) {
+                    result.code = 'error'
+                    result.message = e.message
+                    log.error("Problem by search api: ", e)
+                }
             }
         }
 
@@ -109,10 +110,15 @@ class Api2Controller {
             all_ns.each { ns ->
                 results.add([value: ns.value, namespaceName: ns.name, category: ns.family ?: "", id: ns.id])
             }
-            result.results = results
+
+            //Add information to result
+            result.result_count_total = all_ns.size()
+            result.result_count = all_ns.size()
+
+            result.result = results
         }
 
-        apiReturn(result)
+        render result as JSON
     }
 
     def refdataCategories() {
@@ -139,10 +145,14 @@ class Api2Controller {
                 results << refCatMap
 
             }
+            //Add information to result
+            result.result_count_total = results.size()
+            result.result_count = results.size()
+
             result.result = results
         }
 
-        apiReturn(result)
+        render result as JSON
     }
 
     def groups() {
@@ -159,9 +169,14 @@ class Api2Controller {
                 ]
             }
             result.result = results
+            //Add information to result
+            result.result_count_total = results.size()
+            result.result_count = results.size()
+
+            result.result = results
         }
 
-        apiReturn(result)
+        render result as JSON
     }
 
     def sushiSources() {
