@@ -1176,9 +1176,11 @@ class Api2Service {
             r = Package.findByUuid(params.uuid)
             if (!r) {
                 r = Platform.findByUuid(params.uuid)
-            } else if (!r) {
+            }
+            if (!r) {
                 r = Org.findByUuid(params.uuid)
-            } else if (!r) {
+            }
+            if (!r) {
                 r = TitleInstancePackagePlatform.findByUuid(params.uuid)
             }
 
