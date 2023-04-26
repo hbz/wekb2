@@ -283,7 +283,7 @@ class Api2Service {
 
     }
 
-    private LinkedHashMap<Object, Object> mapDomainFieldsToSpecFields2(Map apiSearchTemplate, Object objectList) {
+/*    private LinkedHashMap<Object, Object> mapDomainFieldsToSpecFields2(Map apiSearchTemplate, Object objectList) {
         LinkedHashMap<Object, Object> result = [:]
 
 
@@ -321,8 +321,9 @@ class Api2Service {
 
         return result
 
-    }
+    }*/
 
+    /*@Deprecated
     private LinkedHashMap<Object, Object> mapHasManyFieldsToSpecFields(def object, LinkedHashMap<Object, Object> result) {
         //LinkedHashMap<Object, Object> result = [:]
 
@@ -330,7 +331,7 @@ class Api2Service {
 
         if(object.class.name == Package.class.name) {
 
-            /* result.uuid = object.uuid
+            *//* result.uuid = object.uuid
              result.name = object.name
              result.sortname = generateSortName(object.name)
              result.status = object.status?.value
@@ -363,7 +364,7 @@ class Api2Service {
 
              result.description = object.description
              result.descriptionURL = object.descriptionURL
-             *//*
+             *//*/*
 
             result.titleCount = object.getTippCount()
             result.currentTippCount = object.getCurrentTippCount()
@@ -371,7 +372,7 @@ class Api2Service {
             result.expectedTippCount = object.getExpectedTippCount()
             result.deletedTippCount = object.getDeletedTippCount()
 
-              *//*
+              *//*/*
 
 
             result.breakable = object.breakable ? object.breakable.value : ""
@@ -384,11 +385,12 @@ class Api2Service {
             result.scope = object.scope ? object.scope.value : ""
 
             result.freeTrialPhase = object.freeTrialPhase
- */
+ *//*
 
             if (object.kbartSource) {
                 result.source = [
                         id              : object.kbartSource.id,
+                        uuid              : object.kbartSource.uuid,
                         name            : object.kbartSource.name,
                         automaticUpdates: object.kbartSource.automaticUpdates,
                         url             : object.kbartSource.url,
@@ -455,7 +457,7 @@ class Api2Service {
             result
         }else if(object.class.name == Org.class.name) {
 
-            /* result.uuid = object.uuid
+            *//* result.uuid = object.uuid
              result.name = object.name
              result.sortname = generateSortName(object.name)
              result.status = object.status?.value
@@ -466,7 +468,7 @@ class Api2Service {
 
              result.kbartDownloaderURL = object.kbartDownloaderURL
              result.metadataDownloaderURL = object.metadataDownloaderURL
-             result.homepage = object.homepage*/
+             result.homepage = object.homepage*//*
 
             result.roles = []
             object.roles.each { role ->
@@ -707,7 +709,7 @@ class Api2Service {
 
         return result
     }
-
+*/
     private LinkedHashMap<Object, Object> mapDomainFieldsToSpecFields(Object object) {
         LinkedHashMap<Object, Object> result = [:]
 
@@ -766,6 +768,7 @@ class Api2Service {
            if (object.kbartSource) {
                result.source = [
                        id              : object.kbartSource.id,
+                       uuid              : object.kbartSource.uuid,
                        name            : object.kbartSource.name,
                        automaticUpdates: object.kbartSource.automaticUpdates,
                        url             : object.kbartSource.url,
