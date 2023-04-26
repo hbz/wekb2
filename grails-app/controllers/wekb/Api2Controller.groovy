@@ -181,23 +181,9 @@ class Api2Controller {
 
     def sushiSources() {
         Map<String, Object> result = checkPermisson(params, 'ROLE_SUSHI')
-        RefdataValue yes = RDStore.YN_YES
 
         if(result.code == 'success') {
-            Set counter4Platforms = []
-            Set counter5Platforms = []
-            //Set<Platform> counter4Platforms = Platform.findAllByCounterR4SushiApiSupportedAndCounterR5SushiApiSupportedNotEqual(yes, yes).toSet(), counter5Platforms = Platform.findAllByCounterR5SushiApiSupported(yes).toSet()
-
-            if(params.uuid){
-                counter4Platforms = Platform.executeQuery("select plat.uuid, plat.counterR4SushiServerUrl, plat.statisticsUpdate.value, sushiApiAuthenticationMethod.value, centralApiKey from Platform plat where plat.counterR4SushiApiSupported = :r4support and plat.counterR5SushiApiSupported != :r5support and plat.counterR4SushiServerUrl is not null and plat.uuid = :uuid", [r4support: yes, r5support: yes, uuid: params.uuid]).toSet()
-                counter5Platforms = Platform.executeQuery("select plat.uuid, plat.counterR5SushiServerUrl, plat.statisticsUpdate.value, sushiApiAuthenticationMethod.value, centralApiKey from Platform plat where plat.counterR5SushiApiSupported = :r5support and plat.counterR5SushiServerUrl is not null and plat.uuid = :uuid", [r5support: yes, uuid: params.uuid]).toSet()
-            }else {
-                counter4Platforms = Platform.executeQuery("select plat.uuid, plat.counterR4SushiServerUrl, plat.statisticsUpdate.value, sushiApiAuthenticationMethod.value, centralApiKey from Platform plat where plat.counterR4SushiApiSupported = :r4support and plat.counterR5SushiApiSupported != :r5support and plat.counterR4SushiServerUrl is not null", [r4support: yes, r5support: yes]).toSet()
-                counter5Platforms = Platform.executeQuery("select plat.uuid, plat.counterR5SushiServerUrl, plat.statisticsUpdate.value, sushiApiAuthenticationMethod.value, centralApiKey from Platform plat where plat.counterR5SushiApiSupported = :r5support and plat.counterR5SushiServerUrl is not null", [r5support: yes]).toSet()
-            }
-
-            result.counter4ApiSources = counter4Platforms.size() > 0 ? counter4Platforms : []
-            result.counter5ApiSources = counter5Platforms.size() > 0 ? counter5Platforms : []
+           result = api2Service.sushiSources(params, result)
         }
         render result as JSON
     }

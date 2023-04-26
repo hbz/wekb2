@@ -1215,12 +1215,15 @@ class Api2Service {
         processSimpleFields(cleaned_params, parameterMap)
         processRefDataFields(cleaned_params, parameterMap)
 
+        println(cleaned_params)
         return cleaned_params
 
     }
 
     private void processStatus(GrailsParameterMap cleaned_params, GrailsParameterMap parameterMap) {
         if (!parameterMap.status){
+            List<String> refdataValueOIDs = [RDStore.KBC_STATUS_CURRENT, RDStore.KBC_STATUS_RETIRED, RDStore.KBC_STATUS_REMOVED, RDStore.KBC_STATUS_DELETED, RDStore.KBC_STATUS_EXPECTED].collect {it.getOID()}
+            cleaned_params.put('status', refdataValueOIDs)
             return
         }
         setRefdataValueFromGrailsParameterMap(cleaned_params, parameterMap, 'status', 'status')
@@ -1281,21 +1284,26 @@ class Api2Service {
 
     private void setRefdataValueFromGrailsParameterMap(GrailsParameterMap cleaned_params, GrailsParameterMap parameterMap, String cleanedFieldName, String parameterMapFieldName){
         if (parameterMap."${parameterMapFieldName}".getClass().isArray() || parameterMap."${parameterMapFieldName}" instanceof List){
+            List<String> refdataValueOIDs = []
             parameterMap."${parameterMapFieldName}".each {
-                RefdataValue refdataValue = RefdataValue.executeQuery("from RefdataValue where LOWER(value) = LOWER(:value)", [value: it])
+                List refdataValues = RefdataValue.executeQuery("from RefdataValue where LOWER(value) = LOWER(:value)", [value: it])
 
-                if(refdataValue){
-                    cleaned_params.put(cleanedFieldName, refdataValue)
+                refdataValues.each {
+                    refdataValueOIDs << it.getOID()
                 }
             }
+
+            cleaned_params.put(cleanedFieldName, refdataValueOIDs)
         }
         else if (parameterMap."${parameterMapFieldName}" instanceof String){
             List<RefdataValue> refdataValues = RefdataValue.executeQuery("from RefdataValue where LOWER(value) = LOWER(:value)", [value: parameterMap."${parameterMapFieldName}"])
 
             if(refdataValues){
+                List<String> refdataValueOIDs = []
                 refdataValues.each {
-                    cleaned_params.put(cleanedFieldName, it)
+                    refdataValueOIDs << it.getOID()
                 }
+                cleaned_params.put(cleanedFieldName, refdataValueOIDs)
             }
         }
     }
@@ -1335,5 +1343,45 @@ class Api2Service {
             setRefdataValueFromGrailsParameterMap(cleaned_params, parameterMap, 'ipAuthentication', 'ipAuthentication')
         }
 
+    }
+
+    Map sushiSources(GrailsParameterMap params, Map result){
+
+        RefdataValue yes = RDStore.YN_YES
+
+        Set counter4Platforms = []
+        Set counter5Platforms = []
+
+        result.counter4ApiSources = []
+        result.counter5ApiSources = []
+
+
+        if(params.uuid){
+            counter4Platforms = Platform.executeQuery("from Platform plat where plat.counterR4SushiApiSupported = :r4support and plat.counterR5SushiApiSupported != :r5support and plat.counterR4SushiServerUrl is not null and plat.uuid = :uuid", [r4support: yes, r5support: yes, uuid: params.uuid]).toSet()
+            counter5Platforms = Platform.executeQuery("from Platform plat where plat.counterR5SushiApiSupported = :r5support and plat.counterR5SushiServerUrl is not null and plat.uuid = :uuid", [r5support: yes, uuid: params.uuid]).toSet()
+        }else {
+            counter4Platforms = Platform.executeQuery("from Platform plat where plat.counterR4SushiApiSupported = :r4support and plat.counterR5SushiApiSupported != :r5support and plat.counterR4SushiServerUrl is not null", [r4support: yes, r5support: yes]).toSet()
+            counter5Platforms = Platform.executeQuery("from Platform plat where plat.counterR5SushiApiSupported = :r5support and plat.counterR5SushiServerUrl is not null", [r5support: yes]).toSet()
+        }
+
+        counter4Platforms.each { Platform platform ->
+            LinkedHashMap<Object, Object> resultMap = mapDomainFieldsToSpecFields(platform)
+
+            resultMap.sushiApiAuthenticationMethod = platform.sushiApiAuthenticationMethod?.value
+            resultMap.centralApiKey = platform.centralApiKey
+
+            result.counter4ApiSources.add(resultMap)
+        }
+
+        counter5Platforms.each { Platform platform ->
+            LinkedHashMap<Object, Object> resultMap = mapDomainFieldsToSpecFields(platform)
+
+            resultMap.sushiApiAuthenticationMethod = platform.sushiApiAuthenticationMethod?.value
+            resultMap.centralApiKey = platform.centralApiKey
+
+            result.counter5ApiSources.add(resultMap)
+        }
+
+        result
     }
 }
