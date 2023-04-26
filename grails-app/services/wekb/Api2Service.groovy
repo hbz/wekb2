@@ -1367,21 +1367,23 @@ class Api2Service {
         }
 
         counter4Platforms.each { Platform platform ->
-            LinkedHashMap<Object, Object> resultMap = mapDomainFieldsToSpecFields(platform)
+            LinkedHashMap<Object, Object> resultMap = ["${platform.uuid}": [:]]
+            resultMap."${platform.uuid}" = mapDomainFieldsToSpecFields(platform)
 
-            resultMap.sushiApiAuthenticationMethod = platform.sushiApiAuthenticationMethod?.value
-            resultMap.centralApiKey = platform.centralApiKey
+            resultMap."${platform.uuid}".sushiApiAuthenticationMethod = platform.sushiApiAuthenticationMethod?.value
+            resultMap."${platform.uuid}".centralApiKey = platform.centralApiKey
 
             result.counter4ApiSources.add(resultMap)
         }
 
         counter5Platforms.each { Platform platform ->
-            LinkedHashMap<Object, Object> resultMap = mapDomainFieldsToSpecFields(platform)
+            LinkedHashMap<Object, Object> resultMap = ["${platform.uuid}": [:]]
+            resultMap."${platform.uuid}" = mapDomainFieldsToSpecFields(platform)
 
-            resultMap.sushiApiAuthenticationMethod = platform.sushiApiAuthenticationMethod?.value
-            resultMap.centralApiKey = platform.centralApiKey
+            resultMap."${platform.uuid}".sushiApiAuthenticationMethod = platform.sushiApiAuthenticationMethod?.value
+            resultMap."${platform.uuid}".centralApiKey = platform.centralApiKey
 
-            result.counter5ApiSources.add(resultMap)
+            result.counter4ApiSources.add(resultMap)
         }
 
         result
