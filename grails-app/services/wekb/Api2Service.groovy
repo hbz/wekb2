@@ -81,17 +81,13 @@ class Api2Service {
 
 
                         ],
-                        qbeResults: [
-                                [property: 'uuid', fieldName: 'uuid'],
-                                [property: 'name', fieldName: 'name'],
-                                [property: 'uuid', fieldName: 'sortname'],
-                                [property: 'status', fieldName: 'status'],
-                                [property: 'lastUpdated', fieldName: 'lastUpdatedDisplay'],
-                                [property: 'dateCreated', fieldName: 'dateCreatedDisplay'],
-                                [property: 'kbartDownloaderURL', fieldName: 'kbartDownloaderURL'],
-                                [property: 'metadataDownloaderURL', fieldName: 'metadataDownloaderURL'],
-                                [property: 'homepage', fieldName: 'homepage'],
-
+                        qbeSortFields: [
+                                [sort: 'name'],
+                                [sort: 'status'],
+                                [sort: 'lastUpdated'],
+                                [sort: 'dateCreated'],
+                                [sort: 'curatoryGroups.curatoryGroup.name'],
+                                [sort: 'abbreviatedName']
                         ]
                 ]
         ]
@@ -152,13 +148,20 @@ class Api2Service {
                                 ],
                         ],
 
-                        qbeResults: [
-                                [property: 'uuid', fieldName: 'uuid'],
-                                [property: 'name', fieldName: 'name'],
-                                [property: 'status', fieldName: 'status'],
-                                [property: 'lastUpdated', fieldName: 'lastUpdatedDisplay'],
-                                [property: 'dateCreated', fieldName: 'dateCreatedDisplay'],
-
+                        qbeSortFields: [
+                                [sort: 'name'],
+                                [sort: 'status'],
+                                [sort: 'lastUpdated'],
+                                [sort: 'dateCreated'],
+                                [sort: 'curatoryGroups.curatoryGroup.name'],
+                                [sort: 'provider.name'],
+                                [sort: 'nominalPlatform.name'],
+                                [sort: 'contentType'],
+                                [sort: 'scope'],
+                                [sort: 'currentTippCount'],
+                                [sort: 'retiredTippCount'],
+                                [sort: 'expectedTippCount'],
+                                [sort: 'deletedTippCount']
                         ]
                 ]
         ]
@@ -209,6 +212,15 @@ class Api2Service {
                                         qparam     : 'providerUuid',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'provider.uuid']
                                 ],
+                        ],
+                        qbeSortFields: [
+                                [sort: 'name'],
+                                [sort: 'status'],
+                                [sort: 'lastUpdated'],
+                                [sort: 'dateCreated'],
+                                [sort: 'curatoryGroups.curatoryGroup.name'],
+                                [sort: 'provider.name'],
+                                [sort: 'primaryUrl']
                         ]
                 ]
         ]
@@ -267,6 +279,20 @@ class Api2Service {
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'hostPlatform.uuid']
                                 ],
 
+                        ],
+
+                        qbeSortFields: [
+                                [sort: 'name'],
+                                [sort: 'status'],
+                                [sort: 'lastUpdated'],
+                                [sort: 'dateCreated'],
+                                [sort: 'curatoryGroups.curatoryGroup.name'],
+                                [sort: 'pkg.name'],
+                                [sort: 'hostPlatform.name'],
+                                [sort: 'publicationType.value'],
+                                [sort: 'medium.value'],
+                                [sort: 'firstAuthor'],
+                                [sort: 'url']
                         ]
                 ]
         ]
@@ -762,6 +788,7 @@ class Api2Service {
            result.scope = object.scope ? object.scope.value : ""
            result.paymentType = object.paymentType ? object.paymentType.value : ""
            result.openAccess = object.openAccess?.value
+           result.file = object.file?.value
 
            result.freeTrialPhase = object.freeTrialPhase
 
@@ -1141,8 +1168,8 @@ class Api2Service {
                 //Add information to result
                 result.result_count_total = searchResult.reccount
                 result.result_count = searchResult.recset.size()
-                result.sort = params.sort
-                result.order = params.order
+                result.sort = searchResult.sort
+                result.order = searchResult.order
                 result.offset = searchResult.offset
                 result.max = searchResult.max
                 result.page_current = (searchResult.offset / searchResult.max) + 1
@@ -1357,8 +1384,8 @@ class Api2Service {
         Set counter4Platforms = []
         Set counter5Platforms = []
 
-        result.counter4ApiSources = []
-        result.counter5ApiSources = []
+        result.counter4ApiSources = [:]
+        result.counter5ApiSources = [:]
 
 
         if(params.uuid){
@@ -1370,23 +1397,19 @@ class Api2Service {
         }
 
         counter4Platforms.each { Platform platform ->
-            LinkedHashMap<Object, Object> resultMap = ["${platform.uuid}": [:]]
-            resultMap."${platform.uuid}" = mapDomainFieldsToSpecFields(platform)
+            result.counter4ApiSources."${platform.uuid}" = mapDomainFieldsToSpecFields(platform)
 
-            resultMap."${platform.uuid}".sushiApiAuthenticationMethod = platform.sushiApiAuthenticationMethod?.value
-            resultMap."${platform.uuid}".centralApiKey = platform.centralApiKey
+            result.counter4ApiSources."${platform.uuid}".sushiApiAuthenticationMethod = platform.sushiApiAuthenticationMethod?.value
+            result.counter4ApiSources."${platform.uuid}".centralApiKey = platform.centralApiKey
 
-            result.counter4ApiSources.add(resultMap)
         }
 
         counter5Platforms.each { Platform platform ->
-            LinkedHashMap<Object, Object> resultMap = ["${platform.uuid}": [:]]
-            resultMap."${platform.uuid}" = mapDomainFieldsToSpecFields(platform)
+            result.counter5ApiSources."${platform.uuid}" = mapDomainFieldsToSpecFields(platform)
 
-            resultMap."${platform.uuid}".sushiApiAuthenticationMethod = platform.sushiApiAuthenticationMethod?.value
-            resultMap."${platform.uuid}".centralApiKey = platform.centralApiKey
+            result.counter5ApiSources."${platform.uuid}".sushiApiAuthenticationMethod = platform.sushiApiAuthenticationMethod?.value
+            result.counter5ApiSources."${platform.uuid}".centralApiKey = platform.centralApiKey
 
-            result.counter4ApiSources.add(resultMap)
         }
 
         result

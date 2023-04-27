@@ -85,6 +85,12 @@ public class HQLBuilder {
       }
     }
 
+    qbetemplate.qbeConfig.qbeSortFields.each { qbeSortField ->
+      if(qbeSortField.sort){
+        availableSortFields << qbeSortField.sort
+      }
+    }
+
     def hql_builder_context = new java.util.HashMap();
     hql_builder_context.declared_scopes = [:];
     hql_builder_context.query_clausesWithAnd = []
@@ -97,13 +103,14 @@ public class HQLBuilder {
     }else {
       hql_builder_context.sort = ( qbetemplate.containsKey('defaultSort') ? qbetemplate.defaultSort : null )
     }
+    result.sort = hql_builder_context.sort
 
     if(params.order && params.order in ['desc', 'asc']){
       hql_builder_context.order = params.order
     }else {
       hql_builder_context.order = ( qbetemplate.containsKey('defaultOrder') ? qbetemplate.defaultOrder : null )
     }
-
+    result.order = hql_builder_context.order
 
 
     def baseclass = target_class.getClazz()

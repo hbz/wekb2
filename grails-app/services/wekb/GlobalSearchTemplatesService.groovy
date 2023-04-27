@@ -257,7 +257,7 @@ class GlobalSearchTemplatesService {
                                 [heading: 'Provider', property: 'name', sort: 'name', link: true],
                                 [heading: 'Homepage', property: 'homepage', sort: 'homepage', outGoingLink: true],
                                 [heading: 'Last Updated', property: 'lastUpdated', sort: 'lastUpdated'],
-                                [heading: 'Status', sort: 'status', property: 'status.value'],
+                                [heading: 'Status', property: 'status.value', sort: 'status'],
                                 [heading: 'Current Titles', property: 'currentTippCount']
 
                         ]
