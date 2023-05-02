@@ -982,7 +982,7 @@ class Api2Service {
 
             result
         }else if(object.class.name == TitleInstancePackagePlatform.class.name) {
-
+            //Long start = System.currentTimeMillis()
             result.uuid = object.uuid
             result.name = object.name
             result.sortname = generateSortName(object.name)
@@ -1052,15 +1052,11 @@ class Api2Service {
                 }
             }
 
-            result.identifiers = []
-            object.ids.each { idc ->
-                result.identifiers.add([namespace    : idc.namespace.value,
-                                        value        : idc.value,
-                                        namespaceName: idc.namespace.name])
-            }
+            result.identifiers = Identifier.executeQuery('select new map(ns.value as namespace, id.value as value, ns.name as namespaceName) from Identifier id join id.namespace ns where id.tipp = :obj', [obj: object])
 
             // prices
-            result.prices = []
+            result.prices = TippPrice.executeQuery("select new map(p.priceType.value as type, p.price as amount, p.currency.value as currency, to_char(p.startDate, 'yyyy-mm-ddThh:ii:ssZ') as startDate, to_char(p.endDate, 'yyyy-mm-ddThh:ii:ss') as endDate) from TippPrice p where p.tipp = :obj", [obj: object])
+            /*
             object.prices?.each { p ->
                 def price = [:]
                 price.type = p.priceType?.value ?: ""
@@ -1073,21 +1069,27 @@ class Api2Service {
                     price.endDate = dateFormatService.formatIsoTimestamp(p.endDate)
                 }
                 result.prices.add(price)
-            }
+            }*/
 
+            result.ddcs = RefdataValue.executeQuery("select new map(ddc.value as value, ddc.value_de as value_de, ddc.value_en as value_en) from TitleInstancePackagePlatform tipp join tipp.ddcs ddc where tipp = :obj", [obj: object])
+            /*
             result.ddcs = []
             object.ddcs.each { ddc ->
                 result.ddcs.add([value     : ddc.value,
                                  value_de  : ddc.value_de,
                                  value_en  : ddc.value_en])
             }
+            */
 
+            result.langugages = ComponentLanguage.executeQuery("select new map(lang.value as value, lang.value_de as value_de, lang.value_en as value_en) from ComponentLanguage cl join cl.language lang where cl.tipp = :obj", [obj: object])
+            /*
             result.languages = []
             object.languages.each { ComponentLanguage kbl ->
                 result.languages.add([value     : kbl.language.value,
                                       value_de  : kbl.language.value_de,
                                       value_en  : kbl.language.value_en])
             }
+            */
 
             result.curatoryGroups = []
             object.pkg?.curatoryGroups?.each {
@@ -1095,7 +1097,7 @@ class Api2Service {
                                            type: it.curatoryGroup.type?.value,
                                            curatoryGroup: it.curatoryGroup.getOID()])
             }
-
+            //log.debug("record finished after ${System.currentTimeMillis()-start} msecs")
             result
         }else if(object.class.name == DeletedKBComponent.class.name) {
 
