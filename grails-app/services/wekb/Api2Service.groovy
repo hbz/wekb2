@@ -982,7 +982,7 @@ class Api2Service {
 
             result
         }else if(object.class.name == TitleInstancePackagePlatform.class.name) {
-            Long start = System.currentTimeMillis()
+            //Long start = System.currentTimeMillis()
             result.uuid = object.uuid
             result.name = object.name
             result.sortname = generateSortName(object.name)
@@ -1097,7 +1097,7 @@ class Api2Service {
                                            type: it.curatoryGroup.type?.value,
                                            curatoryGroup: it.curatoryGroup.getOID()])
             }
-            log.debug("record finished after ${System.currentTimeMillis()-start} msecs")
+            //log.debug("record finished after ${System.currentTimeMillis()-start} msecs")
             result
         }else if(object.class.name == DeletedKBComponent.class.name) {
 
