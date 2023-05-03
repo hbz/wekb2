@@ -1249,7 +1249,7 @@ class Api2Service {
         processSimpleFields(cleaned_params, parameterMap)
         processRefDataFields(cleaned_params, parameterMap)
 
-        println(cleaned_params)
+        //println(cleaned_params)
         return cleaned_params
 
     }

@@ -140,11 +140,11 @@ class KbartSource extends AbstractBase implements Auditable {
             Date today = new Date()
             def interval = intervals.get(frequency.value)
             if (interval != null) {
-                println("today: "+today)
+                //println("today: "+today)
                 Date due = getUpdateDay(interval, false)
-                println("due: "+due)
+                //println("due: "+due)
                 if (today == due) {
-                    println('true')
+                    //println('true')
                     return true
                 }else {
                    /* long diffInMillies = Math.abs(due.getTime() - lastRun.getTime())
@@ -176,11 +176,11 @@ class KbartSource extends AbstractBase implements Auditable {
             cal.set(Calendar.MILLISECOND, 0)
         }
         Date nextUpdate = cal.getTime()
-        println("interval:"+interval )
+        //println("interval:"+interval )
         while (nextUpdate.before(today)) {
             cal.add(Calendar.DATE, interval)
             nextUpdate = cal.getTime()
-            println("nextUpdate:"+nextUpdate )
+            //println("nextUpdate:"+nextUpdate )
         }
         return nextUpdate
     }

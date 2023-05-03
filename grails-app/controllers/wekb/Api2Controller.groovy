@@ -2,10 +2,8 @@ package wekb
 
 import grails.plugin.springsecurity.SpringSecurityService
 import grails.web.servlet.mvc.GrailsParameterMap
-import org.springframework.security.access.annotation.Secured
 import wekb.auth.User
 import grails.converters.JSON
-import wekb.helper.RDStore
 
 import java.security.SecureRandom
 
@@ -69,7 +67,7 @@ class Api2Controller {
     }
 
     def searchApi() {
-        log.debug("Api2Controller:searchApi ${params}")
+        log.info("Api2Controller:searchApi ${params}")
 
         Map<String, Object> result = checkPermisson(params)
 
@@ -95,6 +93,7 @@ class Api2Controller {
     }
 
     def namespaces() {
+        log.info("Api2Controller:namespaces ${params}")
         Map<String, Object> result = checkPermisson(params)
 
         if(result.code == 'success') {
@@ -122,6 +121,7 @@ class Api2Controller {
     }
 
     def refdataCategories() {
+        log.info("Api2Controller:refdataCategories ${params}")
         Map<String, Object> result = checkPermisson(params)
 
         if(result.code == 'success') {
@@ -156,6 +156,7 @@ class Api2Controller {
     }
 
     def groups() {
+        log.info("Api2Controller:groups ${params}")
         Map<String, Object> result = checkPermisson(params)
 
         if(result.code == 'success') {
@@ -180,6 +181,7 @@ class Api2Controller {
     }
 
     def sushiSources() {
+        log.info("Api2Controller:sushiSources ${params}")
         Map<String, Object> result = checkPermisson(params, 'ROLE_SUSHI')
 
         if(result.code == 'success') {
