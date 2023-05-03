@@ -590,7 +590,7 @@ class FTUpdateService {
 
           FTControl.withTransaction {
             latest_ft_record = FTControl.get(latest_ft_record.id)
-            latest_ft_record.lastTimestamp = last_LastUpdated.toTimestamp()
+            latest_ft_record.lastTimestamp = last_LastUpdated.getTime()
             latest_ft_record.lastId = highest_id
             latest_ft_record.save()
           }
