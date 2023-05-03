@@ -532,11 +532,12 @@ class FTUpdateService {
       boolean processFail = false
 
       BulkRequest bulkRequest = new BulkRequest()
+      Date last_LastUpdated
       // while (results.next()) {
       FTControl.withTransaction {
 
         List<Long> todoList = idList.take(3000000)
-        List<List<Long>> bulks = todoList.collate(10000)
+        List<List<Long>> bulks = todoList.collate(5000)
 
         bulks.eachWithIndex { List<Long> bulk, int i ->
           for (domain_id in bulk) {
@@ -565,6 +566,7 @@ class FTUpdateService {
                 bulkRequest.add(request)
               }
               highest_id = r.id
+              last_LastUpdated = r.lastUpdated
               count++
               total++
             }
@@ -584,6 +586,13 @@ class FTUpdateService {
             }
           }else {
             log.info( "updateES: ignored empty bulk")
+          }
+
+          FTControl.withTransaction {
+            latest_ft_record = FTControl.get(latest_ft_record.id)
+            latest_ft_record.lastTimestamp = last_LastUpdated.toTimestamp()
+            latest_ft_record.lastId = highest_id
+            latest_ft_record.save()
           }
           bulkRequest = new BulkRequest()
         }
