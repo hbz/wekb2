@@ -592,7 +592,7 @@ class FTUpdateService {
             latest_ft_record = FTControl.get(latest_ft_record.id)
             latest_ft_record.lastTimestamp = last_LastUpdated.getTime()
             latest_ft_record.lastId = highest_id
-            latest_ft_record.save()
+            latest_ft_record.save(flush: true)
           }
           bulkRequest = new BulkRequest()
         }
