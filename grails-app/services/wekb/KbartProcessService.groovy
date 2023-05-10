@@ -43,7 +43,7 @@ class KbartProcessService {
                     folder.mkdirs()
                 }
 
-                String packageName = "${pkg.name.toLowerCase().replaceAll('[+\\-/\\\\(){}\\[\\]<>!§$%&=?*#€¿&_\\".,:;]','').replaceAll("\\s", '_')}_${pkg.id}"
+                String packageName = "${pkg.id}"
 
                 Path source = new File("${fPathSource}/${packageName}").toPath()
                 Path target = new File("${fPathTarget}/${packageName}").toPath()

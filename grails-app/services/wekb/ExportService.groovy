@@ -47,7 +47,7 @@ class ExportService {
             try {
                 String fPath = "${Holders.grailsApplication.config.getProperty('wekb.kbartImportStorageLocation', String)}" ?: '/tmp/wekb/kbartImport'
 
-                String packageName = "${pkg.name.toLowerCase().replaceAll('[+\\-/\\\\(){}\\[\\]<>!§$%&=?*#€¿&_\\".,:;]','').replaceAll("\\s", '_')}_${pkg.id}"
+                String packageName = "${pkg.id}"
                 File file = new File("${fPath}/${packageName}")
                 output = file.getBytes()
 
