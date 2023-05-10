@@ -469,7 +469,7 @@ class GlobalSearchTemplatesService {
                                 ],
                         ],
                         qbeResults: [
-                                [heading: 'Package', property: 'name', sort: 'name', link: true],
+                                [heading: 'Name', property: 'name', sort: 'name', link: true],
                                 [heading: 'Provider', property: 'provider.name', sort: 'provider.name', link: true],
                                 [heading: 'Nominal Platform', property: 'nominalPlatform.name', sort: 'nominalPlatform.name', link: true],
                                 [heading: 'Content Type', property: 'contentType.value', sort: 'contentType'],
@@ -842,7 +842,7 @@ class GlobalSearchTemplatesService {
 
                         ],
                         qbeResults: [
-                                [heading: 'Package', property: 'name', sort: 'name', link: true],
+                                [heading: 'Name', property: 'name', sort: 'name', link: true],
                                 [heading: 'Provider', property: 'provider.name', sort: 'provider.name', link: true],
                                 [heading: 'Nominal Platform', property: 'nominalPlatform.name', sort: 'nominalPlatform.name', link: true],
                                 [heading: 'Curatory Groups', property: 'curatoryGroupsCuratoryGroup', link: true],
