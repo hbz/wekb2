@@ -176,7 +176,7 @@ class PublicController {
       pkg = wekb.Package.findByUuid(params.id)
     }
 
-    if(!pkg){
+    if(!pkg || (pkg && pkg.getTippCount() > 500000)){
       response.sendError(404)
       return
     }

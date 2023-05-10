@@ -116,7 +116,9 @@
                             id="${params.id}">KBART File</g:link> &nbsp;
                     <div class="or"></div>
                 </g:if>
-                <a class="ui black button" href="#" onclick="$('#packageTSVExport').modal('show');">we:kb File</a>
+                <g:if test="${d.getTippCount() < 500000}">
+                    <a class="ui black button" href="#" onclick="$('#packageTSVExport').modal('show');">we:kb File</a>
+                </g:if>
             </div>
 
             <semui:modal id="packageTSVExport" title="Export we:kb File" msgSave="Export">
