@@ -22,6 +22,7 @@ class Api2Service {
         ApiTemplates.put('packages', packages())
         ApiTemplates.put('platforms', platforms())
         ApiTemplates.put('tipps', tipps())
+        ApiTemplates.put('deletedKBComponents', deletedKBComponents())
 
     }
 
@@ -309,6 +310,51 @@ class Api2Service {
                                 [sort: 'medium.value'],
                                 [sort: 'firstAuthor'],
                                 [sort: 'url']
+                        ]
+                ]
+        ]
+
+        result
+    }
+
+    Map deletedKBComponents() {
+        Map result = [
+                baseclass: 'wekb.DeletedKBComponent',
+                defaultSort : 'name',
+                defaultOrder: 'asc',
+                qbeConfig: [
+                        qbeForm   : [
+                                //General Fields
+                                [
+                                        qparam     : 'name',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'name', 'wildcard': 'B']
+                                ],
+                                [
+                                        type       : 'lookup',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        qparam     : 'status',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'status']
+                                ],
+                                [
+                                        qparam     : 'changedSince',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'greater', 'prop': 'lastUpdated', 'type': 'java.util.Date'],
+                                ],
+                                [
+                                        qparam     : 'changedBefore',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'smaller', 'prop': 'lastUpdated', 'type': 'java.util.Date'],
+                                ],
+                                [
+                                        qparam     : 'uuid',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'uuid']
+                                ],
+
+                        ],
+
+                        qbeSortFields: [
+                                [sort: 'name'],
+                                [sort: 'status'],
+                                [sort: 'lastUpdated'],
+                                [sort: 'dateCreated']
                         ]
                 ]
         ]
@@ -1151,6 +1197,9 @@ class Api2Service {
                 case TitleInstancePackagePlatform.class.name.toLowerCase():
                     result = 'tipps'
                     break
+                case DeletedKBComponent.class.name.toLowerCase():
+                    result = 'deletedKBComponents'
+                    break
             }
         }
 
@@ -1230,6 +1279,10 @@ class Api2Service {
             }
             if (!r) {
                 r = TitleInstancePackagePlatform.findByUuid(params.uuid)
+            }
+
+            if (!r) {
+                r = DeletedKBComponent.findByUuid(params.uuid)
             }
 
             if (r) {
