@@ -39,11 +39,15 @@ class Api2Service {
                                 //General Fields
                                 [
                                         qparam     : 'name',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'name', 'wildcard': 'R']
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'name', 'wildcard': 'B']
                                 ],
                                 [
                                         qparam     : 'identifier',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'ids.value']
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'ids.value', 'wildcard': 'B']
+                                ],
+                                [
+                                        qparam     : 'identifierNamespace',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'ids.namespace.value']
                                 ],
                                 [
                                         qparam     : 'curatoryGroup',
@@ -105,11 +109,15 @@ class Api2Service {
                                 //General Fields
                                 [
                                         qparam     : 'name',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'name', 'wildcard': 'R']
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'name', 'wildcard': 'B']
                                 ],
                                 [
                                         qparam     : 'identifier',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'ids.value']
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'ids.value', 'wildcard': 'B']
+                                ],
+                                [
+                                        qparam     : 'identifierNamespace',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'ids.namespace.value']
                                 ],
                                 [
                                         qparam     : 'curatoryGroup',
@@ -179,11 +187,15 @@ class Api2Service {
                                 //General Fields
                                 [
                                         qparam     : 'name',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'name', 'wildcard': 'R']
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'name', 'wildcard': 'B']
                                 ],
                                 [
                                         qparam     : 'identifier',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'ids.value']
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'ids.value', 'wildcard': 'B']
+                                ],
+                                [
+                                        qparam     : 'identifierNamespace',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'ids.namespace.value']
                                 ],
                                 [
                                         qparam     : 'curatoryGroup',
@@ -237,11 +249,15 @@ class Api2Service {
                                 //General Fields
                                 [
                                         qparam     : 'name',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'name', 'wildcard': 'R']
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'name', 'wildcard': 'B']
                                 ],
                                 [
                                         qparam     : 'identifier',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'ids.value']
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'ids.value', 'wildcard': 'B']
+                                ],
+                                [
+                                        qparam     : 'identifierNamespace',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'ids.namespace.value']
                                 ],
                                 [
                                         qparam     : 'curatoryGroup',
@@ -1282,15 +1298,30 @@ class Api2Service {
         }
 
         if (parameterMap.identifier){
-            cleaned_params.put('identifier', parameterMap.identifier)
+            if (parameterMap.identifier.contains(',')) {
+                cleaned_params.put('identifierNamespace', parameterMap.identifier.split(',')[0])
+                cleaned_params.put('identifier', parameterMap.identifier.split(',')[1])
+            }else{
+                cleaned_params.put('identifier', parameterMap.identifier)
+            }
         }
 
         if (parameterMap.ids){
-            cleaned_params.put('identifier', parameterMap.ids)
+            if (parameterMap.ids.contains(',')) {
+                cleaned_params.put('identifierNamespace', parameterMap.ids.split(',')[0])
+                cleaned_params.put('identifier', parameterMap.ids.split(',')[1])
+            }else{
+                cleaned_params.put('identifier', parameterMap.ids)
+            }
         }
 
         if (parameterMap.identifiers){
-            cleaned_params.put('identifier', parameterMap.identifiers)
+            if (parameterMap.identifiers.contains(',')) {
+                cleaned_params.put('identifierNamespace', parameterMap.identifiers.split(',')[0])
+                cleaned_params.put('identifier', parameterMap.identifiers.split(',')[1])
+            }else{
+                cleaned_params.put('identifier', parameterMap.identifiers)
+            }
         }
 
         if (parameterMap.altname){
