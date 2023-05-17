@@ -217,7 +217,7 @@ class GlobalSearchTemplatesService {
                                         prompt     : 'Name',
                                         qparam     : 'qp_name',
                                         placeholder: 'Name',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'name', 'wildcard': 'B']
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike_Combine_Name_And_VariantNames_And_AbbreviatedName', 'prop': 'name', 'wildcard': 'B']
                                 ],
                                 [
                                         prompt     : 'Identifier',
