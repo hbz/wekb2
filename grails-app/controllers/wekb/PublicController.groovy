@@ -177,7 +177,8 @@ class PublicController {
     }
 
     if(!pkg || (pkg && pkg.getTippCount() > 500000)){
-      response.sendError(404)
+      flash.error = 'The export of the selected number of titles unfortunately exceeds the line limitation provided in Excel, so that only a smaller fraction of the selected titles can be exported. For a complete title list please contact the content provider directly.'
+      redirect(url: request.getHeader('referer'))
       return
     }
 
