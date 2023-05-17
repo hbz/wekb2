@@ -257,7 +257,7 @@ class GlobalSearchTemplatesService {
                                 [heading: 'Provider', property: 'name', sort: 'name', link: true],
                                 [heading: 'Homepage', property: 'homepage', sort: 'homepage', outGoingLink: true],
                                 [heading: 'Last Updated', property: 'lastUpdated', sort: 'lastUpdated'],
-                                [heading: 'Status', sort: 'status', property: 'status.value'],
+                                [heading: 'Status', property: 'status.value', sort: 'status'],
                                 [heading: 'Current Titles', property: 'currentTippCount']
 
                         ]
@@ -469,7 +469,7 @@ class GlobalSearchTemplatesService {
                                 ],
                         ],
                         qbeResults: [
-                                [heading: 'Package', property: 'name', sort: 'name', link: true],
+                                [heading: 'Name', property: 'name', sort: 'name', link: true],
                                 [heading: 'Provider', property: 'provider.name', sort: 'provider.name', link: true],
                                 [heading: 'Nominal Platform', property: 'nominalPlatform.name', sort: 'nominalPlatform.name', link: true],
                                 [heading: 'Content Type', property: 'contentType.value', sort: 'contentType'],
@@ -842,7 +842,7 @@ class GlobalSearchTemplatesService {
 
                         ],
                         qbeResults: [
-                                [heading: 'Package', property: 'name', sort: 'name', link: true],
+                                [heading: 'Name', property: 'name', sort: 'name', link: true],
                                 [heading: 'Provider', property: 'provider.name', sort: 'provider.name', link: true],
                                 [heading: 'Nominal Platform', property: 'nominalPlatform.name', sort: 'nominalPlatform.name', link: true],
                                 [heading: 'Curatory Groups', property: 'curatoryGroupsCuratoryGroup', link: true],

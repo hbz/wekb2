@@ -22,6 +22,7 @@ class Api2Service {
         ApiTemplates.put('packages', packages())
         ApiTemplates.put('platforms', platforms())
         ApiTemplates.put('tipps', tipps())
+        ApiTemplates.put('deletedKBComponents', deletedKBComponents())
 
     }
 
@@ -39,11 +40,15 @@ class Api2Service {
                                 //General Fields
                                 [
                                         qparam     : 'name',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'name', 'wildcard': 'R']
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'name', 'wildcard': 'B']
                                 ],
                                 [
                                         qparam     : 'identifier',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'ids.value']
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'ids.value', 'wildcard': 'B']
+                                ],
+                                [
+                                        qparam     : 'identifierNamespace',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'ids.namespace.value']
                                 ],
                                 [
                                         qparam     : 'curatoryGroup',
@@ -81,17 +86,13 @@ class Api2Service {
 
 
                         ],
-                        qbeResults: [
-                                [property: 'uuid', fieldName: 'uuid'],
-                                [property: 'name', fieldName: 'name'],
-                                [property: 'uuid', fieldName: 'sortname'],
-                                [property: 'status', fieldName: 'status'],
-                                [property: 'lastUpdated', fieldName: 'lastUpdatedDisplay'],
-                                [property: 'dateCreated', fieldName: 'dateCreatedDisplay'],
-                                [property: 'kbartDownloaderURL', fieldName: 'kbartDownloaderURL'],
-                                [property: 'metadataDownloaderURL', fieldName: 'metadataDownloaderURL'],
-                                [property: 'homepage', fieldName: 'homepage'],
-
+                        qbeSortFields: [
+                                [sort: 'name'],
+                                [sort: 'status'],
+                                [sort: 'lastUpdated'],
+                                [sort: 'dateCreated'],
+                                [sort: 'curatoryGroups.curatoryGroup.name'],
+                                [sort: 'abbreviatedName']
                         ]
                 ]
         ]
@@ -109,11 +110,15 @@ class Api2Service {
                                 //General Fields
                                 [
                                         qparam     : 'name',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'name', 'wildcard': 'R']
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'name', 'wildcard': 'B']
                                 ],
                                 [
                                         qparam     : 'identifier',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'ids.value']
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'ids.value', 'wildcard': 'B']
+                                ],
+                                [
+                                        qparam     : 'identifierNamespace',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'ids.namespace.value']
                                 ],
                                 [
                                         qparam     : 'curatoryGroup',
@@ -152,13 +157,20 @@ class Api2Service {
                                 ],
                         ],
 
-                        qbeResults: [
-                                [property: 'uuid', fieldName: 'uuid'],
-                                [property: 'name', fieldName: 'name'],
-                                [property: 'status', fieldName: 'status'],
-                                [property: 'lastUpdated', fieldName: 'lastUpdatedDisplay'],
-                                [property: 'dateCreated', fieldName: 'dateCreatedDisplay'],
-
+                        qbeSortFields: [
+                                [sort: 'name'],
+                                [sort: 'status'],
+                                [sort: 'lastUpdated'],
+                                [sort: 'dateCreated'],
+                                [sort: 'curatoryGroups.curatoryGroup.name'],
+                                [sort: 'provider.name'],
+                                [sort: 'nominalPlatform.name'],
+                                [sort: 'contentType'],
+                                [sort: 'scope'],
+                                [sort: 'currentTippCount'],
+                                [sort: 'retiredTippCount'],
+                                [sort: 'expectedTippCount'],
+                                [sort: 'deletedTippCount']
                         ]
                 ]
         ]
@@ -176,11 +188,15 @@ class Api2Service {
                                 //General Fields
                                 [
                                         qparam     : 'name',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'name', 'wildcard': 'R']
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'name', 'wildcard': 'B']
                                 ],
                                 [
                                         qparam     : 'identifier',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'ids.value']
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'ids.value', 'wildcard': 'B']
+                                ],
+                                [
+                                        qparam     : 'identifierNamespace',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'ids.namespace.value']
                                 ],
                                 [
                                         qparam     : 'curatoryGroup',
@@ -209,6 +225,15 @@ class Api2Service {
                                         qparam     : 'providerUuid',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'provider.uuid']
                                 ],
+                        ],
+                        qbeSortFields: [
+                                [sort: 'name'],
+                                [sort: 'status'],
+                                [sort: 'lastUpdated'],
+                                [sort: 'dateCreated'],
+                                [sort: 'curatoryGroups.curatoryGroup.name'],
+                                [sort: 'provider.name'],
+                                [sort: 'primaryUrl']
                         ]
                 ]
         ]
@@ -225,11 +250,15 @@ class Api2Service {
                                 //General Fields
                                 [
                                         qparam     : 'name',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'name', 'wildcard': 'R']
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'name', 'wildcard': 'B']
                                 ],
                                 [
                                         qparam     : 'identifier',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'ids.value']
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'ids.value', 'wildcard': 'B']
+                                ],
+                                [
+                                        qparam     : 'identifierNamespace',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'ids.namespace.value']
                                 ],
                                 [
                                         qparam     : 'curatoryGroup',
@@ -267,6 +296,65 @@ class Api2Service {
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'hostPlatform.uuid']
                                 ],
 
+                        ],
+
+                        qbeSortFields: [
+                                [sort: 'name'],
+                                [sort: 'status'],
+                                [sort: 'lastUpdated'],
+                                [sort: 'dateCreated'],
+                                [sort: 'curatoryGroups.curatoryGroup.name'],
+                                [sort: 'pkg.name'],
+                                [sort: 'hostPlatform.name'],
+                                [sort: 'publicationType.value'],
+                                [sort: 'medium.value'],
+                                [sort: 'firstAuthor'],
+                                [sort: 'url']
+                        ]
+                ]
+        ]
+
+        result
+    }
+
+    Map deletedKBComponents() {
+        Map result = [
+                baseclass: 'wekb.DeletedKBComponent',
+                defaultSort : 'name',
+                defaultOrder: 'asc',
+                qbeConfig: [
+                        qbeForm   : [
+                                //General Fields
+                                [
+                                        qparam     : 'name',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'name', 'wildcard': 'B']
+                                ],
+                                [
+                                        type       : 'lookup',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        qparam     : 'status',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'status']
+                                ],
+                                [
+                                        qparam     : 'changedSince',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'greater', 'prop': 'lastUpdated', 'type': 'java.util.Date'],
+                                ],
+                                [
+                                        qparam     : 'changedBefore',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'smaller', 'prop': 'lastUpdated', 'type': 'java.util.Date'],
+                                ],
+                                [
+                                        qparam     : 'uuid',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'uuid']
+                                ],
+
+                        ],
+
+                        qbeSortFields: [
+                                [sort: 'name'],
+                                [sort: 'status'],
+                                [sort: 'lastUpdated'],
+                                [sort: 'dateCreated']
                         ]
                 ]
         ]
@@ -283,7 +371,7 @@ class Api2Service {
 
     }
 
-    private LinkedHashMap<Object, Object> mapDomainFieldsToSpecFields2(Map apiSearchTemplate, Object objectList) {
+/*    private LinkedHashMap<Object, Object> mapDomainFieldsToSpecFields2(Map apiSearchTemplate, Object objectList) {
         LinkedHashMap<Object, Object> result = [:]
 
 
@@ -321,8 +409,9 @@ class Api2Service {
 
         return result
 
-    }
+    }*/
 
+    /*@Deprecated
     private LinkedHashMap<Object, Object> mapHasManyFieldsToSpecFields(def object, LinkedHashMap<Object, Object> result) {
         //LinkedHashMap<Object, Object> result = [:]
 
@@ -330,7 +419,7 @@ class Api2Service {
 
         if(object.class.name == Package.class.name) {
 
-            /* result.uuid = object.uuid
+            *//* result.uuid = object.uuid
              result.name = object.name
              result.sortname = generateSortName(object.name)
              result.status = object.status?.value
@@ -363,7 +452,7 @@ class Api2Service {
 
              result.description = object.description
              result.descriptionURL = object.descriptionURL
-             *//*
+             *//*/*
 
             result.titleCount = object.getTippCount()
             result.currentTippCount = object.getCurrentTippCount()
@@ -371,7 +460,7 @@ class Api2Service {
             result.expectedTippCount = object.getExpectedTippCount()
             result.deletedTippCount = object.getDeletedTippCount()
 
-              *//*
+              *//*/*
 
 
             result.breakable = object.breakable ? object.breakable.value : ""
@@ -384,11 +473,12 @@ class Api2Service {
             result.scope = object.scope ? object.scope.value : ""
 
             result.freeTrialPhase = object.freeTrialPhase
- */
+ *//*
 
             if (object.kbartSource) {
                 result.source = [
                         id              : object.kbartSource.id,
+                        uuid              : object.kbartSource.uuid,
                         name            : object.kbartSource.name,
                         automaticUpdates: object.kbartSource.automaticUpdates,
                         url             : object.kbartSource.url,
@@ -455,7 +545,7 @@ class Api2Service {
             result
         }else if(object.class.name == Org.class.name) {
 
-            /* result.uuid = object.uuid
+            *//* result.uuid = object.uuid
              result.name = object.name
              result.sortname = generateSortName(object.name)
              result.status = object.status?.value
@@ -466,7 +556,7 @@ class Api2Service {
 
              result.kbartDownloaderURL = object.kbartDownloaderURL
              result.metadataDownloaderURL = object.metadataDownloaderURL
-             result.homepage = object.homepage*/
+             result.homepage = object.homepage*//*
 
             result.roles = []
             object.roles.each { role ->
@@ -707,7 +797,7 @@ class Api2Service {
 
         return result
     }
-
+*/
     private LinkedHashMap<Object, Object> mapDomainFieldsToSpecFields(Object object) {
         LinkedHashMap<Object, Object> result = [:]
 
@@ -760,12 +850,14 @@ class Api2Service {
            result.scope = object.scope ? object.scope.value : ""
            result.paymentType = object.paymentType ? object.paymentType.value : ""
            result.openAccess = object.openAccess?.value
+           result.file = object.file?.value
 
            result.freeTrialPhase = object.freeTrialPhase
 
            if (object.kbartSource) {
                result.source = [
                        id              : object.kbartSource.id,
+                       uuid              : object.kbartSource.uuid,
                        name            : object.kbartSource.name,
                        automaticUpdates: object.kbartSource.automaticUpdates,
                        url             : object.kbartSource.url,
@@ -952,7 +1044,7 @@ class Api2Service {
 
             result
         }else if(object.class.name == TitleInstancePackagePlatform.class.name) {
-
+            //Long start = System.currentTimeMillis()
             result.uuid = object.uuid
             result.name = object.name
             result.sortname = generateSortName(object.name)
@@ -1022,15 +1114,11 @@ class Api2Service {
                 }
             }
 
-            result.identifiers = []
-            object.ids.each { idc ->
-                result.identifiers.add([namespace    : idc.namespace.value,
-                                        value        : idc.value,
-                                        namespaceName: idc.namespace.name])
-            }
+            result.identifiers = Identifier.executeQuery('select new map(ns.value as namespace, id.value as value, ns.name as namespaceName) from Identifier id join id.namespace ns where id.tipp = :obj', [obj: object])
 
             // prices
-            result.prices = []
+            result.prices = TippPrice.executeQuery("select new map(p.priceType.value as type, p.price as amount, p.currency.value as currency, to_char(p.startDate, 'yyyy-mm-ddThh:ii:ssZ') as startDate, to_char(p.endDate, 'yyyy-mm-ddThh:ii:ss') as endDate) from TippPrice p where p.tipp = :obj", [obj: object])
+            /*
             object.prices?.each { p ->
                 def price = [:]
                 price.type = p.priceType?.value ?: ""
@@ -1043,21 +1131,27 @@ class Api2Service {
                     price.endDate = dateFormatService.formatIsoTimestamp(p.endDate)
                 }
                 result.prices.add(price)
-            }
+            }*/
 
+            result.ddcs = RefdataValue.executeQuery("select new map(ddc.value as value, ddc.value_de as value_de, ddc.value_en as value_en) from TitleInstancePackagePlatform tipp join tipp.ddcs ddc where tipp = :obj", [obj: object])
+            /*
             result.ddcs = []
             object.ddcs.each { ddc ->
                 result.ddcs.add([value     : ddc.value,
                                  value_de  : ddc.value_de,
                                  value_en  : ddc.value_en])
             }
+            */
 
+            result.langugages = ComponentLanguage.executeQuery("select new map(lang.value as value, lang.value_de as value_de, lang.value_en as value_en) from ComponentLanguage cl join cl.language lang where cl.tipp = :obj", [obj: object])
+            /*
             result.languages = []
             object.languages.each { ComponentLanguage kbl ->
                 result.languages.add([value     : kbl.language.value,
                                       value_de  : kbl.language.value_de,
                                       value_en  : kbl.language.value_en])
             }
+            */
 
             result.curatoryGroups = []
             object.pkg?.curatoryGroups?.each {
@@ -1065,7 +1159,7 @@ class Api2Service {
                                            type: it.curatoryGroup.type?.value,
                                            curatoryGroup: it.curatoryGroup.getOID()])
             }
-
+            //log.debug("record finished after ${System.currentTimeMillis()-start} msecs")
             result
         }else if(object.class.name == DeletedKBComponent.class.name) {
 
@@ -1089,19 +1183,24 @@ class Api2Service {
     private String checkAndGlobalSearchComponentType(String typeString) {
         String result = null
 
-        switch ('wekb.'+typeString.toLowerCase()) {
-            case Org.class.name.toLowerCase():
-                result = 'orgs'
-                break
-            case Package.class.name.toLowerCase():
-                result = 'packages'
-                break
-            case Platform.class.name.toLowerCase():
-                result = 'platforms'
-                break
-            case TitleInstancePackagePlatform.class.name.toLowerCase():
-                result = 'tipps'
-                break
+        if(typeString) {
+            switch ('wekb.' + typeString.toLowerCase()) {
+                case Org.class.name.toLowerCase():
+                    result = 'orgs'
+                    break
+                case Package.class.name.toLowerCase():
+                    result = 'packages'
+                    break
+                case Platform.class.name.toLowerCase():
+                    result = 'platforms'
+                    break
+                case TitleInstancePackagePlatform.class.name.toLowerCase():
+                    result = 'tipps'
+                    break
+                case DeletedKBComponent.class.name.toLowerCase():
+                    result = 'deletedKBComponents'
+                    break
+            }
         }
 
         result
@@ -1136,8 +1235,8 @@ class Api2Service {
                 //Add information to result
                 result.result_count_total = searchResult.reccount
                 result.result_count = searchResult.recset.size()
-                result.sort = params.sort
-                result.order = params.order
+                result.sort = searchResult.sort
+                result.order = searchResult.order
                 result.offset = searchResult.offset
                 result.max = searchResult.max
                 result.page_current = (searchResult.offset / searchResult.max) + 1
@@ -1166,6 +1265,36 @@ class Api2Service {
             result.searchTime = searchTime + ' ms'
             log.debug("Search completed after ${searchTime}");
 
+        }else if(params.uuid){
+            result.result = []
+
+            Object r
+
+            r = Package.findByUuid(params.uuid)
+            if (!r) {
+                r = Platform.findByUuid(params.uuid)
+            }
+            if (!r) {
+                r = Org.findByUuid(params.uuid)
+            }
+            if (!r) {
+                r = TitleInstancePackagePlatform.findByUuid(params.uuid)
+            }
+
+            if (!r) {
+                r = DeletedKBComponent.findByUuid(params.uuid)
+            }
+
+            if (r) {
+                LinkedHashMap<Object, Object> resultMap = mapDomainFieldsToSpecFields(r)
+
+                if (params.sortFields) {
+                    resultMap = resultMap.sort { it.key }
+                }
+
+                result.result.add(resultMap)
+            }
+
         } else {
             result.message = "This search is not allowed!"
             result.code = "error"
@@ -1189,12 +1318,15 @@ class Api2Service {
         processSimpleFields(cleaned_params, parameterMap)
         processRefDataFields(cleaned_params, parameterMap)
 
+        //println(cleaned_params)
         return cleaned_params
 
     }
 
     private void processStatus(GrailsParameterMap cleaned_params, GrailsParameterMap parameterMap) {
         if (!parameterMap.status){
+            List<String> refdataValueOIDs = [RDStore.KBC_STATUS_CURRENT, RDStore.KBC_STATUS_RETIRED, RDStore.KBC_STATUS_REMOVED, RDStore.KBC_STATUS_DELETED, RDStore.KBC_STATUS_EXPECTED].collect {it.getOID()}
+            cleaned_params.put('status', refdataValueOIDs)
             return
         }
         setRefdataValueFromGrailsParameterMap(cleaned_params, parameterMap, 'status', 'status')
@@ -1219,15 +1351,30 @@ class Api2Service {
         }
 
         if (parameterMap.identifier){
-            cleaned_params.put('identifier', parameterMap.identifier)
+            if (parameterMap.identifier.contains(',')) {
+                cleaned_params.put('identifierNamespace', parameterMap.identifier.split(',')[0])
+                cleaned_params.put('identifier', parameterMap.identifier.split(',')[1])
+            }else{
+                cleaned_params.put('identifier', parameterMap.identifier)
+            }
         }
 
         if (parameterMap.ids){
-            cleaned_params.put('identifier', parameterMap.ids)
+            if (parameterMap.ids.contains(',')) {
+                cleaned_params.put('identifierNamespace', parameterMap.ids.split(',')[0])
+                cleaned_params.put('identifier', parameterMap.ids.split(',')[1])
+            }else{
+                cleaned_params.put('identifier', parameterMap.ids)
+            }
         }
 
         if (parameterMap.identifiers){
-            cleaned_params.put('identifier', parameterMap.identifiers)
+            if (parameterMap.identifiers.contains(',')) {
+                cleaned_params.put('identifierNamespace', parameterMap.identifiers.split(',')[0])
+                cleaned_params.put('identifier', parameterMap.identifiers.split(',')[1])
+            }else{
+                cleaned_params.put('identifier', parameterMap.identifiers)
+            }
         }
 
         if (parameterMap.altname){
@@ -1255,19 +1402,26 @@ class Api2Service {
 
     private void setRefdataValueFromGrailsParameterMap(GrailsParameterMap cleaned_params, GrailsParameterMap parameterMap, String cleanedFieldName, String parameterMapFieldName){
         if (parameterMap."${parameterMapFieldName}".getClass().isArray() || parameterMap."${parameterMapFieldName}" instanceof List){
+            List<String> refdataValueOIDs = []
             parameterMap."${parameterMapFieldName}".each {
-                RefdataValue refdataValue = RefdataValue.executeQuery("from RefdataValue where LOWER(value) = LOWER(:value)", [value: it])
+                List refdataValues = RefdataValue.executeQuery("from RefdataValue where LOWER(value) = LOWER(:value)", [value: it])
 
-                if(refdataValue){
-                    cleaned_params.put(cleanedFieldName, refdataValue)
+                refdataValues.each {
+                    refdataValueOIDs << it.getOID()
                 }
             }
-        }
-        if (parameterMap."${parameterMapFieldName}" instanceof String){
-            RefdataValue refdataValue = RefdataValue.executeQuery("from RefdataValue where LOWER(value) = LOWER(:value)", [value: parameterMap."${parameterMapFieldName}"])
 
-            if(refdataValue){
-                cleaned_params.put(cleanedFieldName, refdataValue)
+            cleaned_params.put(cleanedFieldName, refdataValueOIDs)
+        }
+        else if (parameterMap."${parameterMapFieldName}" instanceof String){
+            List<RefdataValue> refdataValues = RefdataValue.executeQuery("from RefdataValue where LOWER(value) = LOWER(:value)", [value: parameterMap."${parameterMapFieldName}"])
+
+            if(refdataValues){
+                List<String> refdataValueOIDs = []
+                refdataValues.each {
+                    refdataValueOIDs << it.getOID()
+                }
+                cleaned_params.put(cleanedFieldName, refdataValueOIDs)
             }
         }
     }
@@ -1307,5 +1461,43 @@ class Api2Service {
             setRefdataValueFromGrailsParameterMap(cleaned_params, parameterMap, 'ipAuthentication', 'ipAuthentication')
         }
 
+    }
+
+    Map sushiSources(GrailsParameterMap params, Map result){
+
+        RefdataValue yes = RDStore.YN_YES
+
+        Set counter4Platforms = []
+        Set counter5Platforms = []
+
+        result.counter4ApiSources = [:]
+        result.counter5ApiSources = [:]
+
+
+        if(params.uuid){
+            counter4Platforms = Platform.executeQuery("from Platform plat where plat.counterR4SushiApiSupported = :r4support and plat.counterR5SushiApiSupported != :r5support and plat.counterR4SushiServerUrl is not null and plat.uuid = :uuid", [r4support: yes, r5support: yes, uuid: params.uuid]).toSet()
+            counter5Platforms = Platform.executeQuery("from Platform plat where plat.counterR5SushiApiSupported = :r5support and plat.counterR5SushiServerUrl is not null and plat.uuid = :uuid", [r5support: yes, uuid: params.uuid]).toSet()
+        }else {
+            counter4Platforms = Platform.executeQuery("from Platform plat where plat.counterR4SushiApiSupported = :r4support and plat.counterR5SushiApiSupported != :r5support and plat.counterR4SushiServerUrl is not null", [r4support: yes, r5support: yes]).toSet()
+            counter5Platforms = Platform.executeQuery("from Platform plat where plat.counterR5SushiApiSupported = :r5support and plat.counterR5SushiServerUrl is not null", [r5support: yes]).toSet()
+        }
+
+        counter4Platforms.each { Platform platform ->
+            result.counter4ApiSources."${platform.uuid}" = mapDomainFieldsToSpecFields(platform)
+
+            result.counter4ApiSources."${platform.uuid}".sushiApiAuthenticationMethod = platform.sushiApiAuthenticationMethod?.value
+            result.counter4ApiSources."${platform.uuid}".centralApiKey = platform.centralApiKey
+
+        }
+
+        counter5Platforms.each { Platform platform ->
+            result.counter5ApiSources."${platform.uuid}" = mapDomainFieldsToSpecFields(platform)
+
+            result.counter5ApiSources."${platform.uuid}".sushiApiAuthenticationMethod = platform.sushiApiAuthenticationMethod?.value
+            result.counter5ApiSources."${platform.uuid}".centralApiKey = platform.centralApiKey
+
+        }
+
+        result
     }
 }

@@ -67,9 +67,13 @@ public class HQLBuilder {
         criteria.add([defn:query_prop_def, value:params[query_prop_def.qparam]]);
       }
       if ( ( params[query_prop_def.qparam] != null ) && ( params[query_prop_def.qparam] instanceof ArrayList && params[query_prop_def.qparam].size() > 0 ) ) {
-        params[query_prop_def.qparam].each {
-          if( ( it != null ) )
-          criteria.add([defn:query_prop_def, value:it])
+        params[query_prop_def.qparam].eachWithIndex { def value, int index ->
+          if( ( value != null ) ){
+            LinkedHashMap cloneOfQuery_Prop_Def = query_prop_def.clone()
+            cloneOfQuery_Prop_Def.qparam = (index > 0) ? cloneOfQuery_Prop_Def.qparam+"_${index}" : cloneOfQuery_Prop_Def.qparam
+            criteria.add([defn:cloneOfQuery_Prop_Def, value:value, disjunction: true])
+          }
+
         }
       }
     }
@@ -81,9 +85,16 @@ public class HQLBuilder {
       }
     }
 
+    qbetemplate.qbeConfig.qbeSortFields.each { qbeSortField ->
+      if(qbeSortField.sort){
+        availableSortFields << qbeSortField.sort
+      }
+    }
+
     def hql_builder_context = new java.util.HashMap();
     hql_builder_context.declared_scopes = [:];
-    hql_builder_context.query_clauses = []
+    hql_builder_context.query_clausesWithAnd = []
+    hql_builder_context.query_clausesWithOr = []
     hql_builder_context.bindvars = new java.util.HashMap();
     hql_builder_context.genericOIDService = genericOIDService;
 
@@ -92,13 +103,14 @@ public class HQLBuilder {
     }else {
       hql_builder_context.sort = ( qbetemplate.containsKey('defaultSort') ? qbetemplate.defaultSort : null )
     }
+    result.sort = hql_builder_context.sort
 
     if(params.order && params.order in ['desc', 'asc']){
       hql_builder_context.order = params.order
     }else {
       hql_builder_context.order = ( qbetemplate.containsKey('defaultOrder') ? qbetemplate.defaultOrder : null )
     }
-
+    result.order = hql_builder_context.order
 
 
     def baseclass = target_class.getClazz()
@@ -113,7 +125,7 @@ public class HQLBuilder {
       // log.debug("Scope: ${ds}");
     }
 
-    hql_builder_context.query_clauses.each { qc ->
+    hql_builder_context.query_clausesWithAnd.each { qc ->
       // log.debug("QueryClause: ${qc}");
     }
 
@@ -123,7 +135,7 @@ public class HQLBuilder {
 
 
     if(qbetemplate.baseclass in ["wekb.CuratoryGroup", "wekb.KbartSource", "wekb.Org", "wekb.Package", "wekb.Platform", "wekb.TitleInstancePackagePlatform"]) {
-      if (!hql_builder_context.bindvars.qp_status) {
+      if (!hql_builder_context.bindvars.qp_status && !hql_builder_context.bindvars.status) {
 
         if (hql.contains('where')) {
           hql = hql + " and o.status != ${RDStore.KBC_STATUS_REMOVED.id}"
@@ -259,9 +271,12 @@ public class HQLBuilder {
   }
 
   static def addQueryClauseFor(crit, hql_builder_context, scoped_property, baseclass) {
+    String addToQuery = (crit.disjunction ? 'query_clausesWithOr' : 'query_clausesWithAnd')
+
+
     switch ( crit.defn.contextTree.comparator ) {
       case 'eq':
-        hql_builder_context.query_clauses.add("${crit.defn.contextTree.negate?'not ':''}${scoped_property} = :${crit.defn.qparam}");
+        hql_builder_context."${addToQuery}".add("${crit.defn.contextTree.negate?'not ':''}${scoped_property} = :${crit.defn.qparam}");
         if ( crit.defn.type=='lookup' ) {
           def value = hql_builder_context.genericOIDService.resolveOID(crit.value)
           value = (crit.defn.propType == 'Boolean') ? (value == RDStore.YN_YES ? true : false) : value
@@ -283,7 +298,7 @@ public class HQLBuilder {
         break;
 
       case 'ilike':
-        hql_builder_context.query_clauses.add("${crit.defn.contextTree.negate?'not ':''} lower(${scoped_property}) like :${crit.defn.qparam}");
+        hql_builder_context."${addToQuery}".add("${crit.defn.contextTree.negate?'not ':''} lower(${scoped_property}) like :${crit.defn.qparam}");
         def base_value = crit.value.toLowerCase().trim()
         if ( crit.defn.contextTree.normalise == true ) {
           base_value = TextUtils.norm2(base_value)
@@ -294,7 +309,7 @@ public class HQLBuilder {
         break;
 
       case 'like':
-        hql_builder_context.query_clauses.add("${crit.defn.contextTree.negate?'not ':''}${scoped_property} like :${crit.defn.qparam}");
+        hql_builder_context."${addToQuery}".add("${crit.defn.contextTree.negate?'not ':''}${scoped_property} like :${crit.defn.qparam}");
         def base_value = crit.value.trim()
         if ( crit.defn.contextTree.normalise == true ) {
           base_value = TextUtils.norm2(base_value)
@@ -310,7 +325,7 @@ public class HQLBuilder {
           if(crit.defn.baseClass == 'wekb.RefdataValue') {
             def value = hql_builder_context.genericOIDService.resolveOID(crit.value)
             if(value && value.class.getSimpleName() == 'RefdataValue') {
-              hql_builder_context.query_clauses.add("${crit.defn.contextTree.negate ? 'not ' : ''} exists (select ${crit.defn.qparam} from ${scoped_property} as ${crit.defn.qparam} where ${crit.defn.qparam} = :${crit.defn.qparam} ) ");
+              hql_builder_context."${addToQuery}".add("${crit.defn.contextTree.negate ? 'not ' : ''} exists (select ${crit.defn.qparam} from ${scoped_property} as ${crit.defn.qparam} where ${crit.defn.qparam} = :${crit.defn.qparam} ) ");
               hql_builder_context.bindvars[crit.defn.qparam] = value
             }
           }
@@ -318,22 +333,22 @@ public class HQLBuilder {
             def value = CuratoryGroup.get(crit.value)
             if(value) {
               if(baseclass.toString() == 'class wekb.Org') {
-                hql_builder_context.query_clauses.add("${crit.defn.contextTree.negate ? 'not ' : ''} exists ( select cgo from CuratoryGroupOrg cgo where cgo.org = o and cgo.curatoryGroup = :curGroup) ");
+                hql_builder_context."${addToQuery}".add("${crit.defn.contextTree.negate ? 'not ' : ''} exists ( select cgo from CuratoryGroupOrg cgo where cgo.org = o and cgo.curatoryGroup = :curGroup) ");
                 hql_builder_context.bindvars.curGroup = value
               }else if(baseclass.toString() == 'class wekb.Platform') {
-                hql_builder_context.query_clauses.add("${crit.defn.contextTree.negate ? 'not ' : ''} exists (select cgp from CuratoryGroupPlatform cgp where cgp.platform = o and cgp.curatoryGroup = :curGroup) ");
+                hql_builder_context."${addToQuery}".add("${crit.defn.contextTree.negate ? 'not ' : ''} exists (select cgp from CuratoryGroupPlatform cgp where cgp.platform = o and cgp.curatoryGroup = :curGroup) ");
                 hql_builder_context.bindvars.curGroup = value
               }else if(baseclass.toString() == 'class wekb.Package') {
-                hql_builder_context.query_clauses.add("${crit.defn.contextTree.negate ? 'not ' : ''} exists (select cgp from CuratoryGroupPackage cgp where cgp.pkg = o and cgp.curatoryGroup = :curGroup) ");
+                hql_builder_context."${addToQuery}".add("${crit.defn.contextTree.negate ? 'not ' : ''} exists (select cgp from CuratoryGroupPackage cgp where cgp.pkg = o and cgp.curatoryGroup = :curGroup) ");
                 hql_builder_context.bindvars.curGroup = value
               }else if(baseclass.toString() == 'class wekb.User') {
-                hql_builder_context.query_clauses.add("${crit.defn.contextTree.negate ? 'not ' : ''} exists (select cgu from CuratoryGroupUser cgu where cgu.user = o and cgu.curatoryGroup = :curGroup) ");
+                hql_builder_context."${addToQuery}".add("${crit.defn.contextTree.negate ? 'not ' : ''} exists (select cgu from CuratoryGroupUser cgu where cgu.user = o and cgu.curatoryGroup = :curGroup) ");
                 hql_builder_context.bindvars.curGroup = value
               }else if(baseclass.toString() == 'class wekb.KbartSource') {
-                hql_builder_context.query_clauses.add("${crit.defn.contextTree.negate ? 'not ' : ''} exists (select cgk from CuratoryGroupKbartSource cgk where cgk.kbartSource = o and cgk.curatoryGroup = :curGroup) ");
+                hql_builder_context."${addToQuery}".add("${crit.defn.contextTree.negate ? 'not ' : ''} exists (select cgk from CuratoryGroupKbartSource cgk where cgk.kbartSource = o and cgk.curatoryGroup = :curGroup) ");
                 hql_builder_context.bindvars.curGroup = value
               }else if(baseclass.toString() == 'class wekb.TitleInstancePackagePlatform') {
-                hql_builder_context.query_clauses.add("${crit.defn.contextTree.negate ? 'not ' : ''} exists (select cgp from CuratoryGroupPackage cgp where cgp.pkg = o.pkg and cgp.curatoryGroup = :curGroup) ");
+                hql_builder_context."${addToQuery}".add("${crit.defn.contextTree.negate ? 'not ' : ''} exists (select cgp from CuratoryGroupPackage cgp where cgp.pkg = o.pkg and cgp.curatoryGroup = :curGroup) ");
                 hql_builder_context.bindvars.curGroup = value
               }
             }
@@ -342,16 +357,16 @@ public class HQLBuilder {
         break;
 
       case 'eqYear':
-        hql_builder_context.query_clauses.add("${crit.defn.contextTree.negate?'not ':''}YEAR(${scoped_property}) = :${crit.defn.qparam}");
+        hql_builder_context."${addToQuery}".add("${crit.defn.contextTree.negate?'not ':''}YEAR(${scoped_property}) = :${crit.defn.qparam}");
         int base_value = Integer.parseInt(crit.value)
         hql_builder_context.bindvars[crit.defn.qparam] = base_value
         break;
 
       case 'greater':
-        hql_builder_context.query_clauses.add("${crit.defn.contextTree.negate?'not ':''} ${scoped_property} >= :${crit.defn.qparam}");
+        hql_builder_context."${addToQuery}".add("${crit.defn.contextTree.negate?'not ':''} ${scoped_property} >= :${crit.defn.qparam}");
         switch ( crit.defn.contextTree.type ) {
           case 'java.util.Date':
-            hql_builder_context.bindvars[crit.defn.qparam] = parseDate(crit.value, ["yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd"])
+            hql_builder_context.bindvars[crit.defn.qparam] = parseDate(crit.value.toString(), [new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"), new SimpleDateFormat("yyyy-MM-dd")])
             break;
           default:
             hql_builder_context.bindvars[crit.defn.qparam] = crit.value.toString().trim();
@@ -360,10 +375,10 @@ public class HQLBuilder {
         break;
 
       case 'smaller':
-        hql_builder_context.query_clauses.add("${crit.defn.contextTree.negate?'not ':''}YEAR(${scoped_property}) <= :${crit.defn.qparam}");
+        hql_builder_context."${addToQuery}".add("${crit.defn.contextTree.negate?'not ':''} ${scoped_property} <= :${crit.defn.qparam}");
         switch ( crit.defn.contextTree.type ) {
           case 'java.util.Date':
-            hql_builder_context.bindvars[crit.defn.qparam] = parseDate(crit.value, ["yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd"])
+            hql_builder_context.bindvars[crit.defn.qparam] = parseDate(crit.value.toString(), [new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"), new SimpleDateFormat("yyyy-MM-dd")])
             break;
           default:
             hql_builder_context.bindvars[crit.defn.qparam] = crit.value.toString().trim();
@@ -385,12 +400,31 @@ public class HQLBuilder {
     hql_builder_context.declared_scopes.each { scope_name,ds ->
       sw.write(" join ${ds}\n");
     }
-    
-    if ( hql_builder_context.query_clauses.size() > 0 ) {
+
+    if ( hql_builder_context.query_clausesWithAnd.size() > 0 || hql_builder_context.query_clausesWithOr.size() > 0) {
       sw.write(" where");
-      boolean conjunction=false
-      hql_builder_context.query_clauses.each { qc ->
+    }
+
+    boolean conjunction=false
+    if ( hql_builder_context.query_clausesWithOr.size() > 0 ) {
+      sw.write(" ( ");
+      hql_builder_context.query_clausesWithOr.each { qc ->
         if ( conjunction ) {
+          // output and on second and subsequent clauses
+          sw.write(" OR");
+        }
+        else {
+          conjunction=true
+        }
+        sw.write(" ");
+        sw.write(qc);
+      }
+      sw.write(" ) ");
+    }
+
+    if ( hql_builder_context.query_clausesWithAnd.size() > 0 ) {
+      hql_builder_context.query_clausesWithAnd.each { qc ->
+       if ( conjunction ) {
           // output and on second and subsequent clauses
           sw.write(" AND");
         }
@@ -401,6 +435,8 @@ public class HQLBuilder {
         sw.write(qc);
       }
     }
+
+
 
     // if ( ( hql_builder_context.sort != null ) && ( hql_builder_context.sort.length() > 0 ) ) {
     //   sw.write(" order by o.${hql_builder_context.sort} ${hql_builder_context.order}");
@@ -449,7 +485,7 @@ public class HQLBuilder {
     return result;
   }
 
-  private Date parseDate(String dateString, SimpleDateFormat... dateFormats){
+  private static Date parseDate(String dateString, def dateFormats){
     for (SimpleDateFormat format in dateFormats){
       try{
         return format.parse(dateString)

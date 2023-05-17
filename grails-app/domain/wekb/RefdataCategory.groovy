@@ -228,7 +228,8 @@ class RefdataCategory extends AbstractI10n {
       String desc_en = map.get('desc_en')
       String desc_de = map.get('desc_de')
 
-      RefdataCategory rdc = RefdataCategory.findByDescIlike(token)
+      RefdataCategory rdc = RefdataCategory.findByDesc(token)
+      //RefdataCategory rdc = RefdataCategory.findByDescIlike(token)
 
       if (!rdc) {
         static_logger.info("INFO: no match found; creating new refdata category for ( ${map})")

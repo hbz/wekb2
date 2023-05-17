@@ -28,4 +28,9 @@
     <root level="INFO">
         <appender-ref ref="STDOUT" />
     </root>
+
+    <logger name="wekb" level="DEBUG" additivity="false">
+        <appender-ref ref="STDOUT" />
+    </logger>
+
 </configuration>

@@ -8,7 +8,7 @@
         <semui:tabsItemWithoutLink tab="statistic" defaultTab="statistic" activeTab="${params.activeTab}">
             Statistic
         </semui:tabsItemWithoutLink>
-        <g:if test="${user && (SpringSecurityUtils.ifAnyGranted("ROLE_ADMIN") || user.curatoryGroupUsers.curatoryGroup.id.intersect(d.curatoryGroups.curatoryGroup.id))}">
+        <g:if test="${user && (SpringSecurityUtils.ifAnyGranted("ROLE_ADMIN, ROLE_SUSHI") || user.curatoryGroupUsers.curatoryGroup.id.intersect(d.curatoryGroups.curatoryGroup.id))}">
             <semui:tabsItemWithoutLink tab="sushiApiInfo" activeTab="${params.activeTab}">
                 Sushi Api Key Information
             </semui:tabsItemWithoutLink>
@@ -147,7 +147,7 @@
         </div>
     </semui:tabsItemContent>
 
-    <g:if test="${user && (SpringSecurityUtils.ifAnyGranted("ROLE_ADMIN") || user.curatoryGroupUsers.curatoryGroup.id.intersect(d.curatoryGroups.curatoryGroup.id))}">
+    <g:if test="${user && (SpringSecurityUtils.ifAnyGranted("ROLE_ADMIN, ROLE_SUSHI") || user.curatoryGroupUsers.curatoryGroup.id.intersect(d.curatoryGroups.curatoryGroup.id))}">
 
         <semui:tabsItemContent tab="sushiApiInfo" activeTab="${params.activeTab}">
             <div class="content wekb-inline-lists">

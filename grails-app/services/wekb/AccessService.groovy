@@ -42,6 +42,7 @@ class AccessService {
                                    "g:identifiers",
                                    "g:orgs",
                                    "g:packages",
+                                   "g:publicPackages",
                                    "g:platforms",
                                    "g:sources",
                                    "g:tipps",
