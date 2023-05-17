@@ -110,7 +110,7 @@ class Api2Service {
                                 //General Fields
                                 [
                                         qparam     : 'name',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'name', 'wildcard': 'B']
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike_Combine_Name_And_Anbieter_Produkt_ID_And_ZDB', 'prop': 'name', 'wildcard': 'B']
                                 ],
                                 [
                                         qparam     : 'identifier',

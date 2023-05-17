@@ -404,6 +404,15 @@ public class HQLBuilder {
                 ( ( crit.defn.contextTree.wildcard=='R' || crit.defn.contextTree.wildcard=='B') ? '%' : '')
         break;
 
+      case 'ilike_Combine_Name_And_Anbieter_Produkt_ID_And_ZDB':
+        String query = " (lower(o.name) like :${crit.defn.qparam} OR exists (select i from Identifier i where lower(i.value) like :${crit.defn.qparam} AND i.namespace.value = 'Anbieter_Produkt_ID' AND i.pkg = o)" +
+                " OR exists (select i from Identifier i where lower(i.value) like :${crit.defn.qparam} AND i.namespace.value = 'zdb' AND i.pkg = o))"
+        def base_value = crit.value.toLowerCase().trim()
+        hql_builder_context."${addToQuery}".add(query);
+        hql_builder_context.bindvars[crit.defn.qparam] = ( ( crit.defn.contextTree.wildcard=='L' || crit.defn.contextTree.wildcard=='B') ? '%' : '') +
+                base_value +
+                ( ( crit.defn.contextTree.wildcard=='R' || crit.defn.contextTree.wildcard=='B') ? '%' : '')
+        break;
 
 
       default:
