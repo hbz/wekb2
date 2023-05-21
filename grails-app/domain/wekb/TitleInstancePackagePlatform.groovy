@@ -247,23 +247,19 @@ class TitleInstancePackagePlatform  extends AbstractBase implements Auditable {
 
   @Transient
   public String getTitleID(){
-      String result = null
-      if(pkg.kbartSource && pkg.kbartSource.targetNamespace){
-        result = getIdentifierValue(pkg.kbartSource.targetNamespace.value)
-      }else if(hostPlatform.titleNamespace){
-        result = getIdentifierValue(hostPlatform.titleNamespace.value)
-      }
+    String result = null
+    result = getIdentifierValue('title_id')
     return result
   }
 
   @Transient
   public String getPrintIdentifier(){
-    ids?.findAll{ it.namespace.value.toLowerCase() in ["issn", "pisbn"]}?.value.join(';')
+    ids?.findAll{ it.namespace.value.toLowerCase() in ["issn", "isbn"]}?.value.join(';')
   }
 
   @Transient
   public String getOnlineIdentifier(){
-    ids?.findAll{ it.namespace.value.toLowerCase() in ["eissn", "isbn"]}?.value.join(';')
+    ids?.findAll{ it.namespace.value.toLowerCase() in ["eissn", "eisbn"]}?.value.join(';')
   }
 
   @Transient

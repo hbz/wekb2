@@ -440,7 +440,7 @@ class Package  extends AbstractBase implements Auditable {
   @Transient
   List<TitleInstancePackagePlatform> findTippDuplicatesByTitleID() {
 
-    IdentifierNamespace identifierNamespace = this.kbartSource ? this.kbartSource.targetNamespace : null
+    IdentifierNamespace identifierNamespace = IdentifierNamespace.findByValueAndTargetType('title_id', RDStore.IDENTIFIER_NAMESPACE_TARGET_TYPE_TIPP)
 
     if(identifierNamespace) {
       List<TitleInstancePackagePlatform> tippsDuplicates = TitleInstancePackagePlatform.executeQuery("select tipp from TitleInstancePackagePlatform as tipp join tipp.ids as ident" +
@@ -476,7 +476,7 @@ class Package  extends AbstractBase implements Auditable {
 
   @Transient
   Integer getTippDuplicatesByTitleIDCount() {
-    IdentifierNamespace identifierNamespace = this.kbartSource ? this.kbartSource.targetNamespace : null
+    IdentifierNamespace identifierNamespace = IdentifierNamespace.findByValueAndTargetType('title_id', RDStore.IDENTIFIER_NAMESPACE_TARGET_TYPE_TIPP)
 
     if(identifierNamespace) {
       int result = TitleInstancePackagePlatform.executeQuery("select count(tipp.id) from TitleInstancePackagePlatform as tipp join tipp.ids as ident" +
@@ -525,13 +525,8 @@ class Package  extends AbstractBase implements Auditable {
   @Transient
   public IdentifierNamespace getTitleIDNameSpace(){
     IdentifierNamespace identifierNamespace
-    List<IdentifierNamespace> idnsCheck = IdentifierNamespace.executeQuery('select so.targetNamespace from Package pkg join pkg.kbartSource so where pkg = :pkg', [pkg: this])
-    if (!idnsCheck && this.nominalPlatform) {
-      idnsCheck = IdentifierNamespace.executeQuery('select plat.titleNamespace from Platform plat where plat = :plat', [plat: this.nominalPlatform])
-    }
-    if (idnsCheck && idnsCheck.size() == 1) {
-      identifierNamespace = idnsCheck[0]
-    }
+    identifierNamespace = IdentifierNamespace.findByValueAndTargetType('title_id', RDStore.IDENTIFIER_NAMESPACE_TARGET_TYPE_TIPP)
+
 
     return identifierNamespace
   }

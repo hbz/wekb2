@@ -392,7 +392,7 @@ class AdminController {
     def result = [:]
 
     List pkgs = []
-    List<KbartSource> sourceList = KbartSource.findAllByAutomaticUpdatesAndTargetNamespaceIsNotNull(true)
+    List<KbartSource> sourceList = KbartSource.findAllByAutomaticUpdates(true)
 
     Package.findAllByStatus(RDStore.KBC_STATUS_CURRENT, [sort: 'name']).eachWithIndex { Package aPackage, int index ->
       Integer tippDuplicatesByNameCount = aPackage.getTippDuplicatesByNameCount()

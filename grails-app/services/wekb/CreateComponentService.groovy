@@ -592,7 +592,7 @@ class CreateComponentService {
                                     if (colMap.title_id_namespace != null) {
                                         String value = cols[colMap.title_id_namespace].trim()
                                         if (value) {
-                                            IdentifierNamespace identifierNamespace = IdentifierNamespace.findByValue(value)
+                                            IdentifierNamespace identifierNamespace = IdentifierNamespace.findByValueAndTargetType('title_id', RDStore.IDENTIFIER_NAMESPACE_TARGET_TYPE_TIPP)
                                             if (identifierNamespace)
                                                 sourceMap.targetNamespace = identifierNamespace.id
                                         }

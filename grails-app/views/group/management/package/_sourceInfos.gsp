@@ -78,11 +78,6 @@
                                 <semui:xEditableBoolean owner="${row_obj.kbartSource}" field="automaticUpdates"/>
                             </td>
                             <td>
-                                <semui:xEditableManyToOne owner="${row_obj.kbartSource}" field="targetNamespace"
-                                                          baseClass="wekb.IdentifierNamespace"
-                                                          filter1="TitleInstancePackagePlatform">${row_obj.kbartSource.targetNamespace}</semui:xEditableManyToOne>
-                            </td>
-                            <td>
                                 <g:link class="ui icon button" controller="resource" action="show"
                                         id="${row_obj.kbartSource.getOID()}">
                                     <i class="edit icon"></i>

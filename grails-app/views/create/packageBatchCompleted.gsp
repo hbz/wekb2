@@ -1,4 +1,4 @@
-<%@ page import="wekb.IdentifierNamespace; wekb.helper.RCConstants; wekb.RefdataCategory; wekb.IdentifierNamespace;" %>
+<%@ page import="wekb.helper.RDStore; wekb.IdentifierNamespace; wekb.helper.RCConstants; wekb.RefdataCategory; wekb.IdentifierNamespace;" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -64,8 +64,8 @@
                     </td>
 
                     <td>
-                        <g:if test="${pkg.kbartSource && pkg.kbartSource.targetNamespace}">
-                            ${pkg.kbartSource.targetNamespace.value}
+                        <g:if test="${pkg.kbartSource}">
+                            ${IdentifierNamespace.findByValueAndTargetType('title_id', RDStore.IDENTIFIER_NAMESPACE_TARGET_TYPE_TIPP).value}
                         </g:if>
                     </td>
 

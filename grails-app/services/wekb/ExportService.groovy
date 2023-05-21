@@ -254,16 +254,14 @@ class ExportService {
 
         def sanitize = { it ? (it instanceof Date ? sdf.format(it) : "${it}".trim()) : "" }
 
-        List<String> printIdentifier = ["issn", "pisbn"]
-        List<String> onlineIdentifier = ["eissn", "isbn"]
+        List<String> printIdentifier = ["issn", "isbn"]
+        List<String> onlineIdentifier = ["eissn", "eisbn"]
 
         String doiIdentifier = "DOI"
         String zdbIdentifier = "zdb"
         String ezbIdentifier = "ezb"
         String packageEzbAnchor = "package_ezb_anchor"
         String packageIsci = "package_isci"
-
-        String titleIdNameSpace = (pkg.kbartSource && pkg.kbartSource.targetNamespace) ? pkg.kbartSource.targetNamespace.value : 'FAKE'
 
         RefdataValue priceTypeList = RDStore.PRICE_TYPE_LIST
         RefdataValue priceTypeOAAPC = RDStore.PRICE_TYPE_OA_APC
@@ -423,13 +421,7 @@ class ExportService {
                                     }
                                     break;
                                 case 'titleIdNameSpace':
-
-                                    if(titleIdNameSpace == 'FAKE') {
-                                        Platform platform = Platform.executeQuery('select tipp.hostPlatform from TitleInstancePackagePlatform as tipp where tipp.id = :tippID and tipp.hostPlatform is not null', [tippID: tippID], [readOnly: true])[0]
-                                        titleIdNameSpace = (platform && platform.titleNamespace) ? platform.titleNamespace.value : 'FAKE'
-                                    }
-
-                                    List identifiers = Identifier.executeQuery('select i.value from Identifier as i where LOWER(i.namespace.value) = :namespaceValue and i.tipp.id = :tippID', [namespaceValue: titleIdNameSpace.toLowerCase(), tippID: tippID], [readOnly: true])
+                                    List identifiers = Identifier.executeQuery('select i.value from Identifier as i where LOWER(i.namespace.value) = :namespaceValue and i.tipp.id = :tippID', [namespaceValue: 'title_id', tippID: tippID], [readOnly: true])
 
                                     if (identifiers.size() > 0) {
                                         row.add(identifiers.join(';'))
@@ -563,7 +555,7 @@ class ExportService {
             row.add(sanitize(pkg.ddcs?.value.join(',')))
             row.add(sanitize(pkg.kbartSource?.url))
             row.add(sanitize(pkg.kbartSource?.frequency?.value))
-            row.add(sanitize(pkg.kbartSource?.targetNamespace?.value))
+            row.add(sanitize(IdentifierNamespace.findByValueAndTargetType('title_id', RDStore.IDENTIFIER_NAMESPACE_TARGET_TYPE_TIPP).value))
             row.add(sanitize(pkg.kbartSource?.automaticUpdates ? 'Yes': 'No'))
             row.add(sanitize(pkg.paas?.archivingAgency?.value))
             row.add(sanitize(pkg.paas?.openAccess?.value))

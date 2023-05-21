@@ -204,7 +204,7 @@ class WorkflowService {
     private Map deleteIdentifierNamespace(IdentifierNamespace identifierNamespace) {
         Map result = [:]
         log.info("deleteIdentifierNamespace: ${identifierNamespace}..")
-        if (!Platform.findByTitleNamespace(identifierNamespace) && !KbartSource.findByTargetNamespace(identifierNamespace) && !Identifier.findByNamespace(identifierNamespace)) {
+        if (!Platform.findByTitleNamespace(identifierNamespace) && !Identifier.findByNamespace(identifierNamespace)) {
             identifierNamespace.delete()
         } else {
             result.error = "Identifier Namespace is linked with identifier or org or source or platform! Please unlink first!"

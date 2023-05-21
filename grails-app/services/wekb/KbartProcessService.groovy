@@ -129,7 +129,6 @@ class KbartProcessService {
         List<LocalDate> lastChangedDates = []
 
         Platform plt = pkg.nominalPlatform
-        IdentifierNamespace identifierNamespace = pkg.getTitleIDNameSpace()
 
         try {
 
@@ -231,7 +230,7 @@ class KbartProcessService {
                                                             }*/
                                     TitleInstancePackagePlatform updateTipp = null
                                     try {
-                                        Map autoUpdateResultTipp = kbartImportService.tippImportForUpdate(kbartRow, tippsWithCoverage, tippDuplicates, updatePackageInfo, kbartRowsToCreateTipps, identifierNamespace)
+                                        Map autoUpdateResultTipp = kbartImportService.tippImportForUpdate(kbartRow, tippsWithCoverage, tippDuplicates, updatePackageInfo, kbartRowsToCreateTipps)
 
                                         kbartRowsToCreateTipps = autoUpdateResultTipp.kbartRowsToCreateTipps
                                         tippsWithCoverage = autoUpdateResultTipp.tippsWithCoverage
@@ -345,7 +344,7 @@ class KbartProcessService {
             }
 
             if(kbartRowsToCreateTipps.size() > 0){
-                List newTippList = kbartImportService.createTippBatch(kbartRowsToCreateTipps, updatePackageInfo, identifierNamespace)
+                List newTippList = kbartImportService.createTippBatch(kbartRowsToCreateTipps, updatePackageInfo)
                 newTipps = newTippList.size()
                 log.debug("kbartRowsToCreateTipps: TippIds -> "+newTippList.tippID)
 
