@@ -876,7 +876,7 @@ class KbartImportService {
         result
     }*/
 
-    LinkedHashMap tippImportForUpdate(Map tippMap, LinkedHashMap tippsWithCoverage, HashSet<Long> tippDuplicates = [], UpdatePackageInfo updatePackageInfo, List kbartRowsToCreateTipps, IdentifierNamespace identifierNamespace) {
+    LinkedHashMap tippImportForUpdate(Map tippMap, LinkedHashMap tippsWithCoverage, HashSet<Long> tippDuplicates = [], UpdatePackageInfo updatePackageInfo, List kbartRowsToCreateTipps) {
         LinkedHashMap result = [newTipp: false, removedTipp: false, tippObject: null, updatePackageInfo: updatePackageInfo,
                                 tippsWithCoverage: tippsWithCoverage, kbartRowsToCreateTipps: kbartRowsToCreateTipps, tippDuplicates: tippDuplicates]
         log.info("Begin tippImportForUpdate")
@@ -929,7 +929,7 @@ class KbartImportService {
 
                     if(countTipps == 0) {
                         log.debug("not found Tipp with title. research in pkg ${pkg} with tile_id")
-                        tipps = tippsMatchingByTitleIDAutoUpdate(tippMap.title_id, pkg, identifierNamespace)
+                        tipps = tippsMatchingByTitleIDAutoUpdate(tippMap.title_id, pkg)
                         countTipps = tipps.size()
                     }
 
@@ -946,7 +946,7 @@ class KbartImportService {
                             } else {
 
                                 //if url changed find tipp over title id
-                                List<TitleInstancePackagePlatform> tippsMatchedByTitleID = tippsMatchingByTitleIDAutoUpdate(tippMap.title_id, pkg, identifierNamespace)
+                                List<TitleInstancePackagePlatform> tippsMatchedByTitleID = tippsMatchingByTitleIDAutoUpdate(tippMap.title_id, pkg)
 
                                 tippsMatchedByTitleID.each{ TitleInstancePackagePlatform tippByTitleID ->
                                     if (tippByTitleID.id == tipps[0].id) {
@@ -973,7 +973,7 @@ class KbartImportService {
                             if (tipps.size() == 1) {
                                 tipp = tipps[0]
                             } else {
-                                List<TitleInstancePackagePlatform> tippsMatchedByTitleID = tippsMatchingByTitleIDAutoUpdate(tippMap.title_id, pkg, identifierNamespace)
+                                List<TitleInstancePackagePlatform> tippsMatchedByTitleID = tippsMatchingByTitleIDAutoUpdate(tippMap.title_id, pkg)
 
                                 if(tippsMatchedByTitleID.size() > 0){
                                     List<TitleInstancePackagePlatform> tippsByUrlAndTitleID = tipps.findAll { it.id in tippsMatchedByTitleID.id }.sort { it.lastUpdated }
@@ -1023,7 +1023,7 @@ class KbartImportService {
             if (tipp) {
                 tipp.kbartImportRunning = true
                 tipp.fromKbartImport = true
-                result = updateTippWithKbart(result, tipp, tippMap, updatePackageInfo, result.tippsWithCoverage, identifierNamespace)
+                result = updateTippWithKbart(result, tipp, tippMap, updatePackageInfo, result.tippsWithCoverage)
                 tipp = result.tipp
             }
 
@@ -1066,6 +1066,7 @@ class KbartImportService {
 
     }
 
+    @Deprecated
     List<TitleInstancePackagePlatform> tippsMatchingByTitleID(JSONArray identifiers, Package aPackage, Platform platform) {
         if(identifiers && aPackage.kbartSource && aPackage.kbartSource.targetNamespace){
 
@@ -1095,9 +1096,12 @@ class KbartImportService {
 
     }
 
-    List<TitleInstancePackagePlatform> tippsMatchingByTitleIDAutoUpdate(String titleID, Package aPackage, IdentifierNamespace identifierNamespace) {
+    List<TitleInstancePackagePlatform> tippsMatchingByTitleIDAutoUpdate(String titleID, Package aPackage) {
         List<TitleInstancePackagePlatform> tippList = []
         log.debug("tippsMatchingByTitleID provider internal identifier matching by ")
+
+        IdentifierNamespace identifierNamespace = IdentifierNamespace.findByValueAndTargetType('title_id', RDStore.IDENTIFIER_NAMESPACE_TARGET_TYPE_TIPP)
+
         if(titleID && identifierNamespace) {
                 tippList = Identifier.executeQuery('select i.tipp from Identifier i, TitleInstancePackagePlatform tipp where ' +
                         'i.tipp = tipp and ' +
@@ -1919,7 +1923,7 @@ class KbartImportService {
         return  result.changedTipp ?: valueChanged
     }
 
-    LinkedHashMap updateTippWithKbart(LinkedHashMap result, TitleInstancePackagePlatform tipp, Map tippMap, UpdatePackageInfo updatePackageInfo, LinkedHashMap tippsWithCoverage, IdentifierNamespace identifierNamespace) {
+    LinkedHashMap updateTippWithKbart(LinkedHashMap result, TitleInstancePackagePlatform tipp, Map tippMap, UpdatePackageInfo updatePackageInfo, LinkedHashMap tippsWithCoverage) {
         log.debug("in update")
         List identifierNameSpacesExistOnTipp = []
         //Kbart Fields to Ygor and then to wekb (siehe Wiki)
@@ -2116,21 +2120,21 @@ class KbartImportService {
         } else if (tipp.publicationType == RDStore.TIPP_PUBLIC_TYPE_MONO) {
             // KBART -> print_identifier-> identifiers
             if (tippMap.print_identifier) {
-                result.changedTipp = createOrUpdateIdentifierForTipp(result, tipp, "pisbn", tippMap.print_identifier, 'print_identifier', updatePackageInfo)
-                identifierNameSpacesExistOnTipp << "pisbn"
+                result.changedTipp = createOrUpdateIdentifierForTipp(result, tipp, "isbn", tippMap.print_identifier, 'print_identifier', updatePackageInfo)
+                identifierNameSpacesExistOnTipp << "isbn"
             }
 
             // KBART -> online_identifier  -> identifiers
             if (tippMap.online_identifier) {
-                result.changedTipp = createOrUpdateIdentifierForTipp(result, tipp, "isbn", tippMap.online_identifier, 'online_identifier', updatePackageInfo)
-                identifierNameSpacesExistOnTipp << "isbn"
+                result.changedTipp = createOrUpdateIdentifierForTipp(result, tipp, "eisbn", tippMap.online_identifier, 'online_identifier', updatePackageInfo)
+                identifierNameSpacesExistOnTipp << "eisbn"
             }
         }
 
         // KBART -> title_id  -> identifiers
-        if (tippMap.title_id && identifierNamespace) {
-                result.changedTipp = createOrUpdateIdentifierForTipp(result, tipp, identifierNamespace.value, tippMap.title_id, 'title_id', updatePackageInfo)
-                identifierNameSpacesExistOnTipp << identifierNamespace.value
+        if (tippMap.title_id) {
+                result.changedTipp = createOrUpdateIdentifierForTipp(result, tipp, 'title_id', tippMap.title_id, 'title_id', updatePackageInfo)
+                identifierNameSpacesExistOnTipp << 'title_id'
         }
 
         // KBART -> doi_identifier  -> identifiers
@@ -2259,8 +2263,10 @@ class KbartImportService {
         return result
     }
 
-    List createTippBatch(List tippMaps, UpdatePackageInfo updatePackageInfo, IdentifierNamespace identifierNamespace) {
+    List createTippBatch(List tippMaps, UpdatePackageInfo updatePackageInfo) {
         List newTippList = []
+
+        IdentifierNamespace identifierNamespace = IdentifierNamespace.findByValueAndTargetType('title_id', RDStore.IDENTIFIER_NAMESPACE_TARGET_TYPE_TIPP)
 
         int counterNewTippsToProcess = tippMaps.size()
 
@@ -2415,18 +2421,18 @@ class KbartImportService {
                     } else if (tipp.publicationType == RDStore.TIPP_PUBLIC_TYPE_MONO) {
                         // KBART -> print_identifier-> identifiers
                         if (tippMap.kbartRowMap.print_identifier) {
-                            result.changedTipp = createOrUpdateIdentifierForTipp(result, tipp, "pisbn", tippMap.kbartRowMap.print_identifier, 'print_identifier', updatePackageInfo)
+                            result.changedTipp = createOrUpdateIdentifierForTipp(result, tipp, "isbn", tippMap.kbartRowMap.print_identifier, 'print_identifier', updatePackageInfo)
                         }
 
                         // KBART -> online_identifier  -> identifiers
                         if (tippMap.kbartRowMap.online_identifier) {
-                            result.changedTipp = createOrUpdateIdentifierForTipp(result, tipp, "isbn", tippMap.kbartRowMap.online_identifier, 'online_identifier', updatePackageInfo)
+                            result.changedTipp = createOrUpdateIdentifierForTipp(result, tipp, "eisbn", tippMap.kbartRowMap.online_identifier, 'online_identifier', updatePackageInfo)
                         }
                     }
 
                     // KBART -> title_id  -> identifiers
-                    if (tippMap.kbartRowMap.title_id && identifierNamespace) {
-                            result.changedTipp = createOrUpdateIdentifierForTipp(result, tipp, identifierNamespace.value, tippMap.kbartRowMap.title_id, 'title_id', updatePackageInfo)
+                    if (tippMap.kbartRowMap.title_id) {
+                            result.changedTipp = createOrUpdateIdentifierForTipp(result, tipp, 'title_id', tippMap.kbartRowMap.title_id, 'title_id', updatePackageInfo)
                     }
 
                     // KBART -> doi_identifier  -> identifiers
