@@ -83,7 +83,7 @@
                             break
                         case 'frequency': args.addAll(RefdataCategory.lookup(RCConstants.SOURCE_FREQUENCY).sort { it.value }.collect { it -> it.value })
                             break
-                        case 'title_id_namespace': args.addAll(IdentifierNamespace.findAllByFamily('ttl_prv').sort { it.value }.collect { it -> it.value })
+                        case 'title_id_namespace': args.addAll(['title_id'])
                             break
                         case 'automated_updates': args.addAll(RefdataCategory.lookup(RCConstants.YN).sort { it.value }.collect { it -> it.value })
                             break

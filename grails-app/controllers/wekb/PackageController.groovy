@@ -168,7 +168,7 @@ class PackageController {
                                 folder.mkdirs()
                             }
 
-                            String packageName = "${pkg.name.toLowerCase().replaceAll('[+\\-/\\\\(){}\\[\\]<>!§$%&=?*#€¿&_\\".,:;]','').replaceAll("\\s", '_')}_${pkg.id}"
+                            String packageName = "${pkg.id}"
                             String fileName = folder.absolutePath.concat(File.separator).concat(packageName)
                             File file = new File(fileName)
 

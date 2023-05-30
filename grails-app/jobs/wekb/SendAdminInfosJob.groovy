@@ -26,7 +26,7 @@ class SendAdminInfosJob {
         if (grailsApplication.config.getProperty('wekb.sendJobInfosJob', Boolean)) {
             log.debug("Beginning scheduled send job infos job.")
             sendPackageUpdateInfos()
-            sendEsIndexCheck()
+            //sendEsIndexCheck()
             log.info("send job infos job completed.")
         } else {
             log.debug("automatic send job infos Job is not enabled - set config.wekb.sendJobInfosJob = true");

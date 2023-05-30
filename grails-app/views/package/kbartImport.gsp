@@ -1,3 +1,4 @@
+<%@ page import="wekb.IdentifierNamespace; wekb.helper.RDStore;" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -62,7 +63,7 @@
 
             <dl>
                 <dt class="control-label">Identifier Namespace for title_id field in KBART</dt>
-                <dd><g:set var="idNamespace" value="${pkg.getTitleIDNameSpace()}"/>
+                <dd><g:set var="idNamespace" value="${IdentifierNamespace.findByValueAndTargetType('title_id', RDStore.IDENTIFIER_NAMESPACE_TARGET_TYPE_TIPP)}"/>
                     <g:if test="${idNamespace}">
                         Identifier Namespace Name: ${idNamespace.name}<br>
                         Identifier Namespace Value: ${idNamespace.value}

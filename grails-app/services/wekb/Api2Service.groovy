@@ -155,6 +155,19 @@ class Api2Service {
                                         qparam     : 'platformUuid',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'nominalPlatform.uuid']
                                 ],
+                                [
+                                        qparam     : 'provider',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'provider.name', 'wildcard': 'B']
+                                ],
+                                [
+                                        qparam     : 'ddc',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'ddcs.value'],
+                                ],
+                                [
+                                        qparam     : 'curatoryGroupType',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'curatoryGroups.curatoryGroup.type.value']
+                                ],
+
                         ],
 
                         qbeSortFields: [
