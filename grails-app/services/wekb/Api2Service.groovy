@@ -157,7 +157,7 @@ class Api2Service {
                                 ],
                                 [
                                         qparam     : 'provider',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'provider.name', 'wildcard': 'B']
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike_Combine_Name_And_VariantNames_And_AbbreviatedName', 'prop': 'provider.name', 'wildcard': 'B']
                                 ],
                                 [
                                         qparam     : 'ddc',
