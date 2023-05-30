@@ -22,8 +22,28 @@
                         ${identifier.namespace.value}
                     </td>
                     <td>
-                            <semui:xEditable owner="${identifier}" field="value" outGoingLink="true"/>
-                            &nbsp;
+                            <semui:xEditable owner="${identifier}" field="value" />
+
+                        <g:if test="${identifier.namespace.value == 'doi'}">
+                            <g:set value="${identifier.value ? (identifier.value.startsWith('http') ? identifier.value : 'https://www.doi.org/'+identifier.value) : ""}"
+                                   var="url"/>
+                        </g:if>
+                        <g:elseif test="${identifier.namespace.value in ['issn', 'eissn', 'issnl']}">
+                            <g:set value="${identifier.value ? (identifier.value.startsWith('http') ? identifier.value : 'https://portal.issn.org/resource/ISSN/'+identifier.value) : ""}"
+                                   var="url"/>
+                        </g:elseif>
+                        <g:else>
+                            <g:set value="${identifier.value ? (identifier.value.startsWith('http') ? identifier.value : "") : ""}"
+                                   var="url"/>
+                        </g:else>
+
+
+
+                        <g:if test="${url}">
+                            &nbsp;<a aria-label="${identifier.value}" href="${url}" target="_blank"><i
+                                class="external alternate icon"></i></a>
+                        </g:if>
+
                             <g:link controller="resource" action="show" id="${identifier.getOID()}" title="Jump to resource"><i class="fas fa-eye"></i></g:link>
                     </td>
                     <g:if test="${editable}">

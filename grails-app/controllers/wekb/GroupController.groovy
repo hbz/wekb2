@@ -37,7 +37,7 @@ class GroupController {
         params.qp_curgroups = searchResult.groups.id
         params.hide = ['qp_curgroup', 'qp_curgroups']
 
-        searchResult = searchService.search(searchResult.user, searchResult, params, response.format)
+        searchResult = searchService.search(searchResult.user, searchResult, params)
 
         searchResult.result
     }
@@ -58,7 +58,7 @@ class GroupController {
         params.qp_curgroups = searchResult.groups.id
         params.hide = ['qp_curgroup', 'qp_curgroups']
 
-        searchResult = searchService.search(searchResult.user, searchResult, params, response.format)
+        searchResult = searchService.search(searchResult.user, searchResult, params)
 
         searchResult.result
 
@@ -79,7 +79,7 @@ class GroupController {
         params.qp_curgroups = searchResult.groups.id
         params.hide = ['qp_curgroup', 'qp_curgroups']
 
-        searchResult = searchService.search(searchResult.user, searchResult, params, response.format)
+        searchResult = searchService.search(searchResult.user, searchResult, params)
 
         searchResult.result
 
@@ -100,7 +100,7 @@ class GroupController {
             params.qp_curgroups = searchResult.groups.id
             params.hide = ['qp_curgroup', 'qp_curgroups']
 
-            searchResult = searchService.search(searchResult.user, searchResult, params, response.format)
+            searchResult = searchService.search(searchResult.user, searchResult, params)
 
             searchResult.result
     }*/
@@ -122,7 +122,7 @@ class GroupController {
         params.qp_curgroups = searchResult.groups.id
         params.hide = ['qp_curgroup', 'qp_curgroups']
 
-        searchResult = searchService.search(searchResult.user, searchResult, params, response.format)
+        searchResult = searchService.search(searchResult.user, searchResult, params)
 
         searchResult.result
     }
@@ -143,7 +143,7 @@ class GroupController {
         params.qp_curgroups = searchResult.groups.id
         params.hide = ['qp_curgroup', 'qp_curgroups']
 
-        searchResult = searchService.search(searchResult.user, searchResult, params, response.format)
+        searchResult = searchService.search(searchResult.user, searchResult, params)
 
         searchResult.result
     }
@@ -164,7 +164,7 @@ class GroupController {
         params.qp_curgroups = searchResult.groups.id
         params.hide = ['qp_curgroup', 'qp_curgroups']
 
-        searchResult = searchService.search(searchResult.user, searchResult, params, response.format)
+        searchResult = searchService.search(searchResult.user, searchResult, params)
 
         searchResult.result
     }
@@ -204,7 +204,7 @@ class GroupController {
         params.hide = ['qp_curgroup', 'qp_curgroups']
         params.max = '10000'
 
-        searchResult = searchService.search(searchResult.user, searchResult, params, response.format)
+        searchResult = searchService.search(searchResult.user, searchResult, params)
 
         searchResult.result
 
@@ -271,7 +271,7 @@ class GroupController {
         params.qp_curgroups = searchResult.groups.id
         params.hide = ['qp_curgroup', 'qp_curgroups']
 
-        searchResult = searchService.search(searchResult.user, searchResult, params, response.format)
+        searchResult = searchService.search(searchResult.user, searchResult, params)
 
         searchResult.result.editable = accessService.checkReadable(searchResult.result.qbetemplate.baseclass)
 

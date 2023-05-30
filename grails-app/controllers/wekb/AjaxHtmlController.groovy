@@ -465,7 +465,7 @@ class AjaxHtmlController {
                     //target_object."${params.name}" = params.date('value',params.dateFormat ?: 'yyyy-MM-dd')
                 } else if (params.type == 'boolean') {
                     target_object."${params.name}" = params.boolean('value')
-                } else if (params.name == 'uuid' || params.name == 'password') {
+                } else if (params.name == 'uuid' || (params.name == 'password' && !user.getAdminStatus())) {
                     errors[params.name] = "This property is not editable."
                 } else {
                     def binding_properties = [:]

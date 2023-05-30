@@ -125,7 +125,8 @@ class RefdataValue  extends AbstractI10n {
 
       boolean hardData = new Boolean(map.get('hardData'))
 
-      RefdataCategory cat = RefdataCategory.findByDescIlike(rdc)
+      //RefdataCategory cat = RefdataCategory.findByDescIlike(rdc)
+      RefdataCategory cat = RefdataCategory.findByDesc(rdc)
       if (!cat) {
         cat = RefdataCategory.construct([
                 token   : rdc,

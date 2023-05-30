@@ -297,7 +297,7 @@ class SearchController {
         def searchResult = [:]
 
         if ((params.qbe in accessService.allowedComponentSearch) || (springSecurityService.isLoggedIn() && SpringSecurityUtils.ifAnyGranted("ROLE_ADMIN"))) {
-            searchResult = searchService.search(user, searchResult, params, response.format)
+            searchResult = searchService.search(user, searchResult, params)
 
             log.debug("Search completed after ${System.currentTimeMillis() - start_time}");
 
@@ -317,7 +317,7 @@ class SearchController {
         def searchResult = [:]
 
         if ((params.qbe in accessService.allowedInlineSearch) || (springSecurityService.isLoggedIn() && SpringSecurityUtils.ifAnyGranted("ROLE_ADMIN"))) {
-            searchResult = searchService.search(user, searchResult, params, response.format)
+            searchResult = searchService.search(user, searchResult, params)
 
             log.debug("Search completed after ${System.currentTimeMillis() - start_time}");
             if(searchResult.result) {

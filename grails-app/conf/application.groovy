@@ -108,8 +108,18 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
         [pattern: '/api/suggest',             access: ['permitAll']],
         [pattern: '/api/isUp',                access: ['permitAll']],
         [pattern: '/api/namespaces',          access: ['permitAll']],
-        [pattern: '/api/groups',              access: ['permitAll']]
+        [pattern: '/api/groups',              access: ['permitAll']],
+        [pattern: '/api/refdataCategories',              access: ['permitAll']],
+
+        [pattern: '/api2/**',                access: ['permitAll']],
 ]
+
+
+
+grails.plugin.springsecurity.ipRestrictions = [
+        [pattern: '/api/**', access: ['193.30.112.31', '193.30.112.34', '193.30.112.32', '10.1.1.240']],
+]
+
 
 //--------------------------------------------------------------------------------------------------------------------
 

@@ -1,4 +1,4 @@
-<%@ page import="wekb.helper.RCConstants" %>
+<%@ page import="wekb.helper.RCConstants; wekb.IdentifierNamespace; wekb.helper.RDStore;" %>
 <dl>
     <dt class="control-label">
         Source Name
@@ -79,9 +79,7 @@
         Title ID Namespace
     </dt>
     <dd>
-        <semui:xEditableManyToOne owner="${d}" field="targetNamespace"
-                                  baseClass="wekb.IdentifierNamespace"
-                                  filter1="TitleInstancePackagePlatform" disabled="${createObject}">${d.targetNamespace}</semui:xEditableManyToOne>
+        ${IdentifierNamespace.findByValueAndTargetType('title_id', RDStore.IDENTIFIER_NAMESPACE_TARGET_TYPE_TIPP).value}
     </dd>
 </dl>
 <dl>

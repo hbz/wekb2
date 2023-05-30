@@ -51,7 +51,7 @@ class GlobalSearchTemplatesService {
                                         prompt     : 'Name',
                                         qparam     : 'qp_name',
                                         placeholder: 'Name of Curatory Group',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'name']
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'name', 'wildcard': 'B']
                                 ],
                                 [
                                         type       : 'lookup',
@@ -217,7 +217,7 @@ class GlobalSearchTemplatesService {
                                         prompt     : 'Name',
                                         qparam     : 'qp_name',
                                         placeholder: 'Name',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'name', 'wildcard': 'R']
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike_Combine_Name_And_VariantNames_And_AbbreviatedName', 'prop': 'name', 'wildcard': 'B']
                                 ],
                                 [
                                         prompt     : 'Identifier',
@@ -257,7 +257,7 @@ class GlobalSearchTemplatesService {
                                 [heading: 'Provider', property: 'name', sort: 'name', link: true],
                                 [heading: 'Homepage', property: 'homepage', sort: 'homepage', outGoingLink: true],
                                 [heading: 'Last Updated', property: 'lastUpdated', sort: 'lastUpdated'],
-                                [heading: 'Status', sort: 'status', property: 'status.value'],
+                                [heading: 'Status', property: 'status.value', sort: 'status'],
                                 [heading: 'Current Titles', property: 'currentTippCount']
 
                         ]
@@ -469,7 +469,7 @@ class GlobalSearchTemplatesService {
                                 ],
                         ],
                         qbeResults: [
-                                [heading: 'Package', property: 'name', sort: 'name', link: true],
+                                [heading: 'Name', property: 'name', sort: 'name', link: true],
                                 [heading: 'Provider', property: 'provider.name', sort: 'provider.name', link: true],
                                 [heading: 'Nominal Platform', property: 'nominalPlatform.name', sort: 'nominalPlatform.name', link: true],
                                 [heading: 'Content Type', property: 'contentType.value', sort: 'contentType'],
@@ -842,7 +842,7 @@ class GlobalSearchTemplatesService {
 
                         ],
                         qbeResults: [
-                                [heading: 'Package', property: 'name', sort: 'name', link: true],
+                                [heading: 'Name', property: 'name', sort: 'name', link: true],
                                 [heading: 'Provider', property: 'provider.name', sort: 'provider.name', link: true],
                                 [heading: 'Nominal Platform', property: 'nominalPlatform.name', sort: 'nominalPlatform.name', link: true],
                                 [heading: 'Curatory Groups', property: 'curatoryGroupsCuratoryGroup', link: true],
@@ -893,7 +893,7 @@ class GlobalSearchTemplatesService {
                                         prompt     : 'Name',
                                         qparam     : 'qp_name',
                                         placeholder: 'Name',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'name']
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'name', 'wildcard': 'B']
                                 ],
                                 [
                                         type       : 'lookup',
@@ -1034,7 +1034,7 @@ class GlobalSearchTemplatesService {
                                         prompt     : 'Description',
                                         qparam     : 'qp_desc',
                                         placeholder: 'Category Description',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'desc']
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'desc', 'wildcard': 'B']
                                 ],
 
                                 [
@@ -1071,7 +1071,7 @@ class GlobalSearchTemplatesService {
                                         prompt     : 'Description',
                                         qparam     : 'qp_desc',
                                         placeholder: 'Description',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'desc']
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'desc', 'wildcard': 'B']
                                 ],
 
                                 [
@@ -1243,7 +1243,7 @@ class GlobalSearchTemplatesService {
                                         prompt     : 'Title',
                                         qparam     : 'qp_title',
                                         placeholder: 'Title',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'name'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'name', 'wildcard': 'B'],
                                 ],
 
                                 [
@@ -1456,7 +1456,7 @@ class GlobalSearchTemplatesService {
                                         prompt     : 'Title',
                                         qparam     : 'qp_title',
                                         placeholder: 'Title',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'name'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'name', 'wildcard': 'B'],
                                 ],
                                 [
                                         type     : 'dropDownGroup',
@@ -1610,7 +1610,7 @@ class GlobalSearchTemplatesService {
                                         prompt     : 'Username',
                                         qparam     : 'qp_name',
                                         placeholder: 'Username',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'username']
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'username', 'wildcard': 'B']
                                 ],
                                 [
                                         prompt     : 'Email',

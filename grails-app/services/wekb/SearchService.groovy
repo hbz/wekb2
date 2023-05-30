@@ -32,7 +32,7 @@ class SearchService {
         HQLBuilder.build(grailsApplication, qbetemplate, params, result, target_class, genericOIDService)
     }
 
-    Map search(User user = null, Map result, GrailsParameterMap params, String responseFormat = null){
+    Map search(User user = null, Map result, GrailsParameterMap params){
         FlashScope flash = getCurrentFlashScope()
 
         if ( params.init ) {

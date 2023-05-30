@@ -39,7 +39,7 @@
         <div class="menu">
             <g:link class="item" controller="search" action="index">All Components</g:link>
             <g:link class="item" controller="search" action="componentSearch"
-                    params="[qbe: 'g:packages']">Packages</g:link>
+                    params="[qbe: 'g:publicPackages']">Packages</g:link>
             <g:link class="item" controller="search" action="componentSearch"
                     params="[qbe: 'g:platforms']">Platforms</g:link>
             <g:link class="item" controller="search" action="componentSearch"

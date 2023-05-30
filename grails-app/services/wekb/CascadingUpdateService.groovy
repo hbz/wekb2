@@ -33,43 +33,43 @@ class CascadingUpdateService {
         if (obj.tipp) {
             if(obj.tipp instanceof TitleInstancePackagePlatform) {
                 if (!obj.tipp.kbartImportRunning) {
-                    update(obj.tipp, lastUpdated)
+                    update(obj.tipp, lastUpdated ?: new Date())
                 }
             } else {
-                update(obj.tipp, lastUpdated)
+                update(obj.tipp, lastUpdated ?: new Date())
             }
         }
     }
 
     void update(Contact obj, Date lastUpdated) {
-        if (obj.org) { update(obj.org, lastUpdated) }
+        if (obj.org) { update(obj.org, lastUpdated ?: new Date()) }
     }
 
 
     void update(Identifier obj, Date lastUpdated) {
-        if (obj.org) { update(obj.org, lastUpdated) }
-        if (obj.pkg) { update(obj.pkg, lastUpdated) }
+        if (obj.org) { update(obj.org, lastUpdated ?: new Date()) }
+        if (obj.pkg) { update(obj.pkg, lastUpdated ?: new Date()) }
         if (obj.tipp && !obj.tipp.kbartImportRunning) {
-            update(obj.tipp, lastUpdated)
+            update(obj.tipp, lastUpdated ?: new Date())
         }
     }
 
     void update(ComponentLanguage obj, Date lastUpdated) {
-        if (obj.tipp) { update(obj.tipp, lastUpdated) }
+        if (obj.tipp) { update(obj.tipp, lastUpdated ?: new Date()) }
     }
 
     void update(ComponentVariantName obj, Date lastUpdated) {
-        if (obj.pkg) { update(obj.pkg, lastUpdated) }
-        if (obj.org) { update(obj.org, lastUpdated) }
+        if (obj.pkg) { update(obj.pkg, lastUpdated ?: new Date()) }
+        if (obj.org) { update(obj.org, lastUpdated ?: new Date()) }
     }
 
     void update(PackageArchivingAgency obj, Date lastUpdated) {
-        if (obj.pkg) { update(obj.pkg, lastUpdated) }
+        if (obj.pkg) { update(obj.pkg, lastUpdated ?: new Date()) }
     }
 
     void update(TitleInstancePackagePlatform obj, Date lastUpdated) {
         if (obj.pkg && !obj.kbartImportRunning) {
-            update(obj.pkg, lastUpdated)
+            update(obj.pkg, lastUpdated ?: new Date())
             TitleInstancePackagePlatform.executeUpdate("update TitleInstancePackagePlatform tipp set tipp.lastUpdated = :lastUpdated where tipp = :obj", [
                     lastUpdated: lastUpdated, obj: obj
             ])
@@ -77,6 +77,6 @@ class CascadingUpdateService {
     }
 
     void update(TIPPCoverageStatement obj, Date lastUpdated) {
-        if (obj.tipp) { update(obj.tipp, lastUpdated) }
+        if (obj.tipp) { update(obj.tipp, lastUpdated ?: new Date()) }
     }
 }

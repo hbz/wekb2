@@ -129,10 +129,10 @@ class TitleInstancePackagePlatform  extends AbstractBase implements Auditable {
     uuid column: 'tipp_uuid'
     name column: 'tipp_name', type: 'text', index: 'tipp_name_idx'
 
-    lastUpdated column: 'tipp_last_updated'
-    dateCreated column: 'tipp_date_created'
+    lastUpdated column: 'tipp_last_updated', index: 'tipp_last_updated_idx'
+    dateCreated column: 'tipp_date_created', index: 'tipp_date_created_idx'
 
-    status column: 'tipp_status_rv_fk'
+    status column: 'tipp_status_rv_fk', index: 'tipp_status_idx'
 
     note column: 'tipp_note', type: 'text'
     accessType column: 'tipp_access_type'
@@ -247,23 +247,19 @@ class TitleInstancePackagePlatform  extends AbstractBase implements Auditable {
 
   @Transient
   public String getTitleID(){
-      String result = null
-      if(pkg.kbartSource && pkg.kbartSource.targetNamespace){
-        result = getIdentifierValue(pkg.kbartSource.targetNamespace.value)
-      }else if(hostPlatform.titleNamespace){
-        result = getIdentifierValue(hostPlatform.titleNamespace.value)
-      }
+    String result = null
+    result = getIdentifierValue('title_id')
     return result
   }
 
   @Transient
   public String getPrintIdentifier(){
-    ids?.findAll{ it.namespace.value.toLowerCase() in ["issn", "pisbn"]}?.value.join(';')
+    ids?.findAll{ it.namespace.value.toLowerCase() in ["issn", "isbn"]}?.value.join(';')
   }
 
   @Transient
   public String getOnlineIdentifier(){
-    ids?.findAll{ it.namespace.value.toLowerCase() in ["eissn", "isbn"]}?.value.join(';')
+    ids?.findAll{ it.namespace.value.toLowerCase() in ["eissn", "eisbn"]}?.value.join(';')
   }
 
   @Transient

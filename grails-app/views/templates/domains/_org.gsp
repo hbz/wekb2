@@ -9,6 +9,14 @@
 </dl>
 <dl>
     <dt class="control-label">
+        Abbreviated Name
+    </dt>
+    <dd>
+        <semui:xEditable owner="${d}" field="abbreviatedName" required="true"/>
+    </dd>
+</dl>
+<dl>
+    <dt class="control-label">
         Status
     </dt>
     <dd>

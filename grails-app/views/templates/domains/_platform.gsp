@@ -38,7 +38,7 @@
         <semui:xEditable owner="${d}" field="primaryUrl" validation="url" outGoingLink="true"/>
     </dd>
 </dl>
-<dl>
+%{--<dl>
     <dt class="control-label">
         Title Namespace
     </dt>
@@ -46,7 +46,7 @@
         <semui:xEditableManyToOne owner="${d}" field="titleNamespace" baseClass="wekb.IdentifierNamespace"
                                   filter1="TitleInstancePackagePlatform" >${(d.titleNamespace?.name) ?: d.titleNamespace?.value}</semui:xEditableManyToOne>
     </dd>
-</dl>
+</dl>--}%
 <dl>
     <dt class="control-label">IP Auth Supported
     <dd><semui:xEditableRefData owner="${d}" field="ipAuthentication"

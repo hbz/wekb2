@@ -1,15 +1,18 @@
 package wekb
 
-import org.springframework.security.access.annotation.Secured
-import wekb.helper.RCConstants
+import grails.plugin.springsecurity.SpringSecurityService
+import grails.web.servlet.mvc.GrailsParameterMap
+import wekb.auth.User
 import grails.converters.JSON
-import wekb.helper.RDStore
 
 import java.security.SecureRandom
 
-@Secured(['ROLE_API', 'IS_AUTHENTICATED_FULLY'])
+
 class Api2Controller {
     SecureRandom rand = new SecureRandom()
+
+    Api2Service api2Service
+    SpringSecurityService springSecurityService
 
     /**
      * Check if the api is up. Just return true.
@@ -55,7 +58,7 @@ class Api2Controller {
         ]
 
         def json = data as JSON
-        //  log.debug (json)
+        //log.debug("json:"+json.toString())
         render json
         //    render (text: "${params.callback}(${json})", contentType: "application/javascript", encoding: "UTF-8")
     }
@@ -63,51 +66,168 @@ class Api2Controller {
     def index() {
     }
 
+    def searchApi() {
+        log.info("Api2Controller:searchApi ${params}")
+
+        Map<String, Object> result = checkPermisson(params)
+
+        if(result.code == 'success') {
+
+            if (!params.componentType && !params.uuid) {
+                result.code = 'error'
+                result.message = "No componentType set!"
+            }else {
+                try {
+                    result = api2Service.search(result, params)
+                } catch (Throwable e) {
+                    result.code = 'error'
+                    result.message = e.message
+                    log.error("Problem by search api: ", e)
+                }
+            }
+        }
+
+
+        render result as JSON
+
+    }
 
     def namespaces() {
+        log.info("Api2Controller:namespaces ${params}")
+        Map<String, Object> result = checkPermisson(params)
 
-        def result = []
-        def all_ns = null
+        if(result.code == 'success') {
+            def results = []
+            def all_ns = null
 
-        if (params.category && params.category?.trim().size() > 0) {
-            all_ns = IdentifierNamespace.findAllByFamily(params.category)
-        } else {
-            all_ns = IdentifierNamespace.findAll()
+            if (params.category && params.category?.trim().size() > 0) {
+                all_ns = IdentifierNamespace.findAllByFamily(params.category)
+            } else {
+                all_ns = IdentifierNamespace.findAll()
+            }
+
+            all_ns.each { ns ->
+                results.add([value: ns.value, namespaceName: ns.name, category: ns.family ?: "", id: ns.id])
+            }
+
+            //Add information to result
+            result.result_count_total = all_ns.size()
+            result.result_count = all_ns.size()
+
+            result.result = results
         }
 
-        all_ns.each { ns ->
-            result.add([value: ns.value, namespaceName: ns.name, category: ns.family ?: "", id: ns.id])
-        }
-
-        apiReturn(result)
-    }
-
-    def groups() {
-
-        def result = []
-
-        CuratoryGroup.list().each {
-            result << [
-                    'id'    : it.id,
-                    'name'  : it.name,
-                    'status': it.status?.value ?: null,
-                    'uuid'  : it.uuid
-            ]
-        }
-
-        apiReturn(result)
-    }
-
-    def sushiSources() {
-        Map<String, Object> result = [:]
-        RefdataValue yes = RDStore.YN_YES
-        //Set<Platform> counter4Platforms = Platform.findAllByCounterR4SushiApiSupportedAndCounterR5SushiApiSupportedNotEqual(yes, yes).toSet(), counter5Platforms = Platform.findAllByCounterR5SushiApiSupported(yes).toSet()
-        Set counter4Platforms = Platform.executeQuery("select plat.uuid, plat.counterR4SushiServerUrl, plat.statisticsUpdate.value from Platform plat where plat.counterR4SushiApiSupported = :r4support and plat.counterR5SushiApiSupported != :r5support and plat.counterR4SushiServerUrl is not null", [r4support: yes, r5support: yes]).toSet()
-        Set counter5Platforms = Platform.executeQuery("select plat.uuid, plat.counterR5SushiServerUrl, plat.statisticsUpdate.value from Platform plat where plat.counterR5SushiApiSupported = :r5support and plat.counterR5SushiServerUrl is not null", [r5support: yes]).toSet()
-        result.counter4ApiSources = counter4Platforms.size() > 0 ? counter4Platforms : []
-        result.counter5ApiSources = counter5Platforms.size() > 0 ? counter5Platforms : []
         render result as JSON
     }
 
+    def refdataCategories() {
+        log.info("Api2Controller:refdataCategories ${params}")
+        Map<String, Object> result = checkPermisson(params)
+
+        if(result.code == 'success') {
+            def results = []
+            RefdataCategory.list().each { RefdataCategory refdataCategory ->
+                Map refCatMap = ['id'     : refdataCategory.id,
+                                 'desc'   : refdataCategory.desc,
+                                 'desc_en': refdataCategory.desc_en,
+                                 'desc_de': refdataCategory.desc_de]
+
+                refCatMap.refDataValues = []
+
+                refdataCategory.values.each { RefdataValue refdataValue ->
+                    Map refValueMap = ['value'   : refdataValue.value,
+                                       'value_de': refdataValue.value_de,
+                                       'value_en': refdataValue.value_en]
+
+                    refCatMap.refDataValues << refValueMap
+                }
+
+                results << refCatMap
+
+            }
+            //Add information to result
+            result.result_count_total = results.size()
+            result.result_count = results.size()
+
+            result.result = results
+        }
+
+        render result as JSON
+    }
+
+    def groups() {
+        log.info("Api2Controller:groups ${params}")
+        Map<String, Object> result = checkPermisson(params)
+
+        if(result.code == 'success') {
+            def results = []
+            CuratoryGroup.list().each {
+                results << [
+                        'id'    : it.id,
+                        'name'  : it.name,
+                        'status': it.status?.value ?: null,
+                        'uuid'  : it.uuid
+                ]
+            }
+            result.result = results
+            //Add information to result
+            result.result_count_total = results.size()
+            result.result_count = results.size()
+
+            result.result = results
+        }
+
+        render result as JSON
+    }
+
+    def sushiSources() {
+        log.info("Api2Controller:sushiSources ${params}")
+        Map<String, Object> result = checkPermisson(params, 'ROLE_SUSHI')
+
+        if(result.code == 'success') {
+           result = api2Service.sushiSources(params, result)
+        }
+        render result as JSON
+    }
+
+    private Map checkPermisson(GrailsParameterMap params, String checkRole = null){
+        Map result = [code: 'success', message: '']
+        User user
+
+        if(!springSecurityService.loggedIn){
+
+            if (params.username && params.password) {
+                springSecurityService.reauthenticate(params.username, params.password)
+
+                if(!springSecurityService.loggedIn){
+                    result.code = 'error'
+                    result.message = 'Your login is not correct!'
+                    return result
+                }
+            }else {
+                result.code = 'error'
+                result.message = 'Please set your authentication to login!'
+                return result
+            }
+        }
+
+        user = springSecurityService.getCurrentUser()
+
+        if(checkRole){
+            if (!user.hasRole('ROLE_SUSHI')) {
+                result.code = 'error'
+                result.message = 'This user does not have permission to access the api!'
+                return result
+            }
+        }else {
+            if (!user.apiUserStatus) {
+                result.code = 'error'
+                result.message = 'This user does not have permission to access the api!'
+                return result
+            }
+        }
+
+        return result
+    }
 
 }

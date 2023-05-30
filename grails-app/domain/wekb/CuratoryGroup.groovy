@@ -68,7 +68,7 @@ class CuratoryGroup extends AbstractBase implements Auditable {
 
     params.sort = 'name'
 
-    ql = CuratoryGroup.findAllByNameIlikeAndStatusNotEqual("${params.q}%", status_deleted ,params)
+    ql = CuratoryGroup.findAllByNameIlikeAndStatusNotEqual("%${params.q}%", status_deleted ,params)
 
     ql.each { t ->
         result.add([id:"${t.class.name}:${t.id}", text:"${t.name}", status:"${t.status?.value}"])
