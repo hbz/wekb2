@@ -1342,6 +1342,12 @@ class Api2Service {
             cleaned_params.put('status', refdataValueOIDs)
             return
         }
+
+        if(parameterMap.status.contains(',')){
+            List listOfStatus = parameterMap.status.split(',')
+            parameterMap.status = listOfStatus
+        }
+
         setRefdataValueFromGrailsParameterMap(cleaned_params, parameterMap, 'status', 'status')
         return
     }
