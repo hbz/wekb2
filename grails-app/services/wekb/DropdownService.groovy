@@ -29,6 +29,12 @@ class DropdownService {
             case 'publisher':
                 getAllPossiblePublisher(pkg, listStatus)
                 break
+            case 'accessEndDate':
+                getAllPossibleAccessEndDateYear(pkg, listStatus)
+                break
+            case 'accessStartDate':
+                getAllPossibleAccessStartDateYear(pkg, listStatus)
+                break
             default:
                 []
                 break
@@ -125,6 +131,36 @@ class DropdownService {
         }
 
         dateFirstOnlines
+    }
+
+    Set<String> getAllPossibleAccessStartDateYear(Package pkg = null, List listStatus) {
+
+        Set<String> dates = []
+        if(pkg) {
+            dates = TitleInstancePackagePlatform.executeQuery("select distinct(Year(accessStartDate)) from TitleInstancePackagePlatform where accessStartDate is not null and pkg = :pkg and status in (:status) order by YEAR(accessStartDate)", [pkg: pkg, status: listStatus])
+        }else {
+            dates = TitleInstancePackagePlatform.executeQuery("select distinct(Year(accessStartDate)) from TitleInstancePackagePlatform where accessStartDate is not null and status in (:status) order by YEAR(accessStartDate)", [status: listStatus])
+        }
+        if(dates.size() == 0){
+            dates << "No access start date found!"
+        }
+
+        dates
+    }
+
+    Set<String> getAllPossibleAccessEndDateYear(Package pkg = null, List listStatus) {
+
+        Set<String> dates = []
+        if(pkg) {
+            dates = TitleInstancePackagePlatform.executeQuery("select distinct(Year(accessEndDate)) from TitleInstancePackagePlatform where accessEndDate is not null and pkg = :pkg and status in (:status) order by YEAR(accessEndDate)", [pkg: pkg, status: listStatus])
+        }else {
+            dates = TitleInstancePackagePlatform.executeQuery("select distinct(Year(accessEndDate)) from TitleInstancePackagePlatform where accessEndDate is not null and status in (:status) order by YEAR(accessEndDate)", [status: listStatus])
+        }
+        if(dates.size() == 0){
+            dates << "No access end date found!"
+        }
+
+        dates
     }
 
 

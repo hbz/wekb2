@@ -722,6 +722,22 @@ class GlobalSearchTemplatesService {
                                         advancedSearch: [title: "Search Titles by ...", category: 'Title']
                                 ],
                                 [
+                                        type     : 'dropDownGroup',
+                                        dropDownType  : 'accessStartDate',
+                                        prompt     : 'Access Start Date Year',
+                                        qparam     : 'qp_accessStartDate',
+                                        placeholder: 'Access Start Date Year',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eqYear', 'prop': 'tipps.accessStartDate'],
+                                ],
+                                [
+                                        type     : 'dropDownGroup',
+                                        dropDownType  : 'accessEndDate',
+                                        prompt     : 'Access End Date Year',
+                                        qparam     : 'qp_accessEndDate',
+                                        placeholder: 'Access End Date Year',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eqYear', 'prop': 'tipps.accessEndDate'],
+                                ],
+                                [
                                         type       : 'lookup',
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.DDC,
@@ -1356,6 +1372,22 @@ class GlobalSearchTemplatesService {
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eqYear', 'prop': 'dateFirstOnline'],
                                 ],
                                 [
+                                        type     : 'dropDownGroup',
+                                        dropDownType  : 'accessStartDate',
+                                        prompt     : 'Access Start Date Year',
+                                        qparam     : 'qp_accessStartDate',
+                                        placeholder: 'Access Start Date Year',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eqYear', 'prop': 'accessStartDate'],
+                                ],
+                                [
+                                        type     : 'dropDownGroup',
+                                        dropDownType  : 'accessEndDate',
+                                        prompt     : 'Access End Date Year',
+                                        qparam     : 'qp_accessEndDate',
+                                        placeholder: 'Access End Date Year',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eqYear', 'prop': 'accessEndDate'],
+                                ],
+                                [
                                         type       : 'lookup',
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.DDC,
@@ -1533,6 +1565,22 @@ class GlobalSearchTemplatesService {
                                         qparam     : 'qp_dateFirstOnlineYear',
                                         placeholder: 'Date First Online Year',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eqYear', 'prop': 'dateFirstOnline'],
+                                ],
+                                [
+                                        type     : 'dropDownGroup',
+                                        dropDownType  : 'accessStartDate',
+                                        prompt     : 'Access Start Date Year',
+                                        qparam     : 'qp_accessStartDate',
+                                        placeholder: 'Access Start Date Year',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eqYear', 'prop': 'accessStartDate'],
+                                ],
+                                [
+                                        type     : 'dropDownGroup',
+                                        dropDownType  : 'accessEndDate',
+                                        prompt     : 'Access End Date Year',
+                                        qparam     : 'qp_accessEndDate',
+                                        placeholder: 'Access End Date Year',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eqYear', 'prop': 'accessEndDate'],
                                 ],
                                 [
                                         type       : 'lookup',
