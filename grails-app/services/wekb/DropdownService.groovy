@@ -7,7 +7,7 @@ import wekb.helper.RDStore
 class DropdownService {
 
 
-    def selectedDropDown(String dropDownType, Package pkg = null, def status){
+    def selectedDropDown(String dropDownType, Package pkg = null, def status = null){
         List listStatus = status ? [RefdataValue.get(Long.parseLong(status))] : [RDStore.KBC_STATUS_CURRENT, RDStore.KBC_STATUS_DELETED, RDStore.KBC_STATUS_EXPECTED, RDStore.KBC_STATUS_RETIRED]
 
         switch (dropDownType) {

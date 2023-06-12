@@ -728,6 +728,7 @@ class GlobalSearchTemplatesService {
                                         qparam     : 'qp_accessStartDate',
                                         placeholder: 'Access Start Date Year',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eqYear', 'prop': 'tipps.accessStartDate'],
+                                        advancedSearch: [title: "Search Titles by ...", category: 'Title']
                                 ],
                                 [
                                         type     : 'dropDownGroup',
@@ -736,6 +737,7 @@ class GlobalSearchTemplatesService {
                                         qparam     : 'qp_accessEndDate',
                                         placeholder: 'Access End Date Year',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eqYear', 'prop': 'tipps.accessEndDate'],
+                                        advancedSearch: [title: "Search Titles by ...", category: 'Title']
                                 ],
                                 [
                                         type       : 'lookup',
