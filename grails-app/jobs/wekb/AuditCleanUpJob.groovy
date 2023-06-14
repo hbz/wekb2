@@ -15,7 +15,7 @@ class AuditCleanUpJob {
 
     static triggers = {
         // Cron timer.
-        cron name: 'AuditCleanUpJob', cronExpression: "0 10 11 * * ? *" // daily at 6:00 am
+        cron name: 'AuditCleanUpJob', cronExpression: "0 0 6 * * ? *" // daily at 6:00 am
     }
 
     def execute() {
