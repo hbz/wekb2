@@ -109,7 +109,6 @@ class WorkflowService {
         log.debug("processAction -> result: ${result}, params:" + params)
         result.objects_to_action.each {
             boolean editable = accessService.checkEditableObject(it, params)
-            println("Moe"+editable)
             List availableActions = availableActions(it.class.name)
             Map selectedActionMap = [:]
             availableActions.each {
