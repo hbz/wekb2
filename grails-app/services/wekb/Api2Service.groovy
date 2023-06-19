@@ -4,13 +4,13 @@ import grails.core.GrailsApplication
 import grails.gorm.transactions.Transactional
 import grails.web.servlet.mvc.GrailsParameterMap
 import wekb.helper.RDStore
+import wekb.utils.DateUtils
 
 import java.text.Normalizer
 
 @Transactional
 class Api2Service {
 
-    DateFormatService dateFormatService
     GrailsApplication grailsApplication
     GenericOIDService genericOIDService
 
@@ -438,8 +438,8 @@ class Api2Service {
              result.status = object.status?.value
              result.componentType = object.class.simpleName
 
-             result.lastUpdatedDisplay = dateFormatService.formatIsoTimestamp(object.lastUpdated)
-             result.dateCreatedDisplay = dateFormatService.formatIsoTimestamp(object.dateCreated)
+             result.lastUpdatedDisplay = DateUtils.getSDF_ISO().format(object.lastUpdated)
+             result.dateCreatedDisplay = DateUtils.getSDF_ISO().format(object.dateCreated)
 
              if(object.provider){
                  result.cpname = object.provider.name
@@ -498,7 +498,7 @@ class Api2Service {
                         frequency       : object.kbartSource.frequency?.value,
                 ]
                 if (object.kbartSource.lastRun){
-                    result.source.lastRun = dateFormatService.formatIsoTimestamp(object.kbartSource.lastRun)
+                    result.source.lastRun = DateUtils.getSDF_ISO().format(object.kbartSource.lastRun)
                 }
             }else {
                 result.source = []
@@ -564,8 +564,8 @@ class Api2Service {
              result.status = object.status?.value
              result.componentType = object.class.simpleName
 
-             result.lastUpdatedDisplay = dateFormatService.formatIsoTimestamp(object.lastUpdated)
-             result.dateCreatedDisplay = dateFormatService.formatIsoTimestamp(object.dateCreated)
+             result.lastUpdatedDisplay = DateUtils.getSDF_ISO().format(object.lastUpdated)
+             result.dateCreatedDisplay = DateUtils.getSDF_ISO().format(object.dateCreated)
 
              result.kbartDownloaderURL = object.kbartDownloaderURL
              result.metadataDownloaderURL = object.metadataDownloaderURL
@@ -615,8 +615,8 @@ class Api2Service {
             result.status = object.status?.value
             result.componentType = object.class.simpleName
 
-            result.lastUpdatedDisplay = dateFormatService.formatIsoTimestamp(object.lastUpdated)
-            result.dateCreatedDisplay = dateFormatService.formatIsoTimestamp(object.dateCreated)
+            result.lastUpdatedDisplay = DateUtils.getSDF_ISO().format(object.lastUpdated)
+            result.dateCreatedDisplay = DateUtils.getSDF_ISO().format(object.dateCreated)
 
             result.cpname = object.provider?.name
             result.provider = object.provider ? object.provider.getOID() : ""
@@ -627,7 +627,7 @@ class Api2Service {
 
             result.titleNamespace = object.titleNamespace?.value
 
-            result.lastAuditDate = object.lastAuditDate ? dateFormatService.formatIsoTimestamp(object.lastAuditDate) : ""
+            result.lastAuditDate = object.lastAuditDate ? DateUtils.getSDF_ISO().format(object.lastAuditDate) : ""
 
             result.ipAuthentication = object.ipAuthentication?.value
 
@@ -684,8 +684,8 @@ class Api2Service {
             result.status = object.status?.value
             result.componentType = object.class.simpleName
 
-            result.lastUpdatedDisplay = dateFormatService.formatIsoTimestamp(object.lastUpdated)
-            result.dateCreatedDisplay = dateFormatService.formatIsoTimestamp(object.dateCreated)
+            result.lastUpdatedDisplay = DateUtils.getSDF_ISO().format(object.lastUpdated)
+            result.dateCreatedDisplay = DateUtils.getSDF_ISO().format(object.dateCreated)
 
             if (object.pkg) {
                 result.tippPackage = object.pkg.getOID()
@@ -702,11 +702,11 @@ class Api2Service {
             result.titleType = object.getTitleType() ?: 'Unknown'
             result.url = object.url
 
-            result.dateFirstOnline = object.dateFirstOnline ? dateFormatService.formatIsoTimestamp(object.dateFirstOnline) : ""
-            result.dateFirstInPrint = object.dateFirstInPrint ? dateFormatService.formatIsoTimestamp(object.dateFirstInPrint) : ""
-            result.accessStartDate = object.accessStartDate ? dateFormatService.formatIsoTimestamp(object.accessStartDate) : ""
-            result.accessEndDate = object.accessEndDate ? dateFormatService.formatIsoTimestamp(object.accessEndDate) : ""
-            result.lastChangedExternal = object.lastChangedExternal ? dateFormatService.formatIsoTimestamp(object.lastChangedExternal) : ""
+            result.dateFirstOnline = object.dateFirstOnline ? DateUtils.getSDF_ISO().format(object.dateFirstOnline) : ""
+            result.dateFirstInPrint = object.dateFirstInPrint ? DateUtils.getSDF_ISO().format(object.dateFirstInPrint) : ""
+            result.accessStartDate = object.accessStartDate ? DateUtils.getSDF_ISO().format(object.accessStartDate) : ""
+            result.accessEndDate = object.accessEndDate ? DateUtils.getSDF_ISO().format(object.accessEndDate) : ""
+            result.lastChangedExternal = object.lastChangedExternal ? DateUtils.getSDF_ISO().format(object.lastChangedExternal) : ""
 
             result.medium = object.medium?.value
             result.publicationType = object.publicationType?.value
@@ -734,10 +734,10 @@ class Api2Service {
                 ArrayList<TIPPCoverageStatement> coverage_src = object.coverageStatements
                 coverage_src.each { TIPPCoverageStatement tcs ->
                     def cst = [:]
-                    if (tcs.startDate) cst.startDate = dateFormatService.formatIsoTimestamp(tcs.startDate)
+                    if (tcs.startDate) cst.startDate = DateUtils.getSDF_ISO().format(tcs.startDate)
                     cst.startVolume = tcs.startVolume ?: ""
                     cst.startIssue = tcs.startIssue ?: ""
-                    if (tcs.endDate) cst.endDate = dateFormatService.formatIsoTimestamp(tcs.endDate)
+                    if (tcs.endDate) cst.endDate = DateUtils.getSDF_ISO().format(tcs.endDate)
                     cst.endVolume = tcs.endVolume ?: ""
                     cst.endIssue = tcs.endIssue ?: ""
                     cst.embargo = tcs.embargo ?: ""
@@ -762,10 +762,10 @@ class Api2Service {
                 price.amount = String.valueOf(p.price) ?: ""
                 price.currency = p.currency?.value ?: ""
                 if (p.startDate){
-                    price.startDate = dateFormatService.formatIsoTimestamp(p.startDate)
+                    price.startDate = DateUtils.getSDF_ISO().format(p.startDate)
                 }
                 if (p.endDate){
-                    price.endDate = dateFormatService.formatIsoTimestamp(p.endDate)
+                    price.endDate = DateUtils.getSDF_ISO().format(p.endDate)
                 }
                 result.prices.add(price)
             }
@@ -798,12 +798,12 @@ class Api2Service {
             result.name = object.name
             result.componentType = object.componentType
             result.status = object.status.value
-            result.dateCreated = dateFormatService.formatIsoTimestamp(object.dateCreated)
-            result.lastUpdated = dateFormatService.formatIsoTimestamp(object.lastUpdated)
-            result.oldDateCreated = dateFormatService.formatIsoTimestamp(object.oldDateCreated)
-            result.oldLastUpdated = dateFormatService.formatIsoTimestamp(object.oldLastUpdated)
+            result.dateCreated = DateUtils.getSDF_ISO().format(object.dateCreated)
+            result.lastUpdated = DateUtils.getSDF_ISO().format(object.lastUpdated)
+            result.oldDateCreated = DateUtils.getSDF_ISO().format(object.oldDateCreated)
+            result.oldLastUpdated = DateUtils.getSDF_ISO().format(object.oldLastUpdated)
             result.oldId = object.oldId
-            result.lastUpdatedDisplay = dateFormatService.formatIsoTimestamp(object.lastUpdated)
+            result.lastUpdatedDisplay = DateUtils.getSDF_ISO().format(object.lastUpdated)
 
             result
         }
@@ -822,8 +822,8 @@ class Api2Service {
             result.status = object.status?.value
             result.componentType = object.class.simpleName
 
-            result.lastUpdatedDisplay = dateFormatService.formatIsoTimestamp(object.lastUpdated)
-            result.dateCreatedDisplay = dateFormatService.formatIsoTimestamp(object.dateCreated)
+            result.lastUpdatedDisplay = DateUtils.getSDF_ISO().format(object.lastUpdated)
+            result.dateCreatedDisplay = DateUtils.getSDF_ISO().format(object.dateCreated)
 
             if(object.provider){
                 result.cpname = object.provider.name
@@ -877,7 +877,7 @@ class Api2Service {
                        frequency       : object.kbartSource.frequency?.value,
                ]
                if (object.kbartSource.lastRun){
-                   result.source.lastRun = dateFormatService.formatIsoTimestamp(object.kbartSource.lastRun)
+                   result.source.lastRun = DateUtils.getSDF_ISO().format(object.kbartSource.lastRun)
                }
            }else {
                result.source = []
@@ -944,8 +944,8 @@ class Api2Service {
             result.status = object.status?.value
             result.componentType = object.class.simpleName
 
-            result.lastUpdatedDisplay = dateFormatService.formatIsoTimestamp(object.lastUpdated)
-            result.dateCreatedDisplay = dateFormatService.formatIsoTimestamp(object.dateCreated)
+            result.lastUpdatedDisplay = DateUtils.getSDF_ISO().format(object.lastUpdated)
+            result.dateCreatedDisplay = DateUtils.getSDF_ISO().format(object.dateCreated)
 
             result.kbartDownloaderURL = object.kbartDownloaderURL
             result.metadataDownloaderURL = object.metadataDownloaderURL
@@ -995,8 +995,8 @@ class Api2Service {
             result.status = object.status?.value
             result.componentType = object.class.simpleName
 
-            result.lastUpdatedDisplay = dateFormatService.formatIsoTimestamp(object.lastUpdated)
-            result.dateCreatedDisplay = dateFormatService.formatIsoTimestamp(object.dateCreated)
+            result.lastUpdatedDisplay = DateUtils.getSDF_ISO().format(object.lastUpdated)
+            result.dateCreatedDisplay = DateUtils.getSDF_ISO().format(object.dateCreated)
 
             result.cpname = object.provider?.name
             result.provider = object.provider ? object.provider.getOID() : ""
@@ -1007,7 +1007,7 @@ class Api2Service {
 
             result.titleNamespace = object.titleNamespace?.value
 
-            result.lastAuditDate = object.lastAuditDate ? dateFormatService.formatIsoTimestamp(object.lastAuditDate) : ""
+            result.lastAuditDate = object.lastAuditDate ? DateUtils.getSDF_ISO().format(object.lastAuditDate) : ""
 
             result.ipAuthentication = object.ipAuthentication?.value
 
@@ -1064,8 +1064,8 @@ class Api2Service {
             result.status = object.status?.value
             result.componentType = object.class.simpleName
 
-            result.lastUpdatedDisplay = dateFormatService.formatIsoTimestamp(object.lastUpdated)
-            result.dateCreatedDisplay = dateFormatService.formatIsoTimestamp(object.dateCreated)
+            result.lastUpdatedDisplay = DateUtils.getSDF_ISO().format(object.lastUpdated)
+            result.dateCreatedDisplay = DateUtils.getSDF_ISO().format(object.dateCreated)
 
             if (object.pkg) {
                 result.tippPackage = object.pkg.getOID()
@@ -1082,11 +1082,11 @@ class Api2Service {
             result.titleType = object.getTitleType() ?: 'Unknown'
             result.url = object.url
 
-            result.dateFirstOnline = object.dateFirstOnline ? dateFormatService.formatIsoTimestamp(object.dateFirstOnline) : ""
-            result.dateFirstInPrint = object.dateFirstInPrint ? dateFormatService.formatIsoTimestamp(object.dateFirstInPrint) : ""
-            result.accessStartDate = object.accessStartDate ? dateFormatService.formatIsoTimestamp(object.accessStartDate) : ""
-            result.accessEndDate = object.accessEndDate ? dateFormatService.formatIsoTimestamp(object.accessEndDate) : ""
-            result.lastChangedExternal = object.lastChangedExternal ? dateFormatService.formatIsoTimestamp(object.lastChangedExternal) : ""
+            result.dateFirstOnline = object.dateFirstOnline ? DateUtils.getSDF_ISO().format(object.dateFirstOnline) : ""
+            result.dateFirstInPrint = object.dateFirstInPrint ? DateUtils.getSDF_ISO().format(object.dateFirstInPrint) : ""
+            result.accessStartDate = object.accessStartDate ? DateUtils.getSDF_ISO().format(object.accessStartDate) : ""
+            result.accessEndDate = object.accessEndDate ? DateUtils.getSDF_ISO().format(object.accessEndDate) : ""
+            result.lastChangedExternal = object.lastChangedExternal ? DateUtils.getSDF_ISO().format(object.lastChangedExternal) : ""
 
             result.medium = object.medium?.value
             result.publicationType = object.publicationType?.value
@@ -1114,10 +1114,10 @@ class Api2Service {
                 ArrayList<TIPPCoverageStatement> coverage_src = object.coverageStatements
                 coverage_src.each { TIPPCoverageStatement tcs ->
                     def cst = [:]
-                    if (tcs.startDate) cst.startDate = dateFormatService.formatIsoTimestamp(tcs.startDate)
+                    if (tcs.startDate) cst.startDate = DateUtils.getSDF_ISO().format(tcs.startDate)
                     cst.startVolume = tcs.startVolume ?: ""
                     cst.startIssue = tcs.startIssue ?: ""
-                    if (tcs.endDate) cst.endDate = dateFormatService.formatIsoTimestamp(tcs.endDate)
+                    if (tcs.endDate) cst.endDate = DateUtils.getSDF_ISO().format(tcs.endDate)
                     cst.endVolume = tcs.endVolume ?: ""
                     cst.endIssue = tcs.endIssue ?: ""
                     cst.embargo = tcs.embargo ?: ""
@@ -1138,10 +1138,10 @@ class Api2Service {
                 price.amount = String.valueOf(p.price) ?: ""
                 price.currency = p.currency?.value ?: ""
                 if (p.startDate){
-                    price.startDate = dateFormatService.formatIsoTimestamp(p.startDate)
+                    price.startDate = DateUtils.getSDF_ISO().format(p.startDate)
                 }
                 if (p.endDate){
-                    price.endDate = dateFormatService.formatIsoTimestamp(p.endDate)
+                    price.endDate = DateUtils.getSDF_ISO().format(p.endDate)
                 }
                 result.prices.add(price)
             }*/
@@ -1180,12 +1180,12 @@ class Api2Service {
             result.name = object.name
             result.componentType = object.componentType
             result.status = object.status.value
-            result.dateCreated = dateFormatService.formatIsoTimestamp(object.dateCreated)
-            result.lastUpdated = dateFormatService.formatIsoTimestamp(object.lastUpdated)
-            result.oldDateCreated = dateFormatService.formatIsoTimestamp(object.oldDateCreated)
-            result.oldLastUpdated = dateFormatService.formatIsoTimestamp(object.oldLastUpdated)
+            result.dateCreated = DateUtils.getSDF_ISO().format(object.dateCreated)
+            result.lastUpdated = DateUtils.getSDF_ISO().format(object.lastUpdated)
+            result.oldDateCreated = DateUtils.getSDF_ISO().format(object.oldDateCreated)
+            result.oldLastUpdated = DateUtils.getSDF_ISO().format(object.oldLastUpdated)
             result.oldId = object.oldId
-            result.lastUpdatedDisplay = dateFormatService.formatIsoTimestamp(object.lastUpdated)
+            result.lastUpdatedDisplay = DateUtils.getSDF_ISO().format(object.lastUpdated)
 
             result
         }
@@ -1226,7 +1226,7 @@ class Api2Service {
 
         if (globalSearchComponentType) {
             def searchResult = [:]
-
+            def target_class
             Map apiSearchTemplate = getApiTemplate(globalSearchComponentType)
             if (apiSearchTemplate) {
 
@@ -1239,7 +1239,7 @@ class Api2Service {
                 log.debug("Execute query");
                 GrailsParameterMap cleaned_params = processCleanParameterMap(params)
 
-                def target_class = grailsApplication.getArtefact("Domain", apiSearchTemplate.baseclass);
+                target_class = grailsApplication.getArtefact("Domain", apiSearchTemplate.baseclass);
                 //HQLBuilder.build(grailsApplication, apiSearchTemplate, cleaned_params, searchResult, target_class, genericOIDService, "rows")
                 HQLBuilder.build(grailsApplication, apiSearchTemplate, cleaned_params, searchResult, target_class, genericOIDService)
 
