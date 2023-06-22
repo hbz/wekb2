@@ -145,6 +145,22 @@
                                         value="${params[field.qparam]}"/>
                             </div>
                         </g:if>
+                        <g:elseif test="${field.type == 'dropDownGroup'}">
+                            <div class="ui field">
+                                <div class="ui fluid search selection clearable dropdown">
+                                    <input type="hidden" name="${field.qparam}" value="${params[field.qparam]}">
+                                    <i class="dropdown icon"></i>
+
+                                    <div class="default text">Select ${field.prompt}</div>
+
+                                    <div class="menu">
+                                        <g:each in="${dropdownService.selectedDropDown(field.dropDownType, refObject, params.qp_status_id)}" var="item">
+                                            <div class="item" data-value="${item}">${item}</div>
+                                        </g:each>
+                                    </div>
+                                </div>
+                            </div>
+                        </g:elseif>
                         <g:else>
                             <div class="${field.contextTree.wildcard != null ? 'ui labeled input' : ''}">
                                 <g:if test="${field.contextTree.wildcard == 'B' || field.contextTree.wildcard == 'L'}"><div

@@ -41,6 +41,21 @@
                 <g:set var="object" value="${displayobj.getOID()}"/>
 
                 <g:set var="availableActions" value="${workflowService.availableActions(displayobj.class.name)}"/>
+                <g:set var="availableActionModals" value="${workflowService.availableActionsWithModal(displayobj.class.name)}"/>
+                <g:each var="availableActionModal" in="${availableActionModals}" status="i">
+                <semui:modal id="worklowModal_${availableActionModal.modalID}" title="${availableActionModal.label}" msgSave="Perform action">
+                        <g:form controller="workflow"
+                                action="action"
+                                params="[component: object, selectedAction: availableActionModal.code, curationOverride: params.curationOverride]"
+                                class="ui form">
+
+                            <h3 class="ui header">Info: </h3>
+                            <p>${availableActionModal.info}</p>
+
+                        </g:form>
+                    </semui:modal>
+                </g:each>
+
                 <g:if test="${availableActions}">
                     <div class="ui right floated buttons">
                         <semui:actionsDropdown text="Available actions">
@@ -66,9 +81,15 @@
                                             </g:if>
                                         </g:if>
                                         <g:else>
+                                            <g:if test="${action.modalID}">
+                                                <a class="ui item" href="#"
+                                                   onclick="$('#worklowModal_${action.modalID}').modal('show');">${action.label}</a>
+                                            </g:if>
+                                            <g:else>
                                             <semui:actionsDropdownItem controller="workflow" action="action"
                                                                        params="[component: object, selectedAction: action.code, curationOverride: params.curationOverride]"
                                                                        text="${action.label}"/>
+                                            </g:else>
                                         </g:else>
                                     </g:else>
                                 </g:each>
