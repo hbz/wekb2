@@ -14,6 +14,7 @@ class DateUtils {
     public static final String DATE_FORMAT_NOTIME           = 'default.date.format.notime'
     public static final String DATE_FORMAT_NOZ              = 'default.date.format.noZ'
     public static final String DATE_FORMAT_ONLYTIME         = 'default.date.format.onlytime'
+    public static final String DATE_FORMAT_ISO              = "yyyy-MM-dd'T'HH:mm:ss'Z'"
 
     /** This is a Utility-Class. There are only static methods. It is not necessary to create an instance */
     private DateUtils(){}
@@ -39,6 +40,10 @@ class DateUtils {
 
     static SimpleDateFormat getSDF_NoTime(){
         getSimpleDateFormatByToken(DATE_FORMAT_NOTIME)
+    }
+
+    static SimpleDateFormat getSDF_ISO(){
+        return new SimpleDateFormat(DATE_FORMAT_ISO)
     }
 
     static SimpleDateFormat getSDF_NoZ(){

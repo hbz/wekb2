@@ -57,8 +57,8 @@ class WorkflowService {
                         [code: 'objectMethod::currentWithTipps', label: 'Mark the package as current (with all Titles)', message: '', onlyAdmin: false, group: 2],
                         [code: 'objectMethod::deleteSoft', label: 'Mark the package as deleted (with all Titles)', message: '', onlyAdmin: false, group: 2],
                         [code: 'objectMethod::retireWithTipps', label: 'Mark the package as retired (with all Titles)', message: '', onlyAdmin: false, group: 2],
-                        [code: 'objectMethod::removeOnlyTipps', label: 'Remove only all Titles', message: '', onlyAdmin: false, group: 5],
-                        [code: 'objectMethod::removeWithTipps', label: 'Remove the package (with all Titles)', message: '', onlyAdmin: false, group: 6],
+                        [code: 'objectMethod::removeOnlyTipps', modalID: 'removeOnlyTipps', label: 'Remove only all Titles', message: '', onlyAdmin: false, group: 5],
+                        [code: 'objectMethod::removeWithTipps', modalID: 'removeWithTipps', label: 'Remove the package (with all Titles)', message: '', onlyAdmin: false, group: 6],
 
                         [code: 'workFlowMethod::manualKbartImport', label: 'Manual KBART Import', message: '', onlyAdmin: false, group: 1],
                         [code: 'workFlowMethod::updatePackageFromKbartSource', label: 'Trigger KBART Update (Changed Titles)', message: '', onlyAdmin: false, group: 1],
@@ -91,6 +91,20 @@ class WorkflowService {
         }
     }
 
+    List availableActionsWithModal(String domainClassName) {
+        switch (domainClassName) {
+            case Package.class.name:
+                [
+                        [modalID: 'removeOnlyTipps', code: 'objectMethod::removeOnlyTipps', label: 'Remove only all Titles', info: 'You are about to permanently remove all titles from your package. Are you sure you want to continue?'],
+                        [modalID: 'removeWithTipps', code: 'objectMethod::removeWithTipps', label: 'Remove the package (with all Titles)', info: 'You are about to permanently remove all titles from your package. Are you sure you want to continue?'],
+                ]
+                break
+            default:
+                []
+                break
+        }
+    }
+
     def processAction(result, params) {
         log.debug("processAction -> result: ${result}, params:" + params)
         result.objects_to_action.each {
@@ -110,6 +124,7 @@ class WorkflowService {
                     }
                 }else {
                     if (editable) {
+                        println(result)
                         result = processSelectedAction(result, result.selectedAction, it)
                     }
                 }
