@@ -3,6 +3,7 @@ package wekb
 import grails.core.GrailsApplication
 import grails.gorm.transactions.Transactional
 import grails.web.servlet.mvc.GrailsParameterMap
+import groovyx.gpars.GParsPool
 import wekb.helper.RDStore
 import wekb.utils.DateUtils
 
@@ -1262,15 +1263,19 @@ class Api2Service {
             result.result = []
             log.debug("Create result..")
 
-            for (def r : searchResult.recset) {
-                //LinkedHashMap<Object, Object> resultMap = mapDomainFieldsToSpecFields2(apiSearchTemplate, r)
-                LinkedHashMap<Object, Object> resultMap = mapDomainFieldsToSpecFields(r)
+            GParsPool.withPool(4) {
+                searchResult.recset.eachParallel { r ->
+                    KBComponent.withTransaction {
+                        //LinkedHashMap<Object, Object> resultMap = mapDomainFieldsToSpecFields2(apiSearchTemplate, r)
+                        LinkedHashMap<Object, Object> resultMap = mapDomainFieldsToSpecFields(r)
 
-                if(params.sortFields){
-                    resultMap = resultMap.sort {it.key}
+                        if(params.sortFields){
+                            resultMap = resultMap.sort { Map subResult -> subResult.key }
+                        }
+
+                        result.result.add(resultMap)
+                    }
                 }
-
-                result.result.add(resultMap)
             }
 
             def searchTime = System.currentTimeMillis() - start_time
