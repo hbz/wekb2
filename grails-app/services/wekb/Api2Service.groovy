@@ -4,6 +4,7 @@ import grails.core.GrailsApplication
 import grails.gorm.transactions.Transactional
 import grails.web.servlet.mvc.GrailsParameterMap
 import groovyx.gpars.GParsPool
+import org.grails.orm.hibernate.cfg.GrailsHibernateUtil
 import wekb.helper.RDStore
 import wekb.utils.DateUtils
 
@@ -1075,9 +1076,11 @@ class Api2Service {
             }
 
             if (object.hostPlatform) {
-                result.hostPlatform = object.hostPlatform.getOID()
-                result.hostPlatformName = object.hostPlatform.name
-                result.hostPlatformUuid = object.hostPlatform.uuid
+                // !!!!! observe closely! Danger of session mismatches and performance bottlenecks!!!!!
+                Platform hostPlatform = (Platform) GrailsHibernateUtil.unwrapIfProxy(object.hostPlatform)
+                result.hostPlatform = hostPlatform.getOID()
+                result.hostPlatformName = hostPlatform.name
+                result.hostPlatformUuid = hostPlatform.uuid
             }
 
             result.titleType = object.getTitleType() ?: 'Unknown'
