@@ -1323,7 +1323,7 @@ class Api2Service {
                 searchResult.recset.eachParallel { r ->
                     KBComponent.withTransaction {
                         //LinkedHashMap<Object, Object> resultMap = mapDomainFieldsToSpecFields2(apiSearchTemplate, r)
-                        LinkedHashMap<Object, Object> resultMap = mapDomainFieldsToSpecFields(r, (params.stubOnly ?: false))
+                        LinkedHashMap<Object, Object> resultMap = mapDomainFieldsToSpecFields(r, (params.stubOnly ? true : false))
 
                         if(params.sortFields){
                             resultMap = resultMap.sort { Map subResult -> subResult.key }
