@@ -1334,7 +1334,7 @@ class Api2Service {
                 }
             }*/
 
-            searchResult.recset { r ->
+            searchResult.recset.each { r ->
                 KBComponent.withTransaction {
                     //LinkedHashMap<Object, Object> resultMap = mapDomainFieldsToSpecFields2(apiSearchTemplate, r)
                     LinkedHashMap<Object, Object> resultMap = mapDomainFieldsToSpecFields(r, (params.stubOnly ? true : false))
