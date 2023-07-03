@@ -4,6 +4,7 @@ import grails.core.GrailsApplication
 import grails.gorm.transactions.Transactional
 import grails.web.servlet.mvc.GrailsParameterMap
 import groovyx.gpars.GParsPool
+import org.grails.orm.hibernate.cfg.GrailsHibernateUtil
 import wekb.helper.RDStore
 import wekb.utils.DateUtils
 
@@ -812,327 +813,377 @@ class Api2Service {
         return result
     }
 */
-    private LinkedHashMap<Object, Object> mapDomainFieldsToSpecFields(Object object) {
+    private LinkedHashMap<Object, Object> mapDomainFieldsToSpecFields(Object object, boolean stubOnly = false) {
         LinkedHashMap<Object, Object> result = [:]
 
         if(object.class.name == Package.class.name) {
 
-            result.uuid = object.uuid
-            result.name = object.name
-            result.sortname = generateSortName(object.name)
-            result.status = object.status?.value
-            result.componentType = object.class.simpleName
+            if(stubOnly){
+                result.uuid = object.uuid
+                result.name = object.name
+                result.sortname = generateSortName(object.name)
+                result.status = object.status?.value
+                result.componentType = object.class.simpleName
 
-            result.lastUpdatedDisplay = DateUtils.getSDF_ISO().format(object.lastUpdated)
-            result.dateCreatedDisplay = DateUtils.getSDF_ISO().format(object.dateCreated)
+                result.lastUpdatedDisplay = DateUtils.getSDF_ISO().format(object.lastUpdated)
+                result.dateCreatedDisplay = DateUtils.getSDF_ISO().format(object.dateCreated)
 
-            if(object.provider){
-                result.cpname = object.provider.name
-                result.provider = object.provider.getOID()
-                result.providerName = object.provider.name
-                result.providerUuid = object.provider.uuid
             }else {
-                result.cpname = ""
-                result.provider = ""
-                result.providerName = ""
-                result.providerUuid = ""
+
+                result.uuid = object.uuid
+                result.name = object.name
+                result.sortname = generateSortName(object.name)
+                result.status = object.status?.value
+                result.componentType = object.class.simpleName
+
+                result.lastUpdatedDisplay = DateUtils.getSDF_ISO().format(object.lastUpdated)
+                result.dateCreatedDisplay = DateUtils.getSDF_ISO().format(object.dateCreated)
+
+                if (object.provider) {
+                    result.cpname = object.provider.name
+                    result.provider = object.provider.getOID()
+                    result.providerName = object.provider.name
+                    result.providerUuid = object.provider.uuid
+                } else {
+                    result.cpname = ""
+                    result.provider = ""
+                    result.providerName = ""
+                    result.providerUuid = ""
+                }
+
+                if (object.nominalPlatform) {
+                    result.nominalPlatform = object.nominalPlatform.getOID()
+                    result.nominalPlatformName = object.nominalPlatform.name
+                    result.nominalPlatformUuid = object.nominalPlatform.uuid
+                } else {
+                    result.nominalPlatform = ""
+                    result.nominalPlatformName = ""
+                    result.nominalPlatformUuid = ""
+                }
+
+                result.description = object.description
+                result.descriptionURL = object.descriptionURL
+
+                result.titleCount = object.getTippCount()
+                result.currentTippCount = object.getCurrentTippCount()
+                result.retiredTippCount = object.getRetiredTippCount()
+                result.expectedTippCount = object.getExpectedTippCount()
+                result.deletedTippCount = object.getDeletedTippCount()
+
+                result.breakable = object.breakable ? object.breakable.value : ""
+                result.consistent = object.consistent?.value
+                result.contentType = object.contentType?.value
+                result.freeTrial = object.freeTrial?.value
+                result.scope = object.scope ? object.scope.value : ""
+                result.paymentType = object.paymentType ? object.paymentType.value : ""
+                result.openAccess = object.openAccess?.value
+                result.file = object.file?.value
+
+                result.freeTrialPhase = object.freeTrialPhase
+
+                if (object.kbartSource) {
+                    result.source = [
+                            id              : object.kbartSource.id,
+                            uuid            : object.kbartSource.uuid,
+                            name            : object.kbartSource.name,
+                            automaticUpdates: object.kbartSource.automaticUpdates,
+                            url             : object.kbartSource.url,
+                            frequency       : object.kbartSource.frequency?.value,
+                    ]
+                    if (object.kbartSource.lastRun) {
+                        result.source.lastRun = DateUtils.getSDF_ISO().format(object.kbartSource.lastRun)
+                    }
+                } else {
+                    result.source = []
+                }
+
+                result.altname = []
+                object.variantNames.each { vn ->
+                    result.altname.add(vn.variantName)
+                }
+
+                result.curatoryGroups = []
+                if (object.hasProperty('curatoryGroups')) {
+                    object.curatoryGroups.each {
+                        result.curatoryGroups.add([name         : it.curatoryGroup.name,
+                                                   type         : it.curatoryGroup.type?.value,
+                                                   curatoryGroup: it.curatoryGroup.getOID()])
+                    }
+                }
+
+                result.identifiers = []
+                object.ids.each { idc ->
+                    result.identifiers.add([namespace    : idc.namespace.value,
+                                            value        : idc.value,
+                                            namespaceName: idc.namespace.name])
+                }
+
+
+                result.nationalRanges = []
+                object.nationalRanges.each { nationalRange ->
+                    result.nationalRanges.add([value   : nationalRange.value,
+                                               value_de: nationalRange.value_de,
+                                               value_en: nationalRange.value_en])
+                }
+
+                result.regionalRanges = []
+                object.regionalRanges.each { regionalRange ->
+                    result.regionalRanges.add([value   : regionalRange.value,
+                                               value_de: regionalRange.value_de,
+                                               value_en: regionalRange.value_en])
+                }
+
+                result.ddcs = []
+                object.ddcs.each { ddc ->
+                    result.ddcs.add([value   : ddc.value,
+                                     value_de: ddc.value_de,
+                                     value_en: ddc.value_en])
+                }
+
+                result.packageArchivingAgencies = []
+                object.paas.each { PackageArchivingAgency paa ->
+                    result.packageArchivingAgencies.add([archivingAgency       : paa.archivingAgency?.value,
+                                                         openAccess            : paa.openAccess?.value,
+                                                         postCancellationAccess: paa.postCancellationAccess?.value])
+                }
             }
-
-            if(object.nominalPlatform) {
-                result.nominalPlatform = object.nominalPlatform.getOID()
-                result.nominalPlatformName = object.nominalPlatform.name
-                result.nominalPlatformUuid = object.nominalPlatform.uuid
-            }else {
-                result.nominalPlatform = ""
-                result.nominalPlatformName = ""
-                result.nominalPlatformUuid = ""
-            }
-
-            result.description = object.description
-            result.descriptionURL = object.descriptionURL
-
-           result.titleCount = object.getTippCount()
-           result.currentTippCount = object.getCurrentTippCount()
-           result.retiredTippCount = object.getRetiredTippCount()
-           result.expectedTippCount = object.getExpectedTippCount()
-           result.deletedTippCount = object.getDeletedTippCount()
-
-           result.breakable = object.breakable ? object.breakable.value : ""
-           result.consistent = object.consistent?.value
-           result.contentType = object.contentType?.value
-           result.freeTrial = object.freeTrial?.value
-           result.scope = object.scope ? object.scope.value : ""
-           result.paymentType = object.paymentType ? object.paymentType.value : ""
-           result.openAccess = object.openAccess?.value
-           result.file = object.file?.value
-
-           result.freeTrialPhase = object.freeTrialPhase
-
-           if (object.kbartSource) {
-               result.source = [
-                       id              : object.kbartSource.id,
-                       uuid              : object.kbartSource.uuid,
-                       name            : object.kbartSource.name,
-                       automaticUpdates: object.kbartSource.automaticUpdates,
-                       url             : object.kbartSource.url,
-                       frequency       : object.kbartSource.frequency?.value,
-               ]
-               if (object.kbartSource.lastRun){
-                   result.source.lastRun = DateUtils.getSDF_ISO().format(object.kbartSource.lastRun)
-               }
-           }else {
-               result.source = []
-           }
-
-           result.altname = []
-           object.variantNames.each { vn ->
-               result.altname.add(vn.variantName)
-           }
-
-            result.curatoryGroups = []
-           if(object.hasProperty('curatoryGroups')) {
-               object.curatoryGroups.each {
-                   result.curatoryGroups.add([name: it.curatoryGroup.name,
-                                              type: it.curatoryGroup.type?.value,
-                                              curatoryGroup: it.curatoryGroup.getOID()])
-               }
-           }
-
-           result.identifiers = []
-           object.ids.each { idc ->
-               result.identifiers.add([namespace    : idc.namespace.value,
-                                       value        : idc.value,
-                                       namespaceName: idc.namespace.name])
-           }
-
-
-           result.nationalRanges = []
-           object.nationalRanges.each { nationalRange ->
-               result.nationalRanges.add([value     : nationalRange.value,
-                                          value_de  : nationalRange.value_de,
-                                          value_en  : nationalRange.value_en])
-           }
-
-           result.regionalRanges = []
-           object.regionalRanges.each { regionalRange ->
-               result.regionalRanges.add([value     : regionalRange.value,
-                                          value_de  : regionalRange.value_de,
-                                          value_en  : regionalRange.value_en])
-           }
-
-           result.ddcs = []
-           object.ddcs.each { ddc ->
-               result.ddcs.add([value     : ddc.value,
-                                value_de  : ddc.value_de,
-                                value_en  : ddc.value_en])
-           }
-
-           result.packageArchivingAgencies = []
-           object.paas.each { PackageArchivingAgency paa ->
-               result.packageArchivingAgencies.add([archivingAgency: paa.archivingAgency?.value,
-                                                    openAccess  : paa.openAccess?.value,
-                                                    postCancellationAccess  : paa.postCancellationAccess?.value])
-           }
 
 
             result
         }else if(object.class.name == Org.class.name) {
 
-           result.uuid = object.uuid
-            result.name = object.name
-            result.sortname = generateSortName(object.name)
-            result.abbreviatedName = object.abbreviatedName
-            result.status = object.status?.value
-            result.componentType = object.class.simpleName
+            if(stubOnly){
+                result.uuid = object.uuid
+                result.name = object.name
+                result.sortname = generateSortName(object.name)
+                result.status = object.status?.value
+                result.componentType = object.class.simpleName
 
-            result.lastUpdatedDisplay = DateUtils.getSDF_ISO().format(object.lastUpdated)
-            result.dateCreatedDisplay = DateUtils.getSDF_ISO().format(object.dateCreated)
+                result.lastUpdatedDisplay = DateUtils.getSDF_ISO().format(object.lastUpdated)
+                result.dateCreatedDisplay = DateUtils.getSDF_ISO().format(object.dateCreated)
+            }else {
 
-            result.kbartDownloaderURL = object.kbartDownloaderURL
-            result.metadataDownloaderURL = object.metadataDownloaderURL
-            result.homepage = object.homepage
+                result.uuid = object.uuid
+                result.name = object.name
+                result.sortname = generateSortName(object.name)
+                result.abbreviatedName = object.abbreviatedName
+                result.status = object.status?.value
+                result.componentType = object.class.simpleName
 
-            result.roles = []
-            object.roles.each { role ->
-                result.roles.add(role.value)
-            }
+                result.lastUpdatedDisplay = DateUtils.getSDF_ISO().format(object.lastUpdated)
+                result.dateCreatedDisplay = DateUtils.getSDF_ISO().format(object.dateCreated)
 
-            result.altname = []
+                result.kbartDownloaderURL = object.kbartDownloaderURL
+                result.metadataDownloaderURL = object.metadataDownloaderURL
+                result.homepage = object.homepage
 
-            object.variantNames.each { vn ->
-                result.altname.add(vn.variantName)
-            }
-
-            if(object.hasProperty('curatoryGroups')) {
-                result.curatoryGroups = []
-                object.curatoryGroups?.each {
-                    result.curatoryGroups.add([name: it.curatoryGroup.name,
-                                               type: it.curatoryGroup.type?.value,
-                                               curatoryGroup: it.curatoryGroup.getOID()])
+                result.roles = []
+                object.roles.each { role ->
+                    result.roles.add(role.value)
                 }
-            }
 
-            result.identifiers = []
-            object.ids.each { idc ->
-                result.identifiers.add([namespace    : idc.namespace.value,
-                                        value        : idc.value,
-                                        namespaceName: idc.namespace.name])
-            }
+                result.altname = []
 
-            result.contacts = []
-            object.contacts.each { Contact contact ->
-                result.contacts.add([  content: contact.content,
-                                       contentType: contact.contentType?.value,
-                                       type: contact.type?.value,
-                                       language: contact.language?.value])
+                object.variantNames.each { vn ->
+                    result.altname.add(vn.variantName)
+                }
+
+                if (object.hasProperty('curatoryGroups')) {
+                    result.curatoryGroups = []
+                    object.curatoryGroups?.each {
+                        result.curatoryGroups.add([name         : it.curatoryGroup.name,
+                                                   type         : it.curatoryGroup.type?.value,
+                                                   curatoryGroup: it.curatoryGroup.getOID()])
+                    }
+                }
+
+                result.identifiers = []
+                object.ids.each { idc ->
+                    result.identifiers.add([namespace    : idc.namespace.value,
+                                            value        : idc.value,
+                                            namespaceName: idc.namespace.name])
+                }
+
+                result.contacts = []
+                object.contacts.each { Contact contact ->
+                    result.contacts.add([content    : contact.content,
+                                         contentType: contact.contentType?.value,
+                                         type       : contact.type?.value,
+                                         language   : contact.language?.value])
+                }
             }
 
             result
         }else if(object.class.name == Platform.class.name) {
 
-            result.uuid = object.uuid
-            result.name = object.name
-            result.sortname = generateSortName(object.name)
-            result.status = object.status?.value
-            result.componentType = object.class.simpleName
+            if(stubOnly){
+                result.uuid = object.uuid
+                result.name = object.name
+                result.sortname = generateSortName(object.name)
+                result.status = object.status?.value
+                result.componentType = object.class.simpleName
 
-            result.lastUpdatedDisplay = DateUtils.getSDF_ISO().format(object.lastUpdated)
-            result.dateCreatedDisplay = DateUtils.getSDF_ISO().format(object.dateCreated)
+                result.lastUpdatedDisplay = DateUtils.getSDF_ISO().format(object.lastUpdated)
+                result.dateCreatedDisplay = DateUtils.getSDF_ISO().format(object.dateCreated)
+            }else {
 
-            result.cpname = object.provider?.name
-            result.provider = object.provider ? object.provider.getOID() : ""
-            result.providerName = object.provider ? object.provider.name : ""
-            result.providerUuid = object.provider ? object.provider.uuid : ""
+                result.uuid = object.uuid
+                result.name = object.name
+                result.sortname = generateSortName(object.name)
+                result.status = object.status?.value
+                result.componentType = object.class.simpleName
 
-            result.primaryUrl = object.primaryUrl
+                result.lastUpdatedDisplay = DateUtils.getSDF_ISO().format(object.lastUpdated)
+                result.dateCreatedDisplay = DateUtils.getSDF_ISO().format(object.dateCreated)
 
-            result.titleNamespace = object.titleNamespace?.value
+                result.cpname = object.provider?.name
+                result.provider = object.provider ? object.provider.getOID() : ""
+                result.providerName = object.provider ? object.provider.name : ""
+                result.providerUuid = object.provider ? object.provider.uuid : ""
 
-            result.lastAuditDate = object.lastAuditDate ? DateUtils.getSDF_ISO().format(object.lastAuditDate) : ""
+                result.primaryUrl = object.primaryUrl
 
-            result.ipAuthentication = object.ipAuthentication?.value
+                result.titleNamespace = object.titleNamespace?.value
 
-            result.shibbolethAuthentication = object.shibbolethAuthentication?.value
+                result.lastAuditDate = object.lastAuditDate ? DateUtils.getSDF_ISO().format(object.lastAuditDate) : ""
 
-            result.openAthens = object.openAthens?.value
+                result.ipAuthentication = object.ipAuthentication?.value
 
-            result.passwordAuthentication = object.passwordAuthentication?.value
+                result.shibbolethAuthentication = object.shibbolethAuthentication?.value
 
-            result.statisticsFormat = object.statisticsFormat?.value
-            result.counterR3Supported = object.counterR3Supported?.value
-            result.counterR4Supported = object.counterR4Supported?.value
-            result.counterR5Supported = object.counterR5Supported?.value
-            result.counterR4SushiApiSupported = object.counterR4SushiApiSupported?.value
-            result.counterR5SushiApiSupported = object.counterR5SushiApiSupported?.value
-            result.counterR4SushiServerUrl = object.counterR4SushiServerUrl
-            result.counterR5SushiServerUrl = object.counterR5SushiServerUrl
-            result.counterRegistryUrl = object.counterRegistryUrl
-            result.counterCertified = object.counterCertified?.value
-            result.statisticsAdminPortalUrl = object.statisticsAdminPortalUrl
-            result.statisticsUpdate = object.statisticsUpdate?.value
-            result.proxySupported = object.proxySupported?.value
+                result.openAthens = object.openAthens?.value
 
-            result.counterRegistryApiUuid = object.counterRegistryApiUuid
+                result.passwordAuthentication = object.passwordAuthentication?.value
 
-            if(object.hasProperty('curatoryGroups')) {
-                result.curatoryGroups = []
-                object.curatoryGroups?.each {
-                    result.curatoryGroups.add([name: it.curatoryGroup.name,
-                                               type: it.curatoryGroup.type?.value,
-                                               curatoryGroup: it.curatoryGroup.getOID()])
+                result.statisticsFormat = object.statisticsFormat?.value
+                result.counterR3Supported = object.counterR3Supported?.value
+                result.counterR4Supported = object.counterR4Supported?.value
+                result.counterR5Supported = object.counterR5Supported?.value
+                result.counterR4SushiApiSupported = object.counterR4SushiApiSupported?.value
+                result.counterR5SushiApiSupported = object.counterR5SushiApiSupported?.value
+                result.counterR4SushiServerUrl = object.counterR4SushiServerUrl
+                result.counterR5SushiServerUrl = object.counterR5SushiServerUrl
+                result.counterRegistryUrl = object.counterRegistryUrl
+                result.counterCertified = object.counterCertified?.value
+                result.statisticsAdminPortalUrl = object.statisticsAdminPortalUrl
+                result.statisticsUpdate = object.statisticsUpdate?.value
+                result.proxySupported = object.proxySupported?.value
+
+                result.counterRegistryApiUuid = object.counterRegistryApiUuid
+
+                if (object.hasProperty('curatoryGroups')) {
+                    result.curatoryGroups = []
+                    object.curatoryGroups?.each {
+                        result.curatoryGroups.add([name         : it.curatoryGroup.name,
+                                                   type         : it.curatoryGroup.type?.value,
+                                                   curatoryGroup: it.curatoryGroup.getOID()])
+                    }
                 }
-            }
 
 
-            result.identifiers = []
-            object.ids.each { idc ->
-                result.identifiers.add([namespace    : idc.namespace.value,
-                                        value        : idc.value,
-                                        namespaceName: idc.namespace.name])
-            }
+                result.identifiers = []
+                object.ids.each { idc ->
+                    result.identifiers.add([namespace    : idc.namespace.value,
+                                            value        : idc.value,
+                                            namespaceName: idc.namespace.name])
+                }
 
-            result.federations = []
-            object.federations.each { PlatformFederation platformFederation ->
-                result.federations.add([federation    : platformFederation.federation?.value])
+                result.federations = []
+                object.federations.each { PlatformFederation platformFederation ->
+                    result.federations.add([federation: platformFederation.federation?.value])
+                }
             }
 
             result
         }else if(object.class.name == TitleInstancePackagePlatform.class.name) {
-            //Long start = System.currentTimeMillis()
-            result.uuid = object.uuid
-            result.name = object.name
-            result.sortname = generateSortName(object.name)
-            result.status = object.status?.value
-            result.componentType = object.class.simpleName
+            if(stubOnly){
+                result.uuid = object.uuid
+                result.name = object.name
+                result.sortname = generateSortName(object.name)
+                result.status = object.status?.value
+                result.componentType = object.class.simpleName
 
-            result.lastUpdatedDisplay = DateUtils.getSDF_ISO().format(object.lastUpdated)
-            result.dateCreatedDisplay = DateUtils.getSDF_ISO().format(object.dateCreated)
+                result.lastUpdatedDisplay = DateUtils.getSDF_ISO().format(object.lastUpdated)
+                result.dateCreatedDisplay = DateUtils.getSDF_ISO().format(object.dateCreated)
+            }else {
 
-            if (object.pkg) {
-                result.tippPackage = object.pkg.getOID()
-                result.tippPackageName = object.pkg.name
-                result.tippPackageUuid = object.pkg.uuid
-            }
+                //Long start = System.currentTimeMillis()
+                result.uuid = object.uuid
+                result.name = object.name
+                result.sortname = generateSortName(object.name)
+                result.status = object.status?.value
+                result.componentType = object.class.simpleName
 
-            if (object.hostPlatform) {
-                result.hostPlatform = object.hostPlatform.getOID()
-                result.hostPlatformName = object.hostPlatform.name
-                result.hostPlatformUuid = object.hostPlatform.uuid
-            }
+                result.lastUpdatedDisplay = DateUtils.getSDF_ISO().format(object.lastUpdated)
+                result.dateCreatedDisplay = DateUtils.getSDF_ISO().format(object.dateCreated)
 
-            result.titleType = object.getTitleType() ?: 'Unknown'
-            result.url = object.url
-
-            result.dateFirstOnline = object.dateFirstOnline ? DateUtils.getSDF_ISO().format(object.dateFirstOnline) : ""
-            result.dateFirstInPrint = object.dateFirstInPrint ? DateUtils.getSDF_ISO().format(object.dateFirstInPrint) : ""
-            result.accessStartDate = object.accessStartDate ? DateUtils.getSDF_ISO().format(object.accessStartDate) : ""
-            result.accessEndDate = object.accessEndDate ? DateUtils.getSDF_ISO().format(object.accessEndDate) : ""
-            result.lastChangedExternal = object.lastChangedExternal ? DateUtils.getSDF_ISO().format(object.lastChangedExternal) : ""
-
-            result.medium = object.medium?.value
-            result.publicationType = object.publicationType?.value
-            result.openAccess = object.openAccess?.value
-            result.accessType = object.accessType?.value
-            result.publicationType = object.publicationType?.value
-
-
-            result.publisherName = object.publisherName
-            result.subjectArea = object.subjectArea
-            result.series = object.series
-            result.volumeNumber = object.volumeNumber
-            result.editionStatement = object.editionStatement
-            result.firstAuthor = object.firstAuthor
-            result.firstEditor = object.firstEditor
-            result.parentPublicationTitleId = object.parentPublicationTitleId
-            result.precedingPublicationTitleId = object.precedingPublicationTitleId
-            result.supersedingPublicationTitleId = object.supersedingPublicationTitleId
-            result.note = object.note
-            result.fromKbartImport = object.fromKbartImport
-
-
-            if (object.publicationType == RDStore.TIPP_PUBLIC_TYPE_SERIAL) {
-                result.coverage = []
-                ArrayList<TIPPCoverageStatement> coverage_src = object.coverageStatements
-                coverage_src.each { TIPPCoverageStatement tcs ->
-                    def cst = [:]
-                    if (tcs.startDate) cst.startDate = DateUtils.getSDF_ISO().format(tcs.startDate)
-                    cst.startVolume = tcs.startVolume ?: ""
-                    cst.startIssue = tcs.startIssue ?: ""
-                    if (tcs.endDate) cst.endDate = DateUtils.getSDF_ISO().format(tcs.endDate)
-                    cst.endVolume = tcs.endVolume ?: ""
-                    cst.endIssue = tcs.endIssue ?: ""
-                    cst.embargo = tcs.embargo ?: ""
-                    cst.coverageNote = tcs.coverageNote ?: ""
-                    cst.coverageDepth = tcs.coverageDepth ? tcs.coverageDepth.value : ""
-                    result.coverage.add(cst)
+                if (object.pkg) {
+                    result.tippPackage = object.pkg.getOID()
+                    result.tippPackageName = object.pkg.name
+                    result.tippPackageUuid = object.pkg.uuid
                 }
-            }
 
-            result.identifiers = Identifier.executeQuery('select new map(ns.value as namespace, id.value as value, ns.name as namespaceName) from Identifier id join id.namespace ns where id.tipp = :obj', [obj: object])
+                if (object.hostPlatform) {
+                    // !!!!! observe closely! Danger of session mismatches and performance bottlenecks!!!!!
+                    Platform hostPlatform = (Platform) GrailsHibernateUtil.unwrapIfProxy(object.hostPlatform)
+                    result.hostPlatform = hostPlatform.getOID()
+                    result.hostPlatformName = hostPlatform.name
+                    result.hostPlatformUuid = hostPlatform.uuid
+                }
 
-            // prices
-            result.prices = TippPrice.executeQuery("select new map(p.priceType.value as type, p.price as amount, p.currency.value as currency, to_char(p.startDate, 'yyyy-mm-ddThh:ii:ssZ') as startDate, to_char(p.endDate, 'yyyy-mm-ddThh:ii:ss') as endDate) from TippPrice p where p.tipp = :obj", [obj: object])
-            /*
+                result.titleType = object.getTitleType() ?: 'Unknown'
+                result.url = object.url
+
+                result.dateFirstOnline = object.dateFirstOnline ? DateUtils.getSDF_ISO().format(object.dateFirstOnline) : ""
+                result.dateFirstInPrint = object.dateFirstInPrint ? DateUtils.getSDF_ISO().format(object.dateFirstInPrint) : ""
+                result.accessStartDate = object.accessStartDate ? DateUtils.getSDF_ISO().format(object.accessStartDate) : ""
+                result.accessEndDate = object.accessEndDate ? DateUtils.getSDF_ISO().format(object.accessEndDate) : ""
+                result.lastChangedExternal = object.lastChangedExternal ? DateUtils.getSDF_ISO().format(object.lastChangedExternal) : ""
+
+                result.medium = object.medium?.value
+                result.publicationType = object.publicationType?.value
+                result.openAccess = object.openAccess?.value
+                result.accessType = object.accessType?.value
+                result.publicationType = object.publicationType?.value
+
+
+                result.publisherName = object.publisherName
+                result.subjectArea = object.subjectArea
+                result.series = object.series
+                result.volumeNumber = object.volumeNumber
+                result.editionStatement = object.editionStatement
+                result.firstAuthor = object.firstAuthor
+                result.firstEditor = object.firstEditor
+                result.parentPublicationTitleId = object.parentPublicationTitleId
+                result.precedingPublicationTitleId = object.precedingPublicationTitleId
+                result.supersedingPublicationTitleId = object.supersedingPublicationTitleId
+                result.note = object.note
+                result.fromKbartImport = object.fromKbartImport
+
+
+                if (object.publicationType == RDStore.TIPP_PUBLIC_TYPE_SERIAL) {
+                    result.coverage = []
+                    ArrayList<TIPPCoverageStatement> coverage_src = object.coverageStatements
+                    coverage_src.each { TIPPCoverageStatement tcs ->
+                        def cst = [:]
+                        if (tcs.startDate) cst.startDate = DateUtils.getSDF_ISO().format(tcs.startDate)
+                        cst.startVolume = tcs.startVolume ?: ""
+                        cst.startIssue = tcs.startIssue ?: ""
+                        if (tcs.endDate) cst.endDate = DateUtils.getSDF_ISO().format(tcs.endDate)
+                        cst.endVolume = tcs.endVolume ?: ""
+                        cst.endIssue = tcs.endIssue ?: ""
+                        cst.embargo = tcs.embargo ?: ""
+                        cst.coverageNote = tcs.coverageNote ?: ""
+                        cst.coverageDepth = tcs.coverageDepth ? tcs.coverageDepth.value : ""
+                        result.coverage.add(cst)
+                    }
+                }
+
+                result.identifiers = Identifier.executeQuery('select new map(ns.value as namespace, id.value as value, ns.name as namespaceName) from Identifier id join id.namespace ns where id.tipp = :obj', [obj: object])
+
+                // prices
+                result.prices = TippPrice.executeQuery("select new map(p.priceType.value as type, p.price as amount, p.currency.value as currency, to_char(p.startDate, 'yyyy-mm-ddThh:ii:ssZ') as startDate, to_char(p.endDate, 'yyyy-mm-ddThh:ii:ss') as endDate) from TippPrice p where p.tipp = :obj", [obj: object])
+                /*
             object.prices?.each { p ->
                 def price = [:]
                 price.type = p.priceType?.value ?: ""
@@ -1147,8 +1198,8 @@ class Api2Service {
                 result.prices.add(price)
             }*/
 
-            result.ddcs = RefdataValue.executeQuery("select new map(ddc.value as value, ddc.value_de as value_de, ddc.value_en as value_en) from TitleInstancePackagePlatform tipp join tipp.ddcs ddc where tipp = :obj", [obj: object])
-            /*
+                result.ddcs = RefdataValue.executeQuery("select new map(ddc.value as value, ddc.value_de as value_de, ddc.value_en as value_en) from TitleInstancePackagePlatform tipp join tipp.ddcs ddc where tipp = :obj", [obj: object])
+                /*
             result.ddcs = []
             object.ddcs.each { ddc ->
                 result.ddcs.add([value     : ddc.value,
@@ -1157,8 +1208,8 @@ class Api2Service {
             }
             */
 
-            result.langugages = ComponentLanguage.executeQuery("select new map(lang.value as value, lang.value_de as value_de, lang.value_en as value_en) from ComponentLanguage cl join cl.language lang where cl.tipp = :obj", [obj: object])
-            /*
+                result.langugages = ComponentLanguage.executeQuery("select new map(lang.value as value, lang.value_de as value_de, lang.value_en as value_en) from ComponentLanguage cl join cl.language lang where cl.tipp = :obj", [obj: object])
+                /*
             result.languages = []
             object.languages.each { ComponentLanguage kbl ->
                 result.languages.add([value     : kbl.language.value,
@@ -1167,13 +1218,14 @@ class Api2Service {
             }
             */
 
-            result.curatoryGroups = []
-            object.pkg?.curatoryGroups?.each {
-                result.curatoryGroups.add([name: it.curatoryGroup.name,
-                                           type: it.curatoryGroup.type?.value,
-                                           curatoryGroup: it.curatoryGroup.getOID()])
+                result.curatoryGroups = []
+                object.pkg?.curatoryGroups?.each {
+                    result.curatoryGroups.add([name         : it.curatoryGroup.name,
+                                               type         : it.curatoryGroup.type?.value,
+                                               curatoryGroup: it.curatoryGroup.getOID()])
+                }
+                //log.debug("record finished after ${System.currentTimeMillis()-start} msecs")
             }
-            //log.debug("record finished after ${System.currentTimeMillis()-start} msecs")
             result
         }else if(object.class.name == DeletedKBComponent.class.name) {
 
@@ -1256,6 +1308,10 @@ class Api2Service {
                 result.page_current = (searchResult.offset / searchResult.max) + 1
                 result.page_total = (searchResult.reccount / searchResult.max).toInteger() + (searchResult.reccount % searchResult.max > 0 ? 1 : 0)
 
+                if(params.stubOnly) {
+                    result.stubOnly = params.stubOnly
+                }
+
             } else {
                 log.error("no template ${apiSearchTemplate}");
             }
@@ -1267,7 +1323,7 @@ class Api2Service {
                 searchResult.recset.eachParallel { r ->
                     KBComponent.withTransaction {
                         //LinkedHashMap<Object, Object> resultMap = mapDomainFieldsToSpecFields2(apiSearchTemplate, r)
-                        LinkedHashMap<Object, Object> resultMap = mapDomainFieldsToSpecFields(r)
+                        LinkedHashMap<Object, Object> resultMap = mapDomainFieldsToSpecFields(r, (params.stubOnly ? true : false))
 
                         if(params.sortFields){
                             resultMap = resultMap.sort { Map subResult -> subResult.key }
