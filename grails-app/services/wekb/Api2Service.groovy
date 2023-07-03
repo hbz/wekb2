@@ -1319,7 +1319,7 @@ class Api2Service {
             result.result = []
             log.debug("Create result..")
 
-            GParsPool.withPool(4) {
+           /* GParsPool.withPool(4) {
                 searchResult.recset.eachParallel { r ->
                     KBComponent.withTransaction {
                         //LinkedHashMap<Object, Object> resultMap = mapDomainFieldsToSpecFields2(apiSearchTemplate, r)
@@ -1331,6 +1331,19 @@ class Api2Service {
 
                         result.result.add(resultMap)
                     }
+                }
+            }*/
+
+            searchResult.recset { r ->
+                KBComponent.withTransaction {
+                    //LinkedHashMap<Object, Object> resultMap = mapDomainFieldsToSpecFields2(apiSearchTemplate, r)
+                    LinkedHashMap<Object, Object> resultMap = mapDomainFieldsToSpecFields(r, (params.stubOnly ? true : false))
+
+                    if(params.sortFields){
+                        resultMap = resultMap.sort { Map subResult -> subResult.key }
+                    }
+
+                    result.result.add(resultMap)
                 }
             }
 
