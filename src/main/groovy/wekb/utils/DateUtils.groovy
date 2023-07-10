@@ -15,6 +15,7 @@ class DateUtils {
     public static final String DATE_FORMAT_NOZ              = 'default.date.format.noZ'
     public static final String DATE_FORMAT_ONLYTIME         = 'default.date.format.onlytime'
     public static final String DATE_FORMAT_ISO              = "yyyy-MM-dd'T'HH:mm:ss'Z'"
+    public static final String DATE_FORMAT_ISO_SQL          = 'yyyy-MM-dd"T"HH24:MI:SS"Z"' // ' would be needed to be masked
 
     /** This is a Utility-Class. There are only static methods. It is not necessary to create an instance */
     private DateUtils(){}
@@ -96,6 +97,7 @@ class DateUtils {
         List<SimpleDateFormat> supportedFormats = [
                 new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'"),
                 new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S"),
+                new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"),
                 new SimpleDateFormat('yyyy-MM-dd'),
                 new SimpleDateFormat('yyyy/MM/dd'),
                 new SimpleDateFormat('dd.MM.yy'),
