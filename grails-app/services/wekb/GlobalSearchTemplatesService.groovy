@@ -679,7 +679,7 @@ class GlobalSearchTemplatesService {
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'tipps.accessType'],
                                         advancedSearch: [title: "Search Titles by ...", category: 'Title']
                                 ],
-                                [
+                                /*[
                                         type     : 'dropDownGroup',
                                         dropDownType  : 'publisher',
                                         prompt     : 'Publisher',
@@ -687,11 +687,18 @@ class GlobalSearchTemplatesService {
                                         placeholder: 'Publisher',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'tipps.publisherName'],
                                         advancedSearch: [title: "Search Titles by ...", category: 'Title']
+                                ],*/
+                                [
+                                        prompt     : 'Publisher',
+                                        qparam     : 'qp_publisherName',
+                                        placeholder: 'Publisher',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'tipps.publisherName'],
+                                        advancedSearch: [title: "Search Titles by ...", category: 'Title']
                                 ],
                                 [
                                         prompt     : 'Author',
                                         qparam     : 'qp_firstAuthor_tipp',
-                                        placeholder: 'Publisher',
+                                        placeholder: 'Author',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'tipps.firstAuthor'],
                                         advancedSearch: [title: "Search Titles by ...", category: 'Title']
                                 ],
@@ -703,7 +710,7 @@ class GlobalSearchTemplatesService {
                                         advancedSearch: [title: "Search Titles by ...", category: 'Title']
                                 ],
 
-                                [
+                               /* [
                                         type     : 'dropDownGroup',
                                         dropDownType  : 'subjectArea',
                                         prompt     : 'Subject Area',
@@ -738,7 +745,7 @@ class GlobalSearchTemplatesService {
                                         placeholder: 'Access End Date Year',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eqYear', 'prop': 'tipps.accessEndDate'],
                                         advancedSearch: [title: "Search Titles by ...", category: 'Title']
-                                ],
+                                ],*/
                                 [
                                         type       : 'lookup',
                                         baseClass  : 'wekb.RefdataValue',
