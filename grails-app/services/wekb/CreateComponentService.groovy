@@ -674,6 +674,11 @@ class CreateComponentService {
                 }
 
                 if (map.url) {
+                    if(map.url != kbartSource.url){
+                        kbartSource.lastRun = null
+                        kbartSource.lastUpdateUrl = null
+                    }
+
                     kbartSource.url = map.url
                 }
 
