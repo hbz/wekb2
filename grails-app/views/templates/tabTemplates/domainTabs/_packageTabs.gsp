@@ -102,7 +102,7 @@
 
     </semui:tabsItemContent>
 
-    <g:render template="/templates/tabTemplates/variantNamesTab" model="${[d: d]}"/>
+    <g:render template="/templates/tabTemplates/variantNamesTab" model="${[d: d, showActions: true]}"/>
 
     <g:render template="/templates/tabTemplates/ddcsTab" model="${[d: d]}"/>
 
