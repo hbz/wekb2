@@ -34,6 +34,8 @@ class UpdatePackageInfo {
 
     Date lastChangedInKbart
 
+    String updateUrl
+
     @RefdataAnnotation(cat = RCConstants.UPDATE_STATUS)
     RefdataValue status
 
@@ -75,6 +77,8 @@ class UpdatePackageInfo {
         lastChangedInKbart column: 'upi_last_changed_in_kbart'
 
         automaticUpdate column: 'upi_automatic_update'
+
+        updateUrl column: 'upi_update_url'
     }
 
     static constraints = {
@@ -90,6 +94,7 @@ class UpdatePackageInfo {
         countPreviouslyTippsInWekb (nullable:true)
         onlyRowsWithLastChanged  (nullable:true)
         lastChangedInKbart (nullable:true, default: null)
+        updateUrl (nullable:true)
     }
 
     def beforeValidate (){
@@ -114,7 +119,7 @@ class UpdatePackageInfo {
 
     @Transient
     public int getCountUpdateTippInfos() {
-        int result = UpdateTippInfo.executeQuery("select count(id) from UpdateTippInfo where updatePackageInfo = :updatePackageInfo", [updatePackageInfo: this])[0]
+        int result = UpdateTippInfo.executeQuery("select count(*) from UpdateTippInfo where updatePackageInfo = :updatePackageInfo", [updatePackageInfo: this])[0]
         result
     }
 

@@ -470,6 +470,11 @@ class AjaxHtmlController {
                 } else {
                     def binding_properties = [:]
                     def new_val = params.value?.trim() ?: null
+                    
+                    if(target_object instanceof KbartSource && params.name == 'url' && new_val != null && new_val != target_object.url){
+                        target_object.lastRun = null
+                        target_object.lastUpdateUrl = null
+                    }
 
                     binding_properties[params.name] = new_val
                     bindData(target_object, binding_properties)

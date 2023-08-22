@@ -217,7 +217,7 @@ class Platform  extends AbstractBase implements Auditable {
   @Transient
   public getCurrentTippCount() {
     def refdata_current = RDStore.KBC_STATUS_CURRENT
-    int result = TitleInstancePackagePlatform.executeQuery("select count(t.id) from TitleInstancePackagePlatform as t where t.hostPlatform = :plt and t.status = :status"
+    int result = TitleInstancePackagePlatform.executeQuery("select count(*) from TitleInstancePackagePlatform as t where t.hostPlatform = :plt and t.status = :status"
             , [plt: this, status: refdata_current])[0]
 
     result
@@ -225,7 +225,7 @@ class Platform  extends AbstractBase implements Auditable {
 
   @Transient
   public getPackagesCount() {
-    int result = Package.executeQuery('select count(p.id) from Package as p where nominalPlatform = :nominalPlatform', [nominalPlatform: this])[0]
+    int result = Package.executeQuery('select count(*) from Package as p where nominalPlatform = :nominalPlatform', [nominalPlatform: this])[0]
     result
   }
 
