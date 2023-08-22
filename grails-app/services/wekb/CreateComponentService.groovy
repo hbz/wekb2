@@ -232,6 +232,13 @@ class CreateComponentService {
     }
 
     Map packageBatchImport(MultipartFile tsvFile, User user) {
+        List<CuratoryGroup> curatoryGroups = []
+        if(user.curatoryGroupUsers) {
+            user.curatoryGroupUsers.curatoryGroup.each { CuratoryGroup cg ->
+              curatoryGroups << cg
+            }
+        }
+
         Map colMap = [:]
         Set<String> globalErrors = []
         List<Package> packageList = []
@@ -255,7 +262,9 @@ class CreateComponentService {
                     break
                 case "description": colMap.description = c
                     break
-                case "url": colMap.url = c
+                case "url": colMap.description_url = c
+                    break
+                case "description_url": colMap.description_url = c
                     break
                 case "breakable": colMap.breakable = c
                     break
@@ -327,7 +336,22 @@ class CreateComponentService {
                 String name = cols[colMap.name].trim()
 
                 if(pkg == null) {
-                    def dupes = Package.findAllByNameIlikeAndStatusNotEqual(name, status_deleted)
+                    def dupes = []
+                    if (curatoryGroups && colMap.anbieter_produkt_id != null) {
+                        String value = cols[colMap.anbieter_produkt_id].trim()
+                        if (value) {
+                            IdentifierNamespace namespace = IdentifierNamespace.findByValueAndTargetType("Anbieter_Produkt_ID", RDStore.IDENTIFIER_NAMESPACE_TARGET_TYPE_PACKAGE)
+                            dupes = Identifier.executeQuery('select pkg from Identifier where namespace = :ns and value != :val and pkg is not null and pkg.status not in (:stat) and exists ( select cgp from CuratoryGroupPackage cgp where cgp.pkg = pkg and cgp.curatoryGroup in (:curGroup))', [ns: namespace, val: 'Unknown', stat: status_deleted, curGroup: curatoryGroups])
+                        }else{
+                            dupes = Package.executeQuery("select p from Package as p where lower(name) like :name and status not in (:stat) and exists ( select cgp from CuratoryGroupPackage cgp where cgp.pkg = p and cgp.curatoryGroup in (:curGroup))", [name: name.toLowerCase().trim(), stat: status_deleted, curGroup: curatoryGroups])
+                        }
+                    }else {
+                        dupes = Package.executeQuery("select p from Package as p where lower(name) like :name and status not in (:stat)", [name: name.toLowerCase().trim(), stat: status_deleted])
+
+                        if (curatoryGroups) {
+                            dupes = Package.executeQuery("select p from Package as p where lower(name) like :name and status not in (:stat) and exists ( select cgp from CuratoryGroupPackage cgp where cgp.pkg = p and cgp.curatoryGroup in (:curGroup))", [name: name.toLowerCase().trim(), stat: status_deleted, curGroup: curatoryGroups])
+                        }
+                    }
 
                     if (dupes && dupes.size() > 0) {
                         globalErrors << "The we:kb already has a package with the name '${name}'. Therefore a package with the name could not be created!"
@@ -374,8 +398,8 @@ class CreateComponentService {
                             pkg.description = cols[colMap.description].trim()
                         }
 
-                        if (colMap.url != null && cols[colMap.url]) {
-                            pkg.descriptionURL = cols[colMap.url].trim()
+                        if (colMap.description_url != null && cols[colMap.description_url]) {
+                            pkg.descriptionURL = cols[colMap.description_url].trim()
                         }
 
                         if (colMap.breakable != null) {
@@ -546,8 +570,8 @@ class CreateComponentService {
                                 }
                             }
 
-                            if(user.curatoryGroupUsers) {
-                                user.curatoryGroupUsers.curatoryGroup.each { CuratoryGroup cg ->
+                            if(curatoryGroups) {
+                                curatoryGroups.each { CuratoryGroup cg ->
                                     if (!(pkg.curatoryGroups && cg.id in pkg.curatoryGroups.curatoryGroup.id)) {
                                         new CuratoryGroupPackage(pkg: pkg, curatoryGroup: cg).save(flush: true)
                                     }
@@ -695,8 +719,8 @@ class CreateComponentService {
                 }
                 if (kbartSource.save(flush: true) || kbartSource.isAttached()) {
 
-                    if(user.curatoryGroupUsers) {
-                        user.curatoryGroupUsers.curatoryGroup.each { CuratoryGroup cg ->
+                    if(curatoryGroups) {
+                        curatoryGroups.each { CuratoryGroup cg ->
                             if (!(kbartSource.curatoryGroups && cg.id in kbartSource.curatoryGroups.curatoryGroup.id)) {
                                 new CuratoryGroupKbartSource(kbartSource: kbartSource, curatoryGroup: cg).save(flush: true)
                             }
