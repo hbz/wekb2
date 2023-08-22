@@ -500,7 +500,7 @@ class KbartProcessService {
             }
 
             int countExistingTippsAfterImport = TitleInstancePackagePlatform.executeQuery(
-                    "select count(tipp.id) from TitleInstancePackagePlatform tipp where " +
+                    "select count(*) from TitleInstancePackagePlatform tipp where " +
                             "tipp.status in (:status) and " +
                             "tipp.pkg = :package",
                     [package: pkg, status: listStatus])[0]

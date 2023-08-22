@@ -150,8 +150,8 @@ class ESSearchService{
 
           List providerRoles = [RefdataCategory.lookup(RCConstants.ORG_ROLE, 'Content Provider'), RefdataCategory.lookup(RCConstants.ORG_ROLE, 'Platform Provider'), RefdataCategory.lookup(RCConstants.ORG_ROLE, 'Publisher')]
 
-          Integer countCuratoryGroups = CuratoryGroup.executeQuery("select count(o.id) from CuratoryGroup as o where status != :forbiddenStatus", [forbiddenStatus : RDStore.KBC_STATUS_DELETED], [readOnly: true])[0]
-          Integer countProvider = Org.executeQuery("select count(o.id) from Org as o join o.roles rdv where rdv in (:roles) and o.status != :forbiddenStatus", [forbiddenStatus : RDStore.KBC_STATUS_DELETED, roles: providerRoles], [readOnly: true])[0]
+          Integer countCuratoryGroups = CuratoryGroup.executeQuery("select count(*) from CuratoryGroup as o where status != :forbiddenStatus", [forbiddenStatus : RDStore.KBC_STATUS_DELETED], [readOnly: true])[0]
+          Integer countProvider = Org.executeQuery("select count(*) from Org as o join o.roles rdv where rdv in (:roles) and o.status != :forbiddenStatus", [forbiddenStatus : RDStore.KBC_STATUS_DELETED, roles: providerRoles], [readOnly: true])[0]
 
 
           searchSourceBuilder.query(QueryBuilders.queryStringQuery(query_str))

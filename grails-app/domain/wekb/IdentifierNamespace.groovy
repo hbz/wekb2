@@ -88,7 +88,7 @@ class IdentifierNamespace {
 
   @Transient
   def getIdentifiersCount() {
-    return Identifier.executeQuery("select count(value) from Identifier where namespace = :namespace", [namespace: this])[0]
+    return Identifier.executeQuery("select count(*) from Identifier where namespace = :namespace", [namespace: this])[0]
   }
 
   @Transient

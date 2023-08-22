@@ -217,7 +217,7 @@ class AdminController {
         indexInfo.countIndex = ""
       }
 
-      String query = "select count(id) from ${ESWrapperService.typePerIndex.get(indice.value)}"
+      String query = "select count(*) from ${ESWrapperService.typePerIndex.get(indice.value)}"
       indexInfo.countDB = FTControl.executeQuery(query)[0]
       indexInfo.countDeletedInDB = FTControl.executeQuery(query+ " where status = :status", [status: RDStore.KBC_STATUS_DELETED])[0]
       indexInfo.countRemovedInDB = FTControl.executeQuery(query+ " where status = :status", [status: RDStore.KBC_STATUS_REMOVED])[0]
@@ -344,7 +344,7 @@ class AdminController {
     params.offset = params.offset ?: 0
     params.max = params.max ? Integer.parseInt(params.max) : user.defaultPageSizeAsInteger
 
-    result.packagesCount = Package.executeQuery('select count(pkg) ' + query, [status: status_deleted])[0]
+    result.packagesCount = Package.executeQuery('select count(*) ' + query, [status: status_deleted])[0]
     result.packages = Package.executeQuery('select pkg ' + query + " order by pkg.lastUpdated desc", [status: status_deleted], params)
 
     result
