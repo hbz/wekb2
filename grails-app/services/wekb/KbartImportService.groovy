@@ -898,7 +898,7 @@ class KbartImportService {
 
             String title = tippMap.publication_title
 
-            countTipps = TitleInstancePackagePlatform.executeQuery('select count(tipp.id) from TitleInstancePackagePlatform as tipp ' +
+            countTipps = TitleInstancePackagePlatform.executeQuery('select count(*) from TitleInstancePackagePlatform as tipp ' +
                     'where tipp.pkg = :pkg and tipp.status != :removed and tipp.name = :tiDtoName ',
                     [pkg: pkg, tiDtoName: title, removed: RDStore.KBC_STATUS_REMOVED])[0]
 
@@ -915,7 +915,7 @@ class KbartImportService {
                 if(countTipps == 0){
                     if (trimmed_url && trimmed_url.size() > 0) {
                         log.debug("not found Tipp with title. research in pkg ${pkg} with url")
-                        countTipps = TitleInstancePackagePlatform.executeQuery('select count(tipp.id) from TitleInstancePackagePlatform as tipp ' +
+                        countTipps = TitleInstancePackagePlatform.executeQuery('select count(*) from TitleInstancePackagePlatform as tipp ' +
                                 'where tipp.url = :url and tipp.status != :removed ' +
                                 'and tipp.pkg = :pkg ',
                                 [pkg: pkg, url: trimmed_url, removed: RDStore.KBC_STATUS_REMOVED])[0]

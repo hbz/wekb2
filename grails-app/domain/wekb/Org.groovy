@@ -138,7 +138,7 @@ class Org extends AbstractBase implements Auditable {
 
         int result = 0
         if (getProvidedPackages()) {
-            result = TitleInstancePackagePlatform.executeQuery("select count(t.id) from TitleInstancePackagePlatform as t where t.pkg in (:pkgs) and t.status = :status"
+            result = TitleInstancePackagePlatform.executeQuery("select count(*) from TitleInstancePackagePlatform as t where t.pkg in (:pkgs) and t.status = :status"
                     , [pkgs: getProvidedPackages(), status: refdata_current])[0]
         }
 

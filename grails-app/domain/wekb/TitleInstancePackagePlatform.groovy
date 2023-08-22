@@ -364,13 +364,13 @@ class TitleInstancePackagePlatform  extends AbstractBase implements Auditable {
 
     @Transient
     public getCountAutoUpdateTippInfos() {
-        int result = UpdateTippInfo.executeQuery("select count(id) from UpdateTippInfo where tipp = :tipp and updatePackageInfo.automaticUpdate = true", [tipp: this])[0]
+        int result = UpdateTippInfo.executeQuery("select count(*) from UpdateTippInfo where tipp = :tipp and updatePackageInfo.automaticUpdate = true", [tipp: this])[0]
         result
     }
 
     @Transient
     public getCountManualUpdateTippInfos() {
-        int result = UpdateTippInfo.executeQuery("select count(id) from UpdateTippInfo where tipp = :tipp and updatePackageInfo.automaticUpdate = false", [tipp: this])[0]
+        int result = UpdateTippInfo.executeQuery("select count(*) from UpdateTippInfo where tipp = :tipp and updatePackageInfo.automaticUpdate = false", [tipp: this])[0]
         result
     }
 

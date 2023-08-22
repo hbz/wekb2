@@ -159,6 +159,15 @@
     </dd>
 </dl>
 
+<dl>
+    <dt class="control-label">
+        Last Update Url
+    </dt>
+    <dd>
+        <semui:xEditable owner="${d}" field="updateUrl" overwriteEditable="false"/>
+    </dd>
+</dl>
+
 <semui:tabs>
     <semui:tabsItemWithoutLink tab="updateTippInfos" counts="${d.getCountUpdateTippInfos()}" class="active">
         Title Update Infos

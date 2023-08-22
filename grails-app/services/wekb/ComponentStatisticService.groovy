@@ -66,11 +66,11 @@ class ComponentStatisticService {
 
           def query_params = [enddate: period_end_date,
                               forbiddenStatus : [RDStore.KBC_STATUS_DELETED, RDStore.KBC_STATUS_REMOVED]]
-          def fetch_all = "select count(o.id) from ${c} as o where dateCreated < :enddate and status not in (:forbiddenStatus)"
+          def fetch_all = "select count(*) from ${c} as o where dateCreated < :enddate and status not in (:forbiddenStatus)"
           def stats_total_count = Package.executeQuery(fetch_all.toString(), query_params, [readOnly: true])[0]
 
           query_params.startdate = period_start_date
-          def fetch_new = "select count(o.id) from ${c} as o where dateCreated > :startdate and dateCreated < :enddate and status not in (:forbiddenStatus)"
+          def fetch_new = "select count(*) from ${c} as o where dateCreated > :startdate and dateCreated < :enddate and status not in (:forbiddenStatus)"
           def stats_new_count = Package.executeQuery(fetch_new.toString(), query_params, [readOnly: true])[0]
 
           if (existing_stats && existing_stats.size() > 0 && ( ( offset == 0 && i == to_substract ) || force_update ) ) {

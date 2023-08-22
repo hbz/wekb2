@@ -129,6 +129,7 @@ class AutoUpdatePackagesService {
                                     updatePackageInfo.description = "No KBART File found by URL: ${lastUpdateURL}!"
                                     updatePackageInfo.status = RDStore.UPDATE_STATUS_FAILED
                                     updatePackageInfo.endTime = new Date()
+                                    updatePackageInfo.updateUrl = lastUpdateURL
                                     updatePackageInfo.save()
                                 }
                             }

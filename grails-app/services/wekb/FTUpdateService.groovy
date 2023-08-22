@@ -519,7 +519,7 @@ class FTUpdateService {
 
       def total = 0
       Date from = new Date(latest_ft_record.lastTimestamp)
-      def countq = domain.executeQuery("select count(o.id) from " + domain.name +
+      def countq = domain.executeQuery("select count(*) from " + domain.name +
               " as o where (( o.lastUpdated > :ts ) OR ( o.dateCreated > :ts )) ", [ts: from], [readonly: true])[0]
       log.info("Will process ${countq} records")
       List idLastUpdatedList = domain.executeQuery("select o.id, o.lastUpdated from " + domain.name +

@@ -180,6 +180,7 @@ class KbartProcessService {
                 if(lastChangedInKbart){
                     updatePackageInfo.lastChangedInKbart = lastChangedInKbart
                 }
+                updatePackageInfo.updateUrl = lastUpdateURL
                 updatePackageInfo.save()
             }
 
@@ -499,7 +500,7 @@ class KbartProcessService {
             }
 
             int countExistingTippsAfterImport = TitleInstancePackagePlatform.executeQuery(
-                    "select count(tipp.id) from TitleInstancePackagePlatform tipp where " +
+                    "select count(*) from TitleInstancePackagePlatform tipp where " +
                             "tipp.status in (:status) and " +
                             "tipp.pkg = :package",
                     [package: pkg, status: listStatus])[0]
@@ -614,6 +615,7 @@ class KbartProcessService {
                 updatePackageInfo.description = description
                 updatePackageInfo.status = RDStore.UPDATE_STATUS_FAILED
                 updatePackageInfo.onlyRowsWithLastChanged = onlyRowsWithLastChanged
+                updatePackageInfo.updateUrl = lastUpdateURL
                 updatePackageInfo.save()
             }
         }
@@ -648,6 +650,7 @@ class KbartProcessService {
                 updatePackageInfo.description = description
                 updatePackageInfo.status = RDStore.UPDATE_STATUS_FAILED
                 updatePackageInfo.endTime = new Date()
+                updatePackageInfo.updateUrl = lastUpdateURL
                 updatePackageInfo.save()
             }
         }
@@ -808,6 +811,7 @@ class KbartProcessService {
                                 updatePackageInfo.description = description
                                 updatePackageInfo.status = RDStore.UPDATE_STATUS_FAILED
                                 updatePackageInfo.endTime = new Date()
+                                updatePackageInfo.updateUrl = lastUpdateURL
                                 updatePackageInfo.save()
                             }
 
@@ -846,6 +850,7 @@ class KbartProcessService {
                             updatePackageInfo.description = description
                             updatePackageInfo.status = RDStore.UPDATE_STATUS_FAILED
                             updatePackageInfo.endTime = new Date()
+                            updatePackageInfo.updateUrl = lastUpdateURL
                             updatePackageInfo.save()
                         }
                     }
@@ -859,6 +864,7 @@ class KbartProcessService {
                         updatePackageInfo.description = description
                         updatePackageInfo.status = RDStore.UPDATE_STATUS_FAILED
                         updatePackageInfo.endTime = new Date()
+                        updatePackageInfo.updateUrl = lastUpdateURL
                         updatePackageInfo.save()
                     }
                 }
@@ -873,6 +879,7 @@ class KbartProcessService {
                     updatePackageInfo.description = description
                     updatePackageInfo.status = RDStore.UPDATE_STATUS_FAILED
                     updatePackageInfo.endTime = new Date()
+                    updatePackageInfo.updateUrl = lastUpdateURL
                     updatePackageInfo.save()
                 }
 
