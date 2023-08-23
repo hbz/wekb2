@@ -126,7 +126,7 @@ class CleanupService {
     session.clear()
   }
 
-  private boolean recordDeletedKBComponent(KBComponent kbComponent){
+  private boolean recordDeletedKBComponent(def kbComponent){
 
     DeletedKBComponent deletedKBComponent
     DeletedKBComponent.withTransaction {
