@@ -126,7 +126,9 @@ class AdminController {
     j.type = RefdataCategory.lookupOrCreate(RCConstants.JOB_TYPE, 'CleanupRemovedComponents')
     j.startTime = new Date()
 
-    redirect(controller: 'admin', action: 'jobs');
+    flash.message = "Expunge Removed Component runs in the background!"
+
+    redirect(controller: 'admin', action: 'index');
   }
 
   def recalculateStats() {

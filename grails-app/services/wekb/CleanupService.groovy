@@ -39,25 +39,27 @@ class CleanupService {
       idx++
 
       try {
-          log.debug("Expunging ${component_oid}")
+          log.info("Expunging ${component_oid}")
           def component = genericOIDService.resolveOID(component_oid)
           String c_id = "${component.class.name}:${component.id}"
 
           if(recordDeletedKBComponent(component)) {
             def expunge_result = component.expunge()
-            log.debug("${expunge_result}");
-            DeleteRequest request = new DeleteRequest(
-                    ESWrapperService.indicesPerType.get(component.class.simpleName),
-                    c_id)
-            DeleteResponse deleteResponse = esclient.delete(
-                    request, RequestOptions.DEFAULT);
-            if (deleteResponse.getResult() == DocWriteResponse.Result.NOT_FOUND) {
-              log.debug("ES doc not found ${c_id}")
+            log.info("Expunge result: ${expunge_result}")
+            if(ESWrapperService.indicesPerType.get(component.class.simpleName)) {
+              DeleteRequest request = new DeleteRequest(
+                      ESWrapperService.indicesPerType.get(component.class.simpleName),
+                      c_id)
+              DeleteResponse deleteResponse = esclient.delete(
+                      request, RequestOptions.DEFAULT);
+              if (deleteResponse.getResult() == DocWriteResponse.Result.NOT_FOUND) {
+                log.error("ES doc not found to delete: ${c_id}")
+              }
+              log.debug("ES deleteResponse: ${deleteResponse}")
             }
-            log.debug("ES deleteResponse: ${deleteResponse}")
             result.report.add(expunge_result)
           }
-        j?.setProgress(idx,ids.size())
+        j?.setProgress(idx, oids.size())
       }
       catch ( Throwable t ) {
         log.error("problem",t);
@@ -81,7 +83,7 @@ class CleanupService {
   @Transactional
   def expungeRemovedComponents(Job j = null) {
 
-    log.debug("Process remove candidates");
+    log.info("Process remove candidates");
 
     def status_removed = RDStore.KBC_STATUS_REMOVED
 
