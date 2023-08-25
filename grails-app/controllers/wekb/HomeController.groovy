@@ -201,7 +201,7 @@ class HomeController {
       calendar.set(Calendar.MONTH, start_month);
       calendar.set(Calendar.YEAR, start_year);
 
-      for ( int i=0; i<6; i++ ) {
+      for ( int i=0; i<12; i++ ) {
 
         log.debug("Period ${i}")
 
