@@ -2,6 +2,8 @@ package wekb
 
 import grails.plugin.springsecurity.SpringSecurityService
 import grails.web.servlet.mvc.GrailsParameterMap
+import org.springframework.security.web.savedrequest.DefaultSavedRequest
+import org.springframework.security.web.savedrequest.HttpSessionRequestCache
 import wekb.auth.User
 import grails.converters.JSON
 
@@ -194,6 +196,12 @@ class Api2Controller {
         Map result = [code: 'success', message: '']
         User user
 
+        DefaultSavedRequest savedRequest = new HttpSessionRequestCache().getRequest(request, response) as DefaultSavedRequest
+        String url = savedRequest.getRequestURL() + (savedRequest.getQueryString() ? '?' + savedRequest.getQueryString() : '')
+        log.info 'API request from ' + request.getRemoteAddr() + ' for ' + request.requestURI + ' ---> ' + request.getHeaderNames().findAll{
+            it in ['host', 'referer', 'cookie', 'user-agent']
+        }.collect{it + ': ' + savedRequest.getHeaderValues( it ).join(', ')}
+
         if(!springSecurityService.loggedIn){
 
             if (params.username && params.password) {
@@ -207,6 +215,7 @@ class Api2Controller {
             }else {
                 result.code = 'error'
                 result.message = 'Please set your authentication to login!'
+                log.warn('checkPermisson: Please set your authentication to login!')
                 return result
             }
         }
@@ -217,12 +226,14 @@ class Api2Controller {
             if (!user.hasRole('ROLE_SUSHI')) {
                 result.code = 'error'
                 result.message = 'This user does not have permission to access the api!'
+                log.warn('checkPermisson: This user does not have permission to access the api!')
                 return result
             }
         }else {
             if (!user.apiUserStatus) {
                 result.code = 'error'
                 result.message = 'This user does not have permission to access the api!'
+                log.warn('checkPermisson: This user does not have permission to access the api!')
                 return result
             }
         }
