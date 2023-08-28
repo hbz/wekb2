@@ -193,8 +193,9 @@
                                     </g:link>
 
                                     <g:set var="duration" value="${null}"/>
-                                    <g:if test="${row_obj instanceof wekb.Package || row_obj instanceof wekb.Org
-                                            || row_obj instanceof wekb.Platform || row_obj instanceof wekb.TitleInstancePackagePlatform}">
+                                    <g:if test="${c.globalSearchTemplateProperty == 'name' &&
+                                            (row_obj instanceof wekb.Package || row_obj instanceof wekb.Org
+                                            || row_obj instanceof wekb.Platform || row_obj instanceof wekb.TitleInstancePackagePlatform)}">
 
                                         <% use(groovy.time.TimeCategory) {
                                             duration = row_obj.lastUpdated - row_obj.dateCreated
