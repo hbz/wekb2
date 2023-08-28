@@ -211,30 +211,24 @@ class LoginController {
 
     private boolean _fuzzyCheck(DefaultSavedRequest savedRequest) {
 
-        println("savedRequest"+savedRequest)
         if (!savedRequest) {
             return true
         }
-        println("weiter"+savedRequest.getRequestURI())
         boolean validRequest = false
 
 
         UrlMappingsHolder urlMappingsHolder = BeanStore.getUrlMappingsHolder()
         List<UrlMappingInfo> mappingInfo = urlMappingsHolder.matchAll(savedRequest.getRequestURI())
-        println("mappingInfo"+mappingInfo)
         if (mappingInfo) {
             GrailsClass controller = Holders.grailsApplication.getArtefacts('Controller').toList().sort{ it.clazz.simpleName }.find {
                 it.clazz.simpleName == mappingInfo.first().getControllerName().capitalize() + 'Controller'
             }
-            println("controller"+controller)
             if (controller) {
-                println("Action"+controller.clazz.declaredMethods.find { it.getAnnotation(Action) && it.name == mappingInfo.first().getActionName()})
                 if (controller.clazz.declaredMethods.find { it.getAnnotation(Action) && it.name == mappingInfo.first().getActionName() }) {
                     validRequest = true
                 }
             }
         }
-        println("validRequest"+validRequest)
         validRequest
     }
 }
