@@ -212,6 +212,16 @@ class GlobalSearchTemplatesService {
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'curatoryGroups.curatoryGroup'],
                                         hide       : true
                                 ],
+                                [
+                                        qparam     : 'changedSince',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'greater', 'prop': 'lastUpdated', 'type': 'java.util.Date'],
+                                        hide       : true
+                                ],
+                                [
+                                        qparam     : 'createdSince',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'greater', 'prop': 'dateCreated', 'type': 'java.util.Date'],
+                                        hide       : true
+                                ],
                                 //General Fields
                                 [
                                         prompt     : 'Name',
@@ -296,6 +306,16 @@ class GlobalSearchTemplatesService {
                                         qparam     : 'qp_source_id',
                                         placeholder: 'Source ID',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'kbartSource.id', 'type': 'java.lang.Long'],
+                                        hide       : true
+                                ],
+                                [
+                                        qparam     : 'changedSince',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'greater', 'prop': 'lastUpdated', 'type': 'java.util.Date'],
+                                        hide       : true
+                                ],
+                                [
+                                        qparam     : 'createdSince',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'greater', 'prop': 'dateCreated', 'type': 'java.util.Date'],
                                         hide       : true
                                 ],
                                 //General Fields
@@ -561,6 +581,16 @@ class GlobalSearchTemplatesService {
                                         placeholder: 'Source Automatic Updates',
                                         propType   : 'Boolean',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'kbartSource.automaticUpdates'],
+                                ],
+                                [
+                                        qparam     : 'changedSince',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'greater', 'prop': 'lastUpdated', 'type': 'java.util.Date'],
+                                        hide       : true
+                                ],
+                                [
+                                        qparam     : 'createdSince',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'greater', 'prop': 'dateCreated', 'type': 'java.util.Date'],
+                                        hide       : true
                                 ],
                                 //Package Filter
                                 [
@@ -913,6 +943,16 @@ class GlobalSearchTemplatesService {
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'provider.id', 'type': 'java.lang.Long'],
                                         hide       : true
                                 ],
+                                [
+                                        qparam     : 'changedSince',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'greater', 'prop': 'lastUpdated', 'type': 'java.util.Date'],
+                                        hide       : true
+                                ],
+                                [
+                                        qparam     : 'createdSince',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'greater', 'prop': 'dateCreated', 'type': 'java.util.Date'],
+                                        hide       : true
+                                ],
                                 //General Fields
                                 [
                                         prompt     : 'Name',
@@ -1261,6 +1301,17 @@ class GlobalSearchTemplatesService {
                                         qparam     : 'qp_curgroups',
                                         placeholder: 'Curatory Group',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'pkg.curatoryGroups.curatoryGroup'],
+                                        hide       : true
+                                ],
+
+                                [
+                                        qparam     : 'changedSince',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'greater', 'prop': 'lastUpdated', 'type': 'java.util.Date'],
+                                        hide       : true
+                                ],
+                                [
+                                        qparam     : 'createdSince',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'greater', 'prop': 'dateCreated', 'type': 'java.util.Date'],
                                         hide       : true
                                 ],
                                 //General Fields

@@ -9,6 +9,7 @@ import wekb.helper.RDStore
 import wekb.system.FTControl
 import wekb.system.SavedSearch
 
+import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.ZoneId
 import groovy.xml.XmlSlurper
@@ -48,6 +49,10 @@ class HomeController {
 
     Date dateFor14Days = Date.from(LocalDate.now().minusDays(14).atStartOfDay(ZoneId.systemDefault()).toInstant())
 
+    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd")
+
+    result.dateFor14Days =  format.format(dateFor14Days)
+
     List newsAboutObjects = [//'CuratoryGroup',
                              //'KbartSource',
                              'Org',
@@ -69,9 +74,9 @@ class HomeController {
 
 
       String queryNew = "from ${domainClassName} where TO_CHAR(dateCreated,'YYYY-MM-DD') = TO_CHAR(lastUpdated,'YYYY-MM-DD') and status in (:status) and dateCreated >= :daysBefore order by dateCreated desc"
-      result.news[domainClassName.toLowerCase()] .newInDB = Package.executeQuery(queryNew, [status: status, daysBefore: dateFor14Days], [max: 100, offset: 0])
+      result.news[domainClassName.toLowerCase()] .newInDB = Package.executeQuery(queryNew, [status: status, daysBefore: dateFor14Days], [max: 50, offset: 0])
       String queryLastUpdated = "from ${domainClassName} where TO_CHAR(dateCreated,'YYYY-MM-DD') != TO_CHAR(lastUpdated,'YYYY-MM-DD') and status in (:status) and lastUpdated >= :daysBefore order by lastUpdated desc"
-      result.news[domainClassName.toLowerCase()] .lastUpdatedInDB = Package.executeQuery(queryLastUpdated, [status: status, daysBefore: dateFor14Days], [max: 100, offset: 0])
+      result.news[domainClassName.toLowerCase()] .lastUpdatedInDB = Package.executeQuery(queryLastUpdated, [status: status, daysBefore: dateFor14Days], [max: 50, offset: 0])
 
     }
 
