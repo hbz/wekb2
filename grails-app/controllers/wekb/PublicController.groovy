@@ -269,7 +269,7 @@ class PublicController {
   private void logRequestFrom(){
     log.info 'Request from ' + request.getRemoteAddr() + ' for ' + request.requestURI + ' ---> ' + request.getHeaderNames().findAll{
       it in ['host', 'referer', 'cookie', 'user-agent']
-    }.collect{it + ': ' + request.getHeaders( it ).join(', ')}
+    }.collect{it + ': ' + request.getHeaders( it )}
 
   }
 }

@@ -198,7 +198,7 @@ class Api2Controller {
 
         log.info 'API request from ' + request.getRemoteAddr() + ' for ' + request.requestURI + ' ---> ' + request.getHeaderNames().findAll{
             it in ['host', 'referer', 'cookie', 'user-agent']
-        }.collect{it + ': ' + request.getHeaders( it ).join(', ')}
+        }.collect{it + ': ' + request.getHeaders( it )}
 
         if(!springSecurityService.loggedIn){
 
