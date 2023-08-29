@@ -1,6 +1,8 @@
 package wekb
 
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
+import org.springframework.security.web.savedrequest.DefaultSavedRequest
+import org.springframework.security.web.savedrequest.HttpSessionRequestCache
 import wekb.helper.RCConstants
 import wekb.helper.RDStore
 import wekb.utils.ServerUtils
@@ -26,7 +28,7 @@ class PublicController {
   }
 
   def wcagPlainEnglish() {
-    log.debug("wcagPlainEnglish::${params}")
+    log.info("wcagPlainEnglish::${params}")
     def result = [:]
     //println(params)
     result
@@ -51,45 +53,51 @@ class PublicController {
   }
 
   def wcagFeedbackForm() {
-    log.debug("wcagFeedbackForm::${params}")
+    log.info("wcagFeedbackForm::${params}")
     def result = [:]
     //println(params)
     result
   }
 
   def packageContent() {
-    log.debug("packageContent::${params}")
+    log.info("packageContent::${params}")
+    logRequestFrom()
     redirect(controller: 'resource', action: 'show', id: params.id)
   }
 
   def tippContent() {
-    log.debug("tippContent::${params}")
+    log.info("tippContent::${params}")
+    logRequestFrom()
     redirect(controller: 'resource', action: 'show', id: params.id)
   }
 
   def identifierContent() {
-    log.debug("identifierContent::${params}")
+    log.info("identifierContent::${params}")
+    logRequestFrom()
     redirect(controller: 'resource', action: 'show', id: params.id)
   }
 
   def orgContent() {
-    log.debug("orgContent::${params}")
+    log.info("orgContent::${params}")
+    logRequestFrom()
     redirect(controller: 'resource', action: 'show', id: params.id)
   }
 
   def sourceContent() {
-    log.debug("sourceContent::${params}")
+    log.info("sourceContent::${params}")
+    logRequestFrom()
     redirect(controller: 'resource', action: 'show', id: params.id)
   }
 
   def platformContent() {
-    log.debug("tippContent::${params}")
+    log.info("tippContent::${params}")
+    logRequestFrom()
     redirect(controller: 'resource', action: 'show', id: params.id)
   }
 
 
   def index() {
-    log.debug("PublicController::index ${params}");
+    log.info("PublicController::index ${params}");
     def result = [:]
 
     def searchResult = [:]
@@ -135,7 +143,7 @@ class PublicController {
   }
 
   def kbart() {
-
+    log.info("kbart::${params}")
     wekb.Package pkg = genericOIDService.resolveOID(params.id)
 
     if(!pkg){
@@ -152,7 +160,7 @@ class PublicController {
     String filename = "kbart_${pkg.name}_${export_date}.txt"
 
     try {
-
+      logRequestFrom()
       response.setHeader("Content-disposition", "attachment; filename=\"${filename}\"")
 
       def out = response.outputStream
@@ -169,7 +177,7 @@ class PublicController {
   }
 
   def packageTSVExport() {
-
+    log.info("packageTSVExport::${params}")
     wekb.Package pkg = genericOIDService.resolveOID(params.id)
 
     if(!pkg){
@@ -187,7 +195,7 @@ class PublicController {
     String filename = "wekb_package_${pkg.name.toLowerCase()}_${export_date}"
 
     try {
-
+      logRequestFrom()
       List status = []
 
       if("Current" in params.list('status') || "Current" == params.status){
@@ -253,8 +261,16 @@ class PublicController {
   }
 
   def ygor() {
-    log.debug("ygor::${params}")
+    log.info("ygor::${params}")
     def result = [:]
     result
+  }
+
+  private void logRequestFrom(){
+    DefaultSavedRequest savedRequest = new HttpSessionRequestCache().getRequest(request, response) as DefaultSavedRequest
+    log.info 'Request from ' + request.getRemoteAddr() + ' for ' + request.requestURI + ' ---> ' + request.getHeaderNames().findAll{
+      it in ['host', 'referer', 'cookie', 'user-agent']
+    }.collect{it + ': ' + savedRequest.getHeaderValues( it ).join(', ')}
+
   }
 }
