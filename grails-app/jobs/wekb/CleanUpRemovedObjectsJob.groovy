@@ -23,7 +23,7 @@ class CleanUpRemovedObjectsJob {
             cleanUpRemovedObjects()
             log.info("cleanUp removed objects job completed.")
         } else {
-            log.debug("cleanUp removed objects job is not enabled - set config.wekb.cleanUpRemovedObjects = true");
+            log.info("cleanUp removed objects job is not enabled - set config.wekb.cleanUpRemovedObjects = true");
         }
     }
 

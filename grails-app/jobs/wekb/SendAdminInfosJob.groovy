@@ -29,7 +29,7 @@ class SendAdminInfosJob {
             //sendEsIndexCheck()
             log.info("send job infos job completed.")
         } else {
-            log.debug("automatic send job infos Job is not enabled - set config.wekb.sendJobInfosJob = true");
+            log.info("automatic send job infos Job is not enabled - set config.wekb.sendJobInfosJob = true");
         }
     }
 
