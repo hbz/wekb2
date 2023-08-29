@@ -267,10 +267,9 @@ class PublicController {
   }
 
   private void logRequestFrom(){
-    DefaultSavedRequest savedRequest = new HttpSessionRequestCache().getRequest(request, response) as DefaultSavedRequest
     log.info 'Request from ' + request.getRemoteAddr() + ' for ' + request.requestURI + ' ---> ' + request.getHeaderNames().findAll{
       it in ['host', 'referer', 'cookie', 'user-agent']
-    }.collect{it + ': ' + savedRequest.getHeaderValues( it ).join(', ')}
+    }.collect{it + ': ' + request.getHeaders( it ).join(', ')}
 
   }
 }

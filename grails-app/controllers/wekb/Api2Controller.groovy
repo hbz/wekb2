@@ -196,11 +196,9 @@ class Api2Controller {
         Map result = [code: 'success', message: '']
         User user
 
-        DefaultSavedRequest savedRequest = new HttpSessionRequestCache().getRequest(request, response) as DefaultSavedRequest
-        String url = savedRequest.getRequestURL() + (savedRequest.getQueryString() ? '?' + savedRequest.getQueryString() : '')
         log.info 'API request from ' + request.getRemoteAddr() + ' for ' + request.requestURI + ' ---> ' + request.getHeaderNames().findAll{
             it in ['host', 'referer', 'cookie', 'user-agent']
-        }.collect{it + ': ' + savedRequest.getHeaderValues( it ).join(', ')}
+        }.collect{it + ': ' + request.getHeaders( it ).join(', ')}
 
         if(!springSecurityService.loggedIn){
 
