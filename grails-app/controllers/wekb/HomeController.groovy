@@ -11,6 +11,7 @@ import wekb.system.SavedSearch
 
 import java.time.LocalDate
 import java.time.ZoneId
+import groovy.xml.XmlSlurper
 
 @Secured(['IS_AUTHENTICATED_FULLY'])
 class HomeController {
@@ -72,6 +73,16 @@ class HomeController {
       String queryLastUpdated = "from ${domainClassName} where TO_CHAR(dateCreated,'YYYY-MM-DD') != TO_CHAR(lastUpdated,'YYYY-MM-DD') and status in (:status) and lastUpdated >= :daysBefore order by lastUpdated desc"
       result.news[domainClassName.toLowerCase()] .lastUpdatedInDB = Package.executeQuery(queryLastUpdated, [status: status, daysBefore: dateFor14Days], [max: 100, offset: 0])
 
+    }
+
+    String wikiRssFeedUrl = grailsApplication.config.getProperty('wekb.wikiRSSFeedURL', String)
+
+    if (wikiRssFeedUrl) {
+      log.info("Get data form wiki: "+wikiRssFeedUrl)
+      result.rssFeed = new XmlSlurper().parseText(wikiRssFeedUrl.toURL().text)
+
+    } else {
+      log.info("No wikiRssFeedUrl set!");
     }
 
     result
