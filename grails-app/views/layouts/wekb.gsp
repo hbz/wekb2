@@ -81,7 +81,7 @@
             <div class="header">Statistics</div>
 
             <div class="menu">
-                <g:link class="item" controller="home">Statistics</g:link>
+                <g:link class="item" controller="home" action="statistic">Statistics</g:link>
             </div>
         </div>
         <sec:ifAnyGranted roles='ROLE_ADMIN,ROLE_EDITOR'>

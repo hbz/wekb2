@@ -98,6 +98,7 @@ class PublicController {
 
   def index() {
     log.info("PublicController::index ${params}");
+    logRequestFrom()
     def result = [:]
 
     def searchResult = [:]
@@ -267,9 +268,7 @@ class PublicController {
   }
 
   private void logRequestFrom(){
-    log.info 'Request from ' + request.getRemoteAddr() + ' for ' + request.requestURI + ' ---> ' + request.getHeaderNames().findAll{
-      it in ['host', 'referer', 'cookie', 'user-agent']
-    }.collect{it + ': ' + request.getHeaders( it )}
+    log.info 'Request from ' + request.getRemoteAddr() + ' for ' + request.requestURI + ' ---> Host: ' + request.getRemoteHost() + ''
 
   }
 }
