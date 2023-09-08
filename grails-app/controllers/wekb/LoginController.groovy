@@ -6,9 +6,14 @@ package wekb
 
 
 import grails.converters.JSON
+import grails.core.GrailsClass
 import grails.gorm.transactions.Transactional
 import grails.plugin.springsecurity.SpringSecurityUtils
 import grails.plugins.mail.MailService
+import grails.util.Holders
+import grails.web.Action
+import grails.web.mapping.UrlMappingInfo
+import grails.web.mapping.UrlMappingsHolder
 import org.springframework.context.MessageSource
 import org.springframework.security.access.annotation.Secured
 import org.springframework.security.authentication.AccountExpiredException
@@ -20,7 +25,10 @@ import org.springframework.security.core.Authentication
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.web.WebAttributes
 import org.springframework.security.web.authentication.session.SessionAuthenticationException
+import org.springframework.security.web.savedrequest.DefaultSavedRequest
+import org.springframework.security.web.savedrequest.HttpSessionRequestCache
 import wekb.auth.User
+import wekb.helper.BeanStore
 import wekb.utils.PasswordUtils
 
 import javax.servlet.http.HttpServletResponse
@@ -57,6 +65,20 @@ class LoginController {
         if (springSecurityService.isLoggedIn()) {
             redirect uri: conf.successHandler.defaultTargetUrl
             return
+        }
+
+        DefaultSavedRequest savedRequest = new HttpSessionRequestCache().getRequest(request, response) as DefaultSavedRequest
+        if (savedRequest) {
+            log.info 'The original request was saved as: ' + savedRequest.getRequestURL()
+
+            boolean fuzzyCheck = _fuzzyCheck(savedRequest)
+            if (!fuzzyCheck) {
+                String url = savedRequest.getRequestURL() + (savedRequest.getQueryString() ? '?' + savedRequest.getQueryString() : '')
+                log.warn 'Login failed from ' + request.getRemoteAddr() + ' for ' + url + ' ---> ' + savedRequest.getHeaderNames().findAll{
+                    it in ['host', 'referer', 'cookie', 'user-agent']
+                }.collect{it + ': ' + savedRequest.getHeaderValues( it ).join(', ')}
+
+            }
         }
 
         String postUrl = request.contextPath + conf.apf.filterProcessesUrl
@@ -185,5 +207,28 @@ class LoginController {
         result.emailSent = params.emailSent
 
         result
+    }
+
+    private boolean _fuzzyCheck(DefaultSavedRequest savedRequest) {
+
+        if (!savedRequest) {
+            return true
+        }
+        boolean validRequest = false
+
+
+        UrlMappingsHolder urlMappingsHolder = BeanStore.getUrlMappingsHolder()
+        List<UrlMappingInfo> mappingInfo = urlMappingsHolder.matchAll(savedRequest.getRequestURI())
+        if (mappingInfo) {
+            GrailsClass controller = Holders.grailsApplication.getArtefacts('Controller').toList().sort{ it.clazz.simpleName }.find {
+                it.clazz.simpleName == mappingInfo.first().getControllerName().capitalize() + 'Controller'
+            }
+            if (controller) {
+                if (controller.clazz.declaredMethods.find { it.getAnnotation(Action) && it.name == mappingInfo.first().getActionName() }) {
+                    validRequest = true
+                }
+            }
+        }
+        validRequest
     }
 }

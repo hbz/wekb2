@@ -171,8 +171,10 @@ class Api2Service {
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'ilike_Combine_Name_And_VariantNames_And_AbbreviatedName_Provider', 'prop': 'provider.name', 'wildcard': 'B']
                                 ],
                                 [
+                                        type       : 'lookup',
+                                        baseClass  : 'wekb.RefdataValue',
                                         qparam     : 'ddc',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'ddcs.value'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'ddcs'],
                                 ],
                                 [
                                         qparam     : 'curatoryGroupType',
@@ -1802,10 +1804,10 @@ class Api2Service {
     private void processRefDataFields(GrailsParameterMap cleaned_params, GrailsParameterMap parameterMap) {
 
         if(parameterMap.ddc) {
-            setRefdataValueFromGrailsParameterMap(cleaned_params, parameterMap, 'ddcs', 'ddc')
+            setRefdataValueFromGrailsParameterMap(cleaned_params, parameterMap, 'ddc', 'ddc')
         }
         else if(parameterMap.ddcs) {
-            setRefdataValueFromGrailsParameterMap(cleaned_params, parameterMap, 'ddcs', 'ddcs')
+            setRefdataValueFromGrailsParameterMap(cleaned_params, parameterMap, 'ddc', 'ddcs')
         }
         if(parameterMap.language) {
             setRefdataValueFromGrailsParameterMap(cleaned_params, parameterMap, 'languages', 'language')

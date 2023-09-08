@@ -28,7 +28,7 @@ class AutoUpdatePackagesJob {
 
       log.info("auto update packages job completed.")
     } else {
-      log.debug("automatic package update is not enabled - set config.wekb.packageUpdate_enabled = true");
+      log.info("automatic package update is not enabled - set config.wekb.packageUpdate_enabled = true");
     }
   }
 }

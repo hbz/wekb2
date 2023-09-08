@@ -191,6 +191,25 @@
                                             id="${c.link}">
                                         <g:render template="/search/qbevalue" model="[c: c]"/>
                                     </g:link>
+
+                                    <g:set var="duration" value="${null}"/>
+                                    <g:if test="${c.globalSearchTemplateProperty == 'name' &&
+                                            (row_obj instanceof wekb.Package || row_obj instanceof wekb.Org
+                                            || row_obj instanceof wekb.Platform || row_obj instanceof wekb.TitleInstancePackagePlatform)}">
+
+                                        <% use(groovy.time.TimeCategory) {
+                                            duration = row_obj.lastUpdated - row_obj.dateCreated
+                                            }
+                                        %>
+
+                                        <g:if test="${duration && duration.days <= 14}">
+                                            <div class="ui black label" data-tooltip="Newly added in the last 14 days!">
+                                                <i class="star icon"></i>
+                                                New
+                                            </div>
+                                        </g:if>
+
+                                    </g:if>
                                 </g:elseif>
                                 <g:elseif test="${c.outGoingLink != null}">
                                     <g:render template="/search/qbevalue" model="[c: c]"/>
