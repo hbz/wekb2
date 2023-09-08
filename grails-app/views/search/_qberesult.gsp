@@ -94,6 +94,7 @@
 </g:if>
 <g:else>
 
+    <g:set var="nowDate" value="${new java.util.Date()}"/>
     <div class="ui header">
         <h1>Showing results ${offset.toInteger() + 1} to ${lasthit.toInteger() as int} of
             ${reccount.toInteger() as int}</h1>
@@ -198,10 +199,9 @@
                                             || row_obj instanceof wekb.Platform || row_obj instanceof wekb.TitleInstancePackagePlatform)}">
 
                                         <% use(groovy.time.TimeCategory) {
-                                            duration = row_obj.lastUpdated - row_obj.dateCreated
+                                            duration = nowDate - row_obj.dateCreated
                                             }
                                         %>
-
                                         <g:if test="${duration && duration.days <= 14}">
                                             <div class="ui black label" data-tooltip="Newly added in the last 14 days!">
                                                 <i class="star icon"></i>
