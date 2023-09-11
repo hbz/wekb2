@@ -54,7 +54,7 @@
 
         <div class="menu">
             <g:link class="item" controller="search" action="componentSearch"
-                    params="[qbe: 'g:curatoryGroups', qp_type: RDStore.CURATORY_GROUP_TYPE_PROVIDER]">Curatory Groups</g:link>
+                    params="[qbe: 'g:curatoryGroups', qp_type: RDStore.CURATORY_GROUP_TYPE_PROVIDER.getOID()]">Curatory Groups</g:link>
             <g:link class="item" controller="search" action="componentSearch"
                     params="[qbe: 'g:sources']">Sources</g:link>
 
