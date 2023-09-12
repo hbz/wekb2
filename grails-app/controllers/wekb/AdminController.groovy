@@ -34,6 +34,7 @@ class AdminController {
   SessionFactory sessionFactory
   GenericOIDService genericOIDService
   ExecutorService executorService
+  FtpConnectService ftpConnectService
 
 
 
@@ -732,6 +733,15 @@ class AdminController {
     log.info("End process tipps not index.")
 
     redirect(url: request.getHeader('referer'))
+  }
+
+  def ftpTest() {
+    log.info("ftpTest")
+
+    if(params.serverAddress && params.username && params.password) {
+      ftpConnectService.ftpConnectionTest(params.serverAddress, params.username, params.password)
+    }
+    
   }
 
 }

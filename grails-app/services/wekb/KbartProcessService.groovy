@@ -30,7 +30,15 @@ class KbartProcessService {
         List kbartRows = []
         String lastUpdateURL = ""
         Date startTime = new Date()
-        UpdatePackageInfo updatePackageInfo = new UpdatePackageInfo(pkg: pkg, startTime: startTime, status: RDStore.UPDATE_STATUS_SUCCESSFUL, description: "Starting Update package.", onlyRowsWithLastChanged: onlyRowsWithLastChanged, automaticUpdate: false, kbartHasWekbFields: false).save()
+        UpdatePackageInfo updatePackageInfo = new UpdatePackageInfo(
+                pkg: pkg,
+                startTime: startTime,
+                status: RDStore.UPDATE_STATUS_SUCCESSFUL,
+                description: "Starting Update package.",
+                onlyRowsWithLastChanged: onlyRowsWithLastChanged,
+                automaticUpdate: false,
+                kbartHasWekbFields: false,
+                updateFromFileUpload: true).save()
         try {
             kbartRows = kbartProcess(tsvFile, lastUpdateURL, updatePackageInfo)
 
@@ -63,6 +71,7 @@ class KbartProcessService {
                 updatePackageInfo.pkg = pkg
                 updatePackageInfo.onlyRowsWithLastChanged = onlyRowsWithLastChanged
                 updatePackageInfo.automaticUpdate = false
+                updatePackageInfo.updateFromFileUpload = true
                 updatePackageInfo.save()
             }
         }
@@ -595,7 +604,7 @@ class KbartProcessService {
                     KbartSource src = KbartSource.get(aPackage.kbartSource.id)
                     src.kbartHasWekbFields = !setAllTippsNotInKbartToDeleted
                     src.lastRun = new Date()
-                    src.lastUpdateUrl = lastUpdateURL
+                    src.lastUpdateUrl = (src.defaultSupplyMethod == RDStore.KS_DSMETHOD_HTTP_URL ? lastUpdateURL : "")
                     src.lastChangedInKbart = lastChangedInKbart
                     src.save()
                 }
@@ -609,7 +618,7 @@ class KbartProcessService {
                 updatePackageInfo.refresh()
                 updatePackageInfo.endTime = new Date()
                 String description = "An error occurred while processing the KBART file. More information can be seen in the system log. "
-                if(updatePackageInfo.automaticUpdate){
+                if(lastUpdateURL && updatePackageInfo.automaticUpdate){
                     description = description+ "File from URL: ${lastUpdateURL}"
                 }
                 updatePackageInfo.description = description
@@ -644,7 +653,7 @@ class KbartProcessService {
             log.error("Encoding of file is wrong. File encoding is: ${encoding}")
             UpdatePackageInfo.withTransaction {
                 String description = "Encoding of KBART file is wrong. File encoding was: ${encoding}. "
-                if(updatePackageInfo.automaticUpdate){
+                if(lastUpdateURL && updatePackageInfo.automaticUpdate){
                     description = description+ "File from URL: ${lastUpdateURL}"
                 }
                 updatePackageInfo.description = description
@@ -805,7 +814,7 @@ class KbartProcessService {
                             log.error("KBART file does not have one or any of the headers: ${minimumKbartStandard}")
                             UpdatePackageInfo.withTransaction {
                                 String description = "KBART file does not have one or any of the headers: ${minimumKbartStandard.join(', ')}. "
-                                if(updatePackageInfo.automaticUpdate){
+                                if(lastUpdateURL && updatePackageInfo.automaticUpdate){
                                     description = description+ "File from URL: ${lastUpdateURL}"
                                 }
                                 updatePackageInfo.description = description
@@ -844,7 +853,7 @@ class KbartProcessService {
                         log.error("no delimiter $delimiter: ${lastUpdateURL}")
                         UpdatePackageInfo.withTransaction {
                             String description = "Separator for the KBART was not recognized. The following separators are recognized: Tab, comma, semicolons. "
-                            if(updatePackageInfo.automaticUpdate){
+                            if(lastUpdateURL && updatePackageInfo.automaticUpdate){
                                 description = description+ "File from URL: ${lastUpdateURL}"
                             }
                             updatePackageInfo.description = description
@@ -858,7 +867,7 @@ class KbartProcessService {
                     log.error("KBART file is empty:  ${lastUpdateURL}")
                     UpdatePackageInfo.withTransaction {
                         String description = "KBART file is empty. "
-                        if(updatePackageInfo.automaticUpdate){
+                        if(lastUpdateURL && updatePackageInfo.automaticUpdate){
                             description = description+ "File from URL: ${lastUpdateURL}"
                         }
                         updatePackageInfo.description = description
@@ -873,7 +882,7 @@ class KbartProcessService {
                 UpdatePackageInfo.withTransaction {
                     updatePackageInfo.refresh()
                     String description = "An error occurred while processing the KBART file. More information can be seen in the system log. "
-                    if(updatePackageInfo.automaticUpdate){
+                    if(lastUpdateURL && updatePackageInfo.automaticUpdate){
                         description = description+ "File from URL: ${lastUpdateURL}"
                     }
                     updatePackageInfo.description = description

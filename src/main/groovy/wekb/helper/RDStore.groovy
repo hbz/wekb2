@@ -11,6 +11,9 @@ class RDStore {
     public static final UPDATE_STATUS_FAILED    = getRefdataValue('Failed', RCConstants.UPDATE_STATUS)
     public static final UPDATE_STATUS_WARNING    = getRefdataValue('Warning', RCConstants.UPDATE_STATUS)
 
+    public static final KS_DSMETHOD_HTTP_URL    = getRefdataValue('HTTP Url', RCConstants.SOURCE_DATA_SUPPLY_METHOD)
+    public static final KS_DSMETHOD_FTP    = getRefdataValue('FTP', RCConstants.SOURCE_DATA_SUPPLY_METHOD)
+
     public static final UPDATE_TYPE_NEW_TITLE    = getRefdataValue('New Title', RCConstants.UPDATE_TYPE)
     public static final UPDATE_TYPE_CHANGED_TITLE    = getRefdataValue('Changed Title', RCConstants.UPDATE_TYPE)
     public static final UPDATE_TYPE_REMOVED_TITLE    = getRefdataValue('Removed Title', RCConstants.UPDATE_TYPE)

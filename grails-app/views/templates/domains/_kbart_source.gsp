@@ -25,14 +25,6 @@
         </dl>
         <dl>
             <dt class="control-label">
-                URL
-            </dt>
-            <dd>
-                <semui:xEditable owner="${d}" field="url" validation="url" outGoingLink="true"/>
-            </dd>
-        </dl>
-        <dl>
-            <dt class="control-label">
                 Frequency
             </dt>
             <dd>
@@ -124,16 +116,8 @@
 
             </dd>
         </dl>
-        <dl>
-            <dt class="control-label">
-                Last Update Url
-            </dt>
-            <dd>
-                <semui:xEditable owner="${d}" field="lastUpdateUrl" overwriteEditable="${false}" outGoingLink="true"
-                                 disabled="${createObject}"/>
-            </dd>
-        </dl>
-        <g:if test="${controllerName != 'create'}">
+
+        <g:if test="${controllerName != 'create' && d.automaticUpdates}">
             <dl>
                 <dt class="control-label">
                     Next Run
@@ -156,6 +140,125 @@
                 </dd>
             </dl>
         </g:if>
+    </div>
+</div>
 
+<div class="sixteen wide column">
+    <div class="ui two doubling stackable cards">
+        <div class="ui card">
+            <div class="content wekb-inline-lists">
+                <div class="header">
+                    <g:if test="${d.defaultSupplyMethod == wekb.helper.RDStore.KS_DSMETHOD_HTTP_URL}">
+                        <div class="ui green ribbon label">Activ</div>
+                    </g:if>
+                    <g:else>
+                        <div class="ui red ribbon label">Not activ</div>
+                    </g:else>
+                    HTTP URL Configuration
+                </div>
+
+                <div class="description">
+                    <dl>
+                        <dt class="control-label">
+                            URL
+                        </dt>
+                        <dd>
+                            <semui:xEditable owner="${d}" field="url" validation="url" outGoingLink="true"/>
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt class="control-label">
+                            Last Update Url
+                        </dt>
+                        <dd>
+                            <semui:xEditable owner="${d}" field="lastUpdateUrl" overwriteEditable="${false}"
+                                             outGoingLink="true"
+                                             disabled="${createObject}"/>
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+
+        <div class="ui card">
+            <div class="content wekb-inline-lists">
+                <div class="header">
+                    <g:if test="${d.defaultSupplyMethod == wekb.helper.RDStore.KS_DSMETHOD_FTP}">
+                        <div class="ui green ribbon label">Activ</div>
+                    </g:if><g:else>
+                    <div class="ui red ribbon label">Not activ</div>
+                </g:else>
+                    FTP Configuration
+                </div>
+
+                <div class="description">
+                    <dl>
+                        <dt class="control-label">
+                            FTP Server Url
+                        </dt>
+                        <dd>
+                            <g:if test="${editable || curator}">
+                                <semui:xEditable owner="${d}" field="ftpServerUrl"/>
+                            </g:if>
+                            <g:else>
+                                Only the curator of this component can see this.
+                            </g:else>
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt class="control-label">
+                            FTP Username
+                        </dt>
+                        <dd>
+                            <g:if test="${editable || curator}">
+                                <semui:xEditable owner="${d}" field="ftpUsername"/>
+                            </g:if>
+                            <g:else>
+                                Only the curator of this component can see this.
+                            </g:else>
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt class="control-label">
+                            FTP Password
+                        </dt>
+                        <dd>
+                            <g:if test="${editable || curator}">
+                                <semui:xEditable owner="${d}" field="ftpPassword"/>
+                            </g:if>
+                            <g:else>
+                                Only the curator of this component can see this.
+                            </g:else>
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt class="control-label">
+                            FTP Directory
+                        </dt>
+                        <dd>
+                            <g:if test="${editable || curator}">
+                                <semui:xEditable owner="${d}" field="ftpDirectory"/>
+                            </g:if>
+                            <g:else>
+                                Only the curator of this component can see this.
+                            </g:else>
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt class="control-label">
+                            FTP File Name
+                        </dt>
+                        <dd>
+                            <g:if test="${editable || curator}">
+                                <semui:xEditable owner="${d}" field="ftpFileName"/>
+                            </g:if>
+                            <g:else>
+                                Only the curator of this component can see this.
+                            </g:else>
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

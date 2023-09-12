@@ -184,7 +184,7 @@ class WorkflowService {
     private Map updatePackageFromKbartSource(Package pkg, boolean allTitles = false) {
         log.debug("updatePackageFromKbartSource for Package ${pkg}..")
         Map result = [:]
-        if (pkg && pkg.kbartSource?.url) {
+        if (pkg && pkg.kbartSource && (pkg.kbartSource.url || pkg.kbartSource.ftpServerUrl)) {
             Set<Thread> threadSet = Thread.getAllStackTraces().keySet()
             Thread[] threadArray = threadSet.toArray(new Thread[threadSet.size()])
             boolean processRunning = false
@@ -208,7 +208,7 @@ class WorkflowService {
         } else if (!pkg) {
             result.error = "Unable to reference provided Package!"
         } else {
-            result.error = "Please check the Package KbartSource for validity!"
+            result.error = "Please check the source for validity!"
         }
 
         result.ref = grailsLinkGenerator.link(controller: 'resource', action: 'show', id: pkg.getOID(), absolute: true)

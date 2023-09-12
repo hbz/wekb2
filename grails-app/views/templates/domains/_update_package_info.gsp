@@ -170,6 +170,34 @@
             </dd>
         </dl>
 
+        <dl>
+            <dt class="control-label">
+                Update from URL
+            </dt>
+            <dd>
+                <semui:xEditableBoolean owner="${d}" field="updateFromURL" overwriteEditable="false"/>
+            </dd>
+        </dl>
+
+        <dl>
+            <dt class="control-label">
+                Update from FTP
+            </dt>
+            <dd>
+                <semui:xEditableBoolean owner="${d}" field="updateFromFTP" overwriteEditable="false"/>
+            </dd>
+        </dl>
+
+        <dl>
+            <dt class="control-label">
+                Update from File Upload
+            </dt>
+            <dd>
+                <semui:xEditableBoolean owner="${d}" field="updateFromFileUpload" overwriteEditable="false"/>
+            </dd>
+        </dl>
+
+
         <semui:tabs>
             <semui:tabsItemWithoutLink tab="updateTippInfos" counts="${d.getCountUpdateTippInfos()}" class="active">
                 Title Update Infos

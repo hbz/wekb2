@@ -90,6 +90,7 @@ class ResourceController {
               if (curatedObj && curatedObj.curatoryGroups && !(curatedObj instanceof User) && user.curatoryGroupUsers) {
                 def cur = user.curatoryGroupUsers.curatoryGroup.id.intersect(curatedObj.curatoryGroups.curatoryGroup.id) ?: []
                 request.curator = cur
+                result.curator = cur
               } else {
                 request.curator = null
               }

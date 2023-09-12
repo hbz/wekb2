@@ -1158,12 +1158,14 @@ class KbartImportService {
     static RefdataValue determinePublicationType(String type) {
         if (type) {
             switch (type.trim()) {
+                case "serials":
                 case "serial":
                 case "Serial":
                 case "Journal":
                 case "journal":
                     return RDStore.TIPP_PUBLIC_TYPE_SERIAL
                     break;
+                case "monographs":
                 case "monograph":
                 case "Monograph":
                 case "Book":

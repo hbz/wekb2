@@ -124,6 +124,9 @@ dependencies {
     runtimeOnly 'org.apache.tomcat:tomcat-jdbc'
     runtimeOnly 'javax.xml.bind:jaxb-api:2.3.1'                             // 2018 : [?]
     runtimeOnly 'org.postgresql:postgresql:42.5.1'                          // 2022
+
+    // https://mvnrepository.com/artifact/commons-net/commons-net
+    implementation group: 'commons-net', name: 'commons-net', version: '3.9.0' //2022 -> for FTP
 }
 
 bootRun {

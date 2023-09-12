@@ -20,6 +20,16 @@
                                       params="${params}"/>
                 <semui:sortableColumn property="kbartSource.url" title="URL"
                                       params="${params}"/>
+                <semui:sortableColumn property="kbartSource.ftpServerUrl" title="FTP Server Url"
+                                      params="${params}"/>
+                <semui:sortableColumn property="kbartSource.ftpDirectory" title="FTP Directory"
+                                      params="${params}"/>
+                <semui:sortableColumn property="kbartSource.ftpFileName" title="FTP File Name"
+                                      params="${params}"/>
+                <semui:sortableColumn property="kbartSource.ftpUsername" title="FTP Username"
+                                      params="${params}"/>
+                <semui:sortableColumn property="kbartSource.ftpPassword" title="FTP Password"
+                                      params="${params}"/>
                 <semui:sortableColumn property="kbartSource.frequency" title="Frequency"
                                       params="${params}"/>
                 <semui:sortableColumn property="kbartSource.defaultSupplyMethod" title="Default Supply Method"
@@ -28,7 +38,6 @@
                                       params="${params}"/>
                 <semui:sortableColumn property="kbartSource.automaticUpdates" title="Automatic Updates"
                                       params="${params}"/>
-                <th>Title ID Namespace</th>
                 <th>Source</th>
                 <th></th>
             </tr>
@@ -63,6 +72,21 @@
                                                  outGoingLink="true"/>
                             </td>
                             <td>
+                                <semui:xEditable owner="${row_obj.kbartSource}" field="ftpServerUrl"/>
+                            </td>
+                            <td>
+                                <semui:xEditable owner="${row_obj.kbartSource}" field="ftpDirectory"/>
+                            </td>
+                            <td>
+                                <semui:xEditable owner="${row_obj.kbartSource}" field="ftpFileName"/>
+                            </td>
+                            <td>
+                                <semui:xEditable owner="${row_obj.kbartSource}" field="ftpUsername"/>
+                            </td>
+                            <td>
+                                <semui:xEditable owner="${row_obj.kbartSource}" field="ftpPassword"/>
+                            </td>
+                            <td>
                                 <semui:xEditableRefData owner="${row_obj.kbartSource}" field="frequency"
                                                         config="${RCConstants.SOURCE_FREQUENCY}"/>
                             </td>
@@ -85,6 +109,10 @@
                             </td>
                         </g:if>
                         <g:else>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
                             <td></td>
                             <td></td>
                             <td></td>
