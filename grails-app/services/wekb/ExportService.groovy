@@ -142,8 +142,8 @@ class ExportService {
 
     def exportPackageBatchImportTemplate(def outputStream) {
 
-        List titles = ["package_uuid", "package_name", "provider_uuid", "nominal_platform_uuid", "description", "url", "breakable", "content_type",
-                              "file", "open_access", "payment_type", "scope", "national_range", "regional_range", "provider_product_id", "ddc", "source_url", "frequency", "title_id_namespace", "automated_updates", "archiving_agency", "open_access_of_archiving_agency", "post_cancellation_access_of_archiving_agency"]
+        List titles = ["package_uuid", "package_name", "provider_uuid", "nominal_platform_uuid", "description", "description_url", "breakable", "content_type",
+                              "file", "open_access", "payment_type", "scope", "national_range", "regional_range", "provider_product_id", "ddc", "source_default_supply_method", "source_url", "source_ftp_server_url", "source_ftp_directory", "source_ftp_file_name", "source_ftp_username", "source_ftp_password", "frequency", "automated_updates", "archiving_agency", "open_access_of_archiving_agency", "post_cancellation_access_of_archiving_agency"]
 
 
         XSSFWorkbook workbook = new XSSFWorkbook()
@@ -193,6 +193,8 @@ class ExportService {
                 case 'open_access_of_archiving_agency': datas = RefdataCategory.lookup(RCConstants.PAA_OPEN_ACCESS).sort{it.value}.collect { it -> it.value }
                     break
                 case 'post_cancellation_access_of_archiving_agency': datas = RefdataCategory.lookup(RCConstants.PAA_POST_CANCELLATION_ACCESS).sort{it.value}.collect { it -> it.value }
+                    break
+                case 'source_default_supply_method': datas = [RDStore.KS_DSMETHOD_HTTP_URL.value, RDStore.KS_DSMETHOD_FTP.value]
                     break
             }
 
@@ -524,7 +526,8 @@ class ExportService {
         List<String> titleHeaders = ["package_uuid", "package_name", "provider_name", "provider_uuid", "nominal_platform_name",
                                      "nominal_platform_uuid", "description", "url", "breakable", "content_type",
                                      "file", "open_access", "payment_type", "scope", "national_range", "regional_range", "provider_product_id", "ddc",
-                                     "source_url", "frequency", "title_id_namespace", "automated_updates",
+                                     "source_default_supply_method", "source_url", "source_ftp_server_url", "source_ftp_directory", "source_ftp_file_name", "source_ftp_username", "source_ftp_password",
+                                     "frequency", "automated_updates",
                                      "archiving_agency", "open_access_of_archiving_agency", "post_cancellation_access_of_archiving_agency"]
         Map<String,List> export = [titleRow:titleHeaders,rows:[]]
 
@@ -554,8 +557,13 @@ class ExportService {
             row.add(sanitize(pkg.getAnbieterProduktIDs()))
             row.add(sanitize(pkg.ddcs?.value.join(',')))
             row.add(sanitize(pkg.kbartSource?.url))
+            row.add(sanitize(pkg.kbartSource?.defaultSupplyMethod?.value))
+            row.add(sanitize(pkg.kbartSource?.ftpServerUrl))
+            row.add(sanitize(pkg.kbartSource?.ftpDirectory))
+            row.add(sanitize(pkg.kbartSource?.ftpFileName))
+            row.add(sanitize(pkg.kbartSource?.ftpUsername))
+            row.add(sanitize(pkg.kbartSource?.ftpPassword))
             row.add(sanitize(pkg.kbartSource?.frequency?.value))
-            row.add(sanitize(IdentifierNamespace.findByValueAndTargetType('title_id', RDStore.IDENTIFIER_NAMESPACE_TARGET_TYPE_TIPP).value))
             row.add(sanitize(pkg.kbartSource?.automaticUpdates ? 'Yes': 'No'))
             row.add(sanitize(pkg.paas?.archivingAgency?.value))
             row.add(sanitize(pkg.paas?.openAccess?.value))

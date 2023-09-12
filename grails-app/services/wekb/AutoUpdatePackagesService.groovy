@@ -122,9 +122,7 @@ class AutoUpdatePackagesService {
                                 updatePackageInfo.save()
                             }
                         }
-                    }
-
-                    if (pkg.kbartSource.defaultSupplyMethod == RDStore.KS_DSMETHOD_HTTP_URL) {
+                    }else if (pkg.kbartSource.defaultSupplyMethod == RDStore.KS_DSMETHOD_HTTP_URL) {
                         updatePackageInfo.updateFromURL = true
                         updatePackageInfo.save()
                         if (pkg.kbartSource.url) {
@@ -193,6 +191,18 @@ class AutoUpdatePackagesService {
                                 updatePackageInfo.automaticUpdate = true
                                 updatePackageInfo.save()
                             }
+                        }
+                    }else {
+                        UpdatePackageInfo.withTransaction {
+                            //UpdatePackageInfo updatePackageFail = new UpdatePackageInfo()
+                            updatePackageInfo.description = "Default Supply Method not set in source! Please set Default Supply Method!"
+                            updatePackageInfo.status = RDStore.UPDATE_STATUS_FAILED
+                            updatePackageInfo.startTime = startTime
+                            updatePackageInfo.endTime = new Date()
+                            updatePackageInfo.pkg = pkg
+                            updatePackageInfo.onlyRowsWithLastChanged = onlyRowsWithLastChanged
+                            updatePackageInfo.automaticUpdate = true
+                            updatePackageInfo.save()
                         }
                     }
                 }
