@@ -67,13 +67,13 @@ class HomeController {
     newsAboutObjects.each{ String domainClassName ->
       result.news[domainClassName.toLowerCase()] = [:]
 
-      String queryNewCount = "select count(*) from ${domainClassName} where TO_CHAR(dateCreated,'YYYY-MM-DD') = TO_CHAR(lastUpdated,'YYYY-MM-DD') and status in (:status) and dateCreated >= :daysBefore"
+      String queryNewCount = "select count(*) from ${domainClassName} where  status in (:status) and dateCreated >= :daysBefore"
       result.news[domainClassName.toLowerCase()] .countNewInDB = Package.executeQuery(queryNewCount, [status: status, daysBefore: dateFor14Days])[0]
       String queryLastUpdatedCount = "select count(*) from ${domainClassName} where TO_CHAR(dateCreated,'YYYY-MM-DD') != TO_CHAR(lastUpdated,'YYYY-MM-DD') and status in (:status) and lastUpdated >= :daysBefore"
       result.news[domainClassName.toLowerCase()] .countLastUpdatedInDB = Package.executeQuery(queryLastUpdatedCount, [status: status, daysBefore: dateFor14Days])[0]
 
 
-      String queryNew = "from ${domainClassName} where TO_CHAR(dateCreated,'YYYY-MM-DD') = TO_CHAR(lastUpdated,'YYYY-MM-DD') and status in (:status) and dateCreated >= :daysBefore order by dateCreated desc"
+      String queryNew = "from ${domainClassName} where  status in (:status) and dateCreated >= :daysBefore order by dateCreated desc"
       result.news[domainClassName.toLowerCase()] .newInDB = Package.executeQuery(queryNew, [status: status, daysBefore: dateFor14Days], [max: 50, offset: 0])
       String queryLastUpdated = "from ${domainClassName} where TO_CHAR(dateCreated,'YYYY-MM-DD') != TO_CHAR(lastUpdated,'YYYY-MM-DD') and status in (:status) and lastUpdated >= :daysBefore order by lastUpdated desc"
       result.news[domainClassName.toLowerCase()] .lastUpdatedInDB = Package.executeQuery(queryLastUpdated, [status: status, daysBefore: dateFor14Days], [max: 50, offset: 0])

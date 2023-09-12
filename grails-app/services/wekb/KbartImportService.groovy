@@ -1248,7 +1248,7 @@ class KbartImportService {
                 case "other":
                     return RefdataCategory.lookup(RCConstants.TIPP_MEDIUM, "Other")
                 default:
-                    return null
+                    return RefdataCategory.lookup(RCConstants.TIPP_MEDIUM, medium)
             }
         }
         else {

@@ -34,6 +34,11 @@
     </g:link>
 
     <div class="item">
+        <div class="header">News</div>
+
+        <div class="menu">
+            <g:link class="item" controller="public" action="wekbNews">we:kb News</g:link>
+        </div>
         <div class="header">Search</div>
 
         <div class="menu">
@@ -49,7 +54,7 @@
 
         <div class="menu">
             <g:link class="item" controller="search" action="componentSearch"
-                    params="[qbe: 'g:curatoryGroups']">Curatory Groups</g:link>
+                    params="[qbe: 'g:curatoryGroups', qp_type: RDStore.CURATORY_GROUP_TYPE_PROVIDER.getOID()]">Curatory Groups</g:link>
             <g:link class="item" controller="search" action="componentSearch"
                     params="[qbe: 'g:sources']">Sources</g:link>
 
@@ -81,7 +86,7 @@
             <div class="header">Statistics</div>
 
             <div class="menu">
-                <g:link class="item" controller="home">Statistics</g:link>
+                <g:link class="item" controller="home" action="statistic">Statistics</g:link>
             </div>
         </div>
         <sec:ifAnyGranted roles='ROLE_ADMIN,ROLE_EDITOR'>
