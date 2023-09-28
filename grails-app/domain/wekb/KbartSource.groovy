@@ -32,6 +32,12 @@ class KbartSource extends AbstractBase implements Auditable {
     Date dateCreated
     Date lastUpdated
 
+    String ftpServerUrl
+    String ftpDirectory
+    String ftpFileName
+    String ftpUsername
+    String ftpPassword
+
     static hasMany = [
             curatoryGroups: CuratoryGroupKbartSource
     ]
@@ -59,6 +65,12 @@ class KbartSource extends AbstractBase implements Auditable {
         lastUpdateUrl column: 'ks_last_update_url'
         kbartHasWekbFields column: 'ks_kbart_wekb_fields'
         lastChangedInKbart column: 'ks_last_changed_in_kbart'
+
+        ftpServerUrl column: 'ks_ftp_server_url'
+        ftpFileName column: 'ks_ftp_file_name'
+        ftpDirectory column: 'ks_ftp_directory'
+        ftpUsername column: 'ks_ftp_username'
+        ftpPassword column: 'ks_ftp_password'
     }
 
     static constraints = {
@@ -79,17 +91,23 @@ class KbartSource extends AbstractBase implements Auditable {
         name(validator: { val, obj ->
             if (obj.hasChanged('name')) {
                 if (val && val.trim()) {
-                    def status_deleted = RDStore.KBC_STATUS_DELETED
+                   /* def status_deleted = RDStore.KBC_STATUS_DELETED
                     def dupes = KbartSource.findAllByNameIlikeAndStatusNotEqual(val, status_deleted);
 
                     if (dupes.size() > 0 && dupes.any { it != obj }) {
                         return ['notUnique']
-                    }
+                    }*/
                 } else {
                     return ['notNull']
                 }
             }
         })
+
+        ftpServerUrl (nullable: true, blank: true)
+        ftpFileName (nullable: true, blank: true)
+        ftpUsername (nullable: true, blank: true)
+        ftpPassword (nullable: true, blank: true)
+        ftpDirectory (nullable: true, blank: true)
     }
 
     @Override

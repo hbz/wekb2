@@ -296,8 +296,6 @@ class CreateComponentService {
                     break
                 case "frequency": colMap.frequency = c
                     break
-                case "title_id_namespace": colMap.title_id_namespace = c
-                    break
                 case "automated_updates": colMap.automated_updates = c
                     break
                 case 'archiving_agency': colMap.archiving_agency = c
@@ -305,6 +303,16 @@ class CreateComponentService {
                 case 'open_access_of_archiving_agency': colMap.open_access_of_archiving_agency = c
                     break
                 case 'post_cancellation_access_of_archiving_agency': colMap.post_cancellation_access_of_archiving_agency = c
+                    break
+                case 'source_ftp_server_url': colMap.source_ftp_server_url = c
+                    break
+                case 'source_ftp_directory': colMap.source_ftp_directory = c
+                    break
+                case 'source_ftp_file_name': colMap.source_ftp_file_name = c
+                    break
+                case 'source_ftp_username': colMap.source_ftp_username = c
+                    break
+                case 'source_ftp_password': colMap.source_ftp_password = c
                     break
             }
         }
@@ -578,11 +586,41 @@ class CreateComponentService {
                                 }
                             }
 
-                            if (colMap.source_url != null) {
+                            if (colMap.source_url != null || colMap.source_ftp_server_url != null) {
                                 String source_url = cols[colMap.source_url].trim()
-                                if (source_url) {
+                                String source_ftp_server_url = cols[colMap.source_ftp_server_url].trim()
+                                if (source_url || source_ftp_server_url) {
                                     Map sourceMap = [:]
-                                    sourceMap.url = source_url
+                                    if(source_url) {
+                                        sourceMap.url = source_url
+                                    }
+
+                                    if(cols[colMap.source_default_supply_method]){
+                                        String value = cols[colMap.source_default_supply_method].trim()
+                                        if (value) {
+                                            RefdataValue refdataValue = RefdataCategory.lookup(RCConstants.SOURCE_DATA_SUPPLY_METHOD, value)
+                                            if (refdataValue)
+                                                sourceMap.source_default_supply_method = refdataValue.id
+                                        }
+                                    }
+
+                                    if(source_ftp_server_url) {
+                                        sourceMap.source_ftp_server_url = source_ftp_server_url
+                                    }
+
+                                    if(cols[colMap.source_ftp_directory]){
+                                        sourceMap.source_ftp_directory = cols[colMap.source_ftp_directory].trim()
+                                    }
+                                    if(cols[colMap.source_ftp_file_name]){
+                                        sourceMap.source_ftp_file_name = cols[colMap.source_ftp_file_name].trim()
+                                    }
+                                    if(cols[colMap.source_ftp_username]){
+                                        sourceMap.source_ftp_username = cols[colMap.source_ftp_username].trim()
+                                    }
+                                    if(cols[colMap.source_ftp_password]){
+                                        sourceMap.source_ftp_password = cols[colMap.source_ftp_password].trim()
+                                    }
+
                                     sourceMap.pkgID = pkg.id
 
                                     if (colMap.frequency != null) {
@@ -610,15 +648,6 @@ class CreateComponentService {
                                                 }
                                             }*/
 
-                                        }
-                                    }
-
-                                    if (colMap.title_id_namespace != null) {
-                                        String value = cols[colMap.title_id_namespace].trim()
-                                        if (value) {
-                                            IdentifierNamespace identifierNamespace = IdentifierNamespace.findByValueAndTargetType('title_id', RDStore.IDENTIFIER_NAMESPACE_TARGET_TYPE_TIPP)
-                                            if (identifierNamespace)
-                                                sourceMap.targetNamespace = identifierNamespace.id
                                         }
                                     }
 
@@ -708,6 +737,30 @@ class CreateComponentService {
 
                 if (map.frequency) {
                     kbartSource.frequency = RefdataValue.get(map.frequency)
+                }
+
+                if (map.source_default_supply_method) {
+                    kbartSource.defaultSupplyMethod = RefdataValue.get(map.source_default_supply_method)
+                }
+
+                if (map.source_ftp_server_url) {
+                    kbartSource.ftpServerUrl = RefdataValue.get(map.source_ftp_server_url)
+                }
+
+                if (map.source_ftp_directory) {
+                    kbartSource.ftpDirectory = RefdataValue.get(map.source_ftp_directory)
+                }
+
+                if (map.source_ftp_file_name) {
+                    kbartSource.ftpFileName = RefdataValue.get(map.source_ftp_file_name)
+                }
+
+                if (map.source_ftp_username) {
+                    kbartSource.ftpUsername = RefdataValue.get(map.source_ftp_username)
+                }
+
+                if (map.source_ftp_password) {
+                    kbartSource.ftpPassword = RefdataValue.get(map.source_ftp_password)
                 }
 
                 if (map.automaticUpdates) {
