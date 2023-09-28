@@ -2185,7 +2185,7 @@ class KbartImportService {
                 def langIDs = tipp.languages.id.clone()
                 langIDs.each {
                     tipp.removeFromLanguages(ComponentLanguage.get(it))
-                    ComponentLanguage.get(it).delete()
+                    //ComponentLanguage.get(it).delete()
                 }
                 tipp.save()
                 //ComponentLanguage.executeUpdate("delete from ComponentLanguage where tipp = :tipp", [tipp: tipp])
