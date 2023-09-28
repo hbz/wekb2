@@ -85,7 +85,7 @@ databaseChangeLog = {
     changeSet(author: "djebeniani (hand-coded)", id: "1693497376546-12") {
         grailsChange {
             change {
-                Integer count = sql.executeUpdate("update kbart_source set ks_default_supply_method_rv_fk = (select rdv_id from refdata_value where rdv_owner = (SELECT rdc_id FROM refdata_category WHERE rdc_description = 'Source.DataSupplyMethod') and rdv_value = 'HTTP Url')) WHERE ks_url != null AND ks_url != ''")
+                Integer count = sql.executeUpdate("update kbart_source set ks_default_supply_method_rv_fk = (select rdv_id from refdata_value where rdv_owner = (SELECT rdc_id FROM refdata_category WHERE rdc_description = 'Source.DataSupplyMethod') and rdv_value = 'HTTP Url') WHERE ks_url != null AND ks_url != ''")
 
                 confirm("update kbart_source set ks_default_supply_method_rv_fk = HTTP Url : ${count}")
                 changeSet.setComments("update kbart_source set ks_default_supply_method_rv_fk = HTTP Url: ${count}")
