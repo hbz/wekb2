@@ -32,6 +32,10 @@ class UpdatePackageInfo {
 
     boolean automaticUpdate = false
 
+    boolean updateFromFTP = false
+    boolean updateFromURL = false
+    boolean updateFromFileUpload = false
+
     Date lastChangedInKbart
 
     String updateUrl
@@ -79,6 +83,10 @@ class UpdatePackageInfo {
         automaticUpdate column: 'upi_automatic_update'
 
         updateUrl column: 'upi_update_url'
+
+        updateFromFTP column: 'upi_update_from_ftp'
+        updateFromURL column: 'upi_update_from_url'
+        updateFromFileUpload column: 'upi_update_from_file_upload'
     }
 
     static constraints = {

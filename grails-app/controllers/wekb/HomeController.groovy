@@ -5,7 +5,14 @@ import org.springframework.security.crypto.password.PasswordEncoder
 import wekb.auth.User
 import org.hibernate.SessionFactory
 import org.springframework.security.access.annotation.Secured
+import wekb.helper.RDStore
+import wekb.system.FTControl
 import wekb.system.SavedSearch
+
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.ZoneId
+import groovy.xml.XmlSlurper
 
 @Secured(['IS_AUTHENTICATED_FULLY'])
 class HomeController {
@@ -36,7 +43,55 @@ class HomeController {
   def index () {
     log.debug("Home::index -- ${params}")
 
-    redirect(action:'statistic')
+    Map result = [:]
+
+    result.dateNow = new Date()
+
+    Date dateFor14Days = Date.from(LocalDate.now().minusDays(14).atStartOfDay(ZoneId.systemDefault()).toInstant())
+
+    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd")
+
+    result.dateFor14Days =  format.format(dateFor14Days)
+
+    List newsAboutObjects = [//'CuratoryGroup',
+                             //'KbartSource',
+                             'Org',
+                             'Package',
+                             'Platform',
+                             'TitleInstancePackagePlatform'
+    ]
+
+    List status = [RDStore.KBC_STATUS_CURRENT, RDStore.KBC_STATUS_RETIRED, RDStore.KBC_STATUS_DELETED, RDStore.KBC_STATUS_EXPECTED]
+    result.news = [:]
+
+    newsAboutObjects.each{ String domainClassName ->
+      result.news[domainClassName.toLowerCase()] = [:]
+
+      String queryNewCount = "select count(*) from ${domainClassName} where  status in (:status) and dateCreated >= :daysBefore"
+      result.news[domainClassName.toLowerCase()] .countNewInDB = Package.executeQuery(queryNewCount, [status: status, daysBefore: dateFor14Days])[0]
+      String queryLastUpdatedCount = "select count(*) from ${domainClassName} where TO_CHAR(dateCreated,'YYYY-MM-DD') != TO_CHAR(lastUpdated,'YYYY-MM-DD') and status in (:status) and lastUpdated >= :daysBefore"
+      result.news[domainClassName.toLowerCase()] .countLastUpdatedInDB = Package.executeQuery(queryLastUpdatedCount, [status: status, daysBefore: dateFor14Days])[0]
+
+
+      String queryNew = "from ${domainClassName} where  status in (:status) and dateCreated >= :daysBefore order by dateCreated desc"
+      result.news[domainClassName.toLowerCase()] .newInDB = Package.executeQuery(queryNew, [status: status, daysBefore: dateFor14Days], [max: 50, offset: 0])
+      String queryLastUpdated = "from ${domainClassName} where TO_CHAR(dateCreated,'YYYY-MM-DD') != TO_CHAR(lastUpdated,'YYYY-MM-DD') and status in (:status) and lastUpdated >= :daysBefore order by lastUpdated desc"
+      result.news[domainClassName.toLowerCase()] .lastUpdatedInDB = Package.executeQuery(queryLastUpdated, [status: status, daysBefore: dateFor14Days], [max: 50, offset: 0])
+
+    }
+
+    String wikiRssFeedUrl = grailsApplication.config.getProperty('wekb.wikiRSSFeedURL', String)
+
+    if (wikiRssFeedUrl) {
+      log.info("Get data form wiki: "+wikiRssFeedUrl)
+      result.rssFeed = new XmlSlurper().parseText(wikiRssFeedUrl.toURL().text)
+
+    } else {
+      log.info("No wikiRssFeedUrl set!");
+    }
+
+    result
+
   }
 
   @Secured(['ROLE_USER', 'IS_AUTHENTICATED_FULLY'])

@@ -141,11 +141,11 @@ class Platform  extends AbstractBase implements Auditable {
     name(validator: { val, obj ->
       if (obj.hasChanged('name')) {
         if (val && val.trim()) {
-          def status_deleted = RDStore.KBC_STATUS_DELETED
+         /* def status_deleted = RDStore.KBC_STATUS_DELETED
           def dupes = Platform.findAllByNameIlikeAndStatusNotEqual(val, status_deleted);
           if (dupes?.size() > 0 && dupes.any {it != obj}) {
             return ['notUnique']
-          }
+          }*/
         } else {
           return ['notNull']
         }

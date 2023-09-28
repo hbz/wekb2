@@ -69,7 +69,6 @@ grails.plugin.springsecurity.filterChain.chainMap = [
         [pattern: '/**/favicon.ico',      filters: 'none'],
         [pattern: '/error',               filters: 'none'],
         [pattern: '/fwk/**',              filters: 'JOINED_FILTERS,-exceptionTranslationFilter'],
-        [pattern: '/api/**',              filters: 'JOINED_FILTERS,-exceptionTranslationFilter'],
         [pattern: '/**',                  filters: 'JOINED_FILTERS,-basicAuthenticationFilter,-basicExceptionTranslationFilter,-restTokenValidationFilter,-restExceptionTranslationFilter'],
 ]
 
@@ -101,23 +100,8 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
         [pattern: '/resource/**',        access: ['permitAll']],
         [pattern: '/ajaxJson/**',    access: ['permitAll']],
         [pattern: '/package/**',        access: ['permitAll']],
-        [pattern: '/api/index',                access: ['permitAll']],
-        [pattern: '/api/find',                access: ['permitAll']],
-        [pattern: '/api/scroll',              access: ['permitAll']],
-        [pattern: '/api/sushiSources',        access: ['permitAll']],
-        [pattern: '/api/suggest',             access: ['permitAll']],
-        [pattern: '/api/isUp',                access: ['permitAll']],
-        [pattern: '/api/namespaces',          access: ['permitAll']],
-        [pattern: '/api/groups',              access: ['permitAll']],
-        [pattern: '/api/refdataCategories',              access: ['permitAll']],
 
         [pattern: '/api2/**',                access: ['permitAll']],
-]
-
-
-
-grails.plugin.springsecurity.ipRestrictions = [
-        [pattern: '/api/**', access: ['193.30.112.31', '193.30.112.34', '193.30.112.32', '10.1.1.240']],
 ]
 
 

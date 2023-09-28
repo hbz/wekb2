@@ -28,7 +28,7 @@
             DDCs
         </semui:tabsItemWithoutLink>
 
-        <g:if test="${d.kbartSource && d.kbartSource.url}">
+        <g:if test="${d.kbartSource}">
             <semui:tabsItemWithoutLink tab="autoUpdatePackageInfos" activeTab="${params.activeTab}" counts="${d.getCountAutoUpdateInfos()}">
                 Auto Update Infos
             </semui:tabsItemWithoutLink>
@@ -108,7 +108,7 @@
 
     <g:render template="/templates/tabTemplates/identifiersTab" model="${[d: d]}"/>
 
-    <g:if test="${d.kbartSource && d.kbartSource.url}">
+    <g:if test="${d.kbartSource}">
         <semui:tabsItemContent tab="autoUpdatePackageInfos" activeTab="${params.activeTab}">
 
             <div class="content">

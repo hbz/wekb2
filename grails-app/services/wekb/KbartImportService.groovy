@@ -1158,12 +1158,14 @@ class KbartImportService {
     static RefdataValue determinePublicationType(String type) {
         if (type) {
             switch (type.trim()) {
+                case "serials":
                 case "serial":
                 case "Serial":
                 case "Journal":
                 case "journal":
                     return RDStore.TIPP_PUBLIC_TYPE_SERIAL
                     break;
+                case "monographs":
                 case "monograph":
                 case "Monograph":
                 case "Book":
@@ -1246,7 +1248,7 @@ class KbartImportService {
                 case "other":
                     return RefdataCategory.lookup(RCConstants.TIPP_MEDIUM, "Other")
                 default:
-                    return null
+                    return RefdataCategory.lookup(RCConstants.TIPP_MEDIUM, medium)
             }
         }
         else {
@@ -2183,7 +2185,7 @@ class KbartImportService {
                 def langIDs = tipp.languages.id.clone()
                 langIDs.each {
                     tipp.removeFromLanguages(ComponentLanguage.get(it))
-                    ComponentLanguage.get(it).delete()
+                    //ComponentLanguage.get(it).delete()
                 }
                 tipp.save()
                 //ComponentLanguage.executeUpdate("delete from ComponentLanguage where tipp = :tipp", [tipp: tipp])

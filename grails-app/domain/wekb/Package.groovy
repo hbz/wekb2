@@ -564,6 +564,7 @@ class Package  extends AbstractBase implements Auditable {
     CuratoryGroupPackage.executeUpdate("delete from CuratoryGroupPackage where pkg = :component", [component: this])
     Identifier.executeUpdate("delete from Identifier where pkg = :component", [component: this])
     PackageArchivingAgency.executeUpdate("delete from PackageArchivingAgency where pkg = :component", [component: this])
+    UpdateTippInfo.executeUpdate("delete from UpdateTippInfo where updatePackageInfo in (select upi.id from UpdatePackageInfo as upi where upi.pkg = :component)", [component: this])
     UpdatePackageInfo.executeUpdate("delete from UpdatePackageInfo where pkg = :component", [component: this])
 
     def removedStatus = RDStore.KBC_STATUS_REMOVED

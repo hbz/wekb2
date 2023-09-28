@@ -107,15 +107,13 @@
             <h1 class="ui header">${displayobj.getDomainName()}: ${displayobj.getShowName()}</h1>
 
 
-            <div class="ui segment">
-                <div class="content wekb-inline-lists">
-                    <g:if test="${displaytemplate != null}">
-                        <!-- Using display template ${displaytemplate.rendername} -->
-                        <g:render template="/templates/domains/${displaytemplate.rendername}"
-                                  model="${[d: displayobj, dtype: displayobjclassname_short]}"/>
-                    </g:if>
-                </div>
-            </div>
+
+            <g:if test="${displaytemplate != null}">
+                <!-- Using display template ${displaytemplate.rendername} -->
+                <g:render template="/templates/domains/${displaytemplate.rendername}"
+                          model="${[d: displayobj, dtype: displayobjclassname_short]}"/>
+            </g:if>
+
 
         </div>
 

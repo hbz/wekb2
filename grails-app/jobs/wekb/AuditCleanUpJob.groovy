@@ -28,7 +28,7 @@ class AuditCleanUpJob {
 
             log.info("Audit CleanUp Job completed.")
         } else {
-            log.debug("Audit CleanUp Job is not enabled - set config.wekb.auditCleanUpJob.enabled = true");
+            log.info("Audit CleanUp Job is not enabled - set config.wekb.auditCleanUpJob.enabled = true");
         }
     }
 }

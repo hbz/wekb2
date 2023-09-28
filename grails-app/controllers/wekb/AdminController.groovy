@@ -34,6 +34,7 @@ class AdminController {
   SessionFactory sessionFactory
   GenericOIDService genericOIDService
   ExecutorService executorService
+  FtpConnectService ftpConnectService
 
 
 
@@ -126,7 +127,9 @@ class AdminController {
     j.type = RefdataCategory.lookupOrCreate(RCConstants.JOB_TYPE, 'CleanupRemovedComponents')
     j.startTime = new Date()
 
-    redirect(controller: 'admin', action: 'jobs');
+    flash.message = "Expunge Removed Component runs in the background!"
+
+    redirect(controller: 'admin', action: 'index');
   }
 
   def recalculateStats() {
@@ -730,6 +733,15 @@ class AdminController {
     log.info("End process tipps not index.")
 
     redirect(url: request.getHeader('referer'))
+  }
+
+  def ftpTest() {
+    log.info("ftpTest")
+
+    if(params.serverAddress && params.username && params.password) {
+      ftpConnectService.ftpConnectionTest(params.serverAddress, params.username, params.password)
+    }
+    
   }
 
 }

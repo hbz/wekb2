@@ -246,7 +246,8 @@ class SearchService {
                                 link: (rh.link ? (final_oid ?: response_record.oid ) : null),
                                 value: (cobj != null ? (cobj) : '-Empty-'),
                                 outGoingLink: rh.outGoingLink ?: null,
-                                jumpToLink: jumpToLink ?: null])
+                                jumpToLink: jumpToLink ?: null,
+                                globalSearchTemplateProperty: rh.property])
                 }
             }
 
