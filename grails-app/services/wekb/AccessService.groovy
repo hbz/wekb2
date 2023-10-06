@@ -20,7 +20,8 @@ class AccessService {
                                'wekb.Platform',
                                'wekb.TitleInstancePackagePlatform',
                                'wekb.UpdatePackageInfo',
-                               'wekb.UpdateTippInfo']
+                               'wekb.UpdateTippInfo',
+                               'wekb.Vendor']
 
     List allowedToCreate = ['wekb.KbartSource',
                             'wekb.Org',
@@ -36,7 +37,8 @@ class AccessService {
                               'Platform',
                               'TitleInstancePackagePlatform',
                               'UpdatePackageInfo',
-                              'UpdateTippInfo']
+                              'UpdateTippInfo',
+                              'Vendor']
 
     List allowedComponentSearch = ["g:curatoryGroups",
                                    "g:identifiers",
@@ -48,7 +50,8 @@ class AccessService {
                                    "g:tipps",
                                    "g:tippsOfPkg",
                                    "g:updatePackageInfos",
-                                   "g:updateTippInfos"]
+                                   "g:updateTippInfos",
+                                   "g:vendors"]
 
     List allowedInlineSearch = ["g:curatoryGroups",
                                 "g:identifiers",
@@ -59,7 +62,8 @@ class AccessService {
                                 "g:tipps",
                                 "g:tippsOfPkg",
                                 "g:updatePackageInfos",
-                                "g:updateTippInfos"]
+                                "g:updateTippInfos",
+                                "g:vendors"]
 
 
     boolean checkEditableObject(Object o, GrailsParameterMap grailsParameterMap) {
@@ -124,6 +128,7 @@ class AccessService {
 
     }
 
+    @Deprecated
     boolean checkDeletable(String baseclassName) {
 
         if(baseclassName in allowedToCreate){

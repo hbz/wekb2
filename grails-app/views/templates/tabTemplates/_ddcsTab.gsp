@@ -17,7 +17,7 @@
                         ${ddc.value}: ${ddc.getI10n('value')}
                     </td>
                     <g:if test="${editable}">
-                        <td><g:link controller='ajaxHtml'
+                        <td><g:link class='ui mini button red' controller='ajaxHtml'
                                 action='unlinkManyToMany'
                                 params="${["__context": "${d.getOID()}", "__property": "ddcs", "__itemToRemove": "${ddc.getOID()}", activeTab: 'ddcs']}">Delete</g:link>
                         </td>

@@ -4,7 +4,7 @@
         <g:each in="${d.regionalRanges.sort { it.getI10n('value') }}" var="regionalRange">
             <div class="item">${regionalRange.getI10n('value')}
             <g:if test="${editable}">
-                <g:link controller='ajaxHtml'
+                <g:link class='ui mini button red' controller='ajaxHtml'
                         action='unlinkManyToMany'
                         params="${["__context": "${d.getOID()}", "__property": "regionalRanges", "__itemToRemove": "${regionalRange.getOID()}"]}">Delete</g:link>
             </g:if>

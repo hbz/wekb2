@@ -85,6 +85,14 @@ class WorkflowService {
                         [code: 'workFlowMethod::deleteUser', label: 'Delete', message: '', onlyAdmin: true, group: 1],
                 ]
                 break
+
+            case Vendor.class.name:
+                [
+                        [code: 'workFlowSetStatus::Deleted', label: 'Mark the Vendor as deleted', message: '', onlyAdmin: true, group: 1],
+                        [code: 'workFlowSetStatus::Current', label: 'Mark the Vendor as current', message: '', onlyAdmin: true, group: 1],
+                        [code: 'workFlowSetStatus::Removed', label: 'Remove Vendor', message: '', onlyAdmin: true, group: 2]
+                ]
+                break
             default:
                 []
                 break
