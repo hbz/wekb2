@@ -1774,6 +1774,9 @@ class Api2Service {
                 r = Org.findByUuid(params.uuid)
             }
             if (!r) {
+                r = Vendor.findByUuid(params.uuid)
+            }
+            if (!r) {
                 r = TitleInstancePackagePlatform.findByUuid(params.uuid)
             }
 
