@@ -50,6 +50,8 @@
             <g:link class="item" controller="search" action="componentSearch"
                     params="[qbe: 'g:orgs']">Providers</g:link>
             <g:link class="item" controller="search" action="componentSearch" params="[qbe: 'g:tipps']">Titles</g:link>
+            <g:link class="item" controller="search" action="componentSearch"
+                    params="[qbe: 'g:vendors']">Vendors</g:link>
         </div>
 
         <div class="menu">

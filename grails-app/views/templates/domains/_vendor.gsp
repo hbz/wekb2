@@ -39,22 +39,6 @@
                 <semui:xEditable owner="${d}" field="homepage" outGoingLink="true"/>
             </dd>
         </dl>
-        <dl>
-            <dt class="control-label">
-                Metadata Downloader URL
-            </dt>
-            <dd>
-                <semui:xEditable owner="${d}" field="metadataDownloaderURL" validation="url" outGoingLink="true"/>
-            </dd>
-        </dl>
-        <dl>
-            <dt class="control-label">
-                KBART Downloader URL
-            </dt>
-            <dd>
-                <semui:xEditable owner="${d}" field="kbartDownloaderURL" validation="url" outGoingLink="true"/>
-            </dd>
-        </dl>
         <g:if test="${d.id != null}">
             <dl>
                 <dt class="control-label">
@@ -144,7 +128,7 @@
                 <g:form controller="ajaxHtml" action="addContact" class="ui form">
                     <input type="hidden" name="__context" value="${d.getOID()}"/>
                     <input type="hidden" name="__newObjectClass" value="wekb.Contact"/>
-                    <input type="hidden" name="__recip" value="org"/>
+                    <input type="hidden" name="__recip" value="vendor"/>
                     <input type="hidden" name="activeTab" value="contact"/>
                     <input type="hidden" name="curationOverride" value="${params.curationOverride}"/>
 
