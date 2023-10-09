@@ -34,19 +34,19 @@ class Vendor extends AbstractBase implements Auditable {
   ]
 
   static mapping = {
-    id column: 'org_id'
-    version column: 'org_version'
+    id column: 'ven_id'
+    version column: 'ven_version'
 
-    uuid column: 'org_uuid'
-    name column: 'org_name'
-    abbreviatedName column: 'org_abbreviated_name'
+    uuid column: 'ven_uuid'
+    name column: 'ven_name'
+    abbreviatedName column: 'ven_abbreviated_name'
 
-    lastUpdated column: 'org_last_updated'
-    dateCreated column: 'org_date_created'
+    lastUpdated column: 'ven_last_updated'
+    dateCreated column: 'ven_date_created'
 
-    status column: 'org_status_rv_fk'
+    status column: 'ven_status_rv_fk'
 
-    homepage column: 'org_homepage'
+    homepage column: 'ven_homepage'
   }
 
   static constraints = {
