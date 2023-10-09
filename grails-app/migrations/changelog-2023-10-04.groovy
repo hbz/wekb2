@@ -30,37 +30,37 @@ databaseChangeLog = {
 
     changeSet(author: "djebeniani (generated)", id: "1696409701699-2") {
         createTable(tableName: "vendor") {
-            column(autoIncrement: "true", name: "org_id", type: "BIGINT") {
+            column(autoIncrement: "true", name: "ven_id", type: "BIGINT") {
                 constraints(nullable: "false", primaryKey: "true", primaryKeyName: "vendorPK")
             }
 
-            column(name: "org_version", type: "BIGINT") {
+            column(name: "ven_version", type: "BIGINT") {
                 constraints(nullable: "false")
             }
 
-            column(name: "org_date_created", type: "TIMESTAMP WITHOUT TIME ZONE") {
+            column(name: "ven_date_created", type: "TIMESTAMP WITHOUT TIME ZONE") {
                 constraints(nullable: "false")
             }
 
-            column(name: "org_uuid", type: "VARCHAR(255)") {
+            column(name: "ven_uuid", type: "VARCHAR(255)") {
                 constraints(nullable: "false")
             }
 
-            column(name: "org_last_updated", type: "TIMESTAMP WITHOUT TIME ZONE") {
+            column(name: "ven_last_updated", type: "TIMESTAMP WITHOUT TIME ZONE") {
                 constraints(nullable: "false")
             }
 
-            column(name: "org_homepage", type: "VARCHAR(255)")
+            column(name: "ven_homepage", type: "VARCHAR(255)")
 
-            column(name: "org_name", type: "VARCHAR(255)") {
+            column(name: "ven_name", type: "VARCHAR(255)") {
                 constraints(nullable: "false")
             }
 
-            column(name: "org_status_rv_fk", type: "BIGINT") {
+            column(name: "ven_status_rv_fk", type: "BIGINT") {
                 constraints(nullable: "false")
             }
 
-            column(name: "org_abbreviated_name", type: "VARCHAR(255)")
+            column(name: "ven_abbreviated_name", type: "VARCHAR(255)")
         }
     }
 
@@ -98,7 +98,7 @@ databaseChangeLog = {
         }
     }
     changeSet(author: "djebeniani (generated)", id: "1696409701699-8") {
-        addForeignKeyConstraint(baseColumnNames: "vendor_roles_id", baseTableName: "vendor_refdata_value", constraintName: "FK2d35mpgw7bwo3gu1wvcnyu8ie", deferrable: "false", initiallyDeferred: "false", referencedColumnNames: "org_id", referencedTableName: "vendor", validate: "true")
+        addForeignKeyConstraint(baseColumnNames: "vendor_roles_id", baseTableName: "vendor_refdata_value", constraintName: "FK2d35mpgw7bwo3gu1wvcnyu8ie", deferrable: "false", initiallyDeferred: "false", referencedColumnNames: "ven_id", referencedTableName: "vendor", validate: "true")
     }
 
     changeSet(author: "djebeniani (generated)", id: "1696409701699-9") {
@@ -106,7 +106,7 @@ databaseChangeLog = {
     }
 
     changeSet(author: "djebeniani (generated)", id: "1696409701699-10") {
-        addForeignKeyConstraint(baseColumnNames: "ct_vendor_fk", baseTableName: "contact", constraintName: "FKjeayne70tjjc396rfl8lplcbi", deferrable: "false", initiallyDeferred: "false", referencedColumnNames: "org_id", referencedTableName: "vendor", validate: "true")
+        addForeignKeyConstraint(baseColumnNames: "ct_vendor_fk", baseTableName: "contact", constraintName: "FKjeayne70tjjc396rfl8lplcbi", deferrable: "false", initiallyDeferred: "false", referencedColumnNames: "ven_id", referencedTableName: "vendor", validate: "true")
     }
 
     changeSet(author: "djebeniani (generated)", id: "1696409701699-11") {
@@ -114,11 +114,11 @@ databaseChangeLog = {
     }
 
     changeSet(author: "djebeniani (generated)", id: "1696409701699-12") {
-        addForeignKeyConstraint(baseColumnNames: "cgv_vendor_fk", baseTableName: "curatory_group_vendor", constraintName: "FKs7rc7oaddflek2cmtcu5tlyyf", deferrable: "false", initiallyDeferred: "false", referencedColumnNames: "org_id", referencedTableName: "vendor", validate: "true")
+        addForeignKeyConstraint(baseColumnNames: "cgv_vendor_fk", baseTableName: "curatory_group_vendor", constraintName: "FKs7rc7oaddflek2cmtcu5tlyyf", deferrable: "false", initiallyDeferred: "false", referencedColumnNames: "ven_id", referencedTableName: "vendor", validate: "true")
     }
 
     changeSet(author: "djebeniani (generated)", id: "1696409701699-13") {
-        addForeignKeyConstraint(baseColumnNames: "org_status_rv_fk", baseTableName: "vendor", constraintName: "FKt1vnswfqc0hp5vckvjkst5d2p", deferrable: "false", initiallyDeferred: "false", referencedColumnNames: "rdv_id", referencedTableName: "refdata_value", validate: "true")
+        addForeignKeyConstraint(baseColumnNames: "ven_status_rv_fk", baseTableName: "vendor", constraintName: "FKt1vnswfqc0hp5vckvjkst5d2p", deferrable: "false", initiallyDeferred: "false", referencedColumnNames: "rdv_id", referencedTableName: "refdata_value", validate: "true")
     }
 
     changeSet(author: "djebeniani (generated)", id: "1696409701699-14") {
@@ -154,7 +154,7 @@ databaseChangeLog = {
     }
 
     changeSet(author: "djebeniani (generated)", id: "1696409701699-16") {
-        addForeignKeyConstraint(baseColumnNames: "pv_vendor_fk", baseTableName: "package_vendor", constraintName: "FK84qfewt22i3txkteckf92hhfq", deferrable: "false", initiallyDeferred: "false", referencedColumnNames: "org_id", referencedTableName: "vendor", validate: "true")
+        addForeignKeyConstraint(baseColumnNames: "pv_vendor_fk", baseTableName: "package_vendor", constraintName: "FK84qfewt22i3txkteckf92hhfq", deferrable: "false", initiallyDeferred: "false", referencedColumnNames: "ven_id", referencedTableName: "vendor", validate: "true")
     }
 
     changeSet(author: "djebeniani (generated)", id: "1696409701699-17") {
