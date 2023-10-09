@@ -829,8 +829,10 @@ class KbartProcessService {
                             //Don't delete the header
                             //rows.remove(0)
                             countRows = rows.size() - 1
+                            Set<String> filteredRows = []
+                            filteredRows.addAll(rows)
                             //log.debug("Begin kbart processing rows ${countRows}")
-                            rows.eachWithIndex { row, Integer r ->
+                            filteredRows.eachWithIndex { row, Integer r ->
                                 //log.debug("now processing entry ${row}")
                                 List<String> cols = row.split(delimiter)
                                 Map rowMap = [:]
