@@ -36,6 +36,14 @@ class ResourceController {
       if (oid) {
         displayobj = genericOIDService.resolveOID(oid)
       }else {
+        Set<Class> classesWithUuid = [TitleInstancePackagePlatform.class, Package.class, Platform.class, KbartSource.class,
+                                      Org.class, Vendor.class, CuratoryGroup.class, Identifier.class, UpdatePackageInfo.class, UpdateTippInfo.class]
+        int clscnt = 0
+        while(displayobj == null) {
+          displayobj = classesWithUuid[clscnt].findByUuid(params.id)
+          clscnt++
+        }
+        /*
         if (TitleInstancePackagePlatform.findByUuid(params.id)) {
           displayobj = TitleInstancePackagePlatform.findByUuid(params.id)
         } else if (Package.findByUuid(params.id)) {
@@ -55,6 +63,7 @@ class ResourceController {
         } else if (UpdateTippInfo.findByUuid(params.id)) {
           displayobj = UpdateTippInfo.findByUuid(params.id)
         }
+        */
       }
 
       if (displayobj) {
