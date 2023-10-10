@@ -1,5 +1,7 @@
 package wekb
 
+import wekb.helper.BeanStore
+
 class PackageVendor {
 
     Package pkg
@@ -26,5 +28,15 @@ class PackageVendor {
 
     String getOID() {
         "${this.class.name}:${id}"
+    }
+
+    def afterInsert (){
+        log.debug("afterSave for ${this}")
+        BeanStore.getCascadingUpdateService().update(this, lastUpdated)
+    }
+
+    def afterUpdate (){
+        log.debug("afterUpdate for ${this}")
+        BeanStore.getCascadingUpdateService().update(this, lastUpdated)
     }
 }
