@@ -17,6 +17,12 @@ class CascadingUpdateService {
         ])
     }
 
+    void update(Vendor obj, Date lastUpdated) {
+        Vendor.executeUpdate("update Vendor v set v.lastUpdated = :lastUpdated where v = :obj", [
+                lastUpdated: lastUpdated, obj: obj
+        ])
+    }
+
     void update(Package obj, Date lastUpdated) {
         Package.executeUpdate("update Package pkg set pkg.lastUpdated = :lastUpdated where pkg = :obj", [
                 lastUpdated: lastUpdated, obj: obj
@@ -39,6 +45,11 @@ class CascadingUpdateService {
                 update(obj.tipp, lastUpdated ?: new Date())
             }
         }
+    }
+
+    void update(PackageVendor obj, Date lastUpdated) {
+        if(obj.pkg) { update (obj.pkg, lastUpdated ?: new Date()) }
+        if(obj.vendor) { update (obj.vendor, lastUpdated ?: new Date()) }
     }
 
     void update(Contact obj, Date lastUpdated) {
