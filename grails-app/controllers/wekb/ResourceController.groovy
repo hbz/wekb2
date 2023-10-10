@@ -39,7 +39,7 @@ class ResourceController {
         Set<Class> classesWithUuid = [TitleInstancePackagePlatform.class, Package.class, Platform.class, KbartSource.class,
                                       Org.class, Vendor.class, CuratoryGroup.class, Identifier.class, UpdatePackageInfo.class, UpdateTippInfo.class]
         int clscnt = 0
-        while(displayobj == null) {
+        while(displayobj == null && clscnt < classesWithUuid.size()) {
           displayobj = classesWithUuid[clscnt].findByUuid(params.id)
           clscnt++
         }
