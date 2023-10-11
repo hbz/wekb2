@@ -175,7 +175,7 @@ class SearchService {
             }
         }
 
-        result.new_recset = []
+        Set recSet = []
         log.debug("Create new recset..")
         result.recset.each { r ->
             if(params.sort in ['currentTippCount', 'deletedTippCount', 'retiredTippCount', 'expectedTippCount']){
@@ -251,8 +251,10 @@ class SearchService {
                 }
             }
 
-            result.new_recset.add(response_record)
+            recSet.add(response_record)
         }
+
+        result.new_recset = recSet
         log.debug("Finished new recset!")
 
         result.withoutJump = cleaned_params
