@@ -2097,39 +2097,39 @@ class KbartImportService {
 
         // KBART -> zdb_id  -> identifiers['zdb']
         if (tippMap.zdb_id) {
-            result.changedTipp = createOrUpdateIdentifierForTipp(result, tipp, "zdb", tippMap.zdb_id, 'zdb_id', updatePackageInfo)
-            identifierNameSpacesExistOnTipp << "zdb"
+            result.changedTipp = createOrUpdateIdentifierForTipp(result, tipp, IdentifierNamespace.ZDB, tippMap.zdb_id, 'zdb_id', updatePackageInfo)
+            identifierNameSpacesExistOnTipp << IdentifierNamespace.ZDB
         }
 
         // KBART -> ezb_id -> identifiers['ezb']
         if (tippMap.ezb_id) {
-            result.changedTipp = createOrUpdateIdentifierForTipp(result, tipp, "ezb", tippMap.ezb_id, 'ezb_id', updatePackageInfo)
-            identifierNameSpacesExistOnTipp << "ezb"
+            result.changedTipp = createOrUpdateIdentifierForTipp(result, tipp, IdentifierNamespace.EZB, tippMap.ezb_id, 'ezb_id', updatePackageInfo)
+            identifierNameSpacesExistOnTipp << IdentifierNamespace.EZB
         }
 
         if (tipp.publicationType == RDStore.TIPP_PUBLIC_TYPE_SERIAL) {
             // KBART -> print_identifier-> identifiers
             if (tippMap.print_identifier) {
-                result.changedTipp = createOrUpdateIdentifierForTipp(result, tipp, "issn", tippMap.print_identifier, 'print_identifier', updatePackageInfo)
-                identifierNameSpacesExistOnTipp << "issn"
+                result.changedTipp = createOrUpdateIdentifierForTipp(result, tipp, IdentifierNamespace.ISSN, tippMap.print_identifier, 'print_identifier', updatePackageInfo)
+                identifierNameSpacesExistOnTipp << IdentifierNamespace.ISSN
             }
 
             // KBART -> online_identifier  -> identifiers
             if (tippMap.online_identifier) {
-                result.changedTipp = createOrUpdateIdentifierForTipp(result, tipp, "eissn", tippMap.online_identifier, 'online_identifier', updatePackageInfo)
-                identifierNameSpacesExistOnTipp << "eissn"
+                result.changedTipp = createOrUpdateIdentifierForTipp(result, tipp, IdentifierNamespace.EISSN, tippMap.online_identifier, 'online_identifier', updatePackageInfo)
+                identifierNameSpacesExistOnTipp << IdentifierNamespace.EISSN
             }
         } else if (tipp.publicationType == RDStore.TIPP_PUBLIC_TYPE_MONO) {
             // KBART -> print_identifier-> identifiers
             if (tippMap.print_identifier) {
-                result.changedTipp = createOrUpdateIdentifierForTipp(result, tipp, "isbn", tippMap.print_identifier, 'print_identifier', updatePackageInfo)
-                identifierNameSpacesExistOnTipp << "isbn"
+                result.changedTipp = createOrUpdateIdentifierForTipp(result, tipp, IdentifierNamespace.ISBN, tippMap.print_identifier, 'print_identifier', updatePackageInfo)
+                identifierNameSpacesExistOnTipp << IdentifierNamespace.ISBN
             }
 
             // KBART -> online_identifier  -> identifiers
             if (tippMap.online_identifier) {
-                result.changedTipp = createOrUpdateIdentifierForTipp(result, tipp, "eisbn", tippMap.online_identifier, 'online_identifier', updatePackageInfo)
-                identifierNameSpacesExistOnTipp << "eisbn"
+                result.changedTipp = createOrUpdateIdentifierForTipp(result, tipp, IdentifierNamespace.EISBN, tippMap.online_identifier, 'online_identifier', updatePackageInfo)
+                identifierNameSpacesExistOnTipp << IdentifierNamespace.EISBN
             }
         }
 
@@ -2402,33 +2402,33 @@ class KbartImportService {
 
                     // KBART -> zdb_id  -> identifiers['zdb']
                     if (tippMap.kbartRowMap.zdb_id) {
-                        result.changedTipp = createOrUpdateIdentifierForTipp(result, tipp, "zdb", tippMap.kbartRowMap.zdb_id, 'zdb_id', updatePackageInfo)
+                        result.changedTipp = createOrUpdateIdentifierForTipp(result, tipp, IdentifierNamespace.ZDB, tippMap.kbartRowMap.zdb_id, 'zdb_id', updatePackageInfo)
                     }
 
                     // KBART -> ezb_id -> identifiers['ezb']
                     if (tippMap.kbartRowMap.ezb_id) {
-                        result.changedTipp = createOrUpdateIdentifierForTipp(result, tipp, "ezb", tippMap.kbartRowMap.ezb_id, 'ezb_id', updatePackageInfo)
+                        result.changedTipp = createOrUpdateIdentifierForTipp(result, tipp, IdentifierNamespace.EZB, tippMap.kbartRowMap.ezb_id, 'ezb_id', updatePackageInfo)
                     }
 
                     if (tipp.publicationType == RDStore.TIPP_PUBLIC_TYPE_SERIAL) {
                         // KBART -> print_identifier-> identifiers
                         if (tippMap.kbartRowMap.print_identifier) {
-                            result.changedTipp = createOrUpdateIdentifierForTipp(result, tipp, "issn", tippMap.kbartRowMap.print_identifier, 'print_identifier', updatePackageInfo)
+                            result.changedTipp = createOrUpdateIdentifierForTipp(result, tipp, IdentifierNamespace.ISSN, tippMap.kbartRowMap.print_identifier, 'print_identifier', updatePackageInfo)
                         }
 
                         // KBART -> online_identifier  -> identifiers
                         if (tippMap.kbartRowMap.online_identifier) {
-                            result.changedTipp = createOrUpdateIdentifierForTipp(result, tipp, "eissn", tippMap.kbartRowMap.online_identifier, 'online_identifier', updatePackageInfo)
+                            result.changedTipp = createOrUpdateIdentifierForTipp(result, tipp, IdentifierNamespace.EISSN, tippMap.kbartRowMap.online_identifier, 'online_identifier', updatePackageInfo)
                         }
                     } else if (tipp.publicationType == RDStore.TIPP_PUBLIC_TYPE_MONO) {
                         // KBART -> print_identifier-> identifiers
                         if (tippMap.kbartRowMap.print_identifier) {
-                            result.changedTipp = createOrUpdateIdentifierForTipp(result, tipp, "isbn", tippMap.kbartRowMap.print_identifier, 'print_identifier', updatePackageInfo)
+                            result.changedTipp = createOrUpdateIdentifierForTipp(result, tipp, IdentifierNamespace.ISBN, tippMap.kbartRowMap.print_identifier, 'print_identifier', updatePackageInfo)
                         }
 
                         // KBART -> online_identifier  -> identifiers
                         if (tippMap.kbartRowMap.online_identifier) {
-                            result.changedTipp = createOrUpdateIdentifierForTipp(result, tipp, "eisbn", tippMap.kbartRowMap.online_identifier, 'online_identifier', updatePackageInfo)
+                            result.changedTipp = createOrUpdateIdentifierForTipp(result, tipp, IdentifierNamespace.EISBN, tippMap.kbartRowMap.online_identifier, 'online_identifier', updatePackageInfo)
                         }
                     }
 

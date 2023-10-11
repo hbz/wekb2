@@ -220,26 +220,27 @@ class PublicController {
       }
 
 
-      Map<String,List> export = exportService.exportPackageTippsAsTSVNew(pkg, status)
+      //Map<String,List> export = exportService.exportPackageTippsAsTSVNew(pkg, status)
+      Map<String,List> export = exportService.exportPackageTippsAsTSVWithSQL(pkg, status)
 
       if(params.exportFormat == 'xcel') {
         response.setHeader("Content-disposition", "attachment; filename=${filename}.xlsx")
         response.contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
         Map sheetData = [:]
 
-        List columnData = []
+        /*List columnData = []
 
-        export.rows.each { row ->
+        export.columnData.each { row ->
           List rowData = []
           row.each {
             Map rowMap = [:]
-            rowMap.field = it
+            rowMap.field = it.value
             rowData << rowMap
           }
           columnData << rowData
         }
-
-        XSSFWorkbook workbook = exportService.generateXLSXWorkbook('Package_Export', export.titleRow, columnData)
+        */
+        XSSFWorkbook workbook = exportService.generateXLSXWorkbook('Package_Export', export.titleRow.toList(), export.columnData.toList())
         workbook.write(response.outputStream)
         response.outputStream.flush()
         response.outputStream.close()
@@ -251,7 +252,7 @@ class PublicController {
         ServletOutputStream out = response.outputStream
         out.withWriter { writer ->
           writer.write("we:kb Export : Provider (${pkg.provider?.name}) : Package (${pkg.name}) : ${export_date}\n");
-          writer.write(exportService.generateSeparatorTableString(export.titleRow, export.rows, '\t'))
+          writer.write(exportService.generateSeparatorTableString(export.titleRow.toList(), export.columnData.toList(), '\t'))
         }
         out.flush()
         out.close()
@@ -261,6 +262,8 @@ class PublicController {
     }
     catch ( Exception e ) {
       log.error("Problem with export",e);
+      flash.error = 'Bug in Export. Export not possible at the moment! '
+      redirect(url: request.getHeader('referer'))
     }
   }
 
