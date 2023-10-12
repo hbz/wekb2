@@ -58,7 +58,8 @@ class HomeController {
                              'Org',
                              'Package',
                              'Platform',
-                             'TitleInstancePackagePlatform'
+                             'TitleInstancePackagePlatform',
+                             'Vendor'
     ]
 
     List status = [RDStore.KBC_STATUS_CURRENT, RDStore.KBC_STATUS_RETIRED, RDStore.KBC_STATUS_DELETED, RDStore.KBC_STATUS_EXPECTED]

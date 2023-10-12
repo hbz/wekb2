@@ -1,25 +1,25 @@
-<%@ page import="wekb.helper.RCConstants; wekb.RefdataCategory;" %>
+<%@ page import="wekb.helper.RDStore; wekb.helper.RCConstants; wekb.RefdataCategory; wekb.Vendor;" %>
 <g:set var="counter" value="${offset}"/>
 
 <g:form method="post" class="ui form" controller="${controllerName}" action="${actionName}"
-        params="[activeTab: 'ddcs']">
+        params="[activeTab: 'vendors']">
 
     <div class="ui segment">
         <h1 class="ui header">Bulk Process</h1>
 
         <div class="field">
-            <label>Dewey Decimal Classification:</label>
+            <label>Vendors:</label>
 
-            <g:select from="${RefdataCategory.lookup(RCConstants.DDC).sort { it.value }}"
+            <g:select from="${Vendor.findAllByStatus(RDStore.KBC_STATUS_CURRENT).sort { it.name }}"
                       class="dropdown fluid"
-                      id="ddcSelection"
+                      id="vendorSelection"
                       optionKey="${{ it.class.name + ':' + it.id }}"
-                      optionValue="${{ it.value + ': ' + it.getI10n('value') }}"
-                      name="ddc"
+                      optionValue="${{ it.name }}"
+                      name="vendor"
                       value=""/>
         </div>
 
-        <button class="ui button black" type="submit" value="changeDdcs"
+        <button class="ui button black" type="submit" value="addVendor"
                 name="processOption">Do bulk process to the selected items</button>
 
         <br>
@@ -40,7 +40,7 @@
             </tr>
             <tr>
                 <th>#</th>
-                <th>Dewey Decimal Classification</th>
+                <th>Vendors</th>
                 <th></th>
             </tr>
             </thead>
@@ -62,19 +62,20 @@
                                              overwriteEditable="${false}"/>
                         </td>
                         <td colspan="3">
-                            <g:if test="${row_obj.ddcs}">
+                            <g:if test="${row_obj.vendors}">
                                 <table class="ui selectable striped sortable celled table">
                                     <tbody>
-                                    <g:each in="${row_obj.ddcs.sort { it.value }}" var="ddc" status="i">
+                                    <g:each in="${row_obj.vendors.sort { it.vendor.name }}" var="packageVendor" status="i">
                                         <tr>
                                             <td>${i + 1}</td>
                                             <td>
-                                                ${ddc.value}: ${ddc.getI10n('value')}
+                                                ${packageVendor.vendor.name}
                                             </td>
                                             <g:if test="${editable}">
-                                                <td><g:link class='ui mini button red' controller='ajaxHtml'
-                                                            action='unlinkManyToMany'
-                                                            params="${["__context": "${row_obj.getOID()}", "__property": "ddcs", "__itemToRemove": "${ddc.getOID()}", activeTab: 'ddcs']}">Delete</g:link>
+                                                <td>
+                                                    <g:link class='ui negative mini button' controller='ajaxHtml'
+                                                            action='removeVendorFromPackage'
+                                                            params="${["__context": "${row_obj.getOID()}", "__relatedObject":"${packageVendor.getOID()}", activeTab: 'vendors']}">Unlink</g:link>
                                                 </td>
                                             </g:if>
                                         </tr>

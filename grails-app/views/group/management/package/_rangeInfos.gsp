@@ -28,7 +28,7 @@
                                 <g:each in="${row_obj.nationalRanges.sort { it.getI10n('value') }}" var="nationalRange">
                                     <div class="item">${nationalRange.value}: ${nationalRange.getI10n('value')}
                                     <g:if test="${editable}">
-                                        <g:link controller='ajaxHtml'
+                                        <g:link class='ui mini button red' controller='ajaxHtml'
                                                 action='unlinkManyToMany'
                                                 params="${["__context": "${row_obj.getOID()}", "__property": "nationalRanges", "__itemToRemove": "${nationalRange.getOID()}"]}">Delete</g:link>
                                     </g:if>
@@ -46,7 +46,7 @@
                                 <g:each in="${row_obj.regionalRanges.sort { it.getI10n('value') }}" var="regionalRange">
                                     <div class="item">${regionalRange.getI10n('value')}
                                     <g:if test="${editable}">
-                                        <g:link controller='ajaxHtml'
+                                        <g:link class='ui mini button red' controller='ajaxHtml'
                                                 action='unlinkManyToMany'
                                                 params="${["__context": "${row_obj.getOID()}", "__property": "regionalRanges", "__itemToRemove": "${regionalRange.getOID()}"]}">Delete</g:link>
                                     </g:if>

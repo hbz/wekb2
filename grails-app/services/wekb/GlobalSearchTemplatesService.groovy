@@ -27,6 +27,7 @@ class GlobalSearchTemplatesService {
         globalSearchTemplates.put('updateTippInfos', updateTippInfos())
         globalSearchTemplates.put('users', users())
         globalSearchTemplates.put('userJobs', userJobs())
+        globalSearchTemplates.put('vendors', vendors())
 
     }
 
@@ -1699,6 +1700,81 @@ class GlobalSearchTemplatesService {
                                 [heading: 'Last Updated', property: 'lastUpdated', sort: 'lastUpdated'],
                                 [heading: 'Status', property: 'status.value', sort: 'status.value'],
                                 [heading: 'URL', property: 'url', sort: 'url', outGoingLink: true]
+                        ]
+                ]
+        ]
+
+        result
+    }
+
+    Map vendors() {
+        Map result = [
+                baseclass   : 'wekb.Vendor',
+                title       : 'Vendors',
+                defaultSort : 'name',
+                defaultOrder: 'asc',
+                qbeConfig   : [
+                        qbeForm   : [
+                                //Hidden Fields
+                                [
+                                        type       : 'lookup',
+                                        baseClass  : 'wekb.CuratoryGroup',
+                                        prompt     : 'Curatory Group',
+                                        qparam     : 'qp_curgroups',
+                                        placeholder: 'Curatory Group',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'curatoryGroups.curatoryGroup'],
+                                        hide       : true
+                                ],
+                                [
+                                        qparam     : 'changedSince',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'greater', 'prop': 'lastUpdated', 'type': 'java.util.Date'],
+                                        hide       : true
+                                ],
+                                [
+                                        qparam     : 'createdSince',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'greater', 'prop': 'dateCreated', 'type': 'java.util.Date'],
+                                        hide       : true
+                                ],
+                                //General Fields
+                                [
+                                        prompt     : 'Name',
+                                        qparam     : 'qp_name',
+                                        placeholder: 'Name',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike_Combine_Name_And_VariantNames_And_AbbreviatedName_Org', 'prop': 'name', 'wildcard': 'B']
+                                ],
+                                [
+                                        type       : 'lookup',
+                                        baseClass  : 'wekb.CuratoryGroup',
+                                        prompt     : 'Curatory Group',
+                                        qparam     : 'qp_curgroup',
+                                        placeholder: 'Curatory Group',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'curatoryGroups.curatoryGroup']
+                                ],
+                                [
+                                        type       : 'lookup',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.COMPONENT_STATUS,
+                                        prompt     : 'Status',
+                                        qparam     : 'qp_status',
+                                        placeholder: 'Component Status',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'status']
+                                ],
+                                [
+                                        type       : 'lookup',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.ORG_ROLE,
+                                        prompt     : 'Role',
+                                        qparam     : 'qp_roles',
+                                        placeholder: 'Role',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'roles'],
+                                ],
+
+                        ],
+                        qbeResults: [
+                                [heading: 'Vendor', property: 'name', sort: 'name', link: true],
+                                [heading: 'Homepage', property: 'homepage', sort: 'homepage', outGoingLink: true],
+                                [heading: 'Last Updated', property: 'lastUpdated', sort: 'lastUpdated'],
+                                [heading: 'Status', property: 'status.value', sort: 'status']
                         ]
                 ]
         ]
