@@ -240,7 +240,7 @@ class PublicController {
           columnData << rowData
         }
         */
-        XSSFWorkbook workbook = exportService.generateXLSXWorkbook('Package_Export', export.titleRow.toList(), export.columnData.toList())
+        XSSFWorkbook workbook = exportService.generateXLSXWorkbook('Package_Export', export.titleRow, export.columnData)
         workbook.write(response.outputStream)
         response.outputStream.flush()
         response.outputStream.close()
@@ -252,7 +252,7 @@ class PublicController {
         ServletOutputStream out = response.outputStream
         out.withWriter { writer ->
           writer.write("we:kb Export : Provider (${pkg.provider?.name}) : Package (${pkg.name}) : ${export_date}\n");
-          writer.write(exportService.generateSeparatorTableString(export.titleRow.toList(), export.columnData.toList(), '\t'))
+          writer.write(exportService.generateSeparatorTableString(export.titleRow, export.columnData, '\t'))
         }
         out.flush()
         out.close()
