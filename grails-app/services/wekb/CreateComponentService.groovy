@@ -348,7 +348,7 @@ class CreateComponentService {
                     if (curatoryGroups && colMap.anbieter_produkt_id != null) {
                         String value = cols[colMap.anbieter_produkt_id].trim()
                         if (value) {
-                            IdentifierNamespace namespace = IdentifierNamespace.findByValueAndTargetType("Anbieter_Produkt_ID", RDStore.IDENTIFIER_NAMESPACE_TARGET_TYPE_PACKAGE)
+                            IdentifierNamespace namespace = IdentifierNamespace.findByValueAndTargetType(IdentifierNamespace.PKG_ID, RDStore.IDENTIFIER_NAMESPACE_TARGET_TYPE_PACKAGE)
                             dupes = Identifier.executeQuery('select pkg from Identifier where namespace = :ns and value != :val and pkg is not null and pkg.status not in (:stat) and exists ( select cgp from CuratoryGroupPackage cgp where cgp.pkg = pkg and cgp.curatoryGroup in (:curGroup))', [ns: namespace, val: 'Unknown', stat: status_deleted, curGroup: curatoryGroups])
                         }else{
                             dupes = Package.executeQuery("select p from Package as p where lower(name) like :name and status not in (:stat) and exists ( select cgp from CuratoryGroupPackage cgp where cgp.pkg = p and cgp.curatoryGroup in (:curGroup))", [name: name.toLowerCase().trim(), stat: status_deleted, curGroup: curatoryGroups])
@@ -499,7 +499,7 @@ class CreateComponentService {
 
                                 Map idenitiferMap = [:]
                                 idenitiferMap.pkgID = pkg.id
-                                idenitiferMap.ns = "Anbieter_Produkt_ID"
+                                idenitiferMap.ns = IdentifierNamespace.PKG_ID
                                 idenitiferMap.value = value
 
                                 identifiers << idenitiferMap
@@ -513,7 +513,7 @@ class CreateComponentService {
 
                                 Map idenitiferMap = [:]
                                 idenitiferMap.pkgID = pkg.id
-                                idenitiferMap.ns = "Anbieter_Produkt_ID"
+                                idenitiferMap.ns = IdentifierNamespace.PKG_ID
                                 idenitiferMap.value = value
 
                                 identifiers << idenitiferMap
@@ -671,7 +671,7 @@ class CreateComponentService {
             }
         }
 
-        IdentifierNamespace namespace = IdentifierNamespace.findByValueAndTargetType("Anbieter_Produkt_ID", RDStore.IDENTIFIER_NAMESPACE_TARGET_TYPE_PACKAGE)
+        IdentifierNamespace namespace = IdentifierNamespace.findByValueAndTargetType(IdentifierNamespace.PKG_ID, RDStore.IDENTIFIER_NAMESPACE_TARGET_TYPE_PACKAGE)
         identifiers.each { Map map ->
             boolean found = false
             Package aPackage = Package.get(map.pkgID)
