@@ -964,7 +964,7 @@ class AjaxHtmlController {
     }
 
     @Transactional
-    @Secured(['ROLE_EDITOR', 'IS_AUTHENTICATED_FULLY'])
+    @Secured(['ROLE_ADMIN', 'IS_AUTHENTICATED_FULLY'])
     def addRoleToUser() {
         log.debug("addRoleToUser(${params})")
         User contextObj = resolveOID3(params.__user)
@@ -991,7 +991,7 @@ class AjaxHtmlController {
     }
 
     @Transactional
-    @Secured(['ROLE_EDITOR', 'IS_AUTHENTICATED_FULLY'])
+    @Secured(['ROLE_ADMIN', 'IS_AUTHENTICATED_FULLY'])
     def removeRoleFromUser() {
         log.debug("removeRoleFromUser(${params})")
         User userObject = User.get(params.us_Id)
@@ -1010,7 +1010,7 @@ class AjaxHtmlController {
     }
 
     @Transactional
-    @Secured(['ROLE_EDITOR', 'IS_AUTHENTICATED_FULLY'])
+    @Secured(['ROLE_ADMIN', 'IS_AUTHENTICATED_FULLY'])
     def removeCuratoryGroupFromUser() {
         log.debug("removeRoleFromUser(${params})")
         User userObject = User.get(params.us_Id)
