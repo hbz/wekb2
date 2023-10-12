@@ -8,6 +8,23 @@ import javax.persistence.Transient
 
 class IdentifierNamespace {
 
+  //title identifier namespaces
+  public static final String ZDB        = 'zdb'
+  public static final String EZB        = 'ezb'
+  public static final String ZDB_PPN    = 'zdb_ppn'
+  public static final String DOI        = 'doi'
+  public static final String ISSN       = 'issn'
+  public static final String EISSN      = 'eissn'
+  public static final String EISBN      = 'eisbn'
+  public static final String ISBN       = 'isbn'
+
+  //package identifier namespaces
+  public static final String PKG_ID        = 'Anbieter_Produkt_ID'
+  public static final String PACKAGE_EZB_ANCHOR = "package_ezb_anchor"
+  public static final String PACKAGE_ISCI = "package_isci"
+  public static final String PACKAGE_ISIL = "isil"
+
+
   String name
   String value
 

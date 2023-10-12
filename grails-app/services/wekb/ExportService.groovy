@@ -1,10 +1,13 @@
 package wekb
 
+import groovy.sql.GroovyRowResult
+import groovy.sql.Sql
 import org.apache.poi.ooxml.POIXMLProperties
 import org.apache.poi.ss.usermodel.CellStyle
 import org.apache.poi.xssf.usermodel.XSSFCellStyle
 import org.apache.poi.xssf.usermodel.XSSFDataFormat
 import org.apache.poi.xssf.usermodel.XSSFFont
+import wekb.helper.BeanStore
 import wekb.tools.UrlToolkit
 import wekb.helper.RCConstants
 import wekb.helper.RDStore
@@ -21,6 +24,7 @@ import org.apache.poi.xssf.usermodel.XSSFSheet
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
 import org.hibernate.Session
 
+import javax.sql.DataSource
 import java.nio.file.Files
 import java.text.SimpleDateFormat
 
@@ -234,13 +238,18 @@ class ExportService {
 
     }
 
-    String generateSeparatorTableString(Collection titleRow, Collection columnData,String separator) {
+    String generateSeparatorTableString(List titleRow, List columnData, String separator) {
         List output = []
         output.add(titleRow.join(separator))
         columnData.each { row ->
-            if(row.size() > 0)
-                output.add(row.join(separator))
-            else output.add(" ")
+            if(row instanceof GroovyRowResult) {
+                output.add(row.values().join(separator).replaceAll('null', ''))
+            }
+            else {
+                if(row.size() > 0)
+                    output.add(row.join(separator))
+                else output.add(" ")
+            }
         }
         output.join("\n")
     }
@@ -259,11 +268,11 @@ class ExportService {
         List<String> printIdentifier = ["issn", "isbn"]
         List<String> onlineIdentifier = ["eissn", "eisbn"]
 
-        String doiIdentifier = "DOI"
-        String zdbIdentifier = "zdb"
-        String ezbIdentifier = "ezb"
-        String packageEzbAnchor = "package_ezb_anchor"
-        String packageIsci = "package_isci"
+        String doiIdentifier = IdentifierNamespace.DOI
+        String zdbIdentifier = IdentifierNamespace.ZDB
+        String ezbIdentifier = IdentifierNamespace.EZB
+        String packageEzbAnchor = IdentifierNamespace.PACKAGE_EZB_ANCHOR
+        String packageIsci = IdentifierNamespace.PACKAGE_ISCI
 
         RefdataValue priceTypeList = RDStore.PRICE_TYPE_LIST
         RefdataValue priceTypeOAAPC = RDStore.PRICE_TYPE_OA_APC
@@ -519,6 +528,45 @@ class ExportService {
 
     }
 
+    Map<String,List> exportPackageTippsAsTSVWithSQL(Package pkg, List status) {
+        log.debug("Begin exportPackageTippsAsTSVWithSQL")
+        DataSource dataSource = BeanStore.getDataSource()
+        Sql sql = new Sql(dataSource)
+        Map<String, String> titleHeaders = getTitleHeadersWithSQL()
+        Map<String, List> export = [titleRow: titleHeaders.keySet()]
+        List rows = []
+
+        try {
+            Map queryParams = [:]
+            queryParams.p = pkg.id
+            queryParams.removed = RDStore.KBC_STATUS_REMOVED.id
+
+            String queryBase = "select ${titleHeaders.values().join(', ')} from title_instance_package_platform left join tippcoverage_statement on tcs_tipp_fk = tipp_id join package on tipp_pkg_fk = pkg_id"
+            if(status) {
+
+                queryBase += " where tipp_pkg_fk = :p and tipp_status_rv_fk != :removed and tipp_status_rv_fk = any(:status)"
+                List<Long> statusKeys = []
+                statusKeys.addAll(status.id)
+                queryParams.status = sql.getDataSource().getConnection().createArrayOf('bigint', statusKeys as Object[])
+            }else{
+                queryBase += " where tipp_pkg_fk = :p and tipp_status_rv_fk != :removed "
+            }
+            queryBase += " order by tipp_name"
+
+            rows.addAll(sql.rows(queryBase, queryParams))
+
+        }catch (Exception exception) {
+            sql.close()
+            log.error("exportPackageTippsAsTSVWithSQL: "+ exception.stackTrace)
+
+        }
+        finally {
+            sql.close()
+        }
+        export.columnData = rows
+        log.debug("End exportPackageTippsAsTSVWithSQL")
+        export
+    }
 
     def exportPackages(def outputStream, def packages) {
 
@@ -579,7 +627,7 @@ class ExportService {
         outputStream.close()
     }
 
-
+    @Deprecated
     List<String> getTitleHeadersTSV() {
         ['publication_title',
          'first_author',
@@ -671,14 +719,14 @@ class ExportService {
                 row = sheet.createRow(rownum)
                 rowData.each { cellData ->
                     cell = row.createCell(cellnum++)
-                    if (cellData.field instanceof String) {
-                        cell.setCellValue((String) cellData.field)
-                        if (cellData.field.contains('\n'))
+                    if (cellData.value instanceof String) {
+                        cell.setCellValue((String) cellData.value)
+                        if (cellData.value.contains('\n'))
                             cell.setCellStyle(lb)
-                    } else if (cellData.field instanceof Integer) {
-                        cell.setCellValue((Integer) cellData.field)
-                    } else if (cellData.field instanceof Double || cellData.field instanceof BigDecimal || cellData.field instanceof Float) {
-                        cell.setCellValue((Double) cellData.field)
+                    } else if (cellData.value instanceof Integer) {
+                        cell.setCellValue((Integer) cellData.value)
+                    } else if (cellData.value instanceof Double || cellData.value instanceof BigDecimal || cellData.value instanceof Float) {
+                        cell.setCellValue((Double) cellData.value)
                         cell.setCellStyle(numberStyle)
                     }
                 }
@@ -697,5 +745,71 @@ class ExportService {
             log.error("Data delivered in inappropriate structure!")
         }
         wb
+    }
+
+    /**
+     * Gets the map of column headers for KBART export with their database query mappings
+     * @return a map of column headers and SQL query parts
+     */
+    Map<String, String> getTitleHeadersWithSQL() {
+        Long priceTypeList = RDStore.PRICE_TYPE_LIST.id
+        Long priceTypeOAAPC = RDStore.PRICE_TYPE_OA_APC.id
+
+        Map <String, String> mapping = [publication_title: 'tipp_name as publication_title',
+                                        first_author: 'tipp_first_author as first_author',
+                                        first_editor: 'tipp_first_editor as first_editor',
+                                        publisher_name: 'tipp_publisher_name as publisher_name',
+                                        publication_type: '(select rdv_value from refdata_value where rdv_id = tipp_publication_type_rv_fk) as publication_type',
+                                        medium: '(select rdv_value from refdata_value where rdv_id = tipp_medium_rv_fk) as medium',
+                                        title_url: 'tipp_url as title_url',
+                                        print_identifier: "(select string_agg(id_value,',') from identifier where id_tipp_fk = tipp_id and (id_namespace_fk = ${IdentifierNamespace.findByValue(IdentifierNamespace.ISBN).id} or id_namespace_fk = ${IdentifierNamespace.findByValue(IdentifierNamespace.ISSN).id})) as print_identifier",
+                                        online_identifier: "(select string_agg(id_value,',') from identifier where id_tipp_fk = tipp_id and (id_namespace_fk = ${IdentifierNamespace.findByValue(IdentifierNamespace.EISBN).id} or id_namespace_fk = ${IdentifierNamespace.findByValue(IdentifierNamespace.EISSN).id})) as online_identifier",
+                                        title_id: "(select string_agg(id_value,',') from identifier where id_tipp_fk = tipp_id and id_namespace_fk = ${IdentifierNamespace.findByValue('title_id').id}) as title_id",
+                                        doi_identifier: "(select string_agg(id_value,',') from identifier where id_tipp_fk = tipp_id and id_namespace_fk = '${IdentifierNamespace.findByValue(IdentifierNamespace.DOI).id}') as doi_identifier",
+                                        subject_area: 'tipp_subject_area as subject_area',
+                                        language: "(select string_agg((select rdv_value from refdata_value where rdv_id = cl_rv_fk),',') from component_language where cl_tipp_fk = tipp_id) as language",
+                                        ddc: "(select string_agg((select rdv_value from refdata_value where rdv_id = ddc_rv_Fk),',') from tipp_dewey_decimal_classification where tipp_fk = tipp_id) as ddc",
+                                        access_type: '(select rdv_value from refdata_value where rdv_id = tipp_access_type_rv_fk) as access_type',
+                                        coverage_depth: '(select rdv_value from refdata_value where rdv_id = tcs_coverage_depth) as coverage_depth',
+                                        package_name: 'pkg_name as package_name',
+                                        package_id: "(select string_agg(id_value,',') from identifier where id_pkg_fk = pkg_id and id_namespace_fk = '${IdentifierNamespace.findByValue(IdentifierNamespace.PKG_ID).id}') as package_id",
+                                        access_start_date: "to_char(tipp_access_start_date, 'yyyy-MM-dd') as access_start_date",
+                                        access_end_date: "to_char(tipp_access_end_date, 'yyyy-MM-dd') as access_end_date",
+                                        last_changed: "to_char(tipp_last_change_ext, 'yyyy-MM-dd') as last_changed",
+                                        status: '(select rdv_value from refdata_value where rdv_id = tipp_status_rv_fk) as status',
+                                        listprice_eur: "(select trim(to_char(tp_price, '999999999D99')) from tipp_price where tp_tipp_fk = tipp_id and tp_currency_fk = ${RDStore.CURRENCY_EUR.id} and tp_type_fk = ${priceTypeList} order by tp_last_updated desc limit 1) as listprice_eur",
+                                        listprice_gbp: "(select trim(to_char(tp_price, '999999999D99')) from tipp_price where tp_tipp_fk = tipp_id and tp_currency_fk = ${RDStore.CURRENCY_GBP.id} and tp_type_fk = ${priceTypeList} order by tp_last_updated desc limit 1) as listprice_gbp",
+                                        listprice_usd: "(select trim(to_char(tp_price, '999999999D99')) from tipp_price where tp_tipp_fk = tipp_id and tp_currency_fk = ${RDStore.CURRENCY_USD.id} and tp_type_fk = ${priceTypeList} order by tp_last_updated desc limit 1) as listprice_usd",
+                                        notes: 'tcs_note as notes',
+                                        date_monograph_published_print: "to_char(tipp_date_first_in_print, 'yyyy-MM-dd') as date_monograph_published_print",
+                                        date_monograph_published_online: "to_char(tipp_date_first_online, 'yyyy-MM-dd') as date_monograph_published_online",
+                                        monograph_volume: 'tipp_volume_number as monograph_volume',
+                                        monograph_edition: 'tipp_edition_statement as monograph_edition',
+                                        monograph_parent_collection_title: "tipp_series as monograph_parent_collection_title",
+                                        parent_publication_title_id: "tipp_parent_publication_title_id as parent_publication_title_id",
+                                        date_first_issue_online: "to_char(tcs_start_date, 'yyyy-MM-dd') as date_first_issue_online",
+                                        num_first_vol_online: 'tcs_start_volume as num_first_vol_online',
+                                        num_first_issue_online: 'tcs_start_issue as num_first_issue_online',
+                                        date_last_issue_online: "to_char(tcs_end_date, 'yyyy-MM-dd') as date_last_issue_online",
+                                        num_last_vol_online: 'tcs_end_volume as num_last_vol_online',
+                                        num_last_issue_online: 'tcs_end_issue as num_last_issue_online',
+                                        coverage_depth: 'tcs_depth as coverage_depth',
+                                        zdb_id: "(select string_agg(id_value,',') from identifier where id_tipp_fk = tipp_id and id_namespace_fk = ${IdentifierNamespace.findByValue(IdentifierNamespace.ZDB).id}) as zdb_id",
+                                        ezb_id: "(select string_agg(id_value,',') from identifier where id_tipp_fk = tipp_id and id_namespace_fk = '${IdentifierNamespace.findByValueAndTargetType(IdentifierNamespace.EZB, RDStore.IDENTIFIER_NAMESPACE_TARGET_TYPE_TIPP).id}') as ezb_id",
+                                        package_ezb_anchor: "(select string_agg(id_value,',') from identifier where id_pkg_fk = tipp_id and id_namespace_fk = '${IdentifierNamespace.findByValueAndTargetType(IdentifierNamespace.PACKAGE_EZB_ANCHOR, RDStore.IDENTIFIER_NAMESPACE_TARGET_TYPE_TIPP).id}') as package_ezb_anchor",
+                                        oa_type: '(select rdv_value from refdata_value where rdv_id = tipp_open_access_rv_fk) as oa_type',
+                                        oa_apc_eur: "(select trim(to_char(tp_price, '999999999D99')) from tipp_price where tp_tipp_fk = tipp_id and tp_currency_fk = ${RDStore.CURRENCY_EUR.id} and tp_type_fk = ${priceTypeOAAPC} order by tp_last_updated desc limit 1) as oa_apc_eur",
+                                        oa_apc_usd: "(select trim(to_char(tp_price, '999999999D99')) from tipp_price where tp_tipp_fk = tipp_id and tp_currency_fk = ${RDStore.CURRENCY_GBP.id} and tp_type_fk = ${priceTypeOAAPC} order by tp_last_updated desc limit 1) as oa_apc_usd",
+                                        oa_apc_gbp: "(select trim(to_char(tp_price, '999999999D99')) from tipp_price where tp_tipp_fk = tipp_id and tp_currency_fk = ${RDStore.CURRENCY_USD.id} and tp_type_fk = ${priceTypeOAAPC} order by tp_last_updated desc limit 1) as oa_apc_gbp",
+                                        package_isil: "(select string_agg(id_value,',') from identifier where id_pkg_fk = tipp_id and id_namespace_fk = '${IdentifierNamespace.findByValueAndTargetType(IdentifierNamespace.PACKAGE_ISIL, RDStore.IDENTIFIER_NAMESPACE_TARGET_TYPE_TIPP).id}') as package_isil",
+                                        title_wekb_uuid: 'tipp_uuid as title_wekb_uuid',
+                                        package_wekb_uuid: 'pkg_uuid as package_wekb_uuid',
+                                        //ill_indicator: "null as ill_indicator",
+                                        preceding_publication_title_id: "tipp_preceding_publication_title_id as preceding_publication_title_id",
+                                        superceding_publication_title_id: "tipp_superseding_publication_title_id as superceding_publication_title_id",
+                                        embargo_info: 'tcs_embargo as embargo_info']
+
+
+        mapping
     }
 }
