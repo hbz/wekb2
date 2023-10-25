@@ -1310,7 +1310,7 @@ class Api2Service {
 
                 result.federations = []
                 object.federations.each { PlatformFederation platformFederation ->
-                    result.federations.add([federation: platformFederation.federation?.value])
+                    result.federations.add([federation: platformFederation.federation.value])
                 }
             }
 
@@ -1515,6 +1515,21 @@ class Api2Service {
                 object.packages?.each {
                     result.packages.add([package: it.pkg.name,
                                          packageUuid: it.pkg.uuid])
+                }
+
+                result.supportedLibrarySystems = []
+                object.supportedLibrarySystems.each { VendorLibrarySystem vendorLibrarySystem ->
+                    result.supportedLibrarySystems.add([supportedLibrarySystem: vendorLibrarySystem.supportedLibrarySystem.value])
+                }
+
+                result.electronicBillings = []
+                object.electronicBillings.each { VendorElectronicBilling vendorElectronicBilling ->
+                    result.electronicBillings.add([electronicBilling: vendorElectronicBilling.electronicBilling.value])
+                }
+
+                result.invoiceDispatchs = []
+                object.invoiceDispatchs.each { VendorInvoiceDispatch vendorInvoiceDispatch ->
+                    result.invoiceDispatchs.add([invoiceDispatch: vendorInvoiceDispatch.invoiceDispatch.value])
                 }
             }
 

@@ -23,6 +23,20 @@ class Vendor extends AbstractBase implements Auditable {
 
   String homepage
 
+  boolean paperInvoice
+  boolean managementOfCredits
+  boolean processingOfCompensationPayments
+  boolean individualInvoiceDesign
+
+  boolean technicalSupport
+  boolean shippingMetadata
+  boolean forwardingUsageStatisticsFromPublisher
+  boolean activationForNewReleases
+  boolean exchangeOfIndividualTitles
+  String researchPlatformForEbooks
+
+
+
   static mappedBy = [
   ]
 
@@ -30,7 +44,10 @@ class Vendor extends AbstractBase implements Auditable {
     roles: RefdataValue,
     contacts: Contact,
     curatoryGroups   : CuratoryGroupVendor,
-    packages: PackageVendor
+    packages: PackageVendor,
+    supportedLibrarySystems: VendorLibrarySystem,
+    electronicBillings: VendorElectronicBilling,
+    invoiceDispatchs: VendorInvoiceDispatch
   ]
 
   static mapping = {
@@ -47,6 +64,18 @@ class Vendor extends AbstractBase implements Auditable {
     status column: 'ven_status_rv_fk'
 
     homepage column: 'ven_homepage'
+
+    paperInvoice column: 'ven_paper_invoice'
+    managementOfCredits column: 'ven_management_of_credits'
+    processingOfCompensationPayments column: 'ven_pro_of_com_pay'
+    individualInvoiceDesign column: 'ven_ind_invoice_design'
+
+    technicalSupport column: 'ven_technical_support'
+    shippingMetadata column: 'ven_shipping_metadata'
+    forwardingUsageStatisticsFromPublisher column: 'ven_forw_usage_stati_fr_pub'
+    activationForNewReleases column: 'ven_activation_for_new_releases'
+    exchangeOfIndividualTitles column: 'ven_exchange_of_ind_titles'
+    researchPlatformForEbooks column: 'ven_research_platform_for_ebooks'
   }
 
   static constraints = {
@@ -65,6 +94,19 @@ class Vendor extends AbstractBase implements Auditable {
         }
       }
     })
+
+    paperInvoice (nullable: true, blank: true)
+    managementOfCredits (nullable: true, blank: true)
+    processingOfCompensationPayments (nullable: true, blank: true)
+    individualInvoiceDesign (nullable: true, blank: true)
+
+    technicalSupport (nullable: true, blank: true)
+    shippingMetadata (nullable: true, blank: true)
+    forwardingUsageStatisticsFromPublisher (nullable: true, blank: true)
+    activationForNewReleases (nullable: true, blank: true)
+    exchangeOfIndividualTitles (nullable: true, blank: true)
+    researchPlatformForEbooks (nullable: true, blank: true)
+
   }
 
   @Override

@@ -608,5 +608,15 @@ TitleInstancePackagePlatform.PublicationType;Database;Database;Database
 TitleInstancePackagePlatform.PublicationType;Monograph;Monograph;Monograph
 TitleInstancePackagePlatform.PublicationType;Other;Other;Other
 TitleInstancePackagePlatform.PublicationType;Serial;Serial;Serial
+Vendor.SupportedLibrarySystem;Alma;Alma;Alma
+Vendor.SupportedLibrarySystem;Sisis;Sisis;Sisis
+Vendor.SupportedLibrarySystem;Folio;Folio;Folio
+Vendor.ElectronicBilling;X-Invoice;X-Invoice;X-Invoice
+Vendor.ElectronicBilling;EDI;EDI;EDI
+Vendor.ElectronicBilling;PDF;PDF;PDF
+Vendor.InvoiceDispatch;E-Mail;E-Mail;E-Mail
+Vendor.InvoiceDispatch;Federal state billing portal;Federal state billing portal;Federal state billing portal
+Vendor.InvoiceDispatch;FTP-Server;FTP-Serverl;FTP-Server
+Vendor.InvoiceDispatch;Peppol;Peppol;Peppol
 YN;No;No;No
 YN;Yes;Yes;Yes

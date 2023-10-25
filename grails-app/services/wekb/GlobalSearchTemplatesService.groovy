@@ -1768,6 +1768,31 @@ class GlobalSearchTemplatesService {
                                         placeholder: 'Role',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'roles'],
                                 ],
+                                [
+                                        type       : 'lookup',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.VENDOR_SUPPORTED_LIB_SYSTEM,
+                                        prompt     : 'Supported Library Systems',
+                                        qparam     : 'qp_supportedLibrarySystems',
+                                        placeholder: 'Role',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'supportedLibrarySystems'],
+                                ],
+                                [
+                                        type       : 'lookup',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.VENDOR_ELECTRONIC_BILLING,
+                                        prompt     : 'Electronic Billings',
+                                        qparam     : 'qp_electronicBillings',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'electronicBillings'],
+                                ],
+                                [
+                                        type       : 'lookup',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.VENDOR_INVOICE_DISPATCH,
+                                        prompt     : 'Invoice Dispatchs',
+                                        qparam     : 'qp_invoiceDispatchs',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'invoiceDispatchs'],
+                                ],
 
                         ],
                         qbeResults: [

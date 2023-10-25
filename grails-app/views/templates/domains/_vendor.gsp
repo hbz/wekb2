@@ -31,14 +31,7 @@
                   </sec:ifNotGranted>--}%
             </dd>
         </dl>
-        <dl>
-            <dt class="control-label">
-                Homepage
-            </dt>
-            <dd>
-                <semui:xEditable owner="${d}" field="homepage" outGoingLink="true"/>
-            </dd>
-        </dl>
+
         <g:if test="${d.id != null}">
             <dl>
                 <dt class="control-label">
@@ -176,6 +169,5 @@
                 </g:form>
             </semui:modal>
         </g:if>
-
     </div>
 </div>

@@ -213,7 +213,8 @@ class AjaxHtmlController {
             def redirect_to = request.getHeader('referer')
 
             if (params.activeTab && params.activeTab.length() > 0) {
-                redirect_to = "${redirect_to}?activeTab=${params.tab}"
+                redirect_to = "${redirect_to}?activeTab=${params.activeTab}"
+                params.remove('activeTab')
             }
             redirect(url: redirect_to)
         }
