@@ -238,7 +238,7 @@ class ExportService {
 
     }
 
-    String generateSeparatorTableString(List titleRow, List columnData, String separator) {
+    String generateSeparatorTableString(Set titleRow, List columnData, String separator) {
         List output = []
         output.add(titleRow.join(separator))
         columnData.each { row ->
@@ -685,7 +685,7 @@ class ExportService {
          'embargo_info']
     }
 
-    XSSFWorkbook generateXLSXWorkbook(String sheetTile, List titleRow, List columnData) {
+    XSSFWorkbook generateXLSXWorkbook(String sheetTile, Set titleRow, List columnData) {
         XSSFWorkbook wb = new XSSFWorkbook()
         XSSFSheet sheet = wb.createSheet(sheetTile)
         POIXMLProperties xmlProps = wb.getProperties()

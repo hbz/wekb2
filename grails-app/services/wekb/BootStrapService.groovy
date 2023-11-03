@@ -43,7 +43,7 @@ class BootStrapService {
             def sushiRole = Role.findByAuthority('ROLE_SUSHI') ?: new Role(authority: 'ROLE_SUSHI', roleType: 'global').save(failOnError: true)
         }
 
-        refdataCats()
+        setRefDatas()
 
         log.info("Ensure default Identifier namespaces")
         def namespaces = [
@@ -135,9 +135,9 @@ class BootStrapService {
     }
 
 
-    def refdataCats() {
+    def setRefDatas() {
 
-        log.info("refdataCats")
+        log.info("setRefDatas")
         RefdataValue.executeUpdate('UPDATE RefdataValue rdv SET rdv.isHardData =:reset', [reset: false])
         RefdataCategory.executeUpdate('UPDATE RefdataCategory rdc SET rdc.isHardData =:reset', [reset: false])
 
@@ -169,11 +169,16 @@ class BootStrapService {
             RefdataValue.construct(map)
         }
 
+        List languages = getParsedCsvData('setup/ISO-639-2.csv', 'RefdataValue')
+
+        languages.each { map ->
+            RefdataValue.construct(map)
+        }
+
         log.info("Deleting any null refdata values")
         RefdataValue.executeUpdate('delete from RefdataValue where value is null')
 
-        log.info("Languages Service initialize")
-        LanguagesService.initialize()
+
     }
 
 
