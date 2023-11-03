@@ -248,11 +248,12 @@ class PublicController {
       }else {
         response.setContentType('text/tab-separated-values');
         response.setHeader("Content-disposition", "attachment; filename=${filename}.tsv")
+        String exportString = exportService.generateSeparatorTableString(export.titleRow, export.columnData, '\t')
 
         ServletOutputStream out = response.outputStream
         out.withWriter { writer ->
-          writer.write("we:kb Export : Provider (${pkg.provider?.name}) : Package (${pkg.name}) : ${export_date}\n");
-          writer.write(exportService.generateSeparatorTableString(export.titleRow, export.columnData, '\t'))
+          writer.write("we:kb Export : Provider (${pkg.provider?.name}) : Package (${pkg.name}) : ${export_date}\n")
+          writer.write(exportString)
         }
         out.flush()
         out.close()

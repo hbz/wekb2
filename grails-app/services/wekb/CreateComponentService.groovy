@@ -595,7 +595,7 @@ class CreateComponentService {
                                         sourceMap.url = source_url
                                     }
 
-                                    if(cols[colMap.source_default_supply_method]){
+                                    if(colMap.source_default_supply_method != null && cols[colMap.source_default_supply_method]){
                                         String value = cols[colMap.source_default_supply_method].trim()
                                         if (value) {
                                             RefdataValue refdataValue = RefdataCategory.lookup(RCConstants.SOURCE_DATA_SUPPLY_METHOD, value)
@@ -608,16 +608,16 @@ class CreateComponentService {
                                         sourceMap.source_ftp_server_url = source_ftp_server_url
                                     }
 
-                                    if(cols[colMap.source_ftp_directory]){
+                                    if(colMap.source_ftp_directory != null && cols[colMap.source_ftp_directory]){
                                         sourceMap.source_ftp_directory = cols[colMap.source_ftp_directory].trim()
                                     }
-                                    if(cols[colMap.source_ftp_file_name]){
+                                    if(colMap.source_ftp_file_name != null && cols[colMap.source_ftp_file_name]){
                                         sourceMap.source_ftp_file_name = cols[colMap.source_ftp_file_name].trim()
                                     }
-                                    if(cols[colMap.source_ftp_username]){
+                                    if(colMap.source_ftp_username != null && cols[colMap.source_ftp_username]){
                                         sourceMap.source_ftp_username = cols[colMap.source_ftp_username].trim()
                                     }
-                                    if(cols[colMap.source_ftp_password]){
+                                    if(colMap.source_ftp_password != null && cols[colMap.source_ftp_password]){
                                         sourceMap.source_ftp_password = cols[colMap.source_ftp_password].trim()
                                     }
 
