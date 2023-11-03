@@ -1,0 +1,488 @@
+rdc;token;value_de;value_en
+Component.Language;aar;Danakil-Sprache;Afar
+Component.Language;abk;Abchasisch;Abkhazian
+Component.Language;ace;Aceh-Sprache;Achinese
+Component.Language;ach;Acholi-Sprache;Acoli
+Component.Language;ada;Adangme-Sprache;Adangme
+Component.Language;ady;Adygisch;Adyghe, Adygei
+Component.Language;afa;Hamitosemitische Sprachen;Afro-Asiatic language.isos
+Component.Language;afh;Afrihili;Afrihili
+Component.Language;afr;Afrikaans;Afrikaans
+Component.Language;ain;Ainu-Sprache;Ainu
+Component.Language;aka;Akan-Sprache;Akan
+Component.Language;akk;Akkadisch;Akkadian
+Component.Language;alb;Albanisch;Albanian
+Component.Language;ale;Aleutisch;Aleut
+Component.Language;alg;Algonkin-Sprachen;Algonquian language.isos
+Component.Language;alt;Altaisch;Southern Altai
+Component.Language;amh;Amharisch;Amharic
+Component.Language;ang;Altenglisch;"English; Old (ca.450-1100)"
+Component.Language;anp;Anga-Sprache;Angika
+Component.Language;apa;Apachen-Sprache;Apache language.isos
+Component.Language;ara;Arabisch;Arabic
+Component.Language;arc;Aramäisch;Official Aramaic (700-300 BCE), Imperial Aramaic (700-300 BCE)
+Component.Language;arg;Aragonesisch;Aragonese
+Component.Language;arm;Armenisch;Armenian
+Component.Language;arn;Arauka-Sprachen;Mapudungun, Mapuche
+Component.Language;arp;Arapaho-Sprache;Arapaho
+Component.Language;art;Kunstsprache;Artificial language.isos
+Component.Language;arw;Arawak-Sprachen;Arawak
+Component.Language;asm;Assamesisch;Assamese
+Component.Language;ast;Asturisch;Asturian, Bable, Leonese, Asturleonese
+Component.Language;ath;Athapaskische Sprachen;Athapascan language.isos
+Component.Language;aus;Australische Sprachen;Australian language.isos
+Component.Language;ava;Awarisch;Avaric
+Component.Language;ave;Avestisch;Avestan
+Component.Language;awa;Awadhī;Awadhi
+Component.Language;aym;Aymará-Sprache;Aymara
+Component.Language;aze;Aserbeidschanisch;Azerbaijani
+Component.Language;bad;Banda-Sprache;Banda language.isos
+Component.Language;bai;Bamileke-Sprache;Bamileke language.isos
+Component.Language;bak;Baschkirisch;Bashkir
+Component.Language;bal;Belutschisch;Baluchi
+Component.Language;bam;Bambara-Sprache;Bambara
+Component.Language;ban;Balinesisch;Balinese
+Component.Language;baq;Baskisch;Basque
+Component.Language;bas;Basaa-Sprache;Basa
+Component.Language;bat;Baltische Sprachen;Baltic language.isos
+Component.Language;bej;Bedauye;Beja, Bedawiyet
+Component.Language;bel;Weißrussisch;Belarusian
+Component.Language;bem;Bemba-Sprache;Bemba
+Component.Language;ben;Bengali;Bengali
+Component.Language;ber;Berbersprachen;Berber language.isos
+Component.Language;bho;Bhojpurī;Bhojpuri
+Component.Language;bih;Bihari;Bihari language.isos
+Component.Language;bik;Bikol-Sprache;Bikol
+Component.Language;bin;Edo-Sprache;Bini, Edo
+Component.Language;bis;Beach-la-mar;Bislama
+Component.Language;bla;Blackfoot-Sprache;Siksika
+Component.Language;bnt;Bantusprachen;Bantu language.isos
+Component.Language;bos;Bosnisch;Bosnian
+Component.Language;bra;Braj-Bhakha;Braj
+Component.Language;bre;Bretonisch;Breton
+Component.Language;btk;Batak-Sprache;Batak language.isos
+Component.Language;bua;Burjatisch;Buriat
+Component.Language;bug;Bugi-Sprache;Buginese
+Component.Language;bul;Bulgarisch;Bulgarian
+Component.Language;bur;Birmanisch;Burmese
+Component.Language;byn;Bilin-Sprache;Blin, Bilin
+Component.Language;cad;Caddo-Sprachen;Caddo
+Component.Language;cai;Zentralamerikanisch-indigen;Central American Indian language.isos
+Component.Language;car;Karibische Sprachen;Galibi Carib
+Component.Language;cat;Katalanisch;Catalan, Valencian
+Component.Language;cau;Kaukasische Sprachen;Caucasian language.isos
+Component.Language;ceb;Cebuano;Cebuano
+Component.Language;cel;Keltische Sprachen;Celtic language.isos
+Component.Language;cha;Chamorro-Sprache;Chamorro
+Component.Language;chb;Chibcha-Sprachen;Chibcha
+Component.Language;che;Tschetschenisch;Chechen
+Component.Language;chg;Tschagataisch;Chagatai
+Component.Language;chi;Chinesisch;Chinese
+Component.Language;chk;Trukesisch;Chuukese
+Component.Language;chm;Tscheremissisch;Mari
+Component.Language;chn;Chinook-Jargon;Chinook jargon
+Component.Language;cho;Choctaw-Sprache;Choctaw
+Component.Language;chp;Chipewyan-Sprache;Chipewyan, Dene Suline
+Component.Language;chr;Cherokee-Sprache;Cherokee
+Component.Language;chu;Kirchenslawisch;Church Slavic, Old Slavonic, Church Slavonic, Old Bulgarian, Old Church Slavonic
+Component.Language;chv;Tschuwaschisch;Chuvash
+Component.Language;chy;Cheyenne-Sprache;Cheyenne
+Component.Language;cmc;Cham-Sprachen;Chamic language.isos
+Component.Language;cnr;Montenegrinisch;Montenegrin
+Component.Language;cop;Koptisch;Coptic
+Component.Language;cor;Kornisch;Cornish
+Component.Language;cos;Korsisch;Corsican
+Component.Language;cpe;Kreolisch-Englisch;"Creoles and pidgins; English based"
+Component.Language;cpf;Kreolisch-Französisch;"Creoles and pidgins; French-based"
+Component.Language;cpp;Kreolisch-Portugiesisch;"Creoles and pidgins; Portuguese-based"
+Component.Language;cre;Cree-Sprache;Cree
+Component.Language;crh;Krimtatarisch;Crimean Tatar, Crimean Turkish
+Component.Language;crp;Kreolische Sprachen;Creoles and pidgins
+Component.Language;csb;Kaschubisch;Kashubian
+Component.Language;cus;Kuschitische Sprachen;Cushitic language.isos
+Component.Language;cze;Tschechisch;Czech
+Component.Language;dak;Dakota-Sprache;Dakota
+Component.Language;dan;Dänisch;Danish
+Component.Language;dar;Darginisch;Dargwa
+Component.Language;day;Dajakisch;Land Dayak language.isos
+Component.Language;del;Delaware-Sprache;Delaware
+Component.Language;den;Slave-Sprache;Slave (Athapascan)
+Component.Language;dgr;Dogrib-Sprache;Dogrib
+Component.Language;din;Dinka-Sprache;Dinka
+Component.Language;div;Maledivisch;Divehi, Dhivehi, Maldivian
+Component.Language;doi;Dogrī;Dogri
+Component.Language;dra;Drawidische Sprachen;Dravidian language.isos
+Component.Language;dsb;Niedersorbisch;Lower Sorbian
+Component.Language;dua;Duala-Sprachen;Duala
+Component.Language;dum;Mittelniederländisch;"Dutch; Middle (ca.1050-1350)"
+Component.Language;dut;Niederländisch;Dutch, Flemish
+Component.Language;dyu;Dyula-Sprache;Dyula
+Component.Language;dzo;Dzongkha;Dzongkha
+Component.Language;efi;Efik;Efik
+Component.Language;egy;Ägyptisch;Egyptian (Ancient)
+Component.Language;eka;Ekajuk;Ekajuk
+Component.Language;elx;Elamisch;Elamite
+Component.Language;eng;Englisch;English
+Component.Language;enm;Mittelenglisch;"English; Middle (1100-1500)"
+Component.Language;epo;Esperanto;Esperanto
+Component.Language;est;Estnisch;Estonian
+Component.Language;ewe;Ewe-Sprache;Ewe
+Component.Language;ewo;Ewondo;Ewondo
+Component.Language;fan;Pangwe-Sprache;Fang
+Component.Language;fao;Färöisch;Faroese
+Component.Language;fat;Fante-Sprache;Fanti
+Component.Language;fij;Fidschi-Sprache;Fijian
+Component.Language;fil;Pilipino;Filipino, Pilipino
+Component.Language;fin;Finnisch;Finnish
+Component.Language;fiu;Finnougrische Sprachen;Finno-Ugrian language.isos
+Component.Language;fon;Fon-Sprache;Fon
+Component.Language;fre;Französisch;French
+Component.Language;frm;Mittelfranzösisch;"French; Middle (ca.1400-1600)"
+Component.Language;fro;Altfranzösisch;"French; Old (842-ca.1400)"
+Component.Language;frr;Nordfriesisch;Northern Frisian
+Component.Language;frs;Friesisch;Eastern Frisian
+Component.Language;fry;Friesisch;Western Frisian
+Component.Language;ful;Ful;Fulah
+Component.Language;fur;Friulisch;Friulian
+Component.Language;gaa;Ga-Sprache;Ga
+Component.Language;gay;Gayo-Sprache;Gayo
+Component.Language;gba;Gbaya-Sprache;Gbaya
+Component.Language;gem;Germanische Sprachen;Germanic language.isos
+Component.Language;geo;Georgisch;Georgian
+Component.Language;ger;Deutsch;German
+Component.Language;gez;Geez;Geez
+Component.Language;gil;Gilbertesisch;Gilbertese
+Component.Language;gla;Gälisch-Schottisch;Gaelic, Scottish Gaelic
+Component.Language;gle;Irisch;Irish
+Component.Language;glg;Galicisch;Galician
+Component.Language;glv;Manx;Manx
+Component.Language;gmh;Mittelhochdeutsch;"German; Middle High (ca.1050-1500)"
+Component.Language;goh;Althochdeutsch;"German; Old High (ca.750-1050)"
+Component.Language;gon;Gondi-Sprache;Gondi
+Component.Language;gor;Gorontalesisch;Gorontalo
+Component.Language;got;Gotisch;Gothic
+Component.Language;grb;Grebo-Sprache;Grebo
+Component.Language;grc;Griechisch;"Greek; Ancient (to 1453)"
+Component.Language;gre;Neugriechisch;"Greek; Modern (1453-)"
+Component.Language;grn;Guaraní-Sprache;Guarani
+Component.Language;gsw;Schweizerdeutsch;Swiss German, Alemannic, Alsatian
+Component.Language;guj;Gujarātī-Sprache;Gujarati
+Component.Language;gwi;Kutchin-Sprache;Gwich'in
+Component.Language;hai;Haida-Sprache;Haida
+Component.Language;hat;Haïtien;Haitian, Haitian Creole
+Component.Language;hau;Haussa-Sprache;Hausa
+Component.Language;haw;Hawaiisch;Hawaiian
+Component.Language;heb;Hebräisch;Hebrew
+Component.Language;her;Herero-Sprache;Herero
+Component.Language;hil;Hiligaynon-Sprache;Hiligaynon
+Component.Language;him;Himachali;Himachali language.isos, Western Pahari language.isos
+Component.Language;hin;Hindi;Hindi
+Component.Language;hit;Hethitisch;Hittite
+Component.Language;hmn;Miao-Sprachen;Hmong, Mong
+Component.Language;hmo;Hiri-Motu;Hiri Motu
+Component.Language;hrv;Kroatisch;Croatian
+Component.Language;hsb;Obersorbisch;Upper Sorbian
+Component.Language;hun;Ungarisch;Hungarian
+Component.Language;hup;Hupa-Sprache;Hupa
+Component.Language;iba;Iban-Sprache;Iban
+Component.Language;ibo;Ibo-Sprache;Igbo
+Component.Language;ice;Isländisch;Icelandic
+Component.Language;ido;Ido;Ido
+Component.Language;iii;Lalo-Sprache;Sichuan Yi, Nuosu
+Component.Language;ijo;Ijo-Sprache;Ijo language.isos
+Component.Language;iku;Inuktitut;Inuktitut
+Component.Language;ile;Interlingue;Interlingue, Occidental
+Component.Language;ilo;Ilokano-Sprache;Iloko
+Component.Language;ina;Interlingua;Interlingua (International Auxiliary language.iso Association)
+Component.Language;inc;Indoarische Sprachen;Indic language.isos
+Component.Language;ind;Bahasa / Indonesia;Indonesian
+Component.Language;ine;Indogermanische Sprachen;Indo-European language.isos
+Component.Language;inh;Inguschisch;Ingush
+Component.Language;ipk;Inupik;Inupiaq
+Component.Language;ira;Iranische Sprachen;Iranian language.isos
+Component.Language;iro;Irokesische Sprachen;Iroquoian language.isos
+Component.Language;ita;Italienisch;Italian
+Component.Language;jav;Javanisch;Javanese
+Component.Language;jbo;Lojban;Lojban
+Component.Language;jpn;Japanisch;Japanese
+Component.Language;jpr;Jüdisch-Persisch;Judeo-Persian
+Component.Language;jrb;Jüdisch-Arabisch;Judeo-Arabic
+Component.Language;kaa;Karakalpakisch;Kara-Kalpak
+Component.Language;kab;Kabylisch;Kabyle
+Component.Language;kac;Kachin-Sprache;Kachin, Jingpho
+Component.Language;kal;Grönländisch;Kalaallisut, Greenlandic
+Component.Language;kam;Kamba-Sprache;Kamba
+Component.Language;kan;Kannada;Kannada
+Component.Language;kar;Karenisch;Karen language.isos
+Component.Language;kas;Kaschmiri;Kashmiri
+Component.Language;kau;Kanuri-Sprache;Kanuri
+Component.Language;kaw;Kawi;Kawi
+Component.Language;kaz;Kasachisch;Kazakh
+Component.Language;kbd;Kabardinisch;Kabardian
+Component.Language;kha;Khasi-Sprache;Khasi
+Component.Language;khi;Khoisan-Sprachen;Khoisan language.isos
+Component.Language;khm;Kambodschanisch;Central Khmer
+Component.Language;kho;Sakisch;Khotanese, Sakan
+Component.Language;kik;Kikuyu-Sprache;Kikuyu, Gikuyu
+Component.Language;kin;Rwanda-Sprache;Kinyarwanda
+Component.Language;kir;Kirgisisch;Kirghiz, Kyrgyz
+Component.Language;kmb;Kimbundu-Sprache;Kimbundu
+Component.Language;kok;Konkani;Konkani
+Component.Language;kom;Komi-Sprache;Komi
+Component.Language;kon;Kongo-Sprache;Kongo
+Component.Language;kor;Koreanisch;Korean
+Component.Language;kos;Kosraeanisch;Kosraean
+Component.Language;kpe;Kpelle-Sprache;Kpelle
+Component.Language;krc;Karatschaiisch-Balkarisch;Karachay-Balkar
+Component.Language;krl;Karelisch;Karelian
+Component.Language;kro;Kru-Sprachen;Kru language.isos
+Component.Language;kru;Oraon-Sprache;Kurukh
+Component.Language;kua;Kwanyama-Sprache;Kuanyama, Kwanyama
+Component.Language;kum;Kumükisch;Kumyk
+Component.Language;kur;Kurdisch;Kurdish
+Component.Language;kut;Kutenai-Sprache;Kutenai
+Component.Language;lad;Judenspanisch;Ladino
+Component.Language;lah;Lahndā;Lahnda
+Component.Language;lam;Lamba-Sprache;Lamba
+Component.Language;lao;Laotisch;Lao
+Component.Language;lat;Latein;Latin
+Component.Language;lav;Lettisch;Latvian
+Component.Language;lez;Lesgisch;Lezghian
+Component.Language;lim;Limburgisch;Limburgan, Limburger, Limburgish
+Component.Language;lin;Lingala;Lingala
+Component.Language;lit;Litauisch;Lithuanian
+Component.Language;lol;Mongo-Sprache;Mongo
+Component.Language;loz;Rotse-Sprache;Lozi
+Component.Language;ltz;Luxemburgisch;Luxembourgish, Letzeburgesch
+Component.Language;lua;Luba-Lulua-Sprache;Luba-Lulua
+Component.Language;lub;Luba-Katanga-Sprache;Luba-Katanga
+Component.Language;lug;Ganda-Sprache;Ganda
+Component.Language;lui;Luiseño-Sprache;Luiseno
+Component.Language;lun;Lunda-Sprache;Lunda
+Component.Language;luo;Luo-Sprache;Luo (Kenya and Tanzania)
+Component.Language;lus;Lushai-Sprache;Lushai
+Component.Language;mac;Makedonisch;Macedonian
+Component.Language;mad;Maduresisch;Madurese
+Component.Language;mag;Magahī;Magahi
+Component.Language;mah;Marschallesisch;Marshallese
+Component.Language;mai;Maithili;Maithili
+Component.Language;mak;Makassarisch;Makasar
+Component.Language;mal;Malayalam;Malayalam
+Component.Language;man;Malinke-Sprache;Mandingo
+Component.Language;mao;Maori-Sprache;Maori
+Component.Language;map;Austronesische Sprachen;Austronesian language.isos
+Component.Language;mar;Marathi;Marathi
+Component.Language;mas;Massai-Sprache;Masai
+Component.Language;may;Malaiisch;Malay
+Component.Language;mdf;Mokscha-Sprache;Moksha
+Component.Language;mdr;Mandaresisch;Mandar
+Component.Language;men;Mende-Sprache;Mende
+Component.Language;mga;Mittelirisch;"Irish; Middle (900-1200)"
+Component.Language;mic;Micmac-Sprache;Mi'kmaq, Micmac
+Component.Language;min;Minangkabau-Sprache;Minangkabau
+Component.Language;mis;Ohne-Code;Uncoded language.isos
+Component.Language;mkh;Mon-Khmer-Sprachen;Mon-Khmer language.isos
+Component.Language;mlg;Malagassi-Sprache;Malagasy
+Component.Language;mlt;Maltesisch;Maltese
+Component.Language;mnc;Mandschurisch;Manchu
+Component.Language;mni;Meithei-Sprache;Manipuri
+Component.Language;mno;Manobo-Sprache;Manobo language.isos
+Component.Language;moh;Mohawk-Sprache;Mohawk
+Component.Language;mon;Mongolisch;Mongolian
+Component.Language;mos;Mossi-Sprache;Mossi
+Component.Language;mul;Mehrere Sprachen;Multiple language.isos
+Component.Language;mun;Mundasprachen;Munda language.isos
+Component.Language;mus;Muskogisch;Creek
+Component.Language;mwl;Mirandesisch;Mirandese
+Component.Language;mwr;Mārwārī;Marwari
+Component.Language;myn;Maya-Sprachen;Mayan language.isos
+Component.Language;myv;Erza-Mordwinisch;Erzya
+Component.Language;nah;Nahuatl;Nahuatl language.isos
+Component.Language;nai;Nordamerikanisch-indigen;North American Indian language.isos
+Component.Language;nap;Neapolitanisch;Neapolitan
+Component.Language;nau;Nauruanisch;Nauru
+Component.Language;nav;Navajo-Sprache;Navajo, Navaho
+Component.Language;nbl;Ndebele-Sprache;"Ndebele; South, South Ndebele"
+Component.Language;nde;Ndebele-Sprache;"Ndebele; North, North Ndebele"
+Component.Language;ndo;Ndonga;Ndonga
+Component.Language;nds;Niederdeutsch;"Low German, Low Saxon, German; Low, Saxon; Low"
+Component.Language;nep;Nepali;Nepali
+Component.Language;new;Newārī;Nepal Bhasa, Newari
+Component.Language;nia;Nias-Sprache;Nias
+Component.Language;nic;Nigerkordofanische Sprachen;Niger-Kordofanian language.isos
+Component.Language;niu;Niue-Sprache;Niuean
+Component.Language;nno;Nynorsk;"Norwegian Nynorsk, Nynorsk; Norwegian"
+Component.Language;nob;Bokmål;"Bokmål; Norwegian, Norwegian Bokmål"
+Component.Language;nog;Nogaisch;Nogai
+Component.Language;non;Altnorwegisch;"Norse; Old"
+Component.Language;nor;Norwegisch;Norwegian
+Component.Language;nqo;N'Ko;N'Ko
+Component.Language;nso;Pedi-Sprache;Pedi, Sepedi, Northern Sotho
+Component.Language;nub;Nubische Sprachen;Nubian language.isos
+Component.Language;nwc;Alt-Newārī;Classical Newari, Old Newari, Classical Nepal Bhasa
+Component.Language;nya;Nyanja-Sprache;Chichewa, Chewa, Nyanja
+Component.Language;nym;Nyamwezi-Sprache;Nyamwezi
+Component.Language;nyn;Nkole-Sprache;Nyankole
+Component.Language;nyo;Nyoro-Sprache;Nyoro
+Component.Language;nzi;Nzima-Sprache;Nzima
+Component.Language;oci;Okzitanisch;Occitan (post 1500)
+Component.Language;oji;Ojibwa-Sprache;Ojibwa
+Component.Language;ori;Oriya-Sprache;Oriya
+Component.Language;orm;Ormo-Sprache;Oromo
+Component.Language;osa;Osage-Sprache;Osage
+Component.Language;oss;Ossetisch;Ossetian, Ossetic
+Component.Language;ota;Osmanisch;"Turkish; Ottoman (1500-1928)"
+Component.Language;oto;Otomangue-Sprachen;Otomian language.isos
+Component.Language;paa;Papuasprachen;Papuan language.isos
+Component.Language;pag;Pangasinan-Sprache;Pangasinan
+Component.Language;pal;Mittelpersisch;Pahlavi
+Component.Language;pam;Pampanggan-Sprache;Pampanga, Kapampangan
+Component.Language;pan;Pandschabi-Sprache;Panjabi, Punjabi
+Component.Language;pap;Papiamento;Papiamento
+Component.Language;pau;Palauisch;Palauan
+Component.Language;peo;Altpersisch;"Persian; Old (ca.600-400 B.C.)"
+Component.Language;per;Persisch;Persian
+Component.Language;phi;Philippinen-Austronesisch;Philippine language.isos
+Component.Language;phn;Phönikisch;Phoenician
+Component.Language;pli;Pāli;Pali
+Component.Language;pol;Polnisch;Polish
+Component.Language;pon;Ponapeanisch;Pohnpeian
+Component.Language;por;Portugiesisch;Portuguese
+Component.Language;pra;Prākrit;Prakrit language.isos
+Component.Language;pro;Altokzitanisch;"Provençal; Old (to 1500), Occitan; Old (to 1500)"
+Component.Language;pus;Paschtu;Pushto, Pashto
+Component.Language;qaa-qtz;Reserviert für lokalen Gebrauch;Reserved for local use
+Component.Language;que;Quechua-Sprache;Quechua
+Component.Language;raj;Rājasthānī;Rajasthani
+Component.Language;rap;Osterinsel-Sprache;Rapanui
+Component.Language;rar;Rarotonganisch;Rarotongan, Cook Islands Maori
+Component.Language;roa;Romanische Sprachen;Romance language.isos
+Component.Language;roh;Rätoromanisch;Romansh
+Component.Language;rom;Romani;Romany
+Component.Language;rum;Rumänisch;Romanian, Moldavian, Moldovan
+Component.Language;run;Rundi-Sprache;Rundi
+Component.Language;rup;Aromunisch;Aromanian, Arumanian, Macedo-Romanian
+Component.Language;rus;Russisch;Russian
+Component.Language;sad;Sandawe-Sprache;Sandawe
+Component.Language;sag;Sango-Sprache;Sango
+Component.Language;sah;Jakutisch;Yakut
+Component.Language;sai;Südamerikanisch-indigen;South American Indian language.isos
+Component.Language;sal;Salish-Sprache;Salishan language.isos
+Component.Language;sam;Samaritanisch;Samaritan Aramaic
+Component.Language;san;Sanskrit;Sanskrit
+Component.Language;sas;Sasak;Sasak
+Component.Language;sat;Santālī;Santali
+Component.Language;scn;Sizilianisch;Sicilian
+Component.Language;sco;Schottisch;Scots
+Component.Language;sel;Selkupisch;Selkup
+Component.Language;sem;Semitische Sprachen;Semitic language.isos
+Component.Language;sga;Altirisch;"Irish; Old (to 900)"
+Component.Language;sgn;Zeichensprache;Sign language.isos
+Component.Language;shn;Schan-Sprache;Shan
+Component.Language;sid;Sidamo-Sprache;Sidamo
+Component.Language;sin;Singhalesisch;Sinhala, Sinhalese
+Component.Language;sio;Sioux-Sprachen;Siouan language.isos
+Component.Language;sit;Sinotibetische Sprachen;Sino-Tibetan language.isos
+Component.Language;sla;Slawische Sprachen;Slavic language.isos
+Component.Language;slo;Slowakisch;Slovak
+Component.Language;slv;Slowenisch;Slovenian
+Component.Language;sma;Südsaamisch;Southern Sami
+Component.Language;sme;Nordsaamisch;Northern Sami
+Component.Language;smi;Saamisch;Sami language.isos
+Component.Language;smj;Lulesaamisch;Lule Sami
+Component.Language;smn;Inarisaamisch;Inari Sami
+Component.Language;smo;Samoanisch;Samoan
+Component.Language;sms;Skoltsaamisch;Skolt Sami
+Component.Language;sna;Schona-Sprache;Shona
+Component.Language;snd;Sindhi-Sprache;Sindhi
+Component.Language;snk;Soninke-Sprache;Soninke
+Component.Language;sog;Sogdisch;Sogdian
+Component.Language;som;Somali;Somali
+Component.Language;son;Songhai-Sprache;Songhai language.isos
+Component.Language;sot;Süd-Sotho-Sprache;"Sotho; Southern"
+Component.Language;spa;Spanisch;Spanish, Castilian
+Component.Language;srd;Sardisch;Sardinian
+Component.Language;srn;Sranantongo;Sranan Tongo
+Component.Language;srp;Serbisch;Serbian
+Component.Language;srr;Serer-Sprache;Serer
+Component.Language;ssa;Nilosaharanische Sprachen;Nilo-Saharan language.isos
+Component.Language;ssw;Swasi-Sprache;Swati
+Component.Language;suk;Sukuma-Sprache;Sukuma
+Component.Language;sun;Sundanesisch;Sundanese
+Component.Language;sus;Susu;Susu
+Component.Language;sux;Sumerisch;Sumerian
+Component.Language;swa;Swahili;Swahili
+Component.Language;swe;Schwedisch;Swedish
+Component.Language;syc;Syrisch;Classical Syriac
+Component.Language;syr;Neuostaramäisch;Syriac
+Component.Language;tah;Tahitisch;Tahitian
+Component.Language;tai;Thaisprachen;Tai language.isos
+Component.Language;tam;Tamil;Tamil
+Component.Language;tat;Tatarisch;Tatar
+Component.Language;tel;Telugu-Sprache;Telugu
+Component.Language;tem;Temne-Sprache;Timne
+Component.Language;ter;Tereno-Sprache;Tereno
+Component.Language;tet;Tetun-Sprache;Tetum
+Component.Language;tgk;Tadschikisch;Tajik
+Component.Language;tgl;Tagalog;Tagalog
+Component.Language;tha;Thailändisch;Thai
+Component.Language;tib;Tibetisch;Tibetan
+Component.Language;tig;Tigre-Sprache;Tigre
+Component.Language;tir;Tigrinja-Sprache;Tigrinya
+Component.Language;tiv;Tiv-Sprache;Tiv
+Component.Language;tkl;Tokelauanisch;Tokelau
+Component.Language;tlh;Klingonisch;Klingon, tlhIngan-Hol
+Component.Language;tli;Tlingit-Sprache;Tlingit
+Component.Language;tmh;Tamaschek;Tamashek
+Component.Language;tog;Tonga;Tonga (Nyasa)
+Component.Language;ton;Tongaisch;Tonga (Tonga Islands)
+Component.Language;tpi;Neumelanesisch;Tok Pisin
+Component.Language;tsi;Tsimshian-Sprache;Tsimshian
+Component.Language;tsn;Tswana-Sprache;Tswana
+Component.Language;tso;Tsonga-Sprache;Tsonga
+Component.Language;tuk;Turkmenisch;Turkmen
+Component.Language;tum;Tumbuka-Sprache;Tumbuka
+Component.Language;tup;Tupi-Sprache;Tupi language.isos
+Component.Language;tur;Türkisch;Turkish
+Component.Language;tut;Altaische Sprachen;Altaic language.isos
+Component.Language;tvl;Elliceanisch;Tuvalu
+Component.Language;twi;Twi-Sprache;Twi
+Component.Language;tyv;Tuwinisch;Tuvinian
+Component.Language;udm;Udmurtisch;Udmurt
+Component.Language;uga;Ugaritisch;Ugaritic
+Component.Language;uig;Uigurisch;Uighur, Uyghur
+Component.Language;ukr;Ukrainisch;Ukrainian
+Component.Language;umb;Mbundu-Sprache;Umbundu
+Component.Language;und;Unbestimmt;Undetermined
+Component.Language;urd;Urdu;Urdu
+Component.Language;uzb;Usbekisch;Uzbek
+Component.Language;vai;Vai-Sprache;Vai
+Component.Language;ven;Venda-Sprache;Venda
+Component.Language;vie;Vietnamesisch;Vietnamese
+Component.Language;vol;Volapük;Volapük
+Component.Language;vot;Wotisch;Votic
+Component.Language;wak;Wakash-Sprachen;Wakashan language.isos
+Component.Language;wal;Walamo-Sprache;Wolaitta, Wolaytta
+Component.Language;war;Waray;Waray
+Component.Language;was;Washo-Sprache;Washo
+Component.Language;wel;Kymrisch;Welsh
+Component.Language;wen;Sorbisch;Sorbian language.isos
+Component.Language;wln;Wallonisch;Walloon
+Component.Language;wol;Wolof-Sprache;Wolof
+Component.Language;xal;Kalmückisch;Kalmyk, Oirat
+Component.Language;xho;Xhosa-Sprache;Xhosa
+Component.Language;yao;Yao-Sprache;Yao
+Component.Language;yap;Yapesisch;Yapese
+Component.Language;yid;Jiddisch;Yiddish
+Component.Language;yor;Yoruba-Sprache;Yoruba
+Component.Language;ypk;Yupik-Sprache;Yupik language.isos
+Component.Language;zap;Zapotekisch;Zapotec
+Component.Language;zbl;Bliss;Blissymbols, Blissymbolics, Bliss
+Component.Language;zen;Zenaga;Zenaga
+Component.Language;zgh;Standard Marokkanisch Tamazight;Standard Moroccan Tamazight
+Component.Language;zha;Zhuang;Zhuang, Chuang
+Component.Language;znd;Zande-Sprachen;Zande language.isos
+Component.Language;zul;Zulu-Sprache;Zulu
+Component.Language;zun;Zuñi-Sprache;Zuni
+Component.Language;zxx;Non-linguistisch;No linguistic content, Not applicable
+Component.Language;zza;Zazaki;Zaza, Dimili, Dimli, Kirdki, Kirmanjki, Zazaki
