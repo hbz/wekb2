@@ -238,7 +238,7 @@ class ExportService {
 
     }
 
-    String generateSeparatorTableString(Set titleRow, List columnData, String separator) {
+    String generateSeparatorTableString(def titleRow, List columnData, String separator) {
         List output = []
         output.add(titleRow.join(separator))
         columnData.each { row ->
