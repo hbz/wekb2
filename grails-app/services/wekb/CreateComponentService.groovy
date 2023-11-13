@@ -314,6 +314,8 @@ class CreateComponentService {
                     break
                 case 'source_ftp_password': colMap.source_ftp_password = c
                     break
+                case "source_default_supply_method": colMap.source_default_supply_method = c
+                    break
             }
         }
 
@@ -744,23 +746,23 @@ class CreateComponentService {
                 }
 
                 if (map.source_ftp_server_url) {
-                    kbartSource.ftpServerUrl = RefdataValue.get(map.source_ftp_server_url)
+                    kbartSource.ftpServerUrl = map.source_ftp_server_url
                 }
 
                 if (map.source_ftp_directory) {
-                    kbartSource.ftpDirectory = RefdataValue.get(map.source_ftp_directory)
+                    kbartSource.ftpDirectory = map.source_ftp_directory
                 }
 
                 if (map.source_ftp_file_name) {
-                    kbartSource.ftpFileName = RefdataValue.get(map.source_ftp_file_name)
+                    kbartSource.ftpFileName = map.source_ftp_file_name
                 }
 
                 if (map.source_ftp_username) {
-                    kbartSource.ftpUsername = RefdataValue.get(map.source_ftp_username)
+                    kbartSource.ftpUsername = map.source_ftp_username
                 }
 
                 if (map.source_ftp_password) {
-                    kbartSource.ftpPassword = RefdataValue.get(map.source_ftp_password)
+                    kbartSource.ftpPassword = map.source_ftp_password
                 }
 
                 if (map.automaticUpdates) {
