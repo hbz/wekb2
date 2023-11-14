@@ -102,6 +102,7 @@ class RCConstants {
     public static final String VENDOR_SUPPORTED_LIB_SYSTEM = "Vendor.SupportedLibrarySystem"
     public static final String VENDOR_ELECTRONIC_BILLING = "Vendor.ElectronicBilling"
     public static final String VENDOR_INVOICE_DISPATCH = "Vendor.InvoiceDispatch"
+    public static final String VENDOR_ELECTRONIC_DELIVERY_DELAY = "Vendor.ElectronicDeliveryDelay"
 
     public static final String YN = "YN"
 

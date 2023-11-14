@@ -23,6 +23,9 @@ class Vendor extends AbstractBase implements Auditable {
 
   String homepage
 
+  boolean xmlOrders
+  boolean ediOrders
+
   boolean paperInvoice
   boolean managementOfCredits
   boolean processingOfCompensationPayments
@@ -47,7 +50,8 @@ class Vendor extends AbstractBase implements Auditable {
     packages: PackageVendor,
     supportedLibrarySystems: VendorLibrarySystem,
     electronicBillings: VendorElectronicBilling,
-    invoiceDispatchs: VendorInvoiceDispatch
+    invoiceDispatchs: VendorInvoiceDispatch,
+    electronicDeliveryDelays: VendorElectronicDeliveryDelay
   ]
 
   static mapping = {
@@ -64,6 +68,9 @@ class Vendor extends AbstractBase implements Auditable {
     status column: 'ven_status_rv_fk'
 
     homepage column: 'ven_homepage'
+
+    xmlOrders column: 'ven_xml_orders'
+    ediOrders column: 'ven_edi_orders'
 
     paperInvoice column: 'ven_paper_invoice'
     managementOfCredits column: 'ven_management_of_credits'
@@ -106,6 +113,9 @@ class Vendor extends AbstractBase implements Auditable {
     activationForNewReleases (nullable: true, blank: true)
     exchangeOfIndividualTitles (nullable: true, blank: true)
     researchPlatformForEbooks (nullable: true, blank: true)
+
+    xmlOrders (nullable: true, blank: true)
+    ediOrders (nullable: true, blank: true)
 
   }
 

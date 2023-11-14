@@ -105,6 +105,59 @@
                     Electronic delivery delay notifications via the same formats
                 </dt>
                 <dd>
+                    <table class="ui small selectable striped celled table">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Electronic delivery delay notifications</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <g:each in="${d.electronicDeliveryDelays.sort { it.electronicDeliveryDelay.value }}"
+                                var="vendorElectronicDeliveryDelay" status="i">
+                            <tr>
+                                <td>${i + 1}</td>
+                                <td><semui:xEditableRefData owner="${vendorElectronicDeliveryDelay}"
+                                                            field="electronicDeliveryDelay"
+                                                            config="${RCConstants.VENDOR_ELECTRONIC_DELIVERY_DELAY}"/>
+                                <td>
+                                    <g:if test="${editable}">
+                                        <g:link controller='ajaxHtml'
+                                                action='delete'
+                                                params="${["__context": "${vendorElectronicDeliveryDelay.getOID()}", curationOverride: params.curationOverride]}">Delete</g:link>
+                                    </g:if>
+                                </td>
+                            </tr>
+                        </g:each>
+                        </tbody>
+                    </table>
+
+                    <g:if test="${editable}">
+                        <a class="ui right floated black button" href="#"
+                           onclick="$('#electronicDeliveryDelaysModal').modal('show');">Add electronic delivery delay notifications</a>
+
+                        <br>
+                        <br>
+
+                        <semui:modal id="electronicDeliveryDelaysModal" title="Add electronic delivery delay notifications">
+
+                            <g:form controller="ajaxHtml" action="addToCollection" class="ui form">
+                                <input type="hidden" name="__context" value="${d.getOID()}"/>
+                                <input type="hidden" name="__newObjectClass" value="wekb.VendorElectronicDeliveryDelay"/>
+                                <input type="hidden" name="__recip" value="vendor"/>
+                                <input type="hidden" name="curationOverride" value="${params.curationOverride}"/>
+                                <input type="hidden" name="activeTab" value="anOrder"/>
+
+                                <div class="field">
+                                    <label>Electronic delivery delay notifications:</label> <semui:simpleReferenceDropdown
+                                        name="electronicDeliveryDelay"
+                                        baseClass="wekb.RefdataValue"
+                                        filter1="${RCConstants.VENDOR_ELECTRONIC_DELIVERY_DELAY}"/>
+                                </div>
+                            </g:form>
+                        </semui:modal>
+                    </g:if>
                 </dd>
             </dl>
         </div>

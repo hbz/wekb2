@@ -618,5 +618,7 @@ Vendor.InvoiceDispatch;E-Mail;E-Mail;E-Mail
 Vendor.InvoiceDispatch;Federal state billing portal;Federal state billing portal;Federal state billing portal
 Vendor.InvoiceDispatch;FTP-Server;FTP-Serverl;FTP-Server
 Vendor.InvoiceDispatch;Peppol;Peppol;Peppol
+Vendor.ElectronicDeliveryDelay;E-Mail;E-Mail;E-Mail
+Vendor.ElectronicDeliveryDelay;EDI;EDI;EDI
 YN;No;No;No
 YN;Yes;Yes;Yes

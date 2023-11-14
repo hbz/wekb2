@@ -1486,6 +1486,21 @@ class Api2Service {
 
                 result.homepage = object.homepage
 
+                 result.xmlOrders = object.xmlOrders ? RDStore.YN_YES.value : RDStore.YN_NO.value
+                 result.ediOrders = object.ediOrders  ? RDStore.YN_YES.value : RDStore.YN_NO.value
+
+                 result.paperInvoice = object.paperInvoice  ? RDStore.YN_YES.value : RDStore.YN_NO.value
+                 result.managementOfCredits = object.managementOfCredits  ? RDStore.YN_YES.value : RDStore.YN_NO.value
+                 result.processingOfCompensationPayments = object.processingOfCompensationPayments  ? RDStore.YN_YES.value : RDStore.YN_NO.value
+                 result.individualInvoiceDesign = object.individualInvoiceDesign  ? RDStore.YN_YES.value : RDStore.YN_NO.value
+
+                 result.technicalSupport = object.technicalSupport  ? RDStore.YN_YES.value : RDStore.YN_NO.value
+                 result.shippingMetadata = object.shippingMetadata  ? RDStore.YN_YES.value : RDStore.YN_NO.value
+                 result.forwardingUsageStatisticsFromPublisher = object.forwardingUsageStatisticsFromPublisher  ? RDStore.YN_YES.value : RDStore.YN_NO.value
+                 result.activationForNewReleases = object.activationForNewReleases  ? RDStore.YN_YES.value : RDStore.YN_NO.value
+                 result.exchangeOfIndividualTitles = object.exchangeOfIndividualTitles  ? RDStore.YN_YES.value : RDStore.YN_NO.value
+                 result.researchPlatformForEbooks = object.researchPlatformForEbooks
+
                 result.roles = []
                 object.roles.each { role ->
                     result.roles.add(role.value)
@@ -1530,6 +1545,11 @@ class Api2Service {
                 result.invoiceDispatchs = []
                 object.invoiceDispatchs.each { VendorInvoiceDispatch vendorInvoiceDispatch ->
                     result.invoiceDispatchs.add([invoiceDispatch: vendorInvoiceDispatch.invoiceDispatch.value])
+                }
+
+                result.electronicDeliveryDelays = []
+                object.electronicDeliveryDelays.each { VendorElectronicDeliveryDelay vendorElectronicDeliveryDelay ->
+                    result.electronicDeliveryDelays.add([electronicDeliveryDelay: vendorElectronicDeliveryDelay.electronicDeliveryDelay.value])
                 }
             }
 
