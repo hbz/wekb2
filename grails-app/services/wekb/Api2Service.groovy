@@ -1851,10 +1851,10 @@ class Api2Service {
 
         if(params.uuid){
             counter4Platforms = Platform.executeQuery("from Platform plat where plat.counterR4SushiApiSupported = :r4support and plat.counterR5SushiApiSupported != :r5support and plat.counterR4SushiServerUrl is not null and plat.uuid = :uuid", [r4support: yes, r5support: yes, uuid: params.uuid]).toSet()
-            counter5Platforms = Platform.executeQuery("from Platform plat where plat.counterR5SushiApiSupported = :r5support and plat.counterR5SushiServerUrl is not null and plat.uuid = :uuid", [r5support: yes, uuid: params.uuid]).toSet()
+            counter5Platforms = Platform.executeQuery("from Platform plat where plat.counterR5SushiApiSupported = :r5support and (plat.counterRegistryApiUuid is not null or plat.counterR5SushiServerUrl is not null) and plat.uuid = :uuid", [r5support: yes, uuid: params.uuid]).toSet()
         }else {
             counter4Platforms = Platform.executeQuery("from Platform plat where plat.counterR4SushiApiSupported = :r4support and plat.counterR5SushiApiSupported != :r5support and plat.counterR4SushiServerUrl is not null", [r4support: yes, r5support: yes]).toSet()
-            counter5Platforms = Platform.executeQuery("from Platform plat where plat.counterR5SushiApiSupported = :r5support and plat.counterR5SushiServerUrl is not null", [r5support: yes]).toSet()
+            counter5Platforms = Platform.executeQuery("from Platform plat where plat.counterR5SushiApiSupported = :r5support and (plat.counterRegistryApiUuid is not null or plat.counterR5SushiServerUrl is not null)", [r5support: yes]).toSet()
         }
 
         counter4Platforms.each { Platform platform ->
