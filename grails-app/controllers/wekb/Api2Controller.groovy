@@ -80,6 +80,9 @@ class Api2Controller {
                 result.message = "No componentType set!"
             }else {
                 try {
+                    if(params.changedSince || params.changedBefore) {
+                        log.info("Api2Controller: INCREMENTAL HARVESTING ---------------------------------------------------------------------------------------------------------------------------")
+                    }
                     result = api2Service.search(result, params)
                 } catch (Throwable e) {
                     result.code = 'error'
