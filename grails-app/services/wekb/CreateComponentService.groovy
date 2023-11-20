@@ -545,7 +545,7 @@ class CreateComponentService {
 
 
                         if (pkg.save(flush: true) || pkg.isAttached()) {
-                            if (colMap.archiving_agency != null) {
+                            if (colMap.archiving_agency != null && cols[colMap.archiving_agency]) {
                                 String value = cols[colMap.archiving_agency].trim()
                                 if (value) {
                                     RefdataValue refdataValue = RefdataCategory.lookup(RCConstants.PAA_ARCHIVING_AGENCY, value)
@@ -556,7 +556,7 @@ class CreateComponentService {
                                             packageArchivingAgency = new PackageArchivingAgency(archivingAgency: refdataValue, pkg: pkg)
                                         }
                                         if (packageArchivingAgency.save(flush: true)) {
-                                            if (colMap.open_access_of_archiving_agency != null) {
+                                            if (colMap.open_access_of_archiving_agency != null && cols[colMap.open_access_of_archiving_agency]) {
                                                 String paaOp = cols[colMap.open_access_of_archiving_agency].trim()
                                                 if (paaOp) {
                                                     RefdataValue refdataValuePaaOP = RefdataCategory.lookup(RCConstants.PAA_OPEN_ACCESS, paaOp)
@@ -565,7 +565,7 @@ class CreateComponentService {
                                                 }
                                             }
 
-                                            if (colMap.post_cancellation_access_of_archiving_agency != null) {
+                                            if (colMap.post_cancellation_access_of_archiving_agency != null && cols[colMap.post_cancellation_access_of_archiving_agency]) {
                                                 String paaPCA = cols[colMap.post_cancellation_access_of_archiving_agency].trim()
                                                 if (paaPCA) {
                                                     RefdataValue refdataValuePaaPCA = RefdataCategory.lookup(RCConstants.PAA_POST_CANCELLATION_ACCESS, paaPCA)
@@ -589,8 +589,8 @@ class CreateComponentService {
                             }
 
                             if (colMap.source_url != null || colMap.source_ftp_server_url != null) {
-                                String source_url = cols[colMap.source_url].trim()
-                                String source_ftp_server_url = cols[colMap.source_ftp_server_url].trim()
+                                String source_url = cols[colMap.source_url] ? cols[colMap.source_url].trim() : null
+                                String source_ftp_server_url = cols[colMap.source_ftp_server_url] ? cols[colMap.source_ftp_server_url].trim() : 0
                                 if (source_url || source_ftp_server_url) {
                                     Map sourceMap = [:]
                                     if(source_url) {
@@ -625,7 +625,7 @@ class CreateComponentService {
 
                                     sourceMap.pkgID = pkg.id
 
-                                    if (colMap.frequency != null) {
+                                    if (colMap.frequency != null && cols[colMap.frequency]) {
                                         String value = cols[colMap.frequency].trim()
                                         if (value) {
                                             RefdataValue refdataValue = RefdataCategory.lookup(RCConstants.SOURCE_FREQUENCY, value)
@@ -634,7 +634,7 @@ class CreateComponentService {
                                         }
                                     }
 
-                                    if (colMap.automated_updates != null) {
+                                    if (colMap.automated_updates != null && cols[colMap.automated_updates]) {
                                         String value = cols[colMap.automated_updates].trim()
                                         if (value) {
                                             RefdataValue refdataValue = RefdataCategory.lookup(RCConstants.YN, value)
