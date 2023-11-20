@@ -2,10 +2,10 @@
 <g:if test="${d.id}">
     <semui:tabs>
         <semui:tabsItemWithoutLink tab="anOrder" defaultTab="anOrder" activeTab="${params.activeTab}">
-            An order
+           Ordering
         </semui:tabsItemWithoutLink>
         <semui:tabsItemWithoutLink tab="invoice" activeTab="${params.activeTab}">
-            Invoice
+            Invoicing
         </semui:tabsItemWithoutLink>
         <semui:tabsItemWithoutLink tab="generalServices" activeTab="${params.activeTab}">
             General services
@@ -20,7 +20,7 @@
         <div class="content wekb-inline-lists">
             <dl>
                 <dt class="control-label">
-                    Homepage
+                    Homepage via Webshop
                 </dt>
                 <dd>
                     <semui:xEditable owner="${d}" field="homepage" outGoingLink="true"/>
@@ -28,14 +28,14 @@
             </dl>
             <dl>
                 <dt class="control-label">
-                    XML
+                    XML via Webshop
                 </dt>
                 <dd>
                 </dd>
             </dl>
             <dl>
                 <dt class="control-label">
-                    EDI
+                    EDI via Webshop
                 </dt>
                 <dd>
                 </dd>
@@ -102,14 +102,14 @@
             </dl>
             <dl>
                 <dt class="control-label">
-                    Electronic delivery delay notifications via the same formats
+                    Electronic delivery delay notifications via
                 </dt>
                 <dd>
                     <table class="ui small selectable striped celled table">
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th>Electronic delivery delay notifications</th>
+                            <th>Electronic delivery delay notifications via</th>
                             <th></th>
                         </tr>
                         </thead>
@@ -150,7 +150,7 @@
                                 <input type="hidden" name="activeTab" value="anOrder"/>
 
                                 <div class="field">
-                                    <label>Electronic delivery delay notifications:</label> <semui:simpleReferenceDropdown
+                                    <label>Electronic delivery delay notifications via:</label> <semui:simpleReferenceDropdown
                                         name="electronicDeliveryDelay"
                                         baseClass="wekb.RefdataValue"
                                         filter1="${RCConstants.VENDOR_ELECTRONIC_DELIVERY_DELAY}"/>
@@ -167,14 +167,14 @@
         <div class="content wekb-inline-lists">
             <dl>
                 <dt class="control-label">
-                    Electronic billings
+                    Electronic Invoice Formats
                 </dt>
                 <dd>
                     <table class="ui small selectable striped celled table">
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th>Electronic billing</th>
+                            <th>Format</th>
                             <th></th>
                         </tr>
                         </thead>
@@ -199,7 +199,7 @@
 
                     <g:if test="${editable}">
                         <a class="ui right floated black button" href="#"
-                           onclick="$('#electronicBillingsModal').modal('show');">Add Electronic billing</a>
+                           onclick="$('#electronicBillingsModal').modal('show');">Add Electronic Invoice Format</a>
 
                         <br>
                         <br>
@@ -215,7 +215,7 @@
 
 
                                 <div class="field">
-                                    <label>Electronic billing:</label> <semui:simpleReferenceDropdown
+                                    <label>Electronic Invoice Format:</label> <semui:simpleReferenceDropdown
                                         name="electronicBilling"
                                         baseClass="wekb.RefdataValue"
                                         filter1="${RCConstants.VENDOR_ELECTRONIC_BILLING}"/>
@@ -235,7 +235,7 @@
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th>Electronic billing</th>
+                            <th>Method</th>
                             <th></th>
                         </tr>
                         </thead>
@@ -276,7 +276,7 @@
 
 
                                 <div class="field">
-                                    <label>Invoice Dispatch:</label> <semui:simpleReferenceDropdown
+                                    <label>Method:</label> <semui:simpleReferenceDropdown
                                         name="invoiceDispatch"
                                         baseClass="wekb.RefdataValue"
                                         filter1="${RCConstants.VENDOR_INVOICE_DISPATCH}"/>
@@ -338,7 +338,7 @@
             </dl>
             <dl>
                 <dt class="control-label">
-                    Shipping metadata (MARC)
+                    Metadata (MARC records)
                 </dt>
                 <dd>
                     <semui:xEditableRefData owner="${d}" field="shippingMetadata"
@@ -356,7 +356,7 @@
             </dl>
             <dl>
                 <dt class="control-label">
-                    Activation for new releases within e-book specialist packages
+                    Update information about newreleases within e-book packages
                 </dt>
                 <dd>
                     <semui:xEditableRefData owner="${d}" field="activationForNewReleases"
@@ -365,7 +365,7 @@
             </dl>
             <dl>
                 <dt class="control-label">
-                    Exchange of individual titles within e-book specialist packages
+                    Exchange of individual titleswithin e-book packages
                 </dt>
                 <dd>
                     <semui:xEditableRefData owner="${d}" field="exchangeOfIndividualTitles"
