@@ -387,7 +387,7 @@ class KbartProcessService {
             }
 
             if(!onlyRowsWithLastChanged && tippDuplicates.size() > 0){
-                log.info("remove tippDuplicates -> ${tippDuplicates.size()}: ${tippDuplicates}")
+                log.info("remove tippDuplicates -> ${tippDuplicates.size()}")
 
                 int maxDuplicates = 20000
                 int idxDuplicates = 0
@@ -516,6 +516,7 @@ class KbartProcessService {
 
 
             //TODO: countExistingTippsAfterImport > (kbartRowsCount-countInvalidKbartRowsForTipps) ??? nötig noch
+            log.info("before deleteTipps from wekb -------------------------------------------------------------------------------------")
             if(!onlyRowsWithLastChanged && tippsFound.size() > 0 && kbartRowsCount > 0 && countExistingTippsAfterImport > (kbartRowsCount-countInvalidKbartRowsForTipps)){
 
                 List<Long> existingTippsAfterImport = TitleInstancePackagePlatform.executeQuery(
