@@ -37,6 +37,9 @@ class AdminController {
   FtpConnectService ftpConnectService
 
 
+  def systemThreads() {
+    return [:]
+  }
 
   def updateTextIndexes() {
     log.debug("Call to update indexe");
