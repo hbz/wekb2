@@ -12,7 +12,7 @@
     <g:set var="threads" value="${Thread.getAllStackTraces().keySet().sort{ it.id }}" />
     <g:set var="tmxBean" value="${ManagementFactory.getThreadMXBean()}" />
 
-    <wekb:msg class="info" noClose="true">
+    <semui:message class="info">
             <strong>Anzahl gefundener Threads: ${threads.size()}</strong>
             <br />
             <br />
@@ -22,7 +22,7 @@
             </g:if>
             Seit Systemstart wurden <strong>${tmxBean.getTotalStartedThreadCount()}</strong> Threads erzeugt.
             Die Höchstlast lag bei <strong>${tmxBean.getPeakThreadCount()}</strong> Threads.
-    </wekb:msg>
+    </semui:message>
 
     <table class="ui celled la-js-responsive-table la-table la-hover-table compact table" id="contextTable">
         <tbody>
