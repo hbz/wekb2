@@ -38,7 +38,7 @@ class KbartProcessService {
                 onlyRowsWithLastChanged: onlyRowsWithLastChanged,
                 automaticUpdate: false,
                 kbartHasWekbFields: false,
-                updateFromFileUpload: true).save()
+                updateFromFileUpload: true).save(flush: true)
         try {
             kbartRows = kbartProcess(tsvFile, lastUpdateURL, updatePackageInfo)
 
