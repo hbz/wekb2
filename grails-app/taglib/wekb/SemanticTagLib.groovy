@@ -528,7 +528,8 @@ class SemanticTagLib {
                     linkTagAttrs.class = (currentstep == firststep) ? "item disabled prevLink" : "item prevLink"
 
                     def prevLinkAttrs1 = linkTagAttrs.clone()
-                    out << callLink((prevLinkAttrs1 += prevMap), '<i class="double angle left icon"></i>')
+                    Map prevMap2 = [title: (attrs.prev ?: " ${maxsteps} " + messageSource.getMessage('default.paginate.prev', null, null, locale))]
+                    out << callLink((prevLinkAttrs1 += prevMap2), '<i class="double angle left icon"></i>')
 
                     // | < |
                     linkParams.offset = offset - max
@@ -583,7 +584,8 @@ class SemanticTagLib {
                         linkTagAttrs.class = (currentstep == laststep) ? "item disabled nextLink" : "item nextLink"
 
                         def nextLinkAttrs2 = linkTagAttrs.clone()
-                        out << callLink((nextLinkAttrs2 += nextMap), '<i class="double angle right icon"></i>')
+                        Map nextMap2 = [title: (attrs.next ?: messageSource.getMessage('default.paginate.next', null, null, locale)) +" ${maxsteps} "]
+                        out << callLink((nextLinkAttrs2 += nextMap2), '<i class="double angle right icon"></i>')
                     }
                 }
             }
