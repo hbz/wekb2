@@ -284,7 +284,7 @@ $(function () {
 
     $('nav.pagination').each (function () {
         const $pagination = $(this)
-        console.log("Moe")
+
         const $input      = $pagination.find('.wekb-pagination-custom-input');
         const $inputInput = $pagination.find('.wekb-pagination-custom-input input');
         const $inputForm  = $pagination.find('.wekb-pagination-custom-input .ui.form');
@@ -303,8 +303,7 @@ $(function () {
         $inputInput.on ('input', function() {
                 let newOffset = ($(this).val() - 1) * $input.attr('data-max');
                 $link.attr('href', baseHref + '&offset=' + newOffset);
-            })
-            .bind ('keypress', function(event) {
+            }).bind ('keypress', function(event) {
                 if (event.keyCode === 13){
                     if ( validateInput() ) {
                         $('html').css('cursor', 'wait');
@@ -322,7 +321,6 @@ $(function () {
         });
 
         let validateInput = function() {
-            console.log("Nie")
             $inputForm.form({
                 inline: true,
                 fields: {

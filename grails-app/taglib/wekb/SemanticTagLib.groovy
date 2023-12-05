@@ -437,50 +437,61 @@ class SemanticTagLib {
 
         String action = (attrs.action ? attrs.action : (params.action ? params.action : "list"))
 
-        int total    = Integer.valueOf( (attrs.total != null ? attrs.total : 0) as String )
-        int offset   = Integer.valueOf( (attrs.offset != null ? attrs.offset : params.offset ?: 0) as String )
-        int max      = Integer.valueOf( (attrs.max != null ? attrs.max : params.max ?: 10) as String )
-        int maxsteps = Integer.valueOf( (attrs.maxsteps != null ? attrs.maxsteps : 10) as String )
+        def total = attrs.int('total') ?: 0
+        def offset = params.int('offset') ?: 0
+        def max = params.int('max')
+        def maxsteps = (attrs.int('maxsteps') ?: 10)
+
+        if (!offset) offset = (attrs.int('offset') ?: 0)
+        if (!max) max = (attrs.int('max') ?: 10)
 
         if (total <= max) {
             return
         }
 
         Map linkParams = [:]
-        if (attrs.params) {
-            linkParams.putAll(attrs.params)
-        }
-
+        if (attrs.params instanceof Map) linkParams.putAll((Map)attrs.params)
         linkParams.offset = offset - max
         linkParams.max = max
+        if (params.sort) linkParams.sort = params.sort
+        if (params.order) linkParams.order = params.order
 
-        if (params.sort) {
-            linkParams.sort = params.sort
+        Map linkTagAttrs = [:]
+        if (attrs.containsKey('mapping')) {
+            linkTagAttrs.mapping = attrs.mapping
+            action = attrs.action
+        } else {
+            action = attrs.action ?: params.action
         }
-        if (params.order) {
-            linkParams.order = params.order
+        if (action) {
+            linkTagAttrs.action = action
         }
-
-        Map<String, Object> linkTagAttrs = [action: action]
         if (attrs.controller) {
             linkTagAttrs.controller = attrs.controller
+        }
+        if (attrs.containsKey(UrlMapping.PLUGIN)) {
+            linkTagAttrs.put(UrlMapping.PLUGIN, attrs.get(UrlMapping.PLUGIN))
+        }
+        if (attrs.containsKey(UrlMapping.NAMESPACE)) {
+            linkTagAttrs.put(UrlMapping.NAMESPACE, attrs.get(UrlMapping.NAMESPACE))
         }
         if (attrs.id != null) {
             linkTagAttrs.id = attrs.id
         }
-        if (attrs.fragment != null) {
-            linkTagAttrs.fragment = attrs.fragment
+        if (attrs.tab != null) {
+            linkTagAttrs.tab = attrs.tab
         }
         linkTagAttrs.params = linkParams
+
+        // determine paging variables
+        def steps = maxsteps > 0
+        int currentstep = ((offset / max) as int) + 1
+        int firststep = 1
+        int laststep = Math.round(Math.ceil((total / max) as double)) as int
 
         Map prevMap = [title: (attrs.prev ?: messageSource.getMessage('default.paginate.prev', null, null, locale))]
         Map nextMap = [title: (attrs.next ?: messageSource.getMessage('default.paginate.next', null, null, locale))]
 
-        // determine paging variables
-        def steps = maxsteps > 0
-        int currentstep = Math.round(Math.ceil(offset / max)) + 1
-        int firststep = 1
-        int laststep = Math.round(Math.ceil(total / max))
 
         out << '<div class="ui center aligned basic segment">'
         out << '<nav class="ui pagination menu" >'
