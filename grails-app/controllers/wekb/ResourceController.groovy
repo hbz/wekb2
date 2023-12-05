@@ -101,9 +101,9 @@ class ResourceController {
                 Set<Thread> threadSet = Thread.getAllStackTraces().keySet()
                 Thread[] threadArray = threadSet.toArray(new Thread[threadSet.size()])
                 threadArray.each { Thread thread ->
-                  if (thread.name == 'updatePackageFromKbartSource' + displayobj.id) {
+                  if (thread.name == 'uPFKS' + displayobj.id) {
                     flash.info = 'The KBART Update process is still running in the background!'
-                  }else if (thread.name == 'kbartImport' + displayobj.id) {
+                  }else if (thread.name == 'kImport' + displayobj.id) {
                     flash.info = 'The manual KBART import process is still running in the background!'
                   }
                 }

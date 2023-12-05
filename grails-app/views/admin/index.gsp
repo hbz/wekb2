@@ -72,6 +72,19 @@
 
 <br />
 
+<div class="ui equal width grid">
+    <div class="row">
+        <div class="column">
+            <h3 class="ui header">Admin Infos</h3>
+            <div class="ui divided relaxed list">
+                <g:link class="item" controller="admin" action="systemThreads">Show Threads</g:link>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br>
+
 <div class="ui segment">
         <h3 class="ui header">
             Application Info

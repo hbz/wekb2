@@ -155,6 +155,20 @@ class SemanticTagLib {
             out << '</div>'
         }
 
+        if (flash && flash.info) {
+            out << '<div class="ui message">'
+            out << '<i class="close icon"></i>'
+            out << '<p>'
+            if(flash.info instanceof Map || flash.info instanceof List){
+                generateSemuiList(flash.info)
+            }
+            else{
+                out << flash.info
+            }
+            out << '</p>'
+            out << '</div>'
+        }
+
         if (flash && flash.success) {
             out << '<div class="ui success message">'
             out << '<i class="close icon"></i>'
