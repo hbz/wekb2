@@ -1771,7 +1771,8 @@ class KbartImportService {
                 } else if (existPrices.size() > 1) {
                     def pricesIDs = existPrices.id.clone()
                     pricesIDs.each {
-                        tipp.removeFromPrices(TippPrice.get(it))
+                        TippPrice tippPrice = TippPrice.get(it)
+                        tipp.removeFromPrices(tippPrice)
                         //TippPrice.executeUpdate("delete from TippPrice id = ${it}")
                     }
                     tipp.save()

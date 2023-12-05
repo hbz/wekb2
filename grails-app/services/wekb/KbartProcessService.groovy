@@ -356,7 +356,7 @@ class KbartProcessService {
             if(kbartRowsToCreateTipps.size() > 0){
                 List newTippList = kbartImportService.createTippBatch(kbartRowsToCreateTipps, updatePackageInfo)
                 newTipps = newTippList.size()
-                log.debug("kbartRowsToCreateTipps: TippIds -> "+newTippList.tippID)
+                log.debug("kbartRowsToCreateTipps: newTippList size -> "+newTippList.size())
 
                 /*  Package pkgTipp = pkg
                   Platform platformTipp = plt
