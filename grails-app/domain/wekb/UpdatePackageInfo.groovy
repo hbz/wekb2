@@ -92,15 +92,7 @@ class UpdatePackageInfo {
     static constraints = {
         endTime     (nullable:true)
 
-        countKbartRows (nullable:true)
-        countProcessedKbartRows (nullable:true)
-        countInValidTipps (nullable:true)
-        countChangedTipps (nullable:true)
-        countRemovedTipps (nullable:true)
-        countNewTipps (nullable:true)
-        countNowTippsInWekb (nullable:true)
-        countPreviouslyTippsInWekb (nullable:true)
-        onlyRowsWithLastChanged  (nullable:true)
+        //onlyRowsWithLastChanged  (nullable:true)
         lastChangedInKbart (nullable:true, default: null)
         updateUrl (nullable:true)
     }

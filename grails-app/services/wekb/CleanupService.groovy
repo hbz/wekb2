@@ -141,6 +141,10 @@ class CleanupService {
               status: RefdataCategory.lookup(RCConstants.DELETED_COMPONENT_STATUS, "Permanently Deleted"))
 
       if(!deletedKBComponent.save()){
+        log.error("deletedKBComponent save error: ")
+        deletedKBComponent.errors.allErrors.each {
+          println it
+        }
         return false
       }
     }

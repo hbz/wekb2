@@ -1409,7 +1409,12 @@ class KbartImportService {
             cStsIDs.each {
                 tipp.removeFromCoverageStatements(TIPPCoverageStatement.get(it))
             }
-            tipp.save()
+            if (!tipp.save()) {
+                log.error("Tipp save error: ")
+                tipp.errors.allErrors.each {
+                    println it
+                }
+            }
 
         }else if(countNewCoverages > 0 && countTippCoverages == 0){
             coverage.each { c ->
@@ -1441,7 +1446,12 @@ class KbartImportService {
             cStsIDs.each {
                 tipp.removeFromCoverageStatements(TIPPCoverageStatement.get(it))
             }
-            tipp.save()
+            if (!tipp.save()) {
+                log.error("Tipp save error: ")
+                tipp.errors.allErrors.each {
+                    println it
+                }
+            }
 
             coverage.each { c ->
                 def parsedStart = TextUtils.completeDateString(c.startDate)
@@ -1575,7 +1585,12 @@ class KbartImportService {
             }
             // refdata setStringIfDifferent(tipp, 'coverageDepth', c.coverageDepth)
         }*/
-        tipp.save()
+        if (!tipp.save()) {
+            log.error("Tipp save error: ")
+            tipp.errors.allErrors.each {
+                println it
+            }
+        }
         log.debug("createOrUpdateCoverageForTipp End")
     }
 
@@ -1684,7 +1699,12 @@ class KbartImportService {
         }
 
         if(valueChanged){
-            tipp.save()
+            if (!tipp.save()) {
+                log.error("Tipp save error: ")
+                tipp.errors.allErrors.each {
+                    println it
+                }
+            }
         }
 
         return  result.changedTipp ?: valueChanged
@@ -1764,7 +1784,12 @@ class KbartImportService {
                         oldValue = existPrice.price.toString()
                         existPrice.price = f
                         existPrice.save()
-                        tipp.save()
+                        if (!tipp.save()) {
+                            log.error("Tipp save error: ")
+                            tipp.errors.allErrors.each {
+                                println it
+                            }
+                        }
                         priceChanged = true
                     }
 
@@ -1775,7 +1800,12 @@ class KbartImportService {
                         tipp.removeFromPrices(tippPrice)
                         //TippPrice.executeUpdate("delete from TippPrice id = ${it}")
                     }
-                    tipp.save()
+                    if (!tipp.save()) {
+                        log.error("Tipp save error: ")
+                        tipp.errors.allErrors.each {
+                            println it
+                        }
+                    }
                     tipp = tipp.refresh()
                     cp = new TippPrice(
                             tipp: tipp,
@@ -1783,7 +1813,12 @@ class KbartImportService {
                             currency: currency,
                             price: f)
                     cp.save()
-                    tipp.save()
+                    if (!tipp.save()) {
+                        log.error("Tipp save error: ")
+                        tipp.errors.allErrors.each {
+                            println it
+                        }
+                    }
                     priceChanged = true
 
                 } else {
@@ -1793,7 +1828,12 @@ class KbartImportService {
                             currency: currency,
                             price: f)
                     cp.save()
-                    tipp.save()
+                    if (!tipp.save()) {
+                        log.error("Tipp save error: ")
+                        tipp.errors.allErrors.each {
+                            println it
+                        }
+                    }
                     priceChanged = true
                 }
             } else {
@@ -2086,7 +2126,12 @@ class KbartImportService {
                 cStsIDs.each {
                     tipp.removeFromCoverageStatements(TIPPCoverageStatement.get(it))
                 }
-                tipp.save()
+                if (!tipp.save()) {
+                    log.error("Tipp save error: ")
+                    tipp.errors.allErrors.each {
+                        println it
+                    }
+                }
             }
         }
         //log.debug("before creating identifiers")
@@ -2165,7 +2210,12 @@ class KbartImportService {
                 ddcsIDs.each {
                     tipp.removeFromDdcs(RefdataValue.get(it))
                 }
-                tipp.save()
+                if (!tipp.save()) {
+                    log.error("Tipp save error: ")
+                    tipp.errors.allErrors.each {
+                        println it
+                    }
+                }
             }
         }
         // KBART -> ddc -> ddcs
@@ -2188,7 +2238,12 @@ class KbartImportService {
                     tipp.removeFromLanguages(ComponentLanguage.get(it))
                     //ComponentLanguage.get(it).delete()
                 }
-                tipp.save()
+                if (!tipp.save()) {
+                    log.error("Tipp save error: ")
+                    tipp.errors.allErrors.each {
+                        println it
+                    }
+                }
                 //ComponentLanguage.executeUpdate("delete from ComponentLanguage where tipp = :tipp", [tipp: tipp])
             }
             List languages = tippMap.language.split(',')
@@ -2202,7 +2257,12 @@ class KbartImportService {
                 }
             }
 
-            tipp.save()
+            if (!tipp.save()) {
+                log.error("Tipp save error: ")
+                tipp.errors.allErrors.each {
+                    println it
+                }
+            }
             //tipp.refresh()
         }
         //log.debug("before price section")
@@ -2348,7 +2408,12 @@ class KbartImportService {
                         )
                 if (tipp) {
                     tipp.kbartImportRunning = true
-                    tipp.save()
+                    if (!tipp.save()) {
+                        log.error("Tipp save error: ")
+                        tipp.errors.allErrors.each {
+                            println it
+                        }
+                    }
                 } else {
                     log.error("TIPP creation failed!")
                 }
@@ -2468,7 +2533,12 @@ class KbartImportService {
                             }
                         }
 
-                        tipp.save()
+                        if (!tipp.save()) {
+                            log.error("Tipp save error: ")
+                            tipp.errors.allErrors.each {
+                                println it
+                            }
+                        }
                     }
                     // KBART -> listprice_eur -> prices
                     if (tippMap.kbartRowMap.listprice_eur) {
