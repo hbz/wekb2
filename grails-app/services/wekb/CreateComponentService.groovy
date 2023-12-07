@@ -33,6 +33,7 @@ class CreateComponentService {
     def classExaminationService
     def messageSource
     AccessService accessService
+    DeletionService deletionService
     
     Map process(Map result, GrailsParameterMap params) {
 
@@ -665,7 +666,7 @@ class CreateComponentService {
                 }catch ( Exception e ) {
 
                     if(pkg && newCreated){
-                        pkg.expunge()
+                        deletionService.expungePkg(pkg.id)
                     }
                     log.error("Error on package with the name '${name}':" + e.printStackTrace())
                     globalErrors << "Error on package with the name '${name}'. Please try agian!"

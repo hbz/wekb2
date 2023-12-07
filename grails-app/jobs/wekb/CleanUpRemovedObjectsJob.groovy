@@ -10,7 +10,7 @@ class CleanUpRemovedObjectsJob {
 
     MailService mailService
     GrailsApplication grailsApplication
-    CleanupService cleanupService
+    DeletionService deletionService
 
     static triggers = {
         // Cron timer.
@@ -49,7 +49,7 @@ class CleanUpRemovedObjectsJob {
         }
 
 
-        cleanupService.expungeRemovedComponents()
+        deletionService.expungeRemovedComponents()
 
         removedDomainClassObjects.each{ String domainClassName ->
             String query = "select count(*) from ${domainClassName}"

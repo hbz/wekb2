@@ -155,20 +155,6 @@ class Org extends AbstractBase implements Auditable {
     Platform.executeQuery('select p from Platform as p where provider = :provider', [provider: this])
   }
 
-  def expunge(){
-    log.info("Org expunge: "+this.id)
-
-    ComponentVariantName.executeUpdate("delete from ComponentVariantName as c where c.org=:component", [component: this])
-    Contact.executeUpdate("delete from Contact where org = :component", [component: this])
-    CuratoryGroupOrg.executeUpdate("delete from CuratoryGroupOrg where org = :component", [component: this])
-    Identifier.executeUpdate("delete from Identifier where org = :component", [component: this])
-
-
-    def result = [deleteType: this.class.name, deleteId: this.id]
-    this.delete(failOnError: true)
-    result
-  }
-
   @Transient
   public List<CuratoryGroup> getCuratoryGroupObjects() {
     List<CuratoryGroup> curatoryGroups

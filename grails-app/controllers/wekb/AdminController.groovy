@@ -35,6 +35,7 @@ class AdminController {
   GenericOIDService genericOIDService
   ExecutorService executorService
   FtpConnectService ftpConnectService
+  DeletionService deletionService
 
 
   def systemThreads() {
@@ -120,15 +121,11 @@ class AdminController {
 
 
   def expungeRemovedComponents() {
-    Job j = concurrencyManagerService.createJob { Job j ->
-      cleanupService.expungeRemovedComponents(j)
-    }.startOrQueue()
-
-    log.debug "Triggering cleanup task. Started job #${j.uuid}"
-
-    j.description = "Cleanup Removed Components"
-    j.type = RefdataCategory.lookupOrCreate(RCConstants.JOB_TYPE, 'CleanupRemovedComponents')
-    j.startTime = new Date()
+    log.info "expungeRemovedComponents"
+    executorService.execute({
+      Thread.currentThread().setName('expungeRemovedComponents')
+      deletionService.expungeRemovedComponents()
+    })
 
     flash.message = "Expunge Removed Component runs in the background!"
 
