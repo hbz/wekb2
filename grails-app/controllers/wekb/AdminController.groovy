@@ -561,6 +561,24 @@ class AdminController {
             'SELECT filename, id, dateexecuted from databasechangelog order by orderexecuted desc limit 1'
     )).list()
     result.dbmVersion = dbmQuery.size() > 0 ? dbmQuery.first() : ['unkown', 'unkown', 'unkown']
+
+
+    result.componentsInfos = []
+
+    def components = ["CuratoryGroup","KbartSource", "Org", "Package", "Platform", "TitleInstancePackagePlatform"]
+    components.each{ def component ->
+      Map info = [:]
+      info.name = component
+
+
+      String query = "select count(*) from ${component}"
+      info.countDB = FTControl.executeQuery(query)[0]
+      info.countDeletedInDB = FTControl.executeQuery(query+ " where status = :status", [status: RDStore.KBC_STATUS_DELETED])[0]
+      info.countRemovedInDB = FTControl.executeQuery(query+ " where status = :status", [status: RDStore.KBC_STATUS_REMOVED])[0]
+
+      result.componentsInfos << info
+    }
+
     result
 
   }

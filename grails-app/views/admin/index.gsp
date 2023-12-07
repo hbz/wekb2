@@ -84,6 +84,32 @@
 </div>
 
 <br>
+<div class="ui segment">
+    <h2 class="ui header">Components Infos</h2>
+
+    <table class="ui selectable striped sortable celled table">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>count in DB</th>
+            <th>count status deleted in DB</th>
+            <th>count status removed in DB</th>
+        </tr>
+        </thead>
+        <tbody>
+        <g:each in="${componentsInfos.sort { it.type }}" var="componentsInfo">
+            <tr>
+                <td>${componentsInfo.name}</td>
+                <td>${componentsInfo.countDB}</td>
+                <td>${componentsInfo.countDeletedInDB}</td>
+                <td>${componentsInfo.countRemovedInDB}</td>
+            </tr>
+        </g:each>
+        </tbody>
+    </table>
+</div>
+
+<br>
 
 <div class="ui segment">
         <h3 class="ui header">
