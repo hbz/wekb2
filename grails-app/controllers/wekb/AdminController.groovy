@@ -565,7 +565,7 @@ class AdminController {
 
     result.componentsInfos = []
 
-    def components = ["CuratoryGroup","KbartSource", "Org", "Package", "Platform", "TitleInstancePackagePlatform"]
+    def components = ["DeletedKBComponent", "CuratoryGroup","KbartSource", "Org", "Package", "Platform", "TitleInstancePackagePlatform"]
     components.each{ def component ->
       Map info = [:]
       info.name = component
