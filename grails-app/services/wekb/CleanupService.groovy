@@ -1,5 +1,6 @@
 package wekb
 
+import org.hibernate.SessionFactory
 import wekb.helper.RDStore
 import grails.gorm.transactions.Transactional
 import wekb.ConcurrencyManagerService.Job
@@ -7,7 +8,14 @@ import wekb.ConcurrencyManagerService.Job
 
 class CleanupService {
   GenericOIDService genericOIDService
+  SessionFactory sessionFactory
 
+  def cleanUpGorm() {
+    log.debug("Clean up GORM");
+    def session = sessionFactory.currentSession
+    session.flush()
+    session.clear()
+  }
 
   @Transactional
   def cleanupTippIdentifersWithSameNamespace(Job j = null) {
