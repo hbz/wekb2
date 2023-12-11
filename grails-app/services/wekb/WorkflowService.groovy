@@ -197,7 +197,7 @@ class WorkflowService {
             Thread[] threadArray = threadSet.toArray(new Thread[threadSet.size()])
             boolean processRunning = false
             threadArray.each { Thread thread ->
-                if (thread.name == 'updatePackageFromKbartSource' + pkg.id) {
+                if (thread.name == 'uPFKS' + pkg.id) {
                     processRunning = true
                 }
             }
@@ -207,7 +207,7 @@ class WorkflowService {
             } else {
                 executorService.execute({
                     Package aPackage = Package.get(pkg.id)
-                    Thread.currentThread().setName('updatePackageFromKbartSource' + pkg.id)
+                    Thread.currentThread().setName('uPFKS' + pkg.id)
                     autoUpdatePackagesService.startAutoPackageUpdate(aPackage, !allTitles)
                 })
 

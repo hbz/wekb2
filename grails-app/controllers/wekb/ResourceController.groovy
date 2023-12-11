@@ -106,6 +106,18 @@ class ResourceController {
 
               result.editable = accessService.checkEditableObject(displayobj, params)
 
+              if(displayobj instanceof Package){
+                Set<Thread> threadSet = Thread.getAllStackTraces().keySet()
+                Thread[] threadArray = threadSet.toArray(new Thread[threadSet.size()])
+                threadArray.each { Thread thread ->
+                  if (thread.name == 'uPFKS' + displayobj.id) {
+                    flash.info = 'The KBART Update process is still running in the background!'
+                  }else if (thread.name == 'kImport' + displayobj.id) {
+                    flash.info = 'The manual KBART import process is still running in the background!'
+                  }
+                }
+              }
+
             } else {
               flash.error = "You have no permission to view this resource."
                 result.noPermission = true

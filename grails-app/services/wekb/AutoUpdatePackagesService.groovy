@@ -62,16 +62,17 @@ class AutoUpdatePackagesService {
 
 
     static List<URL> getUpdateUrls(String url, Date lastProcessingDate, Date packageCreationDate) {
+        String newUrl = url ? url.replace(' ', '%20') : ''
         if (lastProcessingDate == null) {
             lastProcessingDate = packageCreationDate
         }
-        if (StringUtils.isEmpty(url) || lastProcessingDate == null) {
+        if (StringUtils.isEmpty(newUrl) || lastProcessingDate == null) {
             return new ArrayList<URL>()
         }
-        if (UrlToolkit.containsDateStamp(url) || UrlToolkit.containsDateStampPlaceholder(url)) {
-            return UrlToolkit.getUpdateUrlList(url, lastProcessingDate.toString())
+        if (UrlToolkit.containsDateStamp(newUrl) || UrlToolkit.containsDateStampPlaceholder(newUrl)) {
+            return UrlToolkit.getUpdateUrlList(newUrl, lastProcessingDate.toString())
         } else {
-            return Arrays.asList(new URL(url))
+            return Arrays.asList(new URL(newUrl))
         }
     }
 
@@ -129,7 +130,7 @@ class AutoUpdatePackagesService {
                             List<URL> updateUrls
                             if (pkg.getTippCount() <= 0 || pkg.kbartSource.lastRun == null) {
                                 updateUrls = new ArrayList<>()
-                                updateUrls.add(new URL(pkg.kbartSource.url))
+                                updateUrls.add(new URL(pkg.kbartSource.url.replace(' ', '%20')))
                             } else {
                                 // this package had already been filled with data
                                 if ((UrlToolkit.containsDateStamp(pkg.kbartSource.url) || UrlToolkit.containsDateStampPlaceholder(pkg.kbartSource.url)) && pkg.kbartSource.lastUpdateUrl) {
@@ -144,6 +145,7 @@ class AutoUpdatePackagesService {
                             File file
                             if (updateUrls.size() > 0) {
                                 LocalTime kbartFromUrlStartTime = LocalTime.now()
+                                boolean failGetKbart = false
                                 while (urlsIterator.hasPrevious()) {
                                     URL url = urlsIterator.previous()
                                     lastUpdateURL = url.toString()
@@ -153,17 +155,30 @@ class AutoUpdatePackagesService {
                                         //if (kbartFromUrlStartTime < LocalTime.now().minus(45, ChronoUnit.MINUTES)){ sense???
                                         //break
                                         //}
+                                        failGetKbart = false
 
                                     }
                                     catch (Exception e) {
                                         log.error("get kbartFromUrl: ${e}")
+                                        failGetKbart = true
                                         continue
                                     }
 
                                 }
-
                                 if (file) {
                                     kbartRows = kbartProcessService.kbartProcess(file, lastUpdateURL, updatePackageInfo)
+
+                                    if (kbartRows.size() > 0) {
+                                        updatePackageInfo = kbartProcessService.kbartImportProcess(kbartRows, pkg, lastUpdateURL, updatePackageInfo, onlyRowsWithLastChanged)
+                                    }else {
+                                        UpdatePackageInfo.withTransaction {
+                                            updatePackageInfo.description = "The KBART File is empty!"
+                                            updatePackageInfo.status = RDStore.UPDATE_STATUS_FAILED
+                                            updatePackageInfo.endTime = new Date()
+                                            updatePackageInfo.updateUrl = lastUpdateURL
+                                            updatePackageInfo.save()
+                                        }
+                                    }
                                 } else {
                                     UpdatePackageInfo.withTransaction {
                                         updatePackageInfo.description = "No KBART File found by URL: ${lastUpdateURL}!"
@@ -173,12 +188,16 @@ class AutoUpdatePackagesService {
                                         updatePackageInfo.save()
                                     }
                                 }
-
+                            }else {
+                                UpdatePackageInfo.withTransaction {
+                                    updatePackageInfo.description = "No KBART File found by URL"
+                                    updatePackageInfo.status = RDStore.UPDATE_STATUS_FAILED
+                                    updatePackageInfo.endTime = new Date()
+                                    updatePackageInfo.updateUrl = lastUpdateURL
+                                    updatePackageInfo.save()
+                                }
                             }
 
-                            if (kbartRows.size() > 0) {
-                                updatePackageInfo = kbartProcessService.kbartImportProcess(kbartRows, pkg, lastUpdateURL, updatePackageInfo, onlyRowsWithLastChanged)
-                            }
                         } else {
                             UpdatePackageInfo.withTransaction {
                                 //UpdatePackageInfo updatePackageFail = new UpdatePackageInfo()
@@ -218,6 +237,7 @@ class AutoUpdatePackagesService {
                     updatePackageInfo.pkg = pkg
                     updatePackageInfo.onlyRowsWithLastChanged = onlyRowsWithLastChanged
                     updatePackageInfo.automaticUpdate = true
+                    updatePackageInfo.updateUrl = lastUpdateURL
                     updatePackageInfo.save()
                 }
             }

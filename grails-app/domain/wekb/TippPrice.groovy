@@ -32,7 +32,7 @@ class TippPrice {
   }
 
   static constraints = {
-    tipp(nullable: false)
+    tipp (nullable: true)
     priceType(nullable: false, blank: true)
     currency(nullable: true, blank: true)
     startDate(nullable: false, blank: true)

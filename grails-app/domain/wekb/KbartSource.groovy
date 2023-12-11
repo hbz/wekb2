@@ -21,6 +21,7 @@ class KbartSource extends AbstractBase implements Auditable {
     RefdataValue defaultDataFormat
     IdentifierNamespace targetNamespace
     Date lastRun
+    //Date lastTimestampInUrl
     String lastUpdateUrl
 
     Boolean kbartHasWekbFields = false
@@ -65,6 +66,7 @@ class KbartSource extends AbstractBase implements Auditable {
         lastUpdateUrl column: 'ks_last_update_url'
         kbartHasWekbFields column: 'ks_kbart_wekb_fields'
         lastChangedInKbart column: 'ks_last_changed_in_kbart'
+        //lastTimestampInUrl column: 'ks_last_timestamp_in_url '
 
         ftpServerUrl column: 'ks_ftp_server_url'
         ftpFileName column: 'ks_ftp_file_name'
@@ -87,6 +89,7 @@ class KbartSource extends AbstractBase implements Auditable {
         lastRun(nullable: true, default: null)
         automaticUpdates(nullable: true, default: false)
         lastUpdateUrl(nullable: true, blank: true)
+        //lastTimestampInUrl(nullable: true, blank: true)
         lastChangedInKbart(nullable: true, default: null)
         name(validator: { val, obj ->
             if (obj.hasChanged('name')) {
@@ -303,16 +306,6 @@ class KbartSource extends AbstractBase implements Auditable {
 
     String toString(){
         "${name ?: ''}".toString()
-    }
-
-    def expunge(){
-        log.info("KbartSource expunge: "+this.id)
-
-        CuratoryGroupKbartSource.executeUpdate("delete from CuratoryGroupKbartSource where kbartSource = :component", [component: this])
-
-        def result = [deleteType: this.class.name, deleteId: this.id]
-        this.delete(failOnError: true)
-        result
     }
 
     @Transient

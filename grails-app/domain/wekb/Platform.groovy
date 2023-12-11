@@ -248,19 +248,6 @@ class Platform  extends AbstractBase implements Auditable {
     Package.executeQuery('select p from Package as p where nominalPlatform = :nominalPlatform', [nominalPlatform: this])
   }
 
-  def expunge(){
-    log.info("Platform expunge: "+ this.id)
-
-    CuratoryGroupPlatform.executeUpdate("delete from CuratoryGroupPlatform where platform = :component", [component: this])
-    Identifier.executeUpdate("delete from Identifier where platform = :component", [component: this])
-    PlatformFederation.executeUpdate("delete from PlatformFederation where platform = :component", [component: this])
-
-    def result = [deleteType: this.class.name, deleteId: this.id]
-    log.debug("Removing all components")
-    this.delete(failOnError: true)
-    result
-  }
-
   @Transient
   public List<CuratoryGroup> getCuratoryGroupObjects() {
     List<CuratoryGroup> curatoryGroups

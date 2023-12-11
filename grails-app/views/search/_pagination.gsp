@@ -4,7 +4,10 @@
 <g:set var="jumpToPage" value="${jumpToPage?:'jumpToPage'}"/>
 <g:set var="custom_offset" value="${offset_param?:'offset'}"/>
 
-  <semui:paginate controller="${s_controller}" action="${s_action}" id="${params.id}" params="${params}"
+  %{--<semui:paginate controller="${s_controller}" action="${s_action}" id="${params.id}" params="${params}"
+                  max="${max}" total="${reccount}"/>--}%
+
+  <semui:paginateNew controller="${s_controller}" action="${s_action}" id="${params.id}" params="${params}"
                   max="${max}" total="${reccount}"/>
 
 %{--  <nav class="navbar navbar-inverse">

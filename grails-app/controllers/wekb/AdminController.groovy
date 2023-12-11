@@ -35,8 +35,12 @@ class AdminController {
   GenericOIDService genericOIDService
   ExecutorService executorService
   FtpConnectService ftpConnectService
+  DeletionService deletionService
 
 
+  def systemThreads() {
+    return [:]
+  }
 
   def updateTextIndexes() {
     log.debug("Call to update indexe");
@@ -117,15 +121,11 @@ class AdminController {
 
 
   def expungeRemovedComponents() {
-    Job j = concurrencyManagerService.createJob { Job j ->
-      cleanupService.expungeRemovedComponents(j)
-    }.startOrQueue()
-
-    log.debug "Triggering cleanup task. Started job #${j.uuid}"
-
-    j.description = "Cleanup Removed Components"
-    j.type = RefdataCategory.lookupOrCreate(RCConstants.JOB_TYPE, 'CleanupRemovedComponents')
-    j.startTime = new Date()
+    log.info "expungeRemovedComponents"
+    executorService.execute({
+      Thread.currentThread().setName('expungeRemovedComponents')
+      deletionService.expungeRemovedComponents()
+    })
 
     flash.message = "Expunge Removed Component runs in the background!"
 
@@ -561,6 +561,24 @@ class AdminController {
             'SELECT filename, id, dateexecuted from databasechangelog order by orderexecuted desc limit 1'
     )).list()
     result.dbmVersion = dbmQuery.size() > 0 ? dbmQuery.first() : ['unkown', 'unkown', 'unkown']
+
+
+    result.componentsInfos = []
+
+    def components = ["DeletedKBComponent", "CuratoryGroup","KbartSource", "Org", "Package", "Platform", "TitleInstancePackagePlatform"]
+    components.each{ def component ->
+      Map info = [:]
+      info.name = component
+
+
+      String query = "select count(*) from ${component}"
+      info.countDB = FTControl.executeQuery(query)[0]
+      info.countDeletedInDB = FTControl.executeQuery(query+ " where status = :status", [status: RDStore.KBC_STATUS_DELETED])[0]
+      info.countRemovedInDB = FTControl.executeQuery(query+ " where status = :status", [status: RDStore.KBC_STATUS_REMOVED])[0]
+
+      result.componentsInfos << info
+    }
+
     result
 
   }

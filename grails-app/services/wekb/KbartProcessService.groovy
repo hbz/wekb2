@@ -38,7 +38,7 @@ class KbartProcessService {
                 onlyRowsWithLastChanged: onlyRowsWithLastChanged,
                 automaticUpdate: false,
                 kbartHasWekbFields: false,
-                updateFromFileUpload: true).save()
+                updateFromFileUpload: true).save(flush: true)
         try {
             kbartRows = kbartProcess(tsvFile, lastUpdateURL, updatePackageInfo)
 
@@ -356,7 +356,7 @@ class KbartProcessService {
             if(kbartRowsToCreateTipps.size() > 0){
                 List newTippList = kbartImportService.createTippBatch(kbartRowsToCreateTipps, updatePackageInfo)
                 newTipps = newTippList.size()
-                log.debug("kbartRowsToCreateTipps: TippIds -> "+newTippList.tippID)
+                log.debug("kbartRowsToCreateTipps: newTippList size -> "+newTippList.size())
 
                 /*  Package pkgTipp = pkg
                   Platform platformTipp = plt

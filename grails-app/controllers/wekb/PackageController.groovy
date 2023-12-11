@@ -178,7 +178,7 @@ class PackageController {
                             Thread[] threadArray = threadSet.toArray(new Thread[threadSet.size()])
                             boolean processRunning = false
                             threadArray.each { Thread thread ->
-                                if (thread.name == 'kbartImport' + pkg.id) {
+                                if (thread.name == 'kImport' + pkg.id) {
                                     processRunning = true
                                 }
                             }
@@ -188,7 +188,7 @@ class PackageController {
                             }else {
                                 executorService.execute({
                                     Package aPackage = Package.get(pkg.id)
-                                    Thread.currentThread().setName('kbartImport' + pkg.id)
+                                    Thread.currentThread().setName('kImport' + pkg.id)
                                     kbartProcessService.kbartImportManual(aPackage, file, onlyRowsWithLastChanged)
                                 })
 
