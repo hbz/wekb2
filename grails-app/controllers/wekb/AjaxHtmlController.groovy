@@ -213,7 +213,8 @@ class AjaxHtmlController {
             def redirect_to = request.getHeader('referer')
 
             if (params.activeTab && params.activeTab.length() > 0) {
-                redirect_to = "${redirect_to}?activeTab=${params.tab}"
+                redirect_to = "${redirect_to}?activeTab=${params.activeTab}"
+                params.remove('activeTab')
             }
             redirect(url: redirect_to)
         }
@@ -834,18 +835,26 @@ class AjaxHtmlController {
             RefdataValue contentType = genericOIDService.resolveOID(params.contentType)
             RefdataValue language = genericOIDService.resolveOID(params.language)
             RefdataValue type = genericOIDService.resolveOID(params.type)
-            Org owner = genericOIDService.resolveOID(params.__context)
+            def owner = genericOIDService.resolveOID(params.__context)
+
+            String objectType = 'org'
+            if(owner instanceof Vendor){
+                objectType = 'vendor'
+            }
+
             def editable = checkEditable(owner)
             if (editable) {
                 if (contentType == RDStore.CONTACT_CONTENT_TYPE_EMAIL) {
                     if (content ==~ /[_A-Za-z0-9-]+(.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(.[A-Za-z0-9]+)*(.[A-Za-z]{2,})/) {
-                        contact = new Contact(org: owner, content: content, contentType: contentType, language: language, type: type)
+                        contact = new Contact(content: content, contentType: contentType, language: language, type: type)
+                        contact[objectType] = owner
                         contact.save()
                     } else {
                         flash.error = message(code: 'contact.email.validation.fail')
                     }
                 } else {
-                    contact = new Contact(org: owner, content: content, contentType: contentType, language: language, type: type)
+                    contact = new Contact(content: content, contentType: contentType, language: language, type: type)
+                    contact[objectType] = owner
                     contact.save()
                 }
             } else {
@@ -857,7 +866,79 @@ class AjaxHtmlController {
     }
 
     @Transactional
-    @Secured(['ROLE_ADMIN', 'IS_AUTHENTICATED_FULLY'])
+    @Secured(['ROLE_EDITOR', 'IS_AUTHENTICATED_FULLY'])
+    def addVendorToPackage() {
+        log.debug("addVendorToPackage - ${params}")
+        def contextObj = resolveOID3(params.__context)
+        def user = springSecurityService.currentUser
+        def relatedObj = resolveOID3(params.__relatedObject)
+        boolean fail = false
+
+        if (contextObj) {
+            if (relatedObj) {
+                def editable = accessService.checkEditableObject(contextObj, params)
+
+                if (editable) {
+                            PackageVendor packageVendor = PackageVendor.findByPkgAndVendor(contextObj, relatedObj)
+                            if (!packageVendor) {
+                                packageVendor = new PackageVendor(vendor: relatedObj, pkg: contextObj)
+                                if (!packageVendor.save()) {
+                                    fail = true
+                                }
+                            } else {
+                                flash.error = message(code: 'notUnique.value')
+                            }
+                } else {
+                    flash.error = message(code: 'default.noPermissons')
+                }
+            } else {
+                flash.error = message(code: 'component.notFound.forLink')
+            }
+        } else {
+            fail = true
+        }
+
+        if (fail) {
+            flash.error = message(code: 'default.action.fail')
+        }
+
+        redirect(url: request.getHeader('referer'))
+    }
+
+    @Transactional
+    @Secured(['ROLE_EDITOR', 'IS_AUTHENTICATED_FULLY'])
+    def removeVendorFromPackage() {
+        log.debug("removeVendorFromPackage - ${params}")
+        def contextObj = resolveOID3(params.__context)
+        def user = springSecurityService.currentUser
+        def relatedObj = resolveOID3(params.__relatedObject)
+        boolean fail = false
+
+        if (contextObj) {
+            if (relatedObj) {
+                def editable = accessService.checkEditableObject(contextObj, params)
+
+                if (editable) {
+                    relatedObj.delete()
+                } else {
+                    flash.error = message(code: 'default.noPermissons')
+                }
+            } else {
+                fail = true
+            }
+        } else {
+            fail = true
+        }
+
+        if (fail) {
+            flash.error = message(code: 'default.action.fail')
+        }
+
+        redirect(url: request.getHeader('referer'))
+    }
+
+    @Transactional
+    @Secured(['ROLE_EDITOR', 'IS_AUTHENTICATED_FULLY'])
     def addUserToCuratoryGroup() {
         log.debug("addUserToCuratoryGroup(${params})")
         User contextObj = resolveOID3(params.__user)
@@ -1005,6 +1086,17 @@ class AjaxHtmlController {
                                 fail = true
                             }
                             break
+                        case Vendor.class.name:
+                            Vendor vendor = Vendor.findById(params.contextObject)
+                            if (vendor) {
+                                CuratoryGroupVendor curatoryGroupVendor = CuratoryGroupVendor.findByVendorAndCuratoryGroup(vendor, curatoryGroup)
+                                if (curatoryGroupVendor) {
+                                    curatoryGroupVendor.delete()
+                                }
+                            } else {
+                                fail = true
+                            }
+                            break
                     }
                 } else {
                     flash.error = message(code: 'default.noPermissons')
@@ -1074,6 +1166,17 @@ class AjaxHtmlController {
                             if (platform) {
                                 CuratoryGroupPlatform curatoryGroupPlatform = new CuratoryGroupPlatform(platform: platform, curatoryGroup: curatoryGroup)
                                 if (!curatoryGroupPlatform.save()) {
+                                    fail = true
+                                }
+                            } else {
+                                fail = true
+                            }
+                            break
+                        case Vendor.class.name:
+                            Vendor vendor = Vendor.findById(params.contextObject)
+                            if (vendor) {
+                                CuratoryGroupVendor curatoryGroupVendor = new CuratoryGroupVendor(vendor: vendor, curatoryGroup: curatoryGroup)
+                                if (!curatoryGroupVendor.save()) {
                                     fail = true
                                 }
                             } else {

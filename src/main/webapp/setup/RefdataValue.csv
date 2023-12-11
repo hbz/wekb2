@@ -21,6 +21,7 @@ Contact.Content.Type;Phone 2;Phone 2;Phone 2
 Contact.Type;Technical Support;Technical Support;Technical Support
 Contact.Type;Service Support;Service Support;Service Support
 Contact.Type;Metadata Contact;Metadata Contact;Metadata Contact
+Contact.Type;Invoicing Contact;Invoicing Contact;Invoicing Contact
 Country;AD;Andorra;Andorra
 Country;AE;Vereinigte Arabische Emirate;United Arab Emirates
 Country;AF;Afghanistan;Afghanistan
@@ -607,5 +608,17 @@ TitleInstancePackagePlatform.PublicationType;Database;Database;Database
 TitleInstancePackagePlatform.PublicationType;Monograph;Monograph;Monograph
 TitleInstancePackagePlatform.PublicationType;Other;Other;Other
 TitleInstancePackagePlatform.PublicationType;Serial;Serial;Serial
+Vendor.SupportedLibrarySystem;Alma;Alma;Alma
+Vendor.SupportedLibrarySystem;Sisis;Sisis;Sisis
+Vendor.SupportedLibrarySystem;Folio;Folio;Folio
+Vendor.ElectronicBilling;X-Invoice;XRechnung;XRechnung
+Vendor.ElectronicBilling;EDI;EDI;EDI
+Vendor.ElectronicBilling;PDF;PDF;PDF
+Vendor.InvoiceDispatch;E-Mail;E-Mail;E-Mail
+Vendor.InvoiceDispatch;Federal state billing portal;Federal state billing portal;Federal state billing portal
+Vendor.InvoiceDispatch;FTP-Server;FTP-Serverl;FTP-Server
+Vendor.InvoiceDispatch;Peppol;Peppol;Peppol
+Vendor.ElectronicDeliveryDelay;E-Mail;E-Mail;E-Mail
+Vendor.ElectronicDeliveryDelay;EDI;EDI;EDI
 YN;No;No;No
 YN;Yes;Yes;Yes

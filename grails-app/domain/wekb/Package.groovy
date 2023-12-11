@@ -70,7 +70,8 @@ class Package  extends AbstractBase implements Auditable {
           updatePackageInfos: UpdatePackageInfo,
           tipps: TitleInstancePackagePlatform,
           variantNames        : ComponentVariantName,
-          curatoryGroups   : CuratoryGroupPackage
+          curatoryGroups   : CuratoryGroupPackage,
+          vendors: PackageVendor
   ]
 
   static mapping = {

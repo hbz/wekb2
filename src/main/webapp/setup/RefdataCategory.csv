@@ -64,4 +64,8 @@ TitleInstancePackagePlatform.Medium;TitleInstancePackagePlatform Medium;TitleIns
 TitleInstancePackagePlatform.OpenAccess;Tipp Open Access;Tipp Open Access
 TitleInstancePackagePlatform.Primary;TitleInstancePackagePlatform Primary;TitleInstancePackagePlatform Primary
 TitleInstancePackagePlatform.PublicationType;TitleInstancePackagePlatform Publication Type;TitleInstancePackagePlatform Publication Type
+Vendor.SupportedLibrarySystem;Supported Library System;Supported Library System
+Vendor.ElectronicBilling;Electronic Billing;Electronic Billing
+Vendor.InvoiceDispatch;Invoice Dispatch;Invoice Dispatch
+Vendor.ElectronicDeliveryDelay;Electronic Delivery Delay;Electronic Delivery Delay
 YN;YN;YN

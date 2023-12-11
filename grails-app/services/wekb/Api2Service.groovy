@@ -29,6 +29,7 @@ class Api2Service {
         ApiTemplates.put('platforms', platforms())
         ApiTemplates.put('tipps', tipps())
         ApiTemplates.put('tipps_sql', tipps_sql())
+        ApiTemplates.put('vendors', vendors())
         ApiTemplates.put('deletedKBComponents', deletedKBComponents())
 
     }
@@ -479,6 +480,64 @@ class Api2Service {
                                 [sort: 'tipp_date_created'],
                                 [sort: 'tipp_first_author'],
                                 [sort: 'tipp_url']
+                        ]
+                ]
+        ]
+
+        result
+    }
+
+    Map vendors() {
+        Map result = [
+                baseclass   : 'wekb.Vendor',
+                defaultSort : 'name',
+                defaultOrder: 'asc',
+                qbeConfig   : [
+                        qbeForm   : [
+                                //General Fields
+                                [
+                                        qparam     : 'name',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'name', 'wildcard': 'B']
+                                ],
+                                [
+                                        qparam     : 'curatoryGroup',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'curatoryGroups.curatoryGroup.name']
+                                ],
+                                [
+                                        type       : 'lookup',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        qparam     : 'status',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'status']
+                                ],
+                                [
+                                        qparam     : 'changedSince',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'greater', 'prop': 'lastUpdated', 'type': 'java.util.Date'],
+                                ],
+                                [
+                                        qparam     : 'changedBefore',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'smaller', 'prop': 'lastUpdated', 'type': 'java.util.Date'],
+                                ],
+                                [
+                                        qparam     : 'uuid',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'uuid']
+                                ],
+                                //spec Fields
+                                [
+                                        type       : 'lookup',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        qparam     : 'roles',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'roles'],
+                                ],
+
+
+                        ],
+                        qbeSortFields: [
+                                [sort: 'name'],
+                                [sort: 'status'],
+                                [sort: 'lastUpdated'],
+                                [sort: 'dateCreated'],
+                                [sort: 'curatoryGroups.curatoryGroup.name'],
+                                [sort: 'abbreviatedName']
                         ]
                 ]
         ]
@@ -1100,6 +1159,13 @@ class Api2Service {
                                                          openAccess            : paa.openAccess?.value,
                                                          postCancellationAccess: paa.postCancellationAccess?.value])
                 }
+
+                result.vendors = []
+
+                object.vendors?.each {
+                    result.vendors.add([vendor: it.vendor.name,
+                                        vendorUuid: it.vendor.uuid])
+                }
             }
 
 
@@ -1244,7 +1310,7 @@ class Api2Service {
 
                 result.federations = []
                 object.federations.each { PlatformFederation platformFederation ->
-                    result.federations.add([federation: platformFederation.federation?.value])
+                    result.federations.add([federation: platformFederation.federation.value])
                 }
             }
 
@@ -1395,6 +1461,99 @@ class Api2Service {
             result.lastUpdatedDisplay = DateUtils.getSDF_ISO().format(object.lastUpdated)
 
             result
+        }else if(object.class.name == Vendor.class.name) {
+
+            if(stubOnly){
+                result.uuid = object.uuid
+                result.name = object.name
+                result.sortname = generateSortName(object.name)
+                result.status = object.status?.value
+                result.componentType = object.class.simpleName
+
+                result.lastUpdatedDisplay = DateUtils.getSDF_ISO().format(object.lastUpdated)
+                result.dateCreatedDisplay = DateUtils.getSDF_ISO().format(object.dateCreated)
+            }else {
+
+                result.uuid = object.uuid
+                result.name = object.name
+                result.sortname = generateSortName(object.name)
+                result.abbreviatedName = object.abbreviatedName
+                result.status = object.status?.value
+                result.componentType = object.class.simpleName
+
+                result.lastUpdatedDisplay = DateUtils.getSDF_ISO().format(object.lastUpdated)
+                result.dateCreatedDisplay = DateUtils.getSDF_ISO().format(object.dateCreated)
+
+                result.homepage = object.homepage
+
+                 result.xmlOrders = object.xmlOrders ? RDStore.YN_YES.value : RDStore.YN_NO.value
+                 result.ediOrders = object.ediOrders  ? RDStore.YN_YES.value : RDStore.YN_NO.value
+
+                 result.paperInvoice = object.paperInvoice  ? RDStore.YN_YES.value : RDStore.YN_NO.value
+                 result.managementOfCredits = object.managementOfCredits  ? RDStore.YN_YES.value : RDStore.YN_NO.value
+                 result.processingOfCompensationPayments = object.processingOfCompensationPayments  ? RDStore.YN_YES.value : RDStore.YN_NO.value
+                 result.individualInvoiceDesign = object.individualInvoiceDesign  ? RDStore.YN_YES.value : RDStore.YN_NO.value
+
+                 result.technicalSupport = object.technicalSupport  ? RDStore.YN_YES.value : RDStore.YN_NO.value
+                 result.shippingMetadata = object.shippingMetadata  ? RDStore.YN_YES.value : RDStore.YN_NO.value
+                 result.forwardingUsageStatisticsFromPublisher = object.forwardingUsageStatisticsFromPublisher  ? RDStore.YN_YES.value : RDStore.YN_NO.value
+                 result.activationForNewReleases = object.activationForNewReleases  ? RDStore.YN_YES.value : RDStore.YN_NO.value
+                 result.exchangeOfIndividualTitles = object.exchangeOfIndividualTitles  ? RDStore.YN_YES.value : RDStore.YN_NO.value
+                 result.researchPlatformForEbooks = object.researchPlatformForEbooks
+
+                result.roles = []
+                object.roles.each { role ->
+                    result.roles.add(role.value)
+                }
+
+
+                if (object.hasProperty('curatoryGroups')) {
+                    result.curatoryGroups = []
+                    object.curatoryGroups?.each {
+                        result.curatoryGroups.add([name         : it.curatoryGroup.name,
+                                                   type         : it.curatoryGroup.type?.value,
+                                                   curatoryGroup: it.curatoryGroup.getOID()])
+                    }
+                }
+
+                result.contacts = []
+                object.contacts.each { Contact contact ->
+                    result.contacts.add([content    : contact.content,
+                                         contentType: contact.contentType?.value,
+                                         type       : contact.type?.value,
+                                         language   : contact.language?.value])
+                }
+
+
+                result.packages = []
+
+                object.packages?.each {
+                    result.packages.add([package: it.pkg.name,
+                                         packageUuid: it.pkg.uuid])
+                }
+
+                result.supportedLibrarySystems = []
+                object.supportedLibrarySystems.each { VendorLibrarySystem vendorLibrarySystem ->
+                    result.supportedLibrarySystems.add([supportedLibrarySystem: vendorLibrarySystem.supportedLibrarySystem.value])
+                }
+
+                result.electronicBillings = []
+                object.electronicBillings.each { VendorElectronicBilling vendorElectronicBilling ->
+                    result.electronicBillings.add([electronicBilling: vendorElectronicBilling.electronicBilling.value])
+                }
+
+                result.invoiceDispatchs = []
+                object.invoiceDispatchs.each { VendorInvoiceDispatch vendorInvoiceDispatch ->
+                    result.invoiceDispatchs.add([invoiceDispatch: vendorInvoiceDispatch.invoiceDispatch.value])
+                }
+
+                result.electronicDeliveryDelays = []
+                object.electronicDeliveryDelays.each { VendorElectronicDeliveryDelay vendorElectronicDeliveryDelay ->
+                    result.electronicDeliveryDelays.add([electronicDeliveryDelay: vendorElectronicDeliveryDelay.electronicDeliveryDelay.value])
+                }
+            }
+
+            result
         }
 
         return result
@@ -1416,6 +1575,9 @@ class Api2Service {
                     break
                 case TitleInstancePackagePlatform.class.name.toLowerCase():
                     result = 'tipps'
+                    break
+                case Vendor.class.name.toLowerCase():
+                    result = 'vendors'
                     break
                 case DeletedKBComponent.class.name.toLowerCase():
                     result = 'deletedKBComponents'
@@ -1645,6 +1807,9 @@ class Api2Service {
             }
             if (!r) {
                 r = Org.findByUuid(params.uuid)
+            }
+            if (!r) {
+                r = Vendor.findByUuid(params.uuid)
             }
             if (!r) {
                 r = TitleInstancePackagePlatform.findByUuid(params.uuid)

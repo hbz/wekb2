@@ -14,6 +14,17 @@
             <dd><semui:xEditableManyToOne owner="${d}" field="provider" baseClass="wekb.Org"/></dd>
         </dl>
 
+<g:if test="${controllerName != 'create'}">
+    <dl>
+        <dt class="control-label">
+            Vendor
+        </dt>
+        <dd>
+            <g:render template="/templates/packageVendors"/>
+        </dd>
+    </dl>
+</g:if>
+
         <dl>
             <dt class="control-label">Source</dt>
             <dd><semui:xEditableManyToOne owner="${d}" field="kbartSource" baseClass="wekb.KbartSource"

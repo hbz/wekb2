@@ -31,6 +31,9 @@
         <semui:tabsItemWithoutLink tab="generalInfos" defaultTab="generalInfos" activeTab="${params.activeTab}">
             General Information
         </semui:tabsItemWithoutLink>
+        <semui:tabsItemWithoutLink tab="vendors" activeTab="${params.activeTab}">
+            Vendors
+        </semui:tabsItemWithoutLink>
        %{-- <semui:tabsItemWithoutLink tab="rangeInfos" activeTab="${params.activeTab}">
             Range Information
         </semui:tabsItemWithoutLink>--}%
@@ -52,6 +55,10 @@
 
     <semui:tabsItemContent tab="generalInfos" activeTab="${params.activeTab}">
         <g:render template="management/package/generalInfos"/>
+    </semui:tabsItemContent>
+
+    <semui:tabsItemContent tab="vendors" activeTab="${params.activeTab}">
+        <g:render template="management/package/vendors"/>
     </semui:tabsItemContent>
 %{--
     <semui:tabsItemContent tab="rangeInfos" activeTab="${params.activeTab}">

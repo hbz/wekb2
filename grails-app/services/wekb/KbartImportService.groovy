@@ -2248,7 +2248,12 @@ class KbartImportService {
             }
             List languages = tippMap.language.split(',')
             languages.each { String lan ->
-                RefdataValue refdataValue = RefdataCategory.lookup(RCConstants.COMPONENT_LANGUAGE, lan)
+                RefdataValue refdataValue
+                if(lan.size() == 2){
+                    refdataValue = RefdataValue.findByOwnerAndValueIlike(RefdataCategory.findByDesc(RCConstants.COMPONENT_LANGUAGE), lan.toLowerCase())
+                }else {
+                    refdataValue = RefdataCategory.lookup(RCConstants.COMPONENT_LANGUAGE, lan)
+                }
                 if (refdataValue) {
                     if (!ComponentLanguage.findByTippAndLanguage(tipp, refdataValue)) {
                         ComponentLanguage componentLanguage = new ComponentLanguage(tipp: tipp, language: refdataValue)
@@ -2524,7 +2529,12 @@ class KbartImportService {
                     if (tippMap.kbartRowMap.language) {
                         List languages = tippMap.kbartRowMap.language.split(',')
                         languages.each { String lan ->
-                            RefdataValue refdataValue = RefdataCategory.lookup(RCConstants.COMPONENT_LANGUAGE, lan)
+                            RefdataValue refdataValue
+                            if(lan.size() == 2){
+                                refdataValue = RefdataValue.findByOwnerAndValueIlike(RefdataCategory.findByDesc(RCConstants.COMPONENT_LANGUAGE), lan)
+                            }else {
+                                refdataValue = RefdataCategory.lookup(RCConstants.COMPONENT_LANGUAGE, lan)
+                            }
                             if (refdataValue) {
                                 if (!ComponentLanguage.findByTippAndLanguage(tipp, refdataValue)) {
                                     ComponentLanguage componentLanguage = new ComponentLanguage(tipp: tipp, language: refdataValue)

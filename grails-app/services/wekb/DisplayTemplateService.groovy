@@ -20,6 +20,7 @@ public class DisplayTemplateService {
     globalDisplayTemplates.put('wekb.UpdatePackageInfo',[rendername:'update_package_info', noCreate:true])
     globalDisplayTemplates.put('wekb.UpdateTippInfo',[rendername:'update_tipp_info', noCreate:true])
     globalDisplayTemplates.put('wekb.auth.User',[rendername:'user'])
+    globalDisplayTemplates.put('wekb.Vendor',[rendername:'vendor'])
     
 
 

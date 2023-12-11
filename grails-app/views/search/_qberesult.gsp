@@ -196,7 +196,8 @@
                                     <g:set var="duration" value="${null}"/>
                                     <g:if test="${c.globalSearchTemplateProperty == 'name' &&
                                             (row_obj instanceof wekb.Package || row_obj instanceof wekb.Org
-                                            || row_obj instanceof wekb.Platform || row_obj instanceof wekb.TitleInstancePackagePlatform)}">
+                                            || row_obj instanceof wekb.Platform || row_obj instanceof wekb.TitleInstancePackagePlatform
+                                                    || row_obj instanceof wekb.Vendor)}">
 
                                         <% use(groovy.time.TimeCategory) {
                                             duration = nowDate - row_obj.dateCreated
