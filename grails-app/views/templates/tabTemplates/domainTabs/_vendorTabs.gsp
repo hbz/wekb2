@@ -27,14 +27,15 @@
                     via Webshop
                 </dt>
                 <dd>
-                    <semui:xEditable owner="${d}" field="homepage" outGoingLink="true"/>
+                    <semui:xEditableBoolean owner="${d}" field="webShopOrders"/>
                 </dd>
             </dl>
             <dl>
                 <dt class="control-label">
-                    via
+                    via XML
                 </dt>
                 <dd>
+                    <semui:xEditableBoolean owner="${d}" field="xmlOrders"/>
                 </dd>
             </dl>
             <dl>
@@ -42,6 +43,7 @@
                     via EDI
                 </dt>
                 <dd>
+                    <semui:xEditableBoolean owner="${d}" field="ediOrders"/>
                 </dd>
             </dl>
             <dl>
