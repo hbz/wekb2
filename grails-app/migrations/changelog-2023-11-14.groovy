@@ -52,4 +52,10 @@ databaseChangeLog = {
         addForeignKeyConstraint(baseColumnNames: "vedd_vendor_fk", baseTableName: "vendor_electronic_delivery_delay", constraintName: "FKt3m7hak2cbbt7lmkpi8l80l33", deferrable: "false", initiallyDeferred: "false", referencedColumnNames: "ven_id", referencedTableName: "vendor", validate: "true")
     }
 
+    changeSet(author: "djebeniani (generated)", id: "1699951211924-7") {
+        addColumn(tableName: "vendor") {
+            column(name: "web_shop_orders", type: "boolean")
+        }
+    }
+
 }

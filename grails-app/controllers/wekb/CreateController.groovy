@@ -9,7 +9,7 @@ import org.springframework.security.access.annotation.Secured
 import org.springframework.web.multipart.MultipartFile
 import wekb.auth.User
 
-@Secured(['IS_AUTHENTICATED_FULLY'])
+@Secured(['ROLE_EDITOR', 'IS_AUTHENTICATED_FULLY'])
 class CreateController {
 
   ClassExaminationService classExaminationService
@@ -19,7 +19,7 @@ class CreateController {
   ExportService exportService
   CreateComponentService createComponentService
 
-  @Secured(['ROLE_EDITOR', 'IS_AUTHENTICATED_FULLY'])
+
   def index() {
     log.debug("CreateControler::index... ${params}");
     def result=[:]
@@ -75,7 +75,6 @@ class CreateController {
     result
   }
 
-  @Secured(['ROLE_EDITOR', 'IS_AUTHENTICATED_FULLY'])
   def process() {
     log.debug("CreateController::process... ${params}");
 
@@ -101,7 +100,6 @@ class CreateController {
     }*/
   }
 
-  @Secured(['ROLE_EDITOR', 'IS_AUTHENTICATED_FULLY'])
   def exportPackageBatchImportTemplate() {
 
     String filename = "template_package_import.xlsx"
@@ -121,8 +119,6 @@ class CreateController {
     }
   }
 
-
-  @Secured(['ROLE_EDITOR', 'IS_AUTHENTICATED_FULLY'])
   def packageBatch() {
     log.debug("CreateControler::packageBatch... ${params}");
     def result=[:]
@@ -134,7 +130,6 @@ class CreateController {
     result
   }
 
-  @Secured(['ROLE_EDITOR', 'IS_AUTHENTICATED_FULLY'])
   def processPackageBatch() {
     log.debug("CreateControler::processPackageBatch... ${params}");
         User user = springSecurityService.currentUser

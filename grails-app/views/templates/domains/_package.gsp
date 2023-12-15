@@ -17,7 +17,7 @@
 <g:if test="${controllerName != 'create'}">
     <dl>
         <dt class="control-label">
-            Vendor
+            Vendors
         </dt>
         <dd>
             <g:render template="/templates/packageVendors"/>

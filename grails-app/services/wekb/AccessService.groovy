@@ -73,12 +73,22 @@ class AccessService {
     boolean checkEditableObject(Object o, boolean curationOverride = false) {
         boolean editable = false
 
-        if (SpringSecurityUtils.ifAnyGranted("ROLE_EDITOR, ROLE_ADMIN, ROLE_SUPERUSER")) {
+        if (SpringSecurityUtils.ifAnyGranted("ROLE_EDITOR, ROLE_VENDOR_EDITOR, ROLE_ADMIN, ROLE_SUPERUSER")) {
             def curatedObj = null
             if(o instanceof Identifier){
                 curatedObj = o.reference.hasProperty('curatoryGroups') ? o.reference : ( o.reference.hasProperty('pkg') ? o.reference.pkg : null )
             }else if(o instanceof Contact){
-                curatedObj = o.org
+                curatedObj = o.org ?: o.vendor
+            }else if(o instanceof VendorElectronicDeliveryDelay){
+                curatedObj = o.vendor
+            }else if(o instanceof VendorLibrarySystem){
+                curatedObj = o.vendor
+            }
+            else if(o instanceof VendorInvoiceDispatch){
+                curatedObj = o.vendor
+            }
+            else if(o instanceof VendorElectronicBilling){
+                curatedObj = o.vendor
             }
             else {
                 curatedObj = o.hasProperty('curatoryGroups') ? o : ( o.hasProperty('pkg') ? o.pkg : null )
@@ -119,7 +129,7 @@ class AccessService {
 
     boolean checkEditable(String baseclassName) {
 
-        if(baseclassName in allowedBaseClasses && SpringSecurityUtils.ifAnyGranted('ROLE_EDITOR')){
+        if(baseclassName in allowedBaseClasses && SpringSecurityUtils.ifAnyGranted('ROLE_EDITOR, ROLE_VENDOR_EDITOR')){
             return true
         }else {
             return SpringSecurityUtils.ifAnyGranted('ROLE_SUPERUSER')

@@ -23,6 +23,7 @@ class Vendor extends AbstractBase implements Auditable {
 
   String homepage
 
+  boolean webShopOrders
   boolean xmlOrders
   boolean ediOrders
 
@@ -71,6 +72,7 @@ class Vendor extends AbstractBase implements Auditable {
 
     xmlOrders column: 'ven_xml_orders'
     ediOrders column: 'ven_edi_orders'
+    webShopOrders column: 'web_shop_orders'
 
     paperInvoice column: 'ven_paper_invoice'
     managementOfCredits column: 'ven_management_of_credits'

@@ -310,6 +310,12 @@ class GlobalSearchTemplatesService {
                                         hide       : true
                                 ],
                                 [
+                                        prompt     : 'Vendor ID',
+                                        qparam     : 'qp_vendor_id',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'vendors.vendor.id', 'type': 'java.lang.Long'],
+                                        hide       : true
+                                ],
+                                [
                                         qparam     : 'changedSince',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'greater', 'prop': 'lastUpdated', 'type': 'java.util.Date'],
                                         hide       : true
@@ -1873,6 +1879,7 @@ class GlobalSearchTemplatesService {
                                 [heading: 'Enabled', property: 'enabled', sort: 'enabled'],
                                 [heading: 'User', property: 'userStatus'],
                                 [heading: 'Editor', property: 'editorStatus'],
+                                [heading: 'Vendor-Editor', property: 'vendorEditorStatus'],
                                 [heading: 'API-User', property: 'apiUserStatus'],
                                 [heading: 'Admin', property: 'adminStatus'],
                                 [heading: 'Super-User', property: 'superUserStatus'],

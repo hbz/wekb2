@@ -13,6 +13,10 @@
         <semui:tabsItemWithoutLink tab="supplierInformation" activeTab="${params.activeTab}">
             Supplier information
         </semui:tabsItemWithoutLink>
+
+        <semui:tabsItemWithoutLink tab="packages" activeTab="${params.activeTab}" counts="${d.packages.size()}">
+            Packages
+        </semui:tabsItemWithoutLink>
     </semui:tabs>
 
 
@@ -20,7 +24,7 @@
         <div class="content wekb-inline-lists">
             <dl>
                 <dt class="control-label">
-                    Homepage via Webshop
+                    via Webshop
                 </dt>
                 <dd>
                     <semui:xEditable owner="${d}" field="homepage" outGoingLink="true"/>
@@ -28,14 +32,14 @@
             </dl>
             <dl>
                 <dt class="control-label">
-                    XML via Webshop
+                    via
                 </dt>
                 <dd>
                 </dd>
             </dl>
             <dl>
                 <dt class="control-label">
-                    EDI via Webshop
+                    via EDI
                 </dt>
                 <dd>
                 </dd>
@@ -356,7 +360,7 @@
             </dl>
             <dl>
                 <dt class="control-label">
-                    Update information about newreleases within e-book packages
+                    Update information about new releases within e-book packages
                 </dt>
                 <dd>
                     <semui:xEditableRefData owner="${d}" field="activationForNewReleases"
@@ -365,7 +369,7 @@
             </dl>
             <dl>
                 <dt class="control-label">
-                    Exchange of individual titleswithin e-book packages
+                    Exchange of individual titles within e-book packages
                 </dt>
                 <dd>
                     <semui:xEditableRefData owner="${d}" field="exchangeOfIndividualTitles"
@@ -392,6 +396,16 @@
                 <dd>
                 </dd>
             </dl>
+        </div>
+    </semui:tabsItemContent>
+
+    <semui:tabsItemContent tab="packages" activeTab="${params.activeTab}">
+        <div class="content">
+
+            <g:link class="display-inline" controller="search" action="inlineSearch"
+                    params="[s_controllerName: controllerName, s_actionName: actionName, objectUUID: params.id, max: params.max, offset: params.offset, sort: params.sort, order: params.order, qbe: 'g:packages', qp_vendor_id: d.id, inline: true, refOID: d.getOID(), hide: ['qp_vendor', 'qp_vendor_id']]"
+                    id="">Packages</g:link>
+
         </div>
     </semui:tabsItemContent>
 

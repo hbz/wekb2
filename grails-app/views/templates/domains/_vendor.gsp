@@ -19,6 +19,14 @@
         </dl>
         <dl>
             <dt class="control-label">
+                Homepage
+            </dt>
+            <dd>
+                <semui:xEditable owner="${d}" field="homepage" outGoingLink="true"/>
+            </dd>
+        </dl>
+        <dl>
+            <dt class="control-label">
                 Status
             </dt>
             <dd>

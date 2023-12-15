@@ -23,20 +23,32 @@ class WorkflowService {
     List availableActions(String domainClassName) {
         switch (domainClassName) {
             case CuratoryGroup.class.name:
-                [
-                        [code: 'workFlowSetStatus::Deleted', label: 'Mark the Curatory Group as deleted', message: '', onlyAdmin: true],
-                        [code: 'workFlowSetStatus::Removed', label: 'Remove Curatory Group', message: '', onlyAdmin: true]
-                ]
+                if (springSecurityService.currentUser.isAdmin()) {
+                    [
+                            [code: 'workFlowSetStatus::Deleted', label: 'Mark the Curatory Group as deleted', message: '', onlyAdmin: true],
+                            [code: 'workFlowSetStatus::Removed', label: 'Remove Curatory Group', message: '', onlyAdmin: true]
+                    ]
+                }else{
+                    []
+                }
                 break
             case IdentifierNamespace.class.name:
-                [
-                        [code: 'workFlowMethod::deleteIdentifierNamespace', label: 'Delete Namespace', message: '', onlyAdmin: true],
-                ]
+                if (springSecurityService.currentUser.isAdmin()) {
+                    [
+                            [code: 'workFlowMethod::deleteIdentifierNamespace', label: 'Delete Namespace', message: '', onlyAdmin: true],
+                    ]
+                }else{
+                    []
+                }
                 break
             case Identifier.class.name:
-                [
-                        [code: 'workFlowMethod::deleteIdentifier', label: 'Delete Identifier', message: '', onlyAdmin: true],
-                ]
+                if (springSecurityService.currentUser.isAdmin()) {
+                    [
+                            [code: 'workFlowMethod::deleteIdentifier', label: 'Delete Identifier', message: '', onlyAdmin: true],
+                    ]
+                }else{
+                    []
+                }
                 break
             case KbartSource.class.name:
                 [
@@ -66,10 +78,14 @@ class WorkflowService {
                 ]
                 break
             case Platform.class.name:
-                [
-                        [code: 'workFlowSetStatus::Deleted', label: 'Mark the Platform as deleted', message: '', onlyAdmin: true, group: 1],
-                        [code: 'workFlowSetStatus::Removed', label: 'Remove Platform', message: '', onlyAdmin: true, group: 1]
-                ]
+                if (springSecurityService.currentUser.isAdmin()) {
+                    [
+                            [code: 'workFlowSetStatus::Deleted', label: 'Mark the Platform as deleted', message: '', onlyAdmin: true, group: 1],
+                            [code: 'workFlowSetStatus::Removed', label: 'Remove Platform', message: '', onlyAdmin: true, group: 1]
+                    ]
+                }else{
+                    []
+                }
                 break
             case TitleInstancePackagePlatform.class.name:
                 [
@@ -81,17 +97,25 @@ class WorkflowService {
                 ]
                 break
             case User.class.name:
-                [
-                        [code: 'workFlowMethod::deleteUser', label: 'Delete', message: '', onlyAdmin: true, group: 1],
-                ]
+                if (springSecurityService.currentUser.isAdmin()) {
+                    [
+                            [code: 'workFlowMethod::deleteUser', label: 'Delete', message: '', onlyAdmin: true, group: 1],
+                    ]
+                }else{
+                    []
+                }
                 break
 
             case Vendor.class.name:
-                [
-                        [code: 'workFlowSetStatus::Deleted', label: 'Mark the Vendor as deleted', message: '', onlyAdmin: true, group: 1],
-                        [code: 'workFlowSetStatus::Current', label: 'Mark the Vendor as current', message: '', onlyAdmin: true, group: 1],
-                        [code: 'workFlowSetStatus::Removed', label: 'Remove Vendor', message: '', onlyAdmin: true, group: 2]
-                ]
+                if (springSecurityService.currentUser.isAdmin()) {
+                    [
+                            [code: 'workFlowSetStatus::Deleted', label: 'Mark the Vendor as deleted', message: '', onlyAdmin: true, group: 1],
+                            [code: 'workFlowSetStatus::Current', label: 'Mark the Vendor as current', message: '', onlyAdmin: true, group: 1],
+                            [code: 'workFlowSetStatus::Removed', label: 'Remove Vendor', message: '', onlyAdmin: true, group: 2]
+                    ]
+                } else {
+                    []
+                }
                 break
             default:
                 []

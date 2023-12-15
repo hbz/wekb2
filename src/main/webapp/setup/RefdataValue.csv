@@ -273,6 +273,7 @@ Country;ZM;Sambia;Zambia
 Country;ZW;Zimbabwe;Zimbabwe
 CuratoryGroup.Type;Other;Sonstige;Other
 CuratoryGroup.Type;Provider;Anbieter;Provider
+CuratoryGroup.Type;Vendor;Lieferant;Vendor
 Currency;EUR;EUR;EUR
 Currency;GBP;GBP;GBP
 Currency;USD;USD;USD

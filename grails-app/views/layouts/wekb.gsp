@@ -63,7 +63,7 @@
         </div>
     </div>
     <g:if test="${isUserLoggedIn}">
-        <g:if test="${user.curatoryGroupUsers.size() > 0}">
+        <g:if test="${user.curatoryGroupUsers.size() > 0 && user.showMyComponents()}">
             <div class="item">
                 <div class="header">My Components</div>
 
