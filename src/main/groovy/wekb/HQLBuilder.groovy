@@ -243,7 +243,7 @@ public class HQLBuilder {
       def newscope = parent_scope+'_'+head
       if ( hql_builder_context.declared_scopes.containsKey(newscope) ) {
         // Already established scope for this context
-        // log.debug("${newscope} already a declared contest");
+        log.debug("${newscope} already a declared contest");
       }
       else {
         // log.debug("Intermediate establish scope - ${head} :: ${proppath}");
@@ -285,7 +285,7 @@ public class HQLBuilder {
         else {
           switch ( crit.defn.contextTree.type ) {
             case 'java.lang.Long':
-              hql_builder_context.bindvars[crit.defn.qparam] = Long.parseLong(crit.value)
+              hql_builder_context.bindvars[crit.defn.qparam] = crit.value instanceof String ? Long.parseLong(crit.value) : crit.value
               break;
             case 'java.lang.Object':
               hql_builder_context.bindvars[crit.defn.qparam] = crit.value
@@ -348,6 +348,9 @@ public class HQLBuilder {
                 hql_builder_context."${addToQuery}".add("${crit.defn.contextTree.negate ? 'not ' : ''} exists (select cgk from CuratoryGroupKbartSource cgk where cgk.kbartSource = o and cgk.curatoryGroup = :curGroup) ");
                 hql_builder_context.bindvars.curGroup = value
               }else if(baseclass.toString() == 'class wekb.TitleInstancePackagePlatform') {
+                hql_builder_context."${addToQuery}".add("${crit.defn.contextTree.negate ? 'not ' : ''} exists (select cgp from CuratoryGroupPackage cgp where cgp.pkg = o.pkg and cgp.curatoryGroup = :curGroup) ");
+                hql_builder_context.bindvars.curGroup = value
+              }else if(baseclass.toString() == 'class wekb.UpdatePackageInfo') {
                 hql_builder_context."${addToQuery}".add("${crit.defn.contextTree.negate ? 'not ' : ''} exists (select cgp from CuratoryGroupPackage cgp where cgp.pkg = o.pkg and cgp.curatoryGroup = :curGroup) ");
                 hql_builder_context.bindvars.curGroup = value
               }

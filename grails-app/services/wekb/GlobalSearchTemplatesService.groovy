@@ -207,10 +207,8 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'lookup',
                                         baseClass  : 'wekb.CuratoryGroup',
-                                        prompt     : 'Curatory Group',
                                         qparam     : 'qp_curgroups',
-                                        placeholder: 'Curatory Group',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'curatoryGroups.curatoryGroup'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'placeHolderForCuratoryGroups'],
                                         hide       : true
                                 ],
                                 [
@@ -289,28 +287,21 @@ class GlobalSearchTemplatesService {
 
                                 //HIDE FIELDS
                                 [
-                                        prompt     : 'Provider ID',
                                         qparam     : 'qp_provider_id',
-                                        placeholder: 'Provider ID',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'provider.id', 'type': 'java.lang.Long'],
                                         hide       : true
                                 ],
                                 [
-                                        prompt     : 'Platform ID',
                                         qparam     : 'qp_platform_id',
-                                        placeholder: 'Platform ID',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'nominalPlatform.id', 'type': 'java.lang.Long'],
                                         hide       : true
                                 ],
                                 [
-                                        prompt     : 'Source ID',
                                         qparam     : 'qp_source_id',
-                                        placeholder: 'Source ID',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'kbartSource.id', 'type': 'java.lang.Long'],
                                         hide       : true
                                 ],
                                 [
-                                        prompt     : 'Vendor ID',
                                         qparam     : 'qp_vendor_id',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'vendors.vendor.id', 'type': 'java.lang.Long'],
                                         hide       : true
@@ -488,10 +479,8 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'lookup',
                                         baseClass  : 'wekb.CuratoryGroup',
-                                        prompt     : 'Curatory Group',
                                         qparam     : 'qp_curgroups',
-                                        placeholder: 'Curatory Group',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'curatoryGroups.curatoryGroup'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'placeHolderForCuratoryGroups'],
                                         hide       : true
                                 ],
                         ],
@@ -528,23 +517,17 @@ class GlobalSearchTemplatesService {
                 qbeConfig   : [
                         qbeForm   : [
                                 [
-                                        prompt     : 'Platform ID',
                                         qparam     : 'qp_platform_id',
-                                        placeholder: 'Platform ID',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'nominalPlatform.id', 'type': 'java.lang.Long'],
                                         hide       : true
                                 ],
                                 [
-                                        prompt     : 'Source ID',
                                         qparam     : 'qp_source_id',
-                                        placeholder: 'Source ID',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'kbartSource.id', 'type': 'java.lang.Long'],
                                         hide       : true
                                 ],
                                 [
-                                        prompt     : 'Provider ID',
                                         qparam     : 'qp_provider_id',
-                                        placeholder: 'Provider ID',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'provider.id', 'type': 'java.lang.Long'],
                                         hide       : true
                                 ],
@@ -790,7 +773,7 @@ class GlobalSearchTemplatesService {
                                         prompt     : 'DDC',
                                         qparam     : 'qp_ddc_tipp',
                                         placeholder: 'DDC',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'tipps.ddcs'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'placeHolderDdcs'],
                                         advancedSearch: [title: "Search Titles by ...", category: 'Title']
                                 ],
                                 [
@@ -937,16 +920,12 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'lookup',
                                         baseClass  : 'wekb.CuratoryGroup',
-                                        prompt     : 'Curatory Group',
                                         qparam     : 'qp_curgroups',
-                                        placeholder: 'Curatory Group',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'curatoryGroups.curatoryGroup'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'placeHolderForCuratoryGroups'],
                                         hide       : true
                                 ],
                                 [
-                                        prompt     : 'Provider ID',
                                         qparam     : 'qp_provider_id',
-                                        placeholder: 'Provider ID',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'provider.id', 'type': 'java.lang.Long'],
                                         hide       : true
                                 ],
@@ -1190,10 +1169,8 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'lookup',
                                         baseClass  : 'wekb.CuratoryGroup',
-                                        prompt     : 'Curatory Group',
                                         qparam     : 'qp_curgroups',
-                                        placeholder: 'Curatory Group',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'curatoryGroups.curatoryGroup'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'placeHolderForCuratoryGroups'],
                                         hide       : true
                                 ],
                                 //General Fields
@@ -1267,47 +1244,35 @@ class GlobalSearchTemplatesService {
                         qbeForm   : [
                                 //Hidden Fields
                                 [
-                                        prompt     : 'Status ID',
                                         qparam     : 'qp_status_id',
-                                        placeholder: 'Status ID',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'status.id', 'type': 'java.lang.Long'],
                                         hide       : true
                                 ],
                                 [
-                                        prompt     : 'Title ID',
                                         qparam     : 'qp_title_id',
-                                        placeholder: 'Title ID',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'title.id', 'type': 'java.lang.Long'],
                                         hide       : true
                                 ],
                                 [
-                                        prompt     : 'Provider ID',
                                         qparam     : 'qp_provider_id',
-                                        placeholder: 'Provider ID',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'pkg.provider.id', 'type': 'java.lang.Long'],
                                         hide       : true
                                 ],
                                 [
-                                        prompt     : 'Package ID',
                                         qparam     : 'qp_pkg_id',
-                                        placeholder: 'Package ID',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'pkg.id', 'type': 'java.lang.Long'],
                                         hide       : true
                                 ],
                                 [
-                                        prompt     : 'Platform ID',
                                         qparam     : 'qp_plat_id',
-                                        placeholder: 'Platform ID',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'hostPlatform.id', 'type': 'java.lang.Long'],
                                         hide       : true
                                 ],
                                 [
                                         type       : 'lookup',
                                         baseClass  : 'wekb.CuratoryGroup',
-                                        prompt     : 'Curatory Group',
                                         qparam     : 'qp_curgroups',
-                                        placeholder: 'Curatory Group',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'pkg.curatoryGroups.curatoryGroup'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'placeHolderForCuratoryGroups'],
                                         hide       : true
                                 ],
 
@@ -1517,37 +1482,27 @@ class GlobalSearchTemplatesService {
                 qbeConfig: [
                         qbeForm   : [
                                 [
-                                        prompt     : 'Status ID',
                                         qparam     : 'qp_status_id',
-                                        placeholder: 'Status ID',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'status.id', 'type': 'java.lang.Long'],
                                         hide       : true
                                 ],
                                 [
-                                        prompt     : 'Title ID',
                                         qparam     : 'qp_title_id',
-                                        placeholder: 'Title ID',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'title.id', 'type': 'java.lang.Long'],
                                         hide       : true
                                 ],
                                 [
-                                        prompt     : 'Provider ID',
                                         qparam     : 'qp_provider_id',
-                                        placeholder: 'Provider ID',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'pkg.provider.id', 'type': 'java.lang.Long'],
                                         hide       : true
                                 ],
                                 [
-                                        prompt     : 'Package ID',
                                         qparam     : 'qp_pkg_id',
-                                        placeholder: 'Package ID',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'pkg.id', 'type': 'java.lang.Long'],
                                         hide       : true
                                 ],
                                 [
-                                        prompt     : 'Platform ID',
                                         qparam     : 'qp_plat_id',
-                                        placeholder: 'Platform ID',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'hostPlatform.id', 'type': 'java.lang.Long'],
                                         hide       : true
                                 ],
@@ -1689,10 +1644,8 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'lookup',
                                         baseClass  : 'wekb.CuratoryGroup',
-                                        prompt     : 'Curatory Group',
                                         qparam     : 'qp_curgroups',
-                                        placeholder: 'Curatory Group',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'pkg.curatoryGroups.curatoryGroup'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'placeHolderForCuratoryGroups'],
                                         hide       : true
                                 ],
 
@@ -1725,10 +1678,8 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'lookup',
                                         baseClass  : 'wekb.CuratoryGroup',
-                                        prompt     : 'Curatory Group',
                                         qparam     : 'qp_curgroups',
-                                        placeholder: 'Curatory Group',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'curatoryGroups.curatoryGroup'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'placeHolderForCuratoryGroups'],
                                         hide       : true
                                 ],
                                 [
@@ -1931,9 +1882,7 @@ class GlobalSearchTemplatesService {
                 qbeConfig: [
                         qbeForm   : [
                                 [
-                                        prompt     : 'Package ID',
                                         qparam     : 'qp_pkg_id',
-                                        placeholder: 'Package ID',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'pkg.id', 'type': 'java.lang.Long'],
                                         hide       : true
                                 ],
@@ -1941,10 +1890,8 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'lookup',
                                         baseClass  : 'wekb.CuratoryGroup',
-                                        prompt     : 'Curatory Group',
                                         qparam     : 'qp_curgroups',
-                                        placeholder: 'Curatory Group',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'pkg.curatoryGroups.curatoryGroup'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'placeHolderForCuratoryGroups'],
                                         hide       : true
                                 ],
 
