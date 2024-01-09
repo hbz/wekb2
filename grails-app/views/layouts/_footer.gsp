@@ -1,5 +1,5 @@
 <%@ page import="java.time.Year;" %>
-<footer class="ui fixed footer segment wekb-footer">
+<footer class="ui fixed footer segment wekb-footer" role="contentinfo">
     <div class="ui center aligned container">
 
         <div class="ui stackable  divided equal height stackable grid center aligned">

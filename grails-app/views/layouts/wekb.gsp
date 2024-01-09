@@ -28,7 +28,7 @@
 
 <body class="pushable">
 <wekb:serverlabel server="${currentServer}"/>
-<div class="ui left vertical inverted visible menu sidebar ${serverLabel}" id="toc">
+<nav class="ui left vertical inverted visible menu sidebar ${serverLabel}" id="toc" aria-label="main navigation">
     <g:link controller="public" action="index" class="header item">
         <img alt="Logo wekb" src="${resource(dir: 'images', file: 'logo.svg')}"/>
     </g:link>
@@ -145,9 +145,9 @@
         </sec:ifAnyGranted>
     </g:if>
 
-</div>
+</nav>
 
-<div class="ui top fixed inverted shrink menu">
+<div class="ui top fixed inverted shrink menu" role="search">
     <div class="ui fluid container">
         <a class="launch icon item" id="sidebar-menu-button">
             <i class="content icon"></i>
