@@ -5,7 +5,7 @@ import grails.core.GrailsClass
 import org.springframework.security.access.annotation.Secured
 import wekb.helper.RCConstants
 
-@Secured(['ROLE_USER', 'ROLE_EDITOR', 'ROLE_VENDOR_EDITOR', 'IS_AUTHENTICATED_FULLY'])
+
 class AjaxJsonController {
 
     /**
@@ -37,7 +37,7 @@ class AjaxJsonController {
      *  getRefdata : Used to retrieve a list of all RefdataValues for a specific category.
      * @param id : The label of the RefdataCategory
      */
-
+    @Secured(['ROLE_USER', 'ROLE_EDITOR', 'ROLE_VENDOR_EDITOR', 'IS_AUTHENTICATED_FULLY'])
     def getRefdata() {
         log.debug("AjaxController::getRefdata ${params}")
         def result = []
@@ -61,6 +61,7 @@ class AjaxJsonController {
         render result as JSON
     }
 
+    @Secured(['ROLE_USER', 'ROLE_EDITOR', 'ROLE_VENDOR_EDITOR', 'IS_AUTHENTICATED_FULLY'])
     def getProfilPageSizeList() {
         List result = [
                 [value: 10, text: '10'],
