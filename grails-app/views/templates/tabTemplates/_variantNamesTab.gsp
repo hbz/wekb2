@@ -5,7 +5,7 @@
           <thead>
             <tr>
               <th>Alternate Name</th>
-              <th>Status</th>
+              <th><g:message code="default.status"/></th>
               <th>Variant Type</th>
               <th>Locale</th>
                         <g:if test="${ editable && showActions }">

@@ -43,6 +43,7 @@ class GlobalSearchTemplatesService {
     Map curatoryGroups() {
         Map result = [
                 baseclass: 'wekb.CuratoryGroup',
+                msgCode    : 'curatorygroup.plural',
                 title    : 'Curatory Groups',
                 defaultSort : 'name',
                 defaultOrder: 'asc',
@@ -50,6 +51,7 @@ class GlobalSearchTemplatesService {
                         qbeForm   : [
                                 [
                                         prompt     : 'Name',
+                                        msgCode    : 'default.name',
                                         qparam     : 'qp_name',
                                         placeholder: 'Name of Curatory Group',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'name', 'wildcard': 'B']
@@ -59,6 +61,7 @@ class GlobalSearchTemplatesService {
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.CURATORY_GROUP_TYPE,
                                         prompt     : 'Type',
+                                        msgCode     : 'default.type',
                                         qparam     : 'qp_type',
                                         placeholder: 'Type',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'type'],
@@ -68,6 +71,7 @@ class GlobalSearchTemplatesService {
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.COMPONENT_STATUS,
                                         prompt     : 'Status',
+                                        msgCode    : 'default.status',
                                         qparam     : 'qp_status',
                                         placeholder: 'Component Status',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'status'],
@@ -88,6 +92,7 @@ class GlobalSearchTemplatesService {
     Map identifiers() {
         Map result = [
                 baseclass: 'wekb.Identifier',
+                msgCode    : 'identifier.plural',
                 title    : 'Identifiers',
                 defaultSort : 'value',
                 defaultOrder: 'asc',
@@ -95,6 +100,7 @@ class GlobalSearchTemplatesService {
                         qbeForm   : [
                                 [
                                         prompt     : 'Namespace',
+                                        msgCode     : 'identifier.namespace',
                                         qparam     : 'qp_namespace_value',
                                         placeholder: 'Namespace',
                                         filter1    : 'all',
@@ -104,6 +110,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         prompt     : 'Identifier',
+                                        msgCode     : 'identifier.value',
                                         qparam     : 'qp_identifier',
                                         placeholder: 'Identifier Value',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'value'],
@@ -124,6 +131,7 @@ class GlobalSearchTemplatesService {
     Map jobResults() {
         Map result = [
                 baseclass   : 'wekb.system.JobResult',
+                msgCode    : 'jobresult.plural',
                 title       : 'Job Results',
                 defaultSort : 'id',
                 defaultOrder: 'desc',
@@ -134,6 +142,7 @@ class GlobalSearchTemplatesService {
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.JOB_TYPE,
                                         prompt     : 'Type',
+                                        msgCode     : 'default.type',
                                         qparam     : 'qp_type',
                                         placeholder: 'Type of Job',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'type']
@@ -156,6 +165,7 @@ class GlobalSearchTemplatesService {
     Map namespaces() {
         Map result = [
                 baseclass: 'wekb.IdentifierNamespace',
+                msgCode    : 'identifiernamespace.plural',
                 title    : 'Identifier Namespaces',
                 defaultSort : 'name',
                 defaultOrder: 'asc',
@@ -163,6 +173,7 @@ class GlobalSearchTemplatesService {
                         qbeForm   : [
                                 [
                                         prompt     : 'Namespace',
+                                        msgCode     : 'identifier.namespace',
                                         qparam     : 'qp_value',
                                         placeholder: 'value',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'value', 'wildcard': 'B']
@@ -198,6 +209,7 @@ class GlobalSearchTemplatesService {
     Map orgs() {
         Map result = [
                 baseclass   : 'wekb.Org',
+                msgCode    : 'org.plural',
                 title       : 'Providers',
                 defaultSort : 'name',
                 defaultOrder: 'asc',
@@ -224,12 +236,14 @@ class GlobalSearchTemplatesService {
                                 //General Fields
                                 [
                                         prompt     : 'Name',
+                                        msgCode    : 'default.name',
                                         qparam     : 'qp_name',
                                         placeholder: 'Name',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'ilike_Combine_Name_And_VariantNames_And_AbbreviatedName_Org', 'prop': 'name', 'wildcard': 'B']
                                 ],
                                 [
                                         prompt     : 'Identifier',
+                                        msgCode     : 'identifier.value',
                                         qparam     : 'qp_identifier',
                                         placeholder: 'Identifier Value',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'ids.value']
@@ -238,6 +252,7 @@ class GlobalSearchTemplatesService {
                                         type       : 'lookup',
                                         baseClass  : 'wekb.CuratoryGroup',
                                         prompt     : 'Curatory Group',
+                                        msgCode     : 'curatorygroup.label',
                                         qparam     : 'qp_curgroup',
                                         placeholder: 'Curatory Group',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'curatoryGroups.curatoryGroup']
@@ -247,6 +262,7 @@ class GlobalSearchTemplatesService {
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.COMPONENT_STATUS,
                                         prompt     : 'Status',
+                                        msgCode    : 'default.status',
                                         qparam     : 'qp_status',
                                         placeholder: 'Component Status',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'status']
@@ -256,6 +272,7 @@ class GlobalSearchTemplatesService {
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.ORG_ROLE,
                                         prompt     : 'Role',
+                                        msgCode     : 'org.role',
                                         qparam     : 'qp_roles',
                                         placeholder: 'Role',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'roles'],
@@ -279,6 +296,7 @@ class GlobalSearchTemplatesService {
     Map packages() {
         Map result = [
                 baseclass   : 'wekb.Package',
+                msgCode    : 'package.plural',
                 title       : 'Packages',
                 defaultSort : 'lastUpdated',
                 defaultOrder: 'desc',
@@ -319,12 +337,14 @@ class GlobalSearchTemplatesService {
                                 //General Fields
                                 [
                                         prompt     : 'Name of Package',
+                                        msgCode     : 'default.name',
                                         qparam     : 'qp_name',
                                         placeholder: 'Package Name',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'name', 'wildcard': 'B', normalise: false]
                                 ],
                                 [
                                         prompt     : 'Identifier',
+                                        msgCode     : 'identifier.value',
                                         qparam     : 'qp_identifier',
                                         placeholder: 'Identifier Value',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'ids.value'],
@@ -334,6 +354,7 @@ class GlobalSearchTemplatesService {
                                         type       : 'lookup',
                                         baseClass  : 'wekb.Org',
                                         prompt     : 'Provider',
+                                        msgCode     : 'org.label',
                                         qparam     : 'qp_provider',
                                         placeholder: 'Provider',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'provider'],
@@ -343,6 +364,7 @@ class GlobalSearchTemplatesService {
                                         type       : 'lookup',
                                         baseClass  : 'wekb.CuratoryGroup',
                                         prompt     : 'Curatory Group',
+                                        msgCode     : 'curatorygroup.label',
                                         qparam     : 'qp_curgroup',
                                         placeholder: 'Curatory Group',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'curatoryGroups.curatoryGroup'],
@@ -352,6 +374,7 @@ class GlobalSearchTemplatesService {
                                         type       : 'lookup',
                                         baseClass  : 'wekb.Platform',
                                         prompt     : 'Platform',
+                                        msgCode     : 'platform.label',
                                         qparam     : 'qp_platform',
                                         placeholder: 'Platform',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'nominalPlatform'],
@@ -362,6 +385,7 @@ class GlobalSearchTemplatesService {
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.COMPONENT_STATUS,
                                         prompt     : 'Status',
+                                        msgCode    : 'default.status',
                                         qparam     : 'qp_status',
                                         placeholder: 'Component Status',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'status']
@@ -371,6 +395,7 @@ class GlobalSearchTemplatesService {
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.PACKAGE_SCOPE,
                                         prompt     : 'Scope',
+                                        msgCode     : 'package.scope',
                                         qparam     : 'qp_scope',
                                         placeholder: 'Scope',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'scope'],
@@ -380,6 +405,7 @@ class GlobalSearchTemplatesService {
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.PACKAGE_CONTENT_TYPE,
                                         prompt     : 'Content Type',
+                                        msgCode     : 'package.contentType',
                                         qparam     : 'qp_content',
                                         placeholder: 'Content Type',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'contentType'],
@@ -389,6 +415,7 @@ class GlobalSearchTemplatesService {
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.PACKAGE_OPEN_ACCESS,
                                         prompt     : 'Open Access',
+                                        msgCode     : 'package.openAccess',
                                         qparam     : 'qp_oa',
                                         placeholder: 'Open Access',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'openAccess'],
@@ -398,6 +425,7 @@ class GlobalSearchTemplatesService {
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.DDC,
                                         prompt     : 'DDC',
+                                        msgCode     : 'package.ddcs',
                                         qparam     : 'qp_ddc',
                                         placeholder: 'DDC',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'ddcs'],
@@ -407,6 +435,7 @@ class GlobalSearchTemplatesService {
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.PAA_ARCHIVING_AGENCY,
                                         prompt     : 'Package Archiving Agency',
+                                        msgCode     : 'package.archivingAgency',
                                         qparam     : 'qp_archivingAgency',
                                         placeholder: 'Package Archiving Agency',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'paas.archivingAgency']
@@ -416,6 +445,7 @@ class GlobalSearchTemplatesService {
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Source Automatic Updates',
+                                        msgCode     : 'kbartSource.automaticUpdates',
                                         qparam     : 'qp_source_automaticUpdates',
                                         placeholder: 'Source Automatic Updates',
                                         propType   : 'Boolean',
@@ -428,6 +458,7 @@ class GlobalSearchTemplatesService {
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.PACKAGE_BREAKABLE,
                                         prompt     : 'Breakable Type',
+                                        msgCode     : 'package.breakable',
                                         qparam     : 'qp_breakable',
                                         placeholder: 'Breakable Type',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'breakable'],
@@ -438,6 +469,7 @@ class GlobalSearchTemplatesService {
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.PACKAGE_CONSISTENT,
                                         prompt     : 'Consistent Type',
+                                        msgCode     : 'package.consistent',
                                         qparam     : 'qp_consistent',
                                         placeholder: 'Consistent Type',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'consistent'],
@@ -448,6 +480,7 @@ class GlobalSearchTemplatesService {
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.PACKAGE_PAYMENT_TYPE,
                                         prompt     : 'Paid',
+                                        msgCode     : 'package.paymentType',
                                         qparam     : 'qp_paymentType',
                                         placeholder: 'Paid',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'paymentType'],
@@ -458,6 +491,7 @@ class GlobalSearchTemplatesService {
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.PACKAGE_FILE,
                                         prompt     : 'File',
+                                        msgCode     : 'package.file',
                                         qparam     : 'qp_file',
                                         placeholder: 'File',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'file'],
@@ -468,6 +502,7 @@ class GlobalSearchTemplatesService {
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Free Trial',
+                                        msgCode     : 'package.freeTrial',
                                         qparam     : 'qp_freeTrial',
                                         placeholder: 'Free Trial',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'freeTrial'],
@@ -511,6 +546,7 @@ class GlobalSearchTemplatesService {
     Map publicPackages() {
         Map result = [
                 baseclass   : 'wekb.Package',
+                msgCode    : 'package.plural',
                 title       : 'Packages',
                 defaultSort : 'lastUpdated',
                 defaultOrder: 'desc',
@@ -534,11 +570,13 @@ class GlobalSearchTemplatesService {
                                 [
                                         prompt     : 'Name of Package',
                                         qparam     : 'qp_name',
+                                        msgCode     : 'package.nameOfPackage',
                                         placeholder: 'Package Name',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'name', 'wildcard': 'B', normalise: false]
                                 ],
                                 [
                                         prompt     : 'Identifier',
+                                        msgCode     : 'identifier.value',
                                         qparam     : 'qp_identifier',
                                         placeholder: 'Identifier Value',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'ids.value'],
@@ -548,6 +586,7 @@ class GlobalSearchTemplatesService {
                                         type       : 'lookup',
                                         baseClass  : 'wekb.CuratoryGroup',
                                         prompt     : 'Curatory Group',
+                                        msgCode     : 'curatorygroup.label',
                                         qparam     : 'qp_curgroup',
                                         placeholder: 'Curatory Group',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'curatoryGroups.curatoryGroup'],
@@ -557,6 +596,7 @@ class GlobalSearchTemplatesService {
                                         type       : 'lookup',
                                         baseClass  : 'wekb.Org',
                                         prompt     : 'Provider',
+                                        msgCode     : 'org.label',
                                         qparam     : 'qp_provider',
                                         placeholder: 'Provider',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'provider'],
@@ -567,6 +607,7 @@ class GlobalSearchTemplatesService {
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Source Automatic Updates',
+                                        msgCode     : 'kbartSource.automaticUpdates',
                                         qparam     : 'qp_source_automaticUpdates',
                                         placeholder: 'Source Automatic Updates',
                                         propType   : 'Boolean',
@@ -588,6 +629,7 @@ class GlobalSearchTemplatesService {
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.PACKAGE_CONTENT_TYPE,
                                         prompt     : 'Content Type',
+                                        msgCode     : 'package.contentType',
                                         qparam     : 'qp_contentType',
                                         placeholder: 'Content Type',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'contentType'],
@@ -598,6 +640,7 @@ class GlobalSearchTemplatesService {
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.COMPONENT_STATUS,
                                         prompt     : 'Status',
+                                        msgCode    : 'default.status',
                                         qparam     : 'qp_status',
                                         placeholder: 'Component Status',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'status'],
@@ -608,6 +651,7 @@ class GlobalSearchTemplatesService {
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.DDC,
                                         prompt     : 'DDC',
+                                        msgCode     : 'package.ddcs',
                                         qparam     : 'qp_ddc',
                                         placeholder: 'DDC',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'ddcs'],
@@ -618,6 +662,7 @@ class GlobalSearchTemplatesService {
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.PACKAGE_PAYMENT_TYPE,
                                         prompt     : 'Paid',
+                                        msgCode     : 'package.paymentType',
                                         qparam     : 'qp_paymentType',
                                         placeholder: 'Paid',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'paymentType'],
@@ -628,6 +673,7 @@ class GlobalSearchTemplatesService {
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.PACKAGE_OPEN_ACCESS,
                                         prompt     : 'Open Access',
+                                        msgCode     : 'package.openAccess',
                                         qparam     : 'qp_oa',
                                         placeholder: 'Open Access',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'openAccess'],
@@ -639,6 +685,7 @@ class GlobalSearchTemplatesService {
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.PAA_ARCHIVING_AGENCY,
                                         prompt     : 'Package Archiving Agency',
+                                        msgCode     : 'package.archivingAgency',
                                         qparam     : 'qp_archivingAgency',
                                         placeholder: 'Package Archiving Agency',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'paas.archivingAgency'],
@@ -647,6 +694,7 @@ class GlobalSearchTemplatesService {
                                 //Title Filter
                                 [
                                         prompt     : 'Title',
+                                        msgCode     : 'package.label',
                                         qparam     : 'qp_title',
                                         placeholder: 'Title',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'tipps.name'],
@@ -654,6 +702,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         prompt     : 'Identifier',
+                                        msgCode     : 'identifier.value',
                                         qparam     : 'qp_tippIdentifier',
                                         placeholder: 'Identifier Value',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'tipps.ids.value'],
@@ -664,6 +713,7 @@ class GlobalSearchTemplatesService {
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.COMPONENT_STATUS,
                                         prompt     : 'Status',
+                                        msgCode    : 'default.status',
                                         qparam     : 'qp_status_tipp',
                                         placeholder: 'Status',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'tipps.status'],
@@ -674,6 +724,7 @@ class GlobalSearchTemplatesService {
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.TIPP_PUBLICATION_TYPE,
                                         prompt     : 'Publication Type',
+                                        msgCode     : 'titleinstancepackageplatform.publicationType',
                                         qparam     : 'qp_publicationType_tipp',
                                         placeholder: 'Type of item',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'tipps.publicationType'],
@@ -684,6 +735,7 @@ class GlobalSearchTemplatesService {
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.TIPP_MEDIUM,
                                         prompt     : 'Medium',
+                                        msgCode     : 'titleinstancepackageplatform.label',
                                         qparam     : 'qp_medium_tipp',
                                         placeholder: 'Medium of item',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'tipps.medium'],
@@ -694,6 +746,7 @@ class GlobalSearchTemplatesService {
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.TIPP_ACCESS_TYPE,
                                         prompt     : 'Access Type',
+                                        msgCode     : 'titleinstancepackageplatform.label',
                                         qparam     : 'qp_accessType_tipp',
                                         placeholder: 'Access Type',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'tipps.accessType'],
@@ -710,6 +763,7 @@ class GlobalSearchTemplatesService {
                                 ],*/
                                 [
                                         prompt     : 'Publisher',
+                                        msgCode     : 'titleinstancepackageplatform.label',
                                         qparam     : 'qp_publisherName',
                                         placeholder: 'Publisher',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'tipps.publisherName'],
@@ -717,6 +771,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         prompt     : 'Author',
+                                        msgCode     : 'titleinstancepackageplatform.label',
                                         qparam     : 'qp_firstAuthor_tipp',
                                         placeholder: 'Author',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'tipps.firstAuthor'],
@@ -724,6 +779,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         prompt     : 'Editor',
+                                        msgCode     : 'titleinstancepackageplatform.label',
                                         qparam     : 'qp_firstEditor_tipp',
                                         placeholder: 'Editor',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'tipps.firstEditor'],
@@ -771,6 +827,7 @@ class GlobalSearchTemplatesService {
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.DDC,
                                         prompt     : 'DDC',
+                                        msgCode     : 'package.ddcs',
                                         qparam     : 'qp_ddc_tipp',
                                         placeholder: 'DDC',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'placeHolderDdcs'],
@@ -781,6 +838,7 @@ class GlobalSearchTemplatesService {
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.COMPONENT_LANGUAGE,
                                         prompt     : 'Language',
+                                        msgCode     : 'package.label',
                                         qparam     : 'qp_language_tipp',
                                         placeholder: 'Language',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'tipps.languages.language'],
@@ -789,6 +847,7 @@ class GlobalSearchTemplatesService {
                                 //Platform Filter
                                 [
                                         prompt     : 'Name of Platform',
+                                        msgCode     : 'platform.nameOfPlatform',
                                         qparam     : 'qp_name_platform',
                                         placeholder: 'Name of Platform',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'nominalPlatform.name'],
@@ -799,6 +858,7 @@ class GlobalSearchTemplatesService {
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Shibboleth Supported',
+                                        msgCode     : 'platform.shibbolethAuthentication',
                                         qparam     : 'qp_shibbolethAuthentication_platform',
                                         placeholder: 'Shibboleth Supported',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'nominalPlatform.shibbolethAuthentication'],
@@ -809,6 +869,7 @@ class GlobalSearchTemplatesService {
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Open Athens Supported',
+                                        msgCode     : 'platform.openAthens',
                                         qparam     : 'qp_openAthens_platform',
                                         placeholder: 'Open Athens Supported',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'nominalPlatform.openAthens'],
@@ -819,6 +880,7 @@ class GlobalSearchTemplatesService {
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.PLATFORM_IP_AUTH,
                                         prompt     : 'IP Auth Supported',
+                                        msgCode     : 'platform.ipAuthentication',
                                         qparam     : 'qp_ipAuthentication_platform',
                                         placeholder: 'IP Auth Supported',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'nominalPlatform.ipAuthentication'],
@@ -829,6 +891,7 @@ class GlobalSearchTemplatesService {
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.PLATFORM_STATISTICS_FORMAT,
                                         prompt     : 'Statistics Format',
+                                        msgCode     : 'platform.statisticsFormat',
                                         qparam     : 'qp_statisticsFormat_platform',
                                         placeholder: 'Statistics Format',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'nominalPlatform.statisticsFormat'],
@@ -839,6 +902,7 @@ class GlobalSearchTemplatesService {
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Counter R3 Supported',
+                                        msgCode     : 'platform.counterR3Supported',
                                         qparam     : 'qp_counterR3Supported_platform',
                                         placeholder: 'Counter R3 Supported',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'nominalPlatform.counterR3Supported'],
@@ -849,6 +913,7 @@ class GlobalSearchTemplatesService {
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Counter R4 Supported',
+                                        msgCode     : 'platform.counterR4Supported',
                                         qparam     : 'qp_counterR4Supported_platform',
                                         placeholder: 'Counter R4 Supported',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'nominalPlatform.counterR4Supported'],
@@ -859,6 +924,7 @@ class GlobalSearchTemplatesService {
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Counter R5 Supported',
+                                        msgCode     : 'platform.counterR5Supported',
                                         qparam     : 'qp_counterR5Supported_platform',
                                         placeholder: 'Counter R5 Supported',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'nominalPlatform.counterR5Supported'],
@@ -869,6 +935,7 @@ class GlobalSearchTemplatesService {
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Counter R4 Sushi Api Supported',
+                                        msgCode     : 'platform.counterR4SushiApiSupported',
                                         qparam     : 'qp_counterR4SushiApiSupported_platform',
                                         placeholder: 'Counter R4 Sushi Api Supported',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'nominalPlatform.counterR4SushiApiSupported'],
@@ -879,6 +946,7 @@ class GlobalSearchTemplatesService {
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Counter R5 Sushi Api Supported',
+                                        msgCode     : 'platform.counterR5SushiApiSupported',
                                         qparam     : 'qp_counterR5SushiApiSupported_platform',
                                         placeholder: 'Counter R5 Sushi Api Supported',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'nominalPlatform.counterR5SushiApiSupported'],
@@ -911,6 +979,7 @@ class GlobalSearchTemplatesService {
     Map platforms() {
         Map result = [
                 baseclass   : 'wekb.Platform',
+                msgCode    : 'platform.plural',
                 title       : 'Platforms',
                 defaultSort : 'name',
                 defaultOrder: 'asc',
@@ -942,6 +1011,7 @@ class GlobalSearchTemplatesService {
                                 //General Fields
                                 [
                                         prompt     : 'Name',
+                                        msgCode    : 'default.name',
                                         qparam     : 'qp_name',
                                         placeholder: 'Name',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'name', 'wildcard': 'B']
@@ -950,6 +1020,7 @@ class GlobalSearchTemplatesService {
                                         type       : 'lookup',
                                         baseClass  : 'wekb.CuratoryGroup',
                                         prompt     : 'Curatory Group',
+                                        msgCode     : 'curatorygroup.label',
                                         qparam     : 'qp_curgroup',
                                         placeholder: 'Curatory Group',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'curatoryGroups.curatoryGroup']
@@ -958,6 +1029,7 @@ class GlobalSearchTemplatesService {
                                         type       : 'lookup',
                                         baseClass  : 'wekb.Org',
                                         prompt     : 'Provider',
+                                        msgCode     : 'org.label',
                                         qparam     : 'qp_provider',
                                         placeholder: 'Provider',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'provider'],
@@ -967,6 +1039,7 @@ class GlobalSearchTemplatesService {
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.COMPONENT_STATUS,
                                         prompt     : 'Status',
+                                        msgCode    : 'default.status',
                                         qparam     : 'qp_status',
                                         placeholder: 'Component Status',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'status']
@@ -974,6 +1047,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         prompt     : 'Platform URL',
                                         qparam     : 'qp_url',
+                                        msgCode     : 'platform.primaryUrl',
                                         placeholder: 'Platform URL',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'primaryUrl']
                                 ],
@@ -982,6 +1056,7 @@ class GlobalSearchTemplatesService {
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Shibboleth Supported',
+                                        msgCode     : 'platform.shibbolethAuthentication',
                                         qparam     : 'qp_shibbolethAuthentication',
                                         placeholder: 'Shibboleth Supported',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'shibbolethAuthentication'],
@@ -991,6 +1066,7 @@ class GlobalSearchTemplatesService {
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Open Athens Supported',
+                                        msgCode     : 'platform.openAthens',
                                         qparam     : 'qp_openAthens',
                                         placeholder: 'Open Athens Supported',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'openAthens']
@@ -1000,6 +1076,7 @@ class GlobalSearchTemplatesService {
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.PLATFORM_IP_AUTH,
                                         prompt     : 'IP Auth Supported',
+                                        msgCode     : 'platform.ipAuthentication',
                                         qparam     : 'qp_ipAuthentication',
                                         placeholder: 'IP Auth Supported',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'ipAuthentication'],
@@ -1009,6 +1086,7 @@ class GlobalSearchTemplatesService {
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.PLATFORM_STATISTICS_FORMAT,
                                         prompt     : 'Statistics Format',
+                                        msgCode     : 'platform.statisticsFormat',
                                         qparam     : 'qp_statisticsFormat',
                                         placeholder: 'Statistics Format',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'statisticsFormat'],
@@ -1018,6 +1096,7 @@ class GlobalSearchTemplatesService {
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Counter R3 Supported',
+                                        msgCode     : 'platform.counterR3Supported',
                                         qparam     : 'qp_counterR3Supported',
                                         placeholder: 'Counter R3 Supported',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'counterR3Supported'],
@@ -1027,6 +1106,7 @@ class GlobalSearchTemplatesService {
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Counter R4 Supported',
+                                        msgCode     : 'platform.counterR4Supported',
                                         qparam     : 'qp_counterR4Supported',
                                         placeholder: 'Counter R4 Supported',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'counterR4Supported'],
@@ -1036,6 +1116,7 @@ class GlobalSearchTemplatesService {
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Counter R5 Supported',
+                                        msgCode     : 'platform.counterR5Supported',
                                         qparam     : 'qp_counterR5Supported',
                                         placeholder: 'Counter R5 Supported',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'counterR5Supported'],
@@ -1045,6 +1126,7 @@ class GlobalSearchTemplatesService {
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Counter R4 Sushi Api Supported',
+                                        msgCode     : 'platform.counterR4SushiApiSupported',
                                         qparam     : 'qp_counterR4SushiApiSupported',
                                         placeholder: 'Counter R4 Sushi Api Supported',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'counterR4SushiApiSupported'],
@@ -1054,6 +1136,7 @@ class GlobalSearchTemplatesService {
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Counter R5 Sushi Api Supported',
+                                        msgCode     : 'platform.counterR5SushiApiSupported',
                                         qparam     : 'qp_counterR5SushiApiSupported',
                                         placeholder: 'Counter R5 Sushi Api Supported',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'counterR5SushiApiSupported'],
@@ -1076,6 +1159,7 @@ class GlobalSearchTemplatesService {
     Map refdataCategories() {
         Map result = [
                 baseclass: 'wekb.RefdataCategory',
+                msgCode    : 'refdatacategory.plural',
                 title    : 'Refdata Categories ',
                 defaultSort : 'desc',
                 defaultOrder: 'asc',
@@ -1113,6 +1197,7 @@ class GlobalSearchTemplatesService {
     Map refdataValues() {
         Map result = [
                 baseclass: 'wekb.RefdataValue',
+                msgCode    : 'refdatavalue.plural',
                 title    : 'Refdata Values ',
                 defaultSort : 'value',
                 defaultOrder: 'asc',
@@ -1160,6 +1245,7 @@ class GlobalSearchTemplatesService {
     Map sources() {
         Map result = [
                 baseclass: 'wekb.KbartSource',
+                msgCode    : 'kbartsource.plural',
                 title    : 'Source',
                 defaultSort : 'name',
                 defaultOrder: 'asc',
@@ -1176,6 +1262,7 @@ class GlobalSearchTemplatesService {
                                 //General Fields
                                 [
                                         prompt     : 'Name',
+                                        msgCode    : 'default.name',
                                         qparam     : 'qp_name',
                                         placeholder: 'Name',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'name']
@@ -1184,6 +1271,7 @@ class GlobalSearchTemplatesService {
                                         type       : 'lookup',
                                         baseClass  : 'wekb.CuratoryGroup',
                                         prompt     : 'Curatory Group',
+                                        msgCode    : 'curatorygroup.label',
                                         qparam     : 'qp_curgroup',
                                         placeholder: 'Curatory Group',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'curatoryGroups.curatoryGroup'],
@@ -1194,6 +1282,7 @@ class GlobalSearchTemplatesService {
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.COMPONENT_STATUS,
                                         prompt     : 'Status',
+                                        msgCode    : 'default.status',
                                         qparam     : 'qp_status',
                                         placeholder: 'Status',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'status']
@@ -1203,6 +1292,7 @@ class GlobalSearchTemplatesService {
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Automatic Updates',
+                                        msgCode    : 'kbartsource.automaticUpdates',
                                         qparam     : 'qp_automaticUpdates',
                                         placeholder: 'Automatic Updates',
                                         propType   : 'Boolean',
@@ -1213,6 +1303,7 @@ class GlobalSearchTemplatesService {
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.SOURCE_FREQUENCY,
                                         prompt     : 'Frequency',
+                                        msgCode    : 'kbartsource.frequency',
                                         qparam     : 'qp_frequency',
                                         placeholder: 'Frequencys',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'frequency'],
@@ -1237,6 +1328,7 @@ class GlobalSearchTemplatesService {
     Map tipps() {
         Map result = [
                 baseclass: 'wekb.TitleInstancePackagePlatform',
+                msgCode    : 'titleinstancepackageplatform.plural',
                 title    : 'Titles',
                 defaultSort : 'name',
                 defaultOrder: 'asc',
@@ -1289,6 +1381,7 @@ class GlobalSearchTemplatesService {
                                 //General Fields
                                 [
                                         prompt     : 'Title',
+                                        msgCode    : 'titleinstancepackageplatform.name',
                                         qparam     : 'qp_title',
                                         placeholder: 'Title',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'name', 'wildcard': 'B'],
@@ -1296,12 +1389,14 @@ class GlobalSearchTemplatesService {
 
                                 [
                                         prompt     : 'Identifier',
+                                        msgCode    : 'titleinstancepackageplatform.name',
                                         qparam     : 'qp_identifier',
                                         placeholder: 'Identifier Value',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'ids.value']
                                 ],
                                 [
                                         prompt     : 'Url',
+                                        msgCode    : 'titleinstancepackageplatform.name',
                                         qparam     : 'qp_url',
                                         placeholder: 'Url',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'url'],
@@ -1310,6 +1405,7 @@ class GlobalSearchTemplatesService {
                                         type       : 'lookup',
                                         baseClass  : 'wekb.Org',
                                         prompt     : 'Provider',
+                                        msgCode    : 'titleinstancepackageplatform.name',
                                         qparam     : 'qp_provider',
                                         placeholder: 'Provider',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'pkg.provider'],
@@ -1319,6 +1415,7 @@ class GlobalSearchTemplatesService {
                                         type       : 'lookup',
                                         baseClass  : 'wekb.Package',
                                         prompt     : 'Package',
+                                        msgCode    : 'titleinstancepackageplatform.name',
                                         qparam     : 'qp_pkg',
                                         placeholder: 'Package',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'pkg']
@@ -1327,6 +1424,7 @@ class GlobalSearchTemplatesService {
                                         type       : 'lookup',
                                         baseClass  : 'wekb.Platform',
                                         prompt     : 'Platform',
+                                        msgCode    : 'titleinstancepackageplatform.name',
                                         qparam     : 'qp_plat',
                                         placeholder: 'Platform',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'hostPlatform']
@@ -1335,6 +1433,7 @@ class GlobalSearchTemplatesService {
                                         type       : 'lookup',
                                         baseClass  : 'wekb.CuratoryGroup',
                                         prompt     : 'Curatory Group',
+                                        msgCode    : 'titleinstancepackageplatform.name',
                                         qparam     : 'qp_curgroup',
                                         placeholder: 'Curatory Group',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'pkg.curatoryGroups.curatoryGroup'],
@@ -1344,6 +1443,7 @@ class GlobalSearchTemplatesService {
                                         type     : 'dropDownGroup',
                                         dropDownType  : 'publisher',
                                         prompt     : 'Publisher',
+                                        msgCode    : 'titleinstancepackageplatform.name',
                                         qparam     : 'qp_publisherName',
                                         placeholder: 'Publisher',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'publisherName'],
@@ -1353,6 +1453,7 @@ class GlobalSearchTemplatesService {
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.TIPP_PUBLICATION_TYPE,
                                         prompt     : 'Publication Type',
+                                        msgCode    : 'titleinstancepackageplatform.name',
                                         qparam     : 'qp_publicationType',
                                         placeholder: 'Type of item',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'publicationType'],
@@ -1362,18 +1463,21 @@ class GlobalSearchTemplatesService {
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.TIPP_MEDIUM,
                                         prompt     : 'Medium',
+                                        msgCode    : 'titleinstancepackageplatform.name',
                                         qparam     : 'qp_medium',
                                         placeholder: 'Medium of item',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'medium'],
                                 ],
                                 [
                                         prompt     : 'Author',
+                                        msgCode    : 'titleinstancepackageplatform.name',
                                         qparam     : 'qp_firstAuthor',
                                         placeholder: 'Publisher',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'firstAuthor'],
                                 ],
                                 [
                                         prompt     : 'Editor',
+                                        msgCode    : 'titleinstancepackageplatform.name',
                                         qparam     : 'qp_firstEditor',
                                         placeholder: 'Editor',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'firstEditor'],
@@ -1383,6 +1487,7 @@ class GlobalSearchTemplatesService {
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.TIPP_ACCESS_TYPE,
                                         prompt     : 'Access Type',
+                                        msgCode    : 'titleinstancepackageplatform.name',
                                         qparam     : 'qp_accessType',
                                         placeholder: 'Access Type',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'accessType'],
@@ -1391,6 +1496,7 @@ class GlobalSearchTemplatesService {
                                         type     : 'dropDownGroup',
                                         dropDownType  : 'subjectArea',
                                         prompt     : 'Subject Area',
+                                        msgCode    : 'titleinstancepackageplatform.name',
                                         qparam     : 'qp_subjectArea_tipp',
                                         placeholder: 'Subject Area',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'subjectArea'],
@@ -1399,6 +1505,7 @@ class GlobalSearchTemplatesService {
                                         type     : 'dropDownGroup',
                                         dropDownType  : 'dateFirstOnlineYear',
                                         prompt     : 'Date First Online Year',
+                                        msgCode    : 'titleinstancepackageplatform.name',
                                         qparam     : 'qp_dateFirstOnlineYear',
                                         placeholder: 'Date First Online Year',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eqYear', 'prop': 'dateFirstOnline'],
@@ -1407,6 +1514,7 @@ class GlobalSearchTemplatesService {
                                         type     : 'dropDownGroup',
                                         dropDownType  : 'accessStartDate',
                                         prompt     : 'Access Start Date Year',
+                                        msgCode    : 'titleinstancepackageplatform.name',
                                         qparam     : 'qp_accessStartDate',
                                         placeholder: 'Access Start Date Year',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eqYear', 'prop': 'accessStartDate'],
@@ -1415,6 +1523,7 @@ class GlobalSearchTemplatesService {
                                         type     : 'dropDownGroup',
                                         dropDownType  : 'accessEndDate',
                                         prompt     : 'Access End Date Year',
+                                        msgCode    : 'titleinstancepackageplatform.name',
                                         qparam     : 'qp_accessEndDate',
                                         placeholder: 'Access End Date Year',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eqYear', 'prop': 'accessEndDate'],
@@ -1424,6 +1533,7 @@ class GlobalSearchTemplatesService {
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.DDC,
                                         prompt     : 'DDC',
+                                        msgCode    : 'titleinstancepackageplatform.name',
                                         qparam     : 'qp_ddc',
                                         placeholder: 'DDC',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'ddcs'],
@@ -1433,6 +1543,7 @@ class GlobalSearchTemplatesService {
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.TIPP_OPEN_ACCESS,
                                         prompt     : 'Open Access',
+                                        msgCode    : 'titleinstancepackageplatform.name',
                                         qparam     : 'qp_openAccess',
                                         placeholder: 'Open Access',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'openAccess'],
@@ -1442,6 +1553,7 @@ class GlobalSearchTemplatesService {
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.COMPONENT_LANGUAGE,
                                         prompt     : 'Language',
+                                        msgCode    : 'titleinstancepackageplatform.name',
                                         qparam     : 'qp_language',
                                         placeholder: 'Language',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'languages.language'],
@@ -1451,6 +1563,7 @@ class GlobalSearchTemplatesService {
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.COMPONENT_STATUS,
                                         prompt     : 'Status',
+                                        msgCode    : 'default.status',
                                         qparam     : 'qp_status',
                                         placeholder: 'Status',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'status']
@@ -1508,6 +1621,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         prompt     : 'Title',
+                                        msgCode    : 'titleinstancepackageplatform.name',
                                         qparam     : 'qp_title',
                                         placeholder: 'Title',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'name', 'wildcard': 'B'],
@@ -1516,12 +1630,14 @@ class GlobalSearchTemplatesService {
                                         type     : 'dropDownGroup',
                                         dropDownType  : 'publisher',
                                         prompt     : 'Publisher',
+                                        msgCode    : 'titleinstancepackageplatform.publisherName',
                                         qparam     : 'qp_publisherName',
                                         placeholder: 'Publisher',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'publisherName'],
                                 ],
                                 [
                                         prompt     : 'Identifier',
+                                        msgCode    : 'identifer.value',
                                         qparam     : 'qp_identifier',
                                         placeholder: 'Identifier Value',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'ids.value'],
@@ -1529,6 +1645,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         prompt     : 'Url',
+                                        msgCode    : 'titleinstancepackageplatform.url',
                                         qparam     : 'qp_url',
                                         placeholder: 'Url',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'url'],
@@ -1538,6 +1655,7 @@ class GlobalSearchTemplatesService {
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.TIPP_PUBLICATION_TYPE,
                                         prompt     : 'Publication Type',
+                                        msgCode    : 'titleinstancepackageplatform.publicationType',
                                         qparam     : 'qp_publicationType',
                                         placeholder: 'Type of item',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'publicationType'],
@@ -1547,18 +1665,21 @@ class GlobalSearchTemplatesService {
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.TIPP_MEDIUM,
                                         prompt     : 'Medium',
+                                        msgCode    : 'titleinstancepackageplatform.medium',
                                         qparam     : 'qp_medium',
                                         placeholder: 'Medium of item',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'medium'],
                                 ],
                                 [
                                         prompt     : 'Author',
+                                        msgCode    : 'titleinstancepackageplatform.firstAuthor',
                                         qparam     : 'qp_firstAuthor',
                                         placeholder: 'Publisher',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'firstAuthor'],
                                 ],
                                 [
                                         prompt     : 'Editor',
+                                        msgCode    : 'titleinstancepackageplatform.firstEditor',
                                         qparam     : 'qp_firstEditor',
                                         placeholder: 'Editor',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'firstEditor'],
@@ -1568,6 +1689,7 @@ class GlobalSearchTemplatesService {
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.TIPP_ACCESS_TYPE,
                                         prompt     : 'Access Type',
+                                        msgCode    : 'titleinstancepackageplatform.accessType',
                                         qparam     : 'qp_accessType',
                                         placeholder: 'Access Type',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'accessType'],
@@ -1576,6 +1698,7 @@ class GlobalSearchTemplatesService {
                                         type     : 'dropDownGroup',
                                         dropDownType  : 'subjectArea',
                                         prompt     : 'Subject Area',
+                                        msgCode    : 'titleinstancepackageplatform.subjectArea',
                                         qparam     : 'qp_subjectArea_tipp',
                                         placeholder: 'Subject Area',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'subjectArea'],
@@ -1584,6 +1707,7 @@ class GlobalSearchTemplatesService {
                                         type     : 'dropDownGroup',
                                         dropDownType  : 'dateFirstOnlineYear',
                                         prompt     : 'Date First Online Year',
+                                        msgCode    : 'titleinstancepackageplatform.dateFirstOnline',
                                         qparam     : 'qp_dateFirstOnlineYear',
                                         placeholder: 'Date First Online Year',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eqYear', 'prop': 'dateFirstOnline'],
@@ -1592,6 +1716,7 @@ class GlobalSearchTemplatesService {
                                         type     : 'dropDownGroup',
                                         dropDownType  : 'accessStartDate',
                                         prompt     : 'Access Start Date Year',
+                                        msgCode    : 'titleinstancepackageplatform.accessStartDate',
                                         qparam     : 'qp_accessStartDate',
                                         placeholder: 'Access Start Date Year',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eqYear', 'prop': 'accessStartDate'],
@@ -1600,6 +1725,7 @@ class GlobalSearchTemplatesService {
                                         type     : 'dropDownGroup',
                                         dropDownType  : 'accessEndDate',
                                         prompt     : 'Access End Date Year',
+                                        msgCode    : 'titleinstancepackageplatform.accessEndDate',
                                         qparam     : 'qp_accessEndDate',
                                         placeholder: 'Access End Date Year',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eqYear', 'prop': 'accessEndDate'],
@@ -1609,6 +1735,7 @@ class GlobalSearchTemplatesService {
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.DDC,
                                         prompt     : 'DDC',
+                                        msgCode    : 'titleinstancepackageplatform.ddcs',
                                         qparam     : 'qp_ddc',
                                         placeholder: 'DDC',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'ddcs'],
@@ -1618,6 +1745,7 @@ class GlobalSearchTemplatesService {
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.TIPP_OPEN_ACCESS,
                                         prompt     : 'Open Access',
+                                        msgCode    : 'titleinstancepackageplatform.openAccess',
                                         qparam     : 'qp_openAccess',
                                         placeholder: 'Open Access',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'openAccess'],
@@ -1627,6 +1755,7 @@ class GlobalSearchTemplatesService {
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.COMPONENT_LANGUAGE,
                                         prompt     : 'Language',
+                                        msgCode    : 'titleinstancepackageplatform.languages',
                                         qparam     : 'qp_language',
                                         placeholder: 'Language',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'languages.language'],
@@ -1636,6 +1765,7 @@ class GlobalSearchTemplatesService {
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.COMPONENT_STATUS,
                                         prompt     : 'Status',
+                                        msgCode    : 'default.status',
                                         qparam     : 'qp_status',
                                         placeholder: 'Status',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'status']
@@ -1669,6 +1799,7 @@ class GlobalSearchTemplatesService {
     Map vendors() {
         Map result = [
                 baseclass   : 'wekb.Vendor',
+                msgCode    : 'vendor.plural',
                 title       : 'Vendors',
                 defaultSort : 'name',
                 defaultOrder: 'asc',
@@ -1695,6 +1826,7 @@ class GlobalSearchTemplatesService {
                                 //General Fields
                                 [
                                         prompt     : 'Name',
+                                        msgCode    : 'default.name',
                                         qparam     : 'qp_name',
                                         placeholder: 'Name',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'ilike_Combine_Name_And_VariantNames_And_AbbreviatedName_Org', 'prop': 'name', 'wildcard': 'B']
@@ -1703,6 +1835,7 @@ class GlobalSearchTemplatesService {
                                         type       : 'lookup',
                                         baseClass  : 'wekb.CuratoryGroup',
                                         prompt     : 'Curatory Group',
+                                        msgCode    : 'curatorygroup.label',
                                         qparam     : 'qp_curgroup',
                                         placeholder: 'Curatory Group',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'curatoryGroups.curatoryGroup']
@@ -1712,6 +1845,7 @@ class GlobalSearchTemplatesService {
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.COMPONENT_STATUS,
                                         prompt     : 'Status',
+                                        msgCode    : 'default.status',
                                         qparam     : 'qp_status',
                                         placeholder: 'Component Status',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'status']
@@ -1767,6 +1901,7 @@ class GlobalSearchTemplatesService {
     Map users() {
         Map result = [
                 baseclass   : 'wekb.auth.User',
+                msgCode    : 'user.plural',
                 title       : 'Users',
                 defaultSort : 'username',
                 defaultOrder: 'asc',
@@ -1844,6 +1979,7 @@ class GlobalSearchTemplatesService {
     Map userJobs() {
         Map result = [
                 baseclass   : 'wekb.system.JobResult',
+                msgCode    : 'jobresult.plural',
                 title       : 'User Jobs',
                 defaultSort : 'id',
                 defaultOrder: 'desc',
@@ -1854,6 +1990,7 @@ class GlobalSearchTemplatesService {
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.JOB_TYPE,
                                         prompt     : 'Type',
+                                        msgCode     : 'default.type',
                                         qparam     : 'qp_type',
                                         placeholder: 'Type of Job',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'type']
@@ -1876,6 +2013,7 @@ class GlobalSearchTemplatesService {
     Map updatePackageInfos() {
         Map result = [
                 baseclass: 'wekb.UpdatePackageInfo',
+                msgCode    : 'updatepackageinfo.plural',
                 title    : 'Package Update Infos',
                 defaultSort : 'startTime',
                 defaultOrder: 'desc',
@@ -1899,6 +2037,7 @@ class GlobalSearchTemplatesService {
                                         type       : 'lookup',
                                         baseClass  : 'wekb.Package',
                                         prompt     : 'Package',
+                                        msgCode    : 'package.label',
                                         qparam     : 'qp_pkg',
                                         placeholder: 'Package',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'pkg']
@@ -1908,6 +2047,7 @@ class GlobalSearchTemplatesService {
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.UPDATE_STATUS,
                                         prompt     : 'Status',
+                                        msgCode    : 'default.status',
                                         qparam     : 'qp_status',
                                         placeholder: 'Type',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'status'],
@@ -1918,6 +2058,7 @@ class GlobalSearchTemplatesService {
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Automatic Update',
+                                        msgCode    : 'updatepackageinfo.automaticUpdate',
                                         qparam     : 'qp_automaticUpdate',
                                         placeholder: 'Automatic Update',
                                         propType   : 'Boolean',
@@ -1950,6 +2091,7 @@ class GlobalSearchTemplatesService {
     Map updateTippInfos() {
         Map result = [
                 baseclass: 'wekb.UpdateTippInfo',
+                msgCode    : 'updatetippinfo.plural',
                 title    : 'Title Update Infos',
                 defaultSort : 'startTime',
                 defaultOrder: 'desc',
@@ -1967,6 +2109,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         prompt     : 'KBART Field',
+                                        msgCode    : 'updatetippinfo.kbartProperty',
                                         qparam     : 'qp_kbartProperty',
                                         placeholder: 'KBART Field',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'kbartProperty']
@@ -1988,6 +2131,7 @@ class GlobalSearchTemplatesService {
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.UPDATE_TYPE,
                                         prompt     : 'Type',
+                                        msgCode     : 'default.type',
                                         qparam     : 'qp_type',
                                         placeholder: 'Type',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'type'],
@@ -1997,6 +2141,7 @@ class GlobalSearchTemplatesService {
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.UPDATE_STATUS,
                                         prompt     : 'Status',
+                                        msgCode    : 'default.status',
                                         qparam     : 'qp_status',
                                         placeholder: 'Type',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'status'],

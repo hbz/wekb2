@@ -3,7 +3,7 @@
     <div class="content wekb-inline-lists">
         <dl>
             <dt class="control-label">
-                Name
+                <g:message code="org.name"/>
             </dt>
             <dd>
                 <semui:xEditable owner="${d}" field="name" required="true"/>
@@ -11,7 +11,7 @@
         </dl>
         <dl>
             <dt class="control-label">
-                Abbreviated Name
+                <g:message code="org.abbreviatedName"/>
             </dt>
             <dd>
                 <semui:xEditable owner="${d}" field="abbreviatedName" required="true"/>
@@ -19,7 +19,7 @@
         </dl>
         <dl>
             <dt class="control-label">
-                Status
+                <g:message code="default.status"/>
             </dt>
             <dd>
                 <semui:xEditableRefData owner="${d}" field="status" config="${RCConstants.COMPONENT_STATUS}"/>
@@ -33,7 +33,7 @@
         </dl>
         <dl>
             <dt class="control-label">
-                Homepage
+                <g:message code="org.homepage"/>
             </dt>
             <dd>
                 <semui:xEditable owner="${d}" field="homepage" outGoingLink="true"/>
@@ -41,7 +41,7 @@
         </dl>
         <dl>
             <dt class="control-label">
-                Metadata Downloader URL
+                <g:message code="org.metadataDownloaderURL"/>
             </dt>
             <dd>
                 <semui:xEditable owner="${d}" field="metadataDownloaderURL" validation="url" outGoingLink="true"/>
@@ -49,7 +49,7 @@
         </dl>
         <dl>
             <dt class="control-label">
-                KBART Downloader URL
+                <g:message code="org.kbartDownloaderURL"/>
             </dt>
             <dd>
                 <semui:xEditable owner="${d}" field="kbartDownloaderURL" validation="url" outGoingLink="true"/>
@@ -58,7 +58,7 @@
         <g:if test="${d.id != null}">
             <dl>
                 <dt class="control-label">
-                    Roles
+                    <g:message code="org.role"/>
                 </dt>
                 <dd>
                     <div class="ui bulleted list">

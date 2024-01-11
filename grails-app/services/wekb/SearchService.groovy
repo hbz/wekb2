@@ -108,6 +108,8 @@ class SearchService {
                 Class target_class = Class.forName(result.qbetemplate.baseclass);
                 def read_perm = accessService.checkReadable(result.qbetemplate.baseclass)
 
+                result.classSimpleName = target_class.simpleName
+
                 if (read_perm && !params.init) {
 
                     log.debug("Execute query");
@@ -198,7 +200,7 @@ class SearchService {
                         def sp = prop.minus('?')
 
                         if(result.qbetemplate.baseclass != 'wekb.RefdataValue' && cobj?.class?.name == 'wekb.RefdataValue' ) {
-                            cobj = cobj.value
+                            cobj = cobj.getI10n('value')
                         }
                         else if(sp == 'curatoryGroupsCuratoryGroup') {
                             if(cobj instanceof Package){

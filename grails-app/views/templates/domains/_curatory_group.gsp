@@ -3,17 +3,17 @@
     <div class="content wekb-inline-lists">
         <dl>
 
-            <dt class="control-label">Curatory Group Name</dt>
+            <dt class="control-label"><g:message code="curatorygroup.name"/></dt>
             <dd><semui:xEditable owner="${d}" field="name" required="true"/></dd>
         </dl>
         <dl>
-            <dt class="control-label">Type</dt>
+            <dt class="control-label"><g:message code="curatorygroup.type"/></dt>
             <dd><semui:xEditableRefData owner="${d}" field="type" config="${RCConstants.CURATORY_GROUP_TYPE}"
                                         required="true"/></dd>
         </dl>
 
         <dl>
-            <dt class="control-label">Status</dt>
+            <dt class="control-label"><g:message code="default.status"/></dt>
             <dd><semui:xEditableRefData owner="${d}" field="status" config="${RCConstants.COMPONENT_STATUS}"/></dd>
         </dl>
 
