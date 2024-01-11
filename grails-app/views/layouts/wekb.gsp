@@ -39,71 +39,71 @@
         <div class="menu">
             <g:link class="item" controller="public" action="wekbNews">we:kb News</g:link>
         </div>
-        <div class="header">Search</div>
+        <div class="header"><g:message code="default.button.search"/></div>
 
         <div class="menu">
-            <g:link class="item" controller="search" action="index">All Components</g:link>
+            <g:link class="item" controller="search" action="index"><g:message code="public.allComponents"/></g:link>
             <g:link class="item" controller="search" action="componentSearch"
-                    params="[qbe: 'g:publicPackages']">Packages</g:link>
+                    params="[qbe: 'g:publicPackages']"><g:message code="public.packages"/></g:link>
             <g:link class="item" controller="search" action="componentSearch"
-                    params="[qbe: 'g:platforms']">Platforms</g:link>
+                    params="[qbe: 'g:platforms']"><g:message code="public.platforms"/></g:link>
             <g:link class="item" controller="search" action="componentSearch"
-                    params="[qbe: 'g:orgs']">Providers</g:link>
-            <g:link class="item" controller="search" action="componentSearch" params="[qbe: 'g:tipps']">Titles</g:link>
+                    params="[qbe: 'g:orgs']"><g:message code="public.providers"/></g:link>
+            <g:link class="item" controller="search" action="componentSearch" params="[qbe: 'g:tipps']"><g:message code="public.titles"/></g:link>
             <g:link class="item" controller="search" action="componentSearch"
-                    params="[qbe: 'g:vendors']">Vendors</g:link>
+                    params="[qbe: 'g:vendors']"><g:message code="public.vendors"/></g:link>
         </div>
 
         <div class="menu">
             <g:link class="item" controller="search" action="componentSearch"
-                    params="[qbe: 'g:curatoryGroups', qp_type: RDStore.CURATORY_GROUP_TYPE_PROVIDER.getOID()]">Curatory Groups</g:link>
+                    params="[qbe: 'g:curatoryGroups', qp_type: RDStore.CURATORY_GROUP_TYPE_PROVIDER.getOID()]"><g:message code="public.curatoryGroups"/></g:link>
             <g:link class="item" controller="search" action="componentSearch"
-                    params="[qbe: 'g:sources']">Sources</g:link>
+                    params="[qbe: 'g:sources']"><g:message code="public.sources"/></g:link>
 
         </div>
     </div>
     <g:if test="${isUserLoggedIn}">
         <g:if test="${user.curatoryGroupUsers.size() > 0 && user.showMyComponents()}">
             <div class="item">
-                <div class="header">My Components</div>
+                <div class="header"><g:message code="public.myComponents"/></div>
 
                 <div class="menu">
-                    <g:link class="item" controller="group" action="myPackages">My Packages</g:link>
-                    <g:link class="item" controller="group" action="myPlatforms">My Platforms</g:link>
-                    <g:link class="item" controller="group" action="myProviders">My Providers</g:link>
-                    <g:link class="item" controller="group" action="mySources">My Sources</g:link>
-                    <g:link class="item" controller="group" action="myTitles">My Titles</g:link>
+                    <g:link class="item" controller="group" action="myPackages"><g:message code="public.myPackages"/></g:link>
+                    <g:link class="item" controller="group" action="myPlatforms"><g:message code="public.myPlatforms"/></g:link>
+                    <g:link class="item" controller="group" action="myProviders"><g:message code="public.myProviders"/></g:link>
+                    <g:link class="item" controller="group" action="mySources"><g:message code="public.mySources"/></g:link>
+                    <g:link class="item" controller="group" action="myTitles"><g:message code="public.myTitles"/></g:link>
                 </div>
 
                 <div class="menu">
-                    <g:link class="item" controller="group" action="myPackageManagement">My Package Management</g:link>
+                    <g:link class="item" controller="group" action="myPackageManagement"><g:message code="public.myPackageManagement"/></g:link>
                     <g:link class="item" controller="group"
-                            action="myPackagesNeedsAutoUpdates">My Packages due to automatic update</g:link>
-                    <g:link class="item" controller="group" action="myAutoUpdateInfos">My Auto Update Infos</g:link>
+                            action="myPackagesNeedsAutoUpdates"><g:message code="public.myPackagesNeedsAutoUpdates"/></g:link>
+                    <g:link class="item" controller="group" action="myAutoUpdateInfos"><g:message code="public.myAutoUpdateInfos"/></g:link>
                 </div>
             </div>
         </g:if>
 
         <div class="item">
-            <div class="header">Statistics</div>
+            <div class="header"><g:message code="public.myAutoUpdateInfos"/></div>
 
             <div class="menu">
-                <g:link class="item" controller="home" action="statistic">Statistics</g:link>
+                <g:link class="item" controller="home" action="statistic"><g:message code="public.statistic"/></g:link>
             </div>
         </div>
         <sec:ifAnyGranted roles='ROLE_ADMIN,ROLE_EDITOR'>
             <div class="item">
-                <div class="header">Create</div>
+                <div class="header"><g:message code="default.button.create.label"/></div>
 
                 <div class="menu">
                     <g:link class="item" controller="create" action="index"
-                            params="[tmpl: 'wekb.Package']">Packages</g:link>
+                            params="[tmpl: 'wekb.Package']"><g:message code="public.packages"/></g:link>
                     <g:link class="item" controller="create" action="index"
-                            params="[tmpl: 'wekb.Platform']">Platforms</g:link>
+                            params="[tmpl: 'wekb.Platform']"><g:message code="public.platforms"/></g:link>
                     <g:link class="item" controller="create" action="index"
-                            params="[tmpl: 'wekb.KbartSource']">Sources</g:link>
+                            params="[tmpl: 'wekb.KbartSource']"><g:message code="public.sources"/></g:link>
                     <g:link class="item" controller="create" action="index"
-                            params="[tmpl: 'wekb.TitleInstancePackagePlatform']">Titles</g:link>
+                            params="[tmpl: 'wekb.TitleInstancePackagePlatform']"><g:message code="public.titles"/></g:link>
                 </div>
             </div>
         </sec:ifAnyGranted>
@@ -155,12 +155,21 @@
 
         <div class="ui category search item inverted" id="spotlightSearch" style="flex-grow:1;">
             <div class="ui inverted icon input">
-                <input class="prompt" type="text" placeholder="Search for Packages, Titles, Providers, Platforms...">
+                <input class="prompt" type="text" placeholder="${g.message(code: 'public.globalSearch.placeHolder')}">
                 <i class="search link icon"></i>
             </div>
 
             <div class="results"></div>
         </div>
+
+%{--        <div class="ui simple dropdown item">
+            <i class="globe alternate icon icon"></i>
+            <i class="dropdown icon"></i>
+            <div class="menu">
+                <g:link class="item" controller="${controllerName}" action="${actionName}" params="${params+[lang: 'en']}"><g:message code="language.en"/></g:link>
+                <g:link class="item" controller="${controllerName}" action="${actionName}" params="${params+[lang: 'de']}"><g:message code="language.de"/></g:link>
+            </div>
+        </div>--}%
 
         <g:if test="${isUserLoggedIn}">
             <div class="ui dropdown icon item">
@@ -168,9 +177,9 @@
                 <i class="dropdown icon"></i>
 
                 <div class="menu">
-                    <g:link controller="home" action="userdash" class="item">My User Dashboard</g:link>
-                    <g:link controller="home" action="profile" class="item">My Profile & Preferences</g:link>
-                    <g:link controller="home" action="dsgvo" class="item">Privacy Statement</g:link>
+                    <g:link controller="home" action="userdash" class="item"><g:message code="public.userdash"/></g:link>
+                    <g:link controller="home" action="profile" class="item"><g:message code="public.profile"/></g:link>
+                    <g:link controller="home" action="dsgvo" class="item"><g:message code="public.dsgvo"/></g:link>
                 </div>
             </div>
 

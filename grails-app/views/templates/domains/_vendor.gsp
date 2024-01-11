@@ -3,7 +3,7 @@
     <div class="content wekb-inline-lists">
         <dl>
             <dt class="control-label">
-                Name
+                <g:message code="vendor.name"/>
             </dt>
             <dd>
                 <semui:xEditable owner="${d}" field="name" required="true"/>
@@ -11,7 +11,7 @@
         </dl>
         <dl>
             <dt class="control-label">
-                Abbreviated Name
+                <g:message code="vendor.abbreviatedName"/>
             </dt>
             <dd>
                 <semui:xEditable owner="${d}" field="abbreviatedName" required="true"/>
@@ -19,7 +19,7 @@
         </dl>
         <dl>
             <dt class="control-label">
-                Homepage
+                <g:message code="vendor.homepage"/>
             </dt>
             <dd>
                 <semui:xEditable owner="${d}" field="homepage" outGoingLink="true"/>
@@ -27,7 +27,7 @@
         </dl>
         <dl>
             <dt class="control-label">
-                Status
+                <g:message code="default.status"/>
             </dt>
             <dd>
                 <semui:xEditableRefData owner="${d}" field="status" config="${RCConstants.COMPONENT_STATUS}"/>
@@ -43,7 +43,7 @@
         <g:if test="${d.id != null}">
             <dl>
                 <dt class="control-label">
-                    Roles
+                    <g:message code="vendor.role"/>
                 </dt>
                 <dd>
                     <div class="ui bulleted list">

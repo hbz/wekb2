@@ -3,7 +3,7 @@
     <div class="content wekb-inline-lists">
         <dl>
             <dt class="control-label">
-                Name
+                <g:message code="platform.name"/>
             </dt>
             <dd>
                 <semui:xEditable owner="${d}" field="name" required="true"/>
@@ -11,7 +11,7 @@
         </dl>
         <dl>
             <dt class="control-label">
-                Status
+                <g:message code="default.status"/>
             </dt>
             <dd>
                 <semui:xEditableRefData owner="${d}" field="status" config="${RCConstants.COMPONENT_STATUS}"/>
@@ -25,7 +25,7 @@
         </dl>
         <dl>
             <dt class="control-label">
-                Provider
+                <g:message code="platform.provider"/>
             </dt>
             <dd>
                 <semui:xEditableManyToOne owner="${d}" field="provider"
@@ -34,7 +34,7 @@
         </dl>
         <dl>
             <dt class="control-label">
-                Primary URL
+                <g:message code="platform.primaryUrl"/>
             </dt>
             <dd>
                 <semui:xEditable owner="${d}" field="primaryUrl" validation="url" outGoingLink="true"/>
@@ -50,17 +50,17 @@
             </dd>
         </dl>--}%
         <dl>
-            <dt class="control-label">IP Auth Supported
+        <dt class="control-label"><g:message code="platform.ipAuthentication"/></dt>
             <dd><semui:xEditableRefData owner="${d}" field="ipAuthentication"
                                         config="${RCConstants.PLATFORM_IP_AUTH}"/></dd>
         </dl>
         <dl>
-            <dt class="control-label">Open Athens Supported</dt>
+            <dt class="control-label"><g:message code="platform.openAthens"/></dt>
             <dd><semui:xEditableRefData owner="${d}" field="openAthens"
                                         config="${RCConstants.YN}"/></dd>
         </dl>
         <dl>
-            <dt class="control-label">Shibboleth Supported</dt>
+            <dt class="control-label"><g:message code="platform.shibbolethAuthentication"/></dt>
             <dd><semui:xEditableRefData owner="${d}" field="shibbolethAuthentication"
                                         config="${RCConstants.YN}"/></dd>
         </dl>
@@ -110,18 +110,18 @@
 
 
         <dl>
-            <dt class="control-label">User/Pass Supported</dt>
+            <dt class="control-label"><g:message code="platform.passwordAuthentication"/></dt>
             <dd><semui:xEditableRefData owner="${d}" field="passwordAuthentication"
                                         config="${RCConstants.YN}"/></dd>
         </dl>
         <dl>
-            <dt class="control-label">Proxy Supported</dt>
+            <dt class="control-label"><g:message code="platform.proxySupported"/></dt>
             <dd><semui:xEditableRefData owner="${d}" field="proxySupported"
                                         config="${RCConstants.YN}"/></dd>
         </dl>
 
         <dl>
-            <dt class="control-label">Counter Registry Api Uuid</dt>
+            <dt class="control-label"><g:message code="platform.counterRegistryApiUuid"/></dt>
             <dd><semui:xEditable owner="${d}" field="counterRegistryApiUuid"/></dd>
         </dl>
 
