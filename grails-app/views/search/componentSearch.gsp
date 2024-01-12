@@ -2,18 +2,18 @@
 <html>
 <head>
     <meta name="layout" content="wekb"/>
-    <title>we:kb : Search <g:if test="${qbetemplate}">${qbetemplate.title}</g:if><g:if
-            test="${refObject}">for ${refObject.getDomainName()}</g:if></title>
+    <title>we:kb : <g:message code="public.search"/><g:if test="${qbetemplate}"> <g:message code="${qbetemplate.msgCode}" default="${qbetemplate.title}"/></g:if><g:if
+            test="${refObject}">${refObject.getDomainName()}</g:if></title>
 </head>
 
 <body>
 
 <g:if test="${qbetemplate}">
-    <h1 class="ui header">Search ${qbetemplate.title ?: ''} <g:if test="${refObject}">for ${refObject.getDomainName()}: <g:link
+    <h1 class="ui header"><g:message code="public.search"/> <g:message code="${qbetemplate.msgCode}" default="${qbetemplate.title}"/> <g:if test="${refObject}">for ${refObject.getDomainName()}: <g:link
             controller="resource" action="show" id="${refObject.getOID()}">${refObject.name}</g:link></g:if></h1>
 </g:if>
 <g:else>
-    <h1 class="ui header">Search</h1>
+    <h1 class="ui header"><g:message code="public.search"/></h1>
 </g:else>
 
 <semui:flashMessage data="${flash}"/>
@@ -28,18 +28,16 @@
 
         <div class="ui bulleted link list">
             <g:link class="item" controller="search" action="componentSearch"
-                    params="[qbe: 'g:packages']">Packages</g:link>
+                    params="[qbe: 'g:packages']"><g:message code="public.packages"/></g:link>
             <g:link class="item" controller="search" action="componentSearch"
-                    params="[qbe: 'g:platforms']">Platforms</g:link>
+                    params="[qbe: 'g:platforms']"><g:message code="public.platforms"/></g:link>
             <g:link class="item" controller="search" action="componentSearch"
-                    params="[qbe: 'g:orgs']">Providers</g:link>
-            <g:link class="item" controller="search" action="componentSearch" params="[qbe: 'g:tipps']">Titles</g:link>
+                    params="[qbe: 'g:orgs']"><g:message code="public.providers"/></g:link>
+            <g:link class="item" controller="search" action="componentSearch" params="[qbe: 'g:tipps']"><g:message code="public.titles"/></g:link>
             <g:link class="item" controller="search" action="componentSearch"
-                    params="[qbe: 'g:curatoryGroups']">Curatory Groups</g:link>
+                    params="[qbe: 'g:curatoryGroups']"><g:message code="public.curatoryGroups"/></g:link>
             <g:link class="item" controller="search" action="componentSearch"
-                    params="[qbe: 'g:sources']">Sources</g:link>
-            <g:link class="item" controller="search" action="componentSearch"
-                    params="[qbe: 'g:identifiers']">Identifiers</g:link>
+                    params="[qbe: 'g:sources']"><g:message code="public.sources"/></g:link>
         </div>
 
         <br>
@@ -74,7 +72,7 @@
         </g:elseif>
         <g:else>
             <semui:message>
-                <p>No results.</p>
+                <p><g:message code="default.empty"/></p>
             </semui:message>
         </g:else>
     </g:else>

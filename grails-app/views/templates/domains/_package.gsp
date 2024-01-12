@@ -3,21 +3,21 @@
     <div class="content wekb-inline-lists">
         <dl>
             <dt class="control-label">
-                Name
+                <g:message code="package.name"/>
             </dt>
             <dd>
                 <semui:xEditable owner="${d}" field="name" required="true"/>
             </dd>
         </dl>
         <dl>
-            <dt class="control-label">Provider</dt>
+            <dt class="control-label"><g:message code="package.provider.name"/></dt>
             <dd><semui:xEditableManyToOne owner="${d}" field="provider" baseClass="wekb.Org"/></dd>
         </dl>
 
 <g:if test="${controllerName != 'create'}">
     <dl>
         <dt class="control-label">
-            Vendors
+            <g:message code="public.vendors"/>
         </dt>
         <dd>
             <g:render template="/templates/packageVendors"/>
@@ -26,25 +26,25 @@
 </g:if>
 
         <dl>
-            <dt class="control-label">Source</dt>
+            <dt class="control-label"><g:message code="package.source"/></dt>
             <dd><semui:xEditableManyToOne owner="${d}" field="kbartSource" baseClass="wekb.KbartSource"
                                           disabled="${createObject}"/></dd>
         </dl>
 
         <dl>
-            <dt class="control-label">Nominal Platform</dt>
+            <dt class="control-label"><g:message code="package.nominalPlatform.name"/></dt>
             <dd><semui:xEditableManyToOne owner="${d}" field="nominalPlatform"
                                           baseClass="wekb.Platform"/></dd>
         </dl>
         <dl>
-            <dt class="control-label">Status</dt>
+            <dt class="control-label"><g:message code="default.status"/></dt>
             <dd>
                 <semui:xEditableRefData owner="${d}" field="status" config="${RCConstants.COMPONENT_STATUS}"/>
             </dd>
         </dl>
         <g:if test="${controllerName != 'create' && (d.getCountManualUpdateInfos() > 0 || d.getCountAutoUpdateInfos() > 0)}">
             <dl>
-                <dt class="control-label">Last Update Comment</dt>
+                <dt class="control-label"><g:message code="package.lastUpdateComment"/></dt>
                 <dd><semui:xEditable owner="${d}" field="lastUpdateComment" overwriteEditable="false"/>
                     <br>
                     <br>
@@ -54,12 +54,12 @@
             </dl>
         </g:if>
         <dl>
-            <dt class="control-label">Description</dt>
+            <dt class="control-label"><g:message code="package.description"/></dt>
             <dd><semui:xEditable owner="${d}" type="textarea" field="description" disabled="${createObject}"/></dd>
 
         </dl>
         <dl>
-            <dt class="control-label">Description URL</dt>
+            <dt class="control-label"><g:message code="package.descriptionURL"/></dt>
             <dd><semui:xEditable owner="${d}" field="descriptionURL" validation="url" outGoingLink="true"
                                  disabled="${createObject}"/>
             </dd>
@@ -67,7 +67,7 @@
 
         <dl>
             <dt class="control-label">
-                Breakable
+                <g:message code="package.breakable"/>
             </dt>
             <dd>
                 <semui:xEditableRefData owner="${d}" field="breakable" config="${RCConstants.PACKAGE_BREAKABLE}"
@@ -76,7 +76,7 @@
         </dl>
         <dl>
             <dt class="control-label">
-                Content Type
+                <g:message code="package.contentType"/>
             </dt>
             <dd>
                 <semui:xEditableRefData owner="${d}" field="contentType"
@@ -85,7 +85,7 @@
         </dl>
         <dl>
             <dt class="control-label">
-                File
+                <g:message code="package.file"/>
             </dt>
             <dd>
                 <semui:xEditableRefData owner="${d}" field="file" config="${RCConstants.PACKAGE_FILE}"
@@ -94,7 +94,7 @@
         </dl>
         <dl>
             <dt class="control-label">
-                Open Access
+                <g:message code="package.openAccess"/>
             </dt>
             <dd>
                 <semui:xEditableRefData owner="${d}" field="openAccess" config="${RCConstants.PACKAGE_OPEN_ACCESS}"
@@ -103,7 +103,7 @@
         </dl>
         <dl>
             <dt class="control-label">
-                Payment Type
+                <g:message code="package.paymentType"/>
             </dt>
             <dd>
                 <semui:xEditableRefData owner="${d}" field="paymentType"
@@ -112,7 +112,7 @@
         </dl>
         <dl>
             <dt class="control-label">
-                Scope
+                <g:message code="package.scope"/>
             </dt>
             <dd>
                 <semui:xEditableRefData owner="${d}" field="scope" config="${RCConstants.PACKAGE_SCOPE}"
@@ -124,7 +124,7 @@
         <g:if test="${controllerName != 'create'}">
             <dl>
                 <dt class="control-label">
-                    National Range
+                    <g:message code="package.nationalRanges"/>
                 </dt>
                 <dd>
                     <g:if test="${d.scope?.value == 'National'}">
@@ -134,7 +134,7 @@
             </dl>
             <dl>
                 <dt class="control-label">
-                    Regional Range
+                    <g:message code="package.regionalRanges"/>
                 </dt>
                 <dd>
                     <g:if test="${RefdataCategory.lookup(RCConstants.COUNTRY, 'DE') in d.nationalRanges && d.scope?.value == 'National'}">
@@ -146,7 +146,7 @@
 
         <dl>
             <dt class="control-label">
-                Free Trial
+                <g:message code="package.freeTrial"/>
             </dt>
             <dd>
                 <semui:xEditableRefData owner="${d}" field="freeTrial" config="${RCConstants.YN}"
@@ -156,7 +156,7 @@
 
         <dl>
             <dt class="control-label">
-                Free Trial Phase
+                <g:message code="package.freeTrialPhase"/>
             </dt>
             <dd>
                 <semui:xEditable owner="${d}" field="freeTrialPhase" disabled="${createObject}"/>
@@ -206,7 +206,7 @@
 
                     <g:if test="${editable}">
                         <a class="ui right floated black button" href="#"
-                           onclick="$('#paaModal').modal('show');">Add Archiving Agency</a>
+                           onclick="$('#paaModal').modal('show');"><g:message code="default.add.label" args="['Archiving Agency']"/>y</a>
 
                         <br>
                         <br>
@@ -217,7 +217,7 @@
 
 
         <g:if test="${editable && controllerName != 'create'}">
-            <semui:modal id="paaModal" title="Add Archiving Agency">
+            <semui:modal id="paaModal" title="${g.message(code: "default.add.label", args:['Archiving Agency'])}">
 
                 <g:form controller="ajaxHtml" action="addToCollection" class="ui form">
                     <input type="hidden" name="__context" value="${d.getOID()}"/>

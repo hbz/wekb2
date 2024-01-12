@@ -17,21 +17,21 @@
 
             <div class="three wide column left aligned">
 
-                <h3 class="ui  header">About we:kb</h3>
+                <h3 class="ui  header"><g:message code="footer.about"/> </h3>
 
                 <div class="ui  link list">
                     <div class="item">
                         <a target="_blank" class="content"
-                           href="https://service-wiki.hbz-nrw.de/display/WEKB/About+we%3Akb">About we:kb</a>
+                           href="https://service-wiki.hbz-nrw.de/display/WEKB/About+we%3Akb"><g:message code="footer.about"/></a>
                     </div>
 
                     <div class="item">
                         <a target="_blank" class="content"
-                           href="https://service-wiki.hbz-nrw.de/pages/viewpage.action?pageId=771129406">Manual  we:kb</a>
+                           href="https://service-wiki.hbz-nrw.de/pages/viewpage.action?pageId=771129406"><g:message code="footer.manual"/></a>
                     </div>
                 </div>
 
-                <h3 class="ui  header">Technical Details</h3>
+                <h3 class="ui  header"><g:message code="footer.technicalDetails"/></h3>
 
                 <div class="ui  link list">
                     <%-- App version --%>
@@ -66,35 +66,35 @@
             </div>
 
             <div class="four wide column left aligned">
-                <h3 class="ui  header">Contact Us</h3>
+                <h3 class="ui  header"><g:message code="footer.contactUs"/></h3>
 
                 <div class="ui  link list ">
                     <div class="item"><a class="content" href="mailto:laser@hbz-nrw.de">E-Mail</a></div>
 
                     <div class="item"><a target="_blank" class="content"
-                                         href="https://www.hbz-nrw.de/ueber-uns/kontakt/anreise">How to reach us</a>
+                                         href="https://www.hbz-nrw.de/ueber-uns/kontakt/anreise"><g:message code="footer.howToReachUs"/></a>
                     </div>
 
                     <div class="item"><a target="_blank" class="content"
-                                         href="https://www.hbz-nrw.de/impressum">Legal Notice</a></div>
+                                         href="https://www.hbz-nrw.de/impressum"><g:message code="footer.legalNotice"/></a></div>
 
                     <div class="item"><a target="_blank" class="content"
-                                         href="https://www.hbz-nrw.de/datenschutz">Data Privacy Statement</a></div>
+                                         href="https://www.hbz-nrw.de/datenschutz"><g:message code="footer.dataPrivayStat"/></a></div>
                 </div>
             </div>
 
             <div class="four wide column left aligned">
-                <h3 class="ui  header">Accessibility</h3>
+                <h3 class="ui  header"><g:message code="footer.accessibility"/></h3>
 
                 <div class="ui  link list ">
                     <div class="item"><a target="_blank" class="content"
-                                         href="https://www.hbz-nrw.de/barrierefreiheit">Accessibility Statement</a>
+                                         href="https://www.hbz-nrw.de/barrierefreiheit"><g:message code="footer.accessibilityStat"/></a>
                     </div>
 
-                    <div class="item"><g:link controller="public" action="wcagPlainEnglish">Plain English</g:link></div>
+                    <div class="item"><g:link controller="public" action="wcagPlainEnglish"><g:message code="footer.plainEnglish"/></g:link></div>
 
                     <div class="item"><g:link controller="public"
-                                              action="wcagFeedbackForm">Accessibility Feedback Form</g:link></div>
+                                              action="wcagFeedbackForm"><g:message code="footer.accFeedbackForm"/></g:link></div>
                 </div>
             </div>
         </div>
