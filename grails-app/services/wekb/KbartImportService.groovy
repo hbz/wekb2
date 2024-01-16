@@ -1438,7 +1438,8 @@ class KbartImportService {
                         'coverageDepth': cov_depth,
                         'coverageNote': c.coverageNote,
                         'startDate': startAsDate,
-                        'endDate': endAsDate
+                        'endDate': endAsDate,
+                        'uuid': UUID.randomUUID().toString()
                 )
             }
         }else if(countNewCoverages > 1 && countTippCoverages > 1) {
@@ -1474,7 +1475,8 @@ class KbartImportService {
                         'coverageDepth': cov_depth,
                         'coverageNote': c.coverageNote,
                         'startDate': startAsDate,
-                        'endDate': endAsDate
+                        'endDate': endAsDate,
+                        'uuid': UUID.randomUUID().toString()
                 )
             }
 

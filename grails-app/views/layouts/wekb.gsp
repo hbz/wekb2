@@ -85,7 +85,7 @@
         </g:if>
 
         <div class="item">
-            <div class="header"><g:message code="public.myAutoUpdateInfos"/></div>
+            <div class="header"><g:message code="public.statistic"/></div>
 
             <div class="menu">
                 <g:link class="item" controller="home" action="statistic"><g:message code="public.statistic"/></g:link>
