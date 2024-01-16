@@ -3,6 +3,7 @@ package wekb
 import grails.gorm.transactions.Transactional
 import grails.plugin.springsecurity.SpringSecurityService
 import grails.web.mapping.LinkGenerator
+import groovyx.gpars.GParsPool
 import wekb.auth.User
 import wekb.auth.UserRole
 import wekb.helper.RCConstants
@@ -249,6 +250,26 @@ class WorkflowService {
         result.ref = grailsLinkGenerator.link(controller: 'resource', action: 'show', id: pkg.getOID(), absolute: true)
 
         result
+    }
+
+    void updateListOfPackageWithKbart(List<Package> packageList, boolean allTitles = false){
+        GParsPool.withPool(5) { pool ->
+            packageList.anyParallel { aPackage ->
+                Set<Thread> threadSet = Thread.getAllStackTraces().keySet()
+                Thread[] threadArray = threadSet.toArray(new Thread[threadSet.size()])
+                boolean processRunning = false
+                threadArray.each { Thread thread ->
+                    if (thread.name == 'uPFKS' + aPackage.id) {
+                        processRunning = true
+                    }
+                }
+
+                if (!processRunning) {
+                        Thread.currentThread().setName('uPFKS' + aPackage.id)
+                        autoUpdatePackagesService.startAutoPackageUpdate(aPackage, !allTitles)
+                }
+            }
+        }
     }
 
     private Map deleteIdentifierNamespace(IdentifierNamespace identifierNamespace) {

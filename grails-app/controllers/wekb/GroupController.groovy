@@ -14,6 +14,7 @@ class GroupController {
     ExportService exportService
     AccessService accessService
     ManagementService managementService
+    WorkflowService workflowService
 
     @Secured(['ROLE_USER', 'IS_AUTHENTICATED_FULLY'])
     def index() {
@@ -280,6 +281,47 @@ class GroupController {
         searchResult.result.packageSourceInfosBatchForm = managementService.packageSourceInfosBatchForm
 
         searchResult.result
+    }
+
+
+    @Secured(['ROLE_EDITOR', 'IS_AUTHENTICATED_FULLY'])
+    def processPackageUpdate() {
+        def searchResult = [:]
+
+        searchResult = getResultGenerics()
+
+        if(!searchResult.groups){
+            flash.error = "You are not assigned to any curatory group to view this area!"
+            redirect(controller: 'public', action: 'index')
+            return
+        }
+
+        params.qbe = 'g:packages'
+        params.qp_curgroups = searchResult.groups.id
+        params.hide = ['qp_curgroup', 'qp_curgroups']
+        params.max = '5000'
+
+        searchResult = searchService.search(searchResult.user, searchResult, params)
+
+        searchResult.result
+
+        List<Package> packageList = []
+        searchResult.result.new_recset.each {
+            if(it.obj.kbartSource) {
+                packageList << it.obj
+            }
+        }
+
+        boolean allTitles = params.allTitles == 'true' ? true : false
+
+        if(packageList.size() > 0){
+            workflowService.updateListOfPackageWithKbart(packageList, allTitles)
+        }
+
+        flash.message = "The package update for ${packageList.size()} Package was started. This runs in the background."
+
+        redirect(url: request.getHeader('referer'))
+
     }
 
 }
