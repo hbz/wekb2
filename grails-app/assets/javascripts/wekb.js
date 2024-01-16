@@ -231,6 +231,7 @@ $(function () {
             }
         }
     });
+    $('#spotlightSearch').find('.prompt').removeAttr('autocomplete');
 
     $(".simpleReferenceDropdown").each(function() {
         var simpleReferenceDropdownURL = ajaxLookUp + "/?baseClass="+$(this).children('input')[0].getAttribute('data-domain')+"&filter1="+$(this).children('input')[0].getAttribute('data-filter1')+"&q={query}"
@@ -263,9 +264,9 @@ $(function () {
             onShow: function () {
                 current = $(this).val();
                 $(this).dropdown('set selected', current);
-
             }
         });
+        $(this).find('.search').removeAttr('autocomplete');
     });
 
     $('.message .close')
