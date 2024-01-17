@@ -17,7 +17,7 @@
 
             <div class="three wide column left aligned">
 
-                <h3 class="ui  header"><g:message code="footer.about"/> </h3>
+                <h2 class="ui  header"><g:message code="footer.about"/> </h2>
 
                 <div class="ui  link list">
                     <div class="item">
@@ -31,7 +31,7 @@
                     </div>
                 </div>
 
-                <h3 class="ui  header"><g:message code="footer.technicalDetails"/></h3>
+                <h2 class="ui  header"><g:message code="footer.technicalDetails"/></h2>
 
                 <div class="ui  link list">
                     <%-- App version --%>
@@ -66,7 +66,7 @@
             </div>
 
             <div class="four wide column left aligned">
-                <h3 class="ui  header"><g:message code="footer.contactUs"/></h3>
+                <h2 class="ui  header"><g:message code="footer.contactUs"/></h2>
 
                 <div class="ui  link list ">
                     <div class="item"><a class="content" href="mailto:laser@hbz-nrw.de">E-Mail</a></div>
@@ -84,7 +84,7 @@
             </div>
 
             <div class="four wide column left aligned">
-                <h3 class="ui  header"><g:message code="footer.accessibility"/></h3>
+                <h2 class="ui  header"><g:message code="footer.accessibility"/></h2>
 
                 <div class="ui  link list ">
                     <div class="item"><a target="_blank" class="content"
