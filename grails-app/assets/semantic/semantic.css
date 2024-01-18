@@ -36373,15 +36373,15 @@ img.ui.bordered.image {
 /* browsers require these rules separate */
 
 .ui.input > input:-ms-input-placeholder {
-  color: rgba(191, 191, 191, 0.87);
+  color: #585858;
 }
 
 .ui.input > input::-ms-input-placeholder {
-  color: rgba(191, 191, 191, 0.87);
+  color: #585858;
 }
 
 .ui.input > input::placeholder {
-  color: rgba(191, 191, 191, 0.87);
+  color: #585858;
 }
 
 .ui.input > input::-moz-placeholder {
@@ -36389,7 +36389,7 @@ img.ui.bordered.image {
 }
 
 .ui.input > input:-ms-input-placeholder {
-  color: rgba(191, 191, 191, 0.87);
+  color: #585858;
 }
 
 /*******************************
@@ -36466,22 +36466,22 @@ img.ui.bordered.image {
 
 .ui.input.focus > input:-ms-input-placeholder,
 .ui.input > input:focus:-ms-input-placeholder {
-  color: rgba(115, 115, 115, 0.87);
+  color: #000000;
 }
 
 .ui.input.focus > input::-ms-input-placeholder,
 .ui.input > input:focus::-ms-input-placeholder {
-  color: rgba(115, 115, 115, 0.87);
+  color: #000000;
 }
 
 .ui.input.focus > input::placeholder,
 .ui.input > input:focus::placeholder {
-  color: rgba(115, 115, 115, 0.87);
+  color: #000000;
 }
 
 .ui.input.focus > input:-ms-input-placeholder,
 .ui.input > input:focus:-ms-input-placeholder {
-  color: rgba(115, 115, 115, 0.87);
+  color: #000000;
 }
 
 /* --------------------
@@ -65031,12 +65031,12 @@ select.ui.dropdown {
 
 .ui.dropdown:not(.button) > .default.text,
 .ui.default.dropdown:not(.button) > .text {
-  color: rgba(191, 191, 191, 0.87);
+  color: #585858;
 }
 
 .ui.dropdown:not(.button) > input:focus ~ .default.text,
 .ui.default.dropdown:not(.button) > input:focus ~ .text {
-  color: rgba(115, 115, 115, 0.87);
+  color: #000000;
 }
 
 /* --------------------
