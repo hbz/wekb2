@@ -26857,6 +26857,10 @@ a.ui.inverted.black.header.header.header:hover {
          Theme Overrides
 *******************************/
 
+footer h2.ui.header {
+  font-size: 1.28571429rem;
+}
+
 /*******************************
          Site Overrides
 *******************************/
@@ -45549,35 +45553,35 @@ ol.ui.suffixed.list li::before,
 /* browsers require these rules separate */
 
 .ui.form :-ms-input-placeholder {
-  color: rgba(191, 191, 191, 0.87);
+  color: #585858;
 }
 
 .ui.form ::-ms-input-placeholder {
-  color: rgba(191, 191, 191, 0.87);
+  color: #585858;
 }
 
 .ui.form ::placeholder {
-  color: rgba(191, 191, 191, 0.87);
+  color: #585858;
 }
 
 .ui.form :-ms-input-placeholder {
-  color: rgba(191, 191, 191, 0.87) !important;
+  color: #585858 !important;
 }
 
 .ui.form :focus:-ms-input-placeholder {
-  color: rgba(115, 115, 115, 0.87);
+  color: #000000;
 }
 
 .ui.form :focus::-ms-input-placeholder {
-  color: rgba(115, 115, 115, 0.87);
+  color: #000000;
 }
 
 .ui.form :focus::placeholder {
-  color: rgba(115, 115, 115, 0.87);
+  color: #000000;
 }
 
 .ui.form :focus:-ms-input-placeholder {
-  color: rgba(115, 115, 115, 0.87) !important;
+  color: #000000 !important;
 }
 
 /* --------------------
