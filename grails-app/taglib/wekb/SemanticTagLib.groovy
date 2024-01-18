@@ -626,7 +626,7 @@ class SemanticTagLib {
         customInputAttrs.params.remove('offset')
         customInputAttrs.params.remove('class')
         customInputAttrs.class= "wekb-pagination-custom-link js-no-wait-wheel"
-        customInputAttrs['aria-label']= 'messageSource.getMessage('pagination.keyboardInput.goToPage',null,locale)'
+        customInputAttrs['aria-label']= messageSource.getMessage('pagination.keyboardInput.goToPage',null,locale)
         customInputAttrs
         out << callLink(customInputAttrs, '<i class="large chevron circle right icon wekb popup" data-content="' + messageSource.getMessage('pagination.keyboardInput.goToPage',null,locale) + '"></i>')
         out << '            </div>'
