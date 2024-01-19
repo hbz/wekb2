@@ -18,12 +18,15 @@
 
 //=require modules/verticalNavi.js
 
+//=require modules/paginationNavi.js
+
 console.log('+ wekb.js')
 
 
 $(function () {
 
     verticalNavi.go();
+    paginationNavi.go();
 
     $('.ui.sticky')
         .sticky({
