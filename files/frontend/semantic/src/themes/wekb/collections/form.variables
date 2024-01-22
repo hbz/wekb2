@@ -1,0 +1,3 @@
+/* Placeholder */
+@inputPlaceholderColor: #585858;
+@inputPlaceholderFocusColor: #000000;
