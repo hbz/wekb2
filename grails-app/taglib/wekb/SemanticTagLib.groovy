@@ -332,7 +332,7 @@ class SemanticTagLib {
 
         out << '<!--.pagination-->'
         out << '<div class="ui center aligned basic segment">'
-        out << '<nav class="ui pagination menu">'
+        out << '<nav class="ui pagination menu" aria-label="pagination2">'
 
         if (currentstep > firststep) {
             int tmp = (offset - (max * (maxsteps +1)))
@@ -494,7 +494,7 @@ class SemanticTagLib {
 
 
         out << '<div class="ui center aligned basic segment">'
-        out << '<nav class="ui pagination menu" >'
+        out << '<nav class="ui pagination menu">'
 
         if (steps && laststep > firststep) {
             if (maxsteps > laststep) { // | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | > |
@@ -626,6 +626,7 @@ class SemanticTagLib {
         customInputAttrs.params.remove('offset')
         customInputAttrs.params.remove('class')
         customInputAttrs.class= "wekb-pagination-custom-link js-no-wait-wheel"
+        customInputAttrs['aria-label']= messageSource.getMessage('pagination.keyboardInput.goToPage',null,locale)
         customInputAttrs
         out << callLink(customInputAttrs, '<i class="large chevron circle right icon wekb popup" data-content="' + messageSource.getMessage('pagination.keyboardInput.goToPage',null,locale) + '"></i>')
         out << '            </div>'
