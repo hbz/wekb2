@@ -4,6 +4,7 @@ import java.security.MessageDigest
 import java.text.Normalizer
 import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.time.format.ResolverStyle
 
@@ -15,7 +16,10 @@ class TextUtils {
     "from"
   ];
   public static final DateTimeFormatter dateformatter = DateTimeFormatter.ofPattern("uuuu-MM-dd").withResolverStyle(ResolverStyle.STRICT)
-  public static final DateTimeFormatter datetimeformatter = DateTimeFormatter.ofPattern("" + "[uuuu-MM-dd' 'HH:mm:ss.SSS]" + "[uuuu-MM-dd' 'HH:mm:ss.S]" + "[uuuu-MM-dd'T'HH:mm:ss'Z']")
+  //public static final DateTimeFormatter datetimeformatter = DateTimeFormatter.ofPattern("" + "[uuuu-MM-dd' 'HH:mm:ss.SSS]" + "[uuuu-MM-dd' 'HH:mm:ss.S]" + "[uuuu-MM-dd'T'HH:mm:ss'Z']")
+  public static final DateTimeFormatter dateformatter2 = DateTimeFormatter.ofPattern("dd/MM/uuuu").withResolverStyle(ResolverStyle.STRICT)
+  public static final DateTimeFormatter datetimeformatter = DateTimeFormatter.ofPattern("" + "[uuuu-MM-dd' 'HH:mm:ss.SSS]" + "[uuuu-MM-dd'T'HH:mm:ss'Z']").withResolverStyle(ResolverStyle.STRICT)
+
 
   public static int levenshteinDistance(String str1, String str2) {
     if ( ( str1 != null ) && ( str2 != null ) ) {
@@ -228,13 +232,18 @@ class TextUtils {
         else if ( datepart.length() == 10 ) {
           result = LocalDate.parse(datepart, dateformatter).atStartOfDay()
         }
+        else if (datepart.length() == 10 && datepart.contains('/')) {
+          result = LocalDate.parse(datepart, dateformatter2).atStartOfDay()
+        }
         else {
           result = LocalDateTime.parse(datepart, datetimeformatter)
         }
       }
       catch (Exception pe) {
+        pe.printStackTrace()
       }
     }
     result
+
   }
 }
