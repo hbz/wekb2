@@ -113,6 +113,11 @@ class FtpConnectService {
 
         String localDir = "/tmp/wekb/kbartExportFTP"
 
+        File folder = new File("${localDir}")
+        if (!folder.exists()) {
+            folder.mkdirs()
+        }
+
         boolean success
         int port = 0
         List<String> parts = server.split(":")

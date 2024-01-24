@@ -401,7 +401,7 @@ class AdminController {
       Integer tippDuplicatesByNameCount = aPackage.getTippDuplicatesByNameCount()
       Integer tippDuplicatesByUrlCount = aPackage.getTippDuplicatesByURLCount()
       Integer tippDuplicatesByTitleIDCount = aPackage.getTippDuplicatesByTitleIDCount()
-      log.debug("Package ${aPackage.name} : ${index}")
+      //log.debug("Package ${aPackage.name} : ${index}")
 
       if(tippDuplicatesByNameCount > 0 || tippDuplicatesByUrlCount > 0 || tippDuplicatesByTitleIDCount > 0){
         pkgs << [pkg: aPackage, tippDuplicatesByNameCount: tippDuplicatesByNameCount, tippDuplicatesByUrlCount: tippDuplicatesByUrlCount, tippDuplicatesByTitleIDCount: tippDuplicatesByTitleIDCount]
@@ -609,6 +609,36 @@ class AdminController {
           pkgs << p
         }
       }
+    }
+
+    result.pkgs = pkgs
+
+    result
+  }
+
+  def findPackagesWithoutTitles() {
+    log.debug("findPackagesWithoutTitles::${params}")
+    def result = [:]
+
+    List pkgs = []
+
+    CuratoryGroup curatoryGroupFilter = params.curatoryGroup ? genericOIDService.resolveOID(params.curatoryGroup) : null
+
+    params.sort = params.sort ?: 'p.name'
+
+    params.order = params.order ?: 'asc'
+
+    Package.executeQuery(
+            "from Package p " +
+                    "where (select count(*) from TitleInstancePackagePlatform as t where t.pkg = p and t.status != :removed) = 0 " +
+                    " order by ${params.sort} ${params.order}", [removed: RDStore.KBC_STATUS_REMOVED]).each { Package p ->
+        if(curatoryGroupFilter){
+          if(p.curatoryGroups && curatoryGroupFilter in p.curatoryGroups.curatoryGroup) {
+            pkgs << p
+          }
+        }else {
+          pkgs << p
+        }
     }
 
     result.pkgs = pkgs

@@ -14,7 +14,7 @@
 
 <h1 class="ui header">Automatic Update Fails (${autoUpdates.size()})</h1>
 
-<h3>Only fails automatic update from <g:formatDate date="${new java.util.Date()-1}" format="${message(code: 'default.date.format.noZ')}"/>
+<h3>Only fails automatic update from <g:formatDate date="${new java.util.Date()}" format="${message(code: 'default.date.format.noZ')}"/> - 1 DAY
 until <g:formatDate date="${new java.util.Date()}" format="${message(code: 'default.date.format.noZ')}"/></h3>
 
 

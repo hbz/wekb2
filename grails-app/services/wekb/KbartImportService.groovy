@@ -12,8 +12,6 @@ import org.hibernate.Session
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.ZoneId
-import java.time.format.DateTimeFormatter
-import java.time.format.ResolverStyle
 
 @Transactional
 class KbartImportService {
@@ -21,9 +19,6 @@ class KbartImportService {
     CleanupService cleanupService
 
     DateFormatService dateFormatService
-    public static final DateTimeFormatter dateformatter = DateTimeFormatter.ofPattern("uuuu-MM-dd").withResolverStyle(ResolverStyle.STRICT)
-    public static final DateTimeFormatter dateformatter2 = DateTimeFormatter.ofPattern("dd/MM/uuuu").withResolverStyle(ResolverStyle.STRICT)
-    public static final DateTimeFormatter datetimeformatter = DateTimeFormatter.ofPattern("" + "[uuuu-MM-dd' 'HH:mm:ss.SSS]" + "[uuuu-MM-dd'T'HH:mm:ss'Z']").withResolverStyle(ResolverStyle.STRICT)
 
 
     /*Platform platformUpsertDTO(platformDTO) {
@@ -1311,6 +1306,7 @@ class KbartImportService {
                             identifierChanged = true
                             identifier = new Identifier(namespace: ns, value: newValue, tipp: tipp)
                             identifier.save()
+                            println(identifier.errors)
                             break
                     }
                     if (identifier && identifierChanged && !result.newTipp) {
@@ -1438,10 +1434,11 @@ class KbartImportService {
                         'coverageDepth': cov_depth,
                         'coverageNote': c.coverageNote,
                         'startDate': startAsDate,
-                        'endDate': endAsDate
+                        'endDate': endAsDate,
+                        'uuid': UUID.randomUUID().toString()
                 )
             }
-        }else if(countNewCoverages > 1 && countTippCoverages > 1) {
+        }else if(countNewCoverages > 1 && countTippCoverages >= 1) {
             def cStsIDs = tipp.coverageStatements.id.clone()
             cStsIDs.each {
                 tipp.removeFromCoverageStatements(TIPPCoverageStatement.get(it))
@@ -1474,7 +1471,8 @@ class KbartImportService {
                         'coverageDepth': cov_depth,
                         'coverageNote': c.coverageNote,
                         'startDate': startAsDate,
-                        'endDate': endAsDate
+                        'endDate': endAsDate,
+                        'uuid': UUID.randomUUID().toString()
                 )
             }
 
@@ -1616,17 +1614,7 @@ class KbartImportService {
                     String newValue = tippMap[kbartProperty]
                     try {
                         if ( newValue.trim() ) {
-                            if (newValue.length() == 4) {
-                                ldt = LocalDate.parse(newValue + "-01-01", dateformatter).atStartOfDay()
-                            } else if (newValue.length() == 7) {
-                                ldt = LocalDate.parse(newValue + "-01", dateformatter).atStartOfDay()
-                            } else if (newValue.length() == 10 && newValue.contains('-')) {
-                                ldt = LocalDate.parse(newValue, dateformatter).atStartOfDay()
-                            }else if (newValue.length() == 10 && newValue.contains('/')) {
-                                ldt = LocalDate.parse(newValue, dateformatter2).atStartOfDay()
-                            } else {
-                                ldt = LocalDateTime.parse(newValue, datetimeformatter)
-                            }
+                            ldt = TextUtils.completeDateString(newValue)
                         }
                     }
                     catch (Exception e) {
@@ -1893,15 +1881,7 @@ class KbartImportService {
                     String oldValue = renderObjectValue(tipp[tippProperty])
                     try {
                         if ( newValue ) {
-                            if (newValue.length() == 4) {
-                                ldt = LocalDate.parse(newValue + "-01-01", dateformatter).atStartOfDay()
-                            } else if (newValue.length() == 7) {
-                                ldt = LocalDate.parse(newValue + "-01", dateformatter).atStartOfDay()
-                            } else if (newValue.length() == 10) {
-                                ldt = LocalDate.parse(newValue, dateformatter).atStartOfDay()
-                            } else {
-                                ldt = LocalDateTime.parse(newValue, datetimeformatter)
-                            }
+                            ldt = TextUtils.completeDateString(newValue)
                         }
                     }
                     catch (Exception e) {
@@ -2625,17 +2605,7 @@ class KbartImportService {
             String newValue = value
             try {
                 if ( newValue.trim() ) {
-                    if (newValue.length() == 4) {
-                        ldt = LocalDate.parse(newValue + "-01-01", dateformatter).atStartOfDay()
-                    } else if (newValue.length() == 7) {
-                        ldt = LocalDate.parse(newValue + "-01", dateformatter).atStartOfDay()
-                    } else if (newValue.length() == 10 && newValue.contains('-')) {
-                        ldt = LocalDate.parse(newValue, dateformatter).atStartOfDay()
-                    }else if (newValue.length() == 10 && newValue.contains('/')) {
-                        ldt = LocalDate.parse(newValue, dateformatter2).atStartOfDay()
-                    } else {
-                        ldt = LocalDateTime.parse(newValue, datetimeformatter)
-                    }
+                    ldt = TextUtils.completeDateString(newValue)
                 }
             }
             catch (Exception e) {

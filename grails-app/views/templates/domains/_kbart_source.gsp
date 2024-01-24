@@ -3,7 +3,7 @@
     <div class="content wekb-inline-lists">
         <dl>
             <dt class="control-label">
-                Source Name
+                <g:message code="kbartsource.name"/>
             </dt>
             <dd>
                 <semui:xEditable owner="${d}" field="name" required="true"/>
@@ -11,7 +11,7 @@
         </dl>
         <dl>
             <dt class="control-label">
-                Status
+                <g:message code="default.status"/>
             </dt>
             <dd>
                 <semui:xEditableRefData owner="${d}" field="status" config="${RCConstants.COMPONENT_STATUS}"/>
@@ -25,7 +25,7 @@
         </dl>
         <dl>
             <dt class="control-label">
-                Frequency
+                <g:message code="kbartsource.frequency"/>
             </dt>
             <dd>
                 <semui:xEditableRefData owner="${d}" field="frequency" config="${RCConstants.SOURCE_FREQUENCY}"/>
@@ -33,7 +33,7 @@
         </dl>
         <dl>
             <dt class="control-label">
-                Default Supply Method
+                <g:message code="kbartsource.defaultSupplyMethod"/>
             </dt>
             <dd>
                 <semui:xEditableRefData owner="${d}" field="defaultSupplyMethod"
@@ -42,7 +42,7 @@
         </dl>
         <dl>
             <dt class="control-label">
-                Default Data Format
+                <g:message code="kbartsource.defaultDataFormat"/>
             </dt>
             <dd>
                 <semui:xEditableRefData owner="${d}" field="defaultDataFormat"
@@ -62,7 +62,7 @@
         </dl>--}%
         <dl>
             <dt class="control-label">
-                Automated Updates
+                <g:message code="kbartsource.automaticUpdates"/>
             </dt>
             <dd>
                 <semui:xEditableBoolean owner="${d}" field="automaticUpdates"/>
@@ -78,7 +78,7 @@
         </dl>
         <dl>
             <dt class="control-label">
-                KBART has additional fields for we:kb
+                <g:message code="kbartsource.kbartHasWekbFields"/>
             </dt>
             <dd>
                 <semui:xEditableBoolean owner="${d}" field="kbartHasWekbFields" overwriteEditable="false"
@@ -87,7 +87,7 @@
         </dl>
         <dl>
             <dt class="control-label">
-                Last Changed in KBART
+                <g:message code="kbartsource.lastChangedInKbart"/>
             </dt>
             <dd>
                 <sec:ifAnyGranted roles="ROLE_SUPERUSER">
@@ -102,7 +102,7 @@
         </dl>
         <dl>
             <dt class="control-label">
-                Last Run
+                <g:message code="kbartsource.lastRun"/>
             </dt>
             <dd>
                 <sec:ifAnyGranted roles="ROLE_SUPERUSER">
@@ -120,7 +120,7 @@
         <g:if test="${controllerName != 'create' && d.automaticUpdates}">
             <dl>
                 <dt class="control-label">
-                    Next Run
+                    <g:message code="kbartsource.nextUpdateTimestamp"/>
                 </dt>
                 <dd>
                     ${d.getNextUpdateTimestamp()}
@@ -145,7 +145,7 @@
 
 <div class="sixteen wide column">
     <div class="ui two doubling stackable cards">
-        <g:if test="${d.defaultSupplyMethod == wekb.helper.RDStore.KS_DSMETHOD_HTTP_URL || editable}">
+        <g:if test="${d.defaultSupplyMethod == wekb.helper.RDStore.KS_DSMETHOD_HTTP_URL || editable || d.defaultSupplyMethod == null}">
         <div class="ui card">
             <div class="content wekb-inline-lists">
                 <div class="header">
@@ -181,7 +181,7 @@
             </div>
         </div>
         </g:if>
-        <g:if test="${d.defaultSupplyMethod == wekb.helper.RDStore.KS_DSMETHOD_FTP || editable}">
+        <g:if test="${d.defaultSupplyMethod == wekb.helper.RDStore.KS_DSMETHOD_FTP || editable || d.defaultSupplyMethod == null}">
         <div class="ui card">
             <div class="content wekb-inline-lists">
                 <div class="header">

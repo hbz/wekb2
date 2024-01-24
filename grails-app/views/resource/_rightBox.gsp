@@ -8,7 +8,7 @@
 <div class="ui card">
     <g:if test="${curatoryGroups || d.hasProperty('curatoryGroups')}">
         <div class="content">
-            <div class="header">Curated By</div>
+            <div class="header"><g:message code="rightBox.curatedBy"/></div>
         </div>
 
         <div class="content">
@@ -30,7 +30,7 @@
 
 
                 <g:if test="${!curatoryGroups}">
-                    <div class="item">There are currently no linked Curatory Groups</div>
+                    <div class="item"><g:message code="rightBox.notCuratedBy.info"/></div>
                 </g:if>
             </div>
 
@@ -42,7 +42,7 @@
                         <input type="hidden" name="curationOverride" value="${params.curationOverride}"/>
 
                         <div class="field">
-                            <label>Select a Curatory Group to link with this component</label>
+                            <label><g:message code="rightBox.curatedBy.info"/></label>
                             <semui:simpleReferenceDropdown name="__curatoryGroup"
                                                            baseClass="wekb.CuratoryGroup"
                                                            filter1="Current"/>
@@ -59,15 +59,14 @@
         <div class="content center aligned">
             <g:link controller="resource" action="showLogin" class="ui icon black button"
                     id="${d.getOID()}"><i
-                    class="edit icon"></i> Edit (Login required)</g:link>
+                    class="edit icon"></i><g:message code="rightBox.edit.info"/></g:link>
         </div>
     </sec:ifNotLoggedIn>
     <sec:ifLoggedIn>
         <g:if test="${(d.hasProperty('curatoryGroups')) && !((request.curator != null ? request.curator.size() > 0 : true))}">
             <div class="content">
                 <h4 class="ui header">Info</h4>
-
-                You are not a curator of this component. If you notice any errors, please contact a curator.
+                <g:message code="rightBox.curatedBy.info2"/>
             </div>
         </g:if>
         <sec:ifAnyGranted roles="ROLE_ADMIN">
@@ -125,51 +124,51 @@
 
                 <g:form controller="public" action="packageTSVExport" id="${params.id}" class="ui form">
                     <div class="grouped fields">
-                        <label>Which titles should be exported:</label>
+                        <label><g:message code="rightBox.export.info"/>:</label>
 
                         <div class="field">
                             <div class="ui checkbox">
                                 <input type="checkbox" name="status" value="Current">
-                                <label>Current Titles</label>
+                                <label><g:message code="rightBox.export.currentTitles"/></label>
                             </div>
                         </div>
 
                         <div class="field">
                             <div class="ui checkbox">
                                 <input type="checkbox" name="status" value="Expected">
-                                <label>Expected Titlesx</label>
+                                <label><g:message code="rightBox.export.expectedTitles"/></label>
                             </div>
                         </div>
 
                         <div class="field">
                             <div class="ui checkbox">
                                 <input type="checkbox" name="status" value="Retired">
-                                <label>Retired Titles</label>
+                                <label><g:message code="rightBox.export.retiredTitles"/></label>
                             </div>
                         </div>
 
                         <div class="field">
                             <div class="ui checkbox">
                                 <input type="checkbox" name="status" value="Deleted">
-                                <label>Deleted Titles</label>
+                                <label><g:message code="rightBox.export.deletedTitles"/></label>
                             </div>
                         </div>
                     </div>
 
                     <div class="inline fields">
-                        <label>Export as: </label>
+                        <label><g:message code="rightBox.export.exportas"/>: </label>
 
                         <div class="field">
                             <div class="ui radio checkbox">
                                 <input type="radio" name="exportFormat" checked="checked"  value="tsv">
-                                <label>TSV-File</label>
+                                <label><g:message code="rightBox.export.tsvfile"/></label>
                             </div>
                         </div>
 
                         <div class="field">
                             <div class="ui radio checkbox">
                                 <input type="radio" name="exportFormat" value="xcel">
-                                <label>Excel-File</label>
+                                <label><g:message code="rightBox.export.excelfile"/></label>
                             </div>
                         </div>
                     </div>

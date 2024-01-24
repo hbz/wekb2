@@ -34,7 +34,7 @@
 
     <% Map advancedSearchMap = [:] %>
     <div class="ui segment">
-        <h1 class="ui header">Filter</h1>
+        <h1 class="ui header"><g:message code="search.filter"/></h1>
     <g:form method="get" class="ui form" controller="${controllerName}" action="${actionName}" id="${params.id}">
 
         <input type="hidden" name="qbe" value="${params.qbe}"/>
@@ -62,9 +62,9 @@
             <g:else>
 
                 <div class="field">
-                    <label for="${fld.qparam}">${fld.prompt}</label>
                     <g:if test="${fld.type == 'lookup'}">
                         <div class="ui field">
+                            <label for="${fld.qparam}"><g:message code="${fld.msgCode}" default="${fld.prompt}"/></label>
                             <semui:simpleReferenceDropdown
                                     id="refdata_${params.inline ? 'inline_' : ''}${fld.qparam}"
                                     name="${fld.qparam}"
@@ -74,12 +74,13 @@
                         </div>
                     </g:if>
                     <g:elseif test="${fld.type == 'dropDownGroup'}">
+                        <label for="${fld.qparam}"><g:message code="${fld.msgCode}" default="${fld.prompt}"/></label>
                         <div class="ui field">
                             <div class="ui fluid search selection clearable dropdown">
                                 <input type="hidden" name="${fld.qparam}" value="${params[fld.qparam]}">
                                 <i class="dropdown icon"></i>
 
-                                <div class="default text">Select ${fld.prompt}</div>
+                                <div class="default text"><g:message code="search.select"/> <g:message code="${fld.msgCode}" default="${fld.prompt}"/></div>
 
                                 <div class="menu">
                                     <g:each in="${dropdownService.selectedDropDown(fld.dropDownType, refObject, params.qp_status_id)}" var="item">
@@ -90,6 +91,7 @@
                         </div>
                     </g:elseif>
                     <g:else>
+                        <label for="${fld.qparam}"><g:message code="${fld.msgCode}" default="${fld.prompt}"/></label>
                         <div class="${fld.contextTree.wildcard != null ? 'ui labeled input' : ''}">
                             <g:if test="${fld.contextTree.wildcard == 'B' || fld.contextTree.wildcard == 'L'}"><div
                                     class="ui label">*</div></g:if>
@@ -126,7 +128,7 @@
                     <i class="icon dropdown"></i>
                 ${advancedSearch.value.title}
                 <g:if test="${filterSetInAccordion > 0}">
-                    <b>Filter Set:</b> <div class="ui black circular label">${filterSetInAccordion}</div>
+                    <b><g:message code="search.filter.set"/>:</b> <div class="ui black circular label">${filterSetInAccordion}</div>
                 </g:if>
             </div>
 
@@ -134,9 +136,9 @@
             <div class="two fields">
                 <g:each in="${advancedSearch.value.formFields}" var="field" status="formFieldsIndex">
                     <div class=" field">
-                        <label for="${field.qparam}">${field.prompt}</label>
                         <g:if test="${field.type == 'lookup'}">
                             <div class="ui field">
+                                <label for="${field.qparam}"><g:message code="${field.msgCode}" default="${field.prompt}"/></label>
                                 <semui:simpleReferenceDropdown
                                         id="refdata_${params.inline ? 'inline_' : ''}${field.qparam}"
                                         name="${field.qparam}"
@@ -146,12 +148,13 @@
                             </div>
                         </g:if>
                         <g:elseif test="${field.type == 'dropDownGroup'}">
+                            <label for="${field.qparam}"><g:message code="${field.msgCode}" default="${field.prompt}"/></label>
                             <div class="ui field">
                                 <div class="ui fluid search selection clearable dropdown">
                                     <input type="hidden" name="${field.qparam}" value="${params[field.qparam]}">
                                     <i class="dropdown icon"></i>
 
-                                    <div class="default text">Select ${field.prompt}</div>
+                                    <div class="default text"><g:message code="search.select"/> <g:message code="${field.msgCode}" default="${field.prompt}"/></div>
 
                                     <div class="menu">
                                         <g:each in="${dropdownService.selectedDropDown(field.dropDownType, refObject, params.qp_status_id)}" var="item">
@@ -162,6 +165,7 @@
                             </div>
                         </g:elseif>
                         <g:else>
+                            <label for="${field.qparam}"><g:message code="${field.msgCode}" default="${field.prompt}"/></label>
                             <div class="${field.contextTree.wildcard != null ? 'ui labeled input' : ''}">
                                 <g:if test="${field.contextTree.wildcard == 'B' || field.contextTree.wildcard == 'L'}"><div
                                         class="ui label">*</div></g:if>
@@ -193,24 +197,24 @@
             <div class="ui right floated buttons">
                 <g:if test="${!hideResetButton}">
                 <g:link class="ui button" controller="${controllerName}" action="${actionName}"
-                        params="[id: params.id, qbe: params.qbe]">Reset</g:link>
+                        params="[id: params.id, qbe: params.qbe]"><g:message code="search.reset"/></g:link>
                 </g:if>
                 <button class="ui button black" type="submit" value="Search"
-                        name="searchAction">Filter</button>
+                        name="searchAction"><g:message code="search.filter"/></button>
 
                 <sec:ifLoggedIn>
                     <div class="ui icon dropdown button">
-                        <div class="text">Save</div>
+                        <div class="text"><g:message code="default.button.save"/></div>
                         <i class="dropdown icon"></i>
 
                         <div class="menu">
                             <div class="header">
-                                Save this Search as:
+                                <g:message code="search.saveSearch"/>:
                             </div>
 
                             <div class="ui left input">
                                 <input type="text" name="searchName"
-                                       placeholder="Search Name">
+                                       placeholder="<g:message code="search.saveSearch.name"/>">
                             </div>
 
                             <div class="item">

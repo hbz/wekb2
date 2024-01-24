@@ -90,7 +90,7 @@ class UpdateTippInfo {
     }
 
     public String getShowName() {
-        return this.tipp.name
+        return this.tipp ? this.tipp.name : getDomainName()
     }
 
     String getOID(){
