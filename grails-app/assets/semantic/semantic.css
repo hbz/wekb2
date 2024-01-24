@@ -784,7 +784,7 @@ input::selection {
   border: none;
   vertical-align: baseline;
   background: #e0e1e2 none;
-  color: rgba(0, 0, 0, 0.6);
+  color: #000000;
   font-family: "Lato", system-ui, -apple-system, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   margin: 0 0.25em 0 0;
   padding: 0.78571429em 1.5em 0.78571429em;
@@ -1603,7 +1603,7 @@ input::selection {
 .ui.basic.buttons .button,
 .ui.basic.button {
   background: transparent none;
-  color: rgba(0, 0, 0, 0.6);
+  color: #000000;
   font-weight: normal;
   border-radius: 0.28571429rem;
   text-transform: none;
@@ -1738,7 +1738,7 @@ input::selection {
   margin: 0.28571429em 0.25em 0.28571429em 0 !important;
   padding: 0.5em 0.5em !important;
   box-shadow: none;
-  color: rgba(0, 0, 0, 0.6);
+  color: #000000;
   background: none;
 }
 
@@ -3077,7 +3077,7 @@ input::selection {
 .ui.inverted.yellow.buttons .button:active,
 .ui.inverted.yellow.button:active {
   box-shadow: none;
-  color: rgba(0, 0, 0, 0.6);
+  color: #000000;
 }
 
 .ui.inverted.yellow.buttons .button:hover,
@@ -3268,7 +3268,7 @@ input::selection {
 .ui.inverted.olive.buttons .button:active,
 .ui.inverted.olive.button:active {
   box-shadow: none;
-  color: rgba(0, 0, 0, 0.6);
+  color: #000000;
 }
 
 .ui.inverted.olive.buttons .button:hover,
@@ -3650,7 +3650,7 @@ input::selection {
 .ui.inverted.teal.buttons .button:active,
 .ui.inverted.teal.button:active {
   box-shadow: none;
-  color: rgba(0, 0, 0, 0.6);
+  color: #000000;
 }
 
 .ui.inverted.teal.buttons .button:hover,
@@ -4796,7 +4796,7 @@ input::selection {
 .ui.inverted.grey.buttons .button:active,
 .ui.inverted.grey.button:active {
   box-shadow: none;
-  color: rgba(0, 0, 0, 0.6);
+  color: #000000;
 }
 
 .ui.inverted.grey.buttons .button:hover,
@@ -24493,6 +24493,10 @@ em[data-emoji="regional_indicator_a"]::before {
 /*******************************
              Emojis
 *******************************/
+
+/*******************************
+         Site Overrides
+*******************************/
 /*!
  * # Fomantic-UI 2.9.3 - Flag
  * https://github.com/fomantic/Fomantic-UI/
@@ -41694,8 +41698,12 @@ ol.ui.suffixed.list li::before,
          Theme Overrides
 *******************************/
 
+.ui.bulleted.list > .item:has(> a) {
+  padding: 5px 0;
+}
+
 /*******************************
-    User Variable Overrides
+         Site Overrides
 *******************************/
 /*!
  * # Fomantic-UI 2.9.3 - Loader
@@ -44287,6 +44295,7 @@ ol.ui.suffixed.list li::before,
 .ui.segment.footer.wekb-footer .ui.link.list .item a:not(.ui),
 .ui.segment.footer.wekb-footer .ui.link.list a.item {
   color: rgba(0, 0, 0, 0.71);
+  padding: 5px 0;
 }
 
 /*******************************
@@ -52763,7 +52772,7 @@ Floated Menu / Item
 *******************************/
 
 /*******************************
-        Site Overrides
+         Site Overrides
 *******************************/
 /*!
  * # Fomantic-UI 2.9.3 - Table
@@ -57147,7 +57156,7 @@ Floated Menu / Item
 *******************************/
 
 /*******************************
-    User Variable Overrides
+         Site Overrides
 *******************************/
 /*!
  * # Fomantic-UI 2.9.3 - Card
@@ -59295,7 +59304,7 @@ a.inverted.ui.card:hover,
 *******************************/
 
 /*******************************
-    User Variable Overrides
+         Site Overrides
 *******************************/
 /*!
  * # Fomantic-UI 2.9.3 - Comment
@@ -59612,7 +59621,7 @@ a.inverted.ui.card:hover,
 *******************************/
 
 /*******************************
-    User Variable Overrides
+         Site Overrides
 *******************************/
 /*!
  * # Fomantic-UI 2.9.3 - Feed
@@ -60551,7 +60560,7 @@ a.inverted.ui.card:hover,
 *******************************/
 
 /*******************************
-    User Variable Overrides
+         Site Overrides
 *******************************/
 /*!
  * # Fomantic-UI 2.9.3 - Item
@@ -61168,7 +61177,7 @@ a.inverted.ui.card:hover,
 *******************************/
 
 /*******************************
-    User Variable Overrides
+         Site Overrides
 *******************************/
 /*!
  * # Fomantic-UI 2.9.3 - Statistic
@@ -61846,7 +61855,7 @@ a.inverted.ui.card:hover,
 *******************************/
 
 /*******************************
-    User Variable Overrides
+         Site Overrides
 *******************************/
 /*!
  * # Fomantic-UI 2.9.3 - Accordion
@@ -62643,6 +62652,10 @@ a.inverted.ui.card:hover,
 
 /*******************************
          Theme Overrides
+*******************************/
+
+/*******************************
+        User Overrides
 *******************************/
 /*!
  * # Fomantic-UI 2.9.3 - Checkbox
@@ -67994,6 +68007,10 @@ a.ui.nag {
 /*******************************
          Theme Overrides
 *******************************/
+
+/*******************************
+         Site Overrides
+*******************************/
 /*!
  * # Fomantic-UI 2.9.3 - Popup
  * https://github.com/fomantic/Fomantic-UI/
@@ -71166,6 +71183,10 @@ a.ui.nag {
 /*******************************
         Slider Overrides
 *******************************/
+
+/*******************************
+        User Overrides
+*******************************/
 /*!
  * # Fomantic-UI 2.9.3 - Rating
  * https://github.com/fomantic/Fomantic-UI/
@@ -73366,6 +73387,10 @@ span.ui.massive.text {
 /*******************************
          Theme Overrides
 *******************************/
+
+/*******************************
+         Site Overrides
+*******************************/
 /*!
  * # Fomantic-UI 2.9.3 - Toast
  * https://github.com/fomantic/Fomantic-UI/
@@ -74290,6 +74315,10 @@ span.ui.massive.text {
 
 /*******************************
          Theme Overrides
+*******************************/
+
+/*******************************
+        User Overrides
 *******************************/
 /*!
  * # Fomantic-UI 2.9.3 - Transition
