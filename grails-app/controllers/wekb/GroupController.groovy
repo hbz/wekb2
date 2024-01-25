@@ -307,7 +307,7 @@ class GroupController {
 
         List<Package> packageList = []
         searchResult.result.new_recset.each {
-            if(it.obj.kbartSource) {
+            if(it.obj.kbartSource && it.obj.kbartSource.automaticUpdates) {
                 packageList << it.obj
             }
         }
