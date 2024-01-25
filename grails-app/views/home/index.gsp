@@ -9,6 +9,43 @@
 <body>
 <h1 class="ui header">Welcome to we:kb</h1>
 
+<g:if test="${rssFeed}">
+    <div class="ui segment">
+
+        <h2 class="ui header">we:kb Wiki News</h2>
+
+        <div class="ui items">
+            <g:each in="${rssFeed.entry}" var="feedEntry" status="i">
+                <div class="item">
+                    <div class="content">
+                        <div class="header">
+                            ${i + 1}. ${feedEntry.title.text()}
+                        </div>
+
+                        <div class="meta">
+                            News object added by <b>${feedEntry.author.name.text()}</b> on <span
+                                class="stay"><g:formatDate
+                                    format="${message(code: 'default.date.format.notime')}"
+                                    date="${new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss'Z'").parse(feedEntry.updated.text())}"/></span>
+                        </div>
+
+                        <g:if test="${feedEntry.summary}">
+                            <div class="description">
+                                <div class="ui segment">
+                                    ${raw(feedEntry.summary.text())}
+                                </div>
+                            </div>
+                        </g:if>
+                    </div>
+                </div>
+                <br>
+                <br>
+            </g:each>
+        </div>
+
+    </div>
+</g:if>
+
 <div class="ui segment">
 
     <h2 class="ui header">we:kb News <div class="ui black label">
@@ -515,41 +552,6 @@
     </div>
 </div>
 
-<g:if test="${rssFeed}">
-    <div class="ui segment">
 
-        <h2 class="ui header">we:kb Wiki News</h2>
-
-        <div class="ui items">
-            <g:each in="${rssFeed.entry}" var="feedEntry" status="i">
-                <div class="item">
-                    <div class="content">
-                        <div class="header">
-                            ${i + 1}. ${feedEntry.title.text()}
-                        </div>
-
-                        <div class="meta">
-                            News object added by <b>${feedEntry.author.name.text()}</b> on <span
-                                class="stay"><g:formatDate
-                                    format="${message(code: 'default.date.format.notime')}"
-                                    date="${new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss'Z'").parse(feedEntry.updated.text())}"/></span>
-                        </div>
-
-                        <g:if test="${feedEntry.summary}">
-                            <div class="description">
-                                <div class="ui segment">
-                                    ${raw(feedEntry.summary.text())}
-                                </div>
-                            </div>
-                        </g:if>
-                    </div>
-                </div>
-                <br>
-                <br>
-            </g:each>
-        </div>
-
-    </div>
-</g:if>
 </body>
 </html>
