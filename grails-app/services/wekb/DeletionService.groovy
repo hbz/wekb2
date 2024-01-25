@@ -175,7 +175,18 @@ class DeletionService {
                     PackageArchivingAgency.executeUpdate("delete from PackageArchivingAgency where pkg = :component", [component: pkg])
                     UpdateTippInfo.executeUpdate("delete from UpdateTippInfo where updatePackageInfo in (select upi.id from UpdatePackageInfo as upi where upi.pkg = :component)", [component: pkg])
                     UpdatePackageInfo.executeUpdate("delete from UpdatePackageInfo where pkg = :component", [component: pkg])
-                    TitleInstancePackagePlatform.executeUpdate("update TitleInstancePackagePlatform as t set t.status = :removed, t.lastUpdated = :now where t.status != :removed and t.pkg = :pkg", [removed: removedStatus, pkg: pkg, now: now])
+
+                    List<Long> tippIDs = TitleInstancePackagePlatform.executeQuery('select id from TitleInstancePackagePlatform where pkg = :pkg', [pkg: pkg])
+                    int countTipps = tippIDs.size()
+                    int countTippsSuccess = 0
+
+                    tippIDs.each { Long objectID ->
+                        if (expungeTipp(objectID)) {
+                            countTippsSuccess++
+                        }
+                        log.info("pkg: tipp remove processing -> ${countTippsSuccess}/${countTipps}")
+                    }
+
                     pkg.refresh()
                     pkg.delete()
                 }
