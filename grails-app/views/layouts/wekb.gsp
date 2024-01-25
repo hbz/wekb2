@@ -39,6 +39,8 @@
         <div class="menu">
             <g:link class="item" controller="public" action="wekbNews">we:kb News</g:link>
         </div>
+    </div>
+    <div class="item">
         <div class="header"><g:message code="default.button.search"/></div>
 
         <div class="menu">
