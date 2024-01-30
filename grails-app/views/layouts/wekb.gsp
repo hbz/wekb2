@@ -126,16 +126,6 @@
                             action="findPackagesWithoutTitles">Packages without Titles</g:link>
                 </div>
             </div>
-
-
-            <div class="item">
-                <div class="header">Frontend</div>
-
-                <div class="menu">
-                    <g:link class="item" controller="frontend" action="index">Frontend</g:link>
-                </div>
-            </div>
-
         </sec:ifAnyGranted>
     </g:if>
 
