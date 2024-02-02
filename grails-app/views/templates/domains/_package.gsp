@@ -185,6 +185,7 @@
                                 <td>${i + 1}</td>
                                 <td><semui:xEditableRefData owner="${paa}" field="archivingAgency"
                                                             config="${RCConstants.PAA_ARCHIVING_AGENCY}"/>
+                                </td>
                                 <td><semui:xEditableRefData owner="${paa}" field="openAccess"
                                                             config="${RCConstants.PAA_OPEN_ACCESS}"/>
                                 </td>
