@@ -14,21 +14,24 @@
             <dd><semui:xEditableManyToOne owner="${d}" field="provider" baseClass="wekb.Org"/></dd>
         </dl>
 
-<g:if test="${controllerName != 'create'}">
-    <dl>
-        <dt class="control-label">
-            <g:message code="public.vendors"/>
-        </dt>
-        <dd>
-            <g:render template="/templates/packageVendors"/>
-        </dd>
-    </dl>
-</g:if>
+        <g:if test="${controllerName != 'create'}">
+            <dl>
+                <dt class="control-label">
+                    <g:message code="public.vendors"/>
+                </dt>
+                <dd>
+                    <g:render template="/templates/packageVendors"/>
+                </dd>
+            </dl>
+        </g:if>
 
         <dl>
             <dt class="control-label"><g:message code="package.source"/></dt>
-            <dd><semui:xEditableManyToOne owner="${d}" field="kbartSource" baseClass="wekb.KbartSource"
-                                          disabled="${createObject}"/></dd>
+            <dd>
+                <g:if test="${!createObject}">
+                    <semui:xEditableManyToOne owner="${d}" field="kbartSource" baseClass="wekb.KbartSource"/>
+                </g:if>
+            </dd>
         </dl>
 
         <dl>
@@ -55,13 +58,17 @@
         </g:if>
         <dl>
             <dt class="control-label"><g:message code="package.description"/></dt>
-            <dd><semui:xEditable owner="${d}" type="textarea" field="description" disabled="${createObject}"/></dd>
+            <dd><g:if test="${!createObject}">
+                <semui:xEditable owner="${d}" type="textarea" field="description"/>
+            </g:if>
+            </dd>
 
         </dl>
         <dl>
             <dt class="control-label"><g:message code="package.descriptionURL"/></dt>
-            <dd><semui:xEditable owner="${d}" field="descriptionURL" validation="url" outGoingLink="true"
-                                 disabled="${createObject}"/>
+            <dd><g:if test="${!createObject}">
+                <semui:xEditable owner="${d}" field="descriptionURL" validation="url" outGoingLink="true"/>
+            </g:if>
             </dd>
         </dl>
 
@@ -70,8 +77,9 @@
                 <g:message code="package.breakable"/>
             </dt>
             <dd>
-                <semui:xEditableRefData owner="${d}" field="breakable" config="${RCConstants.PACKAGE_BREAKABLE}"
-                                        disabled="${createObject}"/>
+                <g:if test="${!createObject}">
+                    <semui:xEditableRefData owner="${d}" field="breakable" config="${RCConstants.PACKAGE_BREAKABLE}"/>
+                </g:if>
             </dd>
         </dl>
         <dl>
@@ -79,8 +87,10 @@
                 <g:message code="package.contentType"/>
             </dt>
             <dd>
-                <semui:xEditableRefData owner="${d}" field="contentType"
-                                        config="${RCConstants.PACKAGE_CONTENT_TYPE}" disabled="${createObject}"/>
+                <g:if test="${!createObject}">
+                    <semui:xEditableRefData owner="${d}" field="contentType"
+                                            config="${RCConstants.PACKAGE_CONTENT_TYPE}"/>
+                </g:if>
             </dd>
         </dl>
         <dl>
@@ -88,8 +98,9 @@
                 <g:message code="package.file"/>
             </dt>
             <dd>
-                <semui:xEditableRefData owner="${d}" field="file" config="${RCConstants.PACKAGE_FILE}"
-                                        disabled="${createObject}"/>
+                <g:if test="${!createObject}">
+                    <semui:xEditableRefData owner="${d}" field="file" config="${RCConstants.PACKAGE_FILE}"/>
+                </g:if>
             </dd>
         </dl>
         <dl>
@@ -97,8 +108,9 @@
                 <g:message code="package.openAccess"/>
             </dt>
             <dd>
-                <semui:xEditableRefData owner="${d}" field="openAccess" config="${RCConstants.PACKAGE_OPEN_ACCESS}"
-                                        disabled="${createObject}"/>
+                <g:if test="${!createObject}">
+                    <semui:xEditableRefData owner="${d}" field="openAccess" config="${RCConstants.PACKAGE_OPEN_ACCESS}"/>
+                </g:if>
             </dd>
         </dl>
         <dl>
@@ -106,8 +118,10 @@
                 <g:message code="package.paymentType"/>
             </dt>
             <dd>
-                <semui:xEditableRefData owner="${d}" field="paymentType"
-                                        config="${RCConstants.PACKAGE_PAYMENT_TYPE}" disabled="${createObject}"/>
+                <g:if test="${!createObject}">
+                    <semui:xEditableRefData owner="${d}" field="paymentType"
+                                            config="${RCConstants.PACKAGE_PAYMENT_TYPE}"/>
+                </g:if>
             </dd>
         </dl>
         <dl>
@@ -115,8 +129,9 @@
                 <g:message code="package.scope"/>
             </dt>
             <dd>
-                <semui:xEditableRefData owner="${d}" field="scope" config="${RCConstants.PACKAGE_SCOPE}"
-                                        disabled="${createObject}"/>
+                <g:if test="${!createObject}">
+                    <semui:xEditableRefData owner="${d}" field="scope" config="${RCConstants.PACKAGE_SCOPE}"/>
+                </g:if>
             </dd>
         </dl>
 
@@ -149,8 +164,9 @@
                 <g:message code="package.freeTrial"/>
             </dt>
             <dd>
-                <semui:xEditableRefData owner="${d}" field="freeTrial" config="${RCConstants.YN}"
-                                        disabled="${createObject}"/>
+                <g:if test="${!createObject}">
+                    <semui:xEditableRefData owner="${d}" field="freeTrial" config="${RCConstants.YN}"/>
+                </g:if>
             </dd>
         </dl>
 
@@ -159,7 +175,9 @@
                 <g:message code="package.freeTrialPhase"/>
             </dt>
             <dd>
-                <semui:xEditable owner="${d}" field="freeTrialPhase" disabled="${createObject}"/>
+                <g:if test="${!createObject}">
+                    <semui:xEditable owner="${d}" field="freeTrialPhase"/>
+                </g:if>
             </dd>
         </dl>
 
@@ -217,7 +235,7 @@
 
 
         <g:if test="${editable && controllerName != 'create'}">
-            <semui:modal id="paaModal" title="${g.message(code: "default.add.label", args:['Archiving Agency'])}">
+            <semui:modal id="paaModal" title="${g.message(code: "default.add.label", args: ['Archiving Agency'])}">
 
                 <g:form controller="ajaxHtml" action="addToCollection" class="ui form">
                     <input type="hidden" name="__context" value="${d.getOID()}"/>
