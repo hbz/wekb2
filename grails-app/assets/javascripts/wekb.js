@@ -22,11 +22,41 @@
 
 console.log('+ wekb.js')
 
+$(function () {
+    //cairo.go();
+})
+
+cairo = {
+    go: function () {
+        cairo.initDynamicSemuiStuff('body');
+    },
+    initDynamicSemuiStuff: function (ctxSel) {
+        //paginationNavi.go(ctxSel);
+        $(ctxSel).css('background-color', 'red');
+
+        $(ctxSel).find('.ui.pagination.menu').attr("aria-label", "pagination-label");
+
+        // console.log(ctxSel);
+        // console.log($(ctxSel));
+
+        //console.log($(ctxSel).find('.ui.pagination.menu'));
+    }
+}
+/*    initDynamicSemuiStuff : function(ctxSel) {
+        //paginationNavi.go(ctxSel);
+        $(ctxSel).css('background-color', 'red');
+        setTimeout(function() {
+            let test = $(ctxSel).find('.ui.pagination.menu').attr("aria-label", "pagination-label");
+        }, 1000)
+        console.log(ctxSel);
+        console.log($(ctxSel));
+        console.log($(ctxSel).find('.ui.pagination.menu'));
+    } */
 
 $(function () {
 
     verticalNavi.go();
-    paginationNavi.go();
+
 
     $('.ui.sticky')
         .sticky({

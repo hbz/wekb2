@@ -123,10 +123,12 @@
 
         <div class="sixteen wide column">
             <g:if test="${displaytemplate != null}">
+                XXXXXXXXXXXXXXXXX
                 <g:if test="${displaytemplate.rendername in ["curatory_group", "org", "package", "platform", "kbart_source", "tipp", "vendor"]}">
                     <g:render template="/templates/tabTemplates/domainTabs/${displaytemplate.rendername}Tabs"
                               model="${[d: displayobj]}"/>
                 </g:if>
+                YYYYYYYYYYYYYYY
             </g:if>
         </div>
     </div>

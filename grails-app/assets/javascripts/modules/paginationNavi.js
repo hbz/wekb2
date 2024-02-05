@@ -3,14 +3,20 @@
 
 paginationNavi = {
 
-  go: function () {
-    paginationNavi.init('body')
+  go: function (ctxSel) {
+    paginationNavi.init(ctxSel)
   },
 
-  init: function () {
-    var pagination = $('.ui.pagination.menu')
-    $.each( pagination, function( i ) {
-      $(this).attr( "aria-label", "pagination-label-"+(i+1));
-    });
+  init: function (ctxSel) {
+    //let pagination_string = (ctxSel + " .ui.pagination.menu");
+   // console.log(typeof pagination_string);
+    // console.log(pagination_string);
+    console.log(ctxSel);
+
+
+
+      let test = $(ctxSel + " .ui.pagination.menu").attr( "aria-label", "pagination-label-"+(i+1));
+       console.log(typeof test);
+      console.log(test);
   }
 }
