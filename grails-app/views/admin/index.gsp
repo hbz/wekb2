@@ -12,8 +12,8 @@
 <div class="ui equal width grid">
     <div class="row">
         <div class="column">
-            <h3 class="ui header">Admin Search</h3>
-            <div class="ui divided relaxed list">
+            <h2 class="ui header">Admin Search</h2>
+            <div class="ui divided large relaxed list">
                 <g:link class="item" controller="search" action="componentSearch"
                         params="[qbe: 'g:updatePackageInfos']">Update Package Infos</g:link>
                 <g:link class="item" controller="search" action="componentSearch"
@@ -31,8 +31,8 @@
             </div>
         </div>
         <div class="column">
-            <h3 class="ui header">Admin Create</h3>
-            <div class="ui divided relaxed list">
+            <h2 class="ui header">Admin Create</h2>
+            <div class="ui divided large relaxed list">
                 <g:link class="item" controller="create" action="index"
                         params="[tmpl: 'wekb.IdentifierNamespace']">Identifier Namespace</g:link>
                 <g:link class="item" controller="create" action="index"
@@ -50,8 +50,8 @@
             </div>
         </div>
         <div class="column">
-            <h3 class="ui header">Admin Jobs</h3>
-            <div class="ui divided relaxed list">
+            <h2 class="ui header">Admin Jobs</h2>
+            <div class="ui divided large relaxed list">
                 <g:link class="item" controller="admin" action="updateTextIndexes"
                         onclick="return confirm('Are you sure?')">Update Free Text Indexes</g:link>
                 %{--              <g:link class="item" controller="admin" action="resetTextIndexes" onclick="return confirm('Are you sure?')"><i class="fa fa-angle-double-right fa-fw"></i> Reset Free Text Indexes</g:link>--}%
@@ -77,8 +77,8 @@
 <div class="ui equal width grid">
     <div class="row">
         <div class="column">
-            <h3 class="ui header">Admin Infos</h3>
-            <div class="ui divided relaxed list">
+            <h2 class="ui header">Admin Infos</h2>
+            <div class="ui divided large relaxed list">
                 <g:link class="item" controller="admin" action="systemThreads">Show Threads</g:link>
                 <g:link class="item" controller="admin" action="autoUpdatesFails">Automatic update fails</g:link>
                 <g:link class="item" controller="admin" action="findPackagesWithTippDuplicates">Packages with Tipp Duplicates</g:link>
@@ -118,9 +118,9 @@
 <br>
 
 <div class="ui segment">
-        <h3 class="ui header">
+        <h2 class="ui header">
             Application Info
-        </h3>
+        </h2>
     <table class="ui selectable striped sortable celled table">
         <tr><td>App profile </td><td>${grailsApplication.config.getProperty('grails.profile')}</td></tr>
         <tr><td>Git Branch</td><td><g:meta name="build.git.branch"/></td></tr>
@@ -139,9 +139,9 @@
 </div>
 
 <div class="ui segment">
-    <h3 class="ui header">
+    <h2 class="ui header">
             Database
-        </h3>
+        </h2>
         <table class="ui selectable striped sortable celled table">
         <tbody>
         <tr><td>DBM version</td><td>${dbmVersion[0]} : ${dbmVersion[1]} -------> ${wekb.utils.DateUtils.getSDF_NoZ().format(dbmVersion[2])}</td></tr>
@@ -153,9 +153,9 @@
 </div>
 
 <div class="ui segment">
-    <h3 class="ui header">
+    <h2 class="ui header">
         Artefacts
-    </h3>
+    </h2>
     <table class="ui selectable striped sortable celled table">
         <tbody>
         <tr><td>Controllers:</td><td>${grailsApplication.controllerClasses.size()}</td></tr>
@@ -167,9 +167,9 @@
 </div>
 
 <div class="ui segment">
-    <h3 class="ui header">
+    <h2 class="ui header">
         Installed Plugins
-    </h3>
+    </h2>
     <table class="ui selectable striped sortable celled table">
         <tbody>
         <g:each var="plugin" in="${applicationContext.getBean('pluginManager').allPlugins}">
