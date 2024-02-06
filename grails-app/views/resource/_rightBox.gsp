@@ -8,7 +8,7 @@
 <div class="ui card">
     <g:if test="${curatoryGroups || d.hasProperty('curatoryGroups')}">
         <div class="content">
-            <div class="header"><g:message code="rightBox.curatedBy"/></div>
+            <h2 class="ui header"><g:message code="rightBox.curatedBy"/></h2>
         </div>
 
         <div class="content">
@@ -65,14 +65,14 @@
     <sec:ifLoggedIn>
         <g:if test="${(d.hasProperty('curatoryGroups')) && !((request.curator != null ? request.curator.size() > 0 : true))}">
             <div class="content">
-                <h4 class="ui header">Info</h4>
+                <h3 class="ui header">Info</h3>
                 <g:message code="rightBox.curatedBy.info2"/>
             </div>
         </g:if>
         <sec:ifAnyGranted roles="ROLE_ADMIN">
             <g:if test="${d.hasProperty('curatoryGroups') || d instanceof TitleInstancePackagePlatform}">
                 <div class="content">
-                    <h4 class="ui header">Warning</h4>
+                    <h3 class="ui header">Warning</h3>
 
                     <p>As an admin you can still edit, but please contact a curator before making major changes.</p>
 

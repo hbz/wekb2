@@ -194,7 +194,7 @@
                             <th>Archiving Agency</th>
                             <th>Open Access</th>
                             <th>Post-Cancellation Access (PCA)</th>
-                            <th></th>
+                            <g:if test="${editable}"><th>Actions</th></g:if>
                         </tr>
                         </thead>
                         <tbody>
@@ -203,6 +203,7 @@
                                 <td>${i + 1}</td>
                                 <td><semui:xEditableRefData owner="${paa}" field="archivingAgency"
                                                             config="${RCConstants.PAA_ARCHIVING_AGENCY}"/>
+                                </td>
                                 <td><semui:xEditableRefData owner="${paa}" field="openAccess"
                                                             config="${RCConstants.PAA_OPEN_ACCESS}"/>
                                 </td>
@@ -210,13 +211,13 @@
                                     <semui:xEditableRefData owner="${paa}" field="postCancellationAccess"
                                                             config="${RCConstants.PAA_POST_CANCELLATION_ACCESS}"/>
                                 </td>
-                                <td>
-                                    <g:if test="${editable}">
+                                <g:if test="${editable}">
+                                    <td>
                                         <g:link controller='ajaxHtml'
                                                 action='delete'
                                                 params="${["__context": "${paa.getOID()}", curationOverride: params.curationOverride]}">Delete</g:link>
-                                    </g:if>
-                                </td>
+                                    </td>
+                                </g:if>
                             </tr>
                         </g:each>
                         </tbody>
