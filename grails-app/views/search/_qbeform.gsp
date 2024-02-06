@@ -64,7 +64,7 @@
                 <div class="field">
                     <g:if test="${fld.type == 'lookup'}">
                         <div class="ui field">
-                            <label for="${fld.qparam}"><g:message code="${fld.msgCode}" default="${fld.prompt}"/></label>
+                            <label><g:message code="${fld.msgCode}" default="${fld.prompt}"/></label>
                             <semui:simpleReferenceDropdown
                                     id="refdata_${params.inline ? 'inline_' : ''}${fld.qparam}"
                                     name="${fld.qparam}"
@@ -74,8 +74,8 @@
                         </div>
                     </g:if>
                     <g:elseif test="${fld.type == 'dropDownGroup'}">
-                        <label for="${fld.qparam}"><g:message code="${fld.msgCode}" default="${fld.prompt}"/></label>
                         <div class="ui field">
+                            <label><g:message code="${fld.msgCode}" default="${fld.prompt}"/></label>
                             <div class="ui fluid search selection clearable dropdown">
                                 <input type="hidden" name="${fld.qparam}" value="${params[fld.qparam]}">
                                 <i class="dropdown icon"></i>
@@ -138,7 +138,7 @@
                     <div class=" field">
                         <g:if test="${field.type == 'lookup'}">
                             <div class="ui field">
-                                <label for="${field.qparam}"><g:message code="${field.msgCode}" default="${field.prompt}"/></label>
+                                <label ><g:message code="${field.msgCode}" default="${field.prompt}"/></label>
                                 <semui:simpleReferenceDropdown
                                         id="refdata_${params.inline ? 'inline_' : ''}${field.qparam}"
                                         name="${field.qparam}"
@@ -148,8 +148,8 @@
                             </div>
                         </g:if>
                         <g:elseif test="${field.type == 'dropDownGroup'}">
-                            <label for="${field.qparam}"><g:message code="${field.msgCode}" default="${field.prompt}"/></label>
                             <div class="ui field">
+                                <label><g:message code="${field.msgCode}" default="${field.prompt}"/></label>
                                 <div class="ui fluid search selection clearable dropdown">
                                     <input type="hidden" name="${field.qparam}" value="${params[field.qparam]}">
                                     <i class="dropdown icon"></i>
@@ -165,7 +165,7 @@
                             </div>
                         </g:elseif>
                         <g:else>
-                            <label for="${field.qparam}"><g:message code="${field.msgCode}" default="${field.prompt}"/></label>
+                            <label><g:message code="${field.msgCode}" default="${field.prompt}"/></label>
                             <div class="${field.contextTree.wildcard != null ? 'ui labeled input' : ''}">
                                 <g:if test="${field.contextTree.wildcard == 'B' || field.contextTree.wildcard == 'L'}"><div
                                         class="ui label">*</div></g:if>

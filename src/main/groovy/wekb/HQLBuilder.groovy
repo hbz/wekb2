@@ -356,6 +356,15 @@ public class HQLBuilder {
               }
             }
           }
+          if(crit.defn.baseClass == 'wekb.Vendor') {
+            def value = Vendor.get(crit.value)
+            if(value) {
+              if(baseclass.toString() == 'class wekb.Org') {
+                hql_builder_context."${addToQuery}".add("${crit.defn.contextTree.negate ? 'not ' : ''} o in (select p.provider from Package as p join p.vendors as vendor_pkg where vendor_pkg.vendor = :vendor) ");
+                hql_builder_context.bindvars.vendor = value
+              }
+            }
+          }
         }
         break;
 

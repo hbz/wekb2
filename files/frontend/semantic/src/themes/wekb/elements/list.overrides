@@ -1,0 +1,3 @@
+.ui.bulleted.list>.item:has(> a) {
+   padding: 5px 0;
+}

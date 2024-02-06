@@ -39,6 +39,8 @@
         <div class="menu">
             <g:link class="item" controller="public" action="wekbNews">we:kb News</g:link>
         </div>
+    </div>
+    <div class="item">
         <div class="header"><g:message code="default.button.search"/></div>
 
         <div class="menu">
@@ -124,16 +126,6 @@
                             action="findPackagesWithoutTitles">Packages without Titles</g:link>
                 </div>
             </div>
-
-
-            <div class="item">
-                <div class="header">Frontend</div>
-
-                <div class="menu">
-                    <g:link class="item" controller="frontend" action="index">Frontend</g:link>
-                </div>
-            </div>
-
         </sec:ifAnyGranted>
     </g:if>
 

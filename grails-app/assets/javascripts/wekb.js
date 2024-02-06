@@ -234,7 +234,9 @@ $(function () {
             }
         }
     });
-    $('#spotlightSearch').find('.prompt').removeAttr('autocomplete');
+    $('#spotlightSearch .prompt').removeAttr('autocomplete');
+    $('.search.dropdown .search').removeAttr('autocomplete');
+
 
     $(".simpleReferenceDropdown").each(function() {
         var simpleReferenceDropdownURL = ajaxLookUp + "/?baseClass="+$(this).children('input')[0].getAttribute('data-domain')+"&filter1="+$(this).children('input')[0].getAttribute('data-filter1')+"&q={query}"

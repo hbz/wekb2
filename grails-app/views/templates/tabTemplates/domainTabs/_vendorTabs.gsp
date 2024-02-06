@@ -17,6 +17,10 @@
         <semui:tabsItemWithoutLink tab="packages" activeTab="${params.activeTab}" counts="${d.packages.size()}">
             Packages
         </semui:tabsItemWithoutLink>
+
+        <semui:tabsItemWithoutLink tab="providers" activeTab="${params.activeTab}" counts="${d.getProvidersCount()}">
+            Providers
+        </semui:tabsItemWithoutLink>
     </semui:tabs>
 
 
@@ -393,7 +397,7 @@
         <div class="content wekb-inline-lists">
             <dl>
                 <dt class="control-label">
-                    VOL prequalification
+                    Prequalification VOL
                 </dt>
                 <dd>
                 </dd>
@@ -407,6 +411,16 @@
             <g:link class="display-inline" controller="search" action="inlineSearch"
                     params="[s_controllerName: controllerName, s_actionName: actionName, objectUUID: params.id, max: params.max, offset: params.offset, sort: params.sort, order: params.order, qbe: 'g:packages', qp_vendor_id: d.id, inline: true, refOID: d.getOID(), hide: ['qp_vendor', 'qp_vendor_id']]"
                     id="">Packages</g:link>
+
+        </div>
+    </semui:tabsItemContent>
+
+    <semui:tabsItemContent tab="providers" activeTab="${params.activeTab}">
+        <div class="content">
+
+            <g:link class="display-inline" controller="search" action="inlineSearch"
+                    params="[s_controllerName: controllerName, s_actionName: actionName, objectUUID: params.id, max: params.max, offset: params.offset, sort: params.sort, order: params.order, qbe: 'g:orgs', qp_vendor_id: d.id, inline: true, refOID: d.getOID(), hide: ['qp_vendor', 'qp_vendor_id']]"
+                    id="">Providers</g:link>
 
         </div>
     </semui:tabsItemContent>

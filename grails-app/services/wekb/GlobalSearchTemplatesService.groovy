@@ -233,6 +233,13 @@ class GlobalSearchTemplatesService {
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'greater', 'prop': 'dateCreated', 'type': 'java.util.Date'],
                                         hide       : true
                                 ],
+                                [
+                                        type       : 'lookup',
+                                        baseClass  : 'wekb.Vendor',
+                                        qparam     : 'qp_vendor_id',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'placeHolderForVendor'],
+                                        hide       : true
+                                ],
                                 //General Fields
                                 [
                                         prompt     : 'Name',

@@ -58,8 +58,8 @@
 
         <div class="sixteen wide field">
         <div class="ui toggle checkbox">
-            <input type="checkbox" name="allProperties" ${params.allProperties ? 'checked' : ''}>
-            <label>Additionally search in all properties of Packages, Titles, Providers, Platforms</label>
+            <input type="checkbox" id="allProperties" name="allProperties" ${params.allProperties ? 'checked' : ''}>
+            <label for="allProperties">Additionally search in all properties of Packages, Titles, Providers, Platforms</label>
         </div>
         </div>
 
