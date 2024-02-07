@@ -41,10 +41,15 @@
         </g:form>
 
         <div class="ui message">
-            <g:link action="forgotPassword"><g:message
-                    code="forgottenPassword.forgotPassword"/></g:link>
-            <br>
-            <a href="#" onclick="$('#infoModal').modal('show');">Not yet registered for a we:kb: account?</a>
+            <div class="ui relaxed list">
+                <div class="item">
+                    <g:link action="forgotPassword"><g:message
+                        code="forgottenPassword.forgotPassword"/></g:link>
+                </div>
+                <div class="item">
+                    <a href="#" onclick="$('#infoModal').modal('show');">Not yet registered for a we:kb: account?</a>
+                </div>
+            </div>
         </div>
     </div>
 </div>
