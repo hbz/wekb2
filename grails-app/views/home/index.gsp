@@ -50,7 +50,7 @@
 </div></h2>
 
 
-<div class="ui two column stackable grid">
+<div class="ui two column stackable wekb-widescreenMonitorBreakpoint grid">
 
     <div class="column">
         <div class="ui fluid card" style="margin-bottom:0">
@@ -311,7 +311,7 @@
     </div>
 </div>
 
-<div class="ui two column stackable grid">
+<div class="ui two column stackable wekb-widescreenMonitorBreakpoint grid">
 
     <div class="column">
         <div class="ui fluid card" style="margin-bottom:0">

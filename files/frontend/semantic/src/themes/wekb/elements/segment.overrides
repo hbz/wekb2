@@ -1,6 +1,7 @@
 /*******************************
          Theme Overrides
 *******************************/
+// wcag
 .ui.segment.footer.wekb-footer {
   padding: 40px;
   background-color: rgb(76 127 144 / 16%);
