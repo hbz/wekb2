@@ -23,35 +23,17 @@
 console.log('+ wekb.js')
 
 $(function () {
-    //cairo.go();
+    r2d2.go();
 })
 
-cairo = {
+r2d2 = {
     go: function () {
-        cairo.initDynamicSemuiStuff('body');
+        r2d2.initDynamicSemuiStuff('body');
     },
     initDynamicSemuiStuff: function (ctxSel) {
-        //paginationNavi.go(ctxSel);
-        $(ctxSel).css('background-color', 'red');
-
-        $(ctxSel).find('.ui.pagination.menu').attr("aria-label", "pagination-label");
-
-        // console.log(ctxSel);
-        // console.log($(ctxSel));
-
-        //console.log($(ctxSel).find('.ui.pagination.menu'));
+        paginationNavi.go(ctxSel);
     }
 }
-/*    initDynamicSemuiStuff : function(ctxSel) {
-        //paginationNavi.go(ctxSel);
-        $(ctxSel).css('background-color', 'red');
-        setTimeout(function() {
-            let test = $(ctxSel).find('.ui.pagination.menu').attr("aria-label", "pagination-label");
-        }, 1000)
-        console.log(ctxSel);
-        console.log($(ctxSel));
-        console.log($(ctxSel).find('.ui.pagination.menu'));
-    } */
 
 $(function () {
 
@@ -318,73 +300,7 @@ $(function () {
         $(this).popup()
     });
 
-    $('nav.pagination').each (function () {
-        const $pagination = $(this)
 
-        const $input      = $pagination.find('.wekb-pagination-custom-input');
-        const $inputInput = $pagination.find('.wekb-pagination-custom-input input');
-        const $inputForm  = $pagination.find('.wekb-pagination-custom-input .ui.form');
-        const $link       = $pagination.find('.wekb-pagination-custom-link');
-
-        let stepsValue = $input.attr('data-steps');
-        let baseHref   = $link.attr('href');
-
-        $.fn.form.settings.rules.smallerEqualThanTotal = function (inputValue, validationValue) {
-            return parseInt(inputValue) <= validationValue;
-        };
-        $.fn.form.settings.rules.biggerThan = function (inputValue, validationValue) {
-            return parseInt(inputValue) > validationValue;
-        };
-
-        $inputInput.on ('input', function() {
-                let newOffset = ($(this).val() - 1) * $input.attr('data-max');
-                $link.attr('href', baseHref + '&offset=' + newOffset);
-            }).bind ('keypress', function(event) {
-                if (event.keyCode === 13){
-                    if ( validateInput() ) {
-                        $('html').css('cursor', 'wait');
-                        location.href = $link.attr('href');
-                    }
-                    else { event.preventDefault(); }
-                }
-            });
-
-        $link.on ('click', function(event) {
-            if ( validateInput() ) {
-                $('html').css('cursor', 'wait');
-            }
-            else { event.preventDefault(); }
-        });
-
-        let validateInput = function() {
-            $inputForm.form({
-                inline: true,
-                fields: {
-                    paginationCustomValidation: {
-                        identifier: $inputInput.attr('data-validate'),
-                        rules: [
-                            {
-                                type: "empty", prompt: 'Please enter a page number!'
-                            },
-                            {
-                                type: "integer", prompt: 'Please enter a page number!'
-                            },
-                            {
-                                type: "smallerEqualThanTotal[" + stepsValue + "]", prompt: 'Please enter a smaller page number!'
-                            },
-                            {
-                                type: "biggerThan[0]", prompt: 'Please enter a smaller page number!'
-                            }
-                        ]
-                    }
-                },
-                onInvalid: function() { return false; },
-                onValid: function()   { return true; }
-            });
-
-            return $inputForm.form('validate form');
-        }
-    });
 
 });
 

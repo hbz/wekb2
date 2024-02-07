@@ -4,20 +4,21 @@
 
   $(document).ready(function() {
 
-/*    /!** Bootstrap 4.6.  - Loading Tabs from URL with hash **!/
-        // Javascript to enable link to tab
-    var hash = location.hash;
+    /*    /!** Bootstrap 4.6.  - Loading Tabs from URL with hash **!/
+            // Javascript to enable link to tab
+        var hash = location.hash;
 
-    if (hash) {
-      $('.nav-item a[href="' + hash + '"]').tab('show');
+        if (hash) {
+          $('.nav-item a[href="' + hash + '"]').tab('show');
 
-    // Change hash for page-reload
-    $('.nav-item a').on('shown.bs.tab', function(e) {
-      location.hash = e.target.hash;
-    })
-    }*/
+        // Change hash for page-reload
+        $('.nav-item a').on('shown.bs.tab', function(e) {
+          location.hash = e.target.hash;
+        })
+        }*/
     // Find every inline link.
     $('a.display-inline').each(function(){
+
       // The link.
       var link = $(this);
 
@@ -38,6 +39,7 @@
         // Grab the data.
         var grabContent = function() {
 
+          console.log("Updated grabbing contents");
 
           // Default data.
           if (the_data == undefined) the_data = {};
@@ -124,46 +126,9 @@
           refreshContent( $(this), form.attr('action'), form.attr('method'), form.serialize());
         }
       });
-      var myNum;
-      function printANumber(myNum, callback) {
-        link.replaceWith(content);
-        callback();
-
-      }
-
-// a function which we will use in a driver function as a callback function
-      function printFinishMessage() {
-        cairo.initDynamicSemuiStuff('.inline-content');
-      }
-
-// Driver method
-      function event() {
-        printANumber(8, );
-      }
-
-      event();
 
       // Then swap out the link for the new content.
-/*      link.replaceWith(content, function() {
-        alert("test");
-        cairo.initDynamicSemuiStuff('.inline-content');
-      });*/
-/*      link.append(function(){
-        return content;
-      });*/
-      //cairo.initDynamicSemuiStuff('.inline-content');
-
-/*      $.fn.replaceWithCallback = function(replace, callback){
-        var ret = $.fn.replaceWith.call(link, replace); // Call replaceWith
-        if(typeof callback === 'function'){
-          callback.call(ret); // Call your callback
-        }
-        return ret;  // For chaining
-      };
-      $.fn.replaceWithCallback(content,$('.inline-content').find('.ui.pagination.menu').attr("aria-label", "pagination-label"));*/
-
-      console.log('---------------------------')
-      console.log($('.inline-content').find('.ui.pagination.menu'));
+      link.replaceWith(content);
 
 
       // Automatically update the content

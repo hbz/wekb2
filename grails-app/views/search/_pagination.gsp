@@ -10,3 +10,8 @@
   <semui:paginateNew controller="${s_controller}" action="${s_action}" id="${params.id}" params="${params}"
                   max="${max}" total="${reccount}"/>
 </g:if>
+<g:javascript>
+  $(document).ready(function() {
+    r2d2.initDynamicSemuiStuff('.inline-content');
+  });
+</g:javascript>
