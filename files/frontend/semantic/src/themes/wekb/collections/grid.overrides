@@ -1,78 +1,78 @@
 & when (@variationGridStackable) {
     /* -------------------
-          Stackable
+          Stackable only for Class wekb-widescreenMonitorBreakpoint
     -------------------- */
 
     @media only screen and (max-width: @widescreenMonitorBreakpoint) {
-        body > .ui.stackable.grid,
-        .ui:not(.segment):not(.grid) .ui.stackable.grid {
+        body > .ui.stackable.wekb-widescreenMonitorBreakpoint.grid,
+        .ui:not(.segment):not(.grid) .ui.stackable.wekb-widescreenMonitorBreakpoint.grid {
             width: auto;
             margin-left: @stackableMobileGutter;
             margin-right: @stackableMobileGutter;
         }
-        .ui.stackable.grid > .row > .wide.column,
-        .ui.stackable.grid > .wide.column,
-        .ui.stackable.grid > .column.grid > .column,
-        .ui.stackable.grid > .column.row > .column,
-        .ui.stackable.grid > .row > .column,
-        .ui.stackable.grid > .column:not(.row),
-        .ui.grid > .stackable.stackable.stackable.row > .column {
+        .ui.stackable.wekb-widescreenMonitorBreakpoint.grid > .row > .wide.column,
+        .ui.stackable.wekb-widescreenMonitorBreakpoint.grid > .wide.column,
+        .ui.stackable.wekb-widescreenMonitorBreakpoint.grid > .column.grid > .column,
+        .ui.stackable.wekb-widescreenMonitorBreakpoint.grid > .column.row > .column,
+        .ui.stackable.wekb-widescreenMonitorBreakpoint.grid > .row > .column,
+        .ui.stackable.wekb-widescreenMonitorBreakpoint.grid > .column:not(.row),
+        .ui.grid > .stackable.wekb-widescreenMonitorBreakpoint.stackable.stackable.row > .column {
             width: 100% !important;
             margin: 0 !important;
             box-shadow: none !important;
             padding: (@stackableRowSpacing / 2) (@stackableGutter / 2);
         }
-        .ui.stackable.grid:not(.vertically) > .row {
+        .ui.stackable.wekb-widescreenMonitorBreakpoint.grid:not(.vertically) > .row {
             margin: 0;
             padding: 0;
         }
 
         /* Coupling */
-        .ui.container > .ui.stackable.grid > .column,
-        .ui.container > .ui.stackable.grid > .row > .column {
+        .ui.container > .ui.stackable.wekb-widescreenMonitorBreakpoint.grid > .column,
+        .ui.container > .ui.stackable.wekb-widescreenMonitorBreakpoint.grid > .row > .column {
             padding-left: 0 !important;
             padding-right: 0 !important;
         }
 
         /* Don't pad inside segment or nested grid */
-        .ui.grid .ui.stackable.grid,
-        .ui.segment:not(.vertical) .ui.stackable.page.grid {
+        .ui.grid .ui.stackable.wekb-widescreenMonitorBreakpoint.grid,
+        .ui.segment:not(.vertical) .ui.stackable.wekb-widescreenMonitorBreakpoint.page.grid {
             margin-left: -(@stackableGutter / 2);
             margin-right: -(@stackableGutter / 2);
         }
 
         /* Divided Stackable */
-        .ui.stackable.divided.grid > .row:first-child > .column:first-child,
-        .ui.stackable.celled.grid > .row:first-child > .column:first-child,
-        .ui.stackable.divided.grid > .column:not(.row):first-child,
-        .ui.stackable.celled.grid > .column:not(.row):first-child {
+        .ui.stackable.wekb-widescreenMonitorBreakpoint.divided.grid > .row:first-child > .column:first-child,
+        .ui.stackable.wekb-widescreenMonitorBreakpoint.celled.grid > .row:first-child > .column:first-child,
+        .ui.stackable.wekb-widescreenMonitorBreakpoint.divided.grid > .column:not(.row):first-child,
+        .ui.stackable.wekb-widescreenMonitorBreakpoint.celled.grid > .column:not(.row):first-child {
             border-top: none !important;
         }
         & when (@variationGridInverted) {
-            .ui.inverted.stackable.celled.grid > .column:not(.row),
-            .ui.inverted.stackable.divided.grid > .column:not(.row),
-            .ui.inverted.stackable.celled.grid > .row > .column,
-            .ui.inverted.stackable.divided.grid > .row > .column {
+            .ui.inverted.stackable.wekb-widescreenMonitorBreakpoint.celled.grid > .column:not(.row),
+            .ui.inverted.stackable.wekb-widescreenMonitorBreakpoint.divided.grid > .column:not(.row),
+            .ui.inverted.stackable.wekb-widescreenMonitorBreakpoint.celled.grid > .row > .column,
+            .ui.inverted.stackable.wekb-widescreenMonitorBreakpoint.divided.grid > .row > .column {
                 border-top: @stackableInvertedMobileBorder;
             }
         }
-        .ui.stackable.celled.grid > .column:not(.row),
-        .ui.stackable.divided:not(.vertically).grid > .column:not(.row),
-        .ui.stackable.celled.grid > .row > .column,
-        .ui.stackable.divided:not(.vertically).grid > .row > .column {
+        .ui.stackable.wekb-widescreenMonitorBreakpoint.celled.grid > .column:not(.row),
+        .ui.stackable.wekb-widescreenMonitorBreakpoint.divided:not(.vertically).grid > .column:not(.row),
+        .ui.stackable.wekb-widescreenMonitorBreakpoint.celled.grid > .row > .column,
+        .ui.stackable.wekb-widescreenMonitorBreakpoint.divided:not(.vertically).grid > .row > .column {
             border-top: @stackableMobileBorder;
             box-shadow: none !important;
             padding-top: @stackableRowSpacing !important;
             padding-bottom: @stackableRowSpacing !important;
         }
         & when (@variationGridCelled) {
-            .ui.stackable.celled.grid > .row {
+            .ui.stackable.wekb-widescreenMonitorBreakpoint.celled.grid > .row {
                 box-shadow: none !important;
             }
         }
         & when (@variationGridDivided) {
-            .ui.stackable.divided:not(.vertically).grid > .column:not(.row),
-            .ui.stackable.divided:not(.vertically).grid > .row > .column {
+            .ui.stackable.wekb-widescreenMonitorBreakpoint.divided:not(.vertically).grid > .column:not(.row),
+            .ui.stackable.wekb-widescreenMonitorBreakpoint.divided:not(.vertically).grid > .row > .column {
                 padding-left: 0 !important;
                 padding-right: 0 !important;
             }
