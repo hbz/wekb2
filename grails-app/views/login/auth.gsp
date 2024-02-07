@@ -8,11 +8,11 @@
 <body>
 <div class="ui middle aligned center aligned grid">
     <div class="six wide column">
-        <h2 class="ui header">
+        <h1 class="ui header">
             <div class="content">
                 Login
             </div>
-        </h2>
+        </h1>
 
         <semui:flashMessage data="${flash}"/>
 
