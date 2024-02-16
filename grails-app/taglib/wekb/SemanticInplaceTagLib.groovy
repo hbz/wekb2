@@ -27,7 +27,7 @@ class SemanticInplaceTagLib {
             String default_empty = "Edit"
             String emptyText = attrs.emptytext ? " data-emptytext=\"${attrs.emptytext}\"" : " data-emptytext=\"${default_empty}\""
 
-            out << "<span id=\"${id}\" class=\"xEditableValue ${attrs.class ?: ''} ${attrs.type == 'date' ? 'date' : ''}\""
+            out << "<a href=\"#\" id=\"${id}\" class=\"xEditableValue ${attrs.class ?: ''} ${attrs.type == 'date' ? 'date' : ''}\""
 
             if (attrs.inputclass) {
                 out << " data-inputclass=\"${attrs.inputclass}\""
@@ -95,10 +95,10 @@ class SemanticInplaceTagLib {
                     out << ""
                 }
             }
-            out << "</span>"
+            out << "</a>"
         } else {
             if (!attrs.disabled) {
-                out << "<span class=\"${attrs.class ?: ''}\">"
+                out << "<a href=\"#\" class=\"${attrs.class ?: ''}\">"
                 if (body) {
                     out << body()
                 } else {
@@ -109,7 +109,7 @@ class SemanticInplaceTagLib {
                         out << "Empty"
                     }
                 }
-                out << '</span>'
+                out << '</a>'
             }
         }
 
@@ -147,10 +147,9 @@ class SemanticInplaceTagLib {
             String default_empty = "Edit"
             String emptyText = attrs.emptytext ? " data-emptytext=\"${attrs.emptytext}\"" : " data-emptytext=\"${default_empty}\""
 
-            out << "<span>"
 
             // Output an editable link
-            out << "<span id=\"${id}\" "
+            out << "<a href=\"#\" id=\"${id}\" "
 
             out << 'class="xEditableManyToOne"'
 
@@ -189,7 +188,7 @@ class SemanticInplaceTagLib {
             // outputting a span containing an icon for refdata fields.
             out << renderObjectValue(owner[field])
 
-            out << "</span>"
+            out << "</a>"
 
             // If the caller specified an rdc attribute then they are describing a refdata category.
             // We want to add a link to the category edit page IF the annotation is editable.
@@ -201,7 +200,6 @@ class SemanticInplaceTagLib {
                 }
             }*/
 
-            out << "</span>"
         } else {
             if (!attrs.disabled) {
                 if (body) {
@@ -241,10 +239,8 @@ class SemanticInplaceTagLib {
             String default_empty = "Edit"
             String emptyText = attrs.emptytext ? " data-emptytext=\"${attrs.emptytext}\"" : " data-emptytext=\"${default_empty}\""
 
-            out << "<span>"
-
             // Output an editable link
-            out << "<span id=\"${id}\" "
+            out << "<a href=\"#\" id=\"${id}\" "
 
             out << 'class="xEditableManyToOne" '
 
@@ -286,12 +282,12 @@ class SemanticInplaceTagLib {
                 out << renderObjectValue(owner[field])
             }
 
-            out << "</span>"
+            out << "</a>"
 
             // If the caller specified an rdc attribute then they are describing a refdata category.
             // We want to add a link to the category edit page IF the annotation is editable.
 
-            out << "</span>"
+
         } else {
             if (!attrs.disabled) {
                 out << renderObjectValue(attrs.owner[attrs.field])
@@ -313,7 +309,6 @@ class SemanticInplaceTagLib {
                 String id 			= attrs.id ?: "${oid}:${field}"
                 String emptyText    = ' data-emptytext="' + ( attrs.emptytext ?: 'Edit' ) + '"'
 
-                out << '<span>'
 
                 String oldValue = ''
                 if ((owner[field] == null) || (owner[field] == 'Unknown') || (owner[field].toString().length() == 0)) {
@@ -327,7 +322,7 @@ class SemanticInplaceTagLib {
                 out <<  " data-value=\"${oldValue}\" data-pk=\"${oid}\" data-type=\"select\" " +
                         " data-name=\"${field}\" data-source=\"${data_link}\" data-url=\"${update_link}\" ${emptyText}>"
 
-                out << "${oldValue}</a></span>"
+                out << "${oldValue}</a>"
             }
             else {
 
