@@ -124,12 +124,12 @@ class ExportService {
         if (connection.getResponseCode() == HttpURLConnection.HTTP_OK){
             FileUtils.copyInputStreamToFile(new ByteArrayInputStream(content), file)
             // copy content to local file
-            Files.write(file.toPath(), content)
+            //Files.write(file.toPath(), content)
         }
         return file
     }
 
-    private byte[] getByteContent(InputStream inputStream){
+    byte[] getByteContent(InputStream inputStream){
         ByteArrayOutputStream baos = new ByteArrayOutputStream()
         byte[] buf = new byte[4096]
         int n = 0

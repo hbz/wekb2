@@ -1,6 +1,6 @@
 package wekb
 
-
+import org.apache.commons.io.FileUtils
 import wekb.tools.UrlToolkit
 import wekb.helper.RDStore
 import grails.gorm.transactions.Transactional
@@ -168,6 +168,12 @@ class AutoUpdatePackagesService {
                                     }
 
                                 }
+
+                                boolean isZipFile = file && lastUpdateURL.contains('.zip')
+                                if(isZipFile){
+                                    file = storeZipContentToFile(file)
+                                }
+
                                 if (file) {
                                     kbartRows = kbartProcessService.kbartProcess(file, lastUpdateURL, updatePackageInfo)
 
@@ -184,7 +190,7 @@ class AutoUpdatePackagesService {
                                     }
                                 } else {
                                     UpdatePackageInfo.withTransaction {
-                                        updatePackageInfo.description = "No KBART File found by URL: ${lastUpdateURL}!"
+                                        updatePackageInfo.description = isZipFile ? "No txt-File found in Zip-File!" : "No KBART File found by URL: ${lastUpdateURL}!"
                                         updatePackageInfo.status = RDStore.UPDATE_STATUS_FAILED
                                         updatePackageInfo.endTime = new Date()
                                         updatePackageInfo.updateUrl = lastUpdateURL
@@ -246,6 +252,20 @@ class AutoUpdatePackagesService {
             }
         }
         log.info("End startAutoPackageUpdate Package ($pkg.name)")
+    }
+
+    File storeZipContentToFile(File zipFIle) {
+        File file = new File(zipFIle.name+'.txt')
+        def zf = new java.util.zip.ZipFile(zipFIle)
+        boolean foundTxtFile = false
+        zf.entries().findAll { !it.directory }.each {
+            log.debug("storeZipContentToFile: fileName -> "+it.name)
+            if(it.name.contains('.txt')){
+                byte[] content = exportService.getByteContent(zf.getInputStream(it))
+                //FileUtils.copyInputStreamToFile(new ByteArrayInputStream(content), file)
+            }
+        }
+        return foundTxtFile ? file : null
     }
 
 
