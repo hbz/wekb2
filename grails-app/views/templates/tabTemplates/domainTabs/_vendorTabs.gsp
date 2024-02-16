@@ -400,6 +400,16 @@
                     Prequalification VOL
                 </dt>
                 <dd>
+                    <semui:xEditableRefData owner="${d}" field="prequalificationVOL"
+                                            config="${RCConstants.YN}"/>
+                </dd>
+            </dl>
+            <dl>
+                <dt class="control-label">
+                    Info to Prequalification VOL
+                </dt>
+                <dd>
+                    <semui:xEditable owner="${d}" field="prequalificationVOLInfo"/>
                 </dd>
             </dl>
         </div>

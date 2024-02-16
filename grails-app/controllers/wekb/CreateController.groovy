@@ -136,7 +136,7 @@ class CreateController {
         MultipartFile tsvFile = request.getFile("tsvFile")
         if(tsvFile && tsvFile.size > 0) {
           String encoding = UniversalDetector.detectCharset(tsvFile.getInputStream())
-          if(encoding in ["UTF-8", "US-ASCII"]) {
+          if(encoding in ["UTF-8", "US-ASCII", "WINDOWS-1252"]) {
             Map packagesData = createComponentService.packageBatchImport(tsvFile, user)
 
             render view: 'packageBatchCompleted', model: packagesData

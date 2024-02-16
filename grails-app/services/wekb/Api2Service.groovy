@@ -1555,6 +1555,8 @@ class Api2Service {
                 result.activationForNewReleases = object.activationForNewReleases ? RDStore.YN_YES.value : RDStore.YN_NO.value
                 result.exchangeOfIndividualTitles = object.exchangeOfIndividualTitles ? RDStore.YN_YES.value : RDStore.YN_NO.value
                 result.researchPlatformForEbooks = object.researchPlatformForEbooks
+                result.prequalificationVOL = object.prequalificationVOL ? RDStore.YN_YES.value : RDStore.YN_NO.value
+                result.prequalificationVOLInfo = object.prequalificationVOLInfo
 
                 result.roles = []
                 object.roles.each { role ->

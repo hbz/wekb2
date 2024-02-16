@@ -39,6 +39,9 @@ class Vendor extends AbstractBase implements Auditable {
   boolean exchangeOfIndividualTitles
   String researchPlatformForEbooks
 
+  boolean prequalificationVOL
+  String prequalificationVOLInfo
+
 
 
   static mappedBy = [
@@ -85,6 +88,9 @@ class Vendor extends AbstractBase implements Auditable {
     activationForNewReleases column: 'ven_activation_for_new_releases'
     exchangeOfIndividualTitles column: 'ven_exchange_of_ind_titles'
     researchPlatformForEbooks column: 'ven_research_platform_for_ebooks'
+
+    prequalificationVOL column: 'ven_prequalification_vol'
+    prequalificationVOLInfo column: 'ven_prequalification_vol_info', type: 'text'
   }
 
   static constraints = {
@@ -118,6 +124,9 @@ class Vendor extends AbstractBase implements Auditable {
 
     xmlOrders (nullable: true, blank: true)
     ediOrders (nullable: true, blank: true)
+
+    prequalificationVOL (nullable: true, blank: true)
+    prequalificationVOLInfo (nullable: true, blank: true)
 
   }
 
