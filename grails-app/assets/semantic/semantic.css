@@ -2231,14 +2231,14 @@ input::selection {
 
 .ui.primary.buttons .button:hover,
 .ui.primary.button:hover {
-  background-color: yellow;
+  background-color: #64696d;
   color: #FFFFFF;
   text-shadow: none;
 }
 
 .ui.primary.buttons .button:focus,
 .ui.primary.button:focus {
-  background-color: #070808;
+  background-color: #64696d;
   color: #FFFFFF;
   text-shadow: none;
 }
@@ -2254,7 +2254,7 @@ input::selection {
 .ui.primary.buttons .active.button:active,
 .ui.primary.active.button,
 .ui.primary.button .active.button:active {
-  background-color: #0f0f10;
+  background-color: #64696d;
   color: #FFFFFF;
   text-shadow: none;
 }
@@ -2271,21 +2271,21 @@ input::selection {
 .ui.basic.primary.buttons .button:hover,
 .ui.basic.primary.button:hover {
   background: transparent;
-  box-shadow: 0 0 0 1px yellow inset;
-  color: yellow;
+  box-shadow: 0 0 0 1px #64696d inset;
+  color: #64696d;
 }
 
 .ui.basic.primary.buttons .button:focus,
 .ui.basic.primary.button:focus {
   background: transparent;
-  box-shadow: 0 0 0 1px #070808 inset;
-  color: yellow;
+  box-shadow: 0 0 0 1px #64696d inset;
+  color: #64696d;
 }
 
 .ui.basic.primary.buttons .active.button,
 .ui.basic.primary.active.button {
   background: transparent;
-  box-shadow: 0 0 0 1px #0f0f10 inset;
+  box-shadow: 0 0 0 1px #64696d inset;
   color: #020203;
 }
 
@@ -2387,15 +2387,15 @@ input::selection {
 .ui.tertiary.primary.buttons .button:hover,
 .ui.tertiary.primary.buttons button:hover,
 .ui.tertiary.primary.button:hover {
-  box-shadow: inset 0 -0.2em 0 #e5e619;
-  color: #e5e619;
+  box-shadow: inset 0 -0.2em 0 #696969;
+  color: #696969;
 }
 
 .ui.tertiary.primary.buttons .button:focus,
 .ui.tertiary.primary.buttons .tertiary.button:focus,
 .ui.tertiary.primary.button:focus {
-  box-shadow: inset 0 -0.2em 0 #080808;
-  color: #080808;
+  box-shadow: inset 0 -0.2em 0 #696969;
+  color: #696969;
 }
 
 .ui.tertiary.primary.buttons .active.button,
@@ -2404,8 +2404,8 @@ input::selection {
 .ui.tertiary.primary.buttons .button:active,
 .ui.tertiary.primary.buttons .tertiary.button:active,
 .ui.tertiary.primary.button:active {
-  box-shadow: inset 0 -0.2em 0 #0c0f13;
-  color: #0f0f10;
+  box-shadow: inset 0 -0.2em 0 #4f6882;
+  color: #64696d;
 }
 
 .ui.secondary.buttons .button,
@@ -24497,10 +24497,6 @@ em[data-emoji="regional_indicator_a"]::before {
 /*******************************
              Emojis
 *******************************/
-
-/*******************************
-         Site Overrides
-*******************************/
 /*!
  * # Fomantic-UI 2.9.3 - Flag
  * https://github.com/fomantic/Fomantic-UI/
@@ -26314,7 +26310,7 @@ h6.ui.header .sub.header {
 }
 
 a.ui.primary.header:hover {
-  color: yellow;
+  color: #64696d;
 }
 
 .ui.primary.dividing.header {
@@ -37333,7 +37329,7 @@ input[type="file"].ui.file.input:focus + label.ui.button:not(.basic):not(.tertia
 
 input[type="file"].ui.file.input:focus + label.ui.primary.button:not(.basic):not(.tertiary),
 .ui.file.input input[type="file"]:focus + label.ui.primary.button:not(.basic):not(.tertiary) {
-  background-color: yellow;
+  background-color: #64696d;
   color: #FFFFFF;
 }
 
@@ -37504,7 +37500,7 @@ input[type="file"].ui.primary.file.input::-webkit-file-upload-button,
 
 input[type="file"].ui.primary.file.input::-webkit-file-upload-button:hover,
 .ui.primary.file.input input[type="file"]::-webkit-file-upload-button:hover {
-  background: yellow;
+  background: #64696d;
 }
 
 input[type="file"].ui.primary.file.input::-ms-browse,
@@ -37515,7 +37511,7 @@ input[type="file"].ui.primary.file.input::-ms-browse,
 
 input[type="file"].ui.primary.file.input::-ms-browse:hover,
 .ui.primary.file.input input[type="file"]::-ms-browse:hover {
-  background: yellow;
+  background: #64696d;
 }
 
 input[type="file"].ui.primary.file.input::-webkit-file-upload-button,
@@ -37532,12 +37528,12 @@ input[type="file"].ui.primary.file.input::file-selector-button,
 
 input[type="file"].ui.primary.file.input::-webkit-file-upload-button:hover,
 .ui.primary.file.input input[type="file"]::-webkit-file-upload-button:hover {
-  background: yellow;
+  background: #64696d;
 }
 
 input[type="file"].ui.primary.file.input::file-selector-button:hover,
 .ui.primary.file.input input[type="file"]::file-selector-button:hover {
-  background: yellow;
+  background: #64696d;
 }
 
 input[type="file"].ui.secondary.file.input::-webkit-file-upload-button,
@@ -38960,8 +38956,8 @@ a.ui.basic.label:hover {
 
 .ui.primary.labels a.label:hover,
 a.ui.ui.ui.primary.label:hover {
-  background-color: yellow;
-  border-color: yellow;
+  background-color: #64696d;
+  border-color: #64696d;
   color: #FFFFFF;
 }
 
@@ -38983,8 +38979,8 @@ a.ui.ui.ui.primary.label:hover {
 .ui.basic.labels a.primary.label:hover,
 a.ui.ui.ui.basic.primary.label:hover {
   background: none #FFFFFF;
-  border-color: yellow;
-  color: yellow;
+  border-color: #64696d;
+  color: #64696d;
 }
 
 /* Inverted */
@@ -41707,7 +41703,7 @@ ol.ui.suffixed.list li::before,
 }
 
 /*******************************
-         Site Overrides
+    User Variable Overrides
 *******************************/
 /*!
  * # Fomantic-UI 2.9.3 - Loader
@@ -51280,7 +51276,7 @@ Floated Menu / Item
 }
 
 .ui.inverted.pointing.primary.menu .active.item {
-  background-color: yellow;
+  background-color: #64696d;
 }
 
 .ui.ui.ui.inverted.menu .red.active.item,
@@ -52553,7 +52549,7 @@ Floated Menu / Item
 }
 
 .ui.primary.message {
-  background-color: pink;
+  background-color: #DFF0FF;
   color: rgba(255, 255, 255, 0.9);
 }
 
@@ -52859,7 +52855,7 @@ Floated Menu / Item
 *******************************/
 
 /*******************************
-         Site Overrides
+        Site Overrides
 *******************************/
 /*!
  * # Fomantic-UI 2.9.3 - Table
@@ -57243,7 +57239,7 @@ Floated Menu / Item
 *******************************/
 
 /*******************************
-         Site Overrides
+    User Variable Overrides
 *******************************/
 /*!
  * # Fomantic-UI 2.9.3 - Card
@@ -57905,7 +57901,7 @@ a.ui.card:hover,
 .ui.link.cards .primary.card:not(.icon):hover,
 a.ui.primary.card:hover,
 .ui.link.primary.card:hover {
-  box-shadow: 0 0 0 1px #d4d4d5, 0 2px 0 0 yellow, 0 1px 3px 0 #bcbdbd;
+  box-shadow: 0 0 0 1px #d4d4d5, 0 2px 0 0 #64696d, 0 1px 3px 0 #bcbdbd;
 }
 
 .ui.cards > .basic.primary.card,
@@ -57956,7 +57952,7 @@ a.ui.inverted.primary.card:hover,
 .ui.link.basic.inverted.cards .primary.card:not(.icon):hover,
 a.ui.basic.inverted.primary.card:hover,
 .ui.link.basic.inverted.primary.card:hover {
-  background: yellow;
+  background: #64696d;
 }
 
 .ui.secondary.cards > .card,
@@ -59391,7 +59387,7 @@ a.inverted.ui.card:hover,
 *******************************/
 
 /*******************************
-         Site Overrides
+    User Variable Overrides
 *******************************/
 /*!
  * # Fomantic-UI 2.9.3 - Comment
@@ -59708,7 +59704,7 @@ a.inverted.ui.card:hover,
 *******************************/
 
 /*******************************
-         Site Overrides
+    User Variable Overrides
 *******************************/
 /*!
  * # Fomantic-UI 2.9.3 - Feed
@@ -60647,7 +60643,7 @@ a.inverted.ui.card:hover,
 *******************************/
 
 /*******************************
-         Site Overrides
+    User Variable Overrides
 *******************************/
 /*!
  * # Fomantic-UI 2.9.3 - Item
@@ -61278,7 +61274,7 @@ a.inverted.ui.card:hover,
 }
 
 /*******************************
-         Site Overrides
+    User Variable Overrides
 *******************************/
 /*!
  * # Fomantic-UI 2.9.3 - Statistic
@@ -61956,7 +61952,7 @@ a.inverted.ui.card:hover,
 *******************************/
 
 /*******************************
-         Site Overrides
+    User Variable Overrides
 *******************************/
 /*!
  * # Fomantic-UI 2.9.3 - Accordion
@@ -62754,10 +62750,6 @@ a.inverted.ui.card:hover,
 /*******************************
          Theme Overrides
 *******************************/
-
-/*******************************
-        User Overrides
-*******************************/
 /*!
  * # Fomantic-UI 2.9.3 - Checkbox
  * https://github.com/fomantic/Fomantic-UI/
@@ -63326,7 +63318,7 @@ a.inverted.ui.card:hover,
 }
 
 .ui.toggle.checkbox input:focus:checked ~ label::before {
-  background-color: #070808;
+  background-color: #64696d;
 }
 
 .ui.right.aligned.toggle.checkbox label {
@@ -63451,7 +63443,7 @@ a.inverted.ui.card:hover,
 }
 
 .ui.ui.inverted.toggle.checkbox input:focus:checked ~ label::before {
-  background-color: #070808;
+  background-color: #64696d;
 }
 
 /* --------------
@@ -68108,10 +68100,6 @@ a.ui.nag {
 /*******************************
          Theme Overrides
 *******************************/
-
-/*******************************
-         Site Overrides
-*******************************/
 /*!
  * # Fomantic-UI 2.9.3 - Popup
  * https://github.com/fomantic/Fomantic-UI/
@@ -70650,7 +70638,7 @@ a.ui.nag {
 
 .ui.primary.slider.basic .inner .thumb:hover,
 .ui.primary.slider.basic:focus .inner .thumb {
-  background-color: yellow;
+  background-color: #64696d;
 }
 
 /* Basic Inverted */
@@ -71284,10 +71272,6 @@ a.ui.nag {
 /*******************************
         Slider Overrides
 *******************************/
-
-/*******************************
-        User Overrides
-*******************************/
 /*!
  * # Fomantic-UI 2.9.3 - Rating
  * https://github.com/fomantic/Fomantic-UI/
@@ -71391,7 +71375,7 @@ a.ui.nag {
 .ui.primary.rating .icon.selected.partial.active {
   background: inherit;
   color: #b5cefa;
-  text-shadow: 0 -1px 0 yellow, -1px 0 0 yellow, 0 1px 0 yellow, 1px 0 0 yellow;
+  text-shadow: 0 -1px 0 #64696d, -1px 0 0 #64696d, 0 1px 0 #64696d, 1px 0 0 #64696d;
   -webkit-text-stroke: unset;
   background-clip: unset;
 }
@@ -73488,10 +73472,6 @@ span.ui.massive.text {
 /*******************************
          Theme Overrides
 *******************************/
-
-/*******************************
-         Site Overrides
-*******************************/
 /*!
  * # Fomantic-UI 2.9.3 - Toast
  * https://github.com/fomantic/Fomantic-UI/
@@ -74416,10 +74396,6 @@ span.ui.massive.text {
 
 /*******************************
          Theme Overrides
-*******************************/
-
-/*******************************
-        User Overrides
 *******************************/
 /*!
  * # Fomantic-UI 2.9.3 - Transition
