@@ -19,7 +19,7 @@
                       value=""/>
         </div>
 
-        <button class="ui button black" type="submit" value="changeDdcs"
+        <button class="ui button primary" type="submit" value="changeDdcs"
                 name="processOption">Do bulk process to the selected items</button>
 
         <br>

@@ -25,7 +25,7 @@
     <br />
     <br />
     <p>
-        <button class="ui black button" onclick="window.history.back()">${message(code: 'default.button.back')}</button>
+        <button class="ui primary button" onclick="window.history.back()">${message(code: 'default.button.back')}</button>
     </p>
 </div>
 </body>

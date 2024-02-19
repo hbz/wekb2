@@ -47,7 +47,7 @@
 
         <div class="ui right floated buttons">
             <a href="${request.forwardURI}" class="ui button">Reset</a>
-            <input type="submit" class="ui black button " value="Send">
+            <input type="submit" class="ui primary button " value="Send">
         </div>
 
         <br>

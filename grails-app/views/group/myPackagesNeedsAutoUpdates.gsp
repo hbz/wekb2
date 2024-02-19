@@ -80,7 +80,7 @@
 
                     <br>
                     <br>
-                    <g:link class="ui button black" controller="workflow" action="action"
+                    <g:link class="ui button primary" controller="workflow" action="action"
                             params="[component: object, selectedAction: 'workFlowMethod::updatePackageAllTitlesFromKbartSource', curationOverride: true]">Trigger Update (all Titles)</g:link>
                 </td>
             </tr>

@@ -48,7 +48,7 @@
                                                            filter1="Current"/>
                         </div>
 
-                        <button type="submit" class="ui black button">Link</button>
+                        <button type="submit" class="ui primary button">Link</button>
                     </g:form>
                 </div>
             </g:if>
@@ -57,7 +57,7 @@
     </g:if>
     <sec:ifNotLoggedIn>
         <div class="content center aligned">
-            <g:link controller="resource" action="showLogin" class="ui icon black button"
+            <g:link controller="resource" action="showLogin" class="ui icon primary button"
                     id="${d.getOID()}"><i
                     class="edit icon"></i><g:message code="rightBox.edit.info"/></g:link>
         </div>
@@ -111,12 +111,12 @@
             <div class="ui buttons">
 
                 <g:if test="${(d.kbartSource && (d.kbartSource.lastUpdateUrl || d.kbartSource.url)) || d.getLastSuccessfulManualUpdateInfo()}">
-                    <g:link controller="public" action="kbart" class="ui black button"
+                    <g:link controller="public" action="kbart" class="ui primary button"
                             id="${params.id}">KBART File</g:link> &nbsp;
                     <div class="or"></div>
                 </g:if>
 
-                <a class="ui black button" href="#" onclick="$('#packageTSVExport').modal('show');">we:kb File</a>
+                <a class="ui primary button" href="#" onclick="$('#packageTSVExport').modal('show');">we:kb File</a>
 
             </div>
 

@@ -60,7 +60,7 @@
                     </div>
 
                     <g:if test="${editable}">
-                        <a class="ui right floated black button" href="#"
+                        <a class="ui right floated primary button" href="#"
                            onclick="$('#rolesModal').modal('show');">Add Role</a>
 
                         <br>
@@ -113,7 +113,7 @@
                     </table>
 
                     <g:if test="${editable}">
-                        <a class="ui right floated black button" href="#"
+                        <a class="ui right floated primary button" href="#"
                            onclick="$('#contactModal').modal('show');">Add Contact</a>
 
                         <br>

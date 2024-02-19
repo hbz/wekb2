@@ -43,7 +43,7 @@
                 </td>
                 <td>
                     <g:link controller="${savedParams.controller ?: 'search'}" action="${savedParams.action ?: 'index'}"
-                            params="${savedParams}" class="ui black button" target="_blank">
+                            params="${savedParams}" class="ui primary button" target="_blank">
                         <i class="icon search"></i>
                         ${itm.name}</g:link>
                 </td>

@@ -25,7 +25,7 @@
         </g:each>
 
         <div class="ui right floated buttons">
-            <button class="ui button black" type="submit" value="search"
+            <button class="ui button primary" type="submit" value="search"
                     name="searchAction">Search View</button>
         </div>
     </g:form>
@@ -199,7 +199,7 @@
                 <g:link class="ui button" controller="${controllerName}" action="${actionName}"
                         params="[id: params.id, qbe: params.qbe]"><g:message code="search.reset"/></g:link>
                 </g:if>
-                <button class="ui button black" type="submit" value="Search"
+                <button class="ui button primary" type="submit" value="Search"
                         name="searchAction"><g:message code="search.filter"/></button>
 
                 <sec:ifLoggedIn>
@@ -218,7 +218,7 @@
                             </div>
 
                             <div class="item">
-                                <input class="ui button black" type="submit" name="searchAction"
+                                <input class="ui button primary" type="submit" name="searchAction"
                                        value="Save"/>
                             </div>
                         </div>

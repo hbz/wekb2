@@ -42,7 +42,7 @@
                         <dd><input  name="repeatpass" type="password"/></dd>
                     </dl>
 
-                    <button type="submit" class="ui black button">Change Password</button>
+                    <button type="submit" class="ui primary button">Change Password</button>
                 </g:form>
             </div>
         </semui:card>

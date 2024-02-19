@@ -118,7 +118,7 @@
                         </table>
 
                         <g:if test="${news.package.countNewInDB > 50}">
-                            <g:link class="ui black button" controller="search" action="componentSearch"
+                            <g:link class="ui primary button" controller="search" action="componentSearch"
                                     params="[qbe: 'g:packages', createdSince: dateFor14Days, sort: 'lastUpdated', order: 'desc']">Show more</g:link>
                         </g:if>
                     </div>
@@ -173,7 +173,7 @@
                         </table>
 
                         <g:if test="${news.package.countLastUpdatedInDB > 50}">
-                            <g:link class="ui black button" controller="search" action="componentSearch"
+                            <g:link class="ui primary button" controller="search" action="componentSearch"
                                     params="[qbe: 'g:packages', changedSince: dateFor14Days, sort: 'lastUpdated', order: 'desc']">Show more</g:link>
                         </g:if>
                     </div>
@@ -247,7 +247,7 @@
                         </table>
 
                         <g:if test="${news.platform.countNewInDB > 50}">
-                            <g:link class="ui black button" controller="search" action="componentSearch"
+                            <g:link class="ui primary button" controller="search" action="componentSearch"
                                     params="[qbe: 'g:platforms', createdSince: dateFor14Days, sort: 'lastUpdated', order: 'desc']">Show more</g:link>
                         </g:if>
                     </div>
@@ -301,7 +301,7 @@
                         </table>
 
                         <g:if test="${news.platform.countLastUpdatedInDB > 50}">
-                            <g:link class="ui black button" controller="search" action="componentSearch"
+                            <g:link class="ui primary button" controller="search" action="componentSearch"
                                     params="[qbe: 'g:platforms', changedSince: dateFor14Days, sort: 'lastUpdated', order: 'desc']">Show more</g:link>
                         </g:if>
                     </div>
@@ -368,7 +368,7 @@
                         </table>
 
                         <g:if test="${news.org.countNewInDB > 50}">
-                            <g:link class="ui black button" controller="search" action="componentSearch"
+                            <g:link class="ui primary button" controller="search" action="componentSearch"
                                     params="[qbe: 'g:orgs', createdSince: dateFor14Days, sort: 'lastUpdated', order: 'desc']">Show more</g:link>
                         </g:if>
                     </div>
@@ -412,7 +412,7 @@
                         </table>
 
                         <g:if test="${news.org.countLastUpdatedInDB > 50}">
-                            <g:link class="ui black button" controller="search" action="componentSearch"
+                            <g:link class="ui primary button" controller="search" action="componentSearch"
                                     params="[qbe: 'g:orgs', changedSince: dateFor14Days, sort: 'lastUpdated', order: 'desc']">Show more</g:link>
                         </g:if>
                     </div>
@@ -485,7 +485,7 @@
                         </table>
 
                         <g:if test="${news.titleinstancepackageplatform.countNewInDB > 50}">
-                            <g:link class="ui black button" controller="search" action="componentSearch"
+                            <g:link class="ui primary button" controller="search" action="componentSearch"
                                     params="[qbe: 'g:tipps', createdSince: dateFor14Days, sort: 'lastUpdated', order: 'desc']">Show more</g:link>
                         </g:if>
 
@@ -538,7 +538,7 @@
                         </table>
 
                         <g:if test="${news.titleinstancepackageplatform.countLastUpdatedInDB > 50}">
-                            <g:link class="ui black button" controller="search" action="componentSearch"
+                            <g:link class="ui primary button" controller="search" action="componentSearch"
                                     params="[qbe: 'g:tipps', changedSince: dateFor14Days, sort: 'lastUpdated', order: 'desc']">Show more</g:link>
                         </g:if>
                     </div>

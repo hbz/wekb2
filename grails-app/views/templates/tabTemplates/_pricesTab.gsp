@@ -36,7 +36,7 @@
                 </table>
 
                 <g:if test="${editable}">
-                    <a class="ui right floated black button" href="#" onclick="$('#pricesModal').modal('show');">Add Price</a>
+                    <a class="ui right floated primary button" href="#" onclick="$('#pricesModal').modal('show');">Add Price</a>
 
                     <br>
                     <br>

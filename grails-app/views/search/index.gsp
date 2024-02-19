@@ -65,7 +65,7 @@
 
         <div class="ui right floated buttons">
             <g:link class="ui button" controller="search" action="index">Reset</g:link>
-            <button class="ui button black" type="submit" value="yes" name="search">Search</button>
+            <button class="ui button primary" type="submit" value="yes" name="search">Search</button>
         </div>
 
         <br>

@@ -36,7 +36,7 @@
                 <div class="field">
                 <input type="file" class="ui button" name="tsvFile" accept=".tsv, .txt"/>
                 </div>
-                <button class="ui black button" type="submit">Upload</button>
+                <button class="ui primary button" type="submit">Upload</button>
             </div>
         </g:uploadForm>
     </div>

@@ -13,7 +13,7 @@
     </div>
 
     <g:if test="${editable}">
-        <a class="ui right floated black button" href="#" onclick="$('#nationalRangesModal').modal('show');">Add National Range</a>
+        <a class="ui right floated primary button" href="#" onclick="$('#nationalRangesModal').modal('show');">Add National Range</a>
 
         <br>
         <br>

@@ -84,7 +84,7 @@
                     </table>
 
                     <g:if test="${editable}">
-                        <a class="ui right floated black button" href="#"
+                        <a class="ui right floated primary button" href="#"
                            onclick="$('#supportedLibrarySystemsModal').modal('show');">Add supported Library System</a>
 
                         <br>
@@ -144,7 +144,7 @@
                     </table>
 
                     <g:if test="${editable}">
-                        <a class="ui right floated black button" href="#"
+                        <a class="ui right floated primary button" href="#"
                            onclick="$('#electronicDeliveryDelaysModal').modal('show');">Add electronic delivery delay notifications</a>
 
                         <br>
@@ -208,7 +208,7 @@
                     </table>
 
                     <g:if test="${editable}">
-                        <a class="ui right floated black button" href="#"
+                        <a class="ui right floated primary button" href="#"
                            onclick="$('#electronicBillingsModal').modal('show');">Add Electronic Invoice Format</a>
 
                         <br>
@@ -269,7 +269,7 @@
                     </table>
 
                     <g:if test="${editable}">
-                        <a class="ui right floated black button" href="#"
+                        <a class="ui right floated primary button" href="#"
                            onclick="$('#invoiceDispatchsModal').modal('show');">Add Invoice dispatch</a>
 
                         <br>

@@ -19,7 +19,7 @@
                       value=""/>
         </div>
 
-        <button class="ui button black" type="submit" value="addVendor"
+        <button class="ui button primary" type="submit" value="addVendor"
                 name="processOption">Do bulk process to the selected items</button>
 
         <br>

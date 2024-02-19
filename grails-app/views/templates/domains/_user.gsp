@@ -107,7 +107,7 @@
 
                     <g:if test="${userIsAdmin}">
 
-                        <a class="ui right floated black button" href="#"
+                        <a class="ui right floated primary button" href="#"
                            onclick="$('#addCuratoryGroup').modal('show');">Add a Curatory Group</a>
 
                         <br>
@@ -161,7 +161,7 @@
 
                     <g:if test="${userIsAdmin}">
 
-                        <a class="ui right floated black button" href="#"
+                        <a class="ui right floated primary button" href="#"
                            onclick="$('#addRoleToUser').modal('show');">Add Role</a>
 
                         <br>

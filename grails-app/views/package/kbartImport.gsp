@@ -104,7 +104,7 @@
                            placeholder="Selected KBART-File">
                     <input type="file" name="tsvFile" accept=".tsv, .txt" style="display: none;" id="uploadFile"
                            type="file">
-                    <label for="uploadFile" class="ui black button" style="padding-left:30px; padding-right:30px">
+                    <label for="uploadFile" class="ui primary button" style="padding-left:30px; padding-right:30px">
                         <i class="upload icon"></i>
                         Click here to upload KBART-File
                     </label>
@@ -112,7 +112,7 @@
                 <br>
                 <br>
 
-                <button class="ui black button" type="submit">Process Kbart Import</button>
+                <button class="ui primary button" type="submit">Process Kbart Import</button>
             </g:uploadForm>
         </div>
     </div>

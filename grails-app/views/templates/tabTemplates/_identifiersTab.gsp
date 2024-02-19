@@ -63,7 +63,7 @@
 
             <g:if test="${editable}">
                 <g:set var="ctxoid" value="${wekb.ClassUtils.deproxy(d).class.name}:${d.id}"/>
-                <a class="ui right floated black button" href="#" onclick="$('#identifiersModal').modal('show');">Add Identifier</a>
+                <a class="ui right floated primary button" href="#" onclick="$('#identifiersModal').modal('show');">Add Identifier</a>
                 <br>
                 <br>
                 <semui:modal id="identifiersModal" title="Add Identifier">

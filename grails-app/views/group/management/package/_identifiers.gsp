@@ -66,7 +66,7 @@
                             </table>
                         </g:if>
 
-                        <a class="ui right floated black button" href="#"
+                        <a class="ui right floated primary button" href="#"
                            onclick="$('#identifiersModal_${row_obj.uuid}').modal('show');">Add Identifier</a>
                         <br>
                         <br>

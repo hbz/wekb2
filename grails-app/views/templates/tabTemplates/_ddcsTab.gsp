@@ -29,7 +29,7 @@
 
 
         <g:if test="${editable}">
-                        <a class="ui right floated black button" href="#"
+                        <a class="ui right floated primary button" href="#"
                            onclick="$('#ddcModal').modal('show');">Add Dewey Decimal Classification</a>
 
                         <br>

@@ -98,7 +98,7 @@
 
             <div class="ui right floated buttons">
                 <g:link controller="admin" action="removeTippDuplicatesByUrl" id="${params.id}"
-                        class="ui button black">Remove Tipps Duplicates By Url</g:link>
+                        class="ui button primary">Remove Tipps Duplicates By Url</g:link>
             </div>
 
             <table class="ui selectable striped sortable celled table">
