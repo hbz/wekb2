@@ -51,7 +51,7 @@
                             <div class="item">
                                 ${t.value}
                                 <g:if test="${editable}">
-                                    <g:link class='ui mini button red' controller='ajaxHtml'
+                                    <g:link class='ui mini button negative' controller='ajaxHtml'
                                             action='unlinkManyToMany'
                                             params="${["__context": "${d.getOID()}", "__property": "roles", "__itemToRemove": "${t.getOID()}"]}">Delete</g:link>
                                 </g:if>

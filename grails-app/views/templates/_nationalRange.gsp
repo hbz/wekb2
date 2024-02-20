@@ -4,7 +4,7 @@
         <g:each in="${d.nationalRanges.sort { it.getI10n('value') }}" var="nationalRange">
             <div class="item">${nationalRange.value}: ${nationalRange.getI10n('value')}
             <g:if test="${editable}">
-                <g:link class='ui mini button red' controller='ajaxHtml'
+                <g:link class='ui mini button negative' controller='ajaxHtml'
                         action='unlinkManyToMany'
                         params="${["__context": "${d.getOID()}", "__property": "nationalRanges", "__itemToRemove": "${nationalRange.getOID()}"]}">Delete</g:link>
             </g:if>

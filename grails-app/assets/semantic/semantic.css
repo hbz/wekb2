@@ -759,6 +759,18 @@ input::selection {
   font-weight: 700;
 }
 
+/* To hide the focus indicator when it is not needed. */
+
+.ui.button:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* To display the focus indicator during keyboard navigation */
+
+.ui.button:focus-visible {
+  outline: 3px solid black;
+}
+
 /*******************************
          Site Overrides
 *******************************/
@@ -1867,7 +1879,7 @@ input::selection {
 }
 
 .ui.button.toggle.active:hover {
-  background-color: #017730;
+  background-color: #00461c;
   text-shadow: none;
   color: #FFFFFF;
 }
@@ -2219,7 +2231,7 @@ input::selection {
 
 .ui.primary.buttons .button,
 .ui.primary.button {
-  background-color: #1b1c1d;
+  background-color: #4c4f52;
   color: #FFFFFF;
   text-shadow: none;
   background-image: none;
@@ -2231,21 +2243,21 @@ input::selection {
 
 .ui.primary.buttons .button:hover,
 .ui.primary.button:hover {
-  background-color: #64696d;
+  background-color: #000000;
   color: #FFFFFF;
   text-shadow: none;
 }
 
 .ui.primary.buttons .button:focus,
 .ui.primary.button:focus {
-  background-color: #64696d;
+  background-color: #000000;
   color: #FFFFFF;
   text-shadow: none;
 }
 
 .ui.primary.buttons .button:active,
 .ui.primary.button:active {
-  background-color: #020203;
+  background-color: #333638;
   color: #FFFFFF;
   text-shadow: none;
 }
@@ -2254,7 +2266,7 @@ input::selection {
 .ui.primary.buttons .active.button:active,
 .ui.primary.active.button,
 .ui.primary.button .active.button:active {
-  background-color: #64696d;
+  background-color: #000000;
   color: #FFFFFF;
   text-shadow: none;
 }
@@ -2264,35 +2276,35 @@ input::selection {
 .ui.basic.primary.buttons .button,
 .ui.basic.primary.button {
   background: transparent;
-  box-shadow: 0 0 0 1px #1b1c1d inset;
-  color: #1b1c1d;
+  box-shadow: 0 0 0 1px #4c4f52 inset;
+  color: #4c4f52;
 }
 
 .ui.basic.primary.buttons .button:hover,
 .ui.basic.primary.button:hover {
   background: transparent;
-  box-shadow: 0 0 0 1px #64696d inset;
-  color: #64696d;
+  box-shadow: 0 0 0 1px #000000 inset;
+  color: #000000;
 }
 
 .ui.basic.primary.buttons .button:focus,
 .ui.basic.primary.button:focus {
   background: transparent;
-  box-shadow: 0 0 0 1px #64696d inset;
-  color: #64696d;
+  box-shadow: 0 0 0 1px #000000 inset;
+  color: #000000;
 }
 
 .ui.basic.primary.buttons .active.button,
 .ui.basic.primary.active.button {
   background: transparent;
-  box-shadow: 0 0 0 1px #64696d inset;
-  color: #020203;
+  box-shadow: 0 0 0 1px #000000 inset;
+  color: #333638;
 }
 
 .ui.basic.primary.buttons .button:active,
 .ui.basic.primary.button:active {
-  box-shadow: 0 0 0 1px #020203 inset;
-  color: #020203;
+  box-shadow: 0 0 0 1px #333638 inset;
+  color: #333638;
 }
 
 /* Inverted */
@@ -2381,21 +2393,21 @@ input::selection {
 .ui.tertiary.primary.button {
   background: transparent;
   box-shadow: none;
-  color: #1b1c1d;
+  color: #4c4f52;
 }
 
 .ui.tertiary.primary.buttons .button:hover,
 .ui.tertiary.primary.buttons button:hover,
 .ui.tertiary.primary.button:hover {
-  box-shadow: inset 0 -0.2em 0 #696969;
-  color: #696969;
+  box-shadow: inset 0 -0.2em 0 #000000;
+  color: #000000;
 }
 
 .ui.tertiary.primary.buttons .button:focus,
 .ui.tertiary.primary.buttons .tertiary.button:focus,
 .ui.tertiary.primary.button:focus {
-  box-shadow: inset 0 -0.2em 0 #696969;
-  color: #696969;
+  box-shadow: inset 0 -0.2em 0 #000000;
+  color: #000000;
 }
 
 .ui.tertiary.primary.buttons .active.button,
@@ -2404,8 +2416,8 @@ input::selection {
 .ui.tertiary.primary.buttons .button:active,
 .ui.tertiary.primary.buttons .tertiary.button:active,
 .ui.tertiary.primary.button:active {
-  box-shadow: inset 0 -0.2em 0 #4f6882;
-  color: #64696d;
+  box-shadow: inset 0 -0.2em 0 #000000;
+  color: #000000;
 }
 
 .ui.secondary.buttons .button,
@@ -5098,14 +5110,14 @@ input::selection {
 
 .ui.positive.buttons .button:hover,
 .ui.positive.button:hover {
-  background-color: #017730;
+  background-color: #00461c;
   color: #FFFFFF;
   text-shadow: none;
 }
 
 .ui.positive.buttons .button:focus,
 .ui.positive.button:focus {
-  background-color: #00692a;
+  background-color: #00461c;
   color: #FFFFFF;
   text-shadow: none;
 }
@@ -5121,7 +5133,7 @@ input::selection {
 .ui.positive.buttons .active.button:active,
 .ui.positive.active.button,
 .ui.positive.button .active.button:active {
-  background-color: #007930;
+  background-color: #00461c;
   color: #FFFFFF;
   text-shadow: none;
 }
@@ -5138,21 +5150,21 @@ input::selection {
 .ui.basic.positive.buttons .button:hover,
 .ui.basic.positive.button:hover {
   background: transparent;
-  box-shadow: 0 0 0 1px #017730 inset;
-  color: #017730;
+  box-shadow: 0 0 0 1px #00461c inset;
+  color: #00461c;
 }
 
 .ui.basic.positive.buttons .button:focus,
 .ui.basic.positive.button:focus {
   background: transparent;
-  box-shadow: 0 0 0 1px #00692a inset;
-  color: #017730;
+  box-shadow: 0 0 0 1px #00461c inset;
+  color: #00461c;
 }
 
 .ui.basic.positive.buttons .active.button,
 .ui.basic.positive.active.button {
   background: transparent;
-  box-shadow: 0 0 0 1px #007930 inset;
+  box-shadow: 0 0 0 1px #00461c inset;
   color: #055a27;
 }
 
@@ -5182,14 +5194,14 @@ input::selection {
 
 .ui.negative.buttons .button:hover,
 .ui.negative.button:hover {
-  background-color: #c61c1c;
+  background-color: #7d0000;
   color: #FFFFFF;
   text-shadow: none;
 }
 
 .ui.negative.buttons .button:focus,
 .ui.negative.button:focus {
-  background-color: #c01313;
+  background-color: #7d0000;
   color: #FFFFFF;
   text-shadow: none;
 }
@@ -5205,7 +5217,7 @@ input::selection {
 .ui.negative.buttons .active.button:active,
 .ui.negative.active.button,
 .ui.negative.button .active.button:active {
-  background-color: #ca1818;
+  background-color: #7d0000;
   color: #FFFFFF;
   text-shadow: none;
 }
@@ -5222,21 +5234,21 @@ input::selection {
 .ui.basic.negative.buttons .button:hover,
 .ui.basic.negative.button:hover {
   background: transparent;
-  box-shadow: 0 0 0 1px #c61c1c inset;
-  color: #c61c1c;
+  box-shadow: 0 0 0 1px #7d0000 inset;
+  color: #7d0000;
 }
 
 .ui.basic.negative.buttons .button:focus,
 .ui.basic.negative.button:focus {
   background: transparent;
-  box-shadow: 0 0 0 1px #c01313 inset;
-  color: #c61c1c;
+  box-shadow: 0 0 0 1px #7d0000 inset;
+  color: #7d0000;
 }
 
 .ui.basic.negative.buttons .active.button,
 .ui.basic.negative.active.button {
   background: transparent;
-  box-shadow: 0 0 0 1px #ca1818 inset;
+  box-shadow: 0 0 0 1px #7d0000 inset;
   color: #a92020;
 }
 
@@ -24497,6 +24509,10 @@ em[data-emoji="regional_indicator_a"]::before {
 /*******************************
              Emojis
 *******************************/
+
+/*******************************
+         Site Overrides
+*******************************/
 /*!
  * # Fomantic-UI 2.9.3 - Flag
  * https://github.com/fomantic/Fomantic-UI/
@@ -26306,15 +26322,15 @@ h6.ui.header .sub.header {
 -------------------- */
 
 .ui.primary.header {
-  color: #1b1c1d;
+  color: #4c4f52;
 }
 
 a.ui.primary.header:hover {
-  color: #64696d;
+  color: #000000;
 }
 
 .ui.primary.dividing.header {
-  border-bottom: 2px solid #1b1c1d;
+  border-bottom: 2px solid #4c4f52;
 }
 
 .ui.inverted.primary.header.header.header {
@@ -27186,7 +27202,7 @@ i.inverted.icon {
 -------------------- */
 
 i.primary.icon.icon.icon.icon.icon.icon {
-  color: #1b1c1d;
+  color: #4c4f52;
 }
 
 i.inverted.primary.icon.icon.icon.icon.icon.icon {
@@ -27197,7 +27213,7 @@ i.inverted.bordered.primary.icon.icon.icon.icon.icon.icon,
 i.inverted.circular.primary.icon.icon.icon.icon.icon.icon,
 i.inverted.bordered.primary.icons,
 i.inverted.circular.primary.icons {
-  background-color: #1b1c1d;
+  background-color: #4c4f52;
   color: #FFFFFF;
 }
 
@@ -37329,7 +37345,7 @@ input[type="file"].ui.file.input:focus + label.ui.button:not(.basic):not(.tertia
 
 input[type="file"].ui.file.input:focus + label.ui.primary.button:not(.basic):not(.tertiary),
 .ui.file.input input[type="file"]:focus + label.ui.primary.button:not(.basic):not(.tertiary) {
-  background-color: #64696d;
+  background-color: #000000;
   color: #FFFFFF;
 }
 
@@ -37494,46 +37510,46 @@ input[type="file"].ui.file.input:focus + label.ui.black.button:not(.basic):not(.
 
 input[type="file"].ui.primary.file.input::-webkit-file-upload-button,
 .ui.primary.file.input input[type="file"]::-webkit-file-upload-button {
-  background: #1b1c1d;
+  background: #4c4f52;
   color: #FFFFFF;
 }
 
 input[type="file"].ui.primary.file.input::-webkit-file-upload-button:hover,
 .ui.primary.file.input input[type="file"]::-webkit-file-upload-button:hover {
-  background: #64696d;
+  background: #000000;
 }
 
 input[type="file"].ui.primary.file.input::-ms-browse,
 .ui.primary.file.input input[type="file"]::-ms-browse {
-  background: #1b1c1d;
+  background: #4c4f52;
   color: #FFFFFF;
 }
 
 input[type="file"].ui.primary.file.input::-ms-browse:hover,
 .ui.primary.file.input input[type="file"]::-ms-browse:hover {
-  background: #64696d;
+  background: #000000;
 }
 
 input[type="file"].ui.primary.file.input::-webkit-file-upload-button,
 .ui.primary.file.input input[type="file"]::-webkit-file-upload-button {
-  background: #1b1c1d;
+  background: #4c4f52;
   color: #FFFFFF;
 }
 
 input[type="file"].ui.primary.file.input::file-selector-button,
 .ui.primary.file.input input[type="file"]::file-selector-button {
-  background: #1b1c1d;
+  background: #4c4f52;
   color: #FFFFFF;
 }
 
 input[type="file"].ui.primary.file.input::-webkit-file-upload-button:hover,
 .ui.primary.file.input input[type="file"]::-webkit-file-upload-button:hover {
-  background: #64696d;
+  background: #000000;
 }
 
 input[type="file"].ui.primary.file.input::file-selector-button:hover,
 .ui.primary.file.input input[type="file"]::file-selector-button:hover {
-  background: #64696d;
+  background: #000000;
 }
 
 input[type="file"].ui.secondary.file.input::-webkit-file-upload-button,
@@ -38947,8 +38963,8 @@ a.ui.basic.label:hover {
 
 .ui.primary.labels .label,
 .ui.ui.ui.primary.label {
-  background-color: #1b1c1d;
-  border-color: #1b1c1d;
+  background-color: #4c4f52;
+  border-color: #4c4f52;
   color: rgba(255, 255, 255, 0.9);
 }
 
@@ -38956,15 +38972,15 @@ a.ui.basic.label:hover {
 
 .ui.primary.labels a.label:hover,
 a.ui.ui.ui.primary.label:hover {
-  background-color: #64696d;
-  border-color: #64696d;
+  background-color: #000000;
+  border-color: #000000;
   color: #FFFFFF;
 }
 
 /* Ribbon */
 
 .ui.ui.ui.primary.ribbon.label {
-  border-color: #020203;
+  border-color: #333638;
 }
 
 /* Basic */
@@ -38972,15 +38988,15 @@ a.ui.ui.ui.primary.label:hover {
 .ui.basic.labels .primary.label,
 .ui.ui.ui.basic.primary.label {
   background: none #FFFFFF;
-  border-color: #1b1c1d;
-  color: #1b1c1d;
+  border-color: #4c4f52;
+  color: #4c4f52;
 }
 
 .ui.basic.labels a.primary.label:hover,
 a.ui.ui.ui.basic.primary.label:hover {
   background: none #FFFFFF;
-  border-color: #64696d;
-  color: #64696d;
+  border-color: #000000;
+  color: #000000;
 }
 
 /* Inverted */
@@ -41703,7 +41719,7 @@ ol.ui.suffixed.list li::before,
 }
 
 /*******************************
-    User Variable Overrides
+         Site Overrides
 *******************************/
 /*!
  * # Fomantic-UI 2.9.3 - Loader
@@ -42014,7 +42030,7 @@ ol.ui.suffixed.list li::before,
 .ui.ui.ui.ui.primary.loading .input > i.icon::after,
 .ui.ui.ui.ui.primary.loading > i.icon::after,
 .ui.ui.ui.primary.loader::after {
-  color: #1b1c1d;
+  color: #4c4f52;
 }
 
 .ui.inverted.primary.elastic.loader::before,
@@ -48694,7 +48710,7 @@ ol.ui.suffixed.list li::before,
 .ui.grid > .primary.row,
 .ui.grid > .primary.column,
 .ui.grid > .row > .primary.column {
-  background-color: #1b1c1d;
+  background-color: #4c4f52;
   color: #FFFFFF;
 }
 
@@ -51039,7 +51055,7 @@ Floated Menu / Item
 .ui.ui.ui.menu .primary.active.item,
 .ui.ui.primary.menu .active.item:hover,
 .ui.ui.primary.menu .active.item {
-  color: #1b1c1d;
+  color: #4c4f52;
 }
 
 .ui.ui.ui.menu .red.active.item,
@@ -51264,7 +51280,7 @@ Floated Menu / Item
 
 .ui.ui.ui.inverted.menu .primary.active.item,
 .ui.ui.inverted.primary.menu {
-  background-color: #1b1c1d;
+  background-color: #4c4f52;
 }
 
 .ui.inverted.primary.menu .item::before {
@@ -51276,7 +51292,7 @@ Floated Menu / Item
 }
 
 .ui.inverted.pointing.primary.menu .active.item {
-  background-color: #64696d;
+  background-color: #000000;
 }
 
 .ui.ui.ui.inverted.menu .red.active.item,
@@ -51814,7 +51830,7 @@ Floated Menu / Item
 }
 
 .ui.inverted.pointing.menu .primary.active.item::after {
-  background-color: #1b1c1d;
+  background-color: #4c4f52;
 }
 
 .ui.inverted.pointing.menu .secondary.active.item::after {
@@ -52555,11 +52571,11 @@ Floated Menu / Item
 
 .ui.primary.message,
 .ui.attached.primary.message {
-  box-shadow: 0 0 0 1px #1b1c1d inset, 0 0 0 0 rgba(0, 0, 0, 0);
+  box-shadow: 0 0 0 1px #4c4f52 inset, 0 0 0 0 rgba(0, 0, 0, 0);
 }
 
 .ui.floating.primary.message {
-  box-shadow: 0 0 0 1px #1b1c1d inset, 0 2px 4px 0 rgba(34, 36, 38, 0.12), 0 2px 10px 0 rgba(34, 36, 38, 0.15);
+  box-shadow: 0 0 0 1px #4c4f52 inset, 0 2px 4px 0 rgba(34, 36, 38, 0.12), 0 2px 10px 0 rgba(34, 36, 38, 0.15);
 }
 
 .ui.primary.message .header {
@@ -52855,7 +52871,7 @@ Floated Menu / Item
 *******************************/
 
 /*******************************
-        Site Overrides
+         Site Overrides
 *******************************/
 /*!
  * # Fomantic-UI 2.9.3 - Table
@@ -53118,11 +53134,11 @@ Floated Menu / Item
   }
 
   .ui.ui.ui.ui.table:not(.unstackable) tr[class*="primary marked"].left {
-    box-shadow: 0 -1px 0 0 rgba(0, 0, 0, 0.1) inset, 0.2em 0 0 0 #1b1c1d inset;
+    box-shadow: 0 -1px 0 0 rgba(0, 0, 0, 0.1) inset, 0.2em 0 0 0 #4c4f52 inset;
   }
 
   .ui.ui.ui.ui.table:not(.unstackable) tr[class*="primary marked"].right {
-    box-shadow: 0 -1px 0 0 rgba(0, 0, 0, 0.1) inset, -0.2em 0 0 0 #1b1c1d inset;
+    box-shadow: 0 -1px 0 0 rgba(0, 0, 0, 0.1) inset, -0.2em 0 0 0 #4c4f52 inset;
   }
 
   .ui.ui.ui.ui.inverted.table:not(.unstackable) tr[class*="primary marked"].left {
@@ -54018,11 +54034,11 @@ Floated Menu / Item
 }
 
 .ui.ui.ui.ui[class*="tablet stackable"].table tr[class*="primary marked"].left {
-  box-shadow: 0 -1px 0 0 rgba(0, 0, 0, 0.1) inset, 0.2em 0 0 0 #1b1c1d inset;
+  box-shadow: 0 -1px 0 0 rgba(0, 0, 0, 0.1) inset, 0.2em 0 0 0 #4c4f52 inset;
 }
 
 .ui.ui.ui.ui[class*="tablet stackable"].table tr[class*="primary marked"].right {
-  box-shadow: 0 -1px 0 0 rgba(0, 0, 0, 0.1) inset, -0.2em 0 0 0 #1b1c1d inset;
+  box-shadow: 0 -1px 0 0 rgba(0, 0, 0, 0.1) inset, -0.2em 0 0 0 #4c4f52 inset;
 }
 
 .ui.ui.ui.ui[class*="tablet stackable"].inverted.table tr[class*="primary marked"].left {
@@ -54483,11 +54499,11 @@ Floated Menu / Item
 -------------------- */
 
 .ui.primary.table {
-  border-top: 0.2em solid #1b1c1d;
+  border-top: 0.2em solid #4c4f52;
 }
 
 .ui.inverted.primary.table {
-  background: #1b1c1d;
+  background: #4c4f52;
   color: #FFFFFF;
 }
 
@@ -54509,8 +54525,8 @@ Floated Menu / Item
 
 .ui.inverted.scrolling.table > thead.primary,
 .ui.inverted.scrolling.table > tfoot.primary {
-  background: #1b1c1d;
-  color: #1b1c1d;
+  background: #4c4f52;
+  color: #4c4f52;
 }
 
 .ui.inverted.scrolling.table > thead.primary > tr > th,
@@ -54547,7 +54563,7 @@ Floated Menu / Item
 .ui.ui.ui.ui.inverted.table tr.primary:not(.marked),
 .ui.ui.inverted.table th.primary:not(.marked),
 .ui.ui.inverted.table td.primary:not(.marked) {
-  background: #1b1c1d;
+  background: #4c4f52;
   color: #FFFFFF;
 }
 
@@ -54583,12 +54599,12 @@ Floated Menu / Item
 
 .ui.table td[class*="primary marked"].left,
 .ui.table tr[class*="primary marked"].left {
-  box-shadow: 0.2em 0 0 0 #1b1c1d inset;
+  box-shadow: 0.2em 0 0 0 #4c4f52 inset;
 }
 
 .ui.table td[class*="primary marked"].right,
 .ui.table tr[class*="primary marked"].right {
-  box-shadow: -0.2em 0 0 0 #1b1c1d inset;
+  box-shadow: -0.2em 0 0 0 #4c4f52 inset;
 }
 
 .ui.inverted.table td[class*="primary marked"].left,
@@ -57239,7 +57255,7 @@ Floated Menu / Item
 *******************************/
 
 /*******************************
-    User Variable Overrides
+         Site Overrides
 *******************************/
 /*!
  * # Fomantic-UI 2.9.3 - Card
@@ -57892,7 +57908,7 @@ a.ui.card:hover,
 .ui.primary.cards > .card,
 .ui.cards > .primary.card,
 .ui.primary.card {
-  box-shadow: 0 0 0 1px #d4d4d5, 0 2px 0 0 #1b1c1d, 0 1px 3px 0 #d4d4d5;
+  box-shadow: 0 0 0 1px #d4d4d5, 0 2px 0 0 #4c4f52, 0 1px 3px 0 #d4d4d5;
 }
 
 .ui.cards a.primary.card:hover,
@@ -57901,7 +57917,7 @@ a.ui.card:hover,
 .ui.link.cards .primary.card:not(.icon):hover,
 a.ui.primary.card:hover,
 .ui.link.primary.card:hover {
-  box-shadow: 0 0 0 1px #d4d4d5, 0 2px 0 0 #64696d, 0 1px 3px 0 #bcbdbd;
+  box-shadow: 0 0 0 1px #d4d4d5, 0 2px 0 0 #000000, 0 1px 3px 0 #bcbdbd;
 }
 
 .ui.cards > .basic.primary.card,
@@ -57941,7 +57957,7 @@ a.ui.inverted.primary.card:hover,
 .ui.basic.inverted.primary.cards > .card,
 .ui.basic.inverted.cards > .primary.card,
 .ui.basic.inverted.primary.card {
-  background: #1b1c1d;
+  background: #4c4f52;
 }
 
 .ui.inverted.cards a.basic.primary.card:hover,
@@ -57952,7 +57968,7 @@ a.ui.inverted.primary.card:hover,
 .ui.link.basic.inverted.cards .primary.card:not(.icon):hover,
 a.ui.basic.inverted.primary.card:hover,
 .ui.link.basic.inverted.primary.card:hover {
-  background: #64696d;
+  background: #000000;
 }
 
 .ui.secondary.cards > .card,
@@ -59387,7 +59403,7 @@ a.inverted.ui.card:hover,
 *******************************/
 
 /*******************************
-    User Variable Overrides
+         Site Overrides
 *******************************/
 /*!
  * # Fomantic-UI 2.9.3 - Comment
@@ -59704,7 +59720,7 @@ a.inverted.ui.card:hover,
 *******************************/
 
 /*******************************
-    User Variable Overrides
+         Site Overrides
 *******************************/
 /*!
  * # Fomantic-UI 2.9.3 - Feed
@@ -60178,12 +60194,12 @@ a.inverted.ui.card:hover,
 
 .ui.ui.feed > .event > .primary.label::before,
 .ui.primary.feed > .event > .label::before {
-  background: #1b1c1d;
+  background: #4c4f52;
 }
 
 .ui.primary.connected.feed > .event::before,
 .ui.connected.feed > .primary.event::before {
-  border-color: #1b1c1d;
+  border-color: #4c4f52;
 }
 
 .ui.inverted.primary.connected.feed > .event::before,
@@ -60193,7 +60209,7 @@ a.inverted.ui.card:hover,
 
 .ui.ui.feed > .event > .primary.basic.label::before,
 .ui.primary.basic.feed > .event > .label::before {
-  color: #1b1c1d;
+  color: #4c4f52;
 }
 
 .ui.feed > .event > .inverted.primary.label::before,
@@ -60643,7 +60659,7 @@ a.inverted.ui.card:hover,
 *******************************/
 
 /*******************************
-    User Variable Overrides
+         Site Overrides
 *******************************/
 /*!
  * # Fomantic-UI 2.9.3 - Item
@@ -61274,7 +61290,7 @@ a.inverted.ui.card:hover,
 }
 
 /*******************************
-    User Variable Overrides
+         Site Overrides
 *******************************/
 /*!
  * # Fomantic-UI 2.9.3 - Statistic
@@ -61608,7 +61624,7 @@ a.inverted.ui.card:hover,
 .ui.primary.statistics .statistic > .value,
 .ui.statistics .primary.statistic > .value,
 .ui.primary.statistic > .value {
-  color: #1b1c1d;
+  color: #4c4f52;
 }
 
 .ui.inverted.primary.statistics .statistic > .value,
@@ -61952,7 +61968,7 @@ a.inverted.ui.card:hover,
 *******************************/
 
 /*******************************
-    User Variable Overrides
+         Site Overrides
 *******************************/
 /*!
  * # Fomantic-UI 2.9.3 - Accordion
@@ -62750,6 +62766,10 @@ a.inverted.ui.card:hover,
 /*******************************
          Theme Overrides
 *******************************/
+
+/*******************************
+        User Overrides
+*******************************/
 /*!
  * # Fomantic-UI 2.9.3 - Checkbox
  * https://github.com/fomantic/Fomantic-UI/
@@ -63303,7 +63323,7 @@ a.inverted.ui.card:hover,
 }
 
 .ui.toggle.checkbox input:checked ~ label::before {
-  background-color: #1b1c1d;
+  background-color: #4c4f52;
 }
 
 .ui.toggle.checkbox input:checked ~ label::after {
@@ -63318,7 +63338,7 @@ a.inverted.ui.card:hover,
 }
 
 .ui.toggle.checkbox input:focus:checked ~ label::before {
-  background-color: #64696d;
+  background-color: #000000;
 }
 
 .ui.right.aligned.toggle.checkbox label {
@@ -63433,7 +63453,7 @@ a.inverted.ui.card:hover,
 }
 
 .ui.ui.inverted.toggle.checkbox input:checked ~ label::before {
-  background-color: #1b1c1d;
+  background-color: #4c4f52;
 }
 
 /* Toggle Active Focus */
@@ -63443,7 +63463,7 @@ a.inverted.ui.card:hover,
 }
 
 .ui.ui.inverted.toggle.checkbox input:focus:checked ~ label::before {
-  background-color: #64696d;
+  background-color: #000000;
 }
 
 /* --------------
@@ -67672,7 +67692,7 @@ a.ui.nag {
 -------------- */
 
 .ui.primary.nag {
-  background-color: #1b1c1d;
+  background-color: #4c4f52;
 }
 
 .ui.inverted.primary.nag {
@@ -68099,6 +68119,10 @@ a.ui.nag {
 
 /*******************************
          Theme Overrides
+*******************************/
+
+/*******************************
+         Site Overrides
 *******************************/
 /*!
  * # Fomantic-UI 2.9.3 - Popup
@@ -68908,14 +68932,14 @@ a.ui.nag {
 .ui.primary.popup,
 [data-tooltip][data-variation~="primary"]::after,
 [data-tooltip][data-variation~="primary"]::before {
-  background: #1b1c1d;
+  background: #4c4f52;
   color: #FFFFFF;
   border: none;
 }
 
 .ui.ui.ui.primary.loading.popup::before,
 .ui.primary.loading.popup {
-  background: #65696c;
+  background: #989c9f;
 }
 
 .ui.ui.ui.primary.popup::before,
@@ -69954,7 +69978,7 @@ a.ui.nag {
 .ui.indeterminate.primary.progress .bar::before,
 .ui.primary.progress .bar,
 .ui.progress .primary.bar {
-  background-color: #1b1c1d;
+  background-color: #4c4f52;
 }
 
 .ui.inverted.indeterminate.primary.progress .bar::before,
@@ -70623,7 +70647,7 @@ a.ui.nag {
 /* Standard */
 
 .ui.primary.slider .inner .track-fill {
-  background-color: #1b1c1d;
+  background-color: #4c4f52;
 }
 
 .ui.primary.inverted.slider .inner .track-fill {
@@ -70633,12 +70657,12 @@ a.ui.nag {
 /* Basic */
 
 .ui.primary.slider.basic .inner .thumb {
-  background-color: #1b1c1d;
+  background-color: #4c4f52;
 }
 
 .ui.primary.slider.basic .inner .thumb:hover,
 .ui.primary.slider.basic:focus .inner .thumb {
-  background-color: #64696d;
+  background-color: #000000;
 }
 
 /* Basic Inverted */
@@ -71272,6 +71296,10 @@ a.ui.nag {
 /*******************************
         Slider Overrides
 *******************************/
+
+/*******************************
+        User Overrides
+*******************************/
 /*!
  * # Fomantic-UI 2.9.3 - Rating
  * https://github.com/fomantic/Fomantic-UI/
@@ -71367,7 +71395,7 @@ a.ui.nag {
 
 .ui.primary.rating .active.icon {
   color: #E6EEFC;
-  text-shadow: 0 -1px 0 #1b1c1d, -1px 0 0 #1b1c1d, 0 1px 0 #1b1c1d, 1px 0 0 #1b1c1d;
+  text-shadow: 0 -1px 0 #4c4f52, -1px 0 0 #4c4f52, 0 1px 0 #4c4f52, 1px 0 0 #4c4f52;
 }
 
 .ui.primary.rating .icon.selected,
@@ -71375,14 +71403,14 @@ a.ui.nag {
 .ui.primary.rating .icon.selected.partial.active {
   background: inherit;
   color: #b5cefa;
-  text-shadow: 0 -1px 0 #64696d, -1px 0 0 #64696d, 0 1px 0 #64696d, 1px 0 0 #64696d;
+  text-shadow: 0 -1px 0 #000000, -1px 0 0 #000000, 0 1px 0 #000000, 1px 0 0 #000000;
   -webkit-text-stroke: unset;
   background-clip: unset;
 }
 
 .ui.primary.rating .icon.partial.active {
   background: linear-gradient(to right, #E6EEFC 0% var(--full), rgba(0, 0, 0, 0.15) var(--full) 100%);
-  -webkit-text-stroke: #1b1c1d 0.78px;
+  -webkit-text-stroke: #4c4f52 0.78px;
 }
 
 .ui.secondary.rating .active.icon {
@@ -73296,7 +73324,7 @@ span.ui.text {
 }
 
 span.ui.primary.text {
-  color: #1b1c1d;
+  color: #4c4f52;
 }
 
 span.ui.inverted.primary.text {
@@ -73471,6 +73499,10 @@ span.ui.massive.text {
 
 /*******************************
          Theme Overrides
+*******************************/
+
+/*******************************
+         Site Overrides
 *******************************/
 /*!
  * # Fomantic-UI 2.9.3 - Toast
@@ -74172,7 +74204,7 @@ span.ui.massive.text {
 -------------- */
 
 .ui.primary.toast {
-  background-color: #1b1c1d;
+  background-color: #4c4f52;
   color: rgba(255, 255, 255, 0.9);
 }
 
@@ -74397,6 +74429,10 @@ span.ui.massive.text {
 /*******************************
          Theme Overrides
 *******************************/
+
+/*******************************
+        User Overrides
+*******************************/
 /*!
  * # Fomantic-UI 2.9.3 - Transition
  * https://github.com/fomantic/Fomantic-UI/
@@ -74487,7 +74523,7 @@ span.ui.massive.text {
 }
 
 .primary.pulsating.transition {
-  box-shadow: 0 0 0 0 rgba(27, 28, 29, 0.5);
+  box-shadow: 0 0 0 0 rgba(76, 79, 82, 0.5);
 }
 
 .primary.inverted.pulsating.transition {

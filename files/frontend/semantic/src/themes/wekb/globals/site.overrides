@@ -28,3 +28,12 @@
   font-style: italic;
   font-weight: 700;
 }
+/* To hide the focus indicator when it is not needed. */
+.ui.button:focus:not(:focus-visible) {
+    outline: none;
+}
+
+/* To display the focus indicator during keyboard navigation */
+.ui.button:focus-visible {
+    outline: 3px solid black;
+}

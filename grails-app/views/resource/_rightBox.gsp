@@ -77,7 +77,7 @@
                     <p>As an admin you can still edit, but please contact a curator before making major changes.</p>
 
                     <g:if test="${params.curationOverride == 'true'}">
-                        <g:link class="ui button green"
+                        <g:link class="ui button positive"
                                 controller="${params.controller}"
                                 action="${params.action}"
                                 id="${displayobj.getOID()}"
@@ -86,7 +86,7 @@
                         </g:link>
                     </g:if>
                     <g:else>
-                        <g:link class="ui button red"
+                        <g:link class="ui button negative"
                                 controller="${params.controller}"
                                 action="${params.action}"
                                 id="${displayobj.getOID()}"
