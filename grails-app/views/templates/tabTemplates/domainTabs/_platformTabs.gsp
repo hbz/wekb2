@@ -149,7 +149,7 @@
                     Counter R5 Sushi Platform Name
                 </dt>
                 <dd>
-                    <semui:xEditable owner="${d}" field="sushiPlatform"/>
+                    <semui:xEditable owner="${d}" field="counterR5SushiPlatform"/>
                 </dd>
 
             </dl>
