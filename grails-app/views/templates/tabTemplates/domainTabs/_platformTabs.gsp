@@ -144,6 +144,15 @@
                 </dd>
 
             </dl>
+            <dl>
+                <dt class="control-label">
+                    Counter R5 Sushi Platform Name
+                </dt>
+                <dd>
+                    <semui:xEditable owner="${d}" field="counterR5SushiPlatform"/>
+                </dd>
+
+            </dl>
         </div>
     </semui:tabsItemContent>
 

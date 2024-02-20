@@ -1344,6 +1344,7 @@ class Api2Service {
                 result.proxySupported = object.proxySupported?.value
 
                 result.counterRegistryApiUuid = object.counterRegistryApiUuid
+                result.counterR5SushiPlatform = object.counterR5SushiPlatform
 
                 if (object.hasProperty('curatoryGroups')) {
                     result.curatoryGroups = []
@@ -2092,6 +2093,7 @@ class Api2Service {
 
             result.counter5ApiSources."${platform.uuid}".sushiApiAuthenticationMethod = platform.sushiApiAuthenticationMethod?.value
             result.counter5ApiSources."${platform.uuid}".centralApiKey = platform.centralApiKey
+            result.counter5ApiSources."${platform.uuid}".counterR5SushiPlatform = platform.counterR5SushiPlatform
 
         }
 
