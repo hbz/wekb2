@@ -771,6 +771,35 @@ input::selection {
   outline: 3px solid black;
 }
 
+/****************************************
+        Accessibility
+*****************************************/
+
+.la-skipLink {
+  position: absolute;
+  height: 0px;
+}
+
+.la-screenReaderText {
+  position: absolute;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(100%);
+  white-space: nowrap;
+}
+
+.la-screenReaderText:not(:focus) {
+  position: absolute;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(100%);
+  white-space: nowrap;
+}
+
 /*******************************
          Site Overrides
 *******************************/
