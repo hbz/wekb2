@@ -75,6 +75,7 @@ class Platform  extends AbstractBase implements Auditable {
   RefdataValue sushiApiAuthenticationMethod
 
   String centralApiKey
+  String sushiPlatform
 
   Date lastAuditDate
 
@@ -129,6 +130,7 @@ class Platform  extends AbstractBase implements Auditable {
 
     sushiApiAuthenticationMethod column: 'plat_sushi_api_authentication_method'
     centralApiKey column: 'plat_central_api_key', type: 'text'
+    sushiPlatform column: 'plat_sushi_platform', type: 'text'
 
   }
 
@@ -172,6 +174,7 @@ class Platform  extends AbstractBase implements Auditable {
     provider(nullable: true, blank: false)
     sushiApiAuthenticationMethod (nullable: true, blank: false)
     centralApiKey(nullable: true, blank: true)
+    sushiPlatform (nullable: true, blank: false)
   }
 
   @Override
