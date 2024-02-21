@@ -9,7 +9,7 @@
 <body>
 <h1 class="ui header">Welcome to we:kb</h1>
 
-<h2 class="ui header">we:kb News <div class="ui black label">
+<h2 class="ui header">we:kb News <div class="uiprimary label">
     Changes in the last <b>14</b> days.
 </div></h2>
 
@@ -28,10 +28,10 @@
                 <div class="description">
                     <div class="ui top attached tabular menu">
                         <a class="item" data-tab="packageNew">New <div
-                                class="floating ui black label">${news.package.countNewInDB}</div></a>
+                                class="floating uiprimary label">${news.package.countNewInDB}</div></a>
                         <a class="item"
                            data-tab="packageLastUpdated">Changes <div
-                                class="floating ui black label">${news.package.countLastUpdatedInDB}</div></a>
+                                class="floating uiprimary label">${news.package.countLastUpdatedInDB}</div></a>
                     </div>
 
                     <div class="ui bottom attached tab segment" data-tab="packageNew">
@@ -160,10 +160,10 @@
                 <div class="description">
                     <div class="ui top attached tabular menu">
                         <a class="item" data-tab="platformNew">New <div
-                                class="floating ui black label">${news.platform.countNewInDB}</div></a>
+                                class="floating uiprimary label">${news.platform.countNewInDB}</div></a>
                         <a class="item"
                            data-tab="platformLastUpdated">Changes <div
-                                class="floating ui black label">${news.platform.countLastUpdatedInDB}</div></a>
+                                class="floating uiprimary label">${news.platform.countLastUpdatedInDB}</div></a>
                     </div>
 
                     <div class="ui bottom attached tab segment" data-tab="platformNew">
@@ -294,9 +294,9 @@
 
                     <div class="ui top attached tabular menu">
                         <a class="item" data-tab="orgNew">New <div
-                                class="floating ui black label">${news.org.countNewInDB}</div></a>
+                                class="floating uiprimary label">${news.org.countNewInDB}</div></a>
                         <a class="item" data-tab="orgLastUpdated">Changes <div
-                                class="floating ui black label">${news.org.countLastUpdatedInDB}</div></a>
+                                class="floating uiprimary label">${news.org.countLastUpdatedInDB}</div></a>
                     </div>
 
                     <div class="ui bottom attached tab segment" data-tab="orgNew">
@@ -405,11 +405,11 @@
                     <div class="ui top attached tabular menu">
                         <a class="item"
                            data-tab="tippNew">New <div
-                                class="floating ui black label">${news.titleinstancepackageplatform.countNewInDB}</div>
+                                class="floating uiprimary label">${news.titleinstancepackageplatform.countNewInDB}</div>
                         </a>
                         <a class="item"
                            data-tab="tippLastUpdated">Changes <div
-                                class="floating ui black label">${news.titleinstancepackageplatform.countLastUpdatedInDB}</div>
+                                class="floating uiprimary label">${news.titleinstancepackageplatform.countLastUpdatedInDB}</div>
                         </a>
                     </div>
 

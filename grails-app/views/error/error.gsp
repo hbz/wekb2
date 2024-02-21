@@ -9,7 +9,7 @@
 <body>
 <div class="ui tall stacked segment">
         <div>
-            <span class="ui black label huge">${code}</span>
+            <span class="uiprimary label huge">${code}</span>
         </div>
     <div class="ui icon header">
         <i class="ambulance icon"></i>

@@ -202,7 +202,7 @@
                                             }
                                         %>
                                         <g:if test="${duration && duration.days <= 14}">
-                                            <div class="ui black label" data-tooltip="<g:message code="search.result.new.info"/>">
+                                            <div class="uiprimary label" data-tooltip="<g:message code="search.result.new.info"/>">
                                                 <i class="star icon"></i>
                                                 <g:message code="search.result.new"/>
                                             </div>

@@ -18,7 +18,7 @@ class SemanticTagLib {
 
     def actionsDropdown = { attrs, body ->
 
-        out << '<div class="ui simple dropdown black button">'
+        out << '<div class="ui simple dropdown primary button">'
         out << '<div class="text">'
         out << attrs.text
         out << '</div>'
@@ -747,7 +747,7 @@ class SemanticTagLib {
         String linkBody = attrs.text ?: ''
         String aClass = ((this.pageScope.variables?.actionName == attrs.action && (attrs.tab == params.tab || attrs.tab == params[attrs.subTab])) ? 'item active' : 'item') + (attrs.class ? ' ' + attrs.class : '')
 
-        String counts = (attrs.counts >= 0) ? '<div class="ui '  + ' circular black label">' + attrs.counts + '</div>' : null
+        String counts = (attrs.counts >= 0) ? '<div class="ui '  + ' circularprimary label">' + attrs.counts + '</div>' : null
 
         linkBody = counts ? linkBody + counts : linkBody
 
@@ -778,7 +778,7 @@ class SemanticTagLib {
         out << body()
 
         if (attrs.counts != null) {
-            out << '<div class="ui floating black circular label">'+attrs.counts+'</div>'
+            out << '<div class="ui floating primary circular label">'+attrs.counts+'</div>'
         }
         out << '</div>'
     }

@@ -41,25 +41,28 @@
         Accessibility
 *****************************************/
 .la-skipLink {
-    position: absolute;
+    //position: absolute;
     height: 0px;
 }
 
+
 .la-screenReaderText {
-  position: absolute;
-  height: 1px;
-  width: 1px;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  clip-path: inset(100%);
-  white-space: nowrap;
+    color: white;
+    position: relative;
+    left: -10000px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
 }
-.la-screenReaderText:not(:focus) {
-  position: absolute;
-  height: 1px;
-  width: 1px;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  clip-path: inset(100%);
-  white-space: nowrap;
+.la-screenReaderText:focus, .la-screenReaderText:active {
+    left: 106px;
+    width: auto;
+    white-space: nowrap;
+    top: -0.6em;
+    height: 20px;
+    overflow: visible;
+    display: block;
+    font-weight: 700;
+    color: #e0e1e2;
 }

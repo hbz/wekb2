@@ -29,17 +29,18 @@
 <body class="pushable">
 <wekb:serverlabel server="${currentServer}"/>
 <!-- skip to main content / for screenreader --!>
-<nav class="la-skipLink" role="navigation" aria-label="${g.message(code: 'accessibility.jumpLink')}">
-    <p>
-        <a href="#main" class="la-screenReaderText">${g.message(code: 'accessibility.jumpToMain')}</a>
-    </p>
-</nav>
 
-<nav class="ui left vertical inverted visible menu sidebar ${serverLabel}" id="toc" aria-label="main navigation">
+
+<nav class="ui left vertical inverted visible menu sidebar ${serverLabel}" id="toc" aria-label="main navigation" >
+
     <g:link controller="public" action="index" class="header item">
         <img alt="Logo wekb" src="${resource(dir: 'images', file: 'logo.svg')}"/>
     </g:link>
-
+    <nav class="la-skipLink" role="navigation" aria-label="${g.message(code: 'accessibility.jumpLink')}">
+        <p>
+            <a href="#jumper" class="la-screenReaderText">${g.message(code: 'accessibility.jumpToMain')}</a>
+        </p>
+    </nav>
     <div class="item">
         <div class="header">News</div>
 
@@ -199,7 +200,7 @@
         </div>
     </div>
 </div>
-
+<div style="position: absolute; right: 0"  id="jumper"></div>
 <div class="pusher shrink" id="main">
     <div class="wekb-content">
         <main class="ui main fluid container">
