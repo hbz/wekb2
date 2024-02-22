@@ -18,7 +18,7 @@
             <th>Identifier Namespace Name</th>
             <th>Identifier Namespace Value</th>
             <th>Identifier</th>
-            <th></th>
+            <th>Action</th>
         </tr>
         </thead>
         <tbody>

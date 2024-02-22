@@ -11,7 +11,7 @@
         <table class="ui selectable striped sortable celled table">
             <thead>
             <tr>
-                <th></th>
+                <th>Select</th>
                 <th>#</th>
                 <semui:sortableColumn property="name" title="Name"
                                       params="${params}"/>
@@ -34,7 +34,7 @@
                 <semui:sortableColumn property="freeTrialPhase" title="Free Trial Phase"
                                       params="${params}"/>
 
-                <th></th>
+                <th>Action</th>
             </tr>
             </thead>
             <tbody>

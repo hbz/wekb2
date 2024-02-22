@@ -23,7 +23,7 @@ until <g:formatDate date="${new java.util.Date()}" format="${message(code: 'defa
         <table class="ui selectable striped sortable celled table">
             <thead>
             <tr>
-                <th></th>
+                <th>#</th>
                 <th>Description</th>
                 <th>Package</th>
                 <th>Provider</th>

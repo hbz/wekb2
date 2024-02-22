@@ -41,7 +41,7 @@
             <tr>
                 <th>#</th>
                 <th>Vendors</th>
-                <th></th>
+                <th>Action</th>
             </tr>
             </thead>
             <tbody>

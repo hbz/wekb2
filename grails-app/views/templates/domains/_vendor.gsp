@@ -82,7 +82,7 @@
                             <th>Content Type</th>
                             <th>Contact Type</th>
                             <th>Language</th>
-                            <th></th>
+                            <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>

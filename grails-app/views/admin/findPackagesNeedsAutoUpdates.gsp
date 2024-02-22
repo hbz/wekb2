@@ -48,7 +48,7 @@
             <semui:sortableColumn property="p.kbartSource.lastRun" title="Last Run"/>
             <th>Next Run</th>
             <th>Titles</th>
-            <th></th>
+            <th>Action</th>
         </tr>
         </thead>
         <tbody>

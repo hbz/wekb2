@@ -53,7 +53,7 @@
                 <th>Archiving Agency</th>
                 <th>Open Access</th>
                 <th>Post-Cancellation Access (PCA)</th>
-                <th></th>
+                <th>Action</th>
             </tr>
             </thead>
             <tbody>

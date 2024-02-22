@@ -17,7 +17,7 @@
     <table>
         <thead>
         <tr>
-            <th></th>
+            <th>#</th>
             <th>Description</th>
             <th>Package</th>
             <th>Provider</th>

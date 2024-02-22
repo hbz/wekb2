@@ -41,7 +41,7 @@
             <tr>
                 <th>#</th>
                 <th>Dewey Decimal Classification</th>
-                <th></th>
+                <th>Action</th>
             </tr>
             </thead>
             <tbody>

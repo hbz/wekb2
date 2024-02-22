@@ -49,7 +49,7 @@
             <th>Invalid Titles in KBART</th>
             <th>Current Titles</th>
             <th>Deleted Titles</th>
-            <th></th>
+            <th>Action</th>
         </tr>
         </thead>
         <tbody>

@@ -76,7 +76,7 @@
                         <tr>
                             <th>#</th>
                             <th>Federation</th>
-                            <th></th>
+                            <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>

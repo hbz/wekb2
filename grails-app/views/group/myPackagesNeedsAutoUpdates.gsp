@@ -28,7 +28,7 @@
             <th>Last Run</th>
             <th>Next Run</th>
             <th>Titles</th>
-            <th></th>
+            <th>Action</th>
         </tr>
         </thead>
         <tbody>

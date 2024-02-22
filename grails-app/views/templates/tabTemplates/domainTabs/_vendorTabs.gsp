@@ -60,7 +60,7 @@
                         <tr>
                             <th>#</th>
                             <th>Supported Library System</th>
-                            <th></th>
+                            <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -120,7 +120,7 @@
                         <tr>
                             <th>#</th>
                             <th>Electronic delivery delay notifications via</th>
-                            <th></th>
+                            <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -185,7 +185,7 @@
                         <tr>
                             <th>#</th>
                             <th>Format</th>
-                            <th></th>
+                            <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -246,7 +246,7 @@
                         <tr>
                             <th>#</th>
                             <th>Method</th>
-                            <th></th>
+                            <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>

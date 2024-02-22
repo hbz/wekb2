@@ -10,7 +10,7 @@
                                   params="${params}"/>
             <th>National Ranges</th>
             <th>Regional Ranges</th>
-            <th></th>
+            <th>Action</th>
         </tr>
         </thead>
         <tbody>
