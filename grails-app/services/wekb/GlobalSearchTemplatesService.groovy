@@ -78,7 +78,7 @@ class GlobalSearchTemplatesService {
                                 ],
                         ],
                         qbeResults: [
-                                [heading: 'Curatory Group', property: 'name', sort: 'name', link: true, linkInfo: 'Curatory Group'],
+                                [heading: 'Curatory Group', property: 'name', sort: 'name', link: true, linkInfo: 'Link to Curatory Group'],
                                 [heading: 'Last Updated', property: 'lastUpdated', sort: 'lastUpdated'],
                                 [heading: 'Status', property: 'status.value', sort: 'status'],
                                 [heading: 'Type', property: 'type.value', sort: 'type']
@@ -118,7 +118,7 @@ class GlobalSearchTemplatesService {
                         ],
                         qbeResults: [
                                 [heading: 'Namespace', property: 'namespace.value', sort: 'namespace.value'],
-                                [heading: 'Value', property: 'value', link: true, sort: 'value', linkInfo: 'Identifier'],
+                                [heading: 'Value', property: 'value', link: true, sort: 'value', linkInfo: 'Link to Identifier'],
                                 [heading: 'Component', property: 'reference'],
                                 [heading: 'Date Created', property: 'dateCreated', sort: 'dateCreated'],
                                 [heading: 'Last Updated', property: 'lastUpdated', sort: 'lastUpdated'],
@@ -149,7 +149,7 @@ class GlobalSearchTemplatesService {
                                 ],
                         ],
                         qbeResults: [
-                                [heading: 'Description', property: 'description', link: true, linkInfo: 'Job Result'],
+                                [heading: 'Description', property: 'description', link: true, linkInfo: 'Link to Job Result'],
                                 [heading: 'Component', property: 'linkedItem'],
                                 [heading: 'Type', property: 'type.value', sort: 'type'],
                                 [heading: 'Status', property: 'statusText'],
@@ -196,7 +196,7 @@ class GlobalSearchTemplatesService {
                         ],
                         qbeResults: [
                                 [heading: 'Name', property: 'name', sort: 'name'],
-                                [heading: 'Value', property: 'value', link: true, sort: 'value', linkInfo: 'Identifier Namespace'],
+                                [heading: 'Value', property: 'value', link: true, sort: 'value', linkInfo: 'Link to Identifier Namespace'],
                                 [heading: 'Category', property: 'family', sort: 'family'],
                                 [heading: 'Target Type', property: 'targetType.value', sort: 'targetType.value'],
                                 [heading: 'Count', property: 'identifiersCount', sort: 'identifiersCount']
@@ -287,8 +287,8 @@ class GlobalSearchTemplatesService {
 
                         ],
                         qbeResults: [
-                                [heading: 'Provider', property: 'name', sort: 'name', link: true, linkInfo: 'Provider'],
-                                [heading: 'Homepage', property: 'homepage', sort: 'homepage', outGoingLink: true, linkInfo: 'Homepage'],
+                                [heading: 'Provider', property: 'name', sort: 'name', link: true, linkInfo: 'Link to Provider'],
+                                [heading: 'Homepage', property: 'homepage', sort: 'homepage', outGoingLink: true, linkInfo: 'Link to Homepage'],
                                 [heading: 'Last Updated', property: 'lastUpdated', sort: 'lastUpdated'],
                                 [heading: 'Status', property: 'status.value', sort: 'status'],
                                 [heading: 'Current Titles', property: 'currentTippCount']
