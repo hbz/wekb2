@@ -119,11 +119,11 @@
               </tr>
             </sec:ifLoggedIn>--}%
             <tr>
-                <sec:ifLoggedIn>
+%{--                <sec:ifLoggedIn>
                     <g:if test="${controllerName == 'group'}">
                     <th></th>
                     </g:if>
-                </sec:ifLoggedIn>
+                </sec:ifLoggedIn>--}%
                 <th>#</th>
                 <g:each in="${qbeConfig.qbeResults}" var="c">
                     <g:set var="colcode" value="${classSimpleName.toLowerCase() + '.' + c.property}"/>
@@ -146,7 +146,7 @@
                     <g:set var="row_obj" value="${r.obj}"/>
                     <tr class="${++counter == det ? 'positive' : ''}">
                     <!-- Row ${counter} -->
-                        <sec:ifLoggedIn>
+%{--                        <sec:ifLoggedIn>
                             <g:if test="${controllerName == 'group'}">
                             <td>
                                 <g:set var="objEditable" value="${accessService.checkEditableObject(row_obj, params)}"/>
@@ -163,7 +163,7 @@
                                 </g:else>
                             </td>
                             </g:if>
-                        </sec:ifLoggedIn>
+                        </sec:ifLoggedIn>--}%
                         <td>${counter}</td>
                         <g:each in="${r.cols}" var="c">
                             <td>
