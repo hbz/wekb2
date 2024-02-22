@@ -245,6 +245,7 @@ class SearchService {
                         }
 
                         response_record.cols.add([
+                                linkInfo: rh.linkInfo ?: null,
                                 link: (rh.link ? (final_oid ?: response_record.oid ) : null),
                                 value: (cobj != null ? (cobj) : '-Empty-'),
                                 outGoingLink: rh.outGoingLink ?: null,
