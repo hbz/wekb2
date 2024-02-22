@@ -45,29 +45,27 @@
         <div class="header">News</div>
 
         <div class="menu">
-            <g:link class="item" controller="public" action="wekbNews">we:kb News</g:link>
+            <g:link class="item we-link" controller="public" action="wekbNews">we:kb News</g:link>
         </div>
     </div>
     <div class="item">
         <div class="header"><g:message code="default.button.search"/></div>
-
         <div class="menu">
-            <g:link class="item" controller="search" action="index"><g:message code="public.allComponents"/></g:link>
-            <g:link class="item" controller="search" action="componentSearch"
+            <g:link class="item we-link" controller="search" action="index"><g:message code="public.allComponents"/></g:link>
+            <g:link class="item we-link" controller="search" action="componentSearch"
                     params="[qbe: 'g:publicPackages']"><g:message code="public.packages"/></g:link>
-            <g:link class="item" controller="search" action="componentSearch"
+            <g:link class="item we-link" controller="search" action="componentSearch"
                     params="[qbe: 'g:platforms']"><g:message code="public.platforms"/></g:link>
-            <g:link class="item" controller="search" action="componentSearch"
+            <g:link class="item we-link" controller="search" action="componentSearch"
                     params="[qbe: 'g:orgs']"><g:message code="public.providers"/></g:link>
-            <g:link class="item" controller="search" action="componentSearch" params="[qbe: 'g:tipps']"><g:message code="public.titles"/></g:link>
-            <g:link class="item" controller="search" action="componentSearch"
+            <g:link class="item we-link" controller="search" action="componentSearch" params="[qbe: 'g:tipps']"><g:message code="public.titles"/></g:link>
+            <g:link class="item we-link" controller="search" action="componentSearch"
                     params="[qbe: 'g:vendors']"><g:message code="public.vendors"/></g:link>
         </div>
-
         <div class="menu">
-            <g:link class="item" controller="search" action="componentSearch"
+            <g:link class="item we-link" controller="search" action="componentSearch"
                     params="[qbe: 'g:curatoryGroups', qp_type: RDStore.CURATORY_GROUP_TYPE_PROVIDER.getOID()]"><g:message code="public.curatoryGroups"/></g:link>
-            <g:link class="item" controller="search" action="componentSearch"
+            <g:link class="item we-link" controller="search" action="componentSearch"
                     params="[qbe: 'g:sources']"><g:message code="public.sources"/></g:link>
 
         </div>
@@ -78,18 +76,18 @@
                 <div class="header"><g:message code="public.myComponents"/></div>
 
                 <div class="menu">
-                    <g:link class="item" controller="group" action="myPackages"><g:message code="public.myPackages"/></g:link>
-                    <g:link class="item" controller="group" action="myPlatforms"><g:message code="public.myPlatforms"/></g:link>
-                    <g:link class="item" controller="group" action="myProviders"><g:message code="public.myProviders"/></g:link>
-                    <g:link class="item" controller="group" action="mySources"><g:message code="public.mySources"/></g:link>
-                    <g:link class="item" controller="group" action="myTitles"><g:message code="public.myTitles"/></g:link>
+                    <g:link class="item we-link" controller="group" action="myPackages"><g:message code="public.myPackages"/></g:link>
+                    <g:link class="item we-link" controller="group" action="myPlatforms"><g:message code="public.myPlatforms"/></g:link>
+                    <g:link class="item we-link" controller="group" action="myProviders"><g:message code="public.myProviders"/></g:link>
+                    <g:link class="item we-link" controller="group" action="mySources"><g:message code="public.mySources"/></g:link>
+                    <g:link class="item we-link" controller="group" action="myTitles"><g:message code="public.myTitles"/></g:link>
                 </div>
 
                 <div class="menu">
-                    <g:link class="item" controller="group" action="myPackageManagement"><g:message code="public.myPackageManagement"/></g:link>
-                    <g:link class="item" controller="group"
+                    <g:link class="item we-link" controller="group" action="myPackageManagement"><g:message code="public.myPackageManagement"/></g:link>
+                    <g:link class="item we-link" controller="group"
                             action="myPackagesNeedsAutoUpdates"><g:message code="public.myPackagesNeedsAutoUpdates"/></g:link>
-                    <g:link class="item" controller="group" action="myAutoUpdateInfos"><g:message code="public.myAutoUpdateInfos"/></g:link>
+                    <g:link class="item we-link" controller="group" action="myAutoUpdateInfos"><g:message code="public.myAutoUpdateInfos"/></g:link>
                 </div>
             </div>
         </g:if>
@@ -98,7 +96,7 @@
             <div class="header"><g:message code="public.statistic"/></div>
 
             <div class="menu">
-                <g:link class="item" controller="home" action="statistic"><g:message code="public.statistic"/></g:link>
+                <g:link class="item we-link" controller="home" action="statistic"><g:message code="public.statistic"/></g:link>
             </div>
         </div>
         <sec:ifAnyGranted roles='ROLE_ADMIN,ROLE_EDITOR'>
@@ -106,13 +104,13 @@
                 <div class="header"><g:message code="default.button.create.label"/></div>
 
                 <div class="menu">
-                    <g:link class="item" controller="create" action="index"
+                    <g:link class="item we-link" controller="create" action="index"
                             params="[tmpl: 'wekb.Package']"><g:message code="public.packages"/></g:link>
-                    <g:link class="item" controller="create" action="index"
+                    <g:link class="item we-link" controller="create" action="index"
                             params="[tmpl: 'wekb.Platform']"><g:message code="public.platforms"/></g:link>
-                    <g:link class="item" controller="create" action="index"
+                    <g:link class="item we-link" controller="create" action="index"
                             params="[tmpl: 'wekb.KbartSource']"><g:message code="public.sources"/></g:link>
-                    <g:link class="item" controller="create" action="index"
+                    <g:link class="item we-link" controller="create" action="index"
                             params="[tmpl: 'wekb.TitleInstancePackagePlatform']"><g:message code="public.titles"/></g:link>
                 </div>
             </div>
@@ -122,15 +120,15 @@
                 <div class="header">Admin Views</div>
 
                 <div class="menu">
-                    <g:link class="item" controller="admin" action="index">Admin Dashboard</g:link>
-                    <g:link class="item" controller="search" action="componentSearch"
+                    <g:link class="item we-link" controller="admin" action="index">Admin Dashboard</g:link>
+                    <g:link class="item we-link" controller="search" action="componentSearch"
                             params="[qbe: 'g:users']">User Management</g:link>
-                    <g:link class="item" controller="admin" action="jobs">Manage Jobs</g:link>
-                    <g:link class="item" controller="admin"
+                    <g:link class="item we-link" controller="admin" action="jobs">Manage Jobs</g:link>
+                    <g:link class="item we-link" controller="admin"
                             action="manageFTControl">Manage FT Control</g:link>
-                    <g:link class="item" controller="admin"
+                    <g:link class="item we-link" controller="admin"
                             action="packagesChanges">Packages Changes</g:link>
-                            <g:link class="item" controller="admin"
+                    <g:link class="item we-link" controller="admin"
                             action="findPackagesWithoutTitles">Packages without Titles</g:link>
                 </div>
             </div>
@@ -212,6 +210,30 @@
         <g:render template="/layouts/footer"/>
     </div>
 </div>
-</body>
+<style>
+/* globalLoadingIndicator */
 
+#globalLoadingIndicator {
+
+
+}
+
+/* globalPageDimmer */
+
+#globalPageDimmer {
+    background-color: rgba(0,0,0, 0.40)
+}
+
+</style>
+
+%{-- global loading indicator --}%
+<div class="ui page dimmer" id="globalLoadingIndicator">
+    <div class="ui large red text loader">Loading</div>
+</div>
+</body>
+<g:javascript>
+    $('.we-link').click(function(e) {
+        $('#globalLoadingIndicator').addClass('active');
+    });
+</g:javascript>
 </html>
