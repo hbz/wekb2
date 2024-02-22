@@ -622,7 +622,7 @@ class SemanticTagLib {
         out << '<div class="item wekb-pagination-custom-input" data-max="' + max + '" data-steps="' + laststep + '">'
         out << '    <div class="ui mini form">'
         out << '            <div class="field">'
-        out << '                <input autocomplete="off" data-validate="pagination-custom-validate" maxlength="6" placeholder="' + messageSource.getMessage('pagination.keyboardInput.placeholder',null,locale) + '" type="text">'
+        out << '                <input autocomplete="off" data-validate="pagination-custom-validate" maxlength="6" title="' + messageSource.getMessage('pagination.keyboardInput.placeholder',null,locale) + '" placeholder="' + messageSource.getMessage('pagination.keyboardInput.placeholder',null,locale) + '" type="text">'
         customInputAttrs.params.remove('offset')
         customInputAttrs.params.remove('class')
         customInputAttrs.class= "wekb-pagination-custom-link js-no-wait-wheel"

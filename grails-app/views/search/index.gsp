@@ -48,12 +48,12 @@
     }
 %>
 
-<h1 class="ui header">Search in All Components</h1>
+<h1 class="ui header" id="searchInAllComponents">Search in All Components</h1>
 
 <div class="ui segment">
     <g:form action="index" method="get" class="ui form">
         <div class="sixteen wide field">
-            <input type="text" name="q" id="q" value="${params.q}" placeholder="Search for Packages, Titles, Providers, Platforms..."/>
+            <input aria-labelledby="searchInAllComponents" type="text" name="q" id="q" value="${params.q}" placeholder="Search for Packages, Titles, Providers, Platforms..."/>
         </div>
 
         <div class="sixteen wide field">

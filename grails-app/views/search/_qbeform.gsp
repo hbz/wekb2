@@ -91,7 +91,7 @@
                         </div>
                     </g:elseif>
                     <g:else>
-                        <label for="${fld.qparam}"><g:message code="${fld.msgCode}" default="${fld.prompt}"/></label>''''''''''''''''''''''''''''''''''''''''''''''''''
+                        <label for="${fld.qparam}"><g:message code="${fld.msgCode}" default="${fld.prompt}"/></label>
                         <div class="${fld.contextTree.wildcard != null ? 'ui labeled input' : ''}">
                             <g:if test="${fld.contextTree.wildcard == 'B' || fld.contextTree.wildcard == 'L'}"><div
                                     class="ui label">*</div></g:if>
@@ -165,7 +165,7 @@
                             </div>
                         </g:elseif>
                         <g:else>
-                            <label><g:message code="${field.msgCode}" default="${field.prompt}"/></label>###############################
+                            <label for="${field.qparam}"><g:message code="${field.msgCode}" default="${field.prompt}"/></label>
                             <div class="${field.contextTree.wildcard != null ? 'ui labeled input' : ''}">
                                 <g:if test="${field.contextTree.wildcard == 'B' || field.contextTree.wildcard == 'L'}"><div
                                         class="ui label">*</div></g:if>
@@ -208,12 +208,12 @@
                         <i class="dropdown icon"></i>
 
                         <div class="menu">
-                            <div class="header">
+                            <div class="header" id="test">
                                 <g:message code="search.saveSearch"/>:
                             </div>
 
                             <div class="ui left input">
-                                <input type="text" name="searchName"
+                                <input aria-labelledby="test" type="text" name="searchName"
                                        placeholder="<g:message code="search.saveSearch.name"/>">
                             </div>
 
