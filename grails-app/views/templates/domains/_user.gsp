@@ -119,6 +119,7 @@
                                 <input type="hidden" name="activeTab" value="curatoryGroupUsers"/>
 
                                 <div class="field">
+                                    <label>Curatory Group</label>
                                     <semui:simpleReferenceDropdown name="__curatoryGroup"
                                                                    baseClass="wekb.CuratoryGroup"
                                                                    filter1="Current"/>
@@ -173,6 +174,7 @@
                                 <input type="hidden" name="activeTab" value="roles"/>
 
                                 <div class="field">
+                                    <label>Role</label>
                                     <semui:simpleReferenceDropdown name="__role"
                                                                    baseClass="wekb.auth.Role"
                                                                    filter1="Current"/>

@@ -30,16 +30,16 @@
             <div class="content wekb-inline-lists">
                 <g:form action="changePass" class="ui form">
                     <dl>
-                        <dt class="dt-label">Original Password:</dt>
-                        <dd><input  name="origpass" type="password"/></dd>
+                        <dt id="labelOriginalPassword" class="dt-label">Original Password:</dt>
+                        <dd><input aria-labelledby="labelOriginalPassword" name="origpass" type="password"/></dd>
                     </dl>
                     <dl>
-                        <dt class="dt-label">New Password:</dt>
-                        <dd><input  name="newpass" type="password"/></dd>
+                        <dt id="labelNewPassword" class="dt-label">New Password:</dt>
+                        <dd><input aria-labelledby="labelNewPassword" name="newpass" type="password"/></dd>
                     </dl>
                     <dl>
-                        <dt class="dt-label">Repeat New Password:</dt>
-                        <dd><input  name="repeatpass" type="password"/></dd>
+                        <dt id="labeNRepeatNewPassword" class="dt-label">Repeat New Password:</dt>
+                        <dd><input aria-labelledby="labeNRepeatNewPassword" name="repeatpass" type="password"/></dd>
                     </dl>
 
                     <button type="submit" class="ui primary button">Change Password</button>

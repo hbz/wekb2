@@ -1903,14 +1903,14 @@ input::selection {
 .ui.toggle.buttons .active.button,
 .ui.buttons .button.toggle.active,
 .ui.button.toggle.active {
-  background-color: #088A3C;
+  background-color: #08873b;
   box-shadow: none;
   text-shadow: none;
   color: #FFFFFF;
 }
 
 .ui.button.toggle.active:hover {
-  background-color: #00461c;
+  background-color: #00431b;
   text-shadow: none;
   color: #FFFFFF;
 }
@@ -3408,7 +3408,7 @@ input::selection {
 
 .ui.green.buttons .button,
 .ui.green.button {
-  background-color: #088A3C;
+  background-color: #08873b;
   color: #FFFFFF;
   text-shadow: none;
   background-image: none;
@@ -3420,21 +3420,21 @@ input::selection {
 
 .ui.green.buttons .button:hover,
 .ui.green.button:hover {
-  background-color: #017730;
+  background-color: #01742f;
   color: #FFFFFF;
   text-shadow: none;
 }
 
 .ui.green.buttons .button:focus,
 .ui.green.button:focus {
-  background-color: #00692a;
+  background-color: #006629;
   color: #FFFFFF;
   text-shadow: none;
 }
 
 .ui.green.buttons .button:active,
 .ui.green.button:active {
-  background-color: #055a27;
+  background-color: #055726;
   color: #FFFFFF;
   text-shadow: none;
 }
@@ -3443,7 +3443,7 @@ input::selection {
 .ui.green.buttons .active.button:active,
 .ui.green.active.button,
 .ui.green.button .active.button:active {
-  background-color: #007930;
+  background-color: #00762f;
   color: #FFFFFF;
   text-shadow: none;
 }
@@ -3453,35 +3453,35 @@ input::selection {
 .ui.basic.green.buttons .button,
 .ui.basic.green.button {
   background: transparent;
-  box-shadow: 0 0 0 1px #088A3C inset;
-  color: #088A3C;
+  box-shadow: 0 0 0 1px #08873b inset;
+  color: #08873b;
 }
 
 .ui.basic.green.buttons .button:hover,
 .ui.basic.green.button:hover {
   background: transparent;
-  box-shadow: 0 0 0 1px #017730 inset;
-  color: #017730;
+  box-shadow: 0 0 0 1px #01742f inset;
+  color: #01742f;
 }
 
 .ui.basic.green.buttons .button:focus,
 .ui.basic.green.button:focus {
   background: transparent;
-  box-shadow: 0 0 0 1px #00692a inset;
-  color: #017730;
+  box-shadow: 0 0 0 1px #006629 inset;
+  color: #01742f;
 }
 
 .ui.basic.green.buttons .active.button,
 .ui.basic.green.active.button {
   background: transparent;
-  box-shadow: 0 0 0 1px #007930 inset;
-  color: #055a27;
+  box-shadow: 0 0 0 1px #00762f inset;
+  color: #055726;
 }
 
 .ui.basic.green.buttons .button:active,
 .ui.basic.green.button:active {
-  box-shadow: 0 0 0 1px #055a27 inset;
-  color: #055a27;
+  box-shadow: 0 0 0 1px #055726 inset;
+  color: #055726;
 }
 
 /* Inverted */
@@ -3570,21 +3570,21 @@ input::selection {
 .ui.tertiary.green.button {
   background: transparent;
   box-shadow: none;
-  color: #088A3C;
+  color: #08873b;
 }
 
 .ui.tertiary.green.buttons .button:hover,
 .ui.tertiary.green.buttons button:hover,
 .ui.tertiary.green.button:hover {
-  box-shadow: inset 0 -0.2em 0 #0d6b33;
-  color: #0d6b33;
+  box-shadow: inset 0 -0.2em 0 #0d6832;
+  color: #0d6832;
 }
 
 .ui.tertiary.green.buttons .button:focus,
 .ui.tertiary.green.buttons .tertiary.button:focus,
 .ui.tertiary.green.button:focus {
-  box-shadow: inset 0 -0.2em 0 #0b5f2c;
-  color: #0b5f2c;
+  box-shadow: inset 0 -0.2em 0 #0a5c2b;
+  color: #0a5c2b;
 }
 
 .ui.tertiary.green.buttons .active.button,
@@ -3593,8 +3593,8 @@ input::selection {
 .ui.tertiary.green.buttons .button:active,
 .ui.tertiary.green.buttons .tertiary.button:active,
 .ui.tertiary.green.button:active {
-  box-shadow: inset 0 -0.2em 0 #007930;
-  color: #007930;
+  box-shadow: inset 0 -0.2em 0 #00762f;
+  color: #00762f;
 }
 
 .ui.teal.buttons .button,
@@ -5129,7 +5129,7 @@ input::selection {
 
 .ui.positive.buttons .button,
 .ui.positive.button {
-  background-color: #088A3C;
+  background-color: #08873b;
   color: #FFFFFF;
   text-shadow: none;
   background-image: none;
@@ -5141,21 +5141,21 @@ input::selection {
 
 .ui.positive.buttons .button:hover,
 .ui.positive.button:hover {
-  background-color: #00461c;
+  background-color: #00431b;
   color: #FFFFFF;
   text-shadow: none;
 }
 
 .ui.positive.buttons .button:focus,
 .ui.positive.button:focus {
-  background-color: #00461c;
+  background-color: #00431b;
   color: #FFFFFF;
   text-shadow: none;
 }
 
 .ui.positive.buttons .button:active,
 .ui.positive.button:active {
-  background-color: #055a27;
+  background-color: #055726;
   color: #FFFFFF;
   text-shadow: none;
 }
@@ -5164,7 +5164,7 @@ input::selection {
 .ui.positive.buttons .active.button:active,
 .ui.positive.active.button,
 .ui.positive.button .active.button:active {
-  background-color: #00461c;
+  background-color: #00431b;
   color: #FFFFFF;
   text-shadow: none;
 }
@@ -5174,35 +5174,35 @@ input::selection {
 .ui.basic.positive.buttons .button,
 .ui.basic.positive.button {
   background: transparent;
-  box-shadow: 0 0 0 1px #088A3C inset;
-  color: #088A3C;
+  box-shadow: 0 0 0 1px #08873b inset;
+  color: #08873b;
 }
 
 .ui.basic.positive.buttons .button:hover,
 .ui.basic.positive.button:hover {
   background: transparent;
-  box-shadow: 0 0 0 1px #00461c inset;
-  color: #00461c;
+  box-shadow: 0 0 0 1px #00431b inset;
+  color: #00431b;
 }
 
 .ui.basic.positive.buttons .button:focus,
 .ui.basic.positive.button:focus {
   background: transparent;
-  box-shadow: 0 0 0 1px #00461c inset;
-  color: #00461c;
+  box-shadow: 0 0 0 1px #00431b inset;
+  color: #00431b;
 }
 
 .ui.basic.positive.buttons .active.button,
 .ui.basic.positive.active.button {
   background: transparent;
-  box-shadow: 0 0 0 1px #00461c inset;
-  color: #055a27;
+  box-shadow: 0 0 0 1px #00431b inset;
+  color: #055726;
 }
 
 .ui.basic.positive.buttons .button:active,
 .ui.basic.positive.button:active {
-  box-shadow: 0 0 0 1px #055a27 inset;
-  color: #055a27;
+  box-shadow: 0 0 0 1px #055726 inset;
+  color: #055726;
 }
 
 .ui.buttons:not(.vertical) > .basic.positive.button:not(:first-child) {
@@ -26497,15 +26497,15 @@ a.ui.inverted.olive.header.header.header:hover {
 }
 
 .ui.green.header {
-  color: #088A3C;
+  color: #08873b;
 }
 
 a.ui.green.header:hover {
-  color: #017730;
+  color: #01742f;
 }
 
 .ui.green.dividing.header {
-  border-bottom: 2px solid #088A3C;
+  border-bottom: 2px solid #08873b;
 }
 
 .ui.inverted.green.header.header.header {
@@ -27329,7 +27329,7 @@ i.inverted.circular.olive.icons {
 }
 
 i.green.icon.icon.icon.icon.icon.icon {
-  color: #088A3C;
+  color: #08873b;
 }
 
 i.inverted.green.icon.icon.icon.icon.icon.icon {
@@ -27340,7 +27340,7 @@ i.inverted.bordered.green.icon.icon.icon.icon.icon.icon,
 i.inverted.circular.green.icon.icon.icon.icon.icon.icon,
 i.inverted.bordered.green.icons,
 i.inverted.circular.green.icons {
-  background-color: #088A3C;
+  background-color: #08873b;
   color: #FFFFFF;
 }
 
@@ -37442,7 +37442,7 @@ input[type="file"].ui.file.input:focus + label.ui.olive.button:not(.basic):not(.
 
 input[type="file"].ui.file.input:focus + label.ui.green.button:not(.basic):not(.tertiary),
 .ui.file.input input[type="file"]:focus + label.ui.green.button:not(.basic):not(.tertiary) {
-  background-color: #017730;
+  background-color: #01742f;
   color: #FFFFFF;
 }
 
@@ -37805,46 +37805,46 @@ input[type="file"].ui.olive.file.input::file-selector-button:hover,
 
 input[type="file"].ui.green.file.input::-webkit-file-upload-button,
 .ui.green.file.input input[type="file"]::-webkit-file-upload-button {
-  background: #088A3C;
+  background: #08873b;
   color: #FFFFFF;
 }
 
 input[type="file"].ui.green.file.input::-webkit-file-upload-button:hover,
 .ui.green.file.input input[type="file"]::-webkit-file-upload-button:hover {
-  background: #017730;
+  background: #01742f;
 }
 
 input[type="file"].ui.green.file.input::-ms-browse,
 .ui.green.file.input input[type="file"]::-ms-browse {
-  background: #088A3C;
+  background: #08873b;
   color: #FFFFFF;
 }
 
 input[type="file"].ui.green.file.input::-ms-browse:hover,
 .ui.green.file.input input[type="file"]::-ms-browse:hover {
-  background: #017730;
+  background: #01742f;
 }
 
 input[type="file"].ui.green.file.input::-webkit-file-upload-button,
 .ui.green.file.input input[type="file"]::-webkit-file-upload-button {
-  background: #088A3C;
+  background: #08873b;
   color: #FFFFFF;
 }
 
 input[type="file"].ui.green.file.input::file-selector-button,
 .ui.green.file.input input[type="file"]::file-selector-button {
-  background: #088A3C;
+  background: #08873b;
   color: #FFFFFF;
 }
 
 input[type="file"].ui.green.file.input::-webkit-file-upload-button:hover,
 .ui.green.file.input input[type="file"]::-webkit-file-upload-button:hover {
-  background: #017730;
+  background: #01742f;
 }
 
 input[type="file"].ui.green.file.input::file-selector-button:hover,
 .ui.green.file.input input[type="file"]::file-selector-button:hover {
-  background: #017730;
+  background: #01742f;
 }
 
 input[type="file"].ui.teal.file.input::-webkit-file-upload-button,
@@ -39558,8 +39558,8 @@ a.ui.ui.ui.inverted.basic.olive.label:hover {
 
 .ui.green.labels .label,
 .ui.ui.ui.green.label {
-  background-color: #088A3C;
-  border-color: #088A3C;
+  background-color: #08873b;
+  border-color: #08873b;
   color: #FFFFFF;
 }
 
@@ -39567,15 +39567,15 @@ a.ui.ui.ui.inverted.basic.olive.label:hover {
 
 .ui.green.labels a.label:hover,
 a.ui.ui.ui.green.label:hover {
-  background-color: #017730;
-  border-color: #017730;
+  background-color: #01742f;
+  border-color: #01742f;
   color: #FFFFFF;
 }
 
 /* Ribbon */
 
 .ui.ui.ui.green.ribbon.label {
-  border-color: #055a27;
+  border-color: #055726;
 }
 
 /* Basic */
@@ -39583,15 +39583,15 @@ a.ui.ui.ui.green.label:hover {
 .ui.basic.labels .green.label,
 .ui.ui.ui.basic.green.label {
   background: none #FFFFFF;
-  border-color: #088A3C;
-  color: #088A3C;
+  border-color: #08873b;
+  color: #08873b;
 }
 
 .ui.basic.labels a.green.label:hover,
 a.ui.ui.ui.basic.green.label:hover {
   background: none #FFFFFF;
-  border-color: #017730;
-  color: #017730;
+  border-color: #01742f;
+  color: #01742f;
 }
 
 /* Inverted */
@@ -42205,7 +42205,7 @@ ol.ui.suffixed.list li::before,
 .ui.ui.ui.ui.green.loading .input > i.icon::after,
 .ui.ui.ui.ui.green.loading > i.icon::after,
 .ui.ui.ui.green.loader::after {
-  color: #088A3C;
+  color: #08873b;
 }
 
 .ui.inverted.green.elastic.loader::before,
@@ -43773,16 +43773,16 @@ ol.ui.suffixed.list li::before,
 }
 
 .ui.ui.ui.ui.ui.green.segment:not(.inverted) {
-  border-top: 2px solid #088A3C;
+  border-top: 2px solid #08873b;
 }
 
 .ui.ui.ui.ui.ui.inverted.green.segment {
-  background-color: #088A3C;
+  background-color: #08873b;
   color: #FFFFFF;
 }
 
 .ui.ui.inverted.green.segment:not(.piled) {
-  border-color: #088A3C;
+  border-color: #08873b;
 }
 
 .ui.ui.ui.ui.ui.teal.segment:not(.inverted) {
@@ -44739,7 +44739,7 @@ ol.ui.suffixed.list li::before,
 
 .ui.steps .step.completed > i.icon::before,
 .ui.ordered.steps .step.completed::before {
-  color: #088A3C;
+  color: #08873b;
 }
 
 /* Disabled */
@@ -48783,7 +48783,7 @@ ol.ui.suffixed.list li::before,
 .ui.grid > .green.row,
 .ui.grid > .green.column,
 .ui.grid > .row > .green.column {
-  background-color: #088A3C;
+  background-color: #08873b;
   color: #FFFFFF;
 }
 
@@ -51116,7 +51116,7 @@ Floated Menu / Item
 .ui.ui.ui.menu .green.active.item,
 .ui.ui.green.menu .active.item:hover,
 .ui.ui.green.menu .active.item {
-  color: #088A3C;
+  color: #08873b;
 }
 
 .ui.ui.ui.menu .teal.active.item,
@@ -51396,7 +51396,7 @@ Floated Menu / Item
 
 .ui.ui.ui.inverted.menu .green.active.item,
 .ui.ui.inverted.green.menu {
-  background-color: #088A3C;
+  background-color: #08873b;
 }
 
 .ui.inverted.green.menu .item::before {
@@ -51408,7 +51408,7 @@ Floated Menu / Item
 }
 
 .ui.inverted.pointing.green.menu .active.item {
-  background-color: #017730;
+  background-color: #01742f;
 }
 
 .ui.ui.ui.inverted.menu .teal.active.item,
@@ -51885,7 +51885,7 @@ Floated Menu / Item
 }
 
 .ui.inverted.pointing.menu .green.active.item::after {
-  background-color: #088A3C;
+  background-color: #08873b;
 }
 
 .ui.inverted.pointing.menu .teal.active.item::after {
@@ -53261,11 +53261,11 @@ Floated Menu / Item
   }
 
   .ui.ui.ui.ui.table:not(.unstackable) tr[class*="green marked"].left {
-    box-shadow: 0 -1px 0 0 rgba(0, 0, 0, 0.1) inset, 0.2em 0 0 0 #088A3C inset;
+    box-shadow: 0 -1px 0 0 rgba(0, 0, 0, 0.1) inset, 0.2em 0 0 0 #08873b inset;
   }
 
   .ui.ui.ui.ui.table:not(.unstackable) tr[class*="green marked"].right {
-    box-shadow: 0 -1px 0 0 rgba(0, 0, 0, 0.1) inset, -0.2em 0 0 0 #088A3C inset;
+    box-shadow: 0 -1px 0 0 rgba(0, 0, 0, 0.1) inset, -0.2em 0 0 0 #08873b inset;
   }
 
   .ui.ui.ui.ui.inverted.table:not(.unstackable) tr[class*="green marked"].left {
@@ -54161,11 +54161,11 @@ Floated Menu / Item
 }
 
 .ui.ui.ui.ui[class*="tablet stackable"].table tr[class*="green marked"].left {
-  box-shadow: 0 -1px 0 0 rgba(0, 0, 0, 0.1) inset, 0.2em 0 0 0 #088A3C inset;
+  box-shadow: 0 -1px 0 0 rgba(0, 0, 0, 0.1) inset, 0.2em 0 0 0 #08873b inset;
 }
 
 .ui.ui.ui.ui[class*="tablet stackable"].table tr[class*="green marked"].right {
-  box-shadow: 0 -1px 0 0 rgba(0, 0, 0, 0.1) inset, -0.2em 0 0 0 #088A3C inset;
+  box-shadow: 0 -1px 0 0 rgba(0, 0, 0, 0.1) inset, -0.2em 0 0 0 #08873b inset;
 }
 
 .ui.ui.ui.ui[class*="tablet stackable"].inverted.table tr[class*="green marked"].left {
@@ -55244,11 +55244,11 @@ Floated Menu / Item
 }
 
 .ui.green.table {
-  border-top: 0.2em solid #088A3C;
+  border-top: 0.2em solid #08873b;
 }
 
 .ui.inverted.green.table {
-  background: #088A3C;
+  background: #08873b;
   color: #FFFFFF;
 }
 
@@ -55270,8 +55270,8 @@ Floated Menu / Item
 
 .ui.inverted.scrolling.table > thead.green,
 .ui.inverted.scrolling.table > tfoot.green {
-  background: #088A3C;
-  color: #088A3C;
+  background: #08873b;
+  color: #08873b;
 }
 
 .ui.inverted.scrolling.table > thead.green > tr > th,
@@ -55308,7 +55308,7 @@ Floated Menu / Item
 .ui.ui.ui.ui.inverted.table tr.green:not(.marked),
 .ui.ui.inverted.table th.green:not(.marked),
 .ui.ui.inverted.table td.green:not(.marked) {
-  background: #088A3C;
+  background: #08873b;
   color: #FFFFFF;
 }
 
@@ -55344,12 +55344,12 @@ Floated Menu / Item
 
 .ui.table td[class*="green marked"].left,
 .ui.table tr[class*="green marked"].left {
-  box-shadow: 0.2em 0 0 0 #088A3C inset;
+  box-shadow: 0.2em 0 0 0 #08873b inset;
 }
 
 .ui.table td[class*="green marked"].right,
 .ui.table tr[class*="green marked"].right {
-  box-shadow: -0.2em 0 0 0 #088A3C inset;
+  box-shadow: -0.2em 0 0 0 #08873b inset;
 }
 
 .ui.inverted.table td[class*="green marked"].left,
@@ -58335,7 +58335,7 @@ a.ui.basic.inverted.olive.card:hover,
 .ui.green.cards > .card,
 .ui.cards > .green.card,
 .ui.green.card {
-  box-shadow: 0 0 0 1px #d4d4d5, 0 2px 0 0 #088A3C, 0 1px 3px 0 #d4d4d5;
+  box-shadow: 0 0 0 1px #d4d4d5, 0 2px 0 0 #08873b, 0 1px 3px 0 #d4d4d5;
 }
 
 .ui.cards a.green.card:hover,
@@ -58344,7 +58344,7 @@ a.ui.basic.inverted.olive.card:hover,
 .ui.link.cards .green.card:not(.icon):hover,
 a.ui.green.card:hover,
 .ui.link.green.card:hover {
-  box-shadow: 0 0 0 1px #d4d4d5, 0 2px 0 0 #017730, 0 1px 3px 0 #bcbdbd;
+  box-shadow: 0 0 0 1px #d4d4d5, 0 2px 0 0 #01742f, 0 1px 3px 0 #bcbdbd;
 }
 
 .ui.cards > .basic.green.card,
@@ -58384,7 +58384,7 @@ a.ui.inverted.green.card:hover,
 .ui.basic.inverted.green.cards > .card,
 .ui.basic.inverted.cards > .green.card,
 .ui.basic.inverted.green.card {
-  background: #088A3C;
+  background: #08873b;
 }
 
 .ui.inverted.cards a.basic.green.card:hover,
@@ -58395,7 +58395,7 @@ a.ui.inverted.green.card:hover,
 .ui.link.basic.inverted.cards .green.card:not(.icon):hover,
 a.ui.basic.inverted.green.card:hover,
 .ui.link.basic.inverted.green.card:hover {
-  background: #017730;
+  background: #01742f;
 }
 
 .ui.teal.cards > .card,
@@ -60405,12 +60405,12 @@ a.inverted.ui.card:hover,
 
 .ui.ui.feed > .event > .green.label::before,
 .ui.green.feed > .event > .label::before {
-  background: #088A3C;
+  background: #08873b;
 }
 
 .ui.green.connected.feed > .event::before,
 .ui.connected.feed > .green.event::before {
-  border-color: #088A3C;
+  border-color: #08873b;
 }
 
 .ui.inverted.green.connected.feed > .event::before,
@@ -60420,7 +60420,7 @@ a.inverted.ui.card:hover,
 
 .ui.ui.feed > .event > .green.basic.label::before,
 .ui.green.basic.feed > .event > .label::before {
-  color: #088A3C;
+  color: #08873b;
 }
 
 .ui.feed > .event > .inverted.green.label::before,
@@ -61727,7 +61727,7 @@ a.inverted.ui.card:hover,
 .ui.green.statistics .statistic > .value,
 .ui.statistics .green.statistic > .value,
 .ui.green.statistic > .value {
-  color: #088A3C;
+  color: #08873b;
 }
 
 .ui.inverted.green.statistics .statistic > .value,
@@ -67771,7 +67771,7 @@ a.ui.nag {
 }
 
 .ui.green.nag {
-  background-color: #088A3C;
+  background-color: #08873b;
 }
 
 .ui.inverted.green.nag {
@@ -69155,14 +69155,14 @@ a.ui.nag {
 .ui.green.popup,
 [data-tooltip][data-variation~="green"]::after,
 [data-tooltip][data-variation~="green"]::before {
-  background: #088A3C;
+  background: #08873b;
   color: #FFFFFF;
   border: none;
 }
 
 .ui.ui.ui.green.loading.popup::before,
 .ui.green.loading.popup {
-  background: #38f383;
+  background: #35f381;
 }
 
 .ui.ui.ui.green.popup::before,
@@ -69813,7 +69813,7 @@ a.ui.nag {
     --------------- */
 
 .ui.ui.progress.success .bar {
-  background-color: #088A3C;
+  background-color: #08873b;
 }
 
 .ui.ui.progress.success .bar,
@@ -69937,7 +69937,7 @@ a.ui.nag {
 }
 
 .ui.inverted.progress.success > .label {
-  color: #088A3C;
+  color: #08873b;
 }
 
 .ui.inverted.progress.warning > .label {
@@ -70081,7 +70081,7 @@ a.ui.nag {
 .ui.indeterminate.green.progress .bar::before,
 .ui.green.progress .bar,
 .ui.progress .green.bar {
-  background-color: #088A3C;
+  background-color: #08873b;
 }
 
 .ui.inverted.indeterminate.green.progress .bar::before,
@@ -70870,7 +70870,7 @@ a.ui.nag {
 /* Standard */
 
 .ui.green.slider .inner .track-fill {
-  background-color: #088A3C;
+  background-color: #08873b;
 }
 
 .ui.green.inverted.slider .inner .track-fill {
@@ -70880,12 +70880,12 @@ a.ui.nag {
 /* Basic */
 
 .ui.green.slider.basic .inner .thumb {
-  background-color: #088A3C;
+  background-color: #08873b;
 }
 
 .ui.green.slider.basic .inner .thumb:hover,
 .ui.green.slider.basic:focus .inner .thumb {
-  background-color: #017730;
+  background-color: #01742f;
 }
 
 /* Basic Inverted */
@@ -71546,7 +71546,7 @@ a.ui.nag {
 
 .ui.green.rating .active.icon {
   color: #E8FCF0;
-  text-shadow: 0 -1px 0 #088A3C, -1px 0 0 #088A3C, 0 1px 0 #088A3C, 1px 0 0 #088A3C;
+  text-shadow: 0 -1px 0 #08873b, -1px 0 0 #08873b, 0 1px 0 #08873b, 1px 0 0 #08873b;
 }
 
 .ui.green.rating .icon.selected,
@@ -71554,14 +71554,14 @@ a.ui.nag {
 .ui.green.rating .icon.selected.partial.active {
   background: inherit;
   color: #b8f9d2;
-  text-shadow: 0 -1px 0 #017730, -1px 0 0 #017730, 0 1px 0 #017730, 1px 0 0 #017730;
+  text-shadow: 0 -1px 0 #01742f, -1px 0 0 #01742f, 0 1px 0 #01742f, 1px 0 0 #01742f;
   -webkit-text-stroke: unset;
   background-clip: unset;
 }
 
 .ui.green.rating .icon.partial.active {
   background: linear-gradient(to right, #E8FCF0 0% var(--full), rgba(0, 0, 0, 0.15) var(--full) 100%);
-  -webkit-text-stroke: #088A3C 0.78px;
+  -webkit-text-stroke: #08873b 0.78px;
 }
 
 .ui.teal.rating .active.icon {
@@ -71935,7 +71935,7 @@ a.ui.nag {
 
 .ui.search > .results .result .price {
   float: right;
-  color: #088A3C;
+  color: #08873b;
 }
 
 /* --------------
@@ -73403,7 +73403,7 @@ span.ui.inverted.olive.text {
 }
 
 span.ui.green.text {
-  color: #088A3C;
+  color: #08873b;
 }
 
 span.ui.inverted.green.text {
@@ -73483,7 +73483,7 @@ span.ui.info.text {
 }
 
 span.ui.success.text {
-  color: #088A3C;
+  color: #08873b;
 }
 
 span.ui.warning.text {
@@ -73732,7 +73732,7 @@ span.ui.massive.text {
 }
 
 .ui.toast-container .toast-box > .attached.progress.success .bar.bar.bar {
-  background: #04421d;
+  background: #043f1b;
 }
 
 .ui.toast-container .toast-box > .attached.progress.error .bar.bar.bar {
@@ -74051,7 +74051,7 @@ span.ui.massive.text {
 }
 
 .ui.toast.success {
-  background-color: #088A3C;
+  background-color: #08873b;
   color: rgba(255, 255, 255, 0.9);
 }
 
@@ -74301,7 +74301,7 @@ span.ui.massive.text {
 }
 
 .ui.green.toast {
-  background-color: #088A3C;
+  background-color: #08873b;
   color: rgba(255, 255, 255, 0.9);
 }
 
@@ -74602,7 +74602,7 @@ span.ui.massive.text {
 }
 
 .green.pulsating.transition {
-  box-shadow: 0 0 0 0 rgba(8, 138, 60, 0.5);
+  box-shadow: 0 0 0 0 rgba(8, 135, 59, 0.5);
 }
 
 .green.inverted.pulsating.transition {
