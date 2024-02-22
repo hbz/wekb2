@@ -82,9 +82,9 @@
                         </div>
 
                         <div class="field">
-                            <label>Identifier Value</label>
+                            <label for="identifierValue">Identifier Value</label>
 
-                            <input type="text" name="identifierValue" required/>
+                            <input type="text" id="identifierValue" name="identifierValue" required/>
                         </div>
 
                     </g:form>

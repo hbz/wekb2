@@ -79,7 +79,6 @@
 
     <div class="ui segment">
         <h3 class="ui header">KBART Import File</h3>
-
         <label class="content">
             <g:uploadForm class="ui form" action="processKbartImport" method="post" id="${pkg.id}">
                     <div class="field">

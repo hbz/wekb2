@@ -128,29 +128,29 @@
 
                         <div class="field">
                             <div class="ui checkbox">
-                                <input type="checkbox" name="status" value="Current">
-                                <label><g:message code="rightBox.export.currentTitles"/></label>
+                                <input type="checkbox" id="statusCurrent" name="status" value="Current">
+                                <label for="statusCurrent"><g:message code="rightBox.export.currentTitles"/></label>
                             </div>
                         </div>
 
                         <div class="field">
                             <div class="ui checkbox">
-                                <input type="checkbox" name="status" value="Expected">
-                                <label><g:message code="rightBox.export.expectedTitles"/></label>
+                                <input type="checkbox" id="statusExpected" name="status" value="Expected">
+                                <label for="statusExpected"><g:message code="rightBox.export.expectedTitles"/></label>
                             </div>
                         </div>
 
                         <div class="field">
                             <div class="ui checkbox">
-                                <input type="checkbox" name="status" value="Retired">
-                                <label><g:message code="rightBox.export.retiredTitles"/></label>
+                                <input type="checkbox" id="statusRetired" name="status" value="Retired">
+                                <label for="statusRetired"><g:message code="rightBox.export.retiredTitles"/></label>
                             </div>
                         </div>
 
                         <div class="field">
                             <div class="ui checkbox">
-                                <input type="checkbox" name="status" value="Deleted">
-                                <label><g:message code="rightBox.export.deletedTitles"/></label>
+                                <input type="checkbox" id="statusDeleted" name="status" value="Deleted">
+                                <label for="statusDeleted"><g:message code="rightBox.export.deletedTitles"/></label>
                             </div>
                         </div>
                     </div>
@@ -160,15 +160,15 @@
 
                         <div class="field">
                             <div class="ui radio checkbox">
-                                <input type="radio" name="exportFormat" checked="checked"  value="tsv">
-                                <label><g:message code="rightBox.export.tsvfile"/></label>
+                                <input type="radio" id="exportFormattsv" name="exportFormat" checked="checked"  value="tsv">
+                                <label for="exportFormattsv"><g:message code="rightBox.export.tsvfile"/></label>
                             </div>
                         </div>
 
                         <div class="field">
                             <div class="ui radio checkbox">
-                                <input type="radio" name="exportFormat" value="xcel">
-                                <label><g:message code="rightBox.export.excelfile"/></label>
+                                <input type="radio" id="exportFormatxcel" name="exportFormat" value="xcel">
+                                <label for="exportFormatxcel"><g:message code="rightBox.export.excelfile"/></label>
                             </div>
                         </div>
                     </div>

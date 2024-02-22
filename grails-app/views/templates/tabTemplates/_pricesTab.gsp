@@ -59,9 +59,9 @@
                                             filter1="${RCConstants.PRICE_TYPE}"/>
                                 </div>
                                 <div class="field">
-                                    <label>Price</label>
+                                    <label for="price">Price</label>
 
-                                    <input type="number" name="price" step="0.01"/>
+                                    <input type="number" id="price" name="price" step="0.01"/>
                                 </div>
 
                                 <div class="field">
