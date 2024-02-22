@@ -147,7 +147,7 @@
 
         <div class="ui category search item inverted" id="spotlightSearch" style="flex-grow:1;">
             <div class="ui inverted icon input">
-                <input class="prompt" type="text" placeholder="${g.message(code: 'public.globalSearch.placeHolder')}">
+                <input class="prompt" type="text" title="${g.message(code: 'public.globalSearch.placeHolder')}" placeholder="${g.message(code: 'public.globalSearch.placeHolder')}">
                 <i class="search link icon"></i>
             </div>
 

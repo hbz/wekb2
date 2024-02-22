@@ -63,9 +63,9 @@
             <div class="content">
                 <div class="description">
                     <div class="ui top attached tabular menu">
-                        <a class="item" data-tab="packageNew">New <div class="floating uiprimary label">${news.package.countNewInDB}</div></a>
+                        <a class="item" data-tab="packageNew">New <div class="ui floating primary label">${news.package.countNewInDB}</div></a>
                         <a class="item"
-                           data-tab="packageLastUpdated">Changes <div class="floating uiprimary label">${news.package.countLastUpdatedInDB}</div></a>
+                           data-tab="packageLastUpdated">Changes <div class="ui floating primary label">${news.package.countLastUpdatedInDB}</div></a>
                     </div>
 
                     <div class="ui bottom attached tab segment" data-tab="packageNew">
@@ -193,9 +193,9 @@
             <div class="content">
                 <div class="description">
                     <div class="ui top attached tabular menu">
-                        <a class="item" data-tab="platformNew">New <div class="floating uiprimary label">${news.platform.countNewInDB}</div></a>
+                        <a class="item" data-tab="platformNew">New <div class="ui floating primary label">${news.platform.countNewInDB}</div></a>
                         <a class="item"
-                           data-tab="platformLastUpdated">Changes <div class="floating uiprimary label">${news.platform.countLastUpdatedInDB}</div></a>
+                           data-tab="platformLastUpdated">Changes <div class="ui floating primary label">${news.platform.countLastUpdatedInDB}</div></a>
                     </div>
 
                     <div class="ui bottom attached tab segment" data-tab="platformNew">
@@ -325,8 +325,8 @@
                 <div class="description">
 
                     <div class="ui top attached tabular menu">
-                        <a class="item" data-tab="orgNew">New <div class="floating uiprimary label">${news.org.countNewInDB}</div></a>
-                        <a class="item" data-tab="orgLastUpdated">Changes <div class="floating uiprimary label">${news.org.countLastUpdatedInDB}</div></a>
+                        <a class="item" data-tab="orgNew">New <div class="ui floating primary label">${news.org.countNewInDB}</div></a>
+                        <a class="item" data-tab="orgLastUpdated">Changes <div class="ui floating primary label">${news.org.countLastUpdatedInDB}</div></a>
                     </div>
 
                     <div class="ui bottom attached tab segment" data-tab="orgNew">
@@ -434,9 +434,9 @@
                 <div class="description">
                     <div class="ui top attached tabular menu">
                         <a class="item"
-                           data-tab="tippNew">New <div class="floating uiprimary label">${news.titleinstancepackageplatform.countNewInDB}</div></a>
+                           data-tab="tippNew">New <div class="ui floating primary label">${news.titleinstancepackageplatform.countNewInDB}</div></a>
                         <a class="item"
-                           data-tab="tippLastUpdated">Changes <div class="floating uiprimary label">${news.titleinstancepackageplatform.countLastUpdatedInDB}</div></a>
+                           data-tab="tippLastUpdated">Changes <div class="ui floating primary label">${news.titleinstancepackageplatform.countLastUpdatedInDB}</div></a>
                     </div>
 
                     <div class="ui bottom attached tab segment" data-tab="tippNew">
