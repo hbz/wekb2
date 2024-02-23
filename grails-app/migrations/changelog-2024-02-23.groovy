@@ -111,6 +111,6 @@ databaseChangeLog = {
     }
 
     changeSet(author: "djebeniani (generated)", id: "1708675359058-27") {
-        addNotNullConstraint(columnDataType: "boolean", columnName: "web_shop_orders", tableName: "vendor", validate: "true")
+        addNotNullConstraint(columnDataType: "boolean", columnName: "ven_web_shop_orders", tableName: "vendor", validate: "true")
     }
 }
