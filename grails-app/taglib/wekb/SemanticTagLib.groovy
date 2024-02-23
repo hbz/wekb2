@@ -747,7 +747,7 @@ class SemanticTagLib {
         String linkBody = attrs.text ?: ''
         String aClass = ((this.pageScope.variables?.actionName == attrs.action && (attrs.tab == params.tab || attrs.tab == params[attrs.subTab])) ? 'item active' : 'item') + (attrs.class ? ' ' + attrs.class : '')
 
-        String counts = (attrs.counts >= 0) ? '<div class="ui '  + ' circularprimary label">' + attrs.counts + '</div>' : null
+        String counts = (attrs.counts >= 0) ? '<div class="ui '  + ' circular primary label">' + attrs.counts + '</div>' : null
 
         linkBody = counts ? linkBody + counts : linkBody
 
