@@ -45,7 +45,7 @@
 
 
 
-<h2 class="ui header">we:kb News <div class="uiprimary label">
+<h2 class="ui header">we:kb News <div class="ui primary  label">
     Changes in the last <b>14</b> days.
 </div></h2>
 

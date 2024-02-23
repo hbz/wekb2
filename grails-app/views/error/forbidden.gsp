@@ -9,7 +9,7 @@
 
 <div class="ui tall stacked segment">
     <div>
-        <span class="uiprimary label huge">${code}</span>
+        <span class="ui primary  label huge">${code}</span>
     </div>
     <div class="ui icon header">
         <i class="exclamation triangle icon"></i>
