@@ -19,7 +19,7 @@
                       value=""/>
         </div>
 
-        <button class="ui button black" type="submit" value="changeDdcs"
+        <button class="ui button primary" type="submit" value="changeDdcs"
                 name="processOption">Do bulk process to the selected items</button>
 
         <br>
@@ -41,7 +41,7 @@
             <tr>
                 <th>#</th>
                 <th>Dewey Decimal Classification</th>
-                <th></th>
+                <th>Action</th>
             </tr>
             </thead>
             <tbody>
@@ -72,7 +72,7 @@
                                                 ${ddc.value}: ${ddc.getI10n('value')}
                                             </td>
                                             <g:if test="${editable}">
-                                                <td><g:link class='ui mini button red' controller='ajaxHtml'
+                                                <td><g:link class='ui mini button negative' controller='ajaxHtml'
                                                             action='unlinkManyToMany'
                                                             params="${["__context": "${row_obj.getOID()}", "__property": "ddcs", "__itemToRemove": "${ddc.getOID()}", activeTab: 'ddcs']}">Delete</g:link>
                                                 </td>

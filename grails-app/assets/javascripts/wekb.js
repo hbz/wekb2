@@ -59,8 +59,8 @@ $(function () {
     //Editable
     $.fn.editable.defaults.mode = 'inline';
     $.fn.editable.defaults.onblur = 'ignore';
-    $.fn.editableform.buttons = '<button type="submit" class="ui icon black button editable-submit"><i aria-hidden="true" class="check icon"></i></button>' +
-        '<button type="button" class="ui icon black button editable-cancel"><i aria-hidden="true" class="times icon"></i></button>';
+    $.fn.editableform.buttons = '<button type="submit" class="ui icon primary button editable-submit"><i aria-hidden="true" class="check icon"></i></button>' +
+        '<button type="button" class="ui icon primary button editable-cancel"><i aria-hidden="true" class="times icon"></i></button>';
     $.fn.editableform.buttonImage = "images/ui-bg_glass_95_fef1ec_1x400.png";
     $.fn.editableform.template =
         '<form class="ui form editableform">' +
@@ -72,7 +72,6 @@ $(function () {
         '			</div>' +
         '		</div>' +
         '        <div id="characters-count"></div>' +
-        '		<div class="editable-error-block">' +
         '		</div>' +
         '	</div>' +
         '</form>';

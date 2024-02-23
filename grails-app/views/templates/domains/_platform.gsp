@@ -76,7 +76,7 @@
                         <tr>
                             <th>#</th>
                             <th>Federation</th>
-                            <th></th>
+                            <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -98,7 +98,7 @@
                     </table>
 
                     <g:if test="${editable}">
-                        <a class="ui right floated black button" href="#"
+                        <a class="ui right floated primary button" href="#"
                            onclick="$('#pfModal').modal('show');">Add Federations</a>
 
                         <br>

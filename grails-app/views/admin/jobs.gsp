@@ -26,7 +26,7 @@
 <div class="ui segment">
     <h2 class="ui header">Current Jobs</h2>
 
-    <button class="ui black button" value="Refresh Page"
+    <button class="ui primary button" value="Refresh Page"
             onClick="window.location.reload()">Reload</button>
     <g:link controller="admin" action="cleanJobList" class="ui button">Clean Job List</g:link>
 

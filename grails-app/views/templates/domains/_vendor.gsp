@@ -51,7 +51,7 @@
                             <div class="item">
                                 ${t.value}
                                 <g:if test="${editable}">
-                                    <g:link class='ui mini button red' controller='ajaxHtml'
+                                    <g:link class='ui mini button negative' controller='ajaxHtml'
                                             action='unlinkManyToMany'
                                             params="${["__context": "${d.getOID()}", "__property": "roles", "__itemToRemove": "${t.getOID()}"]}">Delete</g:link>
                                 </g:if>
@@ -60,7 +60,7 @@
                     </div>
 
                     <g:if test="${editable}">
-                        <a class="ui right floated black button" href="#"
+                        <a class="ui right floated primary button" href="#"
                            onclick="$('#rolesModal').modal('show');">Add Role</a>
 
                         <br>
@@ -82,7 +82,7 @@
                             <th>Content Type</th>
                             <th>Contact Type</th>
                             <th>Language</th>
-                            <th></th>
+                            <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -113,7 +113,7 @@
                     </table>
 
                     <g:if test="${editable}">
-                        <a class="ui right floated black button" href="#"
+                        <a class="ui right floated primary button" href="#"
                            onclick="$('#contactModal').modal('show');">Add Contact</a>
 
                         <br>

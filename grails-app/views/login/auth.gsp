@@ -35,7 +35,7 @@
                     </div>
                 </div>
 
-                <button class="ui fluid submit black button" type="submit">Login</button>
+                <button class="ui fluid submit primary button" type="submit">Login</button>
             </div>
 
         </g:form>

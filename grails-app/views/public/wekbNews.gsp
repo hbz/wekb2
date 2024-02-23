@@ -9,7 +9,7 @@
 <body>
 <h1 class="ui header">Welcome to we:kb</h1>
 
-<h2 class="ui header">we:kb News <div class="ui black label">
+<h2 class="ui header">we:kb News <div class="ui primary  label">
     Changes in the last <b>14</b> days.
 </div></h2>
 
@@ -28,10 +28,10 @@
                 <div class="description">
                     <div class="ui top attached tabular menu">
                         <a class="item" data-tab="packageNew">New <div
-                                class="floating ui black label">${news.package.countNewInDB}</div></a>
+                                class="ui floating primary label">${news.package.countNewInDB}</div></a>
                         <a class="item"
                            data-tab="packageLastUpdated">Changes <div
-                                class="floating ui black label">${news.package.countLastUpdatedInDB}</div></a>
+                                class="ui floating primary label">${news.package.countLastUpdatedInDB}</div></a>
                     </div>
 
                     <div class="ui bottom attached tab segment" data-tab="packageNew">
@@ -84,7 +84,7 @@
                         </table>
 
                         <g:if test="${news.package.countNewInDB > 50}">
-                            <g:link class="ui black button" controller="search" action="componentSearch"
+                            <g:link class="ui primary button" controller="search" action="componentSearch"
                                     params="[qbe: 'g:packages', createdSince: dateFor14Days, sort: 'lastUpdated', order: 'desc']">Show more</g:link>
                         </g:if>
                     </div>
@@ -139,7 +139,7 @@
                         </table>
 
                         <g:if test="${news.package.countLastUpdatedInDB > 50}">
-                            <g:link class="ui black button" controller="search" action="componentSearch"
+                            <g:link class="ui primary button" controller="search" action="componentSearch"
                                     params="[qbe: 'g:packages', changedSince: dateFor14Days, sort: 'lastUpdated', order: 'desc']">Show more</g:link>
                         </g:if>
                     </div>
@@ -160,10 +160,10 @@
                 <div class="description">
                     <div class="ui top attached tabular menu">
                         <a class="item" data-tab="platformNew">New <div
-                                class="floating ui black label">${news.platform.countNewInDB}</div></a>
+                                class="ui floating primary label">${news.platform.countNewInDB}</div></a>
                         <a class="item"
                            data-tab="platformLastUpdated">Changes <div
-                                class="floating ui black label">${news.platform.countLastUpdatedInDB}</div></a>
+                                class="ui floating primary label">${news.platform.countLastUpdatedInDB}</div></a>
                     </div>
 
                     <div class="ui bottom attached tab segment" data-tab="platformNew">
@@ -215,7 +215,7 @@
                         </table>
 
                         <g:if test="${news.platform.countNewInDB > 50}">
-                            <g:link class="ui black button" controller="search" action="componentSearch"
+                            <g:link class="ui primary button" controller="search" action="componentSearch"
                                     params="[qbe: 'g:platforms', createdSince: dateFor14Days, sort: 'lastUpdated', order: 'desc']">Show more</g:link>
                         </g:if>
                     </div>
@@ -269,7 +269,7 @@
                         </table>
 
                         <g:if test="${news.platform.countLastUpdatedInDB > 50}">
-                            <g:link class="ui black button" controller="search" action="componentSearch"
+                            <g:link class="ui primary button" controller="search" action="componentSearch"
                                     params="[qbe: 'g:platforms', changedSince: dateFor14Days, sort: 'lastUpdated', order: 'desc']">Show more</g:link>
                         </g:if>
                     </div>
@@ -294,9 +294,9 @@
 
                     <div class="ui top attached tabular menu">
                         <a class="item" data-tab="orgNew">New <div
-                                class="floating ui black label">${news.org.countNewInDB}</div></a>
+                                class="ui floating primary label">${news.org.countNewInDB}</div></a>
                         <a class="item" data-tab="orgLastUpdated">Changes <div
-                                class="floating ui black label">${news.org.countLastUpdatedInDB}</div></a>
+                                class="ui floating primary label">${news.org.countLastUpdatedInDB}</div></a>
                     </div>
 
                     <div class="ui bottom attached tab segment" data-tab="orgNew">
@@ -338,7 +338,7 @@
                         </table>
 
                         <g:if test="${news.org.countNewInDB > 50}">
-                            <g:link class="ui black button" controller="search" action="componentSearch"
+                            <g:link class="ui primary button" controller="search" action="componentSearch"
                                     params="[qbe: 'g:orgs', createdSince: dateFor14Days, sort: 'lastUpdated', order: 'desc']">Show more</g:link>
                         </g:if>
                     </div>
@@ -382,7 +382,7 @@
                         </table>
 
                         <g:if test="${news.org.countLastUpdatedInDB > 50}">
-                            <g:link class="ui black button" controller="search" action="componentSearch"
+                            <g:link class="ui primary button" controller="search" action="componentSearch"
                                     params="[qbe: 'g:orgs', changedSince: dateFor14Days, sort: 'lastUpdated', order: 'desc']">Show more</g:link>
                         </g:if>
                     </div>
@@ -405,11 +405,11 @@
                     <div class="ui top attached tabular menu">
                         <a class="item"
                            data-tab="tippNew">New <div
-                                class="floating ui black label">${news.titleinstancepackageplatform.countNewInDB}</div>
+                                class="ui floating primary label">${news.titleinstancepackageplatform.countNewInDB}</div>
                         </a>
                         <a class="item"
                            data-tab="tippLastUpdated">Changes <div
-                                class="floating ui black label">${news.titleinstancepackageplatform.countLastUpdatedInDB}</div>
+                                class="ui floating primary label">${news.titleinstancepackageplatform.countLastUpdatedInDB}</div>
                         </a>
                     </div>
 
@@ -459,7 +459,7 @@
                         </table>
 
                         <g:if test="${news.titleinstancepackageplatform.countNewInDB > 50}">
-                            <g:link class="ui black button" controller="search" action="componentSearch"
+                            <g:link class="ui primary button" controller="search" action="componentSearch"
                                     params="[qbe: 'g:tipps', createdSince: dateFor14Days, sort: 'lastUpdated', order: 'desc']">Show more</g:link>
                         </g:if>
 
@@ -512,7 +512,7 @@
                         </table>
 
                         <g:if test="${news.titleinstancepackageplatform.countLastUpdatedInDB > 50}">
-                            <g:link class="ui black button" controller="search" action="componentSearch"
+                            <g:link class="ui primary button" controller="search" action="componentSearch"
                                     params="[qbe: 'g:tipps', changedSince: dateFor14Days, sort: 'lastUpdated', order: 'desc']">Show more</g:link>
                         </g:if>
                     </div>

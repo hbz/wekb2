@@ -18,7 +18,7 @@
     </div>
 
     <g:if test="${editable}">
-        <a class="ui right floated black button" href="#" onclick="$('#vendorsModal').modal('show');">Add Vendor</a>
+        <a class="ui right floated primary button" href="#" onclick="$('#vendorsModal').modal('show');">Add Vendor</a>
 
         <br>
         <br>

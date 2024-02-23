@@ -107,7 +107,7 @@
 
                     <g:if test="${userIsAdmin}">
 
-                        <a class="ui right floated black button" href="#"
+                        <a class="ui right floated primary button" href="#"
                            onclick="$('#addCuratoryGroup').modal('show');">Add a Curatory Group</a>
 
                         <br>
@@ -119,6 +119,7 @@
                                 <input type="hidden" name="activeTab" value="curatoryGroupUsers"/>
 
                                 <div class="field">
+                                    <label>Curatory Group</label>
                                     <semui:simpleReferenceDropdown name="__curatoryGroup"
                                                                    baseClass="wekb.CuratoryGroup"
                                                                    filter1="Current"/>
@@ -161,7 +162,7 @@
 
                     <g:if test="${userIsAdmin}">
 
-                        <a class="ui right floated black button" href="#"
+                        <a class="ui right floated primary button" href="#"
                            onclick="$('#addRoleToUser').modal('show');">Add Role</a>
 
                         <br>
@@ -173,6 +174,7 @@
                                 <input type="hidden" name="activeTab" value="roles"/>
 
                                 <div class="field">
+                                    <label>Role</label>
                                     <semui:simpleReferenceDropdown name="__role"
                                                                    baseClass="wekb.auth.Role"
                                                                    filter1="Current"/>

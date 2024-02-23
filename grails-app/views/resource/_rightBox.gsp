@@ -48,7 +48,7 @@
                                                            filter1="Current"/>
                         </div>
 
-                        <button type="submit" class="ui black button">Link</button>
+                        <button type="submit" class="ui primary button">Link</button>
                     </g:form>
                 </div>
             </g:if>
@@ -57,7 +57,7 @@
     </g:if>
     <sec:ifNotLoggedIn>
         <div class="content center aligned">
-            <g:link controller="resource" action="showLogin" class="ui icon black button"
+            <g:link controller="resource" action="showLogin" class="ui icon primary button"
                     id="${d.getOID()}"><i
                     class="edit icon"></i><g:message code="rightBox.edit.info"/></g:link>
         </div>
@@ -77,7 +77,7 @@
                     <p>As an admin you can still edit, but please contact a curator before making major changes.</p>
 
                     <g:if test="${params.curationOverride == 'true'}">
-                        <g:link class="ui button green"
+                        <g:link class="ui button positive"
                                 controller="${params.controller}"
                                 action="${params.action}"
                                 id="${displayobj.getOID()}"
@@ -86,7 +86,7 @@
                         </g:link>
                     </g:if>
                     <g:else>
-                        <g:link class="ui button red"
+                        <g:link class="ui button negative"
                                 controller="${params.controller}"
                                 action="${params.action}"
                                 id="${displayobj.getOID()}"
@@ -111,12 +111,12 @@
             <div class="ui buttons">
 
                 <g:if test="${(d.kbartSource && (d.kbartSource.lastUpdateUrl || d.kbartSource.url)) || d.getLastSuccessfulManualUpdateInfo()}">
-                    <g:link controller="public" action="kbart" class="ui black button"
+                    <g:link controller="public" action="kbart" class="ui primary button"
                             id="${params.id}">KBART File</g:link> &nbsp;
                     <div class="or"></div>
                 </g:if>
 
-                <a class="ui black button" href="#" onclick="$('#packageTSVExport').modal('show');">we:kb File</a>
+                <a class="ui primary button" href="#" onclick="$('#packageTSVExport').modal('show');">we:kb File</a>
 
             </div>
 
@@ -128,29 +128,29 @@
 
                         <div class="field">
                             <div class="ui checkbox">
-                                <input type="checkbox" name="status" value="Current">
-                                <label><g:message code="rightBox.export.currentTitles"/></label>
+                                <input type="checkbox" id="statusCurrent" name="status" value="Current">
+                                <label for="statusCurrent"><g:message code="rightBox.export.currentTitles"/></label>
                             </div>
                         </div>
 
                         <div class="field">
                             <div class="ui checkbox">
-                                <input type="checkbox" name="status" value="Expected">
-                                <label><g:message code="rightBox.export.expectedTitles"/></label>
+                                <input type="checkbox" id="statusExpected" name="status" value="Expected">
+                                <label for="statusExpected"><g:message code="rightBox.export.expectedTitles"/></label>
                             </div>
                         </div>
 
                         <div class="field">
                             <div class="ui checkbox">
-                                <input type="checkbox" name="status" value="Retired">
-                                <label><g:message code="rightBox.export.retiredTitles"/></label>
+                                <input type="checkbox" id="statusRetired" name="status" value="Retired">
+                                <label for="statusRetired"><g:message code="rightBox.export.retiredTitles"/></label>
                             </div>
                         </div>
 
                         <div class="field">
                             <div class="ui checkbox">
-                                <input type="checkbox" name="status" value="Deleted">
-                                <label><g:message code="rightBox.export.deletedTitles"/></label>
+                                <input type="checkbox" id="statusDeleted" name="status" value="Deleted">
+                                <label for="statusDeleted"><g:message code="rightBox.export.deletedTitles"/></label>
                             </div>
                         </div>
                     </div>
@@ -160,15 +160,15 @@
 
                         <div class="field">
                             <div class="ui radio checkbox">
-                                <input type="radio" name="exportFormat" checked="checked"  value="tsv">
-                                <label><g:message code="rightBox.export.tsvfile"/></label>
+                                <input type="radio" id="exportFormattsv" name="exportFormat" checked="checked"  value="tsv">
+                                <label for="exportFormattsv"><g:message code="rightBox.export.tsvfile"/></label>
                             </div>
                         </div>
 
                         <div class="field">
                             <div class="ui radio checkbox">
-                                <input type="radio" name="exportFormat" value="xcel">
-                                <label><g:message code="rightBox.export.excelfile"/></label>
+                                <input type="radio" id="exportFormatxcel" name="exportFormat" value="xcel">
+                                <label for="exportFormatxcel"><g:message code="rightBox.export.excelfile"/></label>
                             </div>
                         </div>
                     </div>

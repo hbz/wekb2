@@ -18,7 +18,7 @@ class SemanticTagLib {
 
     def actionsDropdown = { attrs, body ->
 
-        out << '<div class="ui simple dropdown black button">'
+        out << '<div class="ui simple dropdown primary button">'
         out << '<div class="text">'
         out << attrs.text
         out << '</div>'
@@ -256,9 +256,9 @@ class SemanticTagLib {
 
         if (attrs.hideSubmitButton == null) {
             if (attrs.formID) {
-                out << '<input type="submit" class="ui button green" name="save" value="' + msgSave + '" onclick="event.preventDefault(); $(\'#' + attrs.id + '\').find(\'#' + attrs.formID + '\').submit()"/>'
+                out << '<input type="submit" class="ui button positive" name="save" value="' + msgSave + '" onclick="event.preventDefault(); $(\'#' + attrs.id + '\').find(\'#' + attrs.formID + '\').submit()"/>'
             } else {
-                out << '<input type="submit" class="ui button green" name="save" value="' + msgSave + '" onclick="event.preventDefault(); $(\'#' + attrs.id + '\').find(\'form\').submit()"/>'
+                out << '<input type="submit" class="ui button positive" name="save" value="' + msgSave + '" onclick="event.preventDefault(); $(\'#' + attrs.id + '\').find(\'form\').submit()"/>'
             }
         }
 
@@ -622,7 +622,7 @@ class SemanticTagLib {
         out << '<div class="item wekb-pagination-custom-input" data-max="' + max + '" data-steps="' + laststep + '">'
         out << '    <div class="ui mini form">'
         out << '            <div class="field">'
-        out << '                <input autocomplete="off" data-validate="pagination-custom-validate" maxlength="6" placeholder="' + messageSource.getMessage('pagination.keyboardInput.placeholder',null,locale) + '" type="text">'
+        out << '                <input autocomplete="off" data-validate="pagination-custom-validate" maxlength="6" title="' + messageSource.getMessage('pagination.keyboardInput.placeholder',null,locale) + '" placeholder="' + messageSource.getMessage('pagination.keyboardInput.placeholder',null,locale) + '" type="text">'
         customInputAttrs.params.remove('offset')
         customInputAttrs.params.remove('class')
         customInputAttrs.class= "wekb-pagination-custom-link js-no-wait-wheel"
@@ -747,7 +747,7 @@ class SemanticTagLib {
         String linkBody = attrs.text ?: ''
         String aClass = ((this.pageScope.variables?.actionName == attrs.action && (attrs.tab == params.tab || attrs.tab == params[attrs.subTab])) ? 'item active' : 'item') + (attrs.class ? ' ' + attrs.class : '')
 
-        String counts = (attrs.counts >= 0) ? '<div class="ui '  + ' circular black label">' + attrs.counts + '</div>' : null
+        String counts = (attrs.counts >= 0) ? '<div class="ui '  + ' circular primary label">' + attrs.counts + '</div>' : null
 
         linkBody = counts ? linkBody + counts : linkBody
 
@@ -778,7 +778,7 @@ class SemanticTagLib {
         out << body()
 
         if (attrs.counts != null) {
-            out << '<div class="ui floating black circular label">'+attrs.counts+'</div>'
+            out << '<div class="ui floating primary circular label">'+attrs.counts+'</div>'
         }
         out << '</div>'
     }

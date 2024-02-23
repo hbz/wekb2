@@ -10,7 +10,7 @@
         <table class="ui selectable striped sortable celled table">
             <thead>
             <tr>
-                <th></th>
+                <th>Select</th>
                 <th>#</th>
                 <semui:sortableColumn property="name" title="Package Name"
                                       params="${params}"/>
@@ -39,7 +39,7 @@
                 <semui:sortableColumn property="kbartSource.automaticUpdates" title="Automatic Updates"
                                       params="${params}"/>
                 <th>Source</th>
-                <th></th>
+                <th>Action</th>
             </tr>
             </thead>
             <tbody>
