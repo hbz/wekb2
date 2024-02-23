@@ -34,6 +34,8 @@ class Api2Service {
 
     }
 
+    static List complexSortFields = ['titleCount', 'currentTippCount', 'deletedTippCount', 'retiredTippCount', 'expectedTippCount', 'providerName', 'nominalPlatformName']
+
     public Map getApiTemplate(String type) {
         return ApiTemplates.get(type);
     }
@@ -181,6 +183,10 @@ class Api2Service {
                                         qparam     : 'curatoryGroupType',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'curatoryGroups.curatoryGroup.type.value']
                                 ],
+                                [
+                                        qparam     : 'automaticUpdates',
+                                        contextTree: ['ctxtp': 'qry', 'type': 'boolean', 'comparator': 'eq', 'prop': 'kbartSource.automaticUpdates']
+                                ],
 
                         ],
 
@@ -194,6 +200,7 @@ class Api2Service {
                                 [sort: 'nominalPlatform.name'],
                                 [sort: 'contentType'],
                                 [sort: 'scope'],
+                                [sort: 'titleCount'],
                                 [sort: 'currentTippCount'],
                                 [sort: 'retiredTippCount'],
                                 [sort: 'expectedTippCount'],
@@ -1131,11 +1138,19 @@ class Api2Service {
                 result.description = object.description
                 result.descriptionURL = object.descriptionURL
 
+                /*
                 result.titleCount = object.getTippCount()
                 result.currentTippCount = object.getCurrentTippCount()
                 result.retiredTippCount = object.getRetiredTippCount()
                 result.expectedTippCount = object.getExpectedTippCount()
                 result.deletedTippCount = object.getDeletedTippCount()
+                */
+                Map<String, Integer> tippCountMap = object.getTippCountMap()
+                result.titleCount = tippCountMap.total
+                result.currentTippCount = tippCountMap.get(RDStore.KBC_STATUS_CURRENT.value)
+                result.retiredTippCount = tippCountMap.get(RDStore.KBC_STATUS_RETIRED.value)
+                result.expectedTippCount = tippCountMap.get(RDStore.KBC_STATUS_EXPECTED.value)
+                result.deletedTippCount = tippCountMap.get(RDStore.KBC_STATUS_DELETED.value)
 
                 result.breakable = object.breakable ? object.breakable.value : ""
                 result.consistent = object.consistent?.value
@@ -1794,7 +1809,7 @@ class Api2Service {
                 log.debug("Execute query")
                 GrailsParameterMap cleaned_params = processCleanParameterMap(params)
 
-                target_class = grailsApplication.getArtefact("Domain", apiSearchTemplate.baseclass);
+                target_class = grailsApplication.getArtefact("Domain", apiSearchTemplate.baseclass)
                 //HQLBuilder.build(grailsApplication, apiSearchTemplate, cleaned_params, searchResult, target_class, genericOIDService, "rows")
                 HQLBuilder.build(grailsApplication, apiSearchTemplate, cleaned_params, searchResult, target_class, genericOIDService)
 
@@ -1815,7 +1830,7 @@ class Api2Service {
                 }
 
             } else {
-                log.error("no template ${apiSearchTemplate}");
+                log.error("no template ${apiSearchTemplate}")
             }
 
             result.result = []
@@ -1838,6 +1853,9 @@ class Api2Service {
 
             searchResult.recset.each { r ->
                 KBComponent.withTransaction {
+                    if(params.sort in complexSortFields){
+                        r = r[0]
+                    }
                     //LinkedHashMap<Object, Object> resultMap = mapDomainFieldsToSpecFields2(apiSearchTemplate, r)
                     LinkedHashMap<Object, Object> resultMap = mapDomainFieldsToSpecFields(r, (params.stubOnly ? true : false))
 
@@ -1993,6 +2011,10 @@ class Api2Service {
 
         if (parameterMap.hostPlatformUuid){
             cleaned_params.put('platformUuid', parameterMap.hostPlatformUuid)
+        }
+
+        if (parameterMap.automaticUpdates){
+            cleaned_params.put('automaticUpdates', parameterMap.boolean('automaticUpdates'))
         }
 
         return

@@ -63,7 +63,7 @@ public class HQLBuilder {
     def criteria = []
 
     qbetemplate.qbeConfig.qbeForm.each { query_prop_def ->
-      if ( ( params[query_prop_def.qparam] != null ) && ( params[query_prop_def.qparam] instanceof String && params[query_prop_def.qparam].length() > 0 ) ) {
+      if ( ( ( params[query_prop_def.qparam] != null ) && ( params[query_prop_def.qparam] instanceof String && params[query_prop_def.qparam].length() > 0 ) ) || ( params[query_prop_def.qparam] instanceof Boolean ) ) {
         criteria.add([defn:query_prop_def, value:params[query_prop_def.qparam]]);
       }
       if ( ( params[query_prop_def.qparam] != null ) && ( params[query_prop_def.qparam] instanceof ArrayList && params[query_prop_def.qparam].size() > 0 ) ) {
@@ -168,24 +168,29 @@ public class HQLBuilder {
          ( hql_builder_context.get('sort').length() > 0 ) ) {
       log.debug("Setting sort order to ${hql_builder_context.sort}")
 
-      if(hql_builder_context.sort == 'currentTippCount'){
-        fetch_hql = fetch_hql.replaceFirst(" o ", " o, (select count(*) from  wekb.TitleInstancePackagePlatform as t where t.pkg = o.id and t.status = ${RDStore.KBC_STATUS_CURRENT.id}) as currentTippCount ")
-        fetch_hql += " order by currentTippCount ${hql_builder_context.order}";
-      }
-      else if(hql_builder_context.sort == 'deletedTippCount'){
-        fetch_hql = fetch_hql.replaceFirst(" o ", " o, (select count(*) from  wekb.TitleInstancePackagePlatform as t where t.pkg = o.id and t.status = ${RDStore.KBC_STATUS_DELETED.id}) as deletedTippCount ")
-        fetch_hql += " order by deletedTippCount ${hql_builder_context.order}";
-      }
-      else if(hql_builder_context.sort == 'retiredTippCount'){
-        fetch_hql = fetch_hql.replaceFirst(" o ", " o, (select count(*) from  wekb.TitleInstancePackagePlatform as t where t.pkg = o.id and t.status = ${RDStore.KBC_STATUS_RETIRED.id}) as retiredTippCount ")
-        fetch_hql += " order by retiredTippCount ${hql_builder_context.order}";
-      }
-      else if(hql_builder_context.sort == 'expectedTippCount'){
-        fetch_hql = fetch_hql.replaceFirst(" o ", " o, (select count(*) from  wekb.TitleInstancePackagePlatform as t where t.pkg = o.id and t.status = ${RDStore.KBC_STATUS_EXPECTED.id}) as expectedTippCount ")
-        fetch_hql += " order by expectedTippCount ${hql_builder_context.order}";
-      }
-      else {
-        fetch_hql += " order by o.${hql_builder_context.sort} ${hql_builder_context.order}";
+      switch(hql_builder_context.sort) {
+        case 'titleCount':
+              fetch_hql = fetch_hql.replaceFirst(" o ", " o, (select count(*) from  wekb.TitleInstancePackagePlatform as t where t.pkg = o.id) as titleCount ")
+              fetch_hql += " order by titleCount ${hql_builder_context.order}"
+              break
+        case 'currentTippCount':
+              fetch_hql = fetch_hql.replaceFirst(" o ", " o, (select count(*) from  wekb.TitleInstancePackagePlatform as t where t.pkg = o.id and t.status = ${RDStore.KBC_STATUS_CURRENT.id}) as currentTippCount ")
+              fetch_hql += " order by currentTippCount ${hql_builder_context.order}"
+              break
+        case 'deletedTippCount':
+              fetch_hql = fetch_hql.replaceFirst(" o ", " o, (select count(*) from  wekb.TitleInstancePackagePlatform as t where t.pkg = o.id and t.status = ${RDStore.KBC_STATUS_DELETED.id}) as deletedTippCount ")
+              fetch_hql += " order by deletedTippCount ${hql_builder_context.order}"
+              break
+        case 'retiredTippCount':
+              fetch_hql = fetch_hql.replaceFirst(" o ", " o, (select count(*) from  wekb.TitleInstancePackagePlatform as t where t.pkg = o.id and t.status = ${RDStore.KBC_STATUS_RETIRED.id}) as retiredTippCount ")
+              fetch_hql += " order by retiredTippCount ${hql_builder_context.order}"
+              break
+        case 'expectedTippCount':
+              fetch_hql = fetch_hql.replaceFirst(" o ", " o, (select count(*) from  wekb.TitleInstancePackagePlatform as t where t.pkg = o.id and t.status = ${RDStore.KBC_STATUS_EXPECTED.id}) as expectedTippCount ")
+              fetch_hql += " order by expectedTippCount ${hql_builder_context.order}"
+              break
+        default: fetch_hql += " order by o.${hql_builder_context.sort} ${hql_builder_context.order}"
+              break
       }
     }
 
@@ -287,7 +292,7 @@ public class HQLBuilder {
             case 'java.lang.Long':
               hql_builder_context.bindvars[crit.defn.qparam] = crit.value instanceof String ? Long.parseLong(crit.value) : crit.value
               break;
-            case 'java.lang.Object':
+            case ['java.lang.Object', 'boolean']:
               hql_builder_context.bindvars[crit.defn.qparam] = crit.value
               break;
             default:

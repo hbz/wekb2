@@ -271,6 +271,14 @@ class Package  extends AbstractBase implements Auditable {
     result
   }
 
+  @Transient
+  Map<String, Integer> getTippCountMap() {
+    List rows = TitleInstancePackagePlatform.executeQuery("select new map(t.status as status, count(*) as count) from TitleInstancePackagePlatform t where t.pkg = :pkg group by t.status", [pkg: this])
+    Map<String, Integer> result = rows.collectEntries { row -> [row.status.value, row.count] } as Map<RefdataValue, Integer>
+    result.total = rows.sum { row -> row.count }
+    result
+  }
+
 
   public void deleteSoft(context) {
     Package.withTransaction {

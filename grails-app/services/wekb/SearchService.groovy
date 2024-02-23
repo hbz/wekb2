@@ -180,7 +180,7 @@ class SearchService {
         Set recSet = []
         log.debug("Create new recset..")
         result.recset.each { r ->
-            if(params.sort in ['currentTippCount', 'deletedTippCount', 'retiredTippCount', 'expectedTippCount']){
+            if(params.sort in Api2Service.complexSortFields){
                 r = r[0]
             }
 
