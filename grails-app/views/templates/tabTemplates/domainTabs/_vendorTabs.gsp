@@ -387,7 +387,7 @@
                     Research platform for e-books
                 </dt>
                 <dd>
-                    <semui:xEditable owner="${d}" field="researchPlatformForEbooks"/>
+                    <semui:xEditable owner="${d}" validation="url" outGoingLink="true" field="researchPlatformForEbooks"/>
                 </dd>
             </dl>
         </div>
