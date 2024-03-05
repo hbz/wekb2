@@ -26,6 +26,11 @@ class Org extends AbstractBase implements Auditable {
   String metadataDownloaderURL
   String kbartDownloaderURL
 
+  boolean paperInvoice  = false
+  boolean managementOfCredits  = false
+  boolean processingOfCompensationPayments  = false
+  boolean individualInvoiceDesign  = false
+
   Set variantNames = []
 
   static mappedBy = [
@@ -36,7 +41,10 @@ class Org extends AbstractBase implements Auditable {
     contacts: Contact,
     ids: Identifier,
     variantNames        : ComponentVariantName,
-    curatoryGroups   : CuratoryGroupOrg
+    curatoryGroups   : CuratoryGroupOrg,
+    electronicBillings: ProviderElectronicBilling,
+    invoiceDispatchs: ProviderInvoiceDispatch,
+    invoicingVendors: ProviderInvoicingVendor,
   ]
 
   static mapping = {
@@ -57,6 +65,11 @@ class Org extends AbstractBase implements Auditable {
     kbartDownloaderURL column: 'org_kbart_downloader_url', type: 'text'
 
     variantNames cascade: "all,delete-orphan", lazy: false
+
+    paperInvoice column: 'org_paper_invoice'
+    managementOfCredits column: 'org_management_of_credits'
+    processingOfCompensationPayments column: 'org_pro_of_com_pay'
+    individualInvoiceDesign column: 'org_ind_invoice_design'
   }
 
   static constraints = {

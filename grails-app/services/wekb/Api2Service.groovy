@@ -1266,6 +1266,11 @@ class Api2Service {
                 result.metadataDownloaderURL = object.metadataDownloaderURL
                 result.homepage = object.homepage
 
+                result.paperInvoice = object.paperInvoice ? RDStore.YN_YES.value : RDStore.YN_NO.value
+                result.managementOfCredits = object.managementOfCredits ? RDStore.YN_YES.value : RDStore.YN_NO.value
+                result.processingOfCompensationPayments = object.processingOfCompensationPayments ? RDStore.YN_YES.value : RDStore.YN_NO.value
+                result.individualInvoiceDesign = object.individualInvoiceDesign ? RDStore.YN_YES.value : RDStore.YN_NO.value
+
                 result.roles = []
                 object.roles.each { role ->
                     result.roles.add(role.value)
@@ -1299,6 +1304,22 @@ class Api2Service {
                                          contentType: contact.contentType?.value,
                                          type       : contact.type?.value,
                                          language   : contact.language?.value])
+                }
+
+
+                result.electronicBillings = []
+                object.electronicBillings.each { ProviderElectronicBilling providerElectronicBilling ->
+                    result.electronicBillings.add([electronicBilling: providerElectronicBilling.electronicBilling.value])
+                }
+
+                result.invoiceDispatchs = []
+                object.invoiceDispatchs.each { ProviderInvoiceDispatch providerInvoiceDispatch ->
+                    result.invoiceDispatchs.add([invoiceDispatch: providerInvoiceDispatch.invoiceDispatch.value])
+                }
+
+                 result.invoicingVendors = []
+                object.invoicingVendors.each { ProviderInvoicingVendor providerInvoicingVendor ->
+                    result.invoicingVendors.add([name: providerInvoicingVendor.vendor.name])
                 }
             }
 

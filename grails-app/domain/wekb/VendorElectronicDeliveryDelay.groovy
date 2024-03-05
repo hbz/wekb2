@@ -25,7 +25,6 @@ class VendorElectronicDeliveryDelay {
 
     static constraints = {
         electronicDeliveryDelay (nullable:true)
-        vendor  (nullable:false)
     }
 
     String getOID(){

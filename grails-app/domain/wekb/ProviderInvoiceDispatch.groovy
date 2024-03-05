@@ -3,9 +3,9 @@ package wekb
 import wekb.annotations.RefdataAnnotation
 import wekb.helper.RCConstants
 
-class VendorInvoiceDispatch {
+class ProviderInvoiceDispatch {
 
-    Vendor vendor
+    Org provider
 
     Date dateCreated
     Date lastUpdated
@@ -14,13 +14,13 @@ class VendorInvoiceDispatch {
     RefdataValue invoiceDispatch
 
     static mapping = {
-        id          column:'vid_id'
-        version     column:'vid_version'
-        invoiceDispatch     column:'vid_invoice_dispatch_rv_fk'
-        vendor column:'vid_vendor_fk', index: 'vid_vendor_idx'
+        id          column:'pid_id'
+        version     column:'pid_version'
+        invoiceDispatch     column:'pid_invoice_dispatch_rv_fk'
+        provider column:'pid_provider_fk', index: 'pid_provider_idx'
 
-        dateCreated column: 'vid_date_created'
-        lastUpdated column: 'vid_last_updated'
+        dateCreated column: 'pid_date_created'
+        lastUpdated column: 'pid_last_updated'
     }
 
     static constraints = {

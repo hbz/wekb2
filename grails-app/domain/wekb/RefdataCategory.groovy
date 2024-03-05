@@ -51,8 +51,8 @@ class RefdataCategory extends AbstractI10n {
 
   static constraints = {
     label(nullable: true, blank: true)
-    dateCreated(nullable:true, blank:true)
-    lastUpdated(nullable:true, blank:true)
+    dateCreated(nullable:true)
+    lastUpdated(nullable:true)
 
     desc_de (nullable:true, blank:false)
     desc_en (nullable:true, blank:false)
@@ -222,7 +222,6 @@ class RefdataCategory extends AbstractI10n {
 
   static RefdataCategory construct(Map<String, Object> map) {
 
-    withTransaction {
       String token = map.get('token')
       boolean hardData = new Boolean(map.get('hardData'))
       String desc_en = map.get('desc_en')
@@ -240,10 +239,9 @@ class RefdataCategory extends AbstractI10n {
       rdc.desc_en = desc_de ?: null
 
       rdc.isHardData = hardData
-      rdc.save()
+      rdc.save(flush: true)
 
       rdc
-    }
   }
 
   Integer getValuesCount(){
