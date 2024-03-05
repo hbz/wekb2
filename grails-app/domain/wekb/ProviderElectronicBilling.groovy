@@ -25,7 +25,6 @@ class ProviderElectronicBilling {
 
     static constraints = {
         electronicBilling (nullable:true)
-        provider  (nullable:false)
     }
 
     String getOID(){

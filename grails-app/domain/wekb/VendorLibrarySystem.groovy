@@ -25,7 +25,6 @@ class VendorLibrarySystem {
 
     static constraints = {
         supportedLibrarySystem (nullable:true)
-        vendor  (nullable:false)
     }
 
     String getOID(){

@@ -25,7 +25,6 @@ class ProviderInvoiceDispatch {
 
     static constraints = {
         invoiceDispatch (nullable:true)
-        provider  (nullable:false)
     }
 
     String getOID(){
