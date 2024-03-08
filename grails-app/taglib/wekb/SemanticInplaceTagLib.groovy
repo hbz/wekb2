@@ -98,7 +98,7 @@ class SemanticInplaceTagLib {
             out << "</a>"
         } else {
             if (!attrs.disabled) {
-                out << "<a href=\"#\" class=\"${attrs.class ?: ''}\">"
+                out << "<span class=\"${attrs.class ?: ''}\">"
                 if (body) {
                     out << body()
                 } else {
@@ -109,7 +109,7 @@ class SemanticInplaceTagLib {
                         out << "Empty"
                     }
                 }
-                out << '</a>'
+                out << '</span>'
             }
         }
 
