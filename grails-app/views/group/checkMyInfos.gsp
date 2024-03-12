@@ -12,7 +12,7 @@
 <div class="ui accordion">
     <div class="title">
         <i class="dropdown icon"></i>
-        Missing contact information in the provider profile: ${checkContacts.size()}
+        Missing contact information in the provider profile: <span class="ui black circular label">${checkContacts.size()}</span>
     </div>
 
     <div class="content">
@@ -25,7 +25,7 @@
 
     <div class="title">
         <i class="dropdown icon"></i>
-        Missing product identifier for packages: ${checkPackagesWithoutProductID.size()}
+        Missing product identifier for packages: <span class="ui black circular label">${checkPackagesWithoutProductID.size()}</span>
     </div>
 
     <div class="content">
@@ -39,7 +39,7 @@
 
     <div class="title">
         <i class="dropdown icon"></i>
-        Missing titles by packages with source: ${checkSourcesWithoutTitles.size()}
+        Missing titles by packages with source: <span class="ui black circular label">${checkSourcesWithoutTitles.size()}</span>
     </div>
 
     <div class="content">
@@ -52,7 +52,7 @@
 
     <div class="title">
         <i class="dropdown icon"></i>
-        Packages without source: ${packagesWithoutTitles.size()}
+        Packages without source: <span class="ui black circular label">${packagesWithoutTitles.size()}</span>
     </div>
 
     <div class="content">
@@ -65,7 +65,7 @@
 
     <div class="title">
         <i class="dropdown icon"></i>
-        No title changes for more than 30 days: ${noChangesPackageLast30Days.size()}
+        No title changes for more than 30 days: <span class="ui black circular label">${noChangesPackageLast30Days.size()}</span>
     </div>
 
     <div class="content">
@@ -79,7 +79,7 @@
 
     <div class="title">
         <i class="dropdown icon"></i>
-        Packages without titles: ${packagesWithoutTitles.size()}
+        Packages without titles: <span class="ui black circular label">${packagesWithoutTitles.size()}</span>
     </div>
 
     <div class="content">
