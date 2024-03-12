@@ -74,6 +74,9 @@
         <g:if test="${user.curatoryGroupUsers.size() > 0 && user.showMyComponents()}">
             <div class="item">
                 <div class="header"><g:message code="public.myComponents"/></div>
+                <div class="menu">
+                    <g:link class="item we-link" controller="group" action="checkMyInfos">Check my Infos</g:link>
+                </div>
 
                 <div class="menu">
                     <g:link class="item we-link" controller="group" action="myPackages"><g:message code="public.myPackages"/></g:link>

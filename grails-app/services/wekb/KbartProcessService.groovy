@@ -1,5 +1,7 @@
 package wekb
 
+import org.apache.tika.parser.txt.CharsetDetector
+import org.apache.tika.parser.txt.CharsetMatch
 import wekb.tools.DateToolkit
 import wekb.helper.RDStore
 import grails.gorm.transactions.Transactional
@@ -648,6 +650,17 @@ class KbartProcessService {
         }
         else {
             encoding = UniversalDetector.detectCharset(tsvFile)
+
+            if(encoding == null){
+                CharsetMatch[] charsetMatches= new CharsetDetector().setText(tsvFile.newInputStream()).detectAll()
+                log.debug("charsetMatches -> "+charsetMatches)
+               charsetMatches.eachWithIndex{ CharsetMatch entry, int i ->
+                   if(entry.name == "UTF-8" && entry.confidence > 5){
+                       log.debug("set encoding after match in charsetMatches: confidence -> "+entry.confidence)
+                       encoding = "UTF-8"
+                   }
+               }
+            }
             encodingPass = encoding == "UTF-8"
         }
         if(!encodingPass) {

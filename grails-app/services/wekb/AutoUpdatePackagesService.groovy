@@ -153,7 +153,7 @@ class AutoUpdatePackagesService {
                                     URL url = urlsIterator.previous()
                                     lastUpdateURL = url.toString()
                                     try {
-                                        file = exportService.kbartFromUrl(lastUpdateURL)
+                                        file = exportService.kbartFromUrl(lastUpdateURL, updatePackageInfo)
 
                                         //if (kbartFromUrlStartTime < LocalTime.now().minus(45, ChronoUnit.MINUTES)){ sense???
                                         //break
@@ -169,32 +169,35 @@ class AutoUpdatePackagesService {
 
                                 }
 
-                                boolean isZipFile = file && lastUpdateURL.contains('.zip')
-                                if(isZipFile){
-                                    file = storeZipContentToFile(file)
-                                }
+                                if(updatePackageInfo.status != RDStore.UPDATE_STATUS_FAILED) {
 
-                                if (file) {
-                                    kbartRows = kbartProcessService.kbartProcess(file, lastUpdateURL, updatePackageInfo)
+                                    boolean isZipFile = file && lastUpdateURL.contains('.zip')
+                                    if (isZipFile) {
+                                        file = storeZipContentToFile(file)
+                                    }
 
-                                    if (kbartRows.size() > 0) {
-                                        updatePackageInfo = kbartProcessService.kbartImportProcess(kbartRows, pkg, lastUpdateURL, updatePackageInfo, onlyRowsWithLastChanged)
-                                    }else {
+                                    if (file) {
+                                        kbartRows = kbartProcessService.kbartProcess(file, lastUpdateURL, updatePackageInfo)
+
+                                        if (kbartRows.size() > 0) {
+                                            updatePackageInfo = kbartProcessService.kbartImportProcess(kbartRows, pkg, lastUpdateURL, updatePackageInfo, onlyRowsWithLastChanged)
+                                        } else {
+                                            UpdatePackageInfo.withTransaction {
+                                                updatePackageInfo.description = "The KBART File is empty!"
+                                                updatePackageInfo.status = RDStore.UPDATE_STATUS_FAILED
+                                                updatePackageInfo.endTime = new Date()
+                                                updatePackageInfo.updateUrl = lastUpdateURL
+                                                updatePackageInfo.save()
+                                            }
+                                        }
+                                    } else {
                                         UpdatePackageInfo.withTransaction {
-                                            updatePackageInfo.description = "The KBART File is empty!"
+                                            updatePackageInfo.description = isZipFile ? "No txt-File found in Zip-File!" : "No KBART File found by URL: ${lastUpdateURL}!"
                                             updatePackageInfo.status = RDStore.UPDATE_STATUS_FAILED
                                             updatePackageInfo.endTime = new Date()
                                             updatePackageInfo.updateUrl = lastUpdateURL
                                             updatePackageInfo.save()
                                         }
-                                    }
-                                } else {
-                                    UpdatePackageInfo.withTransaction {
-                                        updatePackageInfo.description = isZipFile ? "No txt-File found in Zip-File!" : "No KBART File found by URL: ${lastUpdateURL}!"
-                                        updatePackageInfo.status = RDStore.UPDATE_STATUS_FAILED
-                                        updatePackageInfo.endTime = new Date()
-                                        updatePackageInfo.updateUrl = lastUpdateURL
-                                        updatePackageInfo.save()
                                     }
                                 }
                             }else {

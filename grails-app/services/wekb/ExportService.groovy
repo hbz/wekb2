@@ -39,9 +39,11 @@ class ExportService {
         if(pkg.kbartSource && (pkg.kbartSource.lastUpdateUrl || pkg.kbartSource.url)){
             if((UrlToolkit.containsDateStamp(pkg.kbartSource.url) || UrlToolkit.containsDateStampPlaceholder(pkg.kbartSource.url)) && pkg.kbartSource.lastUpdateUrl){
                 File file = kbartFromUrl(pkg.kbartSource.lastUpdateUrl)
+                if(file)
                 outputStream << file.bytes
             }else{
                 File file = kbartFromUrl(pkg.kbartSource.url)
+                if(file)
                 outputStream << file.bytes
             }
             outputStream.close()
@@ -100,7 +102,7 @@ class ExportService {
         }
     }
 
-    private File kbartFromUrl(String urlString) throws Exception{
+    private File kbartFromUrl(String urlString, UpdatePackageInfo updatePackageInfo = null) throws Exception{
         URL url = new URL(urlString)
         File folder = new File("/tmp/wekb/kbartExport")
         HttpURLConnection connection
@@ -119,12 +121,21 @@ class ExportService {
         fileName = fileName.split("\\?")[0]
         File file = new File(fileName)
 
-        byte[] content = getByteContent(connection.getInputStream())
-        //InputStream inputStream = new ByteArrayInputStream(content)
+        log.debug("connection.getResponseCode(): "+connection.getResponseCode())
         if (connection.getResponseCode() == HttpURLConnection.HTTP_OK){
+            byte[] content = getByteContent(connection.getInputStream())
+            //InputStream inputStream = new ByteArrayInputStream(content)
             FileUtils.copyInputStreamToFile(new ByteArrayInputStream(content), file)
             // copy content to local file
             //Files.write(file.toPath(), content)
+        }else {
+            UpdatePackageInfo.withTransaction {
+                updatePackageInfo.description = "Server returned HTTP response code: " + connection.getResponseCode()
+                updatePackageInfo.status = RDStore.UPDATE_STATUS_FAILED
+                updatePackageInfo.endTime = new Date()
+                updatePackageInfo.updateUrl = connection.getURL()
+                updatePackageInfo.save()
+            }
         }
         return file
     }
