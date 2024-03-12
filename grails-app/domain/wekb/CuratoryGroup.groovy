@@ -166,7 +166,7 @@ class CuratoryGroup extends AbstractBase implements Auditable {
 
   @Transient
   def getProvidedOrgs(){
-    Platform.executeQuery('select o from Org as o where exists ( select cgo from CuratoryGroupOrg cgo where cgo.org = p and cgo.curatoryGroup = :curGroup)', [curGroup: this])
+    Platform.executeQuery('select o from Org as o where exists ( select cgo from CuratoryGroupOrg cgo where cgo.org = o and cgo.curatoryGroup = :curGroup)', [curGroup: this])
   }
 
 }

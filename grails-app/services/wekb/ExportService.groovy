@@ -106,7 +106,7 @@ class ExportService {
         HttpURLConnection connection
         try {
             connection = (HttpURLConnection) url.openConnection()
-            connection.addRequestProperty("User-Agent", "Mozilla/5.0")
+            connection.addRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:123.0) Gecko/20100101 Firefox/123.0")
         }
         catch (IOException e) {
             throw new RuntimeException("URL Connection was not established.")
