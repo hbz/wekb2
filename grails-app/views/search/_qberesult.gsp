@@ -60,7 +60,8 @@
                             </div>
                         </g:if>
                         <g:elseif test="${c.link != null && c.value && c.value != '-Empty-'}">
-                            <g:link controller="resource"
+                            <g:link
+                                    controller="resource"
                                     action="show"
                                     id="${c.link}">
                                 <g:render template="/search/qbevalue" model="[c: c]"/>
@@ -119,11 +120,11 @@
               </tr>
             </sec:ifLoggedIn>--}%
             <tr>
-                <sec:ifLoggedIn>
+%{--                <sec:ifLoggedIn>
                     <g:if test="${controllerName == 'group'}">
                     <th></th>
                     </g:if>
-                </sec:ifLoggedIn>
+                </sec:ifLoggedIn>--}%
                 <th>#</th>
                 <g:each in="${qbeConfig.qbeResults}" var="c">
                     <g:set var="colcode" value="${classSimpleName.toLowerCase() + '.' + c.property}"/>
@@ -146,7 +147,7 @@
                     <g:set var="row_obj" value="${r.obj}"/>
                     <tr class="${++counter == det ? 'positive' : ''}">
                     <!-- Row ${counter} -->
-                        <sec:ifLoggedIn>
+%{--                        <sec:ifLoggedIn>
                             <g:if test="${controllerName == 'group'}">
                             <td>
                                 <g:set var="objEditable" value="${accessService.checkEditableObject(row_obj, params)}"/>
@@ -163,7 +164,7 @@
                                 </g:else>
                             </td>
                             </g:if>
-                        </sec:ifLoggedIn>
+                        </sec:ifLoggedIn>--}%
                         <td>${counter}</td>
                         <g:each in="${r.cols}" var="c">
                             <td>
@@ -202,7 +203,7 @@
                                             }
                                         %>
                                         <g:if test="${duration && duration.days <= 14}">
-                                            <div class="ui black label" data-tooltip="<g:message code="search.result.new.info"/>">
+                                            <div class="ui primary  label" data-tooltip="<g:message code="search.result.new.info"/>">
                                                 <i class="star icon"></i>
                                                 <g:message code="search.result.new"/>
                                             </div>

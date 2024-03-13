@@ -28,7 +28,7 @@
                                            filter1="${RCConstants.PAA_POST_CANCELLATION_ACCESS}"/>
         </div>
 
-        <button class="ui button black" type="submit" value="changeArchivingAgencies"
+        <button class="ui button primary" type="submit" value="changeArchivingAgencies"
                 name="processOption">Do bulk process to the selected items</button>
 
         <br>
@@ -53,7 +53,7 @@
                 <th>Archiving Agency</th>
                 <th>Open Access</th>
                 <th>Post-Cancellation Access (PCA)</th>
-                <th></th>
+                <th>Action</th>
             </tr>
             </thead>
             <tbody>

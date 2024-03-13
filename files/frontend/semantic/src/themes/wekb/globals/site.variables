@@ -32,7 +32,7 @@
 @orange: #C75000;
 @yellow: #916504;
 @olive: #3D7307;
-@green: #088A3C;
+@green: #08873b;
 @teal: #09857C;
 @blue: #2E6FD9;
 @violet: #7766AA;
@@ -375,3 +375,30 @@
 @subtleTransparentWhite     : rgba(255, 255, 255, 0.02);
 @transparentWhite           : rgba(255, 255, 255, 0.08);
 @strongTransparentWhite     : rgba(255, 255, 255, 0.15);
+
+/* -------------------
+    Brand Colors
+-------------------- */
+
+@primaryColor: #4c4f52;
+@secondaryColor: @blue;
+@positiveColor: @green;
+
+
+/* ---  Colors  --- */
+@primaryColorHover: if(iscolor(@primaryColor), saturate(darken(@primaryColor, 35), 90, relative), @primaryColor);
+@primaryColorFocus: if(iscolor(@primaryColor), saturate(darken(@primaryColor, 35), 90, relative), @primaryColor);
+@primaryColorActive: if(iscolor(@primaryColor), saturate(darken(@primaryColor, 35), 90, relative), @primaryColor);
+
+@negativeColorHover: if(iscolor(@negativeColor), saturate(darken(@negativeColor, 25), 90, relative), @negativeColor);
+@negativeColorFocus: if(iscolor(@negativeColor), saturate(darken(@negativeColor, 25), 90, relative), @negativeColor);
+@negativeColorActive: if(iscolor(@negativeColor), saturate(darken(@negativeColor, 25), 90, relative), @negativeColor);
+
+@positiveColorHover: if(iscolor(@positiveColor), saturate(darken(@positiveColor, 15), 100, relative), @positiveColor);
+@positiveColorFocus: if(iscolor(@positiveColor), saturate(darken(@positiveColor, 15), 100, relative), @positiveColor);
+@positiveColorActive: if(iscolor(@positiveColor), saturate(darken(@positiveColor, 15), 100, relative), @positiveColor);
+
+
+
+
+

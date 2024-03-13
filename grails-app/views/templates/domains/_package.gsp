@@ -51,7 +51,7 @@
                 <dd><semui:xEditable owner="${d}" field="lastUpdateComment" overwriteEditable="false"/>
                     <br>
                     <br>
-                    <g:link class="ui mini black button" id="${d.id}" controller="package"
+                    <g:link class="ui mini primary button" id="${d.id}" controller="package"
                             action="packageChangeHistory">Change History</g:link>
                 </dd>
             </dl>
@@ -224,7 +224,7 @@
                     </table>
 
                     <g:if test="${editable}">
-                        <a class="ui right floated black button" href="#"
+                        <a class="ui right floated primary button" href="#"
                            onclick="$('#paaModal').modal('show');"><g:message code="default.add.label" args="['Archiving Agency']"/>y</a>
 
                         <br>

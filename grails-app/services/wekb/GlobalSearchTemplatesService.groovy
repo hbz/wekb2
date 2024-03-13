@@ -78,7 +78,7 @@ class GlobalSearchTemplatesService {
                                 ],
                         ],
                         qbeResults: [
-                                [heading: 'Curatory Group', property: 'name', sort: 'name', link: true],
+                                [heading: 'Curatory Group', property: 'name', sort: 'name', link: true, linkInfo: 'Link to Curatory Group'],
                                 [heading: 'Last Updated', property: 'lastUpdated', sort: 'lastUpdated'],
                                 [heading: 'Status', property: 'status.value', sort: 'status'],
                                 [heading: 'Type', property: 'type.value', sort: 'type']
@@ -118,7 +118,7 @@ class GlobalSearchTemplatesService {
                         ],
                         qbeResults: [
                                 [heading: 'Namespace', property: 'namespace.value', sort: 'namespace.value'],
-                                [heading: 'Value', property: 'value', link: true, sort: 'value'],
+                                [heading: 'Value', property: 'value', link: true, sort: 'value', linkInfo: 'Link to Identifier'],
                                 [heading: 'Component', property: 'reference'],
                                 [heading: 'Date Created', property: 'dateCreated', sort: 'dateCreated'],
                                 [heading: 'Last Updated', property: 'lastUpdated', sort: 'lastUpdated'],
@@ -149,7 +149,7 @@ class GlobalSearchTemplatesService {
                                 ],
                         ],
                         qbeResults: [
-                                [heading: 'Description', property: 'description', link: true],
+                                [heading: 'Description', property: 'description', link: true, linkInfo: 'Link to Job Result'],
                                 [heading: 'Component', property: 'linkedItem'],
                                 [heading: 'Type', property: 'type.value', sort: 'type'],
                                 [heading: 'Status', property: 'statusText'],
@@ -196,7 +196,7 @@ class GlobalSearchTemplatesService {
                         ],
                         qbeResults: [
                                 [heading: 'Name', property: 'name', sort: 'name'],
-                                [heading: 'Value', property: 'value', link: true, sort: 'value'],
+                                [heading: 'Value', property: 'value', link: true, sort: 'value', linkInfo: 'Link to Identifier Namespace'],
                                 [heading: 'Category', property: 'family', sort: 'family'],
                                 [heading: 'Target Type', property: 'targetType.value', sort: 'targetType.value'],
                                 [heading: 'Count', property: 'identifiersCount', sort: 'identifiersCount']
@@ -287,8 +287,8 @@ class GlobalSearchTemplatesService {
 
                         ],
                         qbeResults: [
-                                [heading: 'Provider', property: 'name', sort: 'name', link: true],
-                                [heading: 'Homepage', property: 'homepage', sort: 'homepage', outGoingLink: true],
+                                [heading: 'Provider', property: 'name', sort: 'name', link: true, linkInfo: 'Link to Provider'],
+                                [heading: 'Homepage', property: 'homepage', sort: 'homepage', outGoingLink: true, linkInfo: 'Link to Homepage'],
                                 [heading: 'Last Updated', property: 'lastUpdated', sort: 'lastUpdated'],
                                 [heading: 'Status', property: 'status.value', sort: 'status'],
                                 [heading: 'Current Titles', property: 'currentTippCount']
@@ -527,9 +527,9 @@ class GlobalSearchTemplatesService {
                                 ],
                         ],
                         qbeResults: [
-                                [heading: 'Name', property: 'name', sort: 'name', link: true],
-                                [heading: 'Provider', property: 'provider.name', sort: 'provider.name', link: true],
-                                [heading: 'Nominal Platform', property: 'nominalPlatform.name', sort: 'nominalPlatform.name', link: true],
+                                [heading: 'Name', property: 'name', sort: 'name', link: true, linkInfo: 'Link to Package'],
+                                [heading: 'Provider', property: 'provider.name', sort: 'provider.name', link: true, linkInfo: 'Link to Provider'],
+                                [heading: 'Nominal Platform', property: 'nominalPlatform.name', sort: 'nominalPlatform.name', link: true, linkInfo: 'Link to Nominal Platform'],
                                 [heading: 'Content Type', property: 'contentType.value', sort: 'contentType'],
                                 [heading: 'Scope', property: 'scope', sort: 'scope'],
                                 [heading: 'Last Updated', property: 'lastUpdated', sort: 'lastUpdated'],
@@ -539,8 +539,8 @@ class GlobalSearchTemplatesService {
                                 [heading: 'Expected Titles', property: 'expectedTippCount', sort: 'expectedTippCount'],
                                 [heading: 'Deleted Titles', property: 'deletedTippCount', sort: 'deletedTippCount'],
                                 [heading: 'Product IDs', property: 'anbieterProduktIDs'],
-                                [heading: 'Source', property: 'kbartSource.name', link: true, sort: 'kbartSource.name'],
-                                [heading: 'Automatic Updates', property: 'kbartSource.automaticUpdates', link: true]
+                                [heading: 'Source', property: 'kbartSource.name', link: true, sort: 'kbartSource.name', linkInfo: 'Link to Source'],
+                                [heading: 'Automatic Updates', property: 'kbartSource.automaticUpdates', link: true, linkInfo: 'Link to Source']
                         ],
                         actions   : [
                         ]
@@ -962,10 +962,10 @@ class GlobalSearchTemplatesService {
 
                         ],
                         qbeResults: [
-                                [heading: 'Name', property: 'name', sort: 'name', link: true],
-                                [heading: 'Provider', property: 'provider.name', sort: 'provider.name', link: true],
-                                [heading: 'Nominal Platform', property: 'nominalPlatform.name', sort: 'nominalPlatform.name', link: true],
-                                [heading: 'Curatory Groups', property: 'curatoryGroupsCuratoryGroup', link: true],
+                                [heading: 'Name', property: 'name', sort: 'name', link: true, linkInfo: 'Link to Package'],
+                                [heading: 'Provider', property: 'provider.name', sort: 'provider.name', link: true, linkInfo: 'Link to Provider'],
+                                [heading: 'Nominal Platform', property: 'nominalPlatform.name', sort: 'nominalPlatform.name', link: true, linkInfo: 'Link to Nominal Platform'],
+                                [heading: 'Curatory Groups', property: 'curatoryGroupsCuratoryGroup', link: true, linkInfo: 'Link to Curatory Group'],
                                 [heading: 'Content Type', property: 'contentType.value', sort: 'contentType'],
                                 [heading: 'Product IDs', property: 'anbieterProduktIDs'],
                                 [heading: 'Current Titles', property: 'currentTippCount', sort: 'currentTippCount'],
@@ -973,7 +973,7 @@ class GlobalSearchTemplatesService {
                                 [heading: 'Expected Titles', property: 'expectedTippCount', sort: 'expectedTippCount'],
                                 [heading: 'Deleted Titles', property: 'deletedTippCount', sort: 'deletedTippCount'],
                                 [heading: 'Last Updated', property: 'lastUpdated', sort: 'lastUpdated'],
-                                [heading: 'Automatic Updates', property: 'kbartSource.automaticUpdates', link: true]
+                                [heading: 'Automatic Updates', property: 'kbartSource.automaticUpdates', link: true, linkInfo: 'Link to Source']
                         ],
                         actions   : [
                         ]
@@ -1150,9 +1150,9 @@ class GlobalSearchTemplatesService {
                                 ],
                         ],
                         qbeResults: [
-                                [heading: 'Platform', property: 'name', sort: 'name', link: true],
-                                [heading: 'Primary URL', property: 'primaryUrl', sort: 'primaryUrl', outGoingLink: true],
-                                [heading: 'Provider', property: 'provider.name', sort: 'provider.name', link: true],
+                                [heading: 'Platform', property: 'name', sort: 'name', link: true, linkInfo: 'Link to Platform'],
+                                [heading: 'Primary URL', property: 'primaryUrl', sort: 'primaryUrl', outGoingLink: true, linkInfo: 'Link to Primary URL'],
+                                [heading: 'Provider', property: 'provider.name', sort: 'provider.name', link: true, linkInfo: 'Link to Provider'],
                                 [heading: 'Last Updated', property: 'lastUpdated', sort: 'lastUpdated'],
                                 [heading: 'Status', property: 'status.value', sort: 'status'],
                                 [heading: 'Current Titles', property: 'currentTippCount'],
@@ -1187,7 +1187,7 @@ class GlobalSearchTemplatesService {
                                 ],
                         ],
                         qbeResults: [
-                                [heading: 'Description', sort: 'desc', property: 'desc', link: true],
+                                [heading: 'Description', sort: 'desc', property: 'desc', link: true, linkInfo: 'Link to Description'],
                                 [heading: 'Description EN', sort: 'desc_en', property: 'desc_en'],
                                 [heading: 'Description DE', sort: 'desc_de', property: 'desc_de'],
                                 [heading: 'Hard Data', sort: 'isHardData', property: 'isHardData'],
@@ -1234,7 +1234,7 @@ class GlobalSearchTemplatesService {
                                 ],
                         ],
                         qbeResults: [
-                                [heading: 'Value', sort: 'value', property: 'value', link: true],
+                                [heading: 'Value', sort: 'value', property: 'value', link: true, linkInfo: 'Link to RefdataValue'],
                                 [heading: 'Value EN', sort: 'value_en', property: 'value_en'],
                                 [heading: 'Value DE', sort: 'value_de', property: 'value_de'],
                                 [heading: 'Hard Data', sort: 'isHardData', property: 'isHardData'],
@@ -1317,9 +1317,9 @@ class GlobalSearchTemplatesService {
                                 ],
                         ],
                         qbeResults: [
-                                [heading: 'Source', property: 'name', sort: 'name', link: true],
-                                [heading: 'Packages', property: 'packages', link: true, sort: 'packages.name'],
-                                [heading: 'Url', property: 'url', sort: 'url', outGoingLink: true],
+                                [heading: 'Source', property: 'name', sort: 'name', link: true, linkInfo: 'Link to Source'],
+                                [heading: 'Packages', property: 'packages', link: true, sort: 'packages.name', linkInfo: 'Link to Package'],
+                                [heading: 'Url', property: 'url', sort: 'url', outGoingLink: true, linkInfo: 'Link to Kbart Url'],
                                 [heading: 'Last Updated', property: 'lastUpdated', sort: 'lastUpdated'],
                                 [heading: 'Status', property: 'status.value', sort: 'status'],
                                 [heading: 'automatic Updates', property: 'automaticUpdates'],
@@ -1577,15 +1577,15 @@ class GlobalSearchTemplatesService {
                                 ]
                         ],
                         qbeResults: [
-                                [heading: 'Title', property: 'name', link: true, sort: 'name'],
+                                [heading: 'Title', property: 'name', link: true, sort: 'name', linkInfo: 'Link to Title'],
                                 [heading: 'Type', property: 'publicationType.value', sort: 'publicationType.value'],
                                 [heading: 'Medium', property: 'medium.value', sort: 'medium.value'],
                                 [heading: 'First Author', property: 'firstAuthor', sort: 'firstAuthor'],
-                                [heading: 'Package', qpEquiv: 'qp_pkg_id', property: 'pkg.name', sort: 'pkg.name', link: true],
-                                [heading: 'Platform', qpEquiv: 'qp_plat_id', property: 'hostPlatform.name', sort: 'hostPlatform.name', link: true],
+                                [heading: 'Package', qpEquiv: 'qp_pkg_id', property: 'pkg.name', sort: 'pkg.name', link: true, linkInfo: 'Link to Package'],
+                                [heading: 'Platform', qpEquiv: 'qp_plat_id', property: 'hostPlatform.name', sort: 'hostPlatform.name', link: true, linkInfo: 'Link to Platform'],
                                 [heading: 'Last Updated', property: 'lastUpdated', sort: 'lastUpdated'],
                                 [heading: 'Status', property: 'status.value', sort: 'status.value'],
-                                [heading: 'URL', property: 'url', sort: 'url', outGoingLink: true]
+                                [heading: 'URL', property: 'url', sort: 'url', outGoingLink: true, linkInfo: 'Link to Title Url']
                         ]
                 ]
         ]
@@ -1788,14 +1788,14 @@ class GlobalSearchTemplatesService {
 
                         ],
                         qbeResults: [
-                                [heading: 'Title', property: 'name', link: true],
+                                [heading: 'Title', property: 'name', link: true, linkInfo: 'Link to Title'],
                                 [heading: 'Type', property: 'publicationType.value', sort: 'publicationType.value'],
                                 [heading: 'Medium', property: 'medium.value', sort: 'medium.value'],
                                 [heading: 'First Author', property: 'firstAuthor', sort: 'firstAuthor'],
-                                [heading: 'Platform', qpEquiv: 'qp_plat_id', property: 'hostPlatform.name', sort: 'hostPlatform.name',  link: true],
+                                [heading: 'Platform', qpEquiv: 'qp_plat_id', property: 'hostPlatform.name', sort: 'hostPlatform.name',  link: true, linkInfo: 'Link to Platform'],
                                 [heading: 'Last Updated', property: 'lastUpdated', sort: 'lastUpdated'],
                                 [heading: 'Status', property: 'status.value', sort: 'status.value'],
-                                [heading: 'URL', property: 'url', sort: 'url', outGoingLink: true]
+                                [heading: 'URL', property: 'url', sort: 'url', outGoingLink: true, linkInfo: 'Link to Title URL']
                         ]
                 ]
         ]
@@ -1898,8 +1898,8 @@ class GlobalSearchTemplatesService {
 
                         ],
                         qbeResults: [
-                                [heading: 'Vendor', property: 'name', sort: 'name', link: true],
-                                [heading: 'Homepage', property: 'homepage', sort: 'homepage', outGoingLink: true],
+                                [heading: 'Vendor', property: 'name', sort: 'name', link: true, linkInfo: 'Link to Vendor'],
+                                [heading: 'Homepage', property: 'homepage', sort: 'homepage', outGoingLink: true, linkInfo: 'Link to Homepage'],
                                 [heading: 'Last Updated', property: 'lastUpdated', sort: 'lastUpdated'],
                                 [heading: 'Status', property: 'status.value', sort: 'status']
                         ]
@@ -1972,7 +1972,7 @@ class GlobalSearchTemplatesService {
                                 ],
                         ],
                         qbeResults: [
-                                [heading: 'Username', property: 'username', link: true, sort: 'username'],
+                                [heading: 'Username', property: 'username', link: true, sort: 'username', linkInfo: 'Link to User'],
                                 [heading: 'Enabled', property: 'enabled', sort: 'enabled'],
                                 [heading: 'User', property: 'userStatus'],
                                 [heading: 'Editor', property: 'editorStatus'],
@@ -2008,7 +2008,7 @@ class GlobalSearchTemplatesService {
                                 ],
                         ],
                         qbeResults: [
-                                [heading: 'Description', property: 'description', link: true],
+                                [heading: 'Description', property: 'description', link: true, linkInfo: 'Link to User Jobs'],
                                 [heading: 'Component', property: 'linkedItem'],
                                 [heading: 'Type', property: 'type.value', sort: 'type'],
                                 [heading: 'Status', property: 'statusText'],
@@ -2077,8 +2077,8 @@ class GlobalSearchTemplatesService {
                                 ],
                         ],
                         qbeResults: [
-                                [heading: 'Description', property: 'description', link: true],
-                                [heading: 'Package', property: 'pkg.name', link: true],
+                                [heading: 'Description', property: 'description', link: true, linkInfo: 'Link to Package Update Info'],
+                                [heading: 'Package', property: 'pkg.name', link: true, linkInfo: 'Link to Package'],
                                 [heading: 'Status', property: 'status', sort: 'status.value'],
                                 [heading: 'Automatic Update', property: 'automaticUpdate', sort: 'automaticUpdate'],
                                 [heading: 'Start Time', property: 'startTime', sort: 'startTime'],
@@ -2088,10 +2088,10 @@ class GlobalSearchTemplatesService {
                                 [heading: 'Titles in we:kb after update', property: 'countNowTippsInWekb', sort: 'countNowTippsInWekb'],
                                 [heading: 'Rows in KBART-File', property: 'countKbartRows', sort: 'countKbartRows'],
                                 [heading: 'Processed KBART Rows', property: 'countProcessedKbartRows', sort: 'countProcessedKbartRows'],
-                                [heading: 'Changed Titles ', property: 'countChangedTipps', sort: 'countChangedTipps', jumpToLink: '/search/componentSearch/wekb.UpdatePackageInfo:objectID?qbe=g:updateTippInfos&qp_aup_id=objectID&&qp_type_value=Changed Title'],
-                                [heading: 'Removed Titles ', property: 'countRemovedTipps', sort: 'countRemovedTipps', jumpToLink: '/search/componentSearch/wekb.UpdatePackageInfo:objectID?qbe=g:updateTippInfos&qp_aup_id=objectID&&qp_type_value=Removed Title'],
-                                [heading: 'New Titles', property: 'countNewTipps', sort: 'countNewTipps', jumpToLink: '/search/componentSearch/wekb.UpdatePackageInfo:objectID?qbe=g:updateTippInfos&qp_aup_id=objectID&&qp_type_value=New Title'],
-                                [heading: 'Invalid Titles', property: 'countInValidTipps', sort: 'countInValidTipps', jumpToLink: '/search/componentSearch/wekb.UpdatePackageInfo:objectID?qbe=g:updateTippInfos&qp_aup_id=objectID&&qp_type_value=Failed Title'],
+                                [heading: 'Changed Titles ', property: 'countChangedTipps', sort: 'countChangedTipps', jumpToLink: '/search/componentSearch/wekb.UpdatePackageInfo:objectID?qbe=g:updateTippInfos&qp_aup_id=objectID&&qp_type_value=Changed Title', linkInfo: 'Link to Changed Titles'],
+                                [heading: 'Removed Titles ', property: 'countRemovedTipps', sort: 'countRemovedTipps', jumpToLink: '/search/componentSearch/wekb.UpdatePackageInfo:objectID?qbe=g:updateTippInfos&qp_aup_id=objectID&&qp_type_value=Removed Title', linkInfo: 'Link to Removed Titles'],
+                                [heading: 'New Titles', property: 'countNewTipps', sort: 'countNewTipps', jumpToLink: '/search/componentSearch/wekb.UpdatePackageInfo:objectID?qbe=g:updateTippInfos&qp_aup_id=objectID&&qp_type_value=New Title', linkInfo: 'Link to New Titles'],
+                                [heading: 'Invalid Titles', property: 'countInValidTipps', sort: 'countInValidTipps', jumpToLink: '/search/componentSearch/wekb.UpdatePackageInfo:objectID?qbe=g:updateTippInfos&qp_aup_id=objectID&&qp_type_value=Failed Title', linkInfo: 'Link to Invalid Titles'],
 
                         ]
                 ]
@@ -2164,8 +2164,8 @@ class GlobalSearchTemplatesService {
                                 ],
                         ],
                         qbeResults: [
-                                [heading: 'Description', property: 'description', link: true],
-                                [heading: 'Title', property: 'tipp.name', link: true],
+                                [heading: 'Description', property: 'description', link: true, linkInfo: 'Link to Title Update Info'],
+                                [heading: 'Title', property: 'tipp.name', link: true, linkInfo: 'Link to Title'],
                                 [heading: 'Status', property: 'status', sort: 'status.value'],
                                 [heading: 'Type', property: 'type', sort: 'type.value'],
                                 [heading: 'KBART Field', property: 'kbartProperty', sort: 'kbartProperty'],

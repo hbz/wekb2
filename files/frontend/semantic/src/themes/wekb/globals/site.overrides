@@ -28,3 +28,41 @@
   font-style: italic;
   font-weight: 700;
 }
+/* To hide the focus indicator when it is not needed. */
+.ui.button:focus:not(:focus-visible) {
+    outline: none;
+}
+
+/* To display the focus indicator during keyboard navigation */
+.ui.button:focus-visible {
+    outline: 3px solid black;
+}
+/****************************************
+        Accessibility
+*****************************************/
+.la-skipLink {
+    //position: absolute;
+    height: 0px;
+}
+
+
+.la-screenReaderText {
+    color: white;
+    position: relative;
+    left: -10000px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}
+.la-screenReaderText:focus, .la-screenReaderText:active {
+    left: 106px;
+    width: auto;
+    white-space: nowrap;
+    top: -0.6em;
+    height: 20px;
+    overflow: visible;
+    display: block;
+    font-weight: 700;
+    color: #e0e1e2;
+}

@@ -9,18 +9,18 @@
 <h1 class="ui header">My Packages of Curatory Groups (${groups.name.join(',')})</h1>
 
     <g:link controller="group" action="processPackageUpdate"
-            class="ui left floated black button">Trigger KBART Update (Changed Titles) for all my Packages</g:link>
+            class="ui left floated primary button">Trigger KBART Update (Changed Titles) for all my Packages</g:link>
 
     <g:link controller="group" action="exportMyPackages"
-            class="ui right floated black button">Export my packages</g:link>
+            class="ui right floated primary button">Export my packages</g:link>
     <br>
     <br>
 
     <g:link controller="group" action="processPackageUpdate" params="[allTitles: 'true']"
-            class="ui left floated black button">Trigger KBART Update (all Titles) for all my Packages</g:link>
+            class="ui left floated primary button">Trigger KBART Update (all Titles) for all my Packages</g:link>
 
     <g:link controller="group" action="myPackagesNeedsAutoUpdates"
-        class="ui right floated black button">My Packages due to automatic update</g:link>
+        class="ui right floated primary button">My Packages due to automatic update</g:link>
     <br>
     <br>
 
@@ -54,7 +54,7 @@
     <br>
 
     <div class="ui right floated buttons">
-        <g:link controller="create" action="packageBatch" class="ui black button right aligned">Upload Packages</g:link>
+        <g:link controller="create" action="packageBatch" class="ui primary button right aligned">Upload Packages</g:link>
     </div>
     <br>
     <br>

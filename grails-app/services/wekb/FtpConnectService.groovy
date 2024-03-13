@@ -98,7 +98,7 @@ class FtpConnectService {
 
     }
 
-    File ftpConnectAndGetFile(KbartSource kbartSource, UpdatePackageInfo updatePackageInfo) {
+    File ftpConnectAndGetFile(KbartSource kbartSource) {
         File file
         String server = kbartSource.ftpServerUrl
         String username = kbartSource.ftpUsername

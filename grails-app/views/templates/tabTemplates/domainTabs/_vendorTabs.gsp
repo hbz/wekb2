@@ -60,7 +60,7 @@
                         <tr>
                             <th>#</th>
                             <th>Supported Library System</th>
-                            <th></th>
+                            <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -84,7 +84,7 @@
                     </table>
 
                     <g:if test="${editable}">
-                        <a class="ui right floated black button" href="#"
+                        <a class="ui right floated primary button" href="#"
                            onclick="$('#supportedLibrarySystemsModal').modal('show');">Add supported Library System</a>
 
                         <br>
@@ -120,7 +120,7 @@
                         <tr>
                             <th>#</th>
                             <th>Electronic delivery delay notifications via</th>
-                            <th></th>
+                            <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -144,7 +144,7 @@
                     </table>
 
                     <g:if test="${editable}">
-                        <a class="ui right floated black button" href="#"
+                        <a class="ui right floated primary button" href="#"
                            onclick="$('#electronicDeliveryDelaysModal').modal('show');">Add electronic delivery delay notifications</a>
 
                         <br>
@@ -185,7 +185,7 @@
                         <tr>
                             <th>#</th>
                             <th>Format</th>
-                            <th></th>
+                            <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -208,7 +208,7 @@
                     </table>
 
                     <g:if test="${editable}">
-                        <a class="ui right floated black button" href="#"
+                        <a class="ui right floated primary button" href="#"
                            onclick="$('#electronicBillingsModal').modal('show');">Add Electronic Invoice Format</a>
 
                         <br>
@@ -246,7 +246,7 @@
                         <tr>
                             <th>#</th>
                             <th>Method</th>
-                            <th></th>
+                            <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -269,7 +269,7 @@
                     </table>
 
                     <g:if test="${editable}">
-                        <a class="ui right floated black button" href="#"
+                        <a class="ui right floated primary button" href="#"
                            onclick="$('#invoiceDispatchsModal').modal('show');">Add Invoice dispatch</a>
 
                         <br>
@@ -387,7 +387,7 @@
                     Research platform for e-books
                 </dt>
                 <dd>
-                    <semui:xEditable owner="${d}" field="researchPlatformForEbooks"/>
+                    <semui:xEditable owner="${d}" validation="url" outGoingLink="true" field="researchPlatformForEbooks"/>
                 </dd>
             </dl>
         </div>

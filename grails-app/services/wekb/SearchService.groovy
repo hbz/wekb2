@@ -180,7 +180,7 @@ class SearchService {
         Set recSet = []
         log.debug("Create new recset..")
         result.recset.each { r ->
-            if(params.sort in ['currentTippCount', 'deletedTippCount', 'retiredTippCount', 'expectedTippCount']){
+            if(params.sort in Api2Service.complexSortFields){
                 r = r[0]
             }
 
@@ -245,6 +245,7 @@ class SearchService {
                         }
 
                         response_record.cols.add([
+                                linkInfo: rh.linkInfo ?: null,
                                 link: (rh.link ? (final_oid ?: response_record.oid ) : null),
                                 value: (cobj != null ? (cobj) : '-Empty-'),
                                 outGoingLink: rh.outGoingLink ?: null,

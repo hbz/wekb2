@@ -25,7 +25,7 @@
         </g:each>
 
         <div class="ui right floated buttons">
-            <button class="ui button black" type="submit" value="search"
+            <button class="ui button primary" type="submit" value="search"
                     name="searchAction">Search View</button>
         </div>
     </g:form>
@@ -128,7 +128,7 @@
                     <i class="icon dropdown"></i>
                 ${advancedSearch.value.title}
                 <g:if test="${filterSetInAccordion > 0}">
-                    <b><g:message code="search.filter.set"/>:</b> <div class="ui black circular label">${filterSetInAccordion}</div>
+                    <b><g:message code="search.filter.set"/>:</b> <div class="ui primary circular label">${filterSetInAccordion}</div>
                 </g:if>
             </div>
 
@@ -165,7 +165,7 @@
                             </div>
                         </g:elseif>
                         <g:else>
-                            <label><g:message code="${field.msgCode}" default="${field.prompt}"/></label>
+                            <label for="${field.qparam}"><g:message code="${field.msgCode}" default="${field.prompt}"/></label>
                             <div class="${field.contextTree.wildcard != null ? 'ui labeled input' : ''}">
                                 <g:if test="${field.contextTree.wildcard == 'B' || field.contextTree.wildcard == 'L'}"><div
                                         class="ui label">*</div></g:if>
@@ -199,7 +199,7 @@
                 <g:link class="ui button" controller="${controllerName}" action="${actionName}"
                         params="[id: params.id, qbe: params.qbe]"><g:message code="search.reset"/></g:link>
                 </g:if>
-                <button class="ui button black" type="submit" value="Search"
+                <button class="ui button primary" type="submit" value="Search"
                         name="searchAction"><g:message code="search.filter"/></button>
 
                 <sec:ifLoggedIn>
@@ -208,17 +208,17 @@
                         <i class="dropdown icon"></i>
 
                         <div class="menu">
-                            <div class="header">
+                            <div class="header" id="test">
                                 <g:message code="search.saveSearch"/>:
                             </div>
 
                             <div class="ui left input">
-                                <input type="text" name="searchName"
+                                <input aria-labelledby="test" type="text" name="searchName"
                                        placeholder="<g:message code="search.saveSearch.name"/>">
                             </div>
 
                             <div class="item">
-                                <input class="ui button black" type="submit" name="searchAction"
+                                <input class="ui button primary" type="submit" name="searchAction"
                                        value="Save"/>
                             </div>
                         </div>

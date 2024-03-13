@@ -62,7 +62,7 @@
 					</table>
 					<g:if test="${editable}">
 						<dl>
-							<a class="ui right floated black button" href="#"
+							<a class="ui right floated primary button" href="#"
 							   onclick="$('#coverageStatementsModal').modal('show');">Add Coverage Statement</a>
 
 							<br>

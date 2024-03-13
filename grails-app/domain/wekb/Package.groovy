@@ -245,6 +245,15 @@ class Package  extends AbstractBase implements Auditable {
   }
 
   @Transient
+  public getTippCountWithoutRemoved() {
+    def refdata_status = RDStore.KBC_STATUS_REMOVED
+    int result = TitleInstancePackagePlatform.executeQuery("select count(*) from TitleInstancePackagePlatform as t where t.pkg = :pkg and t.status != :status"
+            , [pkg: this, status: refdata_status])[0]
+
+    result
+  }
+
+  @Transient
   public getRetiredTippCount() {
     def refdata_status = RDStore.KBC_STATUS_RETIRED
     int result = TitleInstancePackagePlatform.executeQuery("select count(*) from TitleInstancePackagePlatform as t where t.pkg = :pkg and t.status = :status"
@@ -268,6 +277,14 @@ class Package  extends AbstractBase implements Auditable {
     int result = TitleInstancePackagePlatform.executeQuery("select count(*) from TitleInstancePackagePlatform as t where t.pkg = :pkg and t.status = :status"
             , [pkg: this, status: refdata_status])[0]
 
+    result
+  }
+
+  @Transient
+  Map<String, Integer> getTippCountMap() {
+    List rows = TitleInstancePackagePlatform.executeQuery("select new map(t.status as status, count(*) as count) from TitleInstancePackagePlatform t where t.pkg = :pkg group by t.status", [pkg: this])
+    Map<String, Integer> result = rows.collectEntries { row -> [row.status.value, row.count] } as Map<RefdataValue, Integer>
+    result.total = rows.sum { row -> row.count }
     result
   }
 

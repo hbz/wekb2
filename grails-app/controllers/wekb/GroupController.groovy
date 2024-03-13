@@ -1,6 +1,7 @@
 package wekb
 
 import grails.plugin.springsecurity.SpringSecurityService
+import org.apache.xmlbeans.impl.store.Cur
 import wekb.helper.RCConstants
 import wekb.helper.RDStore
 import org.springframework.security.access.annotation.Secured
@@ -15,12 +16,32 @@ class GroupController {
     AccessService accessService
     ManagementService managementService
     WorkflowService workflowService
+    CheckMyInfosService checkMyInfosService
 
     @Secured(['ROLE_USER', 'IS_AUTHENTICATED_FULLY'])
     def index() {
         def result = [:]
         result = getResultGenerics()
         return result
+    }
+
+    @Secured(['ROLE_USER', 'IS_AUTHENTICATED_FULLY'])
+    def checkMyInfos() {
+        def result = [:]
+        result = getResultGenerics()
+
+        if(params.curGroupID && result.user.admin){
+            result.groups = [CuratoryGroup.findById(Long.valueOf(params.curGroupID))]
+        }
+
+        result.checkContacts = checkMyInfosService.checkContacts(result.groups)
+        result.checkSourcesWithoutTitles = checkMyInfosService.checkSourcesWithoutTitles(result.groups)
+        result.noChangesPackageLast30Days = checkMyInfosService.noChangesPackageLast30Days(result.groups)
+        result.packagesWithoutTitles = checkMyInfosService.checkPackagesWithoutTitles(result.groups)
+        result.checkPackageWithoutSource = checkMyInfosService.checkPackageWithoutSource(result.groups)
+        result.checkPackagesWithoutProductID = checkMyInfosService.checkPackagesWithoutProductID(result.groups)
+
+        result
     }
 
     @Secured(['ROLE_USER', 'IS_AUTHENTICATED_FULLY'])

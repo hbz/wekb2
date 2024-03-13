@@ -3,9 +3,9 @@ package wekb
 import wekb.annotations.RefdataAnnotation
 import wekb.helper.RCConstants
 
-class VendorElectronicBilling {
+class ProviderElectronicBilling {
 
-    Vendor vendor
+    Org provider
 
     Date dateCreated
     Date lastUpdated
@@ -14,13 +14,13 @@ class VendorElectronicBilling {
     RefdataValue electronicBilling
 
     static mapping = {
-        id          column:'veb_id'
-        version     column:'veb_version'
-        electronicBilling     column:'veb_electronic_billing_rv_fk'
-        vendor column:'veb_vendor_fk', index: 'veb_vendor_idx'
+        id          column:'peb_id'
+        version     column:'peb_version'
+        electronicBilling     column:'peb_electronic_billing_rv_fk'
+        provider column:'peb_provider_fk', index: 'peb_provider_idx'
 
-        dateCreated column: 'veb_date_created'
-        lastUpdated column: 'veb_last_updated'
+        dateCreated column: 'peb_date_created'
+        lastUpdated column: 'peb_last_updated'
     }
 
     static constraints = {

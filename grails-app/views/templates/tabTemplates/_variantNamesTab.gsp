@@ -35,7 +35,7 @@
         </table>
 
         <g:if test="${editable}">
-            <a class="ui right floated black button" href="#" onclick="$('#variantnamesModal').modal('show');">Add Variant Name</a>
+            <a class="ui right floated primary button" href="#" onclick="$('#variantnamesModal').modal('show');">Add Variant Name</a>
 
             <br>
             <br>

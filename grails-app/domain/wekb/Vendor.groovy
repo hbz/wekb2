@@ -23,23 +23,23 @@ class Vendor extends AbstractBase implements Auditable {
 
   String homepage
 
-  boolean webShopOrders
-  boolean xmlOrders
-  boolean ediOrders
+  boolean webShopOrders  = false
+  boolean xmlOrders  = false
+  boolean ediOrders  = false
 
-  boolean paperInvoice
-  boolean managementOfCredits
-  boolean processingOfCompensationPayments
-  boolean individualInvoiceDesign
+  boolean paperInvoice  = false
+  boolean managementOfCredits  = false
+  boolean processingOfCompensationPayments  = false
+  boolean individualInvoiceDesign  = false
 
-  boolean technicalSupport
-  boolean shippingMetadata
-  boolean forwardingUsageStatisticsFromPublisher
-  boolean activationForNewReleases
-  boolean exchangeOfIndividualTitles
+  boolean technicalSupport  = false
+  boolean shippingMetadata  = false
+  boolean forwardingUsageStatisticsFromPublisher  = false
+  boolean activationForNewReleases  = false
+  boolean exchangeOfIndividualTitles  = false
   String researchPlatformForEbooks
 
-  boolean prequalificationVOL
+  boolean prequalificationVOL = false
   String prequalificationVOLInfo
 
 
@@ -75,7 +75,7 @@ class Vendor extends AbstractBase implements Auditable {
 
     xmlOrders column: 'ven_xml_orders'
     ediOrders column: 'ven_edi_orders'
-    webShopOrders column: 'web_shop_orders'
+    webShopOrders column: 'ven_web_shop_orders'
 
     paperInvoice column: 'ven_paper_invoice'
     managementOfCredits column: 'ven_management_of_credits'
@@ -110,22 +110,7 @@ class Vendor extends AbstractBase implements Auditable {
       }
     })
 
-    paperInvoice (nullable: true, blank: true)
-    managementOfCredits (nullable: true, blank: true)
-    processingOfCompensationPayments (nullable: true, blank: true)
-    individualInvoiceDesign (nullable: true, blank: true)
-
-    technicalSupport (nullable: true, blank: true)
-    shippingMetadata (nullable: true, blank: true)
-    forwardingUsageStatisticsFromPublisher (nullable: true, blank: true)
-    activationForNewReleases (nullable: true, blank: true)
-    exchangeOfIndividualTitles (nullable: true, blank: true)
     researchPlatformForEbooks (nullable: true, blank: true)
-
-    xmlOrders (nullable: true, blank: true)
-    ediOrders (nullable: true, blank: true)
-
-    prequalificationVOL (nullable: true, blank: true)
     prequalificationVOLInfo (nullable: true, blank: true)
 
   }

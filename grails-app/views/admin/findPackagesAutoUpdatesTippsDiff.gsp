@@ -27,7 +27,7 @@
             </div>
 
             <div class="ui right floated buttons">
-                <button type="submit" class="ui black button">Filter</button>
+                <button type="submit" class="ui primary button">Filter</button>
                 <g:link class="ui button" action="findPackagesAutoUpdatesTippsDiff">Reset</g:link>
             </div>
 
@@ -49,7 +49,7 @@
             <th>Invalid Titles in KBART</th>
             <th>Current Titles</th>
             <th>Deleted Titles</th>
-            <th></th>
+            <th>Action</th>
         </tr>
         </thead>
         <tbody>
@@ -110,7 +110,7 @@
 
                     <br>
                     <br>
-                    <g:link class="ui button black" controller="workflow" action="action"
+                    <g:link class="ui button primary" controller="workflow" action="action"
                             params="[component: object, selectedAction: 'workFlowMethod::updatePackageAllTitlesFromKbartSource', curationOverride: true]">Trigger Update (all Titles)</g:link>
                 </td>
             </tr>

@@ -83,7 +83,7 @@
                 </tbody>
             </table>
             <sec:ifAnyGranted roles="ROLE_ADMIN">
-                <a class="ui right floated black button" href="#"
+                <a class="ui right floated primary button" href="#"
                    onclick="$('#rdvModal').modal('show');">Add Refdata Value</a>
 
                 <br>

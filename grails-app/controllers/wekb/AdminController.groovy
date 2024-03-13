@@ -36,6 +36,7 @@ class AdminController {
   ExecutorService executorService
   FtpConnectService ftpConnectService
   DeletionService deletionService
+  SearchService searchService
 
 
   def systemThreads() {
@@ -790,6 +791,17 @@ class AdminController {
       ftpConnectService.ftpConnectionTest(params.serverAddress, params.username, params.password)
     }
     
+  }
+
+  def checkCuratoryGroups() {
+    def searchResult = [:]
+
+
+    params.qbe = 'g:curatoryGroups'
+
+    searchResult = searchService.search(searchResult.user, searchResult, params)
+
+    searchResult.result
   }
 
 }
