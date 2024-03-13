@@ -267,7 +267,6 @@ class AutoUpdatePackagesService {
         File folder = new File("/tmp/wekb/kbartExport")
         File file
         def zf = new java.util.zip.ZipFile(zipFIle)
-        boolean foundTxtFile = false
         zf.entries().findAll { !it.directory }.each {
             log.debug("storeZipContentToFile: fileName -> "+it.name)
             if(it.name.contains('.txt')){
@@ -277,7 +276,7 @@ class AutoUpdatePackagesService {
                 FileUtils.copyInputStreamToFile(new ByteArrayInputStream(content), file)
             }
         }
-        return foundTxtFile ? file : null
+        return file
     }
 
 
