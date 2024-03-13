@@ -52,6 +52,8 @@
                             </g:if>
                         </g:each>
                         <th>No Contacts</th>
+                        <th>No product idenifier</th>
+                        <th>No content type</th>
                         <th>Sources without Titles</th>
                         <th>Packages without Source</th>
                         <th>No changes in packages last 30 Days</th>
@@ -129,6 +131,7 @@
                                 </g:each>
                                 <td><g:link controller="group" action="checkMyInfos" params="[curGroupID: row_obj.id]"> ${checkMyInfosService.checkContacts([row_obj]).size()} </g:link></td>
                                 <td><g:link controller="group" action="checkMyInfos" params="[curGroupID: row_obj.id]"> ${checkMyInfosService.checkPackagesWithoutProductID([row_obj]).size()} </g:link></td>
+                                <td><g:link controller="group" action="checkMyInfos" params="[curGroupID: row_obj.id]"> ${checkMyInfosService.checkPackagesWithoutContentType([row_obj]).size()} </g:link></td>
                                 <td><g:link controller="group" action="checkMyInfos" params="[curGroupID: row_obj.id]"> ${checkMyInfosService.checkSourcesWithoutTitles([row_obj]).size()} </g:link></td>
                                 <td><g:link controller="group" action="checkMyInfos" params="[curGroupID: row_obj.id]"> ${checkMyInfosService.checkPackageWithoutSource([row_obj]).size()} </g:link></td>
                                 <td><g:link controller="group" action="checkMyInfos" params="[curGroupID: row_obj.id]"> ${checkMyInfosService.noChangesPackageLast30Days([row_obj]).size()} </g:link></td>

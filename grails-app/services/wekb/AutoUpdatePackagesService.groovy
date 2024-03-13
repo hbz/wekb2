@@ -271,7 +271,7 @@ class AutoUpdatePackagesService {
             log.debug("storeZipContentToFile: fileName -> "+it.name)
             if(it.name.contains('.txt')){
                 byte[] content = exportService.getByteContent(zf.getInputStream(it))
-                //FileUtils.copyInputStreamToFile(new ByteArrayInputStream(content), file)
+                FileUtils.copyInputStreamToFile(new ByteArrayInputStream(content), file)
             }
         }
         return foundTxtFile ? file : null
