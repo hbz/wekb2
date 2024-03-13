@@ -95,17 +95,19 @@ class AutoUpdatePackagesService {
                         updatePackageInfo.updateFromFTP = true
                         updatePackageInfo.save()
                         if (pkg.kbartSource.ftpServerUrl) {
-                            File file = ftpConnectService.ftpConnectAndGetFile(pkg.kbartSource, updatePackageInfo)
+                            File file = ftpConnectService.ftpConnectAndGetFile(pkg.kbartSource)
 
 
                             if (file) {
                                 kbartRows = kbartProcessService.kbartProcess(file, "", updatePackageInfo)
                             } else {
-                                UpdatePackageInfo.withTransaction {
-                                    updatePackageInfo.description = "No KBART File found by FTP Server!"
-                                    updatePackageInfo.status = RDStore.UPDATE_STATUS_FAILED
-                                    updatePackageInfo.endTime = new Date()
-                                    updatePackageInfo.save()
+                                if(updatePackageInfo.status != RDStore.UPDATE_STATUS_FAILED) {
+                                    UpdatePackageInfo.withTransaction {
+                                        updatePackageInfo.description = "No KBART File found by FTP Server!"
+                                        updatePackageInfo.status = RDStore.UPDATE_STATUS_FAILED
+                                        updatePackageInfo.endTime = new Date()
+                                        updatePackageInfo.save()
+                                    }
                                 }
                             }
 
@@ -193,12 +195,14 @@ class AutoUpdatePackagesService {
                                             }
                                         }
                                     } else {
-                                        UpdatePackageInfo.withTransaction {
-                                            updatePackageInfo.description = isZipFile ? "No txt-File found in Zip-File!" : "No KBART File found by URL: ${lastUpdateURL}!"
-                                            updatePackageInfo.status = RDStore.UPDATE_STATUS_FAILED
-                                            updatePackageInfo.endTime = new Date()
-                                            updatePackageInfo.updateUrl = lastUpdateURL
-                                            updatePackageInfo.save()
+                                        if(updatePackageInfo.status != RDStore.UPDATE_STATUS_FAILED) {
+                                            UpdatePackageInfo.withTransaction {
+                                                updatePackageInfo.description = isZipFile ? "No txt-File found in Zip-File!" : "No KBART File found by URL: ${lastUpdateURL}!"
+                                                updatePackageInfo.status = RDStore.UPDATE_STATUS_FAILED
+                                                updatePackageInfo.endTime = new Date()
+                                                updatePackageInfo.updateUrl = lastUpdateURL
+                                                updatePackageInfo.save()
+                                            }
                                         }
                                     }
                                 }
