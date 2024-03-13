@@ -264,7 +264,9 @@ class AutoUpdatePackagesService {
     }
 
     File storeZipContentToFile(File zipFIle) {
-        File file = new File(zipFIle.name+'.txt')
+        File folder = new File("/tmp/wekb/kbartExport")
+        String fileName = folder.absolutePath.concat(File.separator).concat(zipFIle.name+'.txt')
+        File file = new File(fileName)
         def zf = new java.util.zip.ZipFile(zipFIle)
         boolean foundTxtFile = false
         zf.entries().findAll { !it.directory }.each {
