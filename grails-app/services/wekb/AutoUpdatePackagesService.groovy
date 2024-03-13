@@ -182,12 +182,14 @@ class AutoUpdatePackagesService {
                                         if (kbartRows.size() > 0) {
                                             updatePackageInfo = kbartProcessService.kbartImportProcess(kbartRows, pkg, lastUpdateURL, updatePackageInfo, onlyRowsWithLastChanged)
                                         } else {
-                                            UpdatePackageInfo.withTransaction {
-                                                updatePackageInfo.description = "The KBART File is empty!"
-                                                updatePackageInfo.status = RDStore.UPDATE_STATUS_FAILED
-                                                updatePackageInfo.endTime = new Date()
-                                                updatePackageInfo.updateUrl = lastUpdateURL
-                                                updatePackageInfo.save()
+                                            if(updatePackageInfo.status != RDStore.UPDATE_STATUS_FAILED) {
+                                                UpdatePackageInfo.withTransaction {
+                                                    updatePackageInfo.description = "The KBART File is empty!"
+                                                    updatePackageInfo.status = RDStore.UPDATE_STATUS_FAILED
+                                                    updatePackageInfo.endTime = new Date()
+                                                    updatePackageInfo.updateUrl = lastUpdateURL
+                                                    updatePackageInfo.save()
+                                                }
                                             }
                                         }
                                     } else {
