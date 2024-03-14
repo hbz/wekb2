@@ -156,6 +156,10 @@ class Api2Service {
                                         qparam     : 'uuid',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'uuid']
                                 ],
+                                [
+                                        qparam     : 'uuids',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'uuid']
+                                ],
                                 //spec Fields
                                 [
                                         qparam     : 'variantNames',
@@ -1973,6 +1977,11 @@ class Api2Service {
     private void processSimpleFields(GrailsParameterMap cleaned_params, GrailsParameterMap parameterMap) {
         if (parameterMap.uuid){
             cleaned_params.put('uuid', parameterMap.uuid)
+        }
+
+        if (parameterMap.uuids){
+            ArrayList<String> uuids = parameterMap.list('uuids') as ArrayList<String>
+            cleaned_params.put('uuids', uuids)
         }
 
         if (parameterMap.name){
