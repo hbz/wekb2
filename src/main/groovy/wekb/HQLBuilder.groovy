@@ -67,13 +67,18 @@ public class HQLBuilder {
         criteria.add([defn:query_prop_def, value:params[query_prop_def.qparam]]);
       }
       if ( ( params[query_prop_def.qparam] != null ) && ( params[query_prop_def.qparam] instanceof ArrayList && params[query_prop_def.qparam].size() > 0 ) ) {
-        params[query_prop_def.qparam].eachWithIndex { def value, int index ->
-          if( ( value != null ) ){
-            LinkedHashMap cloneOfQuery_Prop_Def = query_prop_def.clone()
-            cloneOfQuery_Prop_Def.qparam = (index > 0) ? cloneOfQuery_Prop_Def.qparam+"_${index}" : cloneOfQuery_Prop_Def.qparam
-            criteria.add([defn:cloneOfQuery_Prop_Def, value:value, disjunction: true])
-          }
+        if(query_prop_def.contextTree.comparator == "in") {
+          criteria.add([defn:query_prop_def, value:params[query_prop_def.qparam]])
+        }
+        else {
+          params[query_prop_def.qparam].eachWithIndex { def value, int index ->
+            if( ( value != null ) ){
+              LinkedHashMap cloneOfQuery_Prop_Def = query_prop_def.clone()
+              cloneOfQuery_Prop_Def.qparam = (index > 0) ? cloneOfQuery_Prop_Def.qparam+"_${index}" : cloneOfQuery_Prop_Def.qparam
+              criteria.add([defn:cloneOfQuery_Prop_Def, value:value, disjunction: true])
+            }
 
+          }
         }
       }
     }
@@ -301,6 +306,10 @@ public class HQLBuilder {
           }
         }
         break;
+      case 'in':
+        hql_builder_context."${addToQuery}".add("${crit.defn.contextTree.negate?'not ':''}${scoped_property} in (:${crit.defn.qparam})")
+        hql_builder_context.bindvars[crit.defn.qparam] = crit.value
+        break
 
       case 'ilike':
         hql_builder_context."${addToQuery}".add("${crit.defn.contextTree.negate?'not ':''} lower(${scoped_property}) like :${crit.defn.qparam}");
