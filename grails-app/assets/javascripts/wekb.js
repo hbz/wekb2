@@ -99,7 +99,7 @@ $(function () {
                     }
                 }
                 if (dVal.includes('url')) {
-                    var regex = /^(https?|ftp):\/\/(.)*/;
+                    var regex = /^(https?|ftp|http):\/\/(.)*/;
                     var test = regex.test($.trim(value)) || $.trim(value) == ''
                     if (! test) {
                         return "The url must beginn with 'http://' or 'https://' or 'ftp://'."
