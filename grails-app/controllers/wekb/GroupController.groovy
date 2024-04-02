@@ -40,6 +40,7 @@ class GroupController {
         result.packagesWithoutTitles = checkMyInfosService.checkPackagesWithoutTitles(result.groups)
         result.checkPackageWithoutSource = checkMyInfosService.checkPackageWithoutSource(result.groups)
         result.checkPackagesWithoutProductID = checkMyInfosService.checkPackagesWithoutProductID(result.groups)
+        result.checkPackagesWithoutContentType = checkMyInfosService.checkPackagesWithoutContentType(result.groups)
 
         result
     }

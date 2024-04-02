@@ -156,6 +156,10 @@ class Api2Service {
                                         qparam     : 'uuid',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'uuid']
                                 ],
+                                [
+                                        qparam     : 'uuids',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'uuid']
+                                ],
                                 //spec Fields
                                 [
                                         qparam     : 'variantNames',
@@ -235,6 +239,10 @@ class Api2Service {
                                 [
                                         qparam     : 'curatoryGroup',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'curatoryGroups.curatoryGroup.name']
+                                ],
+                                [
+                                        qparam     : 'curatoryGroupType',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'curatoryGroups.curatoryGroup.type.value']
                                 ],
                                 [
                                         type       : 'lookup',
@@ -1975,6 +1983,11 @@ class Api2Service {
             cleaned_params.put('uuid', parameterMap.uuid)
         }
 
+        if (parameterMap.uuids){
+            ArrayList<String> uuids = parameterMap.list('uuids') as ArrayList<String>
+            cleaned_params.put('uuids', uuids)
+        }
+
         if (parameterMap.name){
             cleaned_params.put('name', parameterMap.name)
         }
@@ -2087,6 +2100,14 @@ class Api2Service {
 
         if(parameterMap.role) {
             setRefdataValueFromGrailsParameterMap(cleaned_params, parameterMap, 'roles', 'curatoryGroupType')
+        }
+
+        if(parameterMap.counterSushiSupport) {
+            List counterVersions = parameterMap.list('counterSushiSupport')
+            if('counter4' in counterVersions)
+                cleaned_params.put('qp_counterR4SushiApiSupported', RDStore.YN_YES.getOID())
+            if('counter5' in counterVersions)
+                cleaned_params.put('qp_counterR5SushiApiSupported', RDStore.YN_YES.getOID())
         }
 
 

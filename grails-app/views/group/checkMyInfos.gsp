@@ -36,6 +36,19 @@
         </div>
     </div>
 
+    <div class="title">
+        <i class="dropdown icon"></i>
+        Missing content type for packages: <span class="ui black circular label">${checkPackagesWithoutContentType.size()}</span>
+    </div>
+
+    <div class="content">
+        <div class="ui list">
+            <g:each in="${checkPackagesWithoutContentType}" var="pkg" status="i">
+                <g:link class="item" controller="resource" action="show" id="${pkg.getOID()}">${i+1}: ${pkg.name}</g:link>
+            </g:each>
+        </div>
+    </div>
+
 
     <div class="title">
         <i class="dropdown icon"></i>

@@ -113,6 +113,21 @@ class CheckMyInfosService {
         packages
     }
 
+    List<Package> checkPackagesWithoutContentType(List<CuratoryGroup> curatoryGroups) {
+
+        List<Package> packages = []
+        curatoryGroups.each { CuratoryGroup curatoryGroup ->
+
+            curatoryGroup.providedPackages.each { Package pkg ->
+                if(pkg.contentType == null){
+                    packages << pkg
+                }
+            }
+        }
+
+        packages
+    }
+
 
 
 
