@@ -166,7 +166,7 @@ class Api2Controller {
 
         if(result.code == 'success') {
             def results = []
-            CuratoryGroup.list().each {
+            CuratoryGroup.list(sort: 'name').each {
                 results << [
                         'id'    : it.id,
                         'name'  : it.name,
