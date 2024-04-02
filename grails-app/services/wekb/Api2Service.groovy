@@ -2105,9 +2105,9 @@ class Api2Service {
         if(parameterMap.counterSushiSupport) {
             List counterVersions = parameterMap.list('counterSushiSupport')
             if('counter4' in counterVersions)
-                cleaned_params.put('qp_counterR4SushiApiSupported', GenericOIDService.getOID(RDStore.YN_YES))
+                cleaned_params.put('qp_counterR4SushiApiSupported', RDStore.YN_YES.getOID())
             if('counter5' in counterVersions)
-                cleaned_params.put('qp_counterR5SushiApiSupported', GenericOIDService.getOID(RDStore.YN_YES))
+                cleaned_params.put('qp_counterR5SushiApiSupported', RDStore.YN_YES.getOID())
         }
 
 
