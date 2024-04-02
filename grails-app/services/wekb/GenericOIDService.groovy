@@ -111,4 +111,8 @@ class GenericOIDService {
 
     result
   }
+
+  static String getOID(obj) {
+    "${obj.getClass().getName()}:${obj.id}"
+  }
 }
