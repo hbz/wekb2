@@ -242,6 +242,10 @@ class Api2Service {
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'curatoryGroups.curatoryGroup.name']
                                 ],
                                 [
+                                        qparam     : 'curatoryGroupType',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'curatoryGroups.curatoryGroup.type.value']
+                                ],
+                                [
                                         type       : 'lookup',
                                         baseClass  : 'wekb.RefdataValue',
                                         qparam     : 'status',
@@ -2116,6 +2120,14 @@ class Api2Service {
 
         if(parameterMap.role) {
             setRefdataValueFromGrailsParameterMap(cleaned_params, parameterMap, 'roles', 'curatoryGroupType')
+        }
+
+        if(parameterMap.counterSushiSupport) {
+            List counterVersions = parameterMap.list('counterSushiSupport')
+            if('counter4' in counterVersions)
+                cleaned_params.put('qp_counterR4SushiApiSupported', RDStore.YN_YES.getOID())
+            if('counter5' in counterVersions)
+                cleaned_params.put('qp_counterR5SushiApiSupported', RDStore.YN_YES.getOID())
         }
 
 
