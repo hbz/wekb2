@@ -302,6 +302,8 @@ class GroupController {
 
         searchResult.result.packageSourceInfosBatchForm = managementService.packageSourceInfosBatchForm
 
+        params.activeTab = params.activeTab ?: 'generalInfos'
+
         searchResult.result
     }
 

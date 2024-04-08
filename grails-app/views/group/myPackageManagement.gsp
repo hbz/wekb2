@@ -28,58 +28,41 @@
     <g:render template="/search/pagination" model="${params}"/>
 
     <semui:tabs>
-        <semui:tabsItemWithoutLink tab="generalInfos" defaultTab="generalInfos" activeTab="${params.activeTab}">
-            General Information
-        </semui:tabsItemWithoutLink>
-        <semui:tabsItemWithoutLink tab="vendors" activeTab="${params.activeTab}">
-            Vendors
-        </semui:tabsItemWithoutLink>
-       %{-- <semui:tabsItemWithoutLink tab="rangeInfos" activeTab="${params.activeTab}">
-            Range Information
-        </semui:tabsItemWithoutLink>--}%
-        <semui:tabsItemWithoutLink tab="archivingAgencyInfos" activeTab="${params.activeTab}">
-            Archiving Agency
-        </semui:tabsItemWithoutLink>
-        <semui:tabsItemWithoutLink tab="identifiers" activeTab="${params.activeTab}">
-            Identifiers
-        </semui:tabsItemWithoutLink>
-        <semui:tabsItemWithoutLink tab="ddcs" activeTab="${params.activeTab}">
-            Dewey Decimal Classifications
-        </semui:tabsItemWithoutLink>
-        <semui:tabsItemWithoutLink tab="sources" activeTab="${params.activeTab}">
-            Source
-        </semui:tabsItemWithoutLink>
+        <semui:tabsItemWithLink controller="$controllerName" action="$actionName" activeTab="generalInfos" text="General Information" params="${params+[activeTab: "generalInfos"]}"/>
+        <semui:tabsItemWithLink controller="$controllerName" action="$actionName" activeTab="vendors" text="Vendors" params="${params+[activeTab: "vendors"]}"/>
+
+       %{-- <semui:tabsItemWithLink controller="$controllerName" action="$actionName" activeTab="rangeInfos" text="Range Information" params="${params+[activeTab: "rangeInfos"]}"/
+           --}%
+        <semui:tabsItemWithLink controller="$controllerName" action="$actionName" activeTab="archivingAgencyInfos" text="Archiving Agency" params="${params+[activeTab: "archivingAgencyInfos"]}"/>
+        <semui:tabsItemWithLink controller="$controllerName" action="$actionName" activeTab="identifiers" text="Identifiers" params="${params+[activeTab: "identifiers"]}"/>
+        <semui:tabsItemWithLink controller="$controllerName" action="$actionName" activeTab="ddcs" text="Dewey Decimal Classifications" params="${params+[activeTab: "ddcs"]}"/>
+        <semui:tabsItemWithLink controller="$controllerName" action="$actionName" activeTab="sources" text="Source" params="${params+[activeTab: "sources"]}"/>
+
     </semui:tabs>
 
-
-
-    <semui:tabsItemContent tab="generalInfos" activeTab="${params.activeTab}">
-        <g:render template="management/package/generalInfos"/>
-    </semui:tabsItemContent>
-
-    <semui:tabsItemContent tab="vendors" activeTab="${params.activeTab}">
-        <g:render template="management/package/vendors"/>
-    </semui:tabsItemContent>
-%{--
-    <semui:tabsItemContent tab="rangeInfos" activeTab="${params.activeTab}">
-        <g:render template="management/package/rangeInfos"/>
-    </semui:tabsItemContent>--}%
-
-    <semui:tabsItemContent tab="archivingAgencyInfos" activeTab="${params.activeTab}">
-        <g:render template="management/package/archivingAgencyInfos"/>
-    </semui:tabsItemContent>
-
-    <semui:tabsItemContent tab="identifiers" activeTab="${params.activeTab}">
-        <g:render template="management/package/identifiers"/>
-    </semui:tabsItemContent>
-
-    <semui:tabsItemContent tab="ddcs" activeTab="${params.activeTab}">
-        <g:render template="management/package/ddcs"/>
-    </semui:tabsItemContent>
-
-    <semui:tabsItemContent tab="sources" activeTab="${params.activeTab}">
-        <g:render template="management/package/sourceInfos"/>
-    </semui:tabsItemContent>
+    <div class="ui bottom active attached tab segment">
+        <g:if test="${params.activeTab == 'generalInfos'}">
+            <g:render template="management/package/generalInfos"/>
+        </g:if>
+        <g:elseif test="${params.activeTab == 'vendors'}">
+            <g:render template="management/package/vendors"/>
+        </g:elseif>
+        <g:elseif test="${params.activeTab == 'rangeInfos'}">
+            <g:render template="management/package/rangeInfos"/>
+        </g:elseif>
+        <g:elseif test="${params.activeTab == 'archivingAgencyInfos'}">
+            <g:render template="management/package/archivingAgencyInfos"/>
+        </g:elseif>
+        <g:elseif test="${params.activeTab == 'identifiers'}">
+            <g:render template="management/package/identifiers"/>
+        </g:elseif>
+        <g:elseif test="${params.activeTab == 'ddcs'}">
+            <g:render template="management/package/ddcs"/>
+        </g:elseif>
+        <g:elseif test="${params.activeTab == 'sources'}">
+            <g:render template="management/package/sourceInfos"/>
+        </g:elseif>
+    </div>
 
     <g:render template="/search/pagination" model="${params}"/>
 </g:if>
