@@ -294,6 +294,8 @@ class GroupController {
         params.qp_curgroups = searchResult.groups.id
         params.hide = ['qp_curgroup', 'qp_curgroups']
 
+        params.max = params.max ?: '1000'
+
         searchResult = searchService.search(searchResult.user, searchResult, params)
 
         searchResult.result.editable = accessService.checkReadable(searchResult.result.qbetemplate.baseclass)

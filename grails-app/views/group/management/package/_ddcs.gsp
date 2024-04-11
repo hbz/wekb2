@@ -30,7 +30,7 @@
         <table class="ui selectable striped sortable celled table">
             <thead>
             <tr>
-                <th rowspan="2"></th>
+                <th rowspan="2"><g:if test="${editable}"><input id="select-all" type="checkbox" name="chkall" /> <div id="numberOfChecked">Select (0)</div></g:if></th>
                 <th rowspan="2">#</th>
                 <semui:sortableColumn property="name" title="Name" rowspan="2"
                                       params="${params}"/>
@@ -39,7 +39,6 @@
                 <th rowspan="2"></th>
             </tr>
             <tr>
-                <th><g:if test="${editable}"><input id="select-all" type="checkbox" name="chkall" /> <div id="numberOfChecked">Select (0)</div></g:if></th>
                 <th>#</th>
                 <th>Dewey Decimal Classification</th>
                 <th>Action</th>

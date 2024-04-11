@@ -7,6 +7,8 @@
 
 <body>
 
+<g:set var="cleaned_params" value="${params.findAll { it.value && it.value != "" }}"/>
+
 <h1 class="ui header">My Package Management</h1>
 
 <g:if test="${(qbetemplate.message != null)}">
@@ -25,18 +27,18 @@
 
     <semui:flashMessage data="${flash}"/>
 
-    <g:render template="/search/pagination" model="${params}"/>
+    <g:render template="/search/pagination" model="${cleaned_params}"/>
 
     <semui:tabs>
-        <semui:tabsItemWithLink controller="$controllerName" action="$actionName" activeTab="generalInfos" text="General Information" params="${params+[activeTab: "generalInfos"]}"/>
-        <semui:tabsItemWithLink controller="$controllerName" action="$actionName" activeTab="vendors" text="Vendors" params="${params+[activeTab: "vendors"]}"/>
+        <semui:tabsItemWithLink controller="$controllerName" action="$actionName" activeTab="generalInfos" text="General Information" params="${cleaned_params+[activeTab: "generalInfos"]}"/>
+        <semui:tabsItemWithLink controller="$controllerName" action="$actionName" activeTab="vendors" text="Vendors" params="${cleaned_params+[activeTab: "vendors"]}"/>
 
-       %{-- <semui:tabsItemWithLink controller="$controllerName" action="$actionName" activeTab="rangeInfos" text="Range Information" params="${params+[activeTab: "rangeInfos"]}"/
+       %{-- <semui:tabsItemWithLink controller="$controllerName" action="$actionName" activeTab="rangeInfos" text="Range Information" params="${cleaned_params+[activeTab: "rangeInfos"]}"/
            --}%
-        <semui:tabsItemWithLink controller="$controllerName" action="$actionName" activeTab="archivingAgencyInfos" text="Archiving Agency" params="${params+[activeTab: "archivingAgencyInfos"]}"/>
-        <semui:tabsItemWithLink controller="$controllerName" action="$actionName" activeTab="identifiers" text="Identifiers" params="${params+[activeTab: "identifiers"]}"/>
-        <semui:tabsItemWithLink controller="$controllerName" action="$actionName" activeTab="ddcs" text="Dewey Decimal Classifications" params="${params+[activeTab: "ddcs"]}"/>
-        <semui:tabsItemWithLink controller="$controllerName" action="$actionName" activeTab="sources" text="Source" params="${params+[activeTab: "sources"]}"/>
+        <semui:tabsItemWithLink controller="$controllerName" action="$actionName" activeTab="archivingAgencyInfos" text="Archiving Agency" params="${cleaned_params+[activeTab: "archivingAgencyInfos"]}"/>
+        <semui:tabsItemWithLink controller="$controllerName" action="$actionName" activeTab="identifiers" text="Identifiers" params="${cleaned_params+[activeTab: "identifiers"]}"/>
+        <semui:tabsItemWithLink controller="$controllerName" action="$actionName" activeTab="ddcs" text="Dewey Decimal Classifications" params="${cleaned_params+[activeTab: "ddcs"]}"/>
+        <semui:tabsItemWithLink controller="$controllerName" action="$actionName" activeTab="sources" text="Source" params="${cleaned_params+[activeTab: "sources"]}"/>
 
     </semui:tabs>
 
@@ -64,7 +66,7 @@
         </g:elseif>
     </div>
 
-    <g:render template="/search/pagination" model="${params}"/>
+    <g:render template="/search/pagination" model="${cleaned_params}"/>
 </g:if>
 <g:elseif test="${!init && !params.inline}">
     <g:render template="/search/qbeempty"/>
