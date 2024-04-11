@@ -190,6 +190,9 @@ class HomeController {
             'Platforms' : [
                     'componentName' : 'Platform',
             ],
+            'Vendors' : [
+                    'componentName' : 'Vendor',
+            ],
     ]
 
     // The calendar for the queries.
