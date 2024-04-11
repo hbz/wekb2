@@ -89,6 +89,12 @@ class AccessService {
             }
             else if(o instanceof VendorElectronicBilling){
                 curatedObj = o.vendor
+            } else if (o instanceof ProviderInvoicingVendor) {
+                curatedObj = o.provider
+            } else if (o instanceof ProviderInvoiceDispatch) {
+                curatedObj = o.provider
+            } else if (o instanceof ProviderElectronicBilling) {
+                curatedObj = o.provider
             }
             else {
                 curatedObj = o.hasProperty('curatoryGroups') ? o : ( o.hasProperty('pkg') ? o.pkg : null )

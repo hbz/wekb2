@@ -19,6 +19,22 @@
                       value=""/>
         </div>
 
+        <div class="grouped fields">
+            <label>What should be done with vendor?</label>
+            <div class="field">
+                <div class="ui radio checkbox">
+                    <input type="radio" name="processLinkVendor" value="linkVendor" checked="checked">
+                    <label>Link</label>
+                </div>
+            </div>
+            <div class="field">
+                <div class="ui radio checkbox">
+                    <input type="radio" name="processLinkVendor" value="unlinkVendor">
+                    <label>Unlink</label>
+                </div>
+            </div>
+        </div>
+
         <button class="ui button primary" type="submit" value="addVendor"
                 name="processOption">Do bulk process to the selected items</button>
 
@@ -30,7 +46,7 @@
         <table class="ui selectable striped sortable celled table">
             <thead>
             <tr>
-                <th rowspan="2"></th>
+                <th rowspan="2"><g:if test="${editable}"><input id="select-all" type="checkbox" name="chkall" /> <div id="numberOfChecked">Select (0)</div></g:if></th>
                 <th rowspan="2">#</th>
                 <semui:sortableColumn property="name" title="Name" rowspan="2"
                                       params="${params}"/>
@@ -51,7 +67,7 @@
                     <tr>
                         <td>
                             <g:if test="${editable}">
-                                <g:checkBox id="selectedPackages_${row_obj.uuid}" name="selectedPackages"
+                                <g:checkBox class="bulkcheck" id="selectedPackages_${row_obj.uuid}" name="selectedPackages"
                                             value="${row_obj.uuid}"
                                             checked="false"/>
                             </g:if>
@@ -100,4 +116,17 @@
             </tbody>
         </table>
     </div>
+
+    <g:javascript>
+        $("#select-all").click(function() {
+            $('#select-all').is( ":checked")? $('.bulkcheck').prop('checked', true) : $('.bulkcheck').prop('checked', false);
+            var numberOfChecked = $('.bulkcheck:checked').length;
+            $("#numberOfChecked").html("Select ("+numberOfChecked+")");
+        });
+
+        $(".bulkcheck").click(function() {
+            var numberOfChecked = $('.bulkcheck:checked').length;
+            $("#numberOfChecked").html("Select ("+numberOfChecked+")");
+        });
+    </g:javascript>
 </g:form>

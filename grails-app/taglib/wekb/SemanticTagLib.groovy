@@ -745,7 +745,8 @@ class SemanticTagLib {
     Closure tabsItemWithLink = { attrs, body ->
 
         String linkBody = attrs.text ?: ''
-        String aClass = ((this.pageScope.variables?.actionName == attrs.action && (attrs.tab == params.tab || attrs.tab == params[attrs.subTab])) ? 'item active' : 'item') + (attrs.class ? ' ' + attrs.class : '')
+
+        String aClass = ((this.pageScope.variables?.actionName == attrs.action && ((attrs.activeTab && attrs.activeTab == params.activeTab) || (attrs.tab && attrs.tab == params[attrs.subTab]))) ? 'item active' : 'item') + (attrs.class ? ' ' + attrs.class : '')
 
         String counts = (attrs.counts >= 0) ? '<div class="ui '  + ' circular primary label">' + attrs.counts + '</div>' : null
 

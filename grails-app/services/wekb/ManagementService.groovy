@@ -198,6 +198,9 @@ class ManagementService {
                 break
         }
 
+        parameterMap.remove('_selectedPackages')
+        parameterMap.remove('selectedPackages')
+
         result
 
     }
@@ -403,24 +406,46 @@ class ManagementService {
             List selectedPackages = params.list("selectedPackages")
             if (selectedPackages) {
                 Set<Package> packages = Package.findAllByUuidInList(selectedPackages)
-                if (params.processOption == 'addVendor') {
-                    packages.each { Package pkg ->
-                        if (accessService.checkEditableObject(pkg, params)) {
-                            List splitVendorParam = params['vendor'].split(':')
-                            Long refVendorId = Long.parseLong(splitVendorParam[1])
-                            Vendor vendor = Vendor.get(refVendorId)
-                            if (vendor) {
-                                PackageVendor packageVendor = PackageVendor.findByPkgAndVendor(pkg, vendor)
-                                if (!packageVendor) {
-                                    packageVendor = new PackageVendor(vendor: vendor, pkg: pkg)
-                                    packageVendor.save()
+                if (params.processLinkVendor) {
+                    if(params.processLinkVendor == 'linkVendor') {
+                        packages.each { Package pkg ->
+                            if (accessService.checkEditableObject(pkg, params)) {
+                                List splitVendorParam = params['vendor'].split(':')
+                                Long refVendorId = Long.parseLong(splitVendorParam[1])
+                                Vendor vendor = Vendor.get(refVendorId)
+                                if (vendor) {
+                                    PackageVendor packageVendor = PackageVendor.findByPkgAndVendor(pkg, vendor)
+                                    if (!packageVendor) {
+                                        packageVendor = new PackageVendor(vendor: vendor, pkg: pkg)
+                                        packageVendor.save()
+                                    }
                                 }
                             }
-                        }
-                        if(pkg.isDirty()){
-                            pkg.save()
+                            if (pkg.isDirty()) {
+                                pkg.save()
 
-                            successChanges << "The changes were made to the package '${pkg.name}'."
+                                successChanges << "The changes were made to the package '${pkg.name}'."
+                            }
+                        }
+                    }
+                    if(params.processLinkVendor == 'unlinkVendor'){
+                        packages.each { Package pkg ->
+                            if (accessService.checkEditableObject(pkg, params)) {
+                                List splitVendorParam = params['vendor'].split(':')
+                                Long refVendorId = Long.parseLong(splitVendorParam[1])
+                                Vendor vendor = Vendor.get(refVendorId)
+                                if (vendor) {
+                                    PackageVendor packageVendor = PackageVendor.findByPkgAndVendor(pkg, vendor)
+                                    if (packageVendor) {
+                                        packageVendor.delete()
+                                    }
+                                }
+                            }
+                            if (pkg.isDirty()) {
+                                pkg.save()
+
+                                successChanges << "The changes were made to the package '${pkg.name}'."
+                            }
                         }
                     }
                 }

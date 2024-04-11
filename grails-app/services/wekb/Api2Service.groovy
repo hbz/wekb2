@@ -8,6 +8,7 @@ import groovy.json.JsonSlurper
 import groovy.sql.GroovyRowResult
 import groovy.sql.Sql
 import org.grails.orm.hibernate.cfg.GrailsHibernateUtil
+import wekb.helper.RCConstants
 import wekb.helper.RDStore
 import wekb.utils.DateUtils
 
@@ -597,6 +598,25 @@ class Api2Service {
                                         qparam     : 'roles',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'roles'],
                                 ],
+                                [
+                                        type       : 'lookup',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        qparam     : 'qp_supportedLibrarySystems',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'supportedLibrarySystems'],
+                                ],
+                                [
+                                        type       : 'lookup',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        qparam     : 'qp_electronicBillings',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'electronicBillings'],
+                                ],
+                                [
+                                        type       : 'lookup',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        qparam     : 'qp_invoiceDispatchs',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'invoiceDispatchs'],
+                                ],
+
 
 
                         ],
@@ -1241,7 +1261,8 @@ class Api2Service {
 
                 object.vendors?.each {
                     result.vendors.add([vendor: it.vendor.name,
-                                        vendorUuid: it.vendor.uuid])
+                                        vendorUuid: it.vendor.uuid,
+                                        vendorHomepage: it.vendor.homepage])
                 }
             }
 

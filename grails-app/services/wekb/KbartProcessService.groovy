@@ -141,6 +141,8 @@ class KbartProcessService {
 
         Platform plt = pkg.nominalPlatform
 
+        boolean checkAllTitles = false
+
         try {
 
             log.info("Matched package has ${previouslyTipps} TIPPs")
@@ -174,7 +176,7 @@ class KbartProcessService {
                     kbartRows = newKbartRows
                     log.info("onlyRowsWithLastChanged is set! after process only last changed rows: ${newKbartRows.size()}")
                 }else {
-
+                    checkAllTitles = true
                 }
             }
 
@@ -388,7 +390,7 @@ class KbartProcessService {
 
             }
 
-            if(!onlyRowsWithLastChanged && tippDuplicates.size() > 0){
+            if(checkAllTitles && tippDuplicates.size() > 0){
                 log.info("remove tippDuplicates -> ${tippDuplicates.size()}")
 
                 int maxDuplicates = 20000
@@ -451,7 +453,7 @@ class KbartProcessService {
             }
 
 
-            /*if (!onlyRowsWithLastChanged && setAllTippsNotInKbartToDeleted) {
+            /*if (checkAllTitles && setAllTippsNotInKbartToDeleted) {
 
                 List<Long> tippsIds = setTippsNotToDeleted ? TitleInstancePackagePlatform.executeQuery("select tipp.id from TitleInstancePackagePlatform tipp where " +
                         "tipp.status in (:status) and " +
@@ -519,7 +521,7 @@ class KbartProcessService {
 
             //TODO: countExistingTippsAfterImport > (kbartRowsCount-countInvalidKbartRowsForTipps) ??? nötig noch
             log.info("before deleteTipps from wekb -------------------------------------------------------------------------------------")
-            if(!onlyRowsWithLastChanged && tippsFound.size() > 0 && kbartRowsCount > 0 && countExistingTippsAfterImport > (kbartRowsCount-countInvalidKbartRowsForTipps)){
+            if(checkAllTitles && tippsFound.size() > 0 && kbartRowsCount > 0 && countExistingTippsAfterImport > (kbartRowsCount-countInvalidKbartRowsForTipps)){
 
                 List<Long> existingTippsAfterImport = TitleInstancePackagePlatform.executeQuery(
                         "select tipp.id from TitleInstancePackagePlatform tipp where " +
