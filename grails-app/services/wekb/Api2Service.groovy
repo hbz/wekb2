@@ -1261,7 +1261,8 @@ class Api2Service {
 
                 object.vendors?.each {
                     result.vendors.add([vendor: it.vendor.name,
-                                        vendorUuid: it.vendor.uuid])
+                                        vendorUuid: it.vendor.uuid,
+                                        vendorHomepage: it.vendor.homepage])
                 }
             }
 
