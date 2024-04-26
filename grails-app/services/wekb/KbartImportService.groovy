@@ -1843,7 +1843,41 @@ class KbartImportService {
         }catch (Exception e) {
                 log.error("createOrUpdatePrice -> kbartProperty ${newValue}:" + e.toString())
             }
+        }else{
+            if(!result.newTipp) {
+                List<TippPrice> existPrices = TippPrice.findAllByTippAndPriceTypeAndCurrency(tipp, priceType, currency, [sort: 'lastUpdated', order: 'ASC'])
+               if (existPrices.size() > 0) {
+                    def pricesIDs = existPrices.id.clone()
+                    pricesIDs.each {
+                        TippPrice tippPrice = TippPrice.get(it)
+                        tipp.removeFromPrices(tippPrice)
+                    }
+                    if (!tipp.save()) {
+                        log.error("Tipp save error: ")
+                        tipp.errors.allErrors.each {
+                            println it
+                        }
+                    }else {
+                        tipp = tipp.refresh()
+                        UpdateTippInfo updateTippInfo = new UpdateTippInfo(
+                                description: "Delete price of title '${tipp.name}' because no price in kbart!",
+                                tipp: tipp,
+                                startTime: new Date(),
+                                endTime: new Date(),
+                                status: RDStore.UPDATE_STATUS_SUCCESSFUL,
+                                type: RDStore.UPDATE_TYPE_CHANGED_TITLE,
+                                updatePackageInfo: updatePackageInfo,
+                                kbartProperty: kbartProperty,
+                                tippProperty: "prices[${priceType.value}]",
+                                oldValue: oldValue,
+                                newValue: newValue
+                        ).save()
+                    }
+                }
+
+            }
         }
+
         if(cp && priceChanged && !result.newTipp){
             //updatePackageInfo = updatePackageInfo.refresh()
             UpdateTippInfo updateTippInfo = new UpdateTippInfo(
