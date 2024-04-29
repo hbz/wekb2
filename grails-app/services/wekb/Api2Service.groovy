@@ -1348,7 +1348,9 @@ class Api2Service {
 
                  result.invoicingVendors = []
                 object.invoicingVendors.each { ProviderInvoicingVendor providerInvoicingVendor ->
-                    result.invoicingVendors.add([name: providerInvoicingVendor.vendor.name])
+                    result.invoicingVendors.add([vendor: providerInvoicingVendor.vendor.name,
+                                                 vendorUuid: providerInvoicingVendor.vendor.uuid,
+                                                 vendorHomepage: providerInvoicingVendor.vendor.homepage])
                 }
             }
 
