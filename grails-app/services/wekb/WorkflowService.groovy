@@ -71,6 +71,7 @@ class WorkflowService {
                         [code: 'objectMethod::deleteSoft', label: 'Mark the package as deleted (with all Titles)', message: '', onlyAdmin: false, group: 2],
                         [code: 'objectMethod::retireWithTipps', label: 'Mark the package as retired (with all Titles)', message: '', onlyAdmin: false, group: 2],
                         [code: 'objectMethod::removeOnlyTipps', modalID: 'removeOnlyTipps', label: 'Remove only all Titles', message: '', onlyAdmin: false, group: 5],
+                        [code: 'objectMethod::removeOnlyDeletedTipps', modalID: 'removeOnlyDeletedTipps', label: 'Remove only deleted Titles', message: '', onlyAdmin: false, group: 4],
                         [code: 'objectMethod::removeWithTipps', modalID: 'removeWithTipps', label: 'Remove the package (with all Titles)', message: '', onlyAdmin: false, group: 6],
 
                         [code: 'workFlowMethod::manualKbartImport', label: 'Manual KBART Import', message: '', onlyAdmin: false, group: 1],
@@ -128,6 +129,7 @@ class WorkflowService {
         switch (domainClassName) {
             case Package.class.name:
                 [
+                        [modalID: 'removeOnlyDeletedTipps', code: 'objectMethod::removeOnlyDeletedTipps', label: 'Remove only all Titles', info: 'You are about to permanently remove all deleted titles from your package. Are you sure you want to continue?'],
                         [modalID: 'removeOnlyTipps', code: 'objectMethod::removeOnlyTipps', label: 'Remove only all Titles', info: 'You are about to permanently remove all titles from your package. Are you sure you want to continue?'],
                         [modalID: 'removeWithTipps', code: 'objectMethod::removeWithTipps', label: 'Remove the package (with all Titles)', info: 'You are about to permanently remove all titles from your package. Are you sure you want to continue?'],
                 ]

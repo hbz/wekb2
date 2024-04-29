@@ -1843,7 +1843,41 @@ class KbartImportService {
         }catch (Exception e) {
                 log.error("createOrUpdatePrice -> kbartProperty ${newValue}:" + e.toString())
             }
+        }else{
+            if(!result.newTipp) {
+                List<TippPrice> existPrices = TippPrice.findAllByTippAndPriceTypeAndCurrency(tipp, priceType, currency, [sort: 'lastUpdated', order: 'ASC'])
+               if (existPrices.size() > 0) {
+                    def pricesIDs = existPrices.id.clone()
+                    pricesIDs.each {
+                        TippPrice tippPrice = TippPrice.get(it)
+                        tipp.removeFromPrices(tippPrice)
+                    }
+                    if (!tipp.save()) {
+                        log.error("Tipp save error: ")
+                        tipp.errors.allErrors.each {
+                            println it
+                        }
+                    }else {
+                        tipp = tipp.refresh()
+                        UpdateTippInfo updateTippInfo = new UpdateTippInfo(
+                                description: "Delete price of title '${tipp.name}' because no price in kbart!",
+                                tipp: tipp,
+                                startTime: new Date(),
+                                endTime: new Date(),
+                                status: RDStore.UPDATE_STATUS_SUCCESSFUL,
+                                type: RDStore.UPDATE_TYPE_CHANGED_TITLE,
+                                updatePackageInfo: updatePackageInfo,
+                                kbartProperty: kbartProperty,
+                                tippProperty: "prices[${priceType.value}]",
+                                oldValue: oldValue,
+                                newValue: newValue
+                        ).save()
+                    }
+                }
+
+            }
         }
+
         if(cp && priceChanged && !result.newTipp){
             //updatePackageInfo = updatePackageInfo.refresh()
             UpdateTippInfo updateTippInfo = new UpdateTippInfo(
@@ -2252,34 +2286,27 @@ class KbartImportService {
         }
         //log.debug("before price section")
         // KBART -> listprice_eur -> prices
-        if (tippMap.listprice_eur) {
-            result.changedTipp = createOrUpdatePrice(result, tipp, RDStore.PRICE_TYPE_LIST, RDStore.CURRENCY_EUR, tippMap.listprice_eur, 'listprice_eur', updatePackageInfo)
-        }
+        result.changedTipp = createOrUpdatePrice(result, tipp, RDStore.PRICE_TYPE_LIST, RDStore.CURRENCY_EUR, tippMap.listprice_eur, 'listprice_eur', updatePackageInfo)
+
 
         // KBART -> listprice_usd -> prices
-        if (tippMap.listprice_usd) {
-            result.changedTipp = createOrUpdatePrice(result, tipp, RDStore.PRICE_TYPE_LIST, RDStore.CURRENCY_USD, tippMap.listprice_usd, 'listprice_usd', updatePackageInfo)
-        }
+        result.changedTipp = createOrUpdatePrice(result, tipp, RDStore.PRICE_TYPE_LIST, RDStore.CURRENCY_USD, tippMap.listprice_usd, 'listprice_usd', updatePackageInfo)
 
         // KBART -> listprice_gbp -> prices
-        if (tippMap.listprice_gbp) {
-            result.changedTipp = createOrUpdatePrice(result, tipp, RDStore.PRICE_TYPE_LIST, RDStore.CURRENCY_GBP, tippMap.listprice_gbp, 'listprice_gbp', updatePackageInfo)
-        }
+        result.changedTipp = createOrUpdatePrice(result, tipp, RDStore.PRICE_TYPE_LIST, RDStore.CURRENCY_GBP, tippMap.listprice_gbp, 'listprice_gbp', updatePackageInfo)
+
 
         // KBART -> oa_apc_eur -> prices
-        if (tippMap.oa_apc_eur) {
-            result.changedTipp = createOrUpdatePrice(result, tipp, RDStore.PRICE_TYPE_OA_APC, RDStore.CURRENCY_EUR, tippMap.oa_apc_eur, 'oa_apc_eur', updatePackageInfo)
-        }
+        result.changedTipp = createOrUpdatePrice(result, tipp, RDStore.PRICE_TYPE_OA_APC, RDStore.CURRENCY_EUR, tippMap.oa_apc_eur, 'oa_apc_eur', updatePackageInfo)
+
 
         // KBART -> oa_apc_usd -> prices
-        if (tippMap.oa_apc_usd) {
-            result.changedTipp = createOrUpdatePrice(result, tipp, RDStore.PRICE_TYPE_OA_APC, RDStore.CURRENCY_USD, tippMap.oa_apc_usd, 'oa_apc_usd', updatePackageInfo)
-        }
+        result.changedTipp = createOrUpdatePrice(result, tipp, RDStore.PRICE_TYPE_OA_APC, RDStore.CURRENCY_USD, tippMap.oa_apc_usd, 'oa_apc_usd', updatePackageInfo)
+
 
         // KBART -> oa_apc_gbp -> prices
-        if (tippMap.oa_apc_gbp) {
-            result.changedTipp = createOrUpdatePrice(result, tipp, RDStore.PRICE_TYPE_OA_APC, RDStore.CURRENCY_GBP, tippMap.oa_apc_gbp, 'oa_apc_gbp', updatePackageInfo)
-        }
+       result.changedTipp = createOrUpdatePrice(result, tipp, RDStore.PRICE_TYPE_OA_APC, RDStore.CURRENCY_GBP, tippMap.oa_apc_gbp, 'oa_apc_gbp', updatePackageInfo)
+
 
         //log.debug("after price section")
 

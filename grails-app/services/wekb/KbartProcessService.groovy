@@ -141,7 +141,7 @@ class KbartProcessService {
 
         Platform plt = pkg.nominalPlatform
 
-        boolean checkAllTitles = false
+        boolean checkAllTitles = true
 
         try {
 
@@ -174,9 +174,9 @@ class KbartProcessService {
                         }
                     }
                     kbartRows = newKbartRows
+                    checkAllTitles = false
                     log.info("onlyRowsWithLastChanged is set! after process only last changed rows: ${newKbartRows.size()}")
                 }else {
-                    checkAllTitles = true
                 }
             }
 
