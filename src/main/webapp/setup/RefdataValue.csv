@@ -1,10 +1,4 @@
 rdc;token;value_de;value_en
-Activity.Status;Abandoned;Abandoned;Abandoned
-Activity.Status;Active;Active;Active
-Activity.Status;Complete;Complete;Complete
-Activity.Type;TitleTransfer;TitleTransfer;TitleTransfer
-AllocatedReviewGroup.Status;Claimed;Claimed;Claimed
-AllocatedReviewGroup.Status;In Progress;In Progress;In Progress
 Update.Status;Successful;Successful;Successful
 Update.Status;Failed;Failed;Failed
 Update.Status;Warning;Warning;Warning
@@ -277,17 +271,10 @@ CuratoryGroup.Type;Vendor;Lieferant;Vendor
 Currency;EUR;EUR;EUR
 Currency;GBP;GBP;GBP
 Currency;USD;USD;USD
-DCType;Admin;Admin;Admin
-DCType;Standard;Standard;Standard
-DCType;Support;Support;Support
 DeletedComponent.Status;Permanently Deleted;Permanently Deleted;Permanently Deleted
 IdentifierNamespace.TargetType;Org;Provider;Provider
 IdentifierNamespace.TargetType;Package;Package;Package
 IdentifierNamespace.TargetType;TitleInstancePackagePlatform;TitleInstancePackagePlatform;TitleInstancePackagePlatform
-ingest.filetype;cufts;cufts;cufts
-ingest.filetype;ingram;ingram;ingram
-ingest.filetype;kbart2;kbart2;kbart3
-ingest.filetype;ybp;ybp;ybp
 Job.Type;AutoUpdatePackagesJob;AutoUpdatePackagesJob;AutoUpdatePackagesJob
 Job.Type;ManuellUpdatePackageJob;ManuellUpdatePackageJob;ManuellUpdatePackageJob
 Job.Type;BootstrapIdentifierCleanup;BootstrapIdentifierCleanup;BootstrapIdentifierCleanup
@@ -333,11 +320,6 @@ ComponentVariantName.Status;Expected;Expected;Expected
 ComponentVariantName.Status;Retired;Retired;Retired
 ComponentVariantName.VariantType;Acronym;Acronym;Acronym
 ComponentVariantName.VariantType;Alternate Title;Alternate Title;Alternate Title
-MembershipRole;Administrator;Administrator;Administrator
-MembershipRole;Member;Member;Member
-MembershipStatus;Approved;Approved;Approved
-MembershipStatus;Pending;Pending;Pending
-MembershipStatus;Rejected/Revoked;Rejected/Revoked;Rejected/Revoked
 Org.Role;Content Provider;Content Provider;Content Provider
 Org.Role;Platform Provider;Platform Provider;Platform Provider
 Org.Role;Publisher;Publisher;Publisher
@@ -362,8 +344,6 @@ Package.Global;Consortium;Consortium;Consortium
 Package.Global;Global;Global;Global
 Package.Global;Other;Other;Other
 Package.Global;Regional;Regional;Regional
-Package.LinkType;Parent;Parent;Parent
-Package.LinkType;Previous;Previous;Previous
 Package.OpenAccess;Blue OA;Blue OA;Blue OA
 Package.OpenAccess;Empty;Empty;Empty
 Package.OpenAccess;Gold OA;Gold OA;Gold OA
@@ -532,29 +512,6 @@ Price.type;open access apc;open access apc;open access apc
 Price.type;perpetual;perpetual;perpetual
 Price.type;subscription;subscription;subscription
 Price.type;topup;topup;topup
-RDFDataType;string;string;string
-RDFDataType;uri;uri;uri
-ReviewRequest.Status;Closed;Closed;Closed
-ReviewRequest.Status;Deleted;Deleted;Deleted
-ReviewRequest.Status;Open;Open;Open
-ReviewRequest.StdDesc;Ambiguous Matches;Ambiguous Matches;Ambiguous Matches
-ReviewRequest.StdDesc;Invalid TIPPs;Invalid TIPPs;Invalid TIPPs
-ReviewRequest.StdDesc;Major Identifier Mismatch;Major Identifier Mismatch;Major Identifier Mismatch
-ReviewRequest.StdDesc;Minor Identifier Mismatch;Minor Identifier Mismatch;Minor Identifier Mismatch
-ReviewRequest.StdDesc;Multiple Matches;Multiple Matches;Multiple Matches
-ReviewRequest.StdDesc;Name Mismatch;Name Mismatch;Name Mismatch
-ReviewRequest.StdDesc;Name Similarity;Name Similarity;Name Similarity
-ReviewRequest.StdDesc;Namespace Mismatch;Namespace Mismatch;Namespace Mismatch
-ReviewRequest.StdDesc;New Org;New Org;New Org
-ReviewRequest.StdDesc;New Platform;New Platform;New Platform
-ReviewRequest.StdDesc;Platform Noncurrent;Platform Noncurrent;Platform Noncurrent
-ReviewRequest.StdDesc;Removed Identifier;Removed Identifier;Removed Identifier
-ReviewRequest.StdDesc;Status Deleted;Status Deleted;Status Deleted
-ReviewRequest.StdDesc;Status Retired;Status Retired;Status Retired
-ReviewRequest.StdDesc;TIPPs Retired;TIPPs Retired;TIPPs Retired
-ReviewRequest.StdDesc;Type Mismatch;Type Mismatch;Type Mismatch
-ReviewRequest.Type;Import Request;Import Request;Import Request
-ReviewRequest.Type;User Request;User Request;User Request
 Source.DataFormat;KBART;KBART;KBART
 Source.DataFormat;Proprietary;Proprietary;Proprietary
 Source.DataSupplyMethod;eMail;eMail;eMail
@@ -566,11 +523,6 @@ Source.Frequency;Monthly;Monthly;Monthly
 Source.Frequency;Quarterly;Quarterly;Quarterly
 Source.Frequency;Weekly;Weekly;Weekly
 Source.Frequency;Yearly;Yearly;Yearly
-Tipp.LinkType;Comes With;Comes With;Comes With
-Tipp.LinkType;Parent;Parent;Parent
-Tipp.LinkType;Previous;Previous;Previous
-Tipp.StatusReason;Xfer In;Xfer In;Xfer In
-Tipp.StatusReason;Xfer Out;Xfer Out;Xfer Out
 TIPPCoverageStatement.CoverageDepth;Abstracts;Abstracts;Abstracts
 TIPPCoverageStatement.CoverageDepth;Fulltext;Fulltext;Fulltext
 TIPPCoverageStatement.CoverageDepth;Selected Articles;Selected Articles;Selected Articles

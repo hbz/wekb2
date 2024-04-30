@@ -68,6 +68,11 @@
             <g:link class="item we-link" controller="search" action="componentSearch"
                     params="[qbe: 'g:sources']"><g:message code="public.sources"/></g:link>
 
+            <g:if test="${isUserLoggedIn}">
+                <g:link class="item we-link" controller="search" action="componentSearch"
+                        params="[qbe: 'g:refdataCategoriesPublic']">Categories</g:link>
+            </g:if>
+
         </div>
     </div>
     <g:if test="${isUserLoggedIn}">

@@ -19,6 +19,7 @@ class GlobalSearchTemplatesService {
         globalSearchTemplates.put('publicPackages', publicPackages())
         globalSearchTemplates.put('platforms', platforms())
         globalSearchTemplates.put('refdataCategories', refdataCategories())
+        globalSearchTemplates.put('refdataCategoriesPublic', refdataCategoriesPublic())
         globalSearchTemplates.put('refdataValues', refdataValues())
         globalSearchTemplates.put('sources', sources())
         globalSearchTemplates.put('tipps', tipps())
@@ -1194,6 +1195,33 @@ class GlobalSearchTemplatesService {
                                 [heading: 'Date Created', property: 'dateCreated', sort: 'dateCreated'],
                                 [heading: 'Last Updated', property: 'lastUpdated', sort: 'lastUpdated'],
                                 [heading: 'Refdata Values', sort: 'valuesCount', property: 'valuesCount'],
+                        ]
+                ]
+        ]
+
+        result
+    }
+
+    Map refdataCategoriesPublic() {
+        Map result = [
+                baseclass: 'wekb.RefdataCategory',
+                msgCode    : 'refdatacategory.plural',
+                title    : 'Reference Data Categories ',
+                defaultSort : 'desc',
+                defaultOrder: 'asc',
+                qbeConfig: [
+                        qbeForm   : [
+                                [
+                                        prompt     : 'Name',
+                                        qparam     : 'qp_desc',
+                                        placeholder: 'Category Name EN',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'desc_en', 'wildcard': 'B']
+                                ],
+                        ],
+                        qbeResults: [
+                                [heading: 'Name EN', sort: 'desc_en', property: 'desc_en'],
+                                [heading: 'Name DE', sort: 'desc_de', property: 'desc_de'],
+                                [heading: 'Refdata Values', sort: 'valuesCount', property: 'valuesCount', link: true]
                         ]
                 ]
         ]
