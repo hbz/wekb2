@@ -323,7 +323,7 @@ ComponentVariantName.VariantType;Alternate Title;Alternate Title;Alternate Title
 Org.Role;Content Provider;Content Provider;Content Provider
 Org.Role;Platform Provider;Platform Provider;Platform Provider
 Org.Role;Publisher;Publisher;Publisher
-Org.Role;Vendor;Vendor;Vendor
+Vendor.Role;Vendor;Vendor;Vendor
 Package.Breakable;No;No;No
 Package.Breakable;Unknown;Unknown;Unknown
 Package.Breakable;Yes;Yes;Yes

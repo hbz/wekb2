@@ -16,6 +16,7 @@ ComponentVariantName.Locale;Component VariantName Locale;Component VariantName L
 ComponentVariantName.Status;Component VariantName Status;Component VariantName Status
 ComponentVariantName.VariantType;Component VariantName VariantType;Component VariantName VariantType
 Org.Role;Org Role;Org Role
+Vendor.Role;Vendor Role;Vendor Role
 Package.Breakable;Package Breakable;Package Breakable
 Package.Consistent;Package Consistent;Package Consistent
 Package.ContentType;Package Content Type;Package Content Type

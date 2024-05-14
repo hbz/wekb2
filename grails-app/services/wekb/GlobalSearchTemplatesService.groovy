@@ -1888,7 +1888,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'lookup',
                                         baseClass  : 'wekb.RefdataValue',
-                                        filter1    : RCConstants.ORG_ROLE,
+                                        filter1    : RCConstants.VENDOR_ROLE,
                                         prompt     : 'Role',
                                         msgCode    : 'vendor.role',
                                         qparam     : 'qp_roles',
