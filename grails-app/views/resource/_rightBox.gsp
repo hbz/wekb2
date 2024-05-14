@@ -17,7 +17,14 @@
                     <g:each in="${curatoryGroups.sort { it.name }}" var="curatoryGroup">
                         <div class="item">
                             <g:link controller="resource" action="show"
-                                    id="${curatoryGroup.getOID()}">${curatoryGroup.name}</g:link>
+                                    id="${curatoryGroup.getOID()}">${curatoryGroup.name}
+                            </g:link>
+
+                            <g:if test="${curatoryGroups.size() == 1 && curatoryGroup.orgs?.size() == 1 && curatoryGroup.orgs[0].org.name != curatoryGroup.name}">
+                                <g:link controller="resource" action="show"
+                                        id="${curatoryGroup.orgs[0].org.getOID()}">(${curatoryGroup.orgs[0].org.name})
+                                </g:link>
+                            </g:if>
 
                             <g:if test="${params.curationOverride == 'true' && d.hasProperty('curatoryGroups') && isUserLoggedIn && SpringSecurityUtils.ifAnyGranted("ROLE_ADMIN")}">
                                 <g:link controller="ajaxHtml" action="removeCuratoryGroupFromObject"
