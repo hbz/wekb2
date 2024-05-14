@@ -32,6 +32,14 @@
             </dd>
         </dl>
         <dl>
+            <dt class="control-label"><g:message code="package.description"/></dt>
+            <dd><g:if test="${!createObject}">
+                <semui:xEditable owner="${d}" type="textarea" field="description"/>
+            </g:if>
+            </dd>
+
+        </dl>
+        <dl>
             <dt class="control-label">
                 <g:message code="org.homepage"/>
             </dt>

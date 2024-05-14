@@ -1294,11 +1294,13 @@ class Api2Service {
                 result.kbartDownloaderURL = object.kbartDownloaderURL
                 result.metadataDownloaderURL = object.metadataDownloaderURL
                 result.homepage = object.homepage
+                result.description = object.description
 
                 result.paperInvoice = object.paperInvoice ? RDStore.YN_YES.value : RDStore.YN_NO.value
                 result.managementOfCredits = object.managementOfCredits ? RDStore.YN_YES.value : RDStore.YN_NO.value
                 result.processingOfCompensationPayments = object.processingOfCompensationPayments ? RDStore.YN_YES.value : RDStore.YN_NO.value
                 result.individualInvoiceDesign = object.individualInvoiceDesign ? RDStore.YN_YES.value : RDStore.YN_NO.value
+                result.invoicingYourself = object.invoicingYourself ? RDStore.YN_YES.value : RDStore.YN_NO.value
 
                 result.roles = []
                 object.roles.each { role ->
