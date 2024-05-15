@@ -19,6 +19,7 @@ class GlobalSearchTemplatesService {
         globalSearchTemplates.put('publicPackages', publicPackages())
         globalSearchTemplates.put('platforms', platforms())
         globalSearchTemplates.put('refdataCategories', refdataCategories())
+        globalSearchTemplates.put('refdataCategoriesPublic', refdataCategoriesPublic())
         globalSearchTemplates.put('refdataValues', refdataValues())
         globalSearchTemplates.put('sources', sources())
         globalSearchTemplates.put('tipps', tipps())
@@ -1201,6 +1202,33 @@ class GlobalSearchTemplatesService {
         result
     }
 
+    Map refdataCategoriesPublic() {
+        Map result = [
+                baseclass: 'wekb.RefdataCategory',
+                msgCode    : 'refdatacategory.plural',
+                title    : 'Reference Data Categories ',
+                defaultSort : 'desc',
+                defaultOrder: 'asc',
+                qbeConfig: [
+                        qbeForm   : [
+                                [
+                                        prompt     : 'Name',
+                                        qparam     : 'qp_desc',
+                                        placeholder: 'Category Name EN',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'desc_en', 'wildcard': 'B']
+                                ],
+                        ],
+                        qbeResults: [
+                                [heading: 'Name EN', sort: 'desc_en', property: 'desc_en'],
+                                [heading: 'Name DE', sort: 'desc_de', property: 'desc_de'],
+                                [heading: 'Refdata Values', sort: 'valuesCount', property: 'valuesCount', link: true]
+                        ]
+                ]
+        ]
+
+        result
+    }
+
     Map refdataValues() {
         Map result = [
                 baseclass: 'wekb.RefdataValue',
@@ -1860,7 +1888,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'lookup',
                                         baseClass  : 'wekb.RefdataValue',
-                                        filter1    : RCConstants.ORG_ROLE,
+                                        filter1    : RCConstants.VENDOR_ROLE,
                                         prompt     : 'Role',
                                         msgCode    : 'vendor.role',
                                         qparam     : 'qp_roles',

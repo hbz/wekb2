@@ -32,6 +32,14 @@
             </dd>
         </dl>
         <dl>
+            <dt class="control-label"><g:message code="package.description"/></dt>
+            <dd><g:if test="${!createObject}">
+                <semui:xEditable owner="${d}" type="textarea" field="description"/>
+            </g:if>
+            </dd>
+
+        </dl>
+        <dl>
             <dt class="control-label">
                 <g:message code="org.homepage"/>
             </dt>
@@ -187,7 +195,7 @@
                     <div class="field">
                         <label>Role:</label> <semui:simpleReferenceDropdown name="__relatedObject"
                                                                             baseClass="wekb.RefdataValue"
-                                                                            filter1="${RCConstants.ORG_ROLE}"/>
+                                                                            filter1="${RCConstants.VENDOR_ROLE}"/>
                     </div>
                 </g:form>
             </semui:modal>

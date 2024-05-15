@@ -26,10 +26,14 @@ class Org extends AbstractBase implements Auditable {
   String metadataDownloaderURL
   String kbartDownloaderURL
 
+  String description
+
   boolean paperInvoice  = false
   boolean managementOfCredits  = false
   boolean processingOfCompensationPayments  = false
   boolean individualInvoiceDesign  = false
+
+  boolean invoicingYourself  = false
 
   Set variantNames = []
 
@@ -70,6 +74,10 @@ class Org extends AbstractBase implements Auditable {
     managementOfCredits column: 'org_management_of_credits'
     processingOfCompensationPayments column: 'org_pro_of_com_pay'
     individualInvoiceDesign column: 'org_ind_invoice_design'
+
+    description column: 'org_description', type: 'text'
+
+    invoicingYourself column: 'org_invoicing_yourself'
   }
 
   static constraints = {
@@ -90,6 +98,8 @@ class Org extends AbstractBase implements Auditable {
         }
       }
     })
+
+    description(nullable: true, blank: true)
   }
 
   @Override

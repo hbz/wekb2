@@ -265,6 +265,7 @@ class PublicController {
       log.error("Problem with export",e);
       flash.error = 'Bug in Export. Export not possible at the moment! '
       redirect(url: request.getHeader('referer'))
+      return
     }
   }
 

@@ -1,11 +1,11 @@
-<%@ page import="wekb.helper.RCConstants" %>
+<%@ page import="wekb.helper.RDStore; wekb.RefdataCategory; wekb.helper.RCConstants" %>
 <g:if test="${d.id}">
     <semui:tabs>
-        <semui:tabsItemWithoutLink tab="identifiers" defaultTab="identifiers" activeTab="${params.activeTab}" counts="${d.ids.size()}">
-            Identifiers
-        </semui:tabsItemWithoutLink>
-        <semui:tabsItemWithoutLink tab="invoice" activeTab="${params.activeTab}">
+        <semui:tabsItemWithoutLink tab="invoice" defaultTab="invoice" activeTab="${params.activeTab}">
             Invoicing
+        </semui:tabsItemWithoutLink>
+        <semui:tabsItemWithoutLink tab="identifiers" activeTab="${params.activeTab}" counts="${d.ids.size()}">
+            Identifiers
         </semui:tabsItemWithoutLink>
         <semui:tabsItemWithoutLink tab="variantNames" activeTab="${params.activeTab}" counts="${d.variantNames.size()}">
             Alternate Names
@@ -30,169 +30,199 @@
         <div class="content wekb-inline-lists">
             <dl>
                 <dt class="control-label">
-                    Electronic Invoice Formats
+                    Independent Invoicing
                 </dt>
                 <dd>
-                    <table class="ui small selectable striped celled table">
-                        <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Format</th>
-                            <g:if test="${editable}">
-                                <th>Action</th>
-                            </g:if>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <g:each in="${d.electronicBillings.sort { it.electronicBilling.value }}"
-                                var="vendorElectronicBilling" status="i">
-                            <tr>
-                                <td>${i + 1}</td>
-                            <td><semui:xEditableRefData owner="${vendorElectronicBilling}" field="electronicBilling"
-                                config="${RCConstants.VENDOR_ELECTRONIC_BILLING}"/>
-                                <g:if test="${editable}">
-                                    <td>
-
-                                        <g:link controller='ajaxHtml'
-                                                action='delete'
-                                                params="${["__context": "${vendorElectronicBilling.getOID()}", curationOverride: params.curationOverride]}">Delete</g:link>
-
-                                    </td>
-                                </g:if>
-                            </tr>
-                        </g:each>
-                        </tbody>
-                    </table>
-
                     <g:if test="${editable}">
-                        <a class="ui right floated primary button" href="#"
-                           onclick="$('#electronicBillingsModal').modal('show');">Add Electronic Invoice Format</a>
-
-                        <br>
-                        <br>
-
-                        <semui:modal id="electronicBillingsModal" title="Add supported Library System">
-
-                            <g:form controller="ajaxHtml" action="addToCollection" class="ui form">
-                                <input type="hidden" name="__context" value="${d.getOID()}"/>
-                                <input type="hidden" name="__newObjectClass" value="wekb.ProviderElectronicBilling"/>
-                                <input type="hidden" name="__recip" value="provider"/>
-                                <input type="hidden" name="curationOverride" value="${params.curationOverride}"/>
-                                <input type="hidden" name="activeTab" value="invoice"/>
-
-
-                                <div class="field">
-                                    <label>Electronic Invoice Format:</label> <semui:simpleReferenceDropdown
-                                        name="electronicBilling"
-                                        baseClass="wekb.RefdataValue"
-                                        filter1="${RCConstants.VENDOR_ELECTRONIC_BILLING}"/>
-                                </div>
-                            </g:form>
-                        </semui:modal>
+                        <g:form controller="ajaxHtml" action="setInvoicingYourself" id="${d.id}">
+                            <g:select from="${RefdataCategory.lookup(RCConstants.YN).sort { it.value }}"
+                                      class="ui dropdown fluid"
+                                      id="invoicingYourself"
+                                      optionKey="value"
+                                      optionValue="${{ it.getI10n('value') }}"
+                                      name="invoicingYourself"
+                                      value="${d.invoicingYourself ? RDStore.YN_YES.value : RDStore.YN_NO.value}" onChange="this.form.submit()"/>
+                        </g:form>
                     </g:if>
+                    <g:else>
+                        ${d.invoicingYourself ? RDStore.YN_YES.getI10n('value') : RDStore.YN_NO.getI10n('value') }
+                    </g:else>
                 </dd>
             </dl>
-            <dl>
-                <dt class="control-label">
-                    Invoice dispatch via
-                </dt>
-                <dd>
+                <g:if test="${d.invoicingYourself}">
+                    <div class="ui segment">
+                        <div class="ui top attached label">Independent Invoicing Informationen</div>
+                        <div class="content wekb-inline-lists">
+                            <dl>
+                                <dt class="control-label">
+                                    Electronic Invoice Formats
+                                </dt>
+                                <dd>
+                                    <table class="ui small selectable striped celled table">
+                                        <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Format</th>
+                                            <g:if test="${editable}">
+                                                <th>Action</th>
+                                            </g:if>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <g:each in="${d.electronicBillings.sort { it.electronicBilling.value }}"
+                                                var="vendorElectronicBilling" status="i">
+                                            <tr>
+                                                <td>${i + 1}</td>
+                                            <td><semui:xEditableRefData owner="${vendorElectronicBilling}" field="electronicBilling"
+                                                config="${RCConstants.VENDOR_ELECTRONIC_BILLING}"/>
+                                                <g:if test="${editable}">
+                                                    <td>
 
-                    <table class="ui small selectable striped celled table">
-                        <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Method</th>
-                            <g:if test="${editable}">
-                                <th>Action</th>
-                            </g:if>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <g:each in="${d.invoiceDispatchs.sort { it.invoiceDispatch.value }}" var="vendorInvoiceDispatch"
-                                status="i">
-                            <tr>
-                                <td>${i + 1}</td>
-                            <td><semui:xEditableRefData owner="${vendorInvoiceDispatch}" field="invoiceDispatch"
-                                config="${RCConstants.VENDOR_INVOICE_DISPATCH}"/>
-                                <g:if test="${editable}">
-                                    <td>
-                                        <g:link controller='ajaxHtml'
-                                                action='delete'
-                                                params="${["__context": "${vendorInvoiceDispatch.getOID()}", curationOverride: params.curationOverride]}">Delete</g:link>
+                                                        <g:link controller='ajaxHtml'
+                                                                action='delete'
+                                                                params="${["__context": "${vendorElectronicBilling.getOID()}", curationOverride: params.curationOverride]}">Delete</g:link>
 
-                                    </td>
-                                </g:if>
-                            </tr>
-                        </g:each>
-                        </tbody>
-                    </table>
+                                                    </td>
+                                                </g:if>
+                                            </tr>
+                                        </g:each>
+                                        </tbody>
+                                    </table>
 
-                    <g:if test="${editable}">
-                        <a class="ui right floated primary button" href="#"
-                           onclick="$('#invoiceDispatchsModal').modal('show');">Add Invoice dispatch</a>
+                                    <g:if test="${editable}">
+                                        <a class="ui right floated primary button" href="#"
+                                           onclick="$('#electronicBillingsModal').modal('show');">Add Electronic Invoice Format</a>
 
-                        <br>
-                        <br>
+                                        <br>
+                                        <br>
 
-                        <semui:modal id="invoiceDispatchsModal" title="Add supported Library System">
+                                        <semui:modal id="electronicBillingsModal" title="Add supported Library System">
 
-                            <g:form controller="ajaxHtml" action="addToCollection" class="ui form">
-                                <input type="hidden" name="__context" value="${d.getOID()}"/>
-                                <input type="hidden" name="__newObjectClass" value="wekb.ProviderInvoiceDispatch"/>
-                                <input type="hidden" name="__recip" value="provider"/>
-                                <input type="hidden" name="curationOverride" value="${params.curationOverride}"/>
-                                <input type="hidden" name="activeTab" value="invoice"/>
+                                            <g:form controller="ajaxHtml" action="addToCollection" class="ui form">
+                                                <input type="hidden" name="__context" value="${d.getOID()}"/>
+                                                <input type="hidden" name="__newObjectClass" value="wekb.ProviderElectronicBilling"/>
+                                                <input type="hidden" name="__recip" value="provider"/>
+                                                <input type="hidden" name="curationOverride" value="${params.curationOverride}"/>
+                                                <input type="hidden" name="activeTab" value="invoice"/>
 
 
-                                <div class="field">
-                                    <label>Method:</label> <semui:simpleReferenceDropdown
-                                        name="invoiceDispatch"
-                                        baseClass="wekb.RefdataValue"
-                                        filter1="${RCConstants.VENDOR_INVOICE_DISPATCH}"/>
-                                </div>
-                            </g:form>
-                        </semui:modal>
-                    </g:if>
-                </dd>
-            </dl>
-            <dl>
-                <dt class="control-label">
-                    Paper Invoice
-                </dt>
-                <dd>
-                    <semui:xEditableRefData owner="${d}" field="paperInvoice"
-                                            config="${RCConstants.YN}"/>
-                </dd>
-            </dl>
-            <dl>
-                <dt class="control-label">
-                    Management of Credits
-                </dt>
-                <dd>
-                    <semui:xEditableRefData owner="${d}" field="managementOfCredits"
-                                            config="${RCConstants.YN}"/>
-                </dd>
-            </dl>
-            <dl>
-                <dt class="control-label">
-                    Processing of compensation payments (credits/subsequent debits)
-                </dt>
-                <dd>
-                    <semui:xEditableRefData owner="${d}" field="processingOfCompensationPayments"
-                                            config="${RCConstants.YN}"/>
-                </dd>
-            </dl>
-            <dl>
-                <dt class="control-label">
-                    Individual invoice design
-                </dt>
-                <dd>
-                    <semui:xEditableRefData owner="${d}" field="individualInvoiceDesign"
-                                            config="${RCConstants.YN}"/>
-                </dd>
-            </dl>
+                                                <div class="field">
+                                                    <label>Electronic Invoice Format:</label> <semui:simpleReferenceDropdown
+                                                        name="electronicBilling"
+                                                        baseClass="wekb.RefdataValue"
+                                                        filter1="${RCConstants.VENDOR_ELECTRONIC_BILLING}"/>
+                                                </div>
+                                            </g:form>
+                                        </semui:modal>
+                                    </g:if>
+                                </dd>
+                            </dl>
+                            <dl>
+                                <dt class="control-label">
+                                    Invoice dispatch via
+                                </dt>
+                                <dd>
 
+                                    <table class="ui small selectable striped celled table">
+                                        <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Method</th>
+                                            <g:if test="${editable}">
+                                                <th>Action</th>
+                                            </g:if>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <g:each in="${d.invoiceDispatchs.sort { it.invoiceDispatch.value }}" var="vendorInvoiceDispatch"
+                                                status="i">
+                                            <tr>
+                                                <td>${i + 1}</td>
+                                            <td><semui:xEditableRefData owner="${vendorInvoiceDispatch}" field="invoiceDispatch"
+                                                config="${RCConstants.VENDOR_INVOICE_DISPATCH}"/>
+                                                <g:if test="${editable}">
+                                                    <td>
+                                                        <g:link controller='ajaxHtml'
+                                                                action='delete'
+                                                                params="${["__context": "${vendorInvoiceDispatch.getOID()}", curationOverride: params.curationOverride]}">Delete</g:link>
+
+                                                    </td>
+                                                </g:if>
+                                            </tr>
+                                        </g:each>
+                                        </tbody>
+                                    </table>
+
+                                    <g:if test="${editable}">
+                                        <a class="ui right floated primary button" href="#"
+                                           onclick="$('#invoiceDispatchsModal').modal('show');">Add Invoice dispatch</a>
+
+                                        <br>
+                                        <br>
+
+                                        <semui:modal id="invoiceDispatchsModal" title="Add supported Library System">
+
+                                            <g:form controller="ajaxHtml" action="addToCollection" class="ui form">
+                                                <input type="hidden" name="__context" value="${d.getOID()}"/>
+                                                <input type="hidden" name="__newObjectClass" value="wekb.ProviderInvoiceDispatch"/>
+                                                <input type="hidden" name="__recip" value="provider"/>
+                                                <input type="hidden" name="curationOverride" value="${params.curationOverride}"/>
+                                                <input type="hidden" name="activeTab" value="invoice"/>
+
+
+                                                <div class="field">
+                                                    <label>Method:</label> <semui:simpleReferenceDropdown
+                                                        name="invoiceDispatch"
+                                                        baseClass="wekb.RefdataValue"
+                                                        filter1="${RCConstants.VENDOR_INVOICE_DISPATCH}"/>
+                                                </div>
+                                            </g:form>
+                                        </semui:modal>
+                                    </g:if>
+                                </dd>
+                            </dl>
+                            <dl>
+                                <dt class="control-label">
+                                    Paper Invoice
+                                </dt>
+                                <dd>
+                                    <semui:xEditableRefData owner="${d}" field="paperInvoice"
+                                                            config="${RCConstants.YN}"/>
+                                </dd>
+                            </dl>
+                            <dl>
+                                <dt class="control-label">
+                                    Management of Credits
+                                </dt>
+                                <dd>
+                                    <semui:xEditableRefData owner="${d}" field="managementOfCredits"
+                                                            config="${RCConstants.YN}"/>
+                                </dd>
+                            </dl>
+                            <dl>
+                                <dt class="control-label">
+                                    Processing of compensation payments (credits/subsequent debits)
+                                </dt>
+                                <dd>
+                                    <semui:xEditableRefData owner="${d}" field="processingOfCompensationPayments"
+                                                            config="${RCConstants.YN}"/>
+                                </dd>
+                            </dl>
+                            <dl>
+                                <dt class="control-label">
+                                    Individual invoice design
+                                </dt>
+                                <dd>
+                                    <semui:xEditableRefData owner="${d}" field="individualInvoiceDesign"
+                                                            config="${RCConstants.YN}"/>
+                                </dd>
+                            </dl>
+                        </div>
+                    </div>
+                </g:if>
+        </div>
+
+        <div class="content wekb-inline-lists">
             <dl>
                 <dt class="control-label">
                     Invoicing possible by vendor
