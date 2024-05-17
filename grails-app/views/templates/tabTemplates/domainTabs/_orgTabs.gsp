@@ -30,7 +30,7 @@
         <div class="content wekb-inline-lists">
             <dl>
                 <dt class="control-label">
-                    Independent Invoicing
+                    Inhouse Invoicing
                 </dt>
                 <dd>
                     <g:if test="${editable}">
