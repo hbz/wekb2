@@ -40,8 +40,7 @@ databaseChangeLog = {
                     if(org.curatoryGroups.size() == 1){
                         CuratoryGroup curatoryGroup = org.curatoryGroups.curatoryGroup[0]
                         if(curatoryGroup && org.name != curatoryGroup.name){
-                            curatoryGroup.name = org.name
-                            curatoryGroup.save()
+                            CuratoryGroup.executeUpdate("update CuratoryGroup as c set c.name = :newName where c = :curatoryGroup", [newName: org.name, curatoryGroup: curatoryGroup])
                         }
                     }
                 }
