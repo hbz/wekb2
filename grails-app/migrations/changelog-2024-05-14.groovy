@@ -1,3 +1,6 @@
+import wekb.CuratoryGroup
+import wekb.Org
+
 databaseChangeLog = {
 
     changeSet(author: "djebeniani (generated)", id: "1715670174551-1") {
@@ -26,6 +29,22 @@ databaseChangeLog = {
             change {
                 sql.execute('''alter table org alter column org_invoicing_yourself set not null;''')
                 rollback {}
+            }
+        }
+    }
+
+    changeSet(author: "djebeniani (hand-coded))", id: "1715670174551-5") {
+        grailsChange {
+            change {
+                Org.getAll().each {Org org ->
+                    if(org.curatoryGroups.size() == 1){
+                        CuratoryGroup curatoryGroup = org.curatoryGroups.curatoryGroup[0]
+                        if(curatoryGroup && org.name != curatoryGroup.name){
+                            curatoryGroup.name = org.name
+                            curatoryGroup.save()
+                        }
+                    }
+                }
             }
         }
     }
