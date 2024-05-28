@@ -377,7 +377,7 @@ class Api2Service {
                                 ],
                                 [
                                         qparam     : 'uuid',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'uuid']
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'uuid']
                                 ],
                                 //spec Fields
                                 [
@@ -448,7 +448,7 @@ class Api2Service {
                                 ],
                                 [
                                         qparam     : 'uuid',
-                                        whereClause    : 'tipp_uuid = :uuid'
+                                        whereClause    : 'tipp_uuid = any(:uuid)'
                                 ],
                                 //spec Fields
                                 [
