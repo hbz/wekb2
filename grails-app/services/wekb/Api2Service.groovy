@@ -377,10 +377,6 @@ class Api2Service {
                                 ],
                                 [
                                         qparam     : 'uuid',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'uuid']
-                                ],
-                                [
-                                        qparam     : 'uuids',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'uuid']
                                 ],
                                 //spec Fields
