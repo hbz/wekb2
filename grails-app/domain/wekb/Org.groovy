@@ -117,6 +117,17 @@ class Org extends AbstractBase implements Auditable {
     super.beforeDeleteHandler()
   }
 
+  def afterUpdate() {
+    if(this.curatoryGroups.size() == 1){
+      String newName = this.getProperty('name')
+      CuratoryGroup curatoryGroup = this.curatoryGroups.curatoryGroup[0]
+      if(newName && newName != '' && curatoryGroup && newName != curatoryGroup.name){
+        CuratoryGroup.executeUpdate("update CuratoryGroup as c set c.name = :newName where c = :curatoryGroup", [newName: newName, curatoryGroup: curatoryGroup])
+      }
+
+    }
+  }
+
   static def refdataFind(params) {
     def result = [];
     def status_deleted = RDStore.KBC_STATUS_DELETED
