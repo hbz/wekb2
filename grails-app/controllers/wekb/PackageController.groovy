@@ -162,7 +162,7 @@ class PackageController {
                     MultipartFile tsvFile = request.getFile("tsvFile")
                     if (tsvFile && tsvFile.size > 0) {
                         String encoding = UniversalDetector.detectCharset(tsvFile.getInputStream())
-                        if (encoding in ["UTF-8"]) {
+                        if (encoding in ["UTF-8", "WINDOWS-1252", "US-ASCII"]) {
                             if (pkg.status in [RDStore.KBC_STATUS_REMOVED, RDStore.KBC_STATUS_DELETED]) {
                                 String errorText = "Package status is ${pkg.status.value}. Update for this package is not starting."
                                 flash.error = errorText
