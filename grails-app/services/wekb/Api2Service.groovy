@@ -176,7 +176,7 @@ class Api2Service {
                                 ],
                                 [
                                         qparam     : 'provider',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike_Combine_Name_And_VariantNames_And_AbbreviatedName_Provider', 'prop': 'provider.name', 'wildcard': 'B']
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike_Combine_Name_And_VariantNames_And_AbbreviatedName_Provider_Pkg', 'prop': 'provider.name', 'wildcard': 'B']
                                 ],
                                 [
                                         type       : 'lookup',
