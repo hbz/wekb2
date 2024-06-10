@@ -176,7 +176,7 @@ class Api2Service {
                                 ],
                                 [
                                         qparam     : 'provider',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike_Combine_Name_And_VariantNames_And_AbbreviatedName_Provider', 'prop': 'provider.name', 'wildcard': 'B']
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike_Combine_Name_And_VariantNames_And_AbbreviatedName_Provider_Pkg', 'prop': 'provider.name', 'wildcard': 'B']
                                 ],
                                 [
                                         type       : 'lookup',
@@ -262,6 +262,10 @@ class Api2Service {
                                 [
                                         qparam     : 'uuid',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'uuid']
+                                ],
+                                [
+                                        qparam     : 'uuids',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'uuid']
                                 ],
                                 //spec Fields
                                 [
@@ -377,6 +381,10 @@ class Api2Service {
                                 ],
                                 [
                                         qparam     : 'uuid',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'uuid']
+                                ],
+                                [
+                                        qparam     : 'uuids',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'uuid']
                                 ],
                                 //spec Fields
@@ -591,6 +599,10 @@ class Api2Service {
                                         qparam     : 'uuid',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'uuid']
                                 ],
+                                [
+                                        qparam     : 'uuids',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'uuid']
+                                ],
                                 //spec Fields
                                 [
                                         type       : 'lookup',
@@ -663,6 +675,10 @@ class Api2Service {
                                 [
                                         qparam     : 'uuid',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'uuid']
+                                ],
+                                [
+                                        qparam     : 'uuids',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'uuid']
                                 ],
 
                         ],
