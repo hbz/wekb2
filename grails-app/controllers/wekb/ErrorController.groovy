@@ -1,6 +1,7 @@
 package wekb
 
 import grails.converters.JSON
+import grails.plugin.springsecurity.SpringSecurityService
 import grails.util.Environment
 import groovy.util.logging.Slf4j
 import org.grails.exceptions.ExceptionUtils
@@ -8,8 +9,10 @@ import org.grails.exceptions.ExceptionUtils
 @Slf4j
 class ErrorController {
 
+    SpringSecurityService springSecurityService
+
     def serverError() {
-        log.debug("serverError-> ${request.forwardURI} -> params: " + params)
+        log.error("serverError-> ${request.forwardURI} -> params: " + params)
         def resp = [code: 500, message: 'Server Error']
         def exception = request.getAttribute('exception') ?: request.getAttribute('javax.servlet.error.exception')
 
@@ -30,12 +33,17 @@ class ErrorController {
                             "Date/Time: " + new Date() + nl +
                             "Class: " + (root?.class?.name ?: exception.class.name) + nl
 
-            if (excep.message) {
-                resp.mailString += "Message: " + excep.message + nl
+            if(springSecurityService.isLoggedIn()) {
+                if (excep.message) {
+                    resp.mailString += "Message: " + excep.message + nl
+                }
+                if (root?.message != excep.message) {
+                    resp.mailString += "Cause: " + root.message + nl
+                }
             }
-            if (root?.message != excep.message) {
-                resp.mailString += "Cause: " + root.message + nl
-            }
+
+            log.error(excep?.getMessage())
+            log.error(excep?.getStackTrace())
         }
 
         withFormat {
@@ -132,12 +140,17 @@ class ErrorController {
                             "Date/Time: " + new Date() + nl +
                             "Class: " + (root?.class?.name ?: exception.class.name) + nl
 
-            if (excep.message) {
-                resp.mailString += "Message: " + excep.message + nl
+            if(springSecurityService.isLoggedIn()) {
+                if (excep.message) {
+                    resp.mailString += "Message: " + excep.message + nl
+                }
+                if (root?.message != excep.message) {
+                    resp.mailString += "Cause: " + root.message + nl
+                }
             }
-            if (root?.message != excep.message) {
-                resp.mailString += "Cause: " + root.message + nl
-            }
+
+            log.error(excep?.getMessage())
+            log.error(excep?.getStackTrace())
         }
 
         withFormat {

@@ -22,7 +22,7 @@ class TIPPCoverageStatement extends AbstractBase {
   Date dateCreated
   Date lastUpdated
 
-  @RefdataAnnotation(cat = RCConstants.TIPP_COVERAGE_DEPTH)
+  @RefdataAnnotation(cat = RCConstants.TIPPCOVERAGESTATEMENT_COVERAGE_DEPTH)
   RefdataValue coverageDepth
 
   static belongsTo = [

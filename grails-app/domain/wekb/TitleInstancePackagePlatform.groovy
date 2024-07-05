@@ -224,19 +224,19 @@ class TitleInstancePackagePlatform  extends AbstractBase implements Auditable {
     if (publicationType) {
       switch (publicationType) {
         case RDStore.TIPP_PUBLIC_TYPE_SERIAL:
-          return "Journal"
+          return "serial"
           break;
         case RDStore.TIPP_PUBLIC_TYPE_MONO:
-          return "Book"
+          return "monograph"
           break;
         case RDStore.TIPP_PUBLIC_TYPE_DB:
-          return "Database"
+          return "database"
           break;
         case RDStore.TIPP_PUBLIC_TYPE_OTHER:
-          return "Other"
+          return "other"
           break;
         default:
-          return "Title"
+          return "title"
           break;
       }
     }
