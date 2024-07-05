@@ -22,13 +22,17 @@
     <br />
     <br />
     <g:if test="${exception}">
-        <p>${exception.message}</p>
-        <br/>
+        <sec:ifLoggedIn>
+            <p>${exception.message}</p>
+            <br/>
+        </sec:ifLoggedIn>
+
         <p>
             <a href="mailto:laser@hbz-nrw.de?${mailString}">
                 Send Mail to support
             </a>
         </p>
+
     </g:if>
     <br />
     <br />
@@ -40,7 +44,9 @@
 </div>
 
 <g:if test="${wekb.utils.ServerUtils.getCurrentServer() == wekb.utils.ServerUtils.SERVER_DEV}">
+    <sec:ifLoggedIn>
     <g:renderException exception="${exception}"/>
+    </sec:ifLoggedIn>
 </g:if>
 <g:elseif env="development">
     <g:renderException exception="${exception}"/>
