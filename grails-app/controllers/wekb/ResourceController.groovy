@@ -36,6 +36,14 @@ class ResourceController {
       if (oid) {
         displayobj = genericOIDService.resolveOID(oid)
       }else {
+        Set<Class> classesWithUuid = [TitleInstancePackagePlatform.class, Package.class, Platform.class, KbartSource.class,
+                                      Org.class, Vendor.class, CuratoryGroup.class, Identifier.class, UpdatePackageInfo.class, UpdateTippInfo.class]
+        int clscnt = 0
+        while(displayobj == null && clscnt < classesWithUuid.size()) {
+          displayobj = classesWithUuid[clscnt].findByUuid(params.id)
+          clscnt++
+        }
+        /*
         if (TitleInstancePackagePlatform.findByUuid(params.id)) {
           displayobj = TitleInstancePackagePlatform.findByUuid(params.id)
         } else if (Package.findByUuid(params.id)) {
@@ -55,6 +63,7 @@ class ResourceController {
         } else if (UpdateTippInfo.findByUuid(params.id)) {
           displayobj = UpdateTippInfo.findByUuid(params.id)
         }
+        */
       }
 
       if (displayobj) {
@@ -96,6 +105,18 @@ class ResourceController {
               }
 
               result.editable = accessService.checkEditableObject(displayobj, params)
+
+              if(displayobj instanceof Package){
+                Set<Thread> threadSet = Thread.getAllStackTraces().keySet()
+                Thread[] threadArray = threadSet.toArray(new Thread[threadSet.size()])
+                threadArray.each { Thread thread ->
+                  if (thread.name == 'uPFKS' + displayobj.id) {
+                    flash.info = 'The KBART Update process is still running in the background!'
+                  }else if (thread.name == 'kImport' + displayobj.id) {
+                    flash.info = 'The manual KBART import process is still running in the background!'
+                  }
+                }
+              }
 
             } else {
               flash.error = "You have no permission to view this resource."

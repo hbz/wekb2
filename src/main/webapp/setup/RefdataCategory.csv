@@ -1,7 +1,4 @@
 token;desc_de;desc_en
-Activity.Status;Activity Status;Activity Status
-Activity.Type;Activity Type;Activity Type
-AllocatedReviewGroup.Status;Allocated Review Group Status;Allocated Review Group Status
 Update.Status;Update Status;Update Status
 Update.Type;Update Type;Update Type
 Contact.Content.Type; Contact Content Type; Contact Content Type
@@ -9,27 +6,23 @@ Contact.Type; Contact Type; Contact Type
 Country;Country;Country
 CuratoryGroup.Type;CuratoryGroup Type;CuratoryGroup Type
 Currency;Currency;Currency
-DCType;DCType;DCType
 DDC;Dewey-Dezimalklassifikation;Dewey Decimal Classification
 DeletedComponent.Status;DeletedComponent Status;DeletedComponent Status
 IdentifierNamespace.TargetType;Identifier Namespace Target Type;Identifier Namespace Target Type
-ingest.filetype;ingest filetype;ingest filetype
 Job.Type;Job Type;Job Type
 Component.Language;Component Language;Component Language
 Component.Status;Component Status;Component Status
 ComponentVariantName.Locale;Component VariantName Locale;Component VariantName Locale
 ComponentVariantName.Status;Component VariantName Status;Component VariantName Status
 ComponentVariantName.VariantType;Component VariantName VariantType;Component VariantName VariantType
-MembershipRole;Membership Role;Membership Role
-MembershipStatus;Membership Status;Membership Status
 Org.Role;Org Role;Org Role
+Vendor.Role;Vendor Role;Vendor Role
 Package.Breakable;Package Breakable;Package Breakable
 Package.Consistent;Package Consistent;Package Consistent
 Package.ContentType;Package Content Type;Package Content Type
 Package.Editing.Status;Package Editing Status;Package Editing Status
 Package.File;Package File;Package File
 Package.Global;Package Global;Package Global
-Package.LinkType;Package Link Type;Package Link Type
 Package.OpenAccess;Package Open Access;Package Open Access
 Package.RegionalRange; Package RegionalRange; Package RegionalRange
 Package.PaymentType;Package Payment Type;Package Payment Type
@@ -47,21 +40,19 @@ Platform.Statistics.Format;Platform Statistics Format;Platform Statistics Format
 Platform.Statistics.Update;Platform Statistics Update;Platform Statistics Update
 Platform.Sushi.Api.Authentication.Method;Platform Sushi Api Authentication Method;Platform Sushi Api Authentication Method
 Price.type;Price type;Price type
-RDFDataType;RDF Data Type;RDF Data Type
-ReviewRequest.Status;Review Request Status;Review Request Status
-ReviewRequest.StdDesc;Review Request Std Desc;Review Request Std Desc
-ReviewRequest.Type;Review Request Type;Review Request Type
 Source.DataFormat;Source Data Format;Source Data Format
 Source.DataSupplyMethod;Source Data Supply Method;Source Data Supply Method
 Source.Frequency;Source Frequency;Source Frequency
-Tipp.LinkType;Tipp Link Type;Tipp Link Type
-Tipp.StatusReason;Tipp Status Reason;Tipp Status Reason
-TIPPCoverageStatement.CoverageDepth;TIPP CoverageStatement Coverage Depth;TIPP CoverageStatement Coverage Depth
-TitleInstancePackagePlatform.AccessType;TitleInstancePackagePlatform Access Type;TitleInstancePackagePlatform Access Type
-TitleInstancePackagePlatform.CoverageDepth;TitleInstancePackagePlatform Coverage Depth;TitleInstancePackagePlatform Coverage Depth
-TitleInstancePackagePlatform.DelayedOA;TitleInstancePackagePlatform Delayed OA;TitleInstancePackagePlatform Delayed OA
-TitleInstancePackagePlatform.Medium;TitleInstancePackagePlatform Medium;TitleInstancePackagePlatform Medium
-TitleInstancePackagePlatform.OpenAccess;Tipp Open Access;Tipp Open Access
-TitleInstancePackagePlatform.Primary;TitleInstancePackagePlatform Primary;TitleInstancePackagePlatform Primary
-TitleInstancePackagePlatform.PublicationType;TitleInstancePackagePlatform Publication Type;TitleInstancePackagePlatform Publication Type
+TIPPCoverageStatement.CoverageDepth;Title CoverageStatement Coverage Depth;Title CoverageStatement Coverage Depth
+TitleInstancePackagePlatform.AccessType;Title Access Type;Title Access Type
+TitleInstancePackagePlatform.CoverageDepth;Title Coverage Depth;Title Coverage Depth
+TitleInstancePackagePlatform.DelayedOA;Title Delayed OA;Title Delayed OA
+TitleInstancePackagePlatform.Medium;Title Medium;TitleInstancePackagePlatform Medium
+TitleInstancePackagePlatform.OpenAccess;Title Open Access;Title Open Access
+TitleInstancePackagePlatform.Primary;Title Primary;Title Primary
+TitleInstancePackagePlatform.PublicationType;Title Publication Type;Title Publication Type
+Vendor.SupportedLibrarySystem;Supported Library System;Supported Library System
+Vendor.ElectronicBilling;Electronic Billing;Electronic Billing
+Vendor.InvoiceDispatch;Invoice Dispatch;Invoice Dispatch
+Vendor.ElectronicDeliveryDelay;Electronic Delivery Delay;Electronic Delivery Delay
 YN;YN;YN

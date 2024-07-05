@@ -18,12 +18,15 @@
 
 //=require modules/verticalNavi.js
 
+//=require modules/paginationNavi.js
+
 console.log('+ wekb.js')
 
 
 $(function () {
 
     verticalNavi.go();
+    paginationNavi.go();
 
     $('.ui.sticky')
         .sticky({
@@ -56,8 +59,8 @@ $(function () {
     //Editable
     $.fn.editable.defaults.mode = 'inline';
     $.fn.editable.defaults.onblur = 'ignore';
-    $.fn.editableform.buttons = '<button type="submit" class="ui icon black button editable-submit"><i aria-hidden="true" class="check icon"></i></button>' +
-        '<button type="button" class="ui icon black button editable-cancel"><i aria-hidden="true" class="times icon"></i></button>';
+    $.fn.editableform.buttons = '<button type="submit" class="ui icon primary button editable-submit"><i aria-hidden="true" class="check icon"></i></button>' +
+        '<button type="button" class="ui icon primary button editable-cancel"><i aria-hidden="true" class="times icon"></i></button>';
     $.fn.editableform.buttonImage = "images/ui-bg_glass_95_fef1ec_1x400.png";
     $.fn.editableform.template =
         '<form class="ui form editableform">' +
@@ -69,7 +72,6 @@ $(function () {
         '			</div>' +
         '		</div>' +
         '        <div id="characters-count"></div>' +
-        '		<div class="editable-error-block">' +
         '		</div>' +
         '	</div>' +
         '</form>';
@@ -97,7 +99,7 @@ $(function () {
                     }
                 }
                 if (dVal.includes('url')) {
-                    var regex = /^(https?|ftp):\/\/(.)*/;
+                    var regex = /^(https?|ftp|http):\/\/(.)*/;
                     var test = regex.test($.trim(value)) || $.trim(value) == ''
                     if (! test) {
                         return "The url must beginn with 'http://' or 'https://' or 'ftp://'."
@@ -231,6 +233,9 @@ $(function () {
             }
         }
     });
+    $('#spotlightSearch .prompt').removeAttr('autocomplete');
+    $('.search.dropdown .search').removeAttr('autocomplete');
+
 
     $(".simpleReferenceDropdown").each(function() {
         var simpleReferenceDropdownURL = ajaxLookUp + "/?baseClass="+$(this).children('input')[0].getAttribute('data-domain')+"&filter1="+$(this).children('input')[0].getAttribute('data-filter1')+"&q={query}"
@@ -263,9 +268,9 @@ $(function () {
             onShow: function () {
                 current = $(this).val();
                 $(this).dropdown('set selected', current);
-
             }
         });
+        $(this).find('.search').removeAttr('autocomplete');
     });
 
     $('.message .close')
@@ -276,6 +281,79 @@ $(function () {
             ;
         })
     ;
+
+    // ----- pagination -----
+    $('.wekb.popup').each(function() {
+        $(this).popup()
+    });
+
+    $('nav.pagination').each (function () {
+        const $pagination = $(this)
+
+        const $input      = $pagination.find('.wekb-pagination-custom-input');
+        const $inputInput = $pagination.find('.wekb-pagination-custom-input input');
+        const $inputForm  = $pagination.find('.wekb-pagination-custom-input .ui.form');
+        const $link       = $pagination.find('.wekb-pagination-custom-link');
+
+        let stepsValue = $input.attr('data-steps');
+        let baseHref   = $link.attr('href');
+
+        $.fn.form.settings.rules.smallerEqualThanTotal = function (inputValue, validationValue) {
+            return parseInt(inputValue) <= validationValue;
+        };
+        $.fn.form.settings.rules.biggerThan = function (inputValue, validationValue) {
+            return parseInt(inputValue) > validationValue;
+        };
+
+        $inputInput.on ('input', function() {
+                let newOffset = ($(this).val() - 1) * $input.attr('data-max');
+                $link.attr('href', baseHref + '&offset=' + newOffset);
+            }).bind ('keypress', function(event) {
+                if (event.keyCode === 13){
+                    if ( validateInput() ) {
+                        $('html').css('cursor', 'wait');
+                        location.href = $link.attr('href');
+                    }
+                    else { event.preventDefault(); }
+                }
+            });
+
+        $link.on ('click', function(event) {
+            if ( validateInput() ) {
+                $('html').css('cursor', 'wait');
+            }
+            else { event.preventDefault(); }
+        });
+
+        let validateInput = function() {
+            $inputForm.form({
+                inline: true,
+                fields: {
+                    paginationCustomValidation: {
+                        identifier: $inputInput.attr('data-validate'),
+                        rules: [
+                            {
+                                type: "empty", prompt: 'Please enter a page number!'
+                            },
+                            {
+                                type: "integer", prompt: 'Please enter a page number!'
+                            },
+                            {
+                                type: "smallerEqualThanTotal[" + stepsValue + "]", prompt: 'Please enter a smaller page number!'
+                            },
+                            {
+                                type: "biggerThan[0]", prompt: 'Please enter a smaller page number!'
+                            }
+                        ]
+                    }
+                },
+                onInvalid: function() { return false; },
+                onValid: function()   { return true; }
+            });
+
+            return $inputForm.form('validate form');
+        }
+    });
 
 });
 

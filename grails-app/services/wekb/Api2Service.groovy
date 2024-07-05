@@ -8,6 +8,7 @@ import groovy.json.JsonSlurper
 import groovy.sql.GroovyRowResult
 import groovy.sql.Sql
 import org.grails.orm.hibernate.cfg.GrailsHibernateUtil
+import wekb.helper.RCConstants
 import wekb.helper.RDStore
 import wekb.utils.DateUtils
 
@@ -29,9 +30,12 @@ class Api2Service {
         ApiTemplates.put('platforms', platforms())
         ApiTemplates.put('tipps', tipps())
         ApiTemplates.put('tipps_sql', tipps_sql())
+        ApiTemplates.put('vendors', vendors())
         ApiTemplates.put('deletedKBComponents', deletedKBComponents())
 
     }
+
+    static List complexSortFields = ['titleCount', 'currentTippCount', 'deletedTippCount', 'retiredTippCount', 'expectedTippCount']
 
     public Map getApiTemplate(String type) {
         return ApiTemplates.get(type);
@@ -153,6 +157,10 @@ class Api2Service {
                                         qparam     : 'uuid',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'uuid']
                                 ],
+                                [
+                                        qparam     : 'uuids',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'uuid']
+                                ],
                                 //spec Fields
                                 [
                                         qparam     : 'variantNames',
@@ -168,7 +176,7 @@ class Api2Service {
                                 ],
                                 [
                                         qparam     : 'provider',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike_Combine_Name_And_VariantNames_And_AbbreviatedName_Provider', 'prop': 'provider.name', 'wildcard': 'B']
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike_Combine_Name_And_VariantNames_And_AbbreviatedName_Provider_Pkg', 'prop': 'provider.name', 'wildcard': 'B']
                                 ],
                                 [
                                         type       : 'lookup',
@@ -179,6 +187,10 @@ class Api2Service {
                                 [
                                         qparam     : 'curatoryGroupType',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'curatoryGroups.curatoryGroup.type.value']
+                                ],
+                                [
+                                        qparam     : 'automaticUpdates',
+                                        contextTree: ['ctxtp': 'qry', 'type': 'boolean', 'comparator': 'eq', 'prop': 'kbartSource.automaticUpdates']
                                 ],
 
                         ],
@@ -193,6 +205,7 @@ class Api2Service {
                                 [sort: 'nominalPlatform.name'],
                                 [sort: 'contentType'],
                                 [sort: 'scope'],
+                                [sort: 'titleCount'],
                                 [sort: 'currentTippCount'],
                                 [sort: 'retiredTippCount'],
                                 [sort: 'expectedTippCount'],
@@ -229,6 +242,10 @@ class Api2Service {
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'curatoryGroups.curatoryGroup.name']
                                 ],
                                 [
+                                        qparam     : 'curatoryGroupType',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'curatoryGroups.curatoryGroup.type.value']
+                                ],
+                                [
                                         type       : 'lookup',
                                         baseClass  : 'wekb.RefdataValue',
                                         qparam     : 'status',
@@ -246,10 +263,68 @@ class Api2Service {
                                         qparam     : 'uuid',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'uuid']
                                 ],
+                                [
+                                        qparam     : 'uuids',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'uuid']
+                                ],
                                 //spec Fields
                                 [
                                         qparam     : 'providerUuid',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'provider.uuid']
+                                ],
+                                [
+                                        type       : 'lookup',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        qparam     : 'qp_shibbolethAuthentication',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'shibbolethAuthentication'],
+                                ],
+                                [
+                                        type       : 'lookup',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        qparam     : 'qp_openAthens',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'openAthens']
+                                ],
+                                [
+                                        type       : 'lookup',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        qparam     : 'qp_ipAuthentication',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'ipAuthentication'],
+                                ],
+                                [
+                                        type       : 'lookup',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        qparam     : 'qp_statisticsFormat',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'statisticsFormat'],
+                                ],
+                                [
+                                        type       : 'lookup',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        qparam     : 'qp_counterR3Supported',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'counterR3Supported'],
+                                ],
+                                [
+                                        type       : 'lookup',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        qparam     : 'qp_counterR4Supported',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'counterR4Supported'],
+                                ],
+                                [
+                                        type       : 'lookup',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        qparam     : 'qp_counterR5Supported',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'counterR5Supported'],
+                                ],
+                                [
+                                        type       : 'lookup',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        qparam     : 'qp_counterR4SushiApiSupported',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'counterR4SushiApiSupported'],
+                                ],
+                                [
+                                        type       : 'lookup',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        qparam     : 'qp_counterR5SushiApiSupported',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'counterR5SushiApiSupported'],
                                 ],
                         ],
                         qbeSortFields: [
@@ -306,7 +381,11 @@ class Api2Service {
                                 ],
                                 [
                                         qparam     : 'uuid',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'uuid']
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'uuid']
+                                ],
+                                [
+                                        qparam     : 'uuids',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'uuid']
                                 ],
                                 //spec Fields
                                 [
@@ -377,7 +456,7 @@ class Api2Service {
                                 ],
                                 [
                                         qparam     : 'uuid',
-                                        whereClause    : 'tipp_uuid = :uuid'
+                                        whereClause    : 'tipp_uuid = any(:uuid)'
                                 ],
                                 //spec Fields
                                 [
@@ -486,6 +565,87 @@ class Api2Service {
         result
     }
 
+    Map vendors() {
+        Map result = [
+                baseclass   : 'wekb.Vendor',
+                defaultSort : 'name',
+                defaultOrder: 'asc',
+                qbeConfig   : [
+                        qbeForm   : [
+                                //General Fields
+                                [
+                                        qparam     : 'name',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'name', 'wildcard': 'B']
+                                ],
+                                [
+                                        qparam     : 'curatoryGroup',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'curatoryGroups.curatoryGroup.name']
+                                ],
+                                [
+                                        type       : 'lookup',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        qparam     : 'status',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'status']
+                                ],
+                                [
+                                        qparam     : 'changedSince',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'greater', 'prop': 'lastUpdated', 'type': 'java.util.Date'],
+                                ],
+                                [
+                                        qparam     : 'changedBefore',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'smaller', 'prop': 'lastUpdated', 'type': 'java.util.Date'],
+                                ],
+                                [
+                                        qparam     : 'uuid',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'uuid']
+                                ],
+                                [
+                                        qparam     : 'uuids',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'uuid']
+                                ],
+                                //spec Fields
+                                [
+                                        type       : 'lookup',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        qparam     : 'roles',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'roles'],
+                                ],
+                                [
+                                        type       : 'lookup',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        qparam     : 'qp_supportedLibrarySystems',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'supportedLibrarySystems'],
+                                ],
+                                [
+                                        type       : 'lookup',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        qparam     : 'qp_electronicBillings',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'electronicBillings'],
+                                ],
+                                [
+                                        type       : 'lookup',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        qparam     : 'qp_invoiceDispatchs',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'invoiceDispatchs'],
+                                ],
+
+
+
+                        ],
+                        qbeSortFields: [
+                                [sort: 'name'],
+                                [sort: 'status'],
+                                [sort: 'lastUpdated'],
+                                [sort: 'dateCreated'],
+                                [sort: 'curatoryGroups.curatoryGroup.name'],
+                                [sort: 'abbreviatedName']
+                        ]
+                ]
+        ]
+
+        result
+    }
+
     Map deletedKBComponents() {
         Map result = [
                 baseclass: 'wekb.DeletedKBComponent',
@@ -515,6 +675,10 @@ class Api2Service {
                                 [
                                         qparam     : 'uuid',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'uuid']
+                                ],
+                                [
+                                        qparam     : 'uuids',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'uuid']
                                 ],
 
                         ],
@@ -1018,11 +1182,19 @@ class Api2Service {
                 result.description = object.description
                 result.descriptionURL = object.descriptionURL
 
+                /*
                 result.titleCount = object.getTippCount()
                 result.currentTippCount = object.getCurrentTippCount()
                 result.retiredTippCount = object.getRetiredTippCount()
                 result.expectedTippCount = object.getExpectedTippCount()
                 result.deletedTippCount = object.getDeletedTippCount()
+                */
+                Map<String, Integer> tippCountMap = object.getTippCountMap()
+                result.titleCount = tippCountMap.total
+                result.currentTippCount = tippCountMap.get(RDStore.KBC_STATUS_CURRENT.value)
+                result.retiredTippCount = tippCountMap.get(RDStore.KBC_STATUS_RETIRED.value)
+                result.expectedTippCount = tippCountMap.get(RDStore.KBC_STATUS_EXPECTED.value)
+                result.deletedTippCount = tippCountMap.get(RDStore.KBC_STATUS_DELETED.value)
 
                 result.breakable = object.breakable ? object.breakable.value : ""
                 result.consistent = object.consistent?.value
@@ -1100,6 +1272,14 @@ class Api2Service {
                                                          openAccess            : paa.openAccess?.value,
                                                          postCancellationAccess: paa.postCancellationAccess?.value])
                 }
+
+                result.vendors = []
+
+                object.vendors?.each {
+                    result.vendors.add([vendor: it.vendor.name,
+                                        vendorUuid: it.vendor.uuid,
+                                        vendorHomepage: it.vendor.homepage])
+                }
             }
 
 
@@ -1130,6 +1310,13 @@ class Api2Service {
                 result.kbartDownloaderURL = object.kbartDownloaderURL
                 result.metadataDownloaderURL = object.metadataDownloaderURL
                 result.homepage = object.homepage
+                result.description = object.description
+
+                result.paperInvoice = object.paperInvoice ? RDStore.YN_YES.value : RDStore.YN_NO.value
+                result.managementOfCredits = object.managementOfCredits ? RDStore.YN_YES.value : RDStore.YN_NO.value
+                result.processingOfCompensationPayments = object.processingOfCompensationPayments ? RDStore.YN_YES.value : RDStore.YN_NO.value
+                result.individualInvoiceDesign = object.individualInvoiceDesign ? RDStore.YN_YES.value : RDStore.YN_NO.value
+                result.invoicingYourself = object.invoicingYourself ? RDStore.YN_YES.value : RDStore.YN_NO.value
 
                 result.roles = []
                 object.roles.each { role ->
@@ -1164,6 +1351,24 @@ class Api2Service {
                                          contentType: contact.contentType?.value,
                                          type       : contact.type?.value,
                                          language   : contact.language?.value])
+                }
+
+
+                result.electronicBillings = []
+                object.electronicBillings.each { ProviderElectronicBilling providerElectronicBilling ->
+                    result.electronicBillings.add([electronicBilling: providerElectronicBilling.electronicBilling.value])
+                }
+
+                result.invoiceDispatchs = []
+                object.invoiceDispatchs.each { ProviderInvoiceDispatch providerInvoiceDispatch ->
+                    result.invoiceDispatchs.add([invoiceDispatch: providerInvoiceDispatch.invoiceDispatch.value])
+                }
+
+                 result.invoicingVendors = []
+                object.invoicingVendors.each { ProviderInvoicingVendor providerInvoicingVendor ->
+                    result.invoicingVendors.add([vendor: providerInvoicingVendor.vendor.name,
+                                                 vendorUuid: providerInvoicingVendor.vendor.uuid,
+                                                 vendorHomepage: providerInvoicingVendor.vendor.homepage])
                 }
             }
 
@@ -1224,6 +1429,7 @@ class Api2Service {
                 result.proxySupported = object.proxySupported?.value
 
                 result.counterRegistryApiUuid = object.counterRegistryApiUuid
+                result.counterR5SushiPlatform = object.counterR5SushiPlatform
 
                 if (object.hasProperty('curatoryGroups')) {
                     result.curatoryGroups = []
@@ -1244,7 +1450,7 @@ class Api2Service {
 
                 result.federations = []
                 object.federations.each { PlatformFederation platformFederation ->
-                    result.federations.add([federation: platformFederation.federation?.value])
+                    result.federations.add([federation: platformFederation.federation.value])
                 }
             }
 
@@ -1395,6 +1601,102 @@ class Api2Service {
             result.lastUpdatedDisplay = DateUtils.getSDF_ISO().format(object.lastUpdated)
 
             result
+        }else if(object.class.name == Vendor.class.name) {
+
+            if(stubOnly){
+                result.uuid = object.uuid
+                result.name = object.name
+                result.sortname = generateSortName(object.name)
+                result.status = object.status?.value
+                result.componentType = object.class.simpleName
+
+                result.lastUpdatedDisplay = DateUtils.getSDF_ISO().format(object.lastUpdated)
+                result.dateCreatedDisplay = DateUtils.getSDF_ISO().format(object.dateCreated)
+            }else {
+
+                result.uuid = object.uuid
+                result.name = object.name
+                result.sortname = generateSortName(object.name)
+                result.abbreviatedName = object.abbreviatedName
+                result.status = object.status?.value
+                result.componentType = object.class.simpleName
+
+                result.lastUpdatedDisplay = DateUtils.getSDF_ISO().format(object.lastUpdated)
+                result.dateCreatedDisplay = DateUtils.getSDF_ISO().format(object.dateCreated)
+
+                result.homepage = object.homepage
+
+                result.webShopOrders = object.webShopOrders ? RDStore.YN_YES.value : RDStore.YN_NO.value
+                result.xmlOrders = object.xmlOrders ? RDStore.YN_YES.value : RDStore.YN_NO.value
+                result.ediOrders = object.ediOrders ? RDStore.YN_YES.value : RDStore.YN_NO.value
+
+                result.paperInvoice = object.paperInvoice ? RDStore.YN_YES.value : RDStore.YN_NO.value
+                result.managementOfCredits = object.managementOfCredits ? RDStore.YN_YES.value : RDStore.YN_NO.value
+                result.processingOfCompensationPayments = object.processingOfCompensationPayments ? RDStore.YN_YES.value : RDStore.YN_NO.value
+                result.individualInvoiceDesign = object.individualInvoiceDesign ? RDStore.YN_YES.value : RDStore.YN_NO.value
+
+                result.technicalSupport = object.technicalSupport ? RDStore.YN_YES.value : RDStore.YN_NO.value
+                result.shippingMetadata = object.shippingMetadata ? RDStore.YN_YES.value : RDStore.YN_NO.value
+                result.forwardingUsageStatisticsFromPublisher = object.forwardingUsageStatisticsFromPublisher ? RDStore.YN_YES.value : RDStore.YN_NO.value
+                result.activationForNewReleases = object.activationForNewReleases ? RDStore.YN_YES.value : RDStore.YN_NO.value
+                result.exchangeOfIndividualTitles = object.exchangeOfIndividualTitles ? RDStore.YN_YES.value : RDStore.YN_NO.value
+                result.researchPlatformForEbooks = object.researchPlatformForEbooks
+                result.prequalificationVOL = object.prequalificationVOL ? RDStore.YN_YES.value : RDStore.YN_NO.value
+                result.prequalificationVOLInfo = object.prequalificationVOLInfo
+
+                result.roles = []
+                object.roles.each { role ->
+                    result.roles.add(role.value)
+                }
+
+
+                if (object.hasProperty('curatoryGroups')) {
+                    result.curatoryGroups = []
+                    object.curatoryGroups?.each {
+                        result.curatoryGroups.add([name         : it.curatoryGroup.name,
+                                                   type         : it.curatoryGroup.type?.value,
+                                                   curatoryGroup: it.curatoryGroup.getOID()])
+                    }
+                }
+
+                result.contacts = []
+                object.contacts.each { Contact contact ->
+                    result.contacts.add([content    : contact.content,
+                                         contentType: contact.contentType?.value,
+                                         type       : contact.type?.value,
+                                         language   : contact.language?.value])
+                }
+
+
+                result.packages = []
+
+                object.packages?.each {
+                    result.packages.add([package: it.pkg.name,
+                                         packageUuid: it.pkg.uuid])
+                }
+
+                result.supportedLibrarySystems = []
+                object.supportedLibrarySystems.each { VendorLibrarySystem vendorLibrarySystem ->
+                    result.supportedLibrarySystems.add([supportedLibrarySystem: vendorLibrarySystem.supportedLibrarySystem.value])
+                }
+
+                result.electronicBillings = []
+                object.electronicBillings.each { VendorElectronicBilling vendorElectronicBilling ->
+                    result.electronicBillings.add([electronicBilling: vendorElectronicBilling.electronicBilling.value])
+                }
+
+                result.invoiceDispatchs = []
+                object.invoiceDispatchs.each { VendorInvoiceDispatch vendorInvoiceDispatch ->
+                    result.invoiceDispatchs.add([invoiceDispatch: vendorInvoiceDispatch.invoiceDispatch.value])
+                }
+
+                result.electronicDeliveryDelays = []
+                object.electronicDeliveryDelays.each { VendorElectronicDeliveryDelay vendorElectronicDeliveryDelay ->
+                    result.electronicDeliveryDelays.add([electronicDeliveryDelay: vendorElectronicDeliveryDelay.electronicDeliveryDelay.value])
+                }
+            }
+
+            result
         }
 
         return result
@@ -1416,6 +1718,9 @@ class Api2Service {
                     break
                 case TitleInstancePackagePlatform.class.name.toLowerCase():
                     result = 'tipps'
+                    break
+                case Vendor.class.name.toLowerCase():
+                    result = 'vendors'
                     break
                 case DeletedKBComponent.class.name.toLowerCase():
                     result = 'deletedKBComponents'
@@ -1574,7 +1879,7 @@ class Api2Service {
                 log.debug("Execute query")
                 GrailsParameterMap cleaned_params = processCleanParameterMap(params)
 
-                target_class = grailsApplication.getArtefact("Domain", apiSearchTemplate.baseclass);
+                target_class = grailsApplication.getArtefact("Domain", apiSearchTemplate.baseclass)
                 //HQLBuilder.build(grailsApplication, apiSearchTemplate, cleaned_params, searchResult, target_class, genericOIDService, "rows")
                 HQLBuilder.build(grailsApplication, apiSearchTemplate, cleaned_params, searchResult, target_class, genericOIDService)
 
@@ -1595,7 +1900,7 @@ class Api2Service {
                 }
 
             } else {
-                log.error("no template ${apiSearchTemplate}");
+                log.error("no template ${apiSearchTemplate}")
             }
 
             result.result = []
@@ -1618,6 +1923,9 @@ class Api2Service {
 
             searchResult.recset.each { r ->
                 KBComponent.withTransaction {
+                    if(params.sort in complexSortFields){
+                        r = r[0]
+                    }
                     //LinkedHashMap<Object, Object> resultMap = mapDomainFieldsToSpecFields2(apiSearchTemplate, r)
                     LinkedHashMap<Object, Object> resultMap = mapDomainFieldsToSpecFields(r, (params.stubOnly ? true : false))
 
@@ -1645,6 +1953,9 @@ class Api2Service {
             }
             if (!r) {
                 r = Org.findByUuid(params.uuid)
+            }
+            if (!r) {
+                r = Vendor.findByUuid(params.uuid)
             }
             if (!r) {
                 r = TitleInstancePackagePlatform.findByUuid(params.uuid)
@@ -1713,6 +2024,11 @@ class Api2Service {
             cleaned_params.put('uuid', parameterMap.uuid)
         }
 
+        if (parameterMap.uuids){
+            ArrayList<String> uuids = parameterMap.list('uuids') as ArrayList<String>
+            cleaned_params.put('uuids', uuids)
+        }
+
         if (parameterMap.name){
             cleaned_params.put('name', parameterMap.name)
         }
@@ -1772,6 +2088,10 @@ class Api2Service {
             cleaned_params.put('platformUuid', parameterMap.hostPlatformUuid)
         }
 
+        if (parameterMap.automaticUpdates){
+            cleaned_params.put('automaticUpdates', parameterMap.boolean('automaticUpdates'))
+        }
+
         return
     }
 
@@ -1823,6 +2143,14 @@ class Api2Service {
             setRefdataValueFromGrailsParameterMap(cleaned_params, parameterMap, 'roles', 'curatoryGroupType')
         }
 
+        if(parameterMap.counterSushiSupport) {
+            List counterVersions = parameterMap.list('counterSushiSupport')
+            if('counter4' in counterVersions)
+                cleaned_params.put('qp_counterR4SushiApiSupported', RDStore.YN_YES.getOID())
+            if('counter5' in counterVersions)
+                cleaned_params.put('qp_counterR5SushiApiSupported', RDStore.YN_YES.getOID())
+        }
+
 
         if(parameterMap.shibbolethAuthentication) {
             setRefdataValueFromGrailsParameterMap(cleaned_params, parameterMap, 'shibbolethAuthentication', 'shibbolethAuthentication')
@@ -1870,6 +2198,7 @@ class Api2Service {
 
             result.counter5ApiSources."${platform.uuid}".sushiApiAuthenticationMethod = platform.sushiApiAuthenticationMethod?.value
             result.counter5ApiSources."${platform.uuid}".centralApiKey = platform.centralApiKey
+            result.counter5ApiSources."${platform.uuid}".counterR5SushiPlatform = platform.counterR5SushiPlatform
 
         }
 

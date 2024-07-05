@@ -108,6 +108,8 @@ class SearchService {
                 Class target_class = Class.forName(result.qbetemplate.baseclass);
                 def read_perm = accessService.checkReadable(result.qbetemplate.baseclass)
 
+                result.classSimpleName = target_class.simpleName
+
                 if (read_perm && !params.init) {
 
                     log.debug("Execute query");
@@ -178,7 +180,7 @@ class SearchService {
         Set recSet = []
         log.debug("Create new recset..")
         result.recset.each { r ->
-            if(params.sort in ['currentTippCount', 'deletedTippCount', 'retiredTippCount', 'expectedTippCount']){
+            if(params.sort in Api2Service.complexSortFields){
                 r = r[0]
             }
 
@@ -198,7 +200,7 @@ class SearchService {
                         def sp = prop.minus('?')
 
                         if(result.qbetemplate.baseclass != 'wekb.RefdataValue' && cobj?.class?.name == 'wekb.RefdataValue' ) {
-                            cobj = cobj.value
+                            cobj = cobj.getI10n('value')
                         }
                         else if(sp == 'curatoryGroupsCuratoryGroup') {
                             if(cobj instanceof Package){
@@ -243,6 +245,7 @@ class SearchService {
                         }
 
                         response_record.cols.add([
+                                linkInfo: rh.linkInfo ?: null,
                                 link: (rh.link ? (final_oid ?: response_record.oid ) : null),
                                 value: (cobj != null ? (cobj) : '-Empty-'),
                                 outGoingLink: rh.outGoingLink ?: null,

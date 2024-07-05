@@ -224,19 +224,19 @@ class TitleInstancePackagePlatform  extends AbstractBase implements Auditable {
     if (publicationType) {
       switch (publicationType) {
         case RDStore.TIPP_PUBLIC_TYPE_SERIAL:
-          return "Journal"
+          return "serial"
           break;
         case RDStore.TIPP_PUBLIC_TYPE_MONO:
-          return "Book"
+          return "monograph"
           break;
         case RDStore.TIPP_PUBLIC_TYPE_DB:
-          return "Database"
+          return "database"
           break;
         case RDStore.TIPP_PUBLIC_TYPE_OTHER:
-          return "Other"
+          return "other"
           break;
         default:
-          return "Title"
+          return "title"
           break;
       }
     }
@@ -373,21 +373,5 @@ class TitleInstancePackagePlatform  extends AbstractBase implements Auditable {
         int result = UpdateTippInfo.executeQuery("select count(*) from UpdateTippInfo where tipp = :tipp and updatePackageInfo.automaticUpdate = false", [tipp: this])[0]
         result
     }
-
-  def expunge(){
-    log.info("TIPP expunge: "+ this.id)
-
-    Identifier.executeUpdate("delete from Identifier where tipp = :component", [component: this])
-    ComponentLanguage.executeUpdate("delete from ComponentLanguage where tipp = :component", [component: this])
-    TIPPCoverageStatement.executeUpdate("delete from TIPPCoverageStatement where tipp = :component", [component: this])
-    TippPrice.executeUpdate("delete from TippPrice where tipp = :component", [component: this])
-    UpdateTippInfo.executeUpdate("delete from UpdateTippInfo where tipp = :component", [component: this])
-
-
-    def result = [deleteType: this.class.name, deleteId: this.id]
-    log.debug("Removing all components")
-    this.delete(failOnError: true)
-    result
-  }
 
 }

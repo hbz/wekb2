@@ -265,6 +265,7 @@ class PublicController {
       log.error("Problem with export",e);
       flash.error = 'Bug in Export. Export not possible at the moment! '
       redirect(url: request.getHeader('referer'))
+      return
     }
   }
 
@@ -296,7 +297,8 @@ class PublicController {
                              'Org',
                              'Package',
                              'Platform',
-                             'TitleInstancePackagePlatform'
+                             'TitleInstancePackagePlatform',
+                             'Vendor'
     ]
 
     List status = [RDStore.KBC_STATUS_CURRENT, RDStore.KBC_STATUS_RETIRED, RDStore.KBC_STATUS_DELETED, RDStore.KBC_STATUS_EXPECTED]

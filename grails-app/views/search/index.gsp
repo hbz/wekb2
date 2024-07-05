@@ -48,24 +48,24 @@
     }
 %>
 
-<h1 class="ui header">Search in All Components</h1>
+<h1 class="ui header" id="searchInAllComponents">Search in All Components</h1>
 
 <div class="ui segment">
     <g:form action="index" method="get" class="ui form">
         <div class="sixteen wide field">
-            <input type="text" name="q" id="q" value="${params.q}" placeholder="Search for Packages, Titles, Providers, Platforms..."/>
+            <input aria-labelledby="searchInAllComponents" type="text" name="q" id="q" value="${params.q}" placeholder="Search for Packages, Titles, Providers, Platforms..."/>
         </div>
 
         <div class="sixteen wide field">
         <div class="ui toggle checkbox">
-            <input type="checkbox" name="allProperties" ${params.allProperties ? 'checked' : ''}>
-            <label>Additionally search in all properties of Packages, Titles, Providers, Platforms</label>
+            <input type="checkbox" id="allProperties" name="allProperties" ${params.allProperties ? 'checked' : ''}>
+            <label for="allProperties">Additionally search in all properties of Packages, Titles, Providers, Platforms</label>
         </div>
         </div>
 
         <div class="ui right floated buttons">
             <g:link class="ui button" controller="search" action="index">Reset</g:link>
-            <button class="ui button black" type="submit" value="yes" name="search">Search</button>
+            <button class="ui button primary" type="submit" value="yes" name="search">Search</button>
         </div>
 
         <br>

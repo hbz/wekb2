@@ -3,7 +3,7 @@
     <div class="content wekb-inline-lists">
         <dl>
             <dt class="control-label">
-                Title
+                <g:message code="titleinstancepackageplatform.name"/>
             </dt>
             <dd>
                 <semui:xEditable owner="${d}" field="name" required="true"/>
@@ -50,7 +50,7 @@
         </dl>
         <dl>
             <dt class="control-label">
-                Host Platform URL
+                <g:message code="titleinstancepackageplatform.url"/>
             </dt>
             <dd>
                 <semui:xEditable owner="${d}" field="url" validation="url" outGoingLink="true" required="true"/>
@@ -58,7 +58,7 @@
         </dl>
         <dl>
             <dt class="control-label">
-                Status
+                <g:message code="default.status"/>
             </dt>
             <dd>
                 <semui:xEditableRefData owner="${d}" field="status" config="${RCConstants.COMPONENT_STATUS}"/>
@@ -72,7 +72,7 @@
         </dl>
         <dl>
             <dt class="control-label">
-                Publication Type
+                <g:message code="titleinstancepackageplatform.publicationType"/>
             </dt>
             <dd>
                 <semui:xEditableRefData owner="${d}" field="publicationType"
@@ -81,7 +81,7 @@
         </dl>
         <dl>
             <dt class="control-label">
-                Medium
+                <g:message code="titleinstancepackageplatform.medium"/>
             </dt>
             <dd>
                 <semui:xEditableRefData owner="${d}" field="medium" config="${RCConstants.TIPP_MEDIUM}"/>
@@ -97,7 +97,7 @@
         </dl>
         <dl>
             <dt class="control-label">
-                First Author
+                <g:message code="titleinstancepackageplatform.firstAuthor"/>
             </dt>
             <dd>
                 <semui:xEditable owner="${d}" field="firstAuthor"/>
@@ -105,7 +105,7 @@
         </dl>
         <dl>
             <dt class="control-label">
-                First Editor
+                <g:message code="titleinstancepackageplatform.firstEditor"/>
             </dt>
             <dd>
                 <semui:xEditable owner="${d}" field="firstEditor"/>
@@ -113,7 +113,7 @@
         </dl>
         <dl>
             <dt class="control-label">
-                Publisher Name
+                <g:message code="titleinstancepackageplatform.publisherName"/>
             </dt>
             <dd>
                 <semui:xEditable owner="${d}" field="publisherName"/>
@@ -121,7 +121,7 @@
         </dl>
         <dl>
             <dt class="control-label">
-                Date first in print
+                <g:message code="titleinstancepackageplatform.dateFirstInPrint"/>
             </dt>
             <dd>
                 <semui:xEditable owner="${d}" type="date"
@@ -130,7 +130,7 @@
         </dl>
         <dl>
             <dt class="control-label">
-                Date first online
+                <g:message code="titleinstancepackageplatform.dateFirstOnline"/>
             </dt>
             <dd>
                 <semui:xEditable owner="${d}" type="date"
@@ -139,7 +139,7 @@
         </dl>
         <dl>
             <dt class="control-label">
-                Access Start Date
+                <g:message code="titleinstancepackageplatform.accessStartDate"/>
             </dt>
             <dd>
                 <semui:xEditable owner="${d}" type="date"
@@ -148,7 +148,7 @@
         </dl>
         <dl>
             <dt class="control-label">
-                Access End Date
+                <g:message code="titleinstancepackageplatform.accessEndDate"/>
             </dt>
             <dd>
                 <semui:xEditable owner="${d}" type="date"
@@ -157,7 +157,7 @@
         </dl>
         <dl>
             <dt class="control-label">
-                Volume Number
+                <g:message code="titleinstancepackageplatform.volumeNumber"/>
             </dt>
             <dd>
                 <semui:xEditable owner="${d}" field="volumeNumber"/>
@@ -165,7 +165,7 @@
         </dl>
         <dl>
             <dt class="control-label">
-                Edition
+                <g:message code="titleinstancepackageplatform.editionStatement"/>
             </dt>
             <dd>
                 <semui:xEditable owner="${d}" field="editionStatement"/>
@@ -173,7 +173,7 @@
         </dl>
         <dl>
             <dt class="control-label">
-                Access Type
+                <g:message code="titleinstancepackageplatform.accessType"/>
             </dt>
             <dd>
                 <semui:xEditableRefData owner="${d}" field="accessType"
@@ -182,7 +182,7 @@
         </dl>
         <dl>
             <dt class="control-label">
-                Notes
+                <g:message code="titleinstancepackageplatform.note"/>
             </dt>
             <dd>
                 <semui:xEditable owner="${d}" field="note"/>
@@ -190,7 +190,7 @@
         </dl>
         <dl>
             <dt class="control-label">
-                Last Changed
+                <g:message code="titleinstancepackageplatform.lastChangedExternal"/>
             </dt>
             <dd>
                 <semui:xEditable owner="${d}" field="lastChangedExternal" type="date"/>

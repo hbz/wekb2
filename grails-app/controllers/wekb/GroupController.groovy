@@ -1,6 +1,7 @@
 package wekb
 
 import grails.plugin.springsecurity.SpringSecurityService
+import org.apache.xmlbeans.impl.store.Cur
 import wekb.helper.RCConstants
 import wekb.helper.RDStore
 import org.springframework.security.access.annotation.Secured
@@ -14,12 +15,34 @@ class GroupController {
     ExportService exportService
     AccessService accessService
     ManagementService managementService
+    WorkflowService workflowService
+    CheckMyInfosService checkMyInfosService
 
     @Secured(['ROLE_USER', 'IS_AUTHENTICATED_FULLY'])
     def index() {
         def result = [:]
         result = getResultGenerics()
         return result
+    }
+
+    @Secured(['ROLE_USER', 'IS_AUTHENTICATED_FULLY'])
+    def checkMyInfos() {
+        def result = [:]
+        result = getResultGenerics()
+
+        if(params.curGroupID && result.user.admin){
+            result.groups = [CuratoryGroup.findById(Long.valueOf(params.curGroupID))]
+        }
+
+        result.checkContacts = checkMyInfosService.checkContacts(result.groups)
+        result.checkSourcesWithoutTitles = checkMyInfosService.checkSourcesWithoutTitles(result.groups)
+        result.noChangesPackageLast30Days = checkMyInfosService.noChangesPackageLast30Days(result.groups)
+        result.packagesWithoutTitles = checkMyInfosService.checkPackagesWithoutTitles(result.groups)
+        result.checkPackageWithoutSource = checkMyInfosService.checkPackageWithoutSource(result.groups)
+        result.checkPackagesWithoutProductID = checkMyInfosService.checkPackagesWithoutProductID(result.groups)
+        result.checkPackagesWithoutContentType = checkMyInfosService.checkPackagesWithoutContentType(result.groups)
+
+        result
     }
 
     @Secured(['ROLE_USER', 'IS_AUTHENTICATED_FULLY'])
@@ -271,6 +294,8 @@ class GroupController {
         params.qp_curgroups = searchResult.groups.id
         params.hide = ['qp_curgroup', 'qp_curgroups']
 
+        params.max = params.max ?: '1000'
+
         searchResult = searchService.search(searchResult.user, searchResult, params)
 
         searchResult.result.editable = accessService.checkReadable(searchResult.result.qbetemplate.baseclass)
@@ -279,7 +304,50 @@ class GroupController {
 
         searchResult.result.packageSourceInfosBatchForm = managementService.packageSourceInfosBatchForm
 
+        params.activeTab = params.activeTab ?: 'generalInfos'
+
         searchResult.result
+    }
+
+
+    @Secured(['ROLE_EDITOR', 'IS_AUTHENTICATED_FULLY'])
+    def processPackageUpdate() {
+        def searchResult = [:]
+
+        searchResult = getResultGenerics()
+
+        if(!searchResult.groups){
+            flash.error = "You are not assigned to any curatory group to view this area!"
+            redirect(controller: 'public', action: 'index')
+            return
+        }
+
+        params.qbe = 'g:packages'
+        params.qp_curgroups = searchResult.groups.id
+        params.hide = ['qp_curgroup', 'qp_curgroups']
+        params.max = '5000'
+
+        searchResult = searchService.search(searchResult.user, searchResult, params)
+
+        searchResult.result
+
+        List<Package> packageList = []
+        searchResult.result.new_recset.each {
+            if(it.obj.kbartSource && it.obj.kbartSource.automaticUpdates) {
+                packageList << it.obj
+            }
+        }
+
+        boolean allTitles = params.allTitles == 'true' ? true : false
+
+        if(packageList.size() > 0){
+            workflowService.updateListOfPackageWithKbart(packageList, allTitles)
+        }
+
+        flash.message = "The package update for ${packageList.size()} Package was started. This runs in the background."
+
+        redirect(url: request.getHeader('referer'))
+
     }
 
 }

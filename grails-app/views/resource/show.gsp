@@ -5,7 +5,7 @@
     <meta name="layout" content="wekb"/>
     <title>we:kb :
     <g:if test="${displayobj}">
-        ${displayobj.getDomainName()}: ${displayobj.getShowName()}
+        <g:message code="${displayobj.class.simpleName.toLowerCase()}.label" default="${displayobj.getDomainName()}"/> : ${displayobj.getShowName()}
     </g:if><g:else>
         Component
     </g:else>
@@ -26,10 +26,10 @@
 
                     <div class="content">
                         <div class="header">
-                            Removed component
+                           <g:message code="resource.show.removed"/>
                         </div>
 
-                        <p>This component has been set to removed and will soon be permanently removed from this system</p>
+                        <p><g:message code="resource.show.removed.info"/></p>
                     </div>
                 </div>
             </g:if>
@@ -104,7 +104,7 @@
                 </g:if>
             </g:if>
 
-            <h1 class="ui header">${displayobj.getDomainName()}: ${displayobj.getShowName()}</h1>
+            <h1 class="ui header"><g:message code="${displayobj.class.simpleName.toLowerCase()}.label" default="${displayobj.getDomainName()}"/>: ${displayobj.getShowName()}</h1>
 
 
 
@@ -123,7 +123,7 @@
 
         <div class="sixteen wide column">
             <g:if test="${displaytemplate != null}">
-                <g:if test="${displaytemplate.rendername in ["curatory_group", "org", "package", "platform", "kbart_source", "tipp"]}">
+                <g:if test="${displaytemplate.rendername in ["curatory_group", "org", "package", "platform", "kbart_source", "tipp", "vendor"]}">
                     <g:render template="/templates/tabTemplates/domainTabs/${displaytemplate.rendername}Tabs"
                               model="${[d: displayobj]}"/>
                 </g:if>

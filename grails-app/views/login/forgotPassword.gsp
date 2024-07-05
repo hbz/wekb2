@@ -35,7 +35,7 @@
                         </div>
                     </div>
 
-                    <button class="ui fluid submit black button" type="submit">Send Password Recovery Email...</button>
+                    <button class="ui fluid submit primary button" type="submit">Send Password Recovery Email...</button>
                 </div>
 
             </g:form>

@@ -70,7 +70,8 @@ class Package  extends AbstractBase implements Auditable {
           updatePackageInfos: UpdatePackageInfo,
           tipps: TitleInstancePackagePlatform,
           variantNames        : ComponentVariantName,
-          curatoryGroups   : CuratoryGroupPackage
+          curatoryGroups   : CuratoryGroupPackage,
+          vendors: PackageVendor
   ]
 
   static mapping = {
@@ -244,6 +245,15 @@ class Package  extends AbstractBase implements Auditable {
   }
 
   @Transient
+  public getTippCountWithoutRemoved() {
+    def refdata_status = RDStore.KBC_STATUS_REMOVED
+    int result = TitleInstancePackagePlatform.executeQuery("select count(*) from TitleInstancePackagePlatform as t where t.pkg = :pkg and t.status != :status"
+            , [pkg: this, status: refdata_status])[0]
+
+    result
+  }
+
+  @Transient
   public getRetiredTippCount() {
     def refdata_status = RDStore.KBC_STATUS_RETIRED
     int result = TitleInstancePackagePlatform.executeQuery("select count(*) from TitleInstancePackagePlatform as t where t.pkg = :pkg and t.status = :status"
@@ -267,6 +277,14 @@ class Package  extends AbstractBase implements Auditable {
     int result = TitleInstancePackagePlatform.executeQuery("select count(*) from TitleInstancePackagePlatform as t where t.pkg = :pkg and t.status = :status"
             , [pkg: this, status: refdata_status])[0]
 
+    result
+  }
+
+  @Transient
+  Map<String, Integer> getTippCountMap() {
+    List rows = TitleInstancePackagePlatform.executeQuery("select new map(t.status as status, count(*) as count) from TitleInstancePackagePlatform t where t.pkg = :pkg group by t.status", [pkg: this])
+    Map<String, Integer> result = rows.collectEntries { row -> [row.status.value, row.count] } as Map<RefdataValue, Integer>
+    result.total = rows.sum { row -> row.count }
     result
   }
 
@@ -327,6 +345,20 @@ class Package  extends AbstractBase implements Auditable {
 
     log.debug("removed tipps")
     TitleInstancePackagePlatform.executeUpdate("update TitleInstancePackagePlatform as t set t.status = :rev, t.lastUpdated = :now where t.status != :rev and t.pkg = :pkg", [rev: removedStatus, pkg: this, now: now])
+  }
+
+  public void removeOnlyDeletedTipps(context) {
+    log.debug("package::removeOnlyDeletedTipps")
+    Date now = new Date()
+    def removedStatus = RDStore.KBC_STATUS_REMOVED
+    def deletedStatus = RDStore.KBC_STATUS_DELETED
+    Package.withTransaction {
+      this.lastUpdated = now
+      this.save()
+    }
+
+    log.debug("removed tipps")
+    TitleInstancePackagePlatform.executeUpdate("update TitleInstancePackagePlatform as t set t.status = :rev, t.lastUpdated = :now where t.status != :rev and t.pkg = :pkg and t.status = :deleted", [deleted: deletedStatus, rev: removedStatus, pkg: this, now: now])
   }
 
   public void currentWithTipps(context) {
@@ -555,26 +587,6 @@ class Package  extends AbstractBase implements Auditable {
     UpdatePackageInfo updatePackageInfo = UpdatePackageInfo.executeQuery("from UpdatePackageInfo where pkg = :pkg and status = :status" +
             " order by lastUpdated desc", [pkg: this, status: RDStore.UPDATE_STATUS_SUCCESSFUL], [max: 1, offset: 0])[0]
     updatePackageInfo
-  }
-
-  def expunge(){
-    log.info("Package expunge: "+this.id)
-
-    ComponentVariantName.executeUpdate("delete from ComponentVariantName as c where c.pkg = :component", [component: this])
-    CuratoryGroupPackage.executeUpdate("delete from CuratoryGroupPackage where pkg = :component", [component: this])
-    Identifier.executeUpdate("delete from Identifier where pkg = :component", [component: this])
-    PackageArchivingAgency.executeUpdate("delete from PackageArchivingAgency where pkg = :component", [component: this])
-    UpdateTippInfo.executeUpdate("delete from UpdateTippInfo where updatePackageInfo in (select upi.id from UpdatePackageInfo as upi where upi.pkg = :component)", [component: this])
-    UpdatePackageInfo.executeUpdate("delete from UpdatePackageInfo where pkg = :component", [component: this])
-
-    def removedStatus = RDStore.KBC_STATUS_REMOVED
-    Date now = new Date()
-    TitleInstancePackagePlatform.executeUpdate("update TitleInstancePackagePlatform as t set t.status = :removed, t.lastUpdated = :now where t.status != :removed and t.pkg = :pkg", [removed: removedStatus, pkg: this, now: now])
-
-    def result = [deleteType: this.class.name, deleteId: this.id]
-
-    this.delete(failOnError: true)
-    result
   }
 
   @Transient

@@ -15,7 +15,7 @@
 
     <g:if test="${displayobj instanceof wekb.Package}">
         <div class="ui right floated buttons">
-            <g:link controller="create" action="packageBatch" class="ui black button">Upload Packages</g:link>
+            <g:link controller="create" action="packageBatch" class="ui primary button">Upload Packages</g:link>
         </div>
     </g:if>
 </h1>
@@ -37,7 +37,7 @@
                         <g:render template="/templates/domains/${displaytemplate.rendername}"
                                   model="${[d: displayobj, dtype: displayobjclassname_short]}"/>
 
-                        <button id="save-btn" class="ui black button" type="button">Create and Edit </button>
+                        <button id="save-btn" class="ui primary button wekb-moreSpaceTop" type="button">Create and Edit </button>
                     </div>
                 </g:else>
         </g:if>

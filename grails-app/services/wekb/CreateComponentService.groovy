@@ -33,6 +33,7 @@ class CreateComponentService {
     def classExaminationService
     def messageSource
     AccessService accessService
+    DeletionService deletionService
     
     Map process(Map result, GrailsParameterMap params) {
 
@@ -351,7 +352,7 @@ class CreateComponentService {
                         String value = cols[colMap.anbieter_produkt_id].trim()
                         if (value) {
                             IdentifierNamespace namespace = IdentifierNamespace.findByValueAndTargetType(IdentifierNamespace.PKG_ID, RDStore.IDENTIFIER_NAMESPACE_TARGET_TYPE_PACKAGE)
-                            dupes = Identifier.executeQuery('select pkg from Identifier where namespace = :ns and value != :val and pkg is not null and pkg.status not in (:stat) and exists ( select cgp from CuratoryGroupPackage cgp where cgp.pkg = pkg and cgp.curatoryGroup in (:curGroup))', [ns: namespace, val: 'Unknown', stat: status_deleted, curGroup: curatoryGroups])
+                            dupes = Identifier.executeQuery('select ident.pkg from Identifier ident where ident.namespace = :ns and ident.value != :val and ident.value = :value and ident.pkg is not null and ident.pkg.status not in (:stat) and exists ( select cgp from CuratoryGroupPackage cgp where cgp.pkg = ident.pkg and cgp.curatoryGroup in (:curGroup))', [value: value, ns: namespace, val: 'Unknown', stat: status_deleted, curGroup: curatoryGroups])
                         }else{
                             dupes = Package.executeQuery("select p from Package as p where lower(name) like :name and status not in (:stat) and exists ( select cgp from CuratoryGroupPackage cgp where cgp.pkg = p and cgp.curatoryGroup in (:curGroup))", [name: name.toLowerCase().trim(), stat: status_deleted, curGroup: curatoryGroups])
                         }
@@ -590,7 +591,7 @@ class CreateComponentService {
 
                             if (colMap.source_url != null || colMap.source_ftp_server_url != null) {
                                 String source_url = cols[colMap.source_url] ? cols[colMap.source_url].trim() : null
-                                String source_ftp_server_url = cols[colMap.source_ftp_server_url] ? cols[colMap.source_ftp_server_url].trim() : 0
+                                String source_ftp_server_url = colMap.source_ftp_server_url ? (cols[colMap.source_ftp_server_url] ? cols[colMap.source_ftp_server_url].trim() : null) : null
                                 if (source_url || source_ftp_server_url) {
                                     Map sourceMap = [:]
                                     if(source_url) {
@@ -665,7 +666,7 @@ class CreateComponentService {
                 }catch ( Exception e ) {
 
                     if(pkg && newCreated){
-                        pkg.expunge()
+                        deletionService.expungePkg(pkg.id)
                     }
                     log.error("Error on package with the name '${name}':" + e.printStackTrace())
                     globalErrors << "Error on package with the name '${name}'. Please try agian!"

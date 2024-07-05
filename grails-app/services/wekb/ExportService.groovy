@@ -39,9 +39,11 @@ class ExportService {
         if(pkg.kbartSource && (pkg.kbartSource.lastUpdateUrl || pkg.kbartSource.url)){
             if((UrlToolkit.containsDateStamp(pkg.kbartSource.url) || UrlToolkit.containsDateStampPlaceholder(pkg.kbartSource.url)) && pkg.kbartSource.lastUpdateUrl){
                 File file = kbartFromUrl(pkg.kbartSource.lastUpdateUrl)
+                if(file)
                 outputStream << file.bytes
             }else{
                 File file = kbartFromUrl(pkg.kbartSource.url)
+                if(file)
                 outputStream << file.bytes
             }
             outputStream.close()
@@ -100,13 +102,13 @@ class ExportService {
         }
     }
 
-    private File kbartFromUrl(String urlString) throws Exception{
+    private File kbartFromUrl(String urlString, UpdatePackageInfo updatePackageInfo = null) throws Exception{
         URL url = new URL(urlString)
         File folder = new File("/tmp/wekb/kbartExport")
         HttpURLConnection connection
         try {
             connection = (HttpURLConnection) url.openConnection()
-            connection.addRequestProperty("User-Agent", "Mozilla/5.0")
+            connection.addRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:123.0) Gecko/20100101 Firefox/123.0")
         }
         catch (IOException e) {
             throw new RuntimeException("URL Connection was not established.")
@@ -119,17 +121,26 @@ class ExportService {
         fileName = fileName.split("\\?")[0]
         File file = new File(fileName)
 
-        byte[] content = getByteContent(connection.getInputStream())
-        //InputStream inputStream = new ByteArrayInputStream(content)
+        log.debug("connection.getResponseCode(): "+connection.getResponseCode())
         if (connection.getResponseCode() == HttpURLConnection.HTTP_OK){
+            byte[] content = getByteContent(connection.getInputStream())
+            //InputStream inputStream = new ByteArrayInputStream(content)
             FileUtils.copyInputStreamToFile(new ByteArrayInputStream(content), file)
             // copy content to local file
-            Files.write(file.toPath(), content)
+            //Files.write(file.toPath(), content)
+        }else {
+            UpdatePackageInfo.withTransaction {
+                updatePackageInfo.description = "Server returned HTTP response code: " + connection.getResponseCode()
+                updatePackageInfo.status = RDStore.UPDATE_STATUS_FAILED
+                updatePackageInfo.endTime = new Date()
+                updatePackageInfo.updateUrl = connection.getURL()
+                updatePackageInfo.save()
+            }
         }
         return file
     }
 
-    private byte[] getByteContent(InputStream inputStream){
+    byte[] getByteContent(InputStream inputStream){
         ByteArrayOutputStream baos = new ByteArrayOutputStream()
         byte[] buf = new byte[4096]
         int n = 0
@@ -770,7 +781,6 @@ class ExportService {
                                         language: "(select string_agg((select rdv_value from refdata_value where rdv_id = cl_rv_fk),',') from component_language where cl_tipp_fk = tipp_id) as language",
                                         ddc: "(select string_agg((select rdv_value from refdata_value where rdv_id = ddc_rv_Fk),',') from tipp_dewey_decimal_classification where tipp_fk = tipp_id) as ddc",
                                         access_type: '(select rdv_value from refdata_value where rdv_id = tipp_access_type_rv_fk) as access_type',
-                                        coverage_depth: '(select rdv_value from refdata_value where rdv_id = tcs_coverage_depth) as coverage_depth',
                                         package_name: 'pkg_name as package_name',
                                         package_id: "(select string_agg(id_value,',') from identifier where id_pkg_fk = pkg_id and id_namespace_fk = '${IdentifierNamespace.findByValue(IdentifierNamespace.PKG_ID).id}') as package_id",
                                         access_start_date: "to_char(tipp_access_start_date, 'yyyy-MM-dd') as access_start_date",
@@ -793,7 +803,7 @@ class ExportService {
                                         date_last_issue_online: "to_char(tcs_end_date, 'yyyy-MM-dd') as date_last_issue_online",
                                         num_last_vol_online: 'tcs_end_volume as num_last_vol_online',
                                         num_last_issue_online: 'tcs_end_issue as num_last_issue_online',
-                                        coverage_depth: 'tcs_depth as coverage_depth',
+                                        coverage_depth: '(select rdv_value from refdata_value where rdv_id = tcs_depth) as coverage_depth',
                                         zdb_id: "(select string_agg(id_value,',') from identifier where id_tipp_fk = tipp_id and id_namespace_fk = ${IdentifierNamespace.findByValue(IdentifierNamespace.ZDB).id}) as zdb_id",
                                         ezb_id: "(select string_agg(id_value,',') from identifier where id_tipp_fk = tipp_id and id_namespace_fk = '${IdentifierNamespace.findByValueAndTargetType(IdentifierNamespace.EZB, RDStore.IDENTIFIER_NAMESPACE_TARGET_TYPE_TIPP).id}') as ezb_id",
                                         package_ezb_anchor: "(select string_agg(id_value,',') from identifier where id_pkg_fk = tipp_id and id_namespace_fk = '${IdentifierNamespace.findByValueAndTargetType(IdentifierNamespace.PACKAGE_EZB_ANCHOR, RDStore.IDENTIFIER_NAMESPACE_TARGET_TYPE_TIPP).id}') as package_ezb_anchor",

@@ -3,7 +3,7 @@
     <div class="content wekb-inline-lists">
         <dl>
             <dt class="control-label">
-                Source Name
+                <g:message code="kbartsource.name"/>
             </dt>
             <dd>
                 <semui:xEditable owner="${d}" field="name" required="true"/>
@@ -11,7 +11,7 @@
         </dl>
         <dl>
             <dt class="control-label">
-                Status
+                <g:message code="default.status"/>
             </dt>
             <dd>
                 <semui:xEditableRefData owner="${d}" field="status" config="${RCConstants.COMPONENT_STATUS}"/>
@@ -25,7 +25,7 @@
         </dl>
         <dl>
             <dt class="control-label">
-                Frequency
+                <g:message code="kbartsource.frequency"/>
             </dt>
             <dd>
                 <semui:xEditableRefData owner="${d}" field="frequency" config="${RCConstants.SOURCE_FREQUENCY}"/>
@@ -33,7 +33,7 @@
         </dl>
         <dl>
             <dt class="control-label">
-                Default Supply Method
+                <g:message code="kbartsource.defaultSupplyMethod"/>
             </dt>
             <dd>
                 <semui:xEditableRefData owner="${d}" field="defaultSupplyMethod"
@@ -42,7 +42,7 @@
         </dl>
         <dl>
             <dt class="control-label">
-                Default Data Format
+                <g:message code="kbartsource.defaultDataFormat"/>
             </dt>
             <dd>
                 <semui:xEditableRefData owner="${d}" field="defaultDataFormat"
@@ -62,7 +62,7 @@
         </dl>--}%
         <dl>
             <dt class="control-label">
-                Automated Updates
+                <g:message code="kbartsource.automaticUpdates"/>
             </dt>
             <dd>
                 <semui:xEditableBoolean owner="${d}" field="automaticUpdates"/>
@@ -78,21 +78,23 @@
         </dl>
         <dl>
             <dt class="control-label">
-                KBART has additional fields for we:kb
+                <g:message code="kbartsource.kbartHasWekbFields"/>
             </dt>
             <dd>
-                <semui:xEditableBoolean owner="${d}" field="kbartHasWekbFields" overwriteEditable="false"
-                                        disabled="${createObject}"/>
+                <g:if test="${!createObject}">
+                    <semui:xEditableBoolean owner="${d}" field="kbartHasWekbFields" overwriteEditable="false"/>
+                </g:if>
             </dd>
         </dl>
         <dl>
             <dt class="control-label">
-                Last Changed in KBART
+                <g:message code="kbartsource.lastChangedInKbart"/>
             </dt>
             <dd>
                 <sec:ifAnyGranted roles="ROLE_SUPERUSER">
-                    <semui:xEditable owner="${d}" type="date" field="lastChangedInKbart"
-                                     disabled="${createObject}">${d.lastChangedInKbart}</semui:xEditable>
+                    <g:if test="${!createObject}">
+                        <semui:xEditable owner="${d}" type="date" field="lastChangedInKbart">${d.lastChangedInKbart}</semui:xEditable>
+                    </g:if>
                 </sec:ifAnyGranted>
                 <sec:ifNotGranted roles="ROLE_SUPERUSER">
                     <g:formatDate format="${message(code: 'default.date.format.notime')}"
@@ -102,16 +104,18 @@
         </dl>
         <dl>
             <dt class="control-label">
-                Last Run
+                <g:message code="kbartsource.lastRun"/>
             </dt>
             <dd>
                 <sec:ifAnyGranted roles="ROLE_SUPERUSER">
-                    <semui:xEditable owner="${d}" type="date" field="lastRun"
-                                     disabled="${createObject}">${d.lastRun}</semui:xEditable>
+                    <g:if test="${!createObject}">
+                        <semui:xEditable owner="${d}" type="date" field="lastRun">${d.lastRun}</semui:xEditable>
+                    </g:if>
                 </sec:ifAnyGranted>
                 <sec:ifNotGranted roles="ROLE_SUPERUSER">
-                    <semui:xEditable owner="${d}" type="date" field="lastRun" overwriteEditable="false"
-                                     disabled="${createObject}">${d.lastRun}</semui:xEditable>
+                    <g:if test="${!createObject}">
+                        <semui:xEditable owner="${d}" type="date" field="lastRun" overwriteEditable="false">${d.lastRun}</semui:xEditable>
+                    </g:if>
                 </sec:ifNotGranted>
 
             </dd>
@@ -120,7 +124,7 @@
         <g:if test="${controllerName != 'create' && d.automaticUpdates}">
             <dl>
                 <dt class="control-label">
-                    Next Run
+                    <g:message code="kbartsource.nextUpdateTimestamp"/>
                 </dt>
                 <dd>
                     ${d.getNextUpdateTimestamp()}
@@ -145,120 +149,124 @@
 
 <div class="sixteen wide column">
     <div class="ui two doubling stackable cards">
-        <div class="ui card">
-            <div class="content wekb-inline-lists">
-                <div class="header">
-                    <g:if test="${d.defaultSupplyMethod == wekb.helper.RDStore.KS_DSMETHOD_HTTP_URL}">
-                        <div class="ui green ribbon label">Activ</div>
-                    </g:if>
-                    <g:else>
+        <g:if test="${d.defaultSupplyMethod == wekb.helper.RDStore.KS_DSMETHOD_HTTP_URL || editable || d.defaultSupplyMethod == null}">
+            <div class="ui card">
+                <div class="content wekb-inline-lists">
+                    <div class="header">
+                        <g:if test="${d.defaultSupplyMethod == wekb.helper.RDStore.KS_DSMETHOD_HTTP_URL}">
+                            <div class="ui green ribbon label">Active</div>
+                        </g:if>
+                        <g:else>
+                            <div class="ui red ribbon label">Not active</div>
+                        </g:else>
+                        HTTP URL Configuration
+                    </div>
+
+                    <div class="description">
+                        <dl>
+                            <dt class="control-label">
+                                URL
+                            </dt>
+                            <dd>
+                                <semui:xEditable owner="${d}" field="url" validation="url" outGoingLink="true"/>
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt class="control-label">
+                                Last Update Url
+                            </dt>
+                            <dd>
+                                <g:if test="${!createObject}">
+                                    <semui:xEditable owner="${d}" field="lastUpdateUrl" overwriteEditable="${false}"
+                                                     outGoingLink="true"/>
+                                </g:if>
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </g:if>
+        <g:if test="${d.defaultSupplyMethod == wekb.helper.RDStore.KS_DSMETHOD_FTP || editable || d.defaultSupplyMethod == null}">
+            <div class="ui card">
+                <div class="content wekb-inline-lists">
+                    <div class="header">
+                        <g:if test="${d.defaultSupplyMethod == wekb.helper.RDStore.KS_DSMETHOD_FTP}">
+                            <div class="ui green ribbon label">Activ</div>
+                        </g:if><g:else>
                         <div class="ui red ribbon label">Not activ</div>
                     </g:else>
-                    HTTP URL Configuration
-                </div>
+                        FTP Configuration
+                    </div>
 
-                <div class="description">
-                    <dl>
-                        <dt class="control-label">
-                            URL
-                        </dt>
-                        <dd>
-                            <semui:xEditable owner="${d}" field="url" validation="url" outGoingLink="true"/>
-                        </dd>
-                    </dl>
-                    <dl>
-                        <dt class="control-label">
-                            Last Update Url
-                        </dt>
-                        <dd>
-                            <semui:xEditable owner="${d}" field="lastUpdateUrl" overwriteEditable="${false}"
-                                             outGoingLink="true"
-                                             disabled="${createObject}"/>
-                        </dd>
-                    </dl>
+                    <div class="description">
+                        <dl>
+                            <dt class="control-label">
+                                FTP Server Url
+                            </dt>
+                            <dd>
+                                <g:if test="${editable || curator}">
+                                    <semui:xEditable owner="${d}" field="ftpServerUrl"/>
+                                </g:if>
+                                <g:else>
+                                    Only the curator of this component can see this.
+                                </g:else>
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt class="control-label">
+                                FTP Username
+                            </dt>
+                            <dd>
+                                <g:if test="${editable || curator}">
+                                    <semui:xEditable owner="${d}" field="ftpUsername"/>
+                                </g:if>
+                                <g:else>
+                                    Only the curator of this component can see this.
+                                </g:else>
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt class="control-label">
+                                FTP Password
+                            </dt>
+                            <dd>
+                                <g:if test="${editable || curator}">
+                                    <semui:xEditable owner="${d}" field="ftpPassword"/>
+                                </g:if>
+                                <g:else>
+                                    Only the curator of this component can see this.
+                                </g:else>
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt class="control-label">
+                                FTP Directory
+                            </dt>
+                            <dd>
+                                <g:if test="${editable || curator}">
+                                    <semui:xEditable owner="${d}" field="ftpDirectory"/>
+                                </g:if>
+                                <g:else>
+                                    Only the curator of this component can see this.
+                                </g:else>
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt class="control-label">
+                                FTP File Name
+                            </dt>
+                            <dd>
+                                <g:if test="${editable || curator}">
+                                    <semui:xEditable owner="${d}" field="ftpFileName"/>
+                                </g:if>
+                                <g:else>
+                                    Only the curator of this component can see this.
+                                </g:else>
+                            </dd>
+                        </dl>
+                    </div>
                 </div>
             </div>
-        </div>
-
-        <div class="ui card">
-            <div class="content wekb-inline-lists">
-                <div class="header">
-                    <g:if test="${d.defaultSupplyMethod == wekb.helper.RDStore.KS_DSMETHOD_FTP}">
-                        <div class="ui green ribbon label">Activ</div>
-                    </g:if><g:else>
-                    <div class="ui red ribbon label">Not activ</div>
-                </g:else>
-                    FTP Configuration
-                </div>
-
-                <div class="description">
-                    <dl>
-                        <dt class="control-label">
-                            FTP Server Url
-                        </dt>
-                        <dd>
-                            <g:if test="${editable || curator}">
-                                <semui:xEditable owner="${d}" field="ftpServerUrl"/>
-                            </g:if>
-                            <g:else>
-                                Only the curator of this component can see this.
-                            </g:else>
-                        </dd>
-                    </dl>
-                    <dl>
-                        <dt class="control-label">
-                            FTP Username
-                        </dt>
-                        <dd>
-                            <g:if test="${editable || curator}">
-                                <semui:xEditable owner="${d}" field="ftpUsername"/>
-                            </g:if>
-                            <g:else>
-                                Only the curator of this component can see this.
-                            </g:else>
-                        </dd>
-                    </dl>
-                    <dl>
-                        <dt class="control-label">
-                            FTP Password
-                        </dt>
-                        <dd>
-                            <g:if test="${editable || curator}">
-                                <semui:xEditable owner="${d}" field="ftpPassword"/>
-                            </g:if>
-                            <g:else>
-                                Only the curator of this component can see this.
-                            </g:else>
-                        </dd>
-                    </dl>
-                    <dl>
-                        <dt class="control-label">
-                            FTP Directory
-                        </dt>
-                        <dd>
-                            <g:if test="${editable || curator}">
-                                <semui:xEditable owner="${d}" field="ftpDirectory"/>
-                            </g:if>
-                            <g:else>
-                                Only the curator of this component can see this.
-                            </g:else>
-                        </dd>
-                    </dl>
-                    <dl>
-                        <dt class="control-label">
-                            FTP File Name
-                        </dt>
-                        <dd>
-                            <g:if test="${editable || curator}">
-                                <semui:xEditable owner="${d}" field="ftpFileName"/>
-                            </g:if>
-                            <g:else>
-                                Only the curator of this component can see this.
-                            </g:else>
-                        </dd>
-                    </dl>
-                </div>
-            </div>
-        </div>
+        </g:if>
     </div>
 </div>

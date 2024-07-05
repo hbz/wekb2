@@ -7,11 +7,6 @@ import groovy.transform.CompileStatic
 @CompileStatic
 class RCConstants {
 
-    public static final String ACTIVITY_STATUS = "Activity.Status"
-    public static final String ACTIVITY_TYPE = "Activity.Type"
-
-    public static final String ALLOCATED_REVIEW_GROUP_STATUS = "AllocatedReviewGroup.Status"
-
     public static final String UPDATE_STATUS = "Update.Status"
 
     public static final String UPDATE_TYPE = "Update.Type"
@@ -26,15 +21,11 @@ class RCConstants {
 
     public static final String CURRENCY = "Currency"
 
-    public static final String DC_TYPE = "DCType"
-
     public static final String DDC = "DDC"
 
     public static final String DELETED_COMPONENT_STATUS = "DeletedComponent.Status"
 
     public static final String IDENTIFIER_NAMESPACE_TARGET_TYPE = "IdentifierNamespace.TargetType"
-
-    public static final String INGEST_FILE_TYPE = "ingest.filetype"
 
     public static final String JOB_TYPE = "Job.Type"
 
@@ -46,10 +37,8 @@ class RCConstants {
     public static final String COMPONENT_VARIANTNAME_LOCAL = "ComponentVariantName.Locale"
     public static final String COMPONENT_VARIANTNAME_STATUS = "ComponentVariantName.Status"
 
-    public static final String MEMBERSHIP_ROLE = "MembershipRole"
-    public static final String MEMBERSHIP_STATUS = "MembershipStatus"
-
     public static final String ORG_ROLE = "Org.Role"
+    public static final String VENDOR_ROLE = "Vendor.Role"
 
     public static final String PACKAGE_BREAKABLE = "Package.Breakable"
     public static final String PACKAGE_CONSISTENT = "Package.Consistent"
@@ -57,7 +46,6 @@ class RCConstants {
     public static final String PACKAGE_GLOBAL = "Package.Global"
     public static final String PACKAGE_EDITING_STATUS = "Package.Editing.Status"
     public static final String PACKAGE_FILE = "Package.File"
-    public static final String PACKAGE_LINK_TYPE = "Package.LinkType"
     public static final String PACKAGE_REGIONAL_RANGE = "Package.RegionalRange"
     public static final String PACKAGE_PAYMENT_TYPE = "Package.PaymentType"
     public static final String PACKAGE_OPEN_ACCESS = "Package.OpenAccess"
@@ -79,12 +67,6 @@ class RCConstants {
 
     public static final String PRICE_TYPE = "Price.type"
 
-    public static final String REVIEW_REQUEST_STATUS = "ReviewRequest.Status"
-    public static final String REVIEW_REQUEST_STD_DESC = "ReviewRequest.StdDesc"
-    public static final String REVIEW_REQUEST_TYPE = "ReviewRequest.Type"
-
-    public static final String RDFDATA_TYPE = "RDFDataType"
-
     public static final String SOURCE_DATA_SUPPLY_METHOD = "Source.DataSupplyMethod"
     public static final String SOURCE_DATA_FORMAT = "Source.DataFormat"
     public static final String SOURCE_FREQUENCY = "Source.Frequency"
@@ -98,6 +80,11 @@ class RCConstants {
     public static final String TIPPCOVERAGESTATEMENT_COVERAGE_DEPTH = "TIPPCoverageStatement.CoverageDepth"
 
     public static final String TITLEINSTANCE_MEDIUM = "TitleInstance.Medium"
+
+    public static final String VENDOR_SUPPORTED_LIB_SYSTEM = "Vendor.SupportedLibrarySystem"
+    public static final String VENDOR_ELECTRONIC_BILLING = "Vendor.ElectronicBilling"
+    public static final String VENDOR_INVOICE_DISPATCH = "Vendor.InvoiceDispatch"
+    public static final String VENDOR_ELECTRONIC_DELIVERY_DELAY = "Vendor.ElectronicDeliveryDelay"
 
     public static final String YN = "YN"
 

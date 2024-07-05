@@ -5,7 +5,7 @@
           <thead>
             <tr>
               <th>Alternate Name</th>
-              <th>Status</th>
+              <th><g:message code="default.status"/></th>
               <th>Variant Type</th>
               <th>Locale</th>
                         <g:if test="${ editable && showActions }">
@@ -35,7 +35,7 @@
         </table>
 
         <g:if test="${editable}">
-            <a class="ui right floated black button" href="#" onclick="$('#variantnamesModal').modal('show');">Add Variant Name</a>
+            <a class="ui right floated primary button" href="#" onclick="$('#variantnamesModal').modal('show');">Add Variant Name</a>
 
             <br>
             <br>

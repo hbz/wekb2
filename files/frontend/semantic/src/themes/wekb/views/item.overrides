@@ -1,0 +1,11 @@
+/*******************************
+         Theme Overrides
+*******************************/
+/* --------------
+      Links
+--------------- */
+
+/* Generic */
+.ui.items > .item > .content a:not(.ui) {
+    font-weight: bold;
+}

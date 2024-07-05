@@ -18,7 +18,7 @@
             <th>Identifier Namespace Name</th>
             <th>Identifier Namespace Value</th>
             <th>Identifier</th>
-            <th></th>
+            <th>Action</th>
         </tr>
         </thead>
         <tbody>
@@ -66,7 +66,7 @@
                             </table>
                         </g:if>
 
-                        <a class="ui right floated black button" href="#"
+                        <a class="ui right floated primary button" href="#"
                            onclick="$('#identifiersModal_${row_obj.uuid}').modal('show');">Add Identifier</a>
                         <br>
                         <br>

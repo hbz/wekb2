@@ -15,6 +15,8 @@ class RDStore {
     public static final CURRENCY_USD = getRefdataValue('USD', RCConstants.CURRENCY)
     public static final CURRENCY_GBP = getRefdataValue('GBP', RCConstants.CURRENCY)
 
+    public static final DELETED_COMPONENT_STATUS_P_D = getRefdataValue('Permanently Deleted', RCConstants.DELETED_COMPONENT_STATUS)
+
     public static final IDENTIFIER_NAMESPACE_TARGET_TYPE_TIPP = getRefdataValue('TitleInstancePackagePlatform', RCConstants.IDENTIFIER_NAMESPACE_TARGET_TYPE)
     public static final IDENTIFIER_NAMESPACE_TARGET_TYPE_PACKAGE = getRefdataValue('Package', RCConstants.IDENTIFIER_NAMESPACE_TARGET_TYPE)
 

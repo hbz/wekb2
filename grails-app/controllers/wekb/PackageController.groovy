@@ -125,6 +125,11 @@ class PackageController {
                     response.setStatus(403)
                     flash.error = "You have no permission to view this resource."
                 }
+
+                if(!pkg.nominalPlatform){
+                    flash.error = "No nominal platform is set for this package! Please put a nominal platform on the package level."
+                }
+
             }
             else {
                 log.debug("unable to resolve object")
@@ -148,66 +153,68 @@ class PackageController {
         Package pkg = Package.get(params.int('id'))
         Boolean onlyRowsWithLastChanged = params.onlyRowsWithLastChanged ? true : false
         if (pkg) {
-            params.curationOverride = SpringSecurityUtils.ifAnyGranted("ROLE_ADMIN") ? 'true' : null
-            result.editable = accessService.checkEditableObject(pkg, params)
-            if (result.editable) {
-                MultipartFile tsvFile = request.getFile("tsvFile")
-                if(tsvFile && tsvFile.size > 0) {
-                    String encoding = UniversalDetector.detectCharset(tsvFile.getInputStream())
-                    if(encoding in ["UTF-8"]) {
-                        if (pkg.status in [RDStore.KBC_STATUS_REMOVED, RDStore.KBC_STATUS_DELETED]) {
-                            String errorText = "Package status is ${pkg.status.value}. Update for this package is not starting."
-                            flash.error = errorText
-                        } else {
+            if(!pkg.nominalPlatform){
+                flash.error = "No nominal platform is set for this package! Please put a nominal platform on the package level."
+            }else {
+                params.curationOverride = SpringSecurityUtils.ifAnyGranted("ROLE_ADMIN") ? 'true' : null
+                result.editable = accessService.checkEditableObject(pkg, params)
+                if (result.editable) {
+                    MultipartFile tsvFile = request.getFile("tsvFile")
+                    if (tsvFile && tsvFile.size > 0) {
+                        String encoding = UniversalDetector.detectCharset(tsvFile.getInputStream())
+                        if (encoding in ["UTF-8", "WINDOWS-1252", "US-ASCII"]) {
+                            if (pkg.status in [RDStore.KBC_STATUS_REMOVED, RDStore.KBC_STATUS_DELETED]) {
+                                String errorText = "Package status is ${pkg.status.value}. Update for this package is not starting."
+                                flash.error = errorText
+                            } else {
 
 
-                            String fPath = '/tmp/wekb/kbartImportTmp'
+                                String fPath = '/tmp/wekb/kbartImportTmp'
 
-                            File folder = new File("${fPath}")
-                            if (!folder.exists()) {
-                                folder.mkdirs()
-                            }
+                                File folder = new File("${fPath}")
+                                if (!folder.exists()) {
+                                    folder.mkdirs()
+                                }
 
-                            String packageName = "${pkg.id}"
-                            String fileName = folder.absolutePath.concat(File.separator).concat(packageName)
-                            File file = new File(fileName)
+                                String packageName = "${pkg.id}"
+                                String fileName = folder.absolutePath.concat(File.separator).concat(packageName)
+                                File file = new File(fileName)
 
-                            tsvFile.transferTo(file)
+                                tsvFile.transferTo(file)
 
-                            Set<Thread> threadSet = Thread.getAllStackTraces().keySet()
-                            Thread[] threadArray = threadSet.toArray(new Thread[threadSet.size()])
-                            boolean processRunning = false
-                            threadArray.each { Thread thread ->
-                                if (thread.name == 'kbartImport' + pkg.id) {
-                                    processRunning = true
+                                Set<Thread> threadSet = Thread.getAllStackTraces().keySet()
+                                Thread[] threadArray = threadSet.toArray(new Thread[threadSet.size()])
+                                boolean processRunning = false
+                                threadArray.each { Thread thread ->
+                                    if (thread.name == 'kImport' + pkg.id) {
+                                        processRunning = true
+                                    }
+                                }
+
+                                if (processRunning) {
+                                    flash.error = 'A package update is already in progress. Please wait this has finished.'
+                                } else {
+                                    executorService.execute({
+                                        Package aPackage = Package.get(pkg.id)
+                                        Thread.currentThread().setName('kImport' + pkg.id)
+                                        kbartProcessService.kbartImportManual(aPackage, file, onlyRowsWithLastChanged)
+                                    })
+
+                                    flash.success = "The package update for Package '${pkg.name}' was started. This runs in the background. When the update has gone through, you will see this on the Update Info of the package tab."
                                 }
                             }
-
-                            if(processRunning){
-                                flash.error = 'A package update is already in progress. Please wait this has finished.'
-                            }else {
-                                executorService.execute({
-                                    Package aPackage = Package.get(pkg.id)
-                                    Thread.currentThread().setName('kbartImport' + pkg.id)
-                                    kbartProcessService.kbartImportManual(aPackage, file, onlyRowsWithLastChanged)
-                                })
-
-                                flash.success = "The package update for Package '${pkg.name}' was started. This runs in the background. When the update has gone through, you will see this on the Update Info of the package tab."
-                            }
+                        } else {
+                            String errorText = "The file you have uploaded has a wrong character encoding! Please ensure that your file is encoded in UTF-8. Guessed encoding has been: ${encoding}"
+                            flash.error = errorText
                         }
-                    }
-                    else {
-                        String errorText = "The file you have uploaded has a wrong character encoding! Please ensure that your file is encoded in UTF-8. Guessed encoding has been: ${encoding}"
+                    } else {
+                        String errorText = "You have not uploaded a valid file!"
                         flash.error = errorText
                     }
+                } else {
+                    response.setStatus(403)
+                    flash.error = "You have no permission to do this."
                 }
-                else {
-                    String errorText = "You have not uploaded a valid file!"
-                    flash.error = errorText
-                }
-            } else {
-                response.setStatus(403)
-                flash.error = "You have no permission to do this."
             }
         } else {
             log.debug("unable to resolve object")

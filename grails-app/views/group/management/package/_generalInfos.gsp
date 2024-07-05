@@ -11,7 +11,7 @@
         <table class="ui selectable striped sortable celled table">
             <thead>
             <tr>
-                <th></th>
+                <th><g:if test="${editable}"><input id="select-all" type="checkbox" name="chkall" /> <div id="numberOfChecked">Select (0)</div></g:if></th>
                 <th>#</th>
                 <semui:sortableColumn property="name" title="Name"
                                       params="${params}"/>
@@ -34,7 +34,7 @@
                 <semui:sortableColumn property="freeTrialPhase" title="Free Trial Phase"
                                       params="${params}"/>
 
-                <th></th>
+                <th>Action</th>
             </tr>
             </thead>
             <tbody>
@@ -44,7 +44,7 @@
                     <tr>
                         <td>
                             <g:if test="${editable}">
-                                <g:checkBox id="selectedPackages_${row_obj.uuid}" name="selectedPackages"
+                                <g:checkBox class="bulkcheck" id="selectedPackages_${row_obj.uuid}" name="selectedPackages"
                                             value="${row_obj.uuid}"
                                             checked="false"/>
                             </g:if>
@@ -104,5 +104,17 @@
             </tbody>
         </table>
     </div>
+    <g:javascript>
+    $("#select-all").click(function() {
+        $('#select-all').is( ":checked")? $('.bulkcheck').prop('checked', true) : $('.bulkcheck').prop('checked', false);
+        var numberOfChecked = $('.bulkcheck:checked').length;
+        $("#numberOfChecked").html("Select ("+numberOfChecked+")");
+       });
+
+    $(".bulkcheck").click(function() {
+        var numberOfChecked = $('.bulkcheck:checked').length;
+        $("#numberOfChecked").html("Select ("+numberOfChecked+")");
+    });
+    </g:javascript>
 
 </g:form>

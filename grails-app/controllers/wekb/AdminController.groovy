@@ -35,8 +35,13 @@ class AdminController {
   GenericOIDService genericOIDService
   ExecutorService executorService
   FtpConnectService ftpConnectService
+  DeletionService deletionService
+  SearchService searchService
 
 
+  def systemThreads() {
+    return [:]
+  }
 
   def updateTextIndexes() {
     log.debug("Call to update indexe");
@@ -117,15 +122,11 @@ class AdminController {
 
 
   def expungeRemovedComponents() {
-    Job j = concurrencyManagerService.createJob { Job j ->
-      cleanupService.expungeRemovedComponents(j)
-    }.startOrQueue()
-
-    log.debug "Triggering cleanup task. Started job #${j.uuid}"
-
-    j.description = "Cleanup Removed Components"
-    j.type = RefdataCategory.lookupOrCreate(RCConstants.JOB_TYPE, 'CleanupRemovedComponents')
-    j.startTime = new Date()
+    log.info "expungeRemovedComponents"
+    executorService.execute({
+      Thread.currentThread().setName('expungeRemovedComponents')
+      deletionService.expungeRemovedComponents()
+    })
 
     flash.message = "Expunge Removed Component runs in the background!"
 
@@ -401,7 +402,7 @@ class AdminController {
       Integer tippDuplicatesByNameCount = aPackage.getTippDuplicatesByNameCount()
       Integer tippDuplicatesByUrlCount = aPackage.getTippDuplicatesByURLCount()
       Integer tippDuplicatesByTitleIDCount = aPackage.getTippDuplicatesByTitleIDCount()
-      log.debug("Package ${aPackage.name} : ${index}")
+      //log.debug("Package ${aPackage.name} : ${index}")
 
       if(tippDuplicatesByNameCount > 0 || tippDuplicatesByUrlCount > 0 || tippDuplicatesByTitleIDCount > 0){
         pkgs << [pkg: aPackage, tippDuplicatesByNameCount: tippDuplicatesByNameCount, tippDuplicatesByUrlCount: tippDuplicatesByUrlCount, tippDuplicatesByTitleIDCount: tippDuplicatesByTitleIDCount]
@@ -561,6 +562,24 @@ class AdminController {
             'SELECT filename, id, dateexecuted from databasechangelog order by orderexecuted desc limit 1'
     )).list()
     result.dbmVersion = dbmQuery.size() > 0 ? dbmQuery.first() : ['unkown', 'unkown', 'unkown']
+
+
+    result.componentsInfos = []
+
+    def components = ["DeletedKBComponent", "CuratoryGroup","KbartSource", "Org", "Package", "Platform", "TitleInstancePackagePlatform"]
+    components.each{ def component ->
+      Map info = [:]
+      info.name = component
+
+
+      String query = "select count(*) from ${component}"
+      info.countDB = FTControl.executeQuery(query)[0]
+      info.countDeletedInDB = FTControl.executeQuery(query+ " where status = :status", [status: RDStore.KBC_STATUS_DELETED])[0]
+      info.countRemovedInDB = FTControl.executeQuery(query+ " where status = :status", [status: RDStore.KBC_STATUS_REMOVED])[0]
+
+      result.componentsInfos << info
+    }
+
     result
 
   }
@@ -591,6 +610,36 @@ class AdminController {
           pkgs << p
         }
       }
+    }
+
+    result.pkgs = pkgs
+
+    result
+  }
+
+  def findPackagesWithoutTitles() {
+    log.debug("findPackagesWithoutTitles::${params}")
+    def result = [:]
+
+    List pkgs = []
+
+    CuratoryGroup curatoryGroupFilter = params.curatoryGroup ? genericOIDService.resolveOID(params.curatoryGroup) : null
+
+    params.sort = params.sort ?: 'p.name'
+
+    params.order = params.order ?: 'asc'
+
+    Package.executeQuery(
+            "from Package p " +
+                    "where (select count(*) from TitleInstancePackagePlatform as t where t.pkg = p and t.status != :removed) = 0 " +
+                    " order by ${params.sort} ${params.order}", [removed: RDStore.KBC_STATUS_REMOVED]).each { Package p ->
+        if(curatoryGroupFilter){
+          if(p.curatoryGroups && curatoryGroupFilter in p.curatoryGroups.curatoryGroup) {
+            pkgs << p
+          }
+        }else {
+          pkgs << p
+        }
     }
 
     result.pkgs = pkgs
@@ -742,6 +791,17 @@ class AdminController {
       ftpConnectService.ftpConnectionTest(params.serverAddress, params.username, params.password)
     }
     
+  }
+
+  def checkCuratoryGroups() {
+    def searchResult = [:]
+
+
+    params.qbe = 'g:curatoryGroups'
+
+    searchResult = searchService.search(searchResult.user, searchResult, params)
+
+    searchResult.result
   }
 
 }

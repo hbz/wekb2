@@ -75,6 +75,7 @@ class Platform  extends AbstractBase implements Auditable {
   RefdataValue sushiApiAuthenticationMethod
 
   String centralApiKey
+  String counterR5SushiPlatform
 
   Date lastAuditDate
 
@@ -129,6 +130,7 @@ class Platform  extends AbstractBase implements Auditable {
 
     sushiApiAuthenticationMethod column: 'plat_sushi_api_authentication_method'
     centralApiKey column: 'plat_central_api_key', type: 'text'
+    counterR5SushiPlatform column: 'plat_counter_r5_sushi_platform', type: 'text'
 
   }
 
@@ -172,6 +174,7 @@ class Platform  extends AbstractBase implements Auditable {
     provider(nullable: true, blank: false)
     sushiApiAuthenticationMethod (nullable: true, blank: false)
     centralApiKey(nullable: true, blank: true)
+    counterR5SushiPlatform (nullable: true, blank: false)
   }
 
   @Override
@@ -246,19 +249,6 @@ class Platform  extends AbstractBase implements Auditable {
   @Transient
   def  getHostedPackages(){
     Package.executeQuery('select p from Package as p where nominalPlatform = :nominalPlatform', [nominalPlatform: this])
-  }
-
-  def expunge(){
-    log.info("Platform expunge: "+ this.id)
-
-    CuratoryGroupPlatform.executeUpdate("delete from CuratoryGroupPlatform where platform = :component", [component: this])
-    Identifier.executeUpdate("delete from Identifier where platform = :component", [component: this])
-    PlatformFederation.executeUpdate("delete from PlatformFederation where platform = :component", [component: this])
-
-    def result = [deleteType: this.class.name, deleteId: this.id]
-    log.debug("Removing all components")
-    this.delete(failOnError: true)
-    result
   }
 
   @Transient

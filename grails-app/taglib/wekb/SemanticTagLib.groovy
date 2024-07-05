@@ -6,7 +6,9 @@ import org.grails.encoder.CodecLookup
 import org.grails.encoder.Encoder
 import org.grails.taglib.TagOutput
 import org.grails.taglib.encoder.OutputContextLookupHelper
+import org.springframework.context.MessageSource
 import org.springframework.web.servlet.support.RequestContextUtils
+import wekb.helper.BeanStore
 
 class SemanticTagLib {
 
@@ -16,7 +18,7 @@ class SemanticTagLib {
 
     def actionsDropdown = { attrs, body ->
 
-        out << '<div class="ui simple dropdown black button">'
+        out << '<div class="ui simple dropdown primary button">'
         out << '<div class="text">'
         out << attrs.text
         out << '</div>'
@@ -155,6 +157,20 @@ class SemanticTagLib {
             out << '</div>'
         }
 
+        if (flash && flash.info) {
+            out << '<div class="ui message">'
+            out << '<i class="close icon"></i>'
+            out << '<p>'
+            if(flash.info instanceof Map || flash.info instanceof List){
+                generateSemuiList(flash.info)
+            }
+            else{
+                out << flash.info
+            }
+            out << '</p>'
+            out << '</div>'
+        }
+
         if (flash && flash.success) {
             out << '<div class="ui success message">'
             out << '<i class="close icon"></i>'
@@ -240,9 +256,9 @@ class SemanticTagLib {
 
         if (attrs.hideSubmitButton == null) {
             if (attrs.formID) {
-                out << '<input type="submit" class="ui button green" name="save" value="' + msgSave + '" onclick="event.preventDefault(); $(\'#' + attrs.id + '\').find(\'#' + attrs.formID + '\').submit()"/>'
+                out << '<input type="submit" class="ui button positive" name="save" value="' + msgSave + '" onclick="event.preventDefault(); $(\'#' + attrs.id + '\').find(\'#' + attrs.formID + '\').submit()"/>'
             } else {
-                out << '<input type="submit" class="ui button green" name="save" value="' + msgSave + '" onclick="event.preventDefault(); $(\'#' + attrs.id + '\').find(\'form\').submit()"/>'
+                out << '<input type="submit" class="ui button positive" name="save" value="' + msgSave + '" onclick="event.preventDefault(); $(\'#' + attrs.id + '\').find(\'form\').submit()"/>'
             }
         }
 
@@ -316,7 +332,7 @@ class SemanticTagLib {
 
         out << '<!--.pagination-->'
         out << '<div class="ui center aligned basic segment">'
-        out << '<nav class="ui pagination menu">'
+        out << '<nav class="ui pagination menu" aria-label="pagination2">'
 
         if (currentstep > firststep) {
             int tmp = (offset - (max * (maxsteps +1)))
@@ -409,6 +425,217 @@ class SemanticTagLib {
         out << '</nav>'
         out << '</div><!--.pagination-->'
     }
+
+    def paginateNew = { attrs ->
+
+        if (attrs.total == null) {
+            log.debug("throwTagError(\"Tag [paginate] is missing required attribute [total]\")")
+        }
+
+        MessageSource messageSource = BeanStore.getMessageSource()
+        Locale locale = RequestContextUtils.getLocale(request)
+
+        String action = (attrs.action ? attrs.action : (params.action ? params.action : "list"))
+
+        def total = attrs.int('total') ?: 0
+        def offset = params.int('offset') ?: 0
+        def max = params.int('max')
+        def maxsteps = (attrs.int('maxsteps') ?: 10)
+
+        if (!offset) offset = (attrs.int('offset') ?: 0)
+        if (!max) max = (attrs.int('max') ?: 10)
+
+        if (total <= max) {
+            return
+        }
+
+        Map linkParams = [:]
+        if (attrs.params instanceof Map) linkParams.putAll((Map)attrs.params)
+        linkParams.offset = offset - max
+        linkParams.max = max
+        if (params.sort) linkParams.sort = params.sort
+        if (params.order) linkParams.order = params.order
+
+        Map linkTagAttrs = [:]
+        if (attrs.containsKey('mapping')) {
+            linkTagAttrs.mapping = attrs.mapping
+            action = attrs.action
+        } else {
+            action = attrs.action ?: params.action
+        }
+        if (action) {
+            linkTagAttrs.action = action
+        }
+        if (attrs.controller) {
+            linkTagAttrs.controller = attrs.controller
+        }
+        if (attrs.containsKey(UrlMapping.PLUGIN)) {
+            linkTagAttrs.put(UrlMapping.PLUGIN, attrs.get(UrlMapping.PLUGIN))
+        }
+        if (attrs.containsKey(UrlMapping.NAMESPACE)) {
+            linkTagAttrs.put(UrlMapping.NAMESPACE, attrs.get(UrlMapping.NAMESPACE))
+        }
+        if (attrs.id != null) {
+            linkTagAttrs.id = attrs.id
+        }
+        if (attrs.tab != null) {
+            linkTagAttrs.tab = attrs.tab
+        }
+        linkTagAttrs.params = linkParams
+
+        // determine paging variables
+        def steps = maxsteps > 0
+        int currentstep = ((offset / max) as int) + 1
+        int firststep = 1
+        int laststep = Math.round(Math.ceil((total / max) as double)) as int
+
+        Map prevMap = [title: (attrs.prev ?: messageSource.getMessage('default.paginate.prev', null, null, locale))]
+        Map nextMap = [title: (attrs.next ?: messageSource.getMessage('default.paginate.next', null, null, locale))]
+
+
+        out << '<div class="ui center aligned basic segment">'
+        out << '<nav class="ui pagination menu">'
+
+        if (steps && laststep > firststep) {
+            if (maxsteps > laststep) { // | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | > |
+                // prev-buttons
+                if (currentstep > firststep) {
+                    // <
+                    linkParams.offset = offset - max
+                    linkTagAttrs.class = (currentstep == firststep) ? "item disabled prevLink" : "item prevLink"
+
+                    def prevLinkAttrs2 = linkTagAttrs.clone()
+                    out << callLink((prevLinkAttrs2 += prevMap), '<i class="angle left icon"></i>')
+                }
+                // steps
+                for (int i in currentstep..(currentstep + maxsteps)) {
+                    if (((i - 1) * max) < total) {
+                        linkParams.offset = (i - 1) * max
+                        if (currentstep == i) {
+                            linkTagAttrs.class = "item active"
+                        } else {
+                            linkTagAttrs.class = "item"
+                        }
+                        out << callLink(linkTagAttrs.clone()) { i.toString() }
+                    }
+                }
+                // next-buttons
+                if (currentstep < laststep) {
+                    // <
+                    linkParams.offset = offset + max
+                    linkTagAttrs.class = (currentstep == laststep) ? "item disabled nextLink" : "item nextLink"
+
+                    def nextLinkAttrs1 = linkTagAttrs.clone()
+                    out << callLink((nextLinkAttrs1 += nextMap), '<i class="angle right icon"></i>')
+                }
+            }
+            else { // | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | ... | 8121 | > | >> |
+
+                // | << | < |
+                if (currentstep > firststep) {
+                    // | << |
+                    int tmp = (offset - (max * (maxsteps +1)))
+                    linkParams.offset = tmp > 0 ? tmp : 0
+                    linkTagAttrs.class = (currentstep == firststep) ? "item disabled prevLink" : "item prevLink"
+
+                    def prevLinkAttrs1 = linkTagAttrs.clone()
+                    Map prevMap2 = [title: (attrs.prev ?: " ${maxsteps} " + messageSource.getMessage('default.paginate.prev', null, null, locale))]
+                    out << callLink((prevLinkAttrs1 += prevMap2), '<i class="double angle left icon"></i>')
+
+                    // | < |
+                    linkParams.offset = offset - max
+                    linkTagAttrs.class = (currentstep == firststep) ? "item disabled prevLink" : "item prevLink"
+
+                    def prevLinkAttrs2 = linkTagAttrs.clone()
+                    out << callLink((prevLinkAttrs2 += prevMap), '<i class="angle left icon"></i>')
+                }
+                // steps | 1 | 2 | 3 | 4 |
+                for (int i in currentstep..(currentstep + maxsteps)) {
+                    if (((i) * max) < total) {
+                        linkParams.offset = (i - 1) * max
+                        if (currentstep == i) {
+                            linkTagAttrs.class = "item active"
+                        } else {
+                            linkTagAttrs.class = "item"
+                        }
+                        out << callLink(linkTagAttrs.clone()) { i.toString() }
+                    }
+                }
+                // | ... |
+                if (currentstep < laststep-maxsteps-1) {
+                    out << '  <div class="disabled item">\n' +
+                            '    ...\n' +
+                            '  </div>'
+                }
+                // laststep | 1154 |
+                if (currentstep == laststep) {
+                    linkTagAttrs.class = "item active"
+                } else {
+                    linkTagAttrs.class = "item"
+                }
+
+                def lastLinkAttrs = linkTagAttrs.clone()
+
+                int tmp = linkParams.offset + (max * maxsteps)
+                linkParams.offset = tmp < total ? tmp : ((laststep - 1) * max)
+                out << callLink(lastLinkAttrs) {laststep.toString() }
+
+                // | > | >> |
+                if (currentstep < laststep) {
+                    // | > |
+                    linkParams.offset = offset + max
+                    linkTagAttrs.class = (currentstep == laststep) ? "item disabled nextLink" : "item nextLink"
+
+                    def nextLinkAttrs1 = linkTagAttrs.clone()
+                    out << callLink((nextLinkAttrs1 += nextMap), '<i class="angle right icon"></i>')
+                    if (currentstep < laststep-maxsteps-1) {
+                        // | >> |
+                        tmp = linkParams.offset + (max * maxsteps)
+                        linkParams.offset = tmp < total ? tmp : ((laststep - 1) * max)
+                        linkTagAttrs.class = (currentstep == laststep) ? "item disabled nextLink" : "item nextLink"
+
+                        def nextLinkAttrs2 = linkTagAttrs.clone()
+                        Map nextMap2 = [title: (attrs.next ?: messageSource.getMessage('default.paginate.next', null, null, locale)) +" ${maxsteps} "]
+                        out << callLink((nextLinkAttrs2 += nextMap2), '<i class="double angle right icon"></i>')
+                    }
+                }
+            }
+        }
+        // all button
+        Map<String, Object> allLinkAttrs = linkTagAttrs.clone()
+        Map<String, Object> customInputAttrs = linkTagAttrs.clone()
+        customInputAttrs.params = new LinkedHashMap<String, Object>()
+        customInputAttrs.params.putAll(linkTagAttrs.params)
+        allLinkAttrs.putAt('title', messageSource.getMessage('default.paginate.all', null, locale))
+        if (total <= 200) {
+            allLinkAttrs.class = "item"
+            allLinkAttrs.params.remove('offset')
+            allLinkAttrs.params.max = 200
+            out << callLink(allLinkAttrs, '<i class="list icon"></i>')
+        }
+        else {
+            out << '<div class="disabled item wekb popup" data-content="'+messageSource.getMessage('default.paginate.listTooLong',null,locale)+'"><i class="list icon"></i></div>'
+        }
+
+        // Custom Input
+
+        out << '<div class="item wekb-pagination-custom-input" data-max="' + max + '" data-steps="' + laststep + '">'
+        out << '    <div class="ui mini form">'
+        out << '            <div class="field">'
+        out << '                <input autocomplete="off" data-validate="pagination-custom-validate" maxlength="6" title="' + messageSource.getMessage('pagination.keyboardInput.placeholder',null,locale) + '" placeholder="' + messageSource.getMessage('pagination.keyboardInput.placeholder',null,locale) + '" type="text">'
+        customInputAttrs.params.remove('offset')
+        customInputAttrs.params.remove('class')
+        customInputAttrs.class= "wekb-pagination-custom-link js-no-wait-wheel"
+        customInputAttrs['aria-label']= messageSource.getMessage('pagination.keyboardInput.goToPage',null,locale)
+        customInputAttrs
+        out << callLink(customInputAttrs, '<i class="large chevron circle right icon wekb popup" data-content="' + messageSource.getMessage('pagination.keyboardInput.goToPage',null,locale) + '"></i>')
+        out << '            </div>'
+        out << '    </div>'
+        out << '</div>'
+        out << '</nav>'
+        out << '</div><!--.pagination-->'
+    }
+
     Closure showOutGoingLink = { Map attrs ->
         if (attrs.outGoingLink) {
             String url = attrs.outGoingLink.startsWith('http') ? attrs.outGoingLink : ('http://' + attrs.outGoingLink)
@@ -518,9 +745,10 @@ class SemanticTagLib {
     Closure tabsItemWithLink = { attrs, body ->
 
         String linkBody = attrs.text ?: ''
-        String aClass = ((this.pageScope.variables?.actionName == attrs.action && (attrs.tab == params.tab || attrs.tab == params[attrs.subTab])) ? 'item active' : 'item') + (attrs.class ? ' ' + attrs.class : '')
 
-        String counts = (attrs.counts >= 0) ? '<div class="ui '  + ' circular black label">' + attrs.counts + '</div>' : null
+        String aClass = ((this.pageScope.variables?.actionName == attrs.action && ((attrs.activeTab && attrs.activeTab == params.activeTab) || (attrs.tab && attrs.tab == params[attrs.subTab]))) ? 'item active' : 'item') + (attrs.class ? ' ' + attrs.class : '')
+
+        String counts = (attrs.counts >= 0) ? '<div class="ui '  + ' circular primary label">' + attrs.counts + '</div>' : null
 
         linkBody = counts ? linkBody + counts : linkBody
 
@@ -551,7 +779,7 @@ class SemanticTagLib {
         out << body()
 
         if (attrs.counts != null) {
-            out << '<div class="ui floating black circular label">'+attrs.counts+'</div>'
+            out << '<div class="ui floating primary circular label">'+attrs.counts+'</div>'
         }
         out << '</div>'
     }

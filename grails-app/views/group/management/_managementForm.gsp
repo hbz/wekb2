@@ -34,7 +34,7 @@
     </g:each>
 </div>
 
-    <button class="ui button black" type="submit" value="changeProperties"
+    <button class="ui button primary" type="submit" value="changeProperties"
                 name="processOption">Start Bulk Process for selected items</button>
 
     <br>

@@ -43,11 +43,11 @@
                 </td>
                 <td>
                     <g:link controller="${savedParams.controller ?: 'search'}" action="${savedParams.action ?: 'index'}"
-                            params="${savedParams}" class="ui black button" target="_blank">
+                            params="${savedParams}" class="ui primary button" target="_blank">
                         <i class="icon search"></i>
                         ${itm.name}</g:link>
                 </td>
-                <td><g:link controller="home" action="userdash" params="[removeSearch: true, search_id: itm.id]" class="ui red button icon"><i class="icon trash"></i>Remove Search</g:link></td>
+                <td><g:link controller="home" action="userdash" params="[removeSearch: true, search_id: itm.id]" class="ui negative button icon"><i class="icon trash"></i>Remove Search</g:link></td>
             </tr>
         </g:each>
             </tbody>

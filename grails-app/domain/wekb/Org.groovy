@@ -26,6 +26,15 @@ class Org extends AbstractBase implements Auditable {
   String metadataDownloaderURL
   String kbartDownloaderURL
 
+  String description
+
+  boolean paperInvoice  = false
+  boolean managementOfCredits  = false
+  boolean processingOfCompensationPayments  = false
+  boolean individualInvoiceDesign  = false
+
+  boolean invoicingYourself  = false
+
   Set variantNames = []
 
   static mappedBy = [
@@ -36,7 +45,10 @@ class Org extends AbstractBase implements Auditable {
     contacts: Contact,
     ids: Identifier,
     variantNames        : ComponentVariantName,
-    curatoryGroups   : CuratoryGroupOrg
+    curatoryGroups   : CuratoryGroupOrg,
+    electronicBillings: ProviderElectronicBilling,
+    invoiceDispatchs: ProviderInvoiceDispatch,
+    invoicingVendors: ProviderInvoicingVendor,
   ]
 
   static mapping = {
@@ -57,6 +69,15 @@ class Org extends AbstractBase implements Auditable {
     kbartDownloaderURL column: 'org_kbart_downloader_url', type: 'text'
 
     variantNames cascade: "all,delete-orphan", lazy: false
+
+    paperInvoice column: 'org_paper_invoice'
+    managementOfCredits column: 'org_management_of_credits'
+    processingOfCompensationPayments column: 'org_pro_of_com_pay'
+    individualInvoiceDesign column: 'org_ind_invoice_design'
+
+    description column: 'org_description', type: 'text'
+
+    invoicingYourself column: 'org_invoicing_yourself'
   }
 
   static constraints = {
@@ -77,6 +98,8 @@ class Org extends AbstractBase implements Auditable {
         }
       }
     })
+
+    description(nullable: true, blank: true)
   }
 
   @Override
@@ -92,6 +115,17 @@ class Org extends AbstractBase implements Auditable {
   @Override
   def beforeDelete() {
     super.beforeDeleteHandler()
+  }
+
+  def afterUpdate() {
+    if(this.curatoryGroups.size() == 1){
+      String newName = this.getProperty('name')
+      CuratoryGroup curatoryGroup = this.curatoryGroups.curatoryGroup[0]
+      if(newName && newName != '' && curatoryGroup && newName != curatoryGroup.name){
+        CuratoryGroup.executeUpdate("update CuratoryGroup as c set c.name = :newName where c = :curatoryGroup", [newName: newName, curatoryGroup: curatoryGroup])
+      }
+
+    }
   }
 
   static def refdataFind(params) {
@@ -153,20 +187,6 @@ class Org extends AbstractBase implements Auditable {
   @Transient
   def getProvidedPlatforms(){
     Platform.executeQuery('select p from Platform as p where provider = :provider', [provider: this])
-  }
-
-  def expunge(){
-    log.info("Org expunge: "+this.id)
-
-    ComponentVariantName.executeUpdate("delete from ComponentVariantName as c where c.org=:component", [component: this])
-    Contact.executeUpdate("delete from Contact where org = :component", [component: this])
-    CuratoryGroupOrg.executeUpdate("delete from CuratoryGroupOrg where org = :component", [component: this])
-    Identifier.executeUpdate("delete from Identifier where org = :component", [component: this])
-
-
-    def result = [deleteType: this.class.name, deleteId: this.id]
-    this.delete(failOnError: true)
-    result
   }
 
   @Transient

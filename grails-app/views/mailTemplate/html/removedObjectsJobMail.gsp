@@ -34,7 +34,7 @@
 <table>
     <thead>
     <tr>
-        <th></th>
+        <th>#</th>
         <th>Name</th>
         <th>Before in DB</th>
         <th>After in DB</th>

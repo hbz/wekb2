@@ -10,7 +10,7 @@
 <h1 class="ui header">
     Upload Packages completed
 
-    <g:link controller="create" action="packageBatch" class="ui black button">Back to Upload Packages</g:link>
+    <g:link controller="create" action="packageBatch" class="ui primary button">Back to Upload Packages</g:link>
 </h1>
 
 <div class="ui segment">

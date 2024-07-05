@@ -9,7 +9,7 @@
 
 <div class="ui tall stacked segment">
     <div>
-        <span class="ui black label huge">${code}</span>
+        <span class="ui primary  label huge">${code}</span>
     </div>
     <div class="ui icon header">
         <i class="exclamation triangle icon"></i>
@@ -25,7 +25,7 @@
     <br />
     <br />
     <p>
-        <button class="ui black button" onclick="window.history.back()">${message(code: 'default.button.back')}</button>
+        <button class="ui primary button" onclick="window.history.back()">${message(code: 'default.button.back')}</button>
     </p>
 </div>
 </body>

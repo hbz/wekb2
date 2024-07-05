@@ -9,8 +9,7 @@
 <g:if test="${request.isAjax()}">
 
     <div class="ui header">
-        <h1>Showing results ${offset.toInteger() + 1} to ${lasthit.toInteger() as int} of
-            ${reccount.toInteger() as int}</h1>
+        <h1><g:message code="search.show.results" args="[offset.toInteger() + 1, lasthit.toInteger() as int, reccount.toInteger() as int]"/></h1>
     </div>
 
     <g:render template="/search/pagination" model="${params}"/>
@@ -22,7 +21,7 @@
             <th>#</th>
             <g:each in="${qbeConfig.qbeResults}" var="c">
                 <g:if test="${!params.hide || !(c.qpEquiv && params.hide && (params.hide.contains(c.qpEquiv)))}">
-                    <g:set var="colcode" value="${baseClass + '.' + c.heading}"/>
+                    <g:set var="colcode" value="${classSimpleName.toLowerCase() + '.' + c.property}"/>
                     <g:set var="colmsg" value="${message(code: colcode, default: c.heading)}"/>
                     <g:if test="${c.sort}">
                         <semui:sortableColumn controller="${s_controller}" action="${s_action}" id="${params.id}" property="${c.sort}" title="${colmsg == colcode ? c.heading : colmsg}"
@@ -61,7 +60,8 @@
                             </div>
                         </g:if>
                         <g:elseif test="${c.link != null && c.value && c.value != '-Empty-'}">
-                            <g:link controller="resource"
+                            <g:link
+                                    controller="resource"
                                     action="show"
                                     id="${c.link}">
                                 <g:render template="/search/qbevalue" model="[c: c]"/>
@@ -96,8 +96,7 @@
 
     <g:set var="nowDate" value="${new java.util.Date()}"/>
     <div class="ui header">
-        <h1>Showing results ${offset.toInteger() + 1} to ${lasthit.toInteger() as int} of
-            ${reccount.toInteger() as int}</h1>
+        <h1><g:message code="search.show.results" args="[offset.toInteger() + 1, lasthit.toInteger() as int, reccount.toInteger() as int]"/></h1>
     </div>
 
     <div class="batch-all-info" style="display:none;"></div>
@@ -121,14 +120,14 @@
               </tr>
             </sec:ifLoggedIn>--}%
             <tr>
-                <sec:ifLoggedIn>
+%{--                <sec:ifLoggedIn>
                     <g:if test="${controllerName == 'group'}">
                     <th></th>
                     </g:if>
-                </sec:ifLoggedIn>
+                </sec:ifLoggedIn>--}%
                 <th>#</th>
                 <g:each in="${qbeConfig.qbeResults}" var="c">
-                    <g:set var="colcode" value="${baseClass + '.' + c.heading}"/>
+                    <g:set var="colcode" value="${classSimpleName.toLowerCase() + '.' + c.property}"/>
                     <g:set var="colmsg" value="${message(code: colcode, default: c.heading)}"/>
                     <g:if test="${!params.hide || !(c.qpEquiv && params.hide && (params.hide.contains(c.qpEquiv)))}">
                         <g:if test="${c.sort}">
@@ -148,7 +147,7 @@
                     <g:set var="row_obj" value="${r.obj}"/>
                     <tr class="${++counter == det ? 'positive' : ''}">
                     <!-- Row ${counter} -->
-                        <sec:ifLoggedIn>
+%{--                        <sec:ifLoggedIn>
                             <g:if test="${controllerName == 'group'}">
                             <td>
                                 <g:set var="objEditable" value="${accessService.checkEditableObject(row_obj, params)}"/>
@@ -165,7 +164,7 @@
                                 </g:else>
                             </td>
                             </g:if>
-                        </sec:ifLoggedIn>
+                        </sec:ifLoggedIn>--}%
                         <td>${counter}</td>
                         <g:each in="${r.cols}" var="c">
                             <td>
@@ -196,16 +195,17 @@
                                     <g:set var="duration" value="${null}"/>
                                     <g:if test="${c.globalSearchTemplateProperty == 'name' &&
                                             (row_obj instanceof wekb.Package || row_obj instanceof wekb.Org
-                                            || row_obj instanceof wekb.Platform || row_obj instanceof wekb.TitleInstancePackagePlatform)}">
+                                            || row_obj instanceof wekb.Platform || row_obj instanceof wekb.TitleInstancePackagePlatform
+                                                    || row_obj instanceof wekb.Vendor)}">
 
                                         <% use(groovy.time.TimeCategory) {
                                             duration = nowDate - row_obj.dateCreated
                                             }
                                         %>
                                         <g:if test="${duration && duration.days <= 14}">
-                                            <div class="ui black label" data-tooltip="Newly added in the last 14 days!">
+                                            <div class="ui primary  label" data-tooltip="<g:message code="search.result.new.info"/>">
                                                 <i class="star icon"></i>
-                                                New
+                                                <g:message code="search.result.new"/>
                                             </div>
                                         </g:if>
 
@@ -233,7 +233,7 @@
                 </g:if>
                 <g:else>
                     <tr>
-                        <td>Error - Row not found</td>
+                        <td><g:message code="search.result.error"/></td>
                     </tr>
                 </g:else>
             </g:each>

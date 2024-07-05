@@ -23,7 +23,7 @@
                     <th>Curatory Groups</th>
                     <th>Title Count</th>
                     <th>Last Updated</th>
-                    <th></th>
+%{--                    <th></th>--}%
                 </tr>
                 </thead>
                 <tbody>
@@ -59,8 +59,8 @@
                                               date="${pkg.lastUpdated}"/>
                             </g:if>
                         </td>
-                        <td>
-                           %{-- TODO:Moe
+%{--                        <td>
+                            TODO:Moe
                            <a data-toggle="modal" data-cache="false"
                                title="Show History (with Titles)"
                                data-remote='<g:createLink controller="fwk" action="history"
@@ -72,9 +72,9 @@
                             <a data-toggle="modal" data-cache="false"
                                title="Show History"
                                data-remote='<g:createLink controller="fwk" action="history" id="${pkg.class.name}:${pkg.id}"/>'
-                               data-target="#infoModal">Show History</a>--}%
+                               data-target="#infoModal">Show History</a>
 
-                        </td>
+                        </td>--}%
                     </tr>
                 </g:each>
                 </tbody>

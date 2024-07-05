@@ -1,19 +1,22 @@
 <div class="ui segment">
     <div class="content wekb-inline-lists">
-        <dl>
-            <dt class="control-label">
-                Internal Id
-            </dt>
-            <dd>
-                ${d.id ?: 'New record'}
-        </dl>
-        <dl>
-            <dt class="control-label">
-                Category Name / Description
-            </dt>
-            <dd>
-                <semui:xEditable owner="${d}" field="desc"/>
-        </dl>
+        <sec:ifAnyGranted roles="ROLE_ADMIN">
+            <dl>
+                <dt class="control-label">
+                    Internal Id
+                </dt>
+                <dd>
+                    ${d.id ?: 'New record'}
+            </dl>
+
+            <dl>
+                <dt class="control-label">
+                    Category Name / Description
+                </dt>
+                <dd>
+                    <semui:xEditable owner="${d}" field="desc"/>
+            </dl>
+        </sec:ifAnyGranted>
         <dl>
             <dt class="control-label">
                 Category Name / Description EN
@@ -29,25 +32,26 @@
             <dd>
                 <semui:xEditable owner="${d}" field="desc_de"/>
         </dl>
-
-        <dl>
-            <dt class="control-label">
-                Hard Data
-            </dt>
-            <dd>
-                <semui:xEditableBoolean owner="${d}" field="isHardData" overwriteEditable="false"/>
-        </dl>
-        <dl>
-            <dt class="control-label">
-                Label
-            </dt>
-            <dd>
-                <semui:xEditable owner="${d}" field="label"/>
-        </dl>
+        <sec:ifAnyGranted roles="ROLE_ADMIN">
+            <dl>
+                <dt class="control-label">
+                    Hard Data
+                </dt>
+                <dd>
+                    <semui:xEditableBoolean owner="${d}" field="isHardData" overwriteEditable="false"/>
+            </dl>
+            <dl>
+                <dt class="control-label">
+                    Label
+                </dt>
+                <dd>
+                    <semui:xEditable owner="${d}" field="label"/>
+            </dl>
+        </sec:ifAnyGranted>
 
         <g:if test="${d.id != null}">
 
-            <h3 class="ui header">Refdata Values
+            <h3 class="ui header">Reference Data Values
             </h3>
 
             <table class="ui selectable striped sortable celled table">
@@ -83,7 +87,7 @@
                 </tbody>
             </table>
             <sec:ifAnyGranted roles="ROLE_ADMIN">
-                <a class="ui right floated black button" href="#"
+                <a class="ui right floated primary button" href="#"
                    onclick="$('#rdvModal').modal('show');">Add Refdata Value</a>
 
                 <br>

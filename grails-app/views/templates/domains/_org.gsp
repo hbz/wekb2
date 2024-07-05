@@ -3,7 +3,7 @@
     <div class="content wekb-inline-lists">
         <dl>
             <dt class="control-label">
-                Name
+                <g:message code="org.name"/>
             </dt>
             <dd>
                 <semui:xEditable owner="${d}" field="name" required="true"/>
@@ -11,7 +11,7 @@
         </dl>
         <dl>
             <dt class="control-label">
-                Abbreviated Name
+                <g:message code="org.abbreviatedName"/>
             </dt>
             <dd>
                 <semui:xEditable owner="${d}" field="abbreviatedName" required="true"/>
@@ -19,7 +19,7 @@
         </dl>
         <dl>
             <dt class="control-label">
-                Status
+                <g:message code="default.status"/>
             </dt>
             <dd>
                 <semui:xEditableRefData owner="${d}" field="status" config="${RCConstants.COMPONENT_STATUS}"/>
@@ -32,8 +32,16 @@
             </dd>
         </dl>
         <dl>
+            <dt class="control-label"><g:message code="package.description"/></dt>
+            <dd><g:if test="${!createObject}">
+                <semui:xEditable owner="${d}" type="textarea" field="description"/>
+            </g:if>
+            </dd>
+
+        </dl>
+        <dl>
             <dt class="control-label">
-                Homepage
+                <g:message code="org.homepage"/>
             </dt>
             <dd>
                 <semui:xEditable owner="${d}" field="homepage" outGoingLink="true"/>
@@ -41,7 +49,7 @@
         </dl>
         <dl>
             <dt class="control-label">
-                Metadata Downloader URL
+                <g:message code="org.metadataDownloaderURL"/>
             </dt>
             <dd>
                 <semui:xEditable owner="${d}" field="metadataDownloaderURL" validation="url" outGoingLink="true"/>
@@ -49,7 +57,7 @@
         </dl>
         <dl>
             <dt class="control-label">
-                KBART Downloader URL
+                <g:message code="org.kbartDownloaderURL"/>
             </dt>
             <dd>
                 <semui:xEditable owner="${d}" field="kbartDownloaderURL" validation="url" outGoingLink="true"/>
@@ -58,7 +66,7 @@
         <g:if test="${d.id != null}">
             <dl>
                 <dt class="control-label">
-                    Roles
+                    <g:message code="org.role"/>
                 </dt>
                 <dd>
                     <div class="ui bulleted list">
@@ -66,7 +74,7 @@
                             <div class="item">
                                 ${t.value}
                                 <g:if test="${editable}">
-                                    <g:link controller='ajaxHtml'
+                                    <g:link class='ui mini button negative' controller='ajaxHtml'
                                             action='unlinkManyToMany'
                                             params="${["__context": "${d.getOID()}", "__property": "roles", "__itemToRemove": "${t.getOID()}"]}">Delete</g:link>
                                 </g:if>
@@ -75,7 +83,7 @@
                     </div>
 
                     <g:if test="${editable}">
-                        <a class="ui right floated black button" href="#"
+                        <a class="ui right floated primary button" href="#"
                            onclick="$('#rolesModal').modal('show');">Add Role</a>
 
                         <br>
@@ -97,7 +105,7 @@
                             <th>Content Type</th>
                             <th>Contact Type</th>
                             <th>Language</th>
-                            <th></th>
+                            <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -128,7 +136,7 @@
                     </table>
 
                     <g:if test="${editable}">
-                        <a class="ui right floated black button" href="#"
+                        <a class="ui right floated primary button" href="#"
                            onclick="$('#contactModal').modal('show');">Add Contact</a>
 
                         <br>
@@ -187,7 +195,7 @@
                     <div class="field">
                         <label>Role:</label> <semui:simpleReferenceDropdown name="__relatedObject"
                                                                             baseClass="wekb.RefdataValue"
-                                                                            filter1="${RCConstants.ORG_ROLE}"/>
+                                                                            filter1="${RCConstants.VENDOR_ROLE}"/>
                     </div>
                 </g:form>
             </semui:modal>

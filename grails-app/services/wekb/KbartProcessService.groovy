@@ -1,5 +1,7 @@
 package wekb
 
+/*import org.apache.tika.parser.txt.CharsetDetector
+import org.apache.tika.parser.txt.CharsetMatch*/
 import wekb.tools.DateToolkit
 import wekb.helper.RDStore
 import grails.gorm.transactions.Transactional
@@ -38,7 +40,7 @@ class KbartProcessService {
                 onlyRowsWithLastChanged: onlyRowsWithLastChanged,
                 automaticUpdate: false,
                 kbartHasWekbFields: false,
-                updateFromFileUpload: true).save()
+                updateFromFileUpload: true).save(flush: true)
         try {
             kbartRows = kbartProcess(tsvFile, lastUpdateURL, updatePackageInfo)
 
@@ -139,6 +141,8 @@ class KbartProcessService {
 
         Platform plt = pkg.nominalPlatform
 
+        boolean checkAllTitles = true
+
         try {
 
             log.info("Matched package has ${previouslyTipps} TIPPs")
@@ -170,9 +174,9 @@ class KbartProcessService {
                         }
                     }
                     kbartRows = newKbartRows
+                    checkAllTitles = false
                     log.info("onlyRowsWithLastChanged is set! after process only last changed rows: ${newKbartRows.size()}")
                 }else {
-
                 }
             }
 
@@ -356,7 +360,7 @@ class KbartProcessService {
             if(kbartRowsToCreateTipps.size() > 0){
                 List newTippList = kbartImportService.createTippBatch(kbartRowsToCreateTipps, updatePackageInfo)
                 newTipps = newTippList.size()
-                log.debug("kbartRowsToCreateTipps: TippIds -> "+newTippList.tippID)
+                log.debug("kbartRowsToCreateTipps: newTippList size -> "+newTippList.size())
 
                 /*  Package pkgTipp = pkg
                   Platform platformTipp = plt
@@ -386,8 +390,8 @@ class KbartProcessService {
 
             }
 
-            if(!onlyRowsWithLastChanged && tippDuplicates.size() > 0){
-                log.info("remove tippDuplicates -> ${tippDuplicates.size()}: ${tippDuplicates}")
+            if(checkAllTitles && tippDuplicates.size() > 0){
+                log.info("remove tippDuplicates -> ${tippDuplicates.size()}")
 
                 int maxDuplicates = 20000
                 int idxDuplicates = 0
@@ -449,7 +453,7 @@ class KbartProcessService {
             }
 
 
-            /*if (!onlyRowsWithLastChanged && setAllTippsNotInKbartToDeleted) {
+            /*if (checkAllTitles && setAllTippsNotInKbartToDeleted) {
 
                 List<Long> tippsIds = setTippsNotToDeleted ? TitleInstancePackagePlatform.executeQuery("select tipp.id from TitleInstancePackagePlatform tipp where " +
                         "tipp.status in (:status) and " +
@@ -516,7 +520,8 @@ class KbartProcessService {
 
 
             //TODO: countExistingTippsAfterImport > (kbartRowsCount-countInvalidKbartRowsForTipps) ??? nötig noch
-            if(!onlyRowsWithLastChanged && tippsFound.size() > 0 && kbartRowsCount > 0 && countExistingTippsAfterImport > (kbartRowsCount-countInvalidKbartRowsForTipps)){
+            log.info("before deleteTipps from wekb -------------------------------------------------------------------------------------")
+            if(checkAllTitles && tippsFound.size() > 0 && kbartRowsCount > 0 && countExistingTippsAfterImport > (kbartRowsCount-countInvalidKbartRowsForTipps)){
 
                 List<Long> existingTippsAfterImport = TitleInstancePackagePlatform.executeQuery(
                         "select tipp.id from TitleInstancePackagePlatform tipp where " +
@@ -647,7 +652,18 @@ class KbartProcessService {
         }
         else {
             encoding = UniversalDetector.detectCharset(tsvFile)
-            encodingPass = encoding == "UTF-8"
+
+  /*          if(encoding == null){
+                CharsetMatch[] charsetMatches= new CharsetDetector().setText(tsvFile.newInputStream()).detectAll()
+                log.debug("charsetMatches -> "+charsetMatches)
+               charsetMatches.eachWithIndex{ CharsetMatch entry, int i ->
+                   if(entry.name == "UTF-8" && entry.confidence > 5){
+                       log.debug("set encoding after match in charsetMatches: confidence -> "+entry.confidence)
+                       encoding = "UTF-8"
+                   }
+               }
+            }*/
+            encodingPass = encoding in ["UTF-8", "WINDOWS-1252", "US-ASCII"]
         }
         if(!encodingPass) {
             log.error("Encoding of file is wrong. File encoding is: ${encoding}")

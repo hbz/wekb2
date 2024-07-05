@@ -134,6 +134,17 @@ class User {
     false
   }
 
+  transient boolean getVendorEditorStatus() {
+    Role role = Role.findByAuthority("ROLE_VENDOR_EDITOR")
+
+    if (role != null) {
+      return getAuthorities().contains(role)
+    } else {
+      log.error( "Error loading admin role (ROLE_EDITOR)" )
+    }
+    false
+  }
+
   transient boolean getUserStatus() {
     Role role = Role.findByAuthority("ROLE_USER")
 
@@ -231,6 +242,17 @@ class User {
 
   public String getShowName() {
     return this.username
+  }
+
+  boolean showMyComponents() {
+    boolean show = true
+
+    if(this.vendorEditorStatus && !(this.editorStatus || this.adminStatus || this.superUserStatus)){
+      show = false
+    }
+
+
+    return show
   }
 
 }

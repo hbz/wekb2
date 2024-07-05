@@ -17,7 +17,7 @@
                         ${ddc.value}: ${ddc.getI10n('value')}
                     </td>
                     <g:if test="${editable}">
-                        <td><g:link controller='ajaxHtml'
+                        <td><g:link class='ui mini button negative' controller='ajaxHtml'
                                 action='unlinkManyToMany'
                                 params="${["__context": "${d.getOID()}", "__property": "ddcs", "__itemToRemove": "${ddc.getOID()}", activeTab: 'ddcs']}">Delete</g:link>
                         </td>
@@ -29,7 +29,7 @@
 
 
         <g:if test="${editable}">
-                        <a class="ui right floated black button" href="#"
+                        <a class="ui right floated primary button" href="#"
                            onclick="$('#ddcModal').modal('show');">Add Dewey Decimal Classification</a>
 
                         <br>

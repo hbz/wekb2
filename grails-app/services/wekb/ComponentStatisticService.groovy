@@ -7,7 +7,7 @@ import grails.gorm.transactions.Transactional
 @Transactional
 class ComponentStatisticService {
 
-  public static components = ["Org", "Package", "Platform", "CuratoryGroup", "TitleInstancePackagePlatform"]
+  public static components = ["Org", "Package", "Platform", "CuratoryGroup", "TitleInstancePackagePlatform", "Vendor"]
   public static boolean running = false;
 
   def synchronized updateCompStats(int months = 12, int offset = 0, boolean force_update = false) {

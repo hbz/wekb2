@@ -1,6 +1,6 @@
 package wekb
 
-
+import org.apache.commons.io.FileUtils
 import wekb.tools.UrlToolkit
 import wekb.helper.RDStore
 import grails.gorm.transactions.Transactional
@@ -62,16 +62,17 @@ class AutoUpdatePackagesService {
 
 
     static List<URL> getUpdateUrls(String url, Date lastProcessingDate, Date packageCreationDate) {
+        String newUrl = url ? url.replace(' ', '%20') : ''
         if (lastProcessingDate == null) {
             lastProcessingDate = packageCreationDate
         }
-        if (StringUtils.isEmpty(url) || lastProcessingDate == null) {
+        if (StringUtils.isEmpty(newUrl) || lastProcessingDate == null) {
             return new ArrayList<URL>()
         }
-        if (UrlToolkit.containsDateStamp(url) || UrlToolkit.containsDateStampPlaceholder(url)) {
-            return UrlToolkit.getUpdateUrlList(url, lastProcessingDate.toString())
+        if (UrlToolkit.containsDateStamp(newUrl) || UrlToolkit.containsDateStampPlaceholder(newUrl)) {
+            return UrlToolkit.getUpdateUrlList(newUrl, lastProcessingDate.toString())
         } else {
-            return Arrays.asList(new URL(url))
+            return Arrays.asList(new URL(newUrl))
         }
     }
 
@@ -83,6 +84,9 @@ class AutoUpdatePackagesService {
         if (pkg.status in [RDStore.KBC_STATUS_REMOVED, RDStore.KBC_STATUS_DELETED]) {
             UpdatePackageInfo updatePackageInfo = new UpdatePackageInfo(pkg: pkg, startTime: startTime, endTime: new Date(), status: RDStore.UPDATE_STATUS_SUCCESSFUL, description: "Package status is ${pkg.status.value}. Update for this package is not starting.", onlyRowsWithLastChanged: onlyRowsWithLastChanged, automaticUpdate: true, kbartHasWekbFields: false)
             updatePackageInfo.save()
+        }else if (!pkg.nominalPlatform) {
+            UpdatePackageInfo updatePackageInfo = new UpdatePackageInfo(pkg: pkg, startTime: startTime, endTime: new Date(), status: RDStore.UPDATE_STATUS_SUCCESSFUL, description: "No nominal platform is set for this package! Please put a nominal platform on the package level.", onlyRowsWithLastChanged: onlyRowsWithLastChanged, automaticUpdate: true, kbartHasWekbFields: false)
+            updatePackageInfo.save()
         } else {
             UpdatePackageInfo updatePackageInfo = new UpdatePackageInfo(pkg: pkg, startTime: startTime, status: RDStore.UPDATE_STATUS_SUCCESSFUL, description: "Starting Update package.", onlyRowsWithLastChanged: onlyRowsWithLastChanged, automaticUpdate: true).save()
             try {
@@ -91,17 +95,19 @@ class AutoUpdatePackagesService {
                         updatePackageInfo.updateFromFTP = true
                         updatePackageInfo.save()
                         if (pkg.kbartSource.ftpServerUrl) {
-                            File file = ftpConnectService.ftpConnectAndGetFile(pkg.kbartSource, updatePackageInfo)
+                            File file = ftpConnectService.ftpConnectAndGetFile(pkg.kbartSource)
 
 
                             if (file) {
                                 kbartRows = kbartProcessService.kbartProcess(file, "", updatePackageInfo)
                             } else {
-                                UpdatePackageInfo.withTransaction {
-                                    updatePackageInfo.description = "No KBART File found by FTP Server!"
-                                    updatePackageInfo.status = RDStore.UPDATE_STATUS_FAILED
-                                    updatePackageInfo.endTime = new Date()
-                                    updatePackageInfo.save()
+                                if(updatePackageInfo.status != RDStore.UPDATE_STATUS_FAILED) {
+                                    UpdatePackageInfo.withTransaction {
+                                        updatePackageInfo.description = "No KBART File found by FTP Server!"
+                                        updatePackageInfo.status = RDStore.UPDATE_STATUS_FAILED
+                                        updatePackageInfo.endTime = new Date()
+                                        updatePackageInfo.save()
+                                    }
                                 }
                             }
 
@@ -129,7 +135,7 @@ class AutoUpdatePackagesService {
                             List<URL> updateUrls
                             if (pkg.getTippCount() <= 0 || pkg.kbartSource.lastRun == null) {
                                 updateUrls = new ArrayList<>()
-                                updateUrls.add(new URL(pkg.kbartSource.url))
+                                updateUrls.add(new URL(pkg.kbartSource.url.replace(' ', '%20')))
                             } else {
                                 // this package had already been filled with data
                                 if ((UrlToolkit.containsDateStamp(pkg.kbartSource.url) || UrlToolkit.containsDateStampPlaceholder(pkg.kbartSource.url)) && pkg.kbartSource.lastUpdateUrl) {
@@ -144,41 +150,72 @@ class AutoUpdatePackagesService {
                             File file
                             if (updateUrls.size() > 0) {
                                 LocalTime kbartFromUrlStartTime = LocalTime.now()
+                                boolean failGetKbart = false
                                 while (urlsIterator.hasPrevious()) {
                                     URL url = urlsIterator.previous()
                                     lastUpdateURL = url.toString()
                                     try {
-                                        file = exportService.kbartFromUrl(lastUpdateURL)
+                                        file = exportService.kbartFromUrl(lastUpdateURL, updatePackageInfo)
 
                                         //if (kbartFromUrlStartTime < LocalTime.now().minus(45, ChronoUnit.MINUTES)){ sense???
                                         //break
                                         //}
+                                        failGetKbart = false
 
                                     }
                                     catch (Exception e) {
                                         log.error("get kbartFromUrl: ${e}")
+                                        failGetKbart = true
                                         continue
                                     }
 
                                 }
 
-                                if (file) {
-                                    kbartRows = kbartProcessService.kbartProcess(file, lastUpdateURL, updatePackageInfo)
-                                } else {
-                                    UpdatePackageInfo.withTransaction {
-                                        updatePackageInfo.description = "No KBART File found by URL: ${lastUpdateURL}!"
-                                        updatePackageInfo.status = RDStore.UPDATE_STATUS_FAILED
-                                        updatePackageInfo.endTime = new Date()
-                                        updatePackageInfo.updateUrl = lastUpdateURL
-                                        updatePackageInfo.save()
+                                if(updatePackageInfo.status != RDStore.UPDATE_STATUS_FAILED) {
+
+                                    boolean isZipFile = file && lastUpdateURL.contains('.zip')
+                                    if (isZipFile) {
+                                        file = storeZipContentToFile(file)
+                                    }
+
+                                    if (file) {
+                                        kbartRows = kbartProcessService.kbartProcess(file, lastUpdateURL, updatePackageInfo)
+
+                                        if (kbartRows.size() > 0) {
+                                            updatePackageInfo = kbartProcessService.kbartImportProcess(kbartRows, pkg, lastUpdateURL, updatePackageInfo, onlyRowsWithLastChanged)
+                                        } else {
+                                            if(updatePackageInfo.status != RDStore.UPDATE_STATUS_FAILED) {
+                                                UpdatePackageInfo.withTransaction {
+                                                    updatePackageInfo.description = "The KBART File is empty!"
+                                                    updatePackageInfo.status = RDStore.UPDATE_STATUS_FAILED
+                                                    updatePackageInfo.endTime = new Date()
+                                                    updatePackageInfo.updateUrl = lastUpdateURL
+                                                    updatePackageInfo.save()
+                                                }
+                                            }
+                                        }
+                                    } else {
+                                        if(updatePackageInfo.status != RDStore.UPDATE_STATUS_FAILED) {
+                                            UpdatePackageInfo.withTransaction {
+                                                updatePackageInfo.description = isZipFile ? "No txt-File found in Zip-File!" : "No KBART File found by URL: ${lastUpdateURL}!"
+                                                updatePackageInfo.status = RDStore.UPDATE_STATUS_FAILED
+                                                updatePackageInfo.endTime = new Date()
+                                                updatePackageInfo.updateUrl = lastUpdateURL
+                                                updatePackageInfo.save()
+                                            }
+                                        }
                                     }
                                 }
-
+                            }else {
+                                UpdatePackageInfo.withTransaction {
+                                    updatePackageInfo.description = "No KBART File found by URL"
+                                    updatePackageInfo.status = RDStore.UPDATE_STATUS_FAILED
+                                    updatePackageInfo.endTime = new Date()
+                                    updatePackageInfo.updateUrl = lastUpdateURL
+                                    updatePackageInfo.save()
+                                }
                             }
 
-                            if (kbartRows.size() > 0) {
-                                updatePackageInfo = kbartProcessService.kbartImportProcess(kbartRows, pkg, lastUpdateURL, updatePackageInfo, onlyRowsWithLastChanged)
-                            }
                         } else {
                             UpdatePackageInfo.withTransaction {
                                 //UpdatePackageInfo updatePackageFail = new UpdatePackageInfo()
@@ -218,11 +255,28 @@ class AutoUpdatePackagesService {
                     updatePackageInfo.pkg = pkg
                     updatePackageInfo.onlyRowsWithLastChanged = onlyRowsWithLastChanged
                     updatePackageInfo.automaticUpdate = true
+                    updatePackageInfo.updateUrl = lastUpdateURL
                     updatePackageInfo.save()
                 }
             }
         }
         log.info("End startAutoPackageUpdate Package ($pkg.name)")
+    }
+
+    File storeZipContentToFile(File zipFIle) {
+        File folder = new File("/tmp/wekb/kbartExport")
+        File file
+        def zf = new java.util.zip.ZipFile(zipFIle)
+        zf.entries().findAll { !it.directory }.each {
+            log.debug("storeZipContentToFile: fileName -> "+it.name)
+            if(it.name.contains('.txt')){
+                String fileName = folder.absolutePath.concat(File.separator).concat(it.name+'.txt')
+                file = new File(fileName)
+                byte[] content = exportService.getByteContent(zf.getInputStream(it))
+                FileUtils.copyInputStreamToFile(new ByteArrayInputStream(content), file)
+            }
+        }
+        return file
     }
 
 

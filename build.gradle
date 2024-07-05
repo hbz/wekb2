@@ -127,6 +127,9 @@ dependencies {
 
     // https://mvnrepository.com/artifact/commons-net/commons-net
     implementation group: 'commons-net', name: 'commons-net', version: '3.9.0' //2022 -> for FTP
+
+    /*implementation 'org.apache.tika:tika-core:2.9.1'               // for detect encoding in files
+    implementation 'org.apache.tika:tika-parsers-standard-package:2.9.1'*/
 }
 
 bootRun {

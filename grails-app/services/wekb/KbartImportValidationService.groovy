@@ -243,6 +243,12 @@ class KbartImportValidationService {
 
         }
 
+        if (result.valid && (!tippMap.title_id && !tippMap.print_identifier && !tippMap.online_identifier)) {
+            result.valid = false
+            errorMessage = "Missing title_id or print_identifier or online_identifier by title: $tippMap.publication_title"
+
+        }
+
         /*String idJsonKey = 'ids'
         def ids_list = tippMap[idJsonKey]
         if (!ids_list) {

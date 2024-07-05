@@ -12,8 +12,6 @@ import org.hibernate.Session
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.ZoneId
-import java.time.format.DateTimeFormatter
-import java.time.format.ResolverStyle
 
 @Transactional
 class KbartImportService {
@@ -21,9 +19,6 @@ class KbartImportService {
     CleanupService cleanupService
 
     DateFormatService dateFormatService
-    public static final DateTimeFormatter dateformatter = DateTimeFormatter.ofPattern("uuuu-MM-dd").withResolverStyle(ResolverStyle.STRICT)
-    public static final DateTimeFormatter dateformatter2 = DateTimeFormatter.ofPattern("dd/MM/uuuu").withResolverStyle(ResolverStyle.STRICT)
-    public static final DateTimeFormatter datetimeformatter = DateTimeFormatter.ofPattern("" + "[uuuu-MM-dd' 'HH:mm:ss.SSS]" + "[uuuu-MM-dd'T'HH:mm:ss'Z']").withResolverStyle(ResolverStyle.STRICT)
 
 
     /*Platform platformUpsertDTO(platformDTO) {
@@ -1311,6 +1306,7 @@ class KbartImportService {
                             identifierChanged = true
                             identifier = new Identifier(namespace: ns, value: newValue, tipp: tipp)
                             identifier.save()
+                            println(identifier.errors)
                             break
                     }
                     if (identifier && identifierChanged && !result.newTipp) {
@@ -1409,7 +1405,12 @@ class KbartImportService {
             cStsIDs.each {
                 tipp.removeFromCoverageStatements(TIPPCoverageStatement.get(it))
             }
-            tipp.save()
+            if (!tipp.save()) {
+                log.error("Tipp save error: ")
+                tipp.errors.allErrors.each {
+                    println it
+                }
+            }
 
         }else if(countNewCoverages > 0 && countTippCoverages == 0){
             coverage.each { c ->
@@ -1433,15 +1434,21 @@ class KbartImportService {
                         'coverageDepth': cov_depth,
                         'coverageNote': c.coverageNote,
                         'startDate': startAsDate,
-                        'endDate': endAsDate
+                        'endDate': endAsDate,
+                        'uuid': UUID.randomUUID().toString()
                 )
             }
-        }else if(countNewCoverages > 1 && countTippCoverages > 1) {
+        }else if(countNewCoverages > 1 && countTippCoverages >= 1) {
             def cStsIDs = tipp.coverageStatements.id.clone()
             cStsIDs.each {
                 tipp.removeFromCoverageStatements(TIPPCoverageStatement.get(it))
             }
-            tipp.save()
+            if (!tipp.save()) {
+                log.error("Tipp save error: ")
+                tipp.errors.allErrors.each {
+                    println it
+                }
+            }
 
             coverage.each { c ->
                 def parsedStart = TextUtils.completeDateString(c.startDate)
@@ -1464,7 +1471,8 @@ class KbartImportService {
                         'coverageDepth': cov_depth,
                         'coverageNote': c.coverageNote,
                         'startDate': startAsDate,
-                        'endDate': endAsDate
+                        'endDate': endAsDate,
+                        'uuid': UUID.randomUUID().toString()
                 )
             }
 
@@ -1575,7 +1583,12 @@ class KbartImportService {
             }
             // refdata setStringIfDifferent(tipp, 'coverageDepth', c.coverageDepth)
         }*/
-        tipp.save()
+        if (!tipp.save()) {
+            log.error("Tipp save error: ")
+            tipp.errors.allErrors.each {
+                println it
+            }
+        }
         log.debug("createOrUpdateCoverageForTipp End")
     }
 
@@ -1601,17 +1614,7 @@ class KbartImportService {
                     String newValue = tippMap[kbartProperty]
                     try {
                         if ( newValue.trim() ) {
-                            if (newValue.length() == 4) {
-                                ldt = LocalDate.parse(newValue + "-01-01", dateformatter).atStartOfDay()
-                            } else if (newValue.length() == 7) {
-                                ldt = LocalDate.parse(newValue + "-01", dateformatter).atStartOfDay()
-                            } else if (newValue.length() == 10 && newValue.contains('-')) {
-                                ldt = LocalDate.parse(newValue, dateformatter).atStartOfDay()
-                            }else if (newValue.length() == 10 && newValue.contains('/')) {
-                                ldt = LocalDate.parse(newValue, dateformatter2).atStartOfDay()
-                            } else {
-                                ldt = LocalDateTime.parse(newValue, datetimeformatter)
-                            }
+                            ldt = TextUtils.completeDateString(newValue)
                         }
                     }
                     catch (Exception e) {
@@ -1684,7 +1687,12 @@ class KbartImportService {
         }
 
         if(valueChanged){
-            tipp.save()
+            if (!tipp.save()) {
+                log.error("Tipp save error: ")
+                tipp.errors.allErrors.each {
+                    println it
+                }
+            }
         }
 
         return  result.changedTipp ?: valueChanged
@@ -1764,17 +1772,28 @@ class KbartImportService {
                         oldValue = existPrice.price.toString()
                         existPrice.price = f
                         existPrice.save()
-                        tipp.save()
+                        if (!tipp.save()) {
+                            log.error("Tipp save error: ")
+                            tipp.errors.allErrors.each {
+                                println it
+                            }
+                        }
                         priceChanged = true
                     }
 
                 } else if (existPrices.size() > 1) {
                     def pricesIDs = existPrices.id.clone()
                     pricesIDs.each {
-                        tipp.removeFromPrices(TippPrice.get(it))
+                        TippPrice tippPrice = TippPrice.get(it)
+                        tipp.removeFromPrices(tippPrice)
                         //TippPrice.executeUpdate("delete from TippPrice id = ${it}")
                     }
-                    tipp.save()
+                    if (!tipp.save()) {
+                        log.error("Tipp save error: ")
+                        tipp.errors.allErrors.each {
+                            println it
+                        }
+                    }
                     tipp = tipp.refresh()
                     cp = new TippPrice(
                             tipp: tipp,
@@ -1782,7 +1801,12 @@ class KbartImportService {
                             currency: currency,
                             price: f)
                     cp.save()
-                    tipp.save()
+                    if (!tipp.save()) {
+                        log.error("Tipp save error: ")
+                        tipp.errors.allErrors.each {
+                            println it
+                        }
+                    }
                     priceChanged = true
 
                 } else {
@@ -1792,7 +1816,12 @@ class KbartImportService {
                             currency: currency,
                             price: f)
                     cp.save()
-                    tipp.save()
+                    if (!tipp.save()) {
+                        log.error("Tipp save error: ")
+                        tipp.errors.allErrors.each {
+                            println it
+                        }
+                    }
                     priceChanged = true
                 }
             } else {
@@ -1814,7 +1843,41 @@ class KbartImportService {
         }catch (Exception e) {
                 log.error("createOrUpdatePrice -> kbartProperty ${newValue}:" + e.toString())
             }
+        }else{
+            if(!result.newTipp) {
+                List<TippPrice> existPrices = TippPrice.findAllByTippAndPriceTypeAndCurrency(tipp, priceType, currency, [sort: 'lastUpdated', order: 'ASC'])
+               if (existPrices.size() > 0) {
+                    def pricesIDs = existPrices.id.clone()
+                    pricesIDs.each {
+                        TippPrice tippPrice = TippPrice.get(it)
+                        tipp.removeFromPrices(tippPrice)
+                    }
+                    if (!tipp.save()) {
+                        log.error("Tipp save error: ")
+                        tipp.errors.allErrors.each {
+                            println it
+                        }
+                    }else {
+                        tipp = tipp.refresh()
+                        UpdateTippInfo updateTippInfo = new UpdateTippInfo(
+                                description: "Delete price of title '${tipp.name}' because no price in kbart!",
+                                tipp: tipp,
+                                startTime: new Date(),
+                                endTime: new Date(),
+                                status: RDStore.UPDATE_STATUS_SUCCESSFUL,
+                                type: RDStore.UPDATE_TYPE_CHANGED_TITLE,
+                                updatePackageInfo: updatePackageInfo,
+                                kbartProperty: kbartProperty,
+                                tippProperty: "prices[${priceType.value}]",
+                                oldValue: oldValue,
+                                newValue: newValue
+                        ).save()
+                    }
+                }
+
+            }
         }
+
         if(cp && priceChanged && !result.newTipp){
             //updatePackageInfo = updatePackageInfo.refresh()
             UpdateTippInfo updateTippInfo = new UpdateTippInfo(
@@ -1852,15 +1915,7 @@ class KbartImportService {
                     String oldValue = renderObjectValue(tipp[tippProperty])
                     try {
                         if ( newValue ) {
-                            if (newValue.length() == 4) {
-                                ldt = LocalDate.parse(newValue + "-01-01", dateformatter).atStartOfDay()
-                            } else if (newValue.length() == 7) {
-                                ldt = LocalDate.parse(newValue + "-01", dateformatter).atStartOfDay()
-                            } else if (newValue.length() == 10) {
-                                ldt = LocalDate.parse(newValue, dateformatter).atStartOfDay()
-                            } else {
-                                ldt = LocalDateTime.parse(newValue, datetimeformatter)
-                            }
+                            ldt = TextUtils.completeDateString(newValue)
                         }
                     }
                     catch (Exception e) {
@@ -2085,7 +2140,12 @@ class KbartImportService {
                 cStsIDs.each {
                     tipp.removeFromCoverageStatements(TIPPCoverageStatement.get(it))
                 }
-                tipp.save()
+                if (!tipp.save()) {
+                    log.error("Tipp save error: ")
+                    tipp.errors.allErrors.each {
+                        println it
+                    }
+                }
             }
         }
         //log.debug("before creating identifiers")
@@ -2164,7 +2224,12 @@ class KbartImportService {
                 ddcsIDs.each {
                     tipp.removeFromDdcs(RefdataValue.get(it))
                 }
-                tipp.save()
+                if (!tipp.save()) {
+                    log.error("Tipp save error: ")
+                    tipp.errors.allErrors.each {
+                        println it
+                    }
+                }
             }
         }
         // KBART -> ddc -> ddcs
@@ -2187,12 +2252,22 @@ class KbartImportService {
                     tipp.removeFromLanguages(ComponentLanguage.get(it))
                     //ComponentLanguage.get(it).delete()
                 }
-                tipp.save()
+                if (!tipp.save()) {
+                    log.error("Tipp save error: ")
+                    tipp.errors.allErrors.each {
+                        println it
+                    }
+                }
                 //ComponentLanguage.executeUpdate("delete from ComponentLanguage where tipp = :tipp", [tipp: tipp])
             }
             List languages = tippMap.language.split(',')
             languages.each { String lan ->
-                RefdataValue refdataValue = RefdataCategory.lookup(RCConstants.COMPONENT_LANGUAGE, lan)
+                RefdataValue refdataValue
+                if(lan.size() == 2){
+                    refdataValue = RefdataValue.findByOwnerAndValueIlike(RefdataCategory.findByDesc(RCConstants.COMPONENT_LANGUAGE), lan.toLowerCase())
+                }else {
+                    refdataValue = RefdataCategory.lookup(RCConstants.COMPONENT_LANGUAGE, lan)
+                }
                 if (refdataValue) {
                     if (!ComponentLanguage.findByTippAndLanguage(tipp, refdataValue)) {
                         ComponentLanguage componentLanguage = new ComponentLanguage(tipp: tipp, language: refdataValue)
@@ -2201,39 +2276,37 @@ class KbartImportService {
                 }
             }
 
-            tipp.save()
+            if (!tipp.save()) {
+                log.error("Tipp save error: ")
+                tipp.errors.allErrors.each {
+                    println it
+                }
+            }
             //tipp.refresh()
         }
         //log.debug("before price section")
         // KBART -> listprice_eur -> prices
-        if (tippMap.listprice_eur) {
-            result.changedTipp = createOrUpdatePrice(result, tipp, RDStore.PRICE_TYPE_LIST, RDStore.CURRENCY_EUR, tippMap.listprice_eur, 'listprice_eur', updatePackageInfo)
-        }
+        result.changedTipp = createOrUpdatePrice(result, tipp, RDStore.PRICE_TYPE_LIST, RDStore.CURRENCY_EUR, tippMap.listprice_eur, 'listprice_eur', updatePackageInfo)
+
 
         // KBART -> listprice_usd -> prices
-        if (tippMap.listprice_usd) {
-            result.changedTipp = createOrUpdatePrice(result, tipp, RDStore.PRICE_TYPE_LIST, RDStore.CURRENCY_USD, tippMap.listprice_usd, 'listprice_usd', updatePackageInfo)
-        }
+        result.changedTipp = createOrUpdatePrice(result, tipp, RDStore.PRICE_TYPE_LIST, RDStore.CURRENCY_USD, tippMap.listprice_usd, 'listprice_usd', updatePackageInfo)
 
         // KBART -> listprice_gbp -> prices
-        if (tippMap.listprice_gbp) {
-            result.changedTipp = createOrUpdatePrice(result, tipp, RDStore.PRICE_TYPE_LIST, RDStore.CURRENCY_GBP, tippMap.listprice_gbp, 'listprice_gbp', updatePackageInfo)
-        }
+        result.changedTipp = createOrUpdatePrice(result, tipp, RDStore.PRICE_TYPE_LIST, RDStore.CURRENCY_GBP, tippMap.listprice_gbp, 'listprice_gbp', updatePackageInfo)
+
 
         // KBART -> oa_apc_eur -> prices
-        if (tippMap.oa_apc_eur) {
-            result.changedTipp = createOrUpdatePrice(result, tipp, RDStore.PRICE_TYPE_OA_APC, RDStore.CURRENCY_EUR, tippMap.oa_apc_eur, 'oa_apc_eur', updatePackageInfo)
-        }
+        result.changedTipp = createOrUpdatePrice(result, tipp, RDStore.PRICE_TYPE_OA_APC, RDStore.CURRENCY_EUR, tippMap.oa_apc_eur, 'oa_apc_eur', updatePackageInfo)
+
 
         // KBART -> oa_apc_usd -> prices
-        if (tippMap.oa_apc_usd) {
-            result.changedTipp = createOrUpdatePrice(result, tipp, RDStore.PRICE_TYPE_OA_APC, RDStore.CURRENCY_USD, tippMap.oa_apc_usd, 'oa_apc_usd', updatePackageInfo)
-        }
+        result.changedTipp = createOrUpdatePrice(result, tipp, RDStore.PRICE_TYPE_OA_APC, RDStore.CURRENCY_USD, tippMap.oa_apc_usd, 'oa_apc_usd', updatePackageInfo)
+
 
         // KBART -> oa_apc_gbp -> prices
-        if (tippMap.oa_apc_gbp) {
-            result.changedTipp = createOrUpdatePrice(result, tipp, RDStore.PRICE_TYPE_OA_APC, RDStore.CURRENCY_GBP, tippMap.oa_apc_gbp, 'oa_apc_gbp', updatePackageInfo)
-        }
+       result.changedTipp = createOrUpdatePrice(result, tipp, RDStore.PRICE_TYPE_OA_APC, RDStore.CURRENCY_GBP, tippMap.oa_apc_gbp, 'oa_apc_gbp', updatePackageInfo)
+
 
         //log.debug("after price section")
 
@@ -2347,7 +2420,12 @@ class KbartImportService {
                         )
                 if (tipp) {
                     tipp.kbartImportRunning = true
-                    tipp.save()
+                    if (!tipp.save()) {
+                        log.error("Tipp save error: ")
+                        tipp.errors.allErrors.each {
+                            println it
+                        }
+                    }
                 } else {
                     log.error("TIPP creation failed!")
                 }
@@ -2458,7 +2536,12 @@ class KbartImportService {
                     if (tippMap.kbartRowMap.language) {
                         List languages = tippMap.kbartRowMap.language.split(',')
                         languages.each { String lan ->
-                            RefdataValue refdataValue = RefdataCategory.lookup(RCConstants.COMPONENT_LANGUAGE, lan)
+                            RefdataValue refdataValue
+                            if(lan.size() == 2){
+                                refdataValue = RefdataValue.findByOwnerAndValueIlike(RefdataCategory.findByDesc(RCConstants.COMPONENT_LANGUAGE), lan)
+                            }else {
+                                refdataValue = RefdataCategory.lookup(RCConstants.COMPONENT_LANGUAGE, lan)
+                            }
                             if (refdataValue) {
                                 if (!ComponentLanguage.findByTippAndLanguage(tipp, refdataValue)) {
                                     ComponentLanguage componentLanguage = new ComponentLanguage(tipp: tipp, language: refdataValue)
@@ -2467,7 +2550,12 @@ class KbartImportService {
                             }
                         }
 
-                        tipp.save()
+                        if (!tipp.save()) {
+                            log.error("Tipp save error: ")
+                            tipp.errors.allErrors.each {
+                                println it
+                            }
+                        }
                     }
                     // KBART -> listprice_eur -> prices
                     if (tippMap.kbartRowMap.listprice_eur) {
@@ -2544,17 +2632,7 @@ class KbartImportService {
             String newValue = value
             try {
                 if ( newValue.trim() ) {
-                    if (newValue.length() == 4) {
-                        ldt = LocalDate.parse(newValue + "-01-01", dateformatter).atStartOfDay()
-                    } else if (newValue.length() == 7) {
-                        ldt = LocalDate.parse(newValue + "-01", dateformatter).atStartOfDay()
-                    } else if (newValue.length() == 10 && newValue.contains('-')) {
-                        ldt = LocalDate.parse(newValue, dateformatter).atStartOfDay()
-                    }else if (newValue.length() == 10 && newValue.contains('/')) {
-                        ldt = LocalDate.parse(newValue, dateformatter2).atStartOfDay()
-                    } else {
-                        ldt = LocalDateTime.parse(newValue, datetimeformatter)
-                    }
+                    ldt = TextUtils.completeDateString(newValue)
                 }
             }
             catch (Exception e) {

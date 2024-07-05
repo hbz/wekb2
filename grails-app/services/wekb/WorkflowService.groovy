@@ -3,6 +3,7 @@ package wekb
 import grails.gorm.transactions.Transactional
 import grails.plugin.springsecurity.SpringSecurityService
 import grails.web.mapping.LinkGenerator
+import groovyx.gpars.GParsPool
 import wekb.auth.User
 import wekb.auth.UserRole
 import wekb.helper.RCConstants
@@ -23,20 +24,32 @@ class WorkflowService {
     List availableActions(String domainClassName) {
         switch (domainClassName) {
             case CuratoryGroup.class.name:
-                [
-                        [code: 'workFlowSetStatus::Deleted', label: 'Mark the Curatory Group as deleted', message: '', onlyAdmin: true],
-                        [code: 'workFlowSetStatus::Removed', label: 'Remove Curatory Group', message: '', onlyAdmin: true]
-                ]
+                if (springSecurityService.currentUser.isAdmin()) {
+                    [
+                            [code: 'workFlowSetStatus::Deleted', label: 'Mark the Curatory Group as deleted', message: '', onlyAdmin: true],
+                            [code: 'workFlowSetStatus::Removed', label: 'Remove Curatory Group', message: '', onlyAdmin: true]
+                    ]
+                }else{
+                    []
+                }
                 break
             case IdentifierNamespace.class.name:
-                [
-                        [code: 'workFlowMethod::deleteIdentifierNamespace', label: 'Delete Namespace', message: '', onlyAdmin: true],
-                ]
+                if (springSecurityService.currentUser.isAdmin()) {
+                    [
+                            [code: 'workFlowMethod::deleteIdentifierNamespace', label: 'Delete Namespace', message: '', onlyAdmin: true],
+                    ]
+                }else{
+                    []
+                }
                 break
             case Identifier.class.name:
-                [
-                        [code: 'workFlowMethod::deleteIdentifier', label: 'Delete Identifier', message: '', onlyAdmin: true],
-                ]
+                if (springSecurityService.currentUser.isAdmin()) {
+                    [
+                            [code: 'workFlowMethod::deleteIdentifier', label: 'Delete Identifier', message: '', onlyAdmin: true],
+                    ]
+                }else{
+                    []
+                }
                 break
             case KbartSource.class.name:
                 [
@@ -58,6 +71,7 @@ class WorkflowService {
                         [code: 'objectMethod::deleteSoft', label: 'Mark the package as deleted (with all Titles)', message: '', onlyAdmin: false, group: 2],
                         [code: 'objectMethod::retireWithTipps', label: 'Mark the package as retired (with all Titles)', message: '', onlyAdmin: false, group: 2],
                         [code: 'objectMethod::removeOnlyTipps', modalID: 'removeOnlyTipps', label: 'Remove only all Titles', message: '', onlyAdmin: false, group: 5],
+                        [code: 'objectMethod::removeOnlyDeletedTipps', modalID: 'removeOnlyDeletedTipps', label: 'Remove only deleted Titles', message: '', onlyAdmin: false, group: 4],
                         [code: 'objectMethod::removeWithTipps', modalID: 'removeWithTipps', label: 'Remove the package (with all Titles)', message: '', onlyAdmin: false, group: 6],
 
                         [code: 'workFlowMethod::manualKbartImport', label: 'Manual KBART Import', message: '', onlyAdmin: false, group: 1],
@@ -66,10 +80,14 @@ class WorkflowService {
                 ]
                 break
             case Platform.class.name:
-                [
-                        [code: 'workFlowSetStatus::Deleted', label: 'Mark the Platform as deleted', message: '', onlyAdmin: true, group: 1],
-                        [code: 'workFlowSetStatus::Removed', label: 'Remove Platform', message: '', onlyAdmin: true, group: 1]
-                ]
+                if (springSecurityService.currentUser.isAdmin()) {
+                    [
+                            [code: 'workFlowSetStatus::Deleted', label: 'Mark the Platform as deleted', message: '', onlyAdmin: true, group: 1],
+                            [code: 'workFlowSetStatus::Removed', label: 'Remove Platform', message: '', onlyAdmin: true, group: 1]
+                    ]
+                }else{
+                    []
+                }
                 break
             case TitleInstancePackagePlatform.class.name:
                 [
@@ -81,9 +99,25 @@ class WorkflowService {
                 ]
                 break
             case User.class.name:
-                [
-                        [code: 'workFlowMethod::deleteUser', label: 'Delete', message: '', onlyAdmin: true, group: 1],
-                ]
+                if (springSecurityService.currentUser.isAdmin()) {
+                    [
+                            [code: 'workFlowMethod::deleteUser', label: 'Delete', message: '', onlyAdmin: true, group: 1],
+                    ]
+                }else{
+                    []
+                }
+                break
+
+            case Vendor.class.name:
+                if (springSecurityService.currentUser.isAdmin()) {
+                    [
+                            [code: 'workFlowSetStatus::Deleted', label: 'Mark the Vendor as deleted', message: '', onlyAdmin: true, group: 1],
+                            [code: 'workFlowSetStatus::Current', label: 'Mark the Vendor as current', message: '', onlyAdmin: true, group: 1],
+                            [code: 'workFlowSetStatus::Removed', label: 'Remove Vendor', message: '', onlyAdmin: true, group: 2]
+                    ]
+                } else {
+                    []
+                }
                 break
             default:
                 []
@@ -95,6 +129,7 @@ class WorkflowService {
         switch (domainClassName) {
             case Package.class.name:
                 [
+                        [modalID: 'removeOnlyDeletedTipps', code: 'objectMethod::removeOnlyDeletedTipps', label: 'Remove only all Titles', info: 'You are about to permanently remove all deleted titles from your package. Are you sure you want to continue?'],
                         [modalID: 'removeOnlyTipps', code: 'objectMethod::removeOnlyTipps', label: 'Remove only all Titles', info: 'You are about to permanently remove all titles from your package. Are you sure you want to continue?'],
                         [modalID: 'removeWithTipps', code: 'objectMethod::removeWithTipps', label: 'Remove the package (with all Titles)', info: 'You are about to permanently remove all titles from your package. Are you sure you want to continue?'],
                 ]
@@ -184,12 +219,13 @@ class WorkflowService {
     private Map updatePackageFromKbartSource(Package pkg, boolean allTitles = false) {
         log.debug("updatePackageFromKbartSource for Package ${pkg}..")
         Map result = [:]
-        if (pkg && pkg.kbartSource && (pkg.kbartSource.url || pkg.kbartSource.ftpServerUrl)) {
+
+        if (pkg && pkg.nominalPlatform && pkg.kbartSource && (pkg.kbartSource.url || pkg.kbartSource.ftpServerUrl)) {
             Set<Thread> threadSet = Thread.getAllStackTraces().keySet()
             Thread[] threadArray = threadSet.toArray(new Thread[threadSet.size()])
             boolean processRunning = false
             threadArray.each { Thread thread ->
-                if (thread.name == 'updatePackageFromKbartSource' + pkg.id) {
+                if (thread.name == 'uPFKS' + pkg.id) {
                     processRunning = true
                 }
             }
@@ -199,7 +235,7 @@ class WorkflowService {
             } else {
                 executorService.execute({
                     Package aPackage = Package.get(pkg.id)
-                    Thread.currentThread().setName('updatePackageFromKbartSource' + pkg.id)
+                    Thread.currentThread().setName('uPFKS' + pkg.id)
                     autoUpdatePackagesService.startAutoPackageUpdate(aPackage, !allTitles)
                 })
 
@@ -207,13 +243,35 @@ class WorkflowService {
             }
         } else if (!pkg) {
             result.error = "Unable to reference provided Package!"
-        } else {
-            result.error = "Please check the source for validity!"
+        } else if (!pkg.nominalPlatform) {
+            result.error = "Please check the nominal Platform by the package! No nominal Platform set!"
+        }else {
+            result.error = "Please check the source for validity! Check URL or FTP SERVER URL"
         }
 
         result.ref = grailsLinkGenerator.link(controller: 'resource', action: 'show', id: pkg.getOID(), absolute: true)
 
         result
+    }
+
+    void updateListOfPackageWithKbart(List<Package> packageList, boolean allTitles = false){
+        GParsPool.withPool(5) { pool ->
+            packageList.anyParallel { aPackage ->
+                Set<Thread> threadSet = Thread.getAllStackTraces().keySet()
+                Thread[] threadArray = threadSet.toArray(new Thread[threadSet.size()])
+                boolean processRunning = false
+                threadArray.each { Thread thread ->
+                    if (thread.name == 'uPFKS' + aPackage.id) {
+                        processRunning = true
+                    }
+                }
+
+                if (!processRunning) {
+                        Thread.currentThread().setName('uPFKS' + aPackage.id)
+                        autoUpdatePackagesService.startAutoPackageUpdate(aPackage, !allTitles)
+                }
+            }
+        }
     }
 
     private Map deleteIdentifierNamespace(IdentifierNamespace identifierNamespace) {

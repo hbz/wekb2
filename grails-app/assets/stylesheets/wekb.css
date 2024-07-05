@@ -141,4 +141,33 @@ main {
     border-left: 10px solid #d9534f!important;
 }
 
+.ui.menu .item.wekb-pagination-custom-input {
+    position: relative;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.ui.menu .item.wekb-pagination-custom-input .ui.form input[type=text] {
+    align-self: center;
+    width: 3.4rem;
+    vertical-align: middle;
+    padding-top: 0.3em;
+    padding-bottom: 0.3em;
+}
+
+.ui.menu .item.wekb-pagination-custom-input .field {
+    display: flex;
+}
+
+.ui.menu .item.wekb-pagination-custom-input .field .icon {
+    align-self: center;
+    margin-left: 4px;
+}
+
+.ui.menu .item.wekb-pagination-custom-input .ui.basic.red.pointing.prompt.label {
+    position: absolute;
+    top: 70%;
+    left: -50%;
+}
+
 

@@ -41,6 +41,7 @@ class BootStrapService {
             def apiRole = Role.findByAuthority('ROLE_API') ?: new Role(authority: 'ROLE_API', roleType: 'global').save(failOnError: true)
             def suRole = Role.findByAuthority('ROLE_SUPERUSER') ?: new Role(authority: 'ROLE_SUPERUSER', roleType: 'global').save(failOnError: true)
             def sushiRole = Role.findByAuthority('ROLE_SUSHI') ?: new Role(authority: 'ROLE_SUSHI', roleType: 'global').save(failOnError: true)
+            def vendorEditorRole = Role.findByAuthority('ROLE_VENDOR_EDITOR') ?: new Role(authority: 'ROLE_VENDOR_EDITOR', roleType: 'global').save(failOnError: true)
         }
 
         setRefDatas()
@@ -144,12 +145,14 @@ class BootStrapService {
         List rdcList = getParsedCsvData('setup/RefdataCategory.csv', 'RefdataCategory')
 
         rdcList.each { map ->
+            map.hardData = true
             RefdataCategory.construct(map)
         }
 
         List rdvList = getParsedCsvData('setup/RefdataValue.csv', 'RefdataValue')
 
         rdvList.each { map ->
+            map.hardData = true
             RefdataValue.construct(map)
         }
 
@@ -165,18 +168,35 @@ class BootStrapService {
             {
                 map.token = "0"+map.get('token')
             }
-
+            map.hardData = true
             RefdataValue.construct(map)
         }
 
         List languages = getParsedCsvData('setup/ISO-639-2.csv', 'RefdataValue')
 
         languages.each { map ->
+            map.hardData = true
             RefdataValue.construct(map)
         }
 
         log.info("Deleting any null refdata values")
         RefdataValue.executeUpdate('delete from RefdataValue where value is null')
+
+/*        log.info("Cleaup RefdataValue where isHardData = false")
+        try {
+            RefdataValue.executeUpdate('delete from RefdataValue where isHardData = false')
+        }
+        catch (Exception e) {
+            log.error("Problem by Cleaup RefdataValue where isHardData = false -> Exception: ${e}")
+        }
+
+        log.info("Cleaup RefdataCategory where isHardData = false")
+        try {
+            RefdataCategory.executeUpdate('delete from RefdataCategory where isHardData = false')
+        }
+        catch (Exception e) {
+            log.error("Problem by Cleaup RefdataCategory where isHardData = false -> Exception: ${e}")
+        }*/
 
 
     }

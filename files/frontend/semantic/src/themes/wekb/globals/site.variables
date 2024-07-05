@@ -19,41 +19,43 @@
 
 
 @linkHoverUnderline  : underline;
+@linkColor: #00509f;
+@linkHoverColor: if(iscolor(@linkColor), darken(saturate(@linkColor, 20), 15, relative), @linkColor);
 
 
 /*-------------------
       Site Colors
 --------------------*/
 
-/*---  Colors  ---*/
-@red              : #DB2828;
-@orange           : #F2711C;
-@yellow           : #FBBD08;
-@olive            : #B5CC18;
-@green            : #21BA45;
-@teal             : #00B5AD;
-@blue             : #2185D0;
-@violet           : #6435C9;
-@purple           : #A333C8;
-@pink             : #E03997;
-@brown            : #A5673F;
-@grey             : #767676;
-@black            : #24292f;
+/* ---  Colors  --- */
+@red: #D42828;
+@orange: #C75000;
+@yellow: #916504;
+@olive: #3D7307;
+@green: #08873b;
+@teal: #09857C;
+@blue: #2E6FD9;
+@violet: #7766AA;
+@purple: #934DF6;
+@pink: #D93076;
+@brown: #B36200;
+@grey: #767676;
+@black: #1b1c1d;
 
-/*---  Light Colors  ---*/
-@lightRed         : #FF695E;
-@lightOrange      : #FF851B;
-@lightYellow      : #FFE21F;
-@lightOlive       : #D9E778;
-@lightGreen       : #2ECC40;
-@lightTeal        : #6DFFFF;
-@lightBlue        : #54C8FF;
-@lightViolet      : #A291FB;
-@lightPurple      : #DC73FF;
-@lightPink        : #FF8EDF;
-@lightBrown       : #D67C1C;
-@lightGrey        : #DCDDDE;
-@lightBlack       : #545454;
+/* ---  Light Colors  --- */
+@lightRed: #FcDCDC;
+@lightOrange: #FCE8E1;
+@lightYellow: #FCF1DC;
+@lightOlive: #F1FAE6;
+@lightGreen: #E8FCF0;
+@lightTeal: #D7F5F3;
+@lightBlue: #E6EEFC;
+@lightViolet: #E6E1F2;
+@lightPurple: #EBE1F5;
+@lightPink: #E7DAE6;
+@lightBrown: #FCF0E1;
+@lightGrey: #dcddde;
+@lightBlack: #545454;
 
 /*---   Neutrals  ---*/
 @fullBlack        : #000000;
@@ -373,3 +375,30 @@
 @subtleTransparentWhite     : rgba(255, 255, 255, 0.02);
 @transparentWhite           : rgba(255, 255, 255, 0.08);
 @strongTransparentWhite     : rgba(255, 255, 255, 0.15);
+
+/* -------------------
+    Brand Colors
+-------------------- */
+
+@primaryColor: #4c4f52;
+@secondaryColor: @blue;
+@positiveColor: @green;
+
+
+/* ---  Colors  --- */
+@primaryColorHover: if(iscolor(@primaryColor), saturate(darken(@primaryColor, 35), 90, relative), @primaryColor);
+@primaryColorFocus: if(iscolor(@primaryColor), saturate(darken(@primaryColor, 35), 90, relative), @primaryColor);
+@primaryColorActive: if(iscolor(@primaryColor), saturate(darken(@primaryColor, 35), 90, relative), @primaryColor);
+
+@negativeColorHover: if(iscolor(@negativeColor), saturate(darken(@negativeColor, 25), 90, relative), @negativeColor);
+@negativeColorFocus: if(iscolor(@negativeColor), saturate(darken(@negativeColor, 25), 90, relative), @negativeColor);
+@negativeColorActive: if(iscolor(@negativeColor), saturate(darken(@negativeColor, 25), 90, relative), @negativeColor);
+
+@positiveColorHover: if(iscolor(@positiveColor), saturate(darken(@positiveColor, 15), 100, relative), @positiveColor);
+@positiveColorFocus: if(iscolor(@positiveColor), saturate(darken(@positiveColor, 15), 100, relative), @positiveColor);
+@positiveColorActive: if(iscolor(@positiveColor), saturate(darken(@positiveColor, 15), 100, relative), @positiveColor);
+
+
+
+
+

@@ -18,9 +18,11 @@ class AccessService {
                                'wekb.Org',
                                'wekb.Package',
                                'wekb.Platform',
+                               'wekb.RefdataCategory',
                                'wekb.TitleInstancePackagePlatform',
                                'wekb.UpdatePackageInfo',
-                               'wekb.UpdateTippInfo']
+                               'wekb.UpdateTippInfo',
+                               'wekb.Vendor']
 
     List allowedToCreate = ['wekb.KbartSource',
                             'wekb.Org',
@@ -34,9 +36,11 @@ class AccessService {
                               'Org',
                               'Package',
                               'Platform',
+                              'RefdataCategory',
                               'TitleInstancePackagePlatform',
                               'UpdatePackageInfo',
-                              'UpdateTippInfo']
+                              'UpdateTippInfo',
+                              'Vendor']
 
     List allowedComponentSearch = ["g:curatoryGroups",
                                    "g:identifiers",
@@ -44,11 +48,13 @@ class AccessService {
                                    "g:packages",
                                    "g:publicPackages",
                                    "g:platforms",
+                                   "g:refdataCategoriesPublic",
                                    "g:sources",
                                    "g:tipps",
                                    "g:tippsOfPkg",
                                    "g:updatePackageInfos",
-                                   "g:updateTippInfos"]
+                                   "g:updateTippInfos",
+                                   "g:vendors"]
 
     List allowedInlineSearch = ["g:curatoryGroups",
                                 "g:identifiers",
@@ -59,7 +65,8 @@ class AccessService {
                                 "g:tipps",
                                 "g:tippsOfPkg",
                                 "g:updatePackageInfos",
-                                "g:updateTippInfos"]
+                                "g:updateTippInfos",
+                                "g:vendors"]
 
 
     boolean checkEditableObject(Object o, GrailsParameterMap grailsParameterMap) {
@@ -69,12 +76,28 @@ class AccessService {
     boolean checkEditableObject(Object o, boolean curationOverride = false) {
         boolean editable = false
 
-        if (SpringSecurityUtils.ifAnyGranted("ROLE_EDITOR, ROLE_ADMIN, ROLE_SUPERUSER")) {
+        if (SpringSecurityUtils.ifAnyGranted("ROLE_EDITOR, ROLE_VENDOR_EDITOR, ROLE_ADMIN, ROLE_SUPERUSER")) {
             def curatedObj = null
             if(o instanceof Identifier){
                 curatedObj = o.reference.hasProperty('curatoryGroups') ? o.reference : ( o.reference.hasProperty('pkg') ? o.reference.pkg : null )
             }else if(o instanceof Contact){
-                curatedObj = o.org
+                curatedObj = o.org ?: o.vendor
+            }else if(o instanceof VendorElectronicDeliveryDelay){
+                curatedObj = o.vendor
+            }else if(o instanceof VendorLibrarySystem){
+                curatedObj = o.vendor
+            }
+            else if(o instanceof VendorInvoiceDispatch){
+                curatedObj = o.vendor
+            }
+            else if(o instanceof VendorElectronicBilling){
+                curatedObj = o.vendor
+            } else if (o instanceof ProviderInvoicingVendor) {
+                curatedObj = o.provider
+            } else if (o instanceof ProviderInvoiceDispatch) {
+                curatedObj = o.provider
+            } else if (o instanceof ProviderElectronicBilling) {
+                curatedObj = o.provider
             }
             else {
                 curatedObj = o.hasProperty('curatoryGroups') ? o : ( o.hasProperty('pkg') ? o.pkg : null )
@@ -115,7 +138,7 @@ class AccessService {
 
     boolean checkEditable(String baseclassName) {
 
-        if(baseclassName in allowedBaseClasses && SpringSecurityUtils.ifAnyGranted('ROLE_EDITOR')){
+        if(baseclassName in allowedBaseClasses && SpringSecurityUtils.ifAnyGranted('ROLE_EDITOR, ROLE_VENDOR_EDITOR')){
             return true
         }else {
             return SpringSecurityUtils.ifAnyGranted('ROLE_SUPERUSER')
@@ -124,6 +147,7 @@ class AccessService {
 
     }
 
+    @Deprecated
     boolean checkDeletable(String baseclassName) {
 
         if(baseclassName in allowedToCreate){

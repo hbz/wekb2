@@ -155,6 +155,12 @@ class ManagementService {
                     }
                 }
                 break
+            case "vendors":
+                if(parameterMap.processOption) {
+                    processPackageVendors(parameterMap)
+                    parameterMap.remove('processOption')
+                }
+                break
             case "rangeInfos":
                 if(parameterMap.processOption) {
                 }
@@ -191,6 +197,9 @@ class ManagementService {
                 }
                 break
         }
+
+        parameterMap.remove('_selectedPackages')
+        parameterMap.remove('selectedPackages')
 
         result
 
@@ -373,6 +382,70 @@ class ManagementService {
                             pkg.save()
 
                             successChanges << "The changes were made to the package '${pkg.name}'."
+                        }
+                    }
+                }
+            }else {
+                flash.error = "You have not selected any packages to make the changes!"
+            }
+
+            if(successChanges.size() > 0){
+                flash.success = successChanges.join('<br>')
+            }
+        }
+    }
+
+    void processPackageVendors(GrailsParameterMap params) {
+        log.debug("processPackageVendors: $params")
+        Map<String, Object> result = [:]
+        result.user = springSecurityService.currentUser
+        List successChanges = []
+        List failChanges = []
+        if (accessService.checkReadable("wekb.Package")) {
+            FlashScope flash = getCurrentFlashScope()
+            List selectedPackages = params.list("selectedPackages")
+            if (selectedPackages) {
+                Set<Package> packages = Package.findAllByUuidInList(selectedPackages)
+                if (params.processLinkVendor) {
+                    if(params.processLinkVendor == 'linkVendor') {
+                        packages.each { Package pkg ->
+                            if (accessService.checkEditableObject(pkg, params)) {
+                                List splitVendorParam = params['vendor'].split(':')
+                                Long refVendorId = Long.parseLong(splitVendorParam[1])
+                                Vendor vendor = Vendor.get(refVendorId)
+                                if (vendor) {
+                                    PackageVendor packageVendor = PackageVendor.findByPkgAndVendor(pkg, vendor)
+                                    if (!packageVendor) {
+                                        packageVendor = new PackageVendor(vendor: vendor, pkg: pkg)
+                                        packageVendor.save()
+                                    }
+                                }
+                            }
+                            if (pkg.isDirty()) {
+                                pkg.save()
+
+                                successChanges << "The changes were made to the package '${pkg.name}'."
+                            }
+                        }
+                    }
+                    if(params.processLinkVendor == 'unlinkVendor'){
+                        packages.each { Package pkg ->
+                            if (accessService.checkEditableObject(pkg, params)) {
+                                List splitVendorParam = params['vendor'].split(':')
+                                Long refVendorId = Long.parseLong(splitVendorParam[1])
+                                Vendor vendor = Vendor.get(refVendorId)
+                                if (vendor) {
+                                    PackageVendor packageVendor = PackageVendor.findByPkgAndVendor(pkg, vendor)
+                                    if (packageVendor) {
+                                        packageVendor.delete()
+                                    }
+                                }
+                            }
+                            if (pkg.isDirty()) {
+                                pkg.save()
+
+                                successChanges << "The changes were made to the package '${pkg.name}'."
+                            }
                         }
                     }
                 }

@@ -1,11 +1,11 @@
 
 <dl>
-	<dt class="control-label">Date Created</dt>
+	<dt class="control-label"><g:message code="package.dateCreated"/></dt>
 	<dd>
 		<g:formatDate format="${message(code: 'default.date.format.noZ')}"
 					  date="${d.dateCreated}"/>
 	</dd>
-	<dt class="control-label">Last Updated</dt>
+	<dt class="control-label"><g:message code="package.lastUpdated"/></dt>
 	<dd>
 		<g:formatDate format="${message(code: 'default.date.format.noZ')}"
 					  date="${d.lastUpdated}"/>

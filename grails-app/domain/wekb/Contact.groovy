@@ -11,6 +11,7 @@ class Contact{
 
     String content
     Org org
+    Vendor vendor
 
     Date dateCreated
     Date lastUpdated
@@ -31,6 +32,7 @@ class Contact{
         contentType column:'ct_content_type_rv_fk'
         type        column:'ct_type_rv_fk'
         org         column:'ct_org_fk', index: 'ct_org_idx'
+        vendor         column:'ct_vendor_fk', index: 'ct_vendor_idx'
         language    column:'ct_language_rv_fk'
 
         dateCreated column: 'ct_date_created'
@@ -40,7 +42,8 @@ class Contact{
     static constraints = {
         content     (nullable:true)
         contentType (nullable:true)
-        org         (nullable:false)
+        org         (nullable:true)
+        vendor      (nullable:true)
         language    (nullable:true)
     }
     
@@ -88,6 +91,61 @@ class Contact{
                         contentType: contentType,
                         type: type,
                         org: organisation,
+                        language: language
+                )
+
+                if (! result.save()) {
+                    result.errors.each { println it }
+                }
+                else {
+                    info += " > OK"
+                }
+            }
+
+            LogFactory.getLog(this).debug(info)
+            result
+        }
+    }
+
+    static Contact lookup(String content, RefdataValue contentType, RefdataValue type, Vendor ven, RefdataValue language) {
+
+        Contact contact
+        List<Contact>  check = Contact.findAllWhere(
+                content: content ?: null,
+                contentType: contentType,
+                type: type,
+                vendor: ven,
+                language: language
+        ).sort({id: 'asc'})
+
+        if (check.size() > 0) {
+            contact = check.get(0)
+        }
+        contact
+    }
+
+    static Contact lookupOrCreate(String content, RefdataValue contentType, RefdataValue type, Vendor ven, RefdataValue language) {
+
+        withTransaction {
+            Contact result
+            String info = "saving new contact: ${content} ${contentType} ${type} ${language}"
+
+            if (!content) {
+                LogFactory.getLog(this).debug(info + " > ignored; empty content")
+                return
+            }
+
+            Contact check = Contact.lookup(content, contentType, type, ven, language)
+            if (check) {
+                result = check
+                info += " > ignored/duplicate"
+            }
+            else {
+                result = new Contact(
+                        content: content,
+                        contentType: contentType,
+                        type: type,
+                        vendor: ven,
                         language: language
                 )
 

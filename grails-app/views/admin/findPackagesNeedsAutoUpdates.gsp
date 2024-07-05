@@ -27,7 +27,7 @@
             </div>
 
             <div class="ui right floated buttons">
-                <button type="submit" class="ui black button">Filter</button>
+                <button type="submit" class="ui primary button">Filter</button>
                 <g:link class="ui button" action="findPackagesNeedsAutoUpdates">Reset</g:link>
             </div>
 
@@ -48,7 +48,7 @@
             <semui:sortableColumn property="p.kbartSource.lastRun" title="Last Run"/>
             <th>Next Run</th>
             <th>Titles</th>
-            <th></th>
+            <th>Action</th>
         </tr>
         </thead>
         <tbody>
@@ -102,7 +102,7 @@
 
                     <br>
                     <br>
-                    <g:link class="ui button black" controller="workflow" action="action"
+                    <g:link class="ui button primary" controller="workflow" action="action"
                             params="[component: object, selectedAction: 'workFlowMethod::updatePackageAllTitlesFromKbartSource', curationOverride: true]">Trigger Update (all Titles)</g:link>
                 </td>
             </tr>

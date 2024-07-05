@@ -13,7 +13,7 @@
     </div>
 
     <g:if test="${editable}">
-        <a class="ui right floated black button" href="#" onclick="$('#languageModal').modal('show');">Add Language</a>
+        <a class="ui right floated primary button" href="#" onclick="$('#languageModal').modal('show');">Add Language</a>
 
         <br>
         <br>
