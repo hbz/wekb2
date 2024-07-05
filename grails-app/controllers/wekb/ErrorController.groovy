@@ -43,7 +43,7 @@ class ErrorController {
             }
 
             log.error(excep?.getMessage())
-            log.error(excep?.getStackTrace())
+            //log.error(excep?.getStackTrace())
         }
 
         withFormat {
@@ -150,7 +150,7 @@ class ErrorController {
             }
 
             log.error(excep?.getMessage())
-            log.error(excep?.getStackTrace())
+            //log.error(excep?.getStackTrace())
         }
 
         withFormat {
