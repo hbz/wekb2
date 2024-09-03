@@ -89,7 +89,7 @@ class HomeController {
       try {
         result.rssFeed = new XmlSlurper().parseText(wikiRssFeedUrl.toURL().text)
       }catch (Exception exception){
-        Log.error("${wikiRssFeedUrl}"+ exception.printStackTrace())
+        log.error("${wikiRssFeedUrl}"+ exception.printStackTrace())
       }
     } else {
       log.info("No wikiRssFeedUrl set!");
