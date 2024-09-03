@@ -1,6 +1,7 @@
 package wekb
 
 import grails.plugin.springsecurity.SpringSecurityService
+import jdk.internal.org.jline.utils.Log
 import org.springframework.security.crypto.password.PasswordEncoder
 import wekb.auth.User
 import org.hibernate.SessionFactory
@@ -85,8 +86,11 @@ class HomeController {
 
     if (wikiRssFeedUrl) {
       log.info("Get data form wiki: "+wikiRssFeedUrl)
-      result.rssFeed = new XmlSlurper().parseText(wikiRssFeedUrl.toURL().text)
-
+      try {
+        result.rssFeed = new XmlSlurper().parseText(wikiRssFeedUrl.toURL().text)
+      }catch (Exception exception){
+        Log.error("${wikiRssFeedUrl}"+ exception.printStackTrace())
+      }
     } else {
       log.info("No wikiRssFeedUrl set!");
     }
