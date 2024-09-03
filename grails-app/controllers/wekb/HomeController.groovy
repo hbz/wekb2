@@ -1,7 +1,6 @@
 package wekb
 
 import grails.plugin.springsecurity.SpringSecurityService
-import jdk.internal.org.jline.utils.Log
 import org.springframework.security.crypto.password.PasswordEncoder
 import wekb.auth.User
 import org.hibernate.SessionFactory
