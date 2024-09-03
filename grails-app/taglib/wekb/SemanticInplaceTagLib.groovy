@@ -422,7 +422,7 @@ class SemanticInplaceTagLib {
 
             String data_link = createLink(
                     controller:'ajaxJson',
-                    action: 'lookup',
+                    action: attrs.onylMyComponents && !params.curationOverride  ? 'lookupMyComponents' : 'lookup',
                     params: [baseClass: attrs.baseClass,
                             q: '',
                             filter1: attrs.filter1,
