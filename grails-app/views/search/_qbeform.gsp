@@ -73,6 +73,23 @@
                                     value="${params[fld.qparam]}"/>
                         </div>
                     </g:if>
+                    <g:elseif test="${fld.type == 'dropDown'}">
+                        <div class="ui field">
+                            <label><g:message code="${fld.msgCode}" default="${fld.prompt}"/></label>
+                            <div class="ui fluid search selection clearable dropdown">
+                                <input type="hidden" name="${fld.qparam}" value="${params[fld.qparam]}">
+                                <i class="dropdown icon"></i>
+
+                                <div class="default text"><g:message code="search.select"/> <g:message code="${fld.msgCode}" default="${fld.prompt}"/></div>
+
+                                <div class="menu">
+                                    <g:each in="${dropdownService.componentsDropDown(fld.baseClass, fld.filter1 ?: '')}" var="item">
+                                        <div class="item" data-value="${item.id}">${item.text}</div>
+                                    </g:each>
+                                </div>
+                            </div>
+                        </div>
+                    </g:elseif>
                     <g:elseif test="${fld.type == 'dropDownGroup'}">
                         <div class="ui field">
                             <label><g:message code="${fld.msgCode}" default="${fld.prompt}"/></label>

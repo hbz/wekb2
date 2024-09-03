@@ -63,12 +63,11 @@ class CuratoryGroup extends AbstractBase implements Auditable {
 
   static def refdataFind(params) {
     def result = [];
-    def status_deleted = RDStore.KBC_STATUS_DELETED
     def ql = null;
 
     params.sort = 'name'
 
-    ql = CuratoryGroup.findAllByNameIlikeAndStatusNotEqual("%${params.q}%", status_deleted ,params)
+    ql = CuratoryGroup.findAllByNameIlikeAndStatusNotInList("%${params.q}%", [RDStore.KBC_STATUS_DELETED, RDStore.KBC_STATUS_REMOVED], params)
 
     ql.each { t ->
         result.add([id:"${t.class.name}:${t.id}", text:"${t.name}", status:"${t.status?.value}"])
