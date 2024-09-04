@@ -1,11 +1,13 @@
 package wekb
 
+import grails.core.GrailsApplication
 import grails.gorm.transactions.Transactional
 import wekb.helper.RDStore
 
 @Transactional
 class DropdownService {
 
+    GrailsApplication grailsApplication
 
     def selectedDropDown(String dropDownType, Package pkg = null, def status = null){
         List listStatus = status ? [RefdataValue.get(Long.parseLong(status))] : [RDStore.KBC_STATUS_CURRENT, RDStore.KBC_STATUS_DELETED, RDStore.KBC_STATUS_EXPECTED, RDStore.KBC_STATUS_RETIRED]
@@ -39,6 +41,40 @@ class DropdownService {
                 []
                 break
         }
+    }
+
+    def componentsDropDown(String baseClass, String filter = null){
+        def domain_class = grailsApplication.getArtefact('Domain', baseClass)
+        List values = []
+        if (domain_class) {
+            def baseclass = domain_class.getClazz()
+            String query
+            Map queryMap
+            if(baseClass == RefdataValue.class.name){
+                query = "select rv from ${baseClass} as rv where rv.owner.desc = :desc order by rv.value, rv.description"
+                queryMap = [desc: filter]
+
+                baseclass.executeQuery(query, queryMap).each { t ->
+                    values.add([id:"${t.class.name}:${t.id}", text:"${t.getI10n('value')}"])
+                }
+
+            }else {
+                query = "select o from ${baseClass} as o where o.status not in :status order by o.name"
+                queryMap = [status: [RDStore.KBC_STATUS_DELETED, RDStore.KBC_STATUS_REMOVED]]
+
+                baseclass.executeQuery(query, queryMap).each { t ->
+                    values.add([id:"${t.class.name}:${t.id}", text:"${t.name}", status:"${t.status?.value}"])
+                }
+            }
+
+
+
+        } else {
+            log.error("selectedDropDown: Unable to locate domain class ${baseClass} or not readable");
+            values = []
+        }
+
+        return values
     }
 
 

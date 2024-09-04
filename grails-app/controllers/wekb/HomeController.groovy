@@ -85,8 +85,11 @@ class HomeController {
 
     if (wikiRssFeedUrl) {
       log.info("Get data form wiki: "+wikiRssFeedUrl)
-      result.rssFeed = new XmlSlurper().parseText(wikiRssFeedUrl.toURL().text)
-
+      try {
+        result.rssFeed = new XmlSlurper().parseText(wikiRssFeedUrl.toURL().text)
+      }catch (Exception exception){
+        log.error("${wikiRssFeedUrl}"+ exception.printStackTrace())
+      }
     } else {
       log.info("No wikiRssFeedUrl set!");
     }

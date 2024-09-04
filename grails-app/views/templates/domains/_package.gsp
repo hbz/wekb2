@@ -11,7 +11,7 @@
         </dl>
         <dl>
             <dt class="control-label"><g:message code="package.provider.name"/></dt>
-            <dd><semui:xEditableManyToOne owner="${d}" field="provider" baseClass="wekb.Org"/></dd>
+            <dd><semui:xEditableManyToOne owner="${d}" field="provider" baseClass="wekb.Org" onylMyComponents="true"/></dd>
         </dl>
 
         <g:if test="${controllerName != 'create'}">
@@ -29,7 +29,7 @@
             <dt class="control-label"><g:message code="package.source"/></dt>
             <dd>
                 <g:if test="${!createObject}">
-                    <semui:xEditableManyToOne owner="${d}" field="kbartSource" baseClass="wekb.KbartSource"/>
+                    <semui:xEditableManyToOne owner="${d}" field="kbartSource" baseClass="wekb.KbartSource" onylMyComponents="true"/>
                 </g:if>
             </dd>
         </dl>
@@ -37,7 +37,7 @@
         <dl>
             <dt class="control-label"><g:message code="package.nominalPlatform.name"/></dt>
             <dd><semui:xEditableManyToOne owner="${d}" field="nominalPlatform"
-                                          baseClass="wekb.Platform"/></dd>
+                                          baseClass="wekb.Platform" onylMyComponents="true"/></dd>
         </dl>
         <dl>
             <dt class="control-label"><g:message code="default.status"/></dt>

@@ -29,7 +29,7 @@
             </dt>
             <dd>
                 <semui:xEditableManyToOne owner="${d}" field="provider"
-                                          baseClass="wekb.Org"/>
+                                          baseClass="wekb.Org" onylMyComponents="true"/>
             </dd>
         </dl>
         <dl>

@@ -287,7 +287,7 @@ public class HQLBuilder {
     switch ( crit.defn.contextTree.comparator ) {
       case 'eq':
         hql_builder_context."${addToQuery}".add("${crit.defn.contextTree.negate?'not ':''}${scoped_property} = :${crit.defn.qparam}");
-        if ( crit.defn.type=='lookup' ) {
+        if ( crit.defn.type=='lookup' || crit.defn.type=='dropDown' ) {
           def value = hql_builder_context.genericOIDService.resolveOID(crit.value)
           value = (crit.defn.propType == 'Boolean') ? (value == RDStore.YN_YES ? true : false) : value
           hql_builder_context.bindvars[crit.defn.qparam] = value
@@ -334,7 +334,7 @@ public class HQLBuilder {
         break;
 
       case 'exists':
-        if ( crit.defn.type=='lookup') {
+        if ( crit.defn.type=='lookup' || crit.defn.type=='dropDown') {
 
           if(crit.defn.baseClass == 'wekb.RefdataValue') {
             def value = hql_builder_context.genericOIDService.resolveOID(crit.value)

@@ -203,7 +203,6 @@ class Package  extends AbstractBase implements Auditable {
 
   static def refdataFind(params) {
     def result = [];
-    def status_deleted = RDStore.KBC_STATUS_DELETED
     def status_filter = null
 
     if (params.filter1) {
@@ -213,7 +212,7 @@ class Package  extends AbstractBase implements Auditable {
     params.sort = 'name'
 
     def ql = null;
-    ql = Package.findAllByNameIlikeAndStatusNotEqual("%${params.q}%", status_deleted, params)
+    ql = Package.findAllByNameIlikeAndStatusNotInList("%${params.q}%", [RDStore.KBC_STATUS_DELETED, RDStore.KBC_STATUS_REMOVED], params)
 
     if (ql) {
       ql.each { t ->
