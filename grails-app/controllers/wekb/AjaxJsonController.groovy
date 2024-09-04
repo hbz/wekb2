@@ -2,11 +2,16 @@ package wekb
 
 import grails.converters.JSON
 import grails.core.GrailsClass
+import grails.plugin.springsecurity.SpringSecurityService
 import org.springframework.security.access.annotation.Secured
+import wekb.auth.User
 import wekb.helper.RCConstants
+import wekb.helper.RDStore
 
 
 class AjaxJsonController {
+
+    SpringSecurityService springSecurityService
 
     /**
      *  lookup : Calls the refdataFind function of a specific class and returns a simple result list.
@@ -29,6 +34,62 @@ class AjaxJsonController {
 
         if(params.preparForEditable)
         result = result.values.collect { Map value -> [value: value.id, text: "${value.text} ${value.status ? "("+value.status+")": ""}"]}
+
+        render result as JSON
+    }
+
+    def lookupMyComponents() {
+        log.debug("AjaxJsonController::lookupMyComponents ${params}")
+
+        List result = []
+        User user = springSecurityService.currentUser
+
+        List groups = user.curatoryGroupUsers.curatoryGroup
+
+        RefdataValue status_filter = null
+
+        if (params.filter1) {
+            status_filter = RefdataCategory.lookup(RCConstants.COMPONENT_STATUS, params.filter1)
+        }
+
+        if(params.baseClass == Org.class.name){
+            List objectList = null
+            objectList = CuratoryGroupOrg.executeQuery("select curorg.org from CuratoryGroupOrg as curorg where curorg.curatoryGroup in (:cur) and curorg.org.status != :status and curorg.org.status != :removed", [cur: groups, status: RDStore.KBC_STATUS_DELETED, removed: RDStore.KBC_STATUS_REMOVED])
+
+            if (objectList) {
+                objectList.each { t ->
+                    if (!status_filter || t.status == status_filter) {
+                        result.add([value: "${t.class.name}:${t.id}", text: "${t.name}", status: "${t.status?.value}"])
+                    }
+                }
+            }
+        }
+
+        if(params.baseClass == Platform.class.name){
+            List objectList = null
+            objectList = CuratoryGroupPlatform.executeQuery("select curorg.platform from CuratoryGroupPlatform as curorg where curorg.curatoryGroup in (:cur) and curorg.platform.status != :status and curorg.platform.status != :removed", [cur: groups, status: RDStore.KBC_STATUS_DELETED, removed: RDStore.KBC_STATUS_REMOVED])
+
+            if (objectList) {
+                objectList.each { t ->
+                    if (!status_filter || t.status == status_filter) {
+                        result.add([value: "${t.class.name}:${t.id}", text: "${t.name}", status: "${t.status?.value}"])
+                    }
+                }
+            }
+        }
+
+        if(params.baseClass == KbartSource.class.name){
+            List objectList = null
+            objectList = CuratoryGroupKbartSource.executeQuery("select curorg.kbartSource from CuratoryGroupKbartSource as curorg where curorg.curatoryGroup in (:cur) and curorg.kbartSource.status != :status and curorg.kbartSource.status != :removed", [cur: groups, status: RDStore.KBC_STATUS_DELETED, removed: RDStore.KBC_STATUS_REMOVED])
+
+            if (objectList) {
+                objectList.each { t ->
+                    if (!status_filter || t.status == status_filter) {
+                        result.add([value: "${t.class.name}:${t.id}", text: "${t.name}", status: "${t.status?.value}"])
+                    }
+                }
+            }
+        }
 
         render result as JSON
     }

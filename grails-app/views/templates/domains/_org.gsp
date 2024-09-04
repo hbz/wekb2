@@ -195,7 +195,7 @@
                     <div class="field">
                         <label>Role:</label> <semui:simpleReferenceDropdown name="__relatedObject"
                                                                             baseClass="wekb.RefdataValue"
-                                                                            filter1="${RCConstants.VENDOR_ROLE}"/>
+                                                                            filter1="${RCConstants.ORG_ROLE}"/>
                     </div>
                 </g:form>
             </semui:modal>
