@@ -485,10 +485,10 @@ class Api2Service {
                                         hostPlatform: "concat('${Platform.class.name}',':',plat_id)",
                                         hostPlatformName: 'plat_name',
                                         hostPlatformUuid: 'plat_uuid',
-                                        titleType: "case when tipp_publication_type_rv_fk = ${RDStore.TIPP_PUBLIC_TYPE_SERIAL.id} then 'Journal' " +
-                                                "when tipp_publication_type_rv_fk = ${RDStore.TIPP_PUBLIC_TYPE_MONO.id} then 'Book' " +
-                                                "when tipp_publication_type_rv_fk = ${RDStore.TIPP_PUBLIC_TYPE_DB.id} then 'Database' " +
-                                                "when tipp_publication_type_rv_fk = ${RDStore.TIPP_PUBLIC_TYPE_OTHER.id} then 'Other' " +
+                                        titleType: "case when tipp_publication_type_rv_fk = ${RDStore.TIPP_PUBLIC_TYPE_SERIAL.id} then 'serial' " +
+                                                "when tipp_publication_type_rv_fk = ${RDStore.TIPP_PUBLIC_TYPE_MONO.id} then 'monograph' " +
+                                                "when tipp_publication_type_rv_fk = ${RDStore.TIPP_PUBLIC_TYPE_DB.id} then 'database' " +
+                                                "when tipp_publication_type_rv_fk = ${RDStore.TIPP_PUBLIC_TYPE_OTHER.id} then 'other' " +
                                                 "else 'Title' end",
                                         url: 'tipp_url',
                                         dateFirstOnline: "coalesce(to_char(tipp_date_first_online,'${DateUtils.DATE_FORMAT_ISO_SQL}'),'')",
