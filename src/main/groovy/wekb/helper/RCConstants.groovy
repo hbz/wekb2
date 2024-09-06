@@ -11,6 +11,11 @@ class RCConstants {
 
     public static final String UPDATE_TYPE = "Update.Type"
 
+    public static final String BF_EBOOK = "Barrier-Free.Ebook"
+    public static final String BF_PDF = "Barrier-Free.Pdf"
+    public static final String BF_VIDEO = "Barrier-Free.Video"
+    public static final String BF_DATABASE = "Barrier-Free.Database"
+
     public static final String CONTACT_CONTENT_TYPE   = 'Contact.Content.Type'
     public static final String CONTACT_TYPE           = 'Contact.Type'
 
@@ -87,5 +92,7 @@ class RCConstants {
     public static final String VENDOR_ELECTRONIC_DELIVERY_DELAY = "Vendor.ElectronicDeliveryDelay"
 
     public static final String YN = "YN"
+
+    public static final String UYNP = "UYNP"
 
 }

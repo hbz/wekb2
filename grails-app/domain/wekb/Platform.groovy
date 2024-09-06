@@ -83,6 +83,36 @@ class Platform  extends AbstractBase implements Auditable {
 
   String counterRegistryApiUuid
 
+  //Barrierefrei / Barrier-free
+  @RefdataAnnotation(cat = RCConstants.UYNP)
+  RefdataValue accessPlatform
+
+  @RefdataAnnotation(cat = RCConstants.UYNP)
+  RefdataValue playerForAudio
+
+  @RefdataAnnotation(cat = RCConstants.UYNP)
+  RefdataValue playerForVideo
+
+  @RefdataAnnotation(cat = RCConstants.BF_EBOOK)
+  RefdataValue ebookEPub
+
+  @RefdataAnnotation(cat = RCConstants.BF_EBOOK)
+  RefdataValue onixMetadata
+
+  @RefdataAnnotation(cat = RCConstants.BF_PDF)
+  RefdataValue pdfUaStandard
+
+  @RefdataAnnotation(cat = RCConstants.BF_VIDEO)
+  RefdataValue videoAudioDes
+
+  @RefdataAnnotation(cat = RCConstants.BF_VIDEO)
+  RefdataValue videoSubTitles
+
+  @RefdataAnnotation(cat = RCConstants.BF_DATABASE)
+  RefdataValue databaseBarrierFree
+
+
+
   static hasMany = [
           roles: RefdataValue,
           ids: Identifier,
