@@ -65,12 +65,12 @@
 
     <div class="title">
         <i class="dropdown icon"></i>
-        Packages without source: <span class="ui black circular label">${packagesWithoutTitles.size()}</span>
+        Packages without source: <span class="ui black circular label">${checkPackageWithoutSource.size()}</span>
     </div>
 
     <div class="content">
         <div class="ui list">
-            <g:each in="${packagesWithoutTitles}" var="pkg" status="i">
+            <g:each in="${checkPackageWithoutSource}" var="pkg" status="i">
                 <g:link class="item" controller="resource" action="show" id="${pkg.getOID()}">${i+1}: ${pkg.name}</g:link>
             </g:each>
         </div>
