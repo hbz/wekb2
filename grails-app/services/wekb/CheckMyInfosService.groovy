@@ -95,7 +95,7 @@ class CheckMyInfosService {
         List<Package> packageWithoutTitle = []
         curatoryGroups.each { CuratoryGroup curatoryGroup ->
             curatoryGroup.providedPackages.each { Package pkg ->
-                if(pkg.kbartSource.automaticUpdates && pkg.tippCountWithoutRemoved > 0 && (TitleInstancePackagePlatform.executeQuery(query, [status: status, pkg: pkg, daysBefore: dateFor30Days])[0] == 0)){
+                if(pkg.kbartSource && pkg.kbartSource.automaticUpdates && pkg.tippCountWithoutRemoved > 0 && (TitleInstancePackagePlatform.executeQuery(query, [status: status, pkg: pkg, daysBefore: dateFor30Days])[0] == 0)){
                     packageWithoutTitle << pkg
                 }
             }
