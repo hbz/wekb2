@@ -36,7 +36,7 @@ class GroupController {
 
         result.checkContacts = checkMyInfosService.checkContacts(result.groups)
         result.checkSourcesWithoutTitles = checkMyInfosService.checkSourcesWithoutTitles(result.groups)
-        result.noChangesPackageLast30Days = checkMyInfosService.noChangesPackageLast30Days(result.groups)
+        result.noChangesPackageLast30DaysAutoUpdate = checkMyInfosService.noChangesPackageLast30DaysAutoUpdate(result.groups)
         result.packagesWithoutTitles = checkMyInfosService.checkPackagesWithoutTitles(result.groups)
         result.checkPackageWithoutSource = checkMyInfosService.checkPackageWithoutSource(result.groups)
         result.checkPackagesWithoutProductID = checkMyInfosService.checkPackagesWithoutProductID(result.groups)

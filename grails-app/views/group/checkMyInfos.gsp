@@ -78,12 +78,12 @@
 
     <div class="title">
         <i class="dropdown icon"></i>
-        No title changes for more than 30 days: <span class="ui black circular label">${noChangesPackageLast30Days.size()}</span>
+        No title changes for more than 30 days by auto update packages: <span class="ui black circular label">${noChangesPackageLast30DaysAutoUpdate.size()}</span>
     </div>
 
     <div class="content">
         <div class="ui list">
-            <g:each in="${noChangesPackageLast30Days}" var="pkg" status="i">
+            <g:each in="${noChangesPackageLast30DaysAutoUpdate}" var="pkg" status="i">
                 <g:link class="item" controller="resource" action="show" id="${pkg.getOID()}">${i+1}: ${pkg.name}</g:link>
             </g:each>
         </div>

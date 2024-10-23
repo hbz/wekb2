@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta name="layout" content="wekb"/>
-    <title>we:kb : Packages due to automatic update of Curatory Groups (${groups.name.join(',')})</title>
+    <title>we:kb : Packages due to automatic update of Curatory Groups (${groups.sort{it.name}.name.join(',')})</title>
 </head>
 
 <body>
@@ -25,6 +25,7 @@
             <th>Provider</th>
             <th>Source / KBART URL</th>
             <th>Last Update URL</th>
+            <th>Frequency</th>
             <th>Last Run</th>
             <th>Next Run</th>
             <th>Titles</th>
@@ -56,6 +57,9 @@
                 </td>
                 <td>
                     ${pkg.kbartSource.lastUpdateUrl} <semui:showOutGoingLink text="Last Update Url" outGoingLink="${pkg.kbartSource.lastUpdateUrl}"/>
+                </td>
+                <td>
+                    ${pkg.kbartSource.frequency.getI10n('value')}
                 </td>
                 <td>
                     <g:if test="${pkg.kbartSource.lastRun}">

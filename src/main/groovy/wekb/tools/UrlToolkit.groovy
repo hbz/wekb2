@@ -110,21 +110,22 @@ class UrlToolkit {
     }
 
 
-    static List<URL> getUpdateUrlList(String url, String from){
+    static List<URL> getUpdateUrlList(String url, LocalDate from){
         return getUpdateUrlList(url, from, LocalDate.now())
     }
 
 
-    static List<URL> getUpdateUrlList(String url, String from, LocalDate lastDate){
+    static List<URL> getUpdateUrlList(String url, LocalDate from, LocalDate lastDate){
         List<URL> result = new ArrayList<>()
         Matcher urlMatcher = DATESTAMP_REGEX_PATTERN.matcher(url)
         if (!urlMatcher.matches()){
             urlMatcher = DATESTAMP_PLACEHOLDER_REGEX_PATTERN.matcher(url)
         }
         if (urlMatcher.matches()){
+            DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
             String prefix = urlMatcher.group(1)
             String appendix = urlMatcher.group(3)
-            LocalDateTime fromDateTime
+            /*LocalDateTime fromDateTime
             try {
                 fromDateTime = DateToolkit.fromString(from)
             }
@@ -133,10 +134,9 @@ class UrlToolkit {
                 log.error("Fallback of formatDateTime from 12 months by: " +from)
                 fromDateTime = LocalDateTime.now().minusMonths(12)
             }
-            DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-            fromDateTime.format(dateFormatter)
+            fromDateTime.format(dateFormatter)*/
             UrlValidator urlValidator = new UrlValidator()
-            for (LocalDate date = fromDateTime.toLocalDate(); date.isBefore(lastDate.plusDays(1)); date = date.plusDays(1)){
+            for (LocalDate date = from; date.isBefore(lastDate.plusDays(1)); date = date.plusDays(1)){
                 String urlString = prefix.concat(date.format(dateFormatter)).concat(appendix)
                 if (urlValidator.isValid(urlString)){
                     result.add(new URL(urlString))

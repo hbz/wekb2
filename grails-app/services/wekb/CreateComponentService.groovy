@@ -640,7 +640,7 @@ class CreateComponentService {
                                         if (value) {
                                             RefdataValue refdataValue = RefdataCategory.lookup(RCConstants.YN, value)
                                             if (refdataValue) {
-                                                sourceMap.automaticUpdates = (refdataValue.value == "Yes") ? true : false
+                                                sourceMap.automaticUpdates = (refdataValue == RDStore.YN_YES) ? true : false
                                             }
 
                                             /*if (refdataValue && refdataValue.value == "Yes") {
