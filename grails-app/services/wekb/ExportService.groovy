@@ -105,6 +105,7 @@ class ExportService {
     private File kbartFromUrl(String urlString, UpdatePackageInfo updatePackageInfo = null) throws Exception{
         URL url = new URL(urlString)
         File folder = new File("/tmp/wekb/kbartExport")
+        log.debug("kbartFromUrl: "+urlString)
         String fileName = folder.absolutePath.concat(File.separator).concat(urlStringToFileString(url.toExternalForm()))
         fileName = fileName.split("\\?")[0]
         File file = new File(fileName)
