@@ -1301,12 +1301,13 @@ class KbartImportService {
                             }
 
                             toDeletedIdentifier.each {
-                                Identifier.executeUpdate("delete from Identifier where id_id = :id", [id: it])
+                                //Identifier.executeUpdate("delete from Identifier where id_id = :id", [id: it])
+                                tipp.removeFromIds(Identifier.get(it))
                             }
                             identifierChanged = true
                             identifier = new Identifier(namespace: ns, value: newValue, tipp: tipp)
                             identifier.save()
-                            println(identifier.errors)
+                            //println(identifier.errors)
                             break
                     }
                     if (identifier && identifierChanged && !result.newTipp) {
@@ -1328,7 +1329,7 @@ class KbartImportService {
                 }
             }
             catch (Exception e) {
-                log.error("createOrUpdateIdentifierForTipp: -> ${kbartProperty} ${newValue}:" + e.toString())
+                log.error("createOrUpdateIdentifierForTipp: -> ${kbartProperty} ${newValue}:" + e.printStackTrace())
             }
         }
 
@@ -1336,6 +1337,7 @@ class KbartImportService {
         return result.changedTipp ?: identifierChanged
     }
 
+    @Deprecated
     void createOrUpdateIdentifierForTipp(TitleInstancePackagePlatform tipp, String namespace_val, String identifierValue){
         Identifier identifier
         IdentifierNamespace ns = IdentifierNamespace.findByValueAndTargetType(namespace_val, RDStore.IDENTIFIER_NAMESPACE_TARGET_TYPE_TIPP)
@@ -1361,7 +1363,8 @@ class KbartImportService {
                 }
 
                 toDeletedIdentifier.each{
-                    Identifier.executeUpdate("delete from Identifier where id_id = :id", [id: it])
+                    //Identifier.executeUpdate("delete from Identifier where id_id = :id", [id: it])
+                    tipp.removeFromIds(Identifier.get(it))
                 }
 
                 identifier = new Identifier(namespace: ns, value: identifierValue, tipp: tipp)
@@ -1607,9 +1610,8 @@ class KbartImportService {
                         createUpdateTippInfoByTippChange(tipp, updatePackageInfo, kbartProperty, tippProperty, oldValue, tippMap[kbartProperty])
                     }
                     tipp[tippProperty] = null
-                }
 
-                if (tippMap[kbartProperty] && tippMap[kbartProperty].toString().trim()) {
+                }else if (tippMap[kbartProperty] && tippMap[kbartProperty].toString().trim()) {
                     String oldValue = renderObjectValue(tipp[tippProperty])
                     String newValue = tippMap[kbartProperty]
                     try {
@@ -1643,6 +1645,7 @@ class KbartImportService {
                         createUpdateTippInfoByTippChange(tipp, updatePackageInfo, kbartProperty, tippProperty, oldValue, tippMap[kbartProperty])
                     }
                     tipp[tippProperty] = null
+
                 } else if (tippMap[kbartProperty] && tippMap[kbartProperty].trim() && refdataCategory) {
                     String oldValue = renderObjectValue(tipp[tippProperty])
                     if(kbartProperty == 'medium'){
@@ -1841,7 +1844,7 @@ class KbartImportService {
                 ).save()
             }
         }catch (Exception e) {
-                log.error("createOrUpdatePrice -> kbartProperty ${newValue}:" + e.toString())
+                log.error("createOrUpdatePrice -> kbartProperty ${newValue}:" + e.printStackTrace())
             }
         }else{
             if(!result.newTipp) {
@@ -1981,7 +1984,7 @@ class KbartImportService {
     }
 
     LinkedHashMap updateTippWithKbart(LinkedHashMap result, TitleInstancePackagePlatform tipp, Map tippMap, UpdatePackageInfo updatePackageInfo, LinkedHashMap tippsWithCoverage) {
-        log.debug("in update")
+        log.debug("updateTippWithKbart: tipp.id: " + tipp.id)
         List identifierNameSpacesExistOnTipp = []
         //Kbart Fields to Ygor and then to wekb (siehe Wiki)
 
@@ -2214,7 +2217,17 @@ class KbartImportService {
         }
 
         deleteIdentifiers.each {
-            Identifier.executeUpdate("delete from Identifier where id_id = :id", [id: it])
+            //Identifier.executeUpdate("delete from Identifier where id_id = :id", [id: it])
+            tipp.removeFromIds(Identifier.get(it))
+        }
+
+        if(deleteIdentifiers.size() > 0){
+            if (!tipp.save()) {
+                log.error("Tipp save error: ")
+                tipp.errors.allErrors.each {
+                    println it
+                }
+            }
         }
 
         // KBART -> ddc -> ddcs
@@ -2284,7 +2297,7 @@ class KbartImportService {
             }
             //tipp.refresh()
         }
-        //log.debug("before price section")
+        log.debug("before price section")
         // KBART -> listprice_eur -> prices
         result.changedTipp = createOrUpdatePrice(result, tipp, RDStore.PRICE_TYPE_LIST, RDStore.CURRENCY_EUR, tippMap.listprice_eur, 'listprice_eur', updatePackageInfo)
 
@@ -2308,13 +2321,13 @@ class KbartImportService {
        result.changedTipp = createOrUpdatePrice(result, tipp, RDStore.PRICE_TYPE_OA_APC, RDStore.CURRENCY_GBP, tippMap.oa_apc_gbp, 'oa_apc_gbp', updatePackageInfo)
 
 
-        //log.debug("after price section")
+        log.debug("after price section")
 
         try {
             tipp = tipp.save(failOnError: true)
 
         } catch (Exception e) {
-            log.error("KbartImportService tipp.save() error: " + e.toString())
+            log.error("KbartImportService tipp.save() error: " + e.printStackTrace())
            /* updatePackageInfo = updatePackageInfo.refresh()
             UpdateTippInfo updateTippInfo = new UpdateTippInfo(
                         description: "Changes in title fail. More information can be seen in the system log.",
@@ -2608,7 +2621,7 @@ class KbartImportService {
                 log.info("createTippBatch (${idx + 1} of $counterNewTippsToProcess) processed at: ${System.currentTimeMillis() - start} msecs")
 
             }catch (Exception e) {
-                log.error("createTippBatch: -> ${tippMap.kbartRowMap}:" + e.toString())
+                log.error("createTippBatch: -> ${tippMap.kbartRowMap}:" + e.printStackTrace())
             }
 
                    /* if (idx % 250 == 0) {

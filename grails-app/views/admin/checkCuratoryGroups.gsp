@@ -134,7 +134,7 @@
                                 <td><g:link controller="group" action="checkMyInfos" params="[curGroupID: row_obj.id]"> ${checkMyInfosService.checkPackagesWithoutContentType([row_obj]).size()} </g:link></td>
                                 <td><g:link controller="group" action="checkMyInfos" params="[curGroupID: row_obj.id]"> ${checkMyInfosService.checkSourcesWithoutTitles([row_obj]).size()} </g:link></td>
                                 <td><g:link controller="group" action="checkMyInfos" params="[curGroupID: row_obj.id]"> ${checkMyInfosService.checkPackageWithoutSource([row_obj]).size()} </g:link></td>
-                                <td><g:link controller="group" action="checkMyInfos" params="[curGroupID: row_obj.id]"> ${checkMyInfosService.noChangesPackageLast30Days([row_obj]).size()} </g:link></td>
+                                <td><g:link controller="group" action="checkMyInfos" params="[curGroupID: row_obj.id]"> ${checkMyInfosService.noChangesPackageLast30DaysAutoUpdate([row_obj]).size()} </g:link></td>
                                 <td><g:link controller="group" action="checkMyInfos" params="[curGroupID: row_obj.id]"> ${checkMyInfosService.checkPackagesWithoutTitles([row_obj]).size()} </g:link></td>
                             </tr>
                         </g:if>

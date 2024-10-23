@@ -8,6 +8,11 @@ import wekb.helper.RDStore
 import javax.persistence.Transient
 import java.sql.Timestamp
 import java.text.DateFormat
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.YearMonth
+import java.time.temporal.IsoFields
+import java.time.temporal.TemporalAdjusters
 import java.util.concurrent.TimeUnit
 
 class KbartSource extends AbstractBase implements Auditable {
@@ -157,13 +162,13 @@ class KbartSource extends AbstractBase implements Auditable {
             return true
         }
         if (frequency != null) {
-            Date today = new Date()
+            LocalDate today = LocalDateTime.now().toLocalDate()
             def interval = intervals.get(frequency.value)
             if (interval != null) {
                 //println("today: "+today)
-                Date due = getUpdateDay(interval, false)
+                LocalDateTime due = getUpdateDay(interval, false)
                 //println("due: "+due)
-                if (today == due) {
+                if (today == due.toLocalDate()) {
                     //println('true')
                     return true
                 }else {
@@ -183,52 +188,62 @@ class KbartSource extends AbstractBase implements Auditable {
     }
 
 
-    def getUpdateDay(int interval, boolean setAutoUpdateTime) {
-        Date today = new Date()
-        // calculate from each first day of the year to not create a lag over the years
-        Calendar cal = Calendar.getInstance()
-        cal.set(Calendar.YEAR, cal.get(Calendar.YEAR))
-        cal.set(Calendar.DAY_OF_YEAR, 1)
-        if(setAutoUpdateTime) {
-            cal.set(Calendar.HOUR_OF_DAY, 20)
-            cal.set(Calendar.MINUTE, 0)
-            cal.set(Calendar.SECOND, 0)
-            cal.set(Calendar.MILLISECOND, 0)
+    LocalDateTime getUpdateDay(int interval, boolean setAutoUpdateTime) {
+        LocalDateTime today = LocalDateTime.now()
+        LocalDateTime nextUpdate
+        List updateDates = []
+        switch (interval){
+            case '1':
+                updateDates = getAllDaysInYear(setAutoUpdateTime)
+                break
+            case '7':
+                updateDates = getAllFristDaysOfWeeklyYear(setAutoUpdateTime)
+                break
+            case '30':
+                updateDates = getAllFristDaysOfMonthInYear(setAutoUpdateTime)
+                break
+            case '91':
+                updateDates = getAllFristDaysOfQuarterInYear(setAutoUpdateTime)
+                break
+            case '365':
+                updateDates = getAllFristDaysOfYears(setAutoUpdateTime)
+                break
         }
-        Date nextUpdate = cal.getTime()
-        //println("interval:"+interval )
-        while (nextUpdate.before(today)) {
-            cal.add(Calendar.DATE, interval)
-            nextUpdate = cal.getTime()
-            //println("nextUpdate:"+nextUpdate )
+
+        if(updateDates) {
+            updateDates = updateDates.reverse()
+
+            updateDates.each { LocalDateTime updateDate ->
+                if (updateDate.isAfter(today)) {
+                    nextUpdate = updateDate
+                    return
+                }
+
+            }
         }
+
         return nextUpdate
     }
 
-    List getUpdateDays(int interval) {
-        Date today = new Date()
-        List<Date> updateDays = []
-        // calculate from each first day of the year to not create a lag over the years
-        Calendar cal = Calendar.getInstance()
-        cal.set(Calendar.YEAR, cal.get(Calendar.YEAR))
-        cal.set(Calendar.DAY_OF_YEAR, 1)
-        cal.set(Calendar.HOUR_OF_DAY, 20)
-        cal.set(Calendar.MINUTE, 0)
-        cal.set(Calendar.SECOND, 0)
-        cal.set(Calendar.MILLISECOND, 0)
+    List getUpdateDays(int interval, boolean setAutoUpdateTime) {
 
-        Calendar cal2 = Calendar.getInstance()
-        cal2.set(Calendar.YEAR, cal.get(Calendar.YEAR))
-        cal2.set(Calendar.MONTH, 11) // 11 = december
-        cal2.set(Calendar.DAY_OF_MONTH, 31) // new years eve
-        Date nextUpdate = cal.getTime()
-        Date lastUpdate = cal2.getTime()
-        while (nextUpdate.before(lastUpdate)) {
-            cal.add(Calendar.DATE, interval)
-            nextUpdate = cal.getTime()
-            updateDays << nextUpdate
+        switch (interval){
+            case '1':
+                return getAllDaysInYear(setAutoUpdateTime)
+                break
+            case '7':
+                return getAllFristDaysOfWeeklyYear(setAutoUpdateTime)
+                break
+            case '30':
+                return getAllFristDaysOfMonthInYear(setAutoUpdateTime)
+                break
+            case '91':
+                return getAllFristDaysOfQuarterInYear(setAutoUpdateTime)
+                break
+            case '365':
+                return getAllFristDaysOfYears(setAutoUpdateTime)
+                break
         }
-        return updateDays
     }
 
 
@@ -252,37 +267,37 @@ class KbartSource extends AbstractBase implements Auditable {
     }
 
     @Transient
-    Timestamp getNextUpdateTimestamp() {
+    LocalDateTime getNextUpdateTimestamp() {
         //20:00:00 is time of Cronjob in AutoUpdatePackagesJob
         if (automaticUpdates && lastRun == null) {
-            return new Date().toTimestamp()
+            return LocalDateTime.now()
         }
         if (automaticUpdates && frequency != null) {
             def interval = intervals.get(frequency.value)
             if (interval != null) {
-                Date due = getUpdateDay(interval, true)
-                return due.toTimestamp()
+                LocalDateTime due = getUpdateDay(interval, true)
+                return due
             } else {
-                log.debug("KbartSource ${this.id} needsUpdate(): Frequency (${frequency}) is not null but intervals is null")
+                log.debug("KbartSource ${this.id} getNextUpdateTimestamp(): Frequency (${frequency}) is not null but intervals is null")
             }
         } else {
-            log.debug("KbartSource ${this.id} needsUpdate(): Frequency is null")
+            log.debug("KbartSource ${this.id} getNextUpdateTimestamp(): Frequency is null")
         }
         return null
     }
 
     @Transient
-    List<Timestamp> getAllNextUpdateTimestamp() {
+    List<LocalDateTime> getAllNextUpdateTimestamp() {
         //20:00:00 is time of Cronjob in AutoUpdatePackagesJob
         if (automaticUpdates && frequency != null) {
             def interval = intervals.get(frequency.value)
             if (interval != null && interval > 1) {
-                List<Date> due = getUpdateDays(interval)
-                List<Timestamp> timestampList = []
+                List<LocalDateTime> dues = getUpdateDays(interval, true)
+                /*List<Timestamp> timestampList = []
                 due.each {
                     timestampList << it.toTimestamp()
-                }
-                return timestampList
+                }*/
+                return dues
             }
         }
         return null
@@ -314,6 +329,105 @@ class KbartSource extends AbstractBase implements Auditable {
             curatoryGroups = this.curatoryGroups.curatoryGroup
         }
         return curatoryGroups
+    }
+
+    List<LocalDateTime> getAllDaysInYear(boolean setAutoUpdateTime) {
+        List<LocalDateTime> updateDays = []
+        LocalDateTime todays
+        if(setAutoUpdateTime){
+            todays = LocalDate.now().atTime(20, 0, 0, 0)
+        }else {
+            todays = LocalDateTime.now()
+        }
+
+        LocalDateTime nextDay = todays.with(TemporalAdjusters.firstDayOfYear())
+        LocalDateTime lastDayOfYear = todays.with(TemporalAdjusters.lastDayOfYear()).toLocalDate().atTime(23,59,59);
+
+        while (nextDay.isBefore(lastDayOfYear)) {
+            updateDays << nextDay
+            nextDay = nextDay.plusDays(1)
+        }
+        updateDays
+    }
+
+    List<LocalDateTime> getAllFristDaysOfWeeklyYear(boolean setAutoUpdateTime) {
+        List<LocalDateTime> updateDays = []
+
+        LocalDateTime todays
+        if(setAutoUpdateTime){
+            todays = LocalDate.now().atTime(20, 0, 0, 0)
+        }else {
+            todays = LocalDateTime.now()
+        }
+
+        LocalDateTime nextDay = todays.with(TemporalAdjusters.firstDayOfYear())
+        LocalDateTime lastDayOfYear = todays.with(TemporalAdjusters.lastDayOfYear()).toLocalDate().atTime(23,59,59);
+
+        while (nextDay.isBefore(lastDayOfYear)) {
+            updateDays << nextDay
+            nextDay = nextDay.plusDays(7)
+        }
+        updateDays
+    }
+
+    List<LocalDateTime> getAllFristDaysOfMonthInYear(boolean setAutoUpdateTime) {
+        List<LocalDateTime> updateDays = []
+        LocalDateTime todays
+        if(setAutoUpdateTime){
+            todays = LocalDate.now().atTime(20, 0, 0, 0)
+        }else {
+            todays = LocalDateTime.now()
+        }
+
+        LocalDateTime firstDayofMonth = todays.with(TemporalAdjusters.firstDayOfYear())
+        LocalDateTime lastDayOfYear = todays.with(TemporalAdjusters.lastDayOfYear())
+
+        while (firstDayofMonth.isBefore(lastDayOfYear)) {
+            firstDayofMonth = firstDayofMonth.with(TemporalAdjusters.firstDayOfMonth())
+            updateDays << firstDayofMonth
+            firstDayofMonth = firstDayofMonth.plusMonths(1)
+        }
+        updateDays
+    }
+
+    List<LocalDateTime> getAllFristDaysOfQuarterInYear(boolean setAutoUpdateTime) {
+        List<LocalDateTime> updateDays = []
+        LocalDateTime todays
+        if(setAutoUpdateTime){
+            todays = LocalDate.now().atTime(20, 0, 0, 0)
+        }else {
+            todays = LocalDateTime.now()
+        }
+
+        LocalDateTime firstDayofQuarter = todays.with(TemporalAdjusters.firstDayOfYear())
+        LocalDateTime lastDayOfYear = todays.with(TemporalAdjusters.lastDayOfYear())
+
+        while (firstDayofQuarter.isBefore(lastDayOfYear)) {
+            firstDayofQuarter = firstDayofQuarter.with(IsoFields.DAY_OF_QUARTER, 1L)
+            updateDays << firstDayofQuarter
+            firstDayofQuarter = firstDayofQuarter.plusMonths(3)
+        }
+        updateDays
+    }
+
+    List<LocalDateTime> getAllFristDaysOfYears(boolean setAutoUpdateTime) {
+        List<LocalDateTime> updateDays = []
+        LocalDateTime todays
+        if(setAutoUpdateTime){
+            todays = LocalDate.now().atTime(20, 0, 0, 0)
+        }else {
+            todays = LocalDateTime.now()
+        }
+
+        LocalDateTime firstDayofYear= todays.with(TemporalAdjusters.firstDayOfYear())
+        LocalDateTime lastDayOf4Year = todays.plusYears(4).with(TemporalAdjusters.firstDayOfYear())
+
+        while (firstDayofYear.isBefore(lastDayOf4Year)) {
+            firstDayofYear = firstDayofYear.with(TemporalAdjusters.firstDayOfYear())
+            updateDays << firstDayofYear
+            firstDayofYear = firstDayofYear.plusYears(1)
+        }
+        updateDays
     }
 
 }

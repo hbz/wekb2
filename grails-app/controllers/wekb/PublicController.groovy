@@ -22,12 +22,16 @@ class PublicController {
   SearchService searchService
 
   def robots() {
-    if(ServerUtils.getCurrentServer() != ServerUtils.SERVER_PROD) {
-      def text = "User-agent: *\n"+
-              "Disallow: / \n"
-      render(text: text, contentType: "text/plain", encoding: "UTF-8")
+    String text = "User-agent: *\n"
+
+    if(ServerUtils.getCurrentServer() == ServerUtils.SERVER_PROD) {
+      text += "Disallow: /search/index/ \n"
+      text += "Disallow: /search/componentSearch/ \n"
     }
-    else render (status: 404, text: 'Failed to load robots.txt')
+    else {
+      text += "Disallow: / \n"
+    }
+    render(text: text, contentType: "text/plain", encoding: "UTF-8")
   }
 
   def wcagPlainEnglish() {

@@ -299,7 +299,7 @@ class KbartProcessService {
                                                 updateTipp.discard()
                                             }
                                         }
-                                        log.error("ValidationException attempting to cross reference the title: ${kbartRow.publication_title} with TIPP ${updateTipp?.id}:", ve)
+                                        log.error("ValidationException attempting to cross reference the title: ${kbartRow.publication_title} with TIPP ${updateTipp?.id}:", ve.printStackTrace())
                                         /*tippErrorMap.putAll(messageService.processValidationErrors(ve.errors))*/
                                     }
                                     catch (Exception ge) {
@@ -324,7 +324,7 @@ class KbartProcessService {
                                                 updateTipp.discard()
                                             }
                                         }
-                                        log.error("Exception attempting to cross reference TIPP:", ge)
+                                        log.error("Exception attempting to cross reference TIPP:", ge.printStackTrace())
                                         /*                                      def tipp_error = [
                                                                                       message: messageService.resolveCode('crossRef.package.tipps.error', [kbartRow.publication_title], Locale.ENGLISH),
                                                                                       baddata: kbartRow,
@@ -339,7 +339,7 @@ class KbartProcessService {
                                 }*/
                             }
                             catch (Exception ge) {
-                                log.error("Exception attempting to cross reference the title: ${kbartRow.publication_title}:", ge)
+                                log.error("Exception attempting to cross reference the title: ${kbartRow.publication_title}:", ge.printStackTrace())
                             }
                         }
 
@@ -618,7 +618,7 @@ class KbartProcessService {
              cleanupService.cleanUpGorm()*/
 
         } catch (Exception e) {
-            log.error("Error by kbartImportProcess: ", e)
+            log.error("Error by kbartImportProcess: ", e.printStackTrace())
             UpdatePackageInfo.withTransaction {
                 updatePackageInfo.refresh()
                 updatePackageInfo.endTime = new Date()
@@ -666,7 +666,7 @@ class KbartProcessService {
             encodingPass = encoding in ["UTF-8", "WINDOWS-1252", "US-ASCII"]
         }
         if(!encodingPass) {
-            log.error("Encoding of file is wrong. File encoding is: ${encoding}")
+            log.warn("Encoding of file is wrong. File encoding is: ${encoding}")
             UpdatePackageInfo.withTransaction {
                 String description = "Encoding of KBART file is wrong. File encoding was: ${encoding}. "
                 if(lastUpdateURL && updatePackageInfo.automaticUpdate){
@@ -827,7 +827,7 @@ class KbartProcessService {
                         }
 
                         if (minimumKbartStandard.size() != countMinimumKbartStandard) {
-                            log.error("KBART file does not have one or any of the headers: ${minimumKbartStandard}")
+                            log.warn("KBART file does not have one or any of the headers: ${minimumKbartStandard}")
                             UpdatePackageInfo.withTransaction {
                                 String description = "KBART file does not have one or any of the headers: ${minimumKbartStandard.join(', ')}. "
                                 if(lastUpdateURL && updatePackageInfo.automaticUpdate){
@@ -868,7 +868,7 @@ class KbartProcessService {
                             //log.debug("End kbart processing rows ${countRows}")
                         }
                     }else {
-                        log.error("no delimiter $delimiter: ${lastUpdateURL}")
+                        log.warn("no delimiter $delimiter: ${lastUpdateURL}")
                         UpdatePackageInfo.withTransaction {
                             String description = "Separator for the KBART was not recognized. The following separators are recognized: Tab, comma, semicolons. "
                             if(lastUpdateURL && updatePackageInfo.automaticUpdate){
@@ -882,7 +882,7 @@ class KbartProcessService {
                         }
                     }
                 }else {
-                    log.error("KBART file is empty:  ${lastUpdateURL}")
+                    log.warn("KBART file is empty:  ${lastUpdateURL}")
                     UpdatePackageInfo.withTransaction {
                         String description = "KBART file is empty. "
                         if(lastUpdateURL && updatePackageInfo.automaticUpdate){
@@ -896,7 +896,7 @@ class KbartProcessService {
                     }
                 }
             } catch (Exception e) {
-                log.error("Error by KbartProcess: ${e}")
+                log.error("Error by KbartProcess: ${e.printStackTrace()}")
                 UpdatePackageInfo.withTransaction {
                     updatePackageInfo.refresh()
                     String description = "An error occurred while processing the KBART file. More information can be seen in the system log. "

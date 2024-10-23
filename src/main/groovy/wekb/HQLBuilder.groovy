@@ -347,26 +347,26 @@ public class HQLBuilder {
             def value = CuratoryGroup.get(crit.value)
             if(value) {
               if(baseclass.toString() == 'class wekb.Org') {
-                hql_builder_context."${addToQuery}".add("${crit.defn.contextTree.negate ? 'not ' : ''} exists ( select cgo from CuratoryGroupOrg cgo where cgo.org = o and cgo.curatoryGroup = :curGroup) ");
-                hql_builder_context.bindvars.curGroup = value
+                hql_builder_context."${addToQuery}".add("${crit.defn.contextTree.negate ? 'not ' : ''} exists ( select cgo from CuratoryGroupOrg cgo where cgo.org = o and cgo.curatoryGroup = :${crit.defn.qparam}) ");
+                hql_builder_context.bindvars[crit.defn.qparam] = value
               }else if(baseclass.toString() == 'class wekb.Platform') {
-                hql_builder_context."${addToQuery}".add("${crit.defn.contextTree.negate ? 'not ' : ''} exists (select cgp from CuratoryGroupPlatform cgp where cgp.platform = o and cgp.curatoryGroup = :curGroup) ");
-                hql_builder_context.bindvars.curGroup = value
+                hql_builder_context."${addToQuery}".add("${crit.defn.contextTree.negate ? 'not ' : ''} exists (select cgp from CuratoryGroupPlatform cgp where cgp.platform = o and cgp.curatoryGroup = :${crit.defn.qparam}) ");
+                hql_builder_context.bindvars[crit.defn.qparam] = value
               }else if(baseclass.toString() == 'class wekb.Package') {
-                hql_builder_context."${addToQuery}".add("${crit.defn.contextTree.negate ? 'not ' : ''} exists (select cgp from CuratoryGroupPackage cgp where cgp.pkg = o and cgp.curatoryGroup = :curGroup) ");
-                hql_builder_context.bindvars.curGroup = value
+                hql_builder_context."${addToQuery}".add("${crit.defn.contextTree.negate ? 'not ' : ''} exists (select cgp from CuratoryGroupPackage cgp where cgp.pkg = o and cgp.curatoryGroup = :${crit.defn.qparam}) ");
+                hql_builder_context.bindvars[crit.defn.qparam] = value
               }else if(baseclass.toString() == 'class wekb.User') {
-                hql_builder_context."${addToQuery}".add("${crit.defn.contextTree.negate ? 'not ' : ''} exists (select cgu from CuratoryGroupUser cgu where cgu.user = o and cgu.curatoryGroup = :curGroup) ");
-                hql_builder_context.bindvars.curGroup = value
+                hql_builder_context."${addToQuery}".add("${crit.defn.contextTree.negate ? 'not ' : ''} exists (select cgu from CuratoryGroupUser cgu where cgu.user = o and cgu.curatoryGroup = :${crit.defn.qparam}) ");
+                hql_builder_context.bindvars[crit.defn.qparam] = value
               }else if(baseclass.toString() == 'class wekb.KbartSource') {
-                hql_builder_context."${addToQuery}".add("${crit.defn.contextTree.negate ? 'not ' : ''} exists (select cgk from CuratoryGroupKbartSource cgk where cgk.kbartSource = o and cgk.curatoryGroup = :curGroup) ");
-                hql_builder_context.bindvars.curGroup = value
+                hql_builder_context."${addToQuery}".add("${crit.defn.contextTree.negate ? 'not ' : ''} exists (select cgk from CuratoryGroupKbartSource cgk where cgk.kbartSource = o and cgk.curatoryGroup = :${crit.defn.qparam}) ");
+                hql_builder_context.bindvars[crit.defn.qparam] = value
               }else if(baseclass.toString() == 'class wekb.TitleInstancePackagePlatform') {
-                hql_builder_context."${addToQuery}".add("${crit.defn.contextTree.negate ? 'not ' : ''} exists (select cgp from CuratoryGroupPackage cgp where cgp.pkg = o.pkg and cgp.curatoryGroup = :curGroup) ");
-                hql_builder_context.bindvars.curGroup = value
+                hql_builder_context."${addToQuery}".add("${crit.defn.contextTree.negate ? 'not ' : ''} exists (select cgp from CuratoryGroupPackage cgp where cgp.pkg = o.pkg and cgp.curatoryGroup = :${crit.defn.qparam}) ");
+                hql_builder_context.bindvars[crit.defn.qparam] = value
               }else if(baseclass.toString() == 'class wekb.UpdatePackageInfo') {
-                hql_builder_context."${addToQuery}".add("${crit.defn.contextTree.negate ? 'not ' : ''} exists (select cgp from CuratoryGroupPackage cgp where cgp.pkg = o.pkg and cgp.curatoryGroup = :curGroup) ");
-                hql_builder_context.bindvars.curGroup = value
+                hql_builder_context."${addToQuery}".add("${crit.defn.contextTree.negate ? 'not ' : ''} exists (select cgp from CuratoryGroupPackage cgp where cgp.pkg = o.pkg and cgp.curatoryGroup = :${crit.defn.qparam}) ");
+                hql_builder_context.bindvars[crit.defn.qparam] = value
               }
             }
           }
@@ -374,8 +374,8 @@ public class HQLBuilder {
             def value = Vendor.get(crit.value)
             if(value) {
               if(baseclass.toString() == 'class wekb.Org') {
-                hql_builder_context."${addToQuery}".add("${crit.defn.contextTree.negate ? 'not ' : ''} o in (select p.provider from Package as p join p.vendors as vendor_pkg where vendor_pkg.vendor = :vendor) ");
-                hql_builder_context.bindvars.vendor = value
+                hql_builder_context."${addToQuery}".add("${crit.defn.contextTree.negate ? 'not ' : ''} o in (select p.provider from Package as p join p.vendors as vendor_pkg where vendor_pkg.vendor = :${crit.defn.qparam}) ");
+                hql_builder_context.bindvars[crit.defn.qparam] = value
               }
             }
           }

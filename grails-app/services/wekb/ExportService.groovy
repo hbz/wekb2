@@ -105,6 +105,10 @@ class ExportService {
     private File kbartFromUrl(String urlString, UpdatePackageInfo updatePackageInfo = null) throws Exception{
         URL url = new URL(urlString)
         File folder = new File("/tmp/wekb/kbartExport")
+        log.debug("kbartFromUrl: "+urlString)
+        String fileName = folder.absolutePath.concat(File.separator).concat(urlStringToFileString(url.toExternalForm()))
+        fileName = fileName.split("\\?")[0]
+        File file = new File(fileName)
         HttpURLConnection connection
         try {
             connection = (HttpURLConnection) url.openConnection()
@@ -112,31 +116,59 @@ class ExportService {
         }
         catch (IOException e) {
             throw new RuntimeException("URL Connection was not established.")
-        }
-        connection.connect()
-        connection = UrlToolkit.resolveRedirects(connection, 5)
-        log.debug("Final URL after redirects: ${connection.getURL()}")
-
-        String fileName = folder.absolutePath.concat(File.separator).concat(urlStringToFileString(url.toExternalForm()))
-        fileName = fileName.split("\\?")[0]
-        File file = new File(fileName)
-
-        log.debug("connection.getResponseCode(): "+connection.getResponseCode())
-        if (connection.getResponseCode() == HttpURLConnection.HTTP_OK){
-            byte[] content = getByteContent(connection.getInputStream())
-            //InputStream inputStream = new ByteArrayInputStream(content)
-            FileUtils.copyInputStreamToFile(new ByteArrayInputStream(content), file)
-            // copy content to local file
-            //Files.write(file.toPath(), content)
-        }else {
             UpdatePackageInfo.withTransaction {
-                updatePackageInfo.description = "Server returned HTTP response code: " + connection.getResponseCode()
+                updatePackageInfo.description = "URL Connection was not established."
                 updatePackageInfo.status = RDStore.UPDATE_STATUS_FAILED
                 updatePackageInfo.endTime = new Date()
                 updatePackageInfo.updateUrl = connection.getURL()
                 updatePackageInfo.save()
             }
+            return file
         }
+        try {
+            connection.connect()
+        } catch (Exception e) {
+            log.error("Problem with connection of Server with kbart source server: ${e.printStackTrace()}")
+            UpdatePackageInfo.withTransaction {
+                updatePackageInfo.description = "Problem with connection with kbart source server."
+                updatePackageInfo.status = RDStore.UPDATE_STATUS_FAILED
+                updatePackageInfo.endTime = new Date()
+                updatePackageInfo.updateUrl = connection.getURL()
+                updatePackageInfo.save()
+            }
+            return file
+        }
+        connection = UrlToolkit.resolveRedirects(connection, 5)
+
+        log.debug("connection.getResponseCode(): "+connection.getResponseCode())
+        try {
+            if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                byte[] content = getByteContent(connection.getInputStream())
+                //InputStream inputStream = new ByteArrayInputStream(content)
+                FileUtils.copyInputStreamToFile(new ByteArrayInputStream(content), file)
+                // copy content to local file
+                //Files.write(file.toPath(), content)
+            } else {
+                UpdatePackageInfo.withTransaction {
+                    updatePackageInfo.description = "Server returned HTTP response code: " + connection.getResponseCode()
+                    updatePackageInfo.status = RDStore.UPDATE_STATUS_FAILED
+                    updatePackageInfo.endTime = new Date()
+                    updatePackageInfo.updateUrl = connection.getURL()
+                    updatePackageInfo.save()
+                }
+            }
+        } catch (Exception e) {
+            log.error("Problem with kbart file of kbart source server: ${e.printStackTrace()}")
+            UpdatePackageInfo.withTransaction {
+                updatePackageInfo.description = "Problem with kbart file of kbart source server."
+                updatePackageInfo.status = RDStore.UPDATE_STATUS_FAILED
+                updatePackageInfo.endTime = new Date()
+                updatePackageInfo.updateUrl = connection.getURL()
+                updatePackageInfo.save()
+            }
+            return file
+        }
+
         return file
     }
 
