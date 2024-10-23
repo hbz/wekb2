@@ -115,7 +115,7 @@ class ExportService {
             connection.addRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:123.0) Gecko/20100101 Firefox/123.0")
         }
         catch (IOException e) {
-            log.error("URL Connection was not established." ${e.printStackTrace()})
+            log.error("URL Connection was not established." + ${e.printStackTrace()})
             if(updatePackageInfo) {
                 UpdatePackageInfo.withTransaction {
                     updatePackageInfo.description = "URL Connection was not established."
