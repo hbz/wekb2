@@ -8,6 +8,7 @@ import org.apache.commons.lang.StringUtils
 import wekb.system.JobResult
 
 import java.time.LocalTime
+import java.time.ZoneId
 import java.util.concurrent.ExecutorService
 
 import groovyx.gpars.GParsPool
@@ -70,7 +71,7 @@ class AutoUpdatePackagesService {
             return new ArrayList<URL>()
         }
         if (UrlToolkit.containsDateStamp(newUrl) || UrlToolkit.containsDateStampPlaceholder(newUrl)) {
-            return UrlToolkit.getUpdateUrlList(newUrl, lastProcessingDate.toString())
+            return UrlToolkit.getUpdateUrlList(newUrl, lastProcessingDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate())
         } else {
             return Arrays.asList(new URL(newUrl))
         }
@@ -144,31 +145,27 @@ class AutoUpdatePackagesService {
                                     updateUrls = getUpdateUrls(pkg.kbartSource.url, pkg.kbartSource.lastRun, pkg.dateCreated)
                                 }
                             }
-                            log.info("Got ${updateUrls}")
-                            Iterator urlsIterator = updateUrls.listIterator(updateUrls.size())
+                            log.info("Got updateUrls: ${updateUrls}")
 
                             File file
                             if (updateUrls.size() > 0) {
-                                LocalTime kbartFromUrlStartTime = LocalTime.now()
-                                boolean failGetKbart = false
-                                while (urlsIterator.hasPrevious()) {
-                                    URL url = urlsIterator.previous()
+                                updateUrls = updateUrls.reverse()
+                                for(URL url in updateUrls){
                                     lastUpdateURL = url.toString()
                                     try {
                                         file = exportService.kbartFromUrl(lastUpdateURL, updatePackageInfo)
-
-                                        //if (kbartFromUrlStartTime < LocalTime.now().minus(45, ChronoUnit.MINUTES)){ sense???
-                                        //break
-                                        //}
-                                        failGetKbart = false
-
+                                        println(updatePackageInfo.status)
+                                        if(file.size() > 0){
+                                            updatePackageInfo.status = RDStore.UPDATE_STATUS_SUCCESSFUL
+                                            updatePackageInfo.updateUrl = lastUpdateURL
+                                            updatePackageInfo.save()
+                                            log.info("Found File by URL: ${lastUpdateURL}")
+                                            break
+                                        }
                                     }
                                     catch (Exception e) {
-                                        log.error("get kbartFromUrl: ${e.printStackTrace()}")
-                                        failGetKbart = true
-                                        continue
+                                        log.error("Exception by get kbartFromUrl: ${e.printStackTrace()}")
                                     }
-
                                 }
 
                                 if(updatePackageInfo.status != RDStore.UPDATE_STATUS_FAILED) {

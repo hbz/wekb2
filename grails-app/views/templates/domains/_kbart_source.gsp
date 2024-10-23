@@ -148,9 +148,8 @@
 </div>
 
 <div class="sixteen wide column">
-    <div class="ui two doubling stackable cards">
         <g:if test="${d.defaultSupplyMethod == wekb.helper.RDStore.KS_DSMETHOD_HTTP_URL || editable || d.defaultSupplyMethod == null}">
-            <div class="ui card">
+            <div class="ui segment">
                 <div class="content wekb-inline-lists">
                     <div class="header">
                         <g:if test="${d.defaultSupplyMethod == wekb.helper.RDStore.KS_DSMETHOD_HTTP_URL}">
@@ -187,7 +186,7 @@
             </div>
         </g:if>
         <g:if test="${d.defaultSupplyMethod == wekb.helper.RDStore.KS_DSMETHOD_FTP || editable || d.defaultSupplyMethod == null}">
-            <div class="ui card">
+            <div class="ui segment">
                 <div class="content wekb-inline-lists">
                     <div class="header">
                         <g:if test="${d.defaultSupplyMethod == wekb.helper.RDStore.KS_DSMETHOD_FTP}">
@@ -268,5 +267,5 @@
                 </div>
             </div>
         </g:if>
-    </div>
+
 </div>
