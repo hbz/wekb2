@@ -400,7 +400,7 @@ class KbartSource extends AbstractBase implements Auditable {
         }
 
         LocalDateTime firstDayofQuarter = todays.with(TemporalAdjusters.firstDayOfYear())
-        LocalDateTime lastDayOfYear = todays.with(TemporalAdjusters.lastDayOfYear())
+        LocalDateTime lastDayOfYear = todays.plusYears(2).with(TemporalAdjusters.firstDayOfYear())
 
         while (firstDayofQuarter.isBefore(lastDayOfYear)) {
             firstDayofQuarter = firstDayofQuarter.with(IsoFields.DAY_OF_QUARTER, 1L)
