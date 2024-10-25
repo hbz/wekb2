@@ -32,15 +32,13 @@ class TippPrice {
   }
 
   static constraints = {
-    tipp (nullable: true)
-    priceType(nullable: false, blank: true)
-    currency(nullable: true, blank: true)
     startDate(nullable: false, blank: true)
     endDate(nullable: true, blank: true)
-    price(nullable: true, blank: true)
 
     lastUpdated (nullable: true)
     dateCreated (nullable: true)
+
+    tipp(unique: ['tipp', 'priceType', 'currency'])
   }
 
   @Override
