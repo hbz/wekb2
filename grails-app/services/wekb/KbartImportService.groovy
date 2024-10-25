@@ -2263,7 +2263,7 @@ class KbartImportService {
                 def langIDs = tipp.languages.id.clone()
                 langIDs.each {
                     tipp.removeFromLanguages(ComponentLanguage.get(it))
-                    //ComponentLanguage.get(it).delete()
+                    ComponentLanguage.get(it).delete()
                 }
                 if (!tipp.save()) {
                     log.error("Tipp save error: ")
@@ -2282,7 +2282,7 @@ class KbartImportService {
                     refdataValue = RefdataCategory.lookup(RCConstants.COMPONENT_LANGUAGE, lan)
                 }
                 if (refdataValue) {
-                    if (!ComponentLanguage.findByTippAndLanguage(tipp, refdataValue)) {
+                    if (!(tipp.languages && refdataValue in tipp.languages.language)) {
                         ComponentLanguage componentLanguage = new ComponentLanguage(tipp: tipp, language: refdataValue)
                         componentLanguage.save()
                     }

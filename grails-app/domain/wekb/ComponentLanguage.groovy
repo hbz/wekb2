@@ -17,7 +17,7 @@ class ComponentLanguage {
     ]
 
     static constraints = {
-        tipp (nullable: true)
+        tipp(unique: ['tipp', 'language'])
         dateCreated (nullable: true)
         lastUpdated (nullable: true)
     }
