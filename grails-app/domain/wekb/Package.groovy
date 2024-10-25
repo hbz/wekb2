@@ -130,18 +130,18 @@ class Package  extends AbstractBase implements Auditable {
   }
 
   static constraints = {
-    freeTrial(nullable: true, blank: false)
+    freeTrial(nullable: true)
     freeTrialPhase(nullable: true, blank: true)
 
     description(nullable: true, blank: true)
     lastUpdateComment(nullable: true, blank: true)
-    scope(nullable: true, blank: false)
-    breakable(nullable: true, blank: false)
-    consistent(nullable: true, blank: false)
-    paymentType(nullable: true, blank: false)
-    openAccess (nullable: true, blank: true)
-    contentType (nullable: true, blank: true)
-    file (nullable: true, blank: true)
+    scope(nullable: true)
+    breakable(nullable: true)
+    consistent(nullable: true)
+    paymentType(nullable: true)
+    openAccess (nullable: true)
+    contentType (nullable: true)
+    file (nullable: true)
     descriptionURL(nullable: true, blank: true)
     name(validator: { val, obj ->
       if (obj.hasChanged('name')) {
@@ -163,9 +163,9 @@ class Package  extends AbstractBase implements Auditable {
     ddcs(nullable:true)
     paas(nullable:true)
 
-    nominalPlatform (nullable: true, blank: false)
-    provider (nullable: true, blank: false)
-    kbartSource (nullable: true, blank: false)
+    nominalPlatform (nullable: true)
+    provider (nullable: true)
+    kbartSource (nullable: true)
 
   }
 
