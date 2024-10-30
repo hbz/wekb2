@@ -114,7 +114,7 @@ class CreateComponentService {
                                         log.error(e.toString())
                                     }
 
-                                }else if ( pprop.getType().name == 'boolean' ) {
+                                }else if ( pprop.getType().name == 'java.lang.Boolean' ) {
                                     result.newobj[p.key] = (p.value == '1') ? true : false
                                 }
                                 propertyWasSet = propertyWasSet || (p.value != null)
