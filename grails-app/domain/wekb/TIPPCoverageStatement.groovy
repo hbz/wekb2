@@ -7,8 +7,6 @@ import wekb.helper.RCConstants
 
 class TIPPCoverageStatement extends AbstractBase {
 
-  TitleInstancePackagePlatform tipp
-
   Date startDate
   Date endDate
   String startVolume
@@ -66,7 +64,7 @@ class TIPPCoverageStatement extends AbstractBase {
     dateCreated(nullable:true, blank:true)
     lastUpdated(nullable:true, blank:true)
 
-    tipp (nullable:true, blank:false)
+    tipp(unique: ['tipp', 'startDate', 'startVolume', 'startIssue', 'endDate', 'endVolume', 'endIssue'])
   }
 
   def afterInsert (){

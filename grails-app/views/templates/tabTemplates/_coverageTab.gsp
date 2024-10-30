@@ -82,7 +82,8 @@
 				   value="${d.getOID()}"/>
 			<input type="hidden" name="__newObjectClass"
 				   value="wekb.TIPPCoverageStatement"/>
-			<input type="hidden" name="__recip" value="owner"/>
+			<input type="hidden" name="__recip" value="tipp"/>
+			<input type="hidden" name="curationOverride" value="${params.curationOverride}"/>
 			<div class="field">
                               <label>Start Date</label>
 
