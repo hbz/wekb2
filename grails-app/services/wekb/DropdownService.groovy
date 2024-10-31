@@ -53,9 +53,8 @@ class DropdownService {
             if(baseClass == RefdataValue.class.name){
                 query = "select rv from ${baseClass} as rv where rv.owner.desc = :desc order by rv.value, rv.description"
                 queryMap = [desc: filter]
-
-                baseclass.executeQuery(query, queryMap).each { t ->
-                    values.add([id:"${t.class.name}:${t.id}", text:"${t.getI10n('value')}"])
+                RefdataValue.executeQuery(query, queryMap).each { t ->
+                    values.add([id:"${RefdataValue.class.name}:${t.id}", text:"${t.getI10n('value')}"])
                 }
 
             }else {
@@ -63,7 +62,7 @@ class DropdownService {
                 queryMap = [status: [RDStore.KBC_STATUS_DELETED, RDStore.KBC_STATUS_REMOVED]]
 
                 baseclass.executeQuery(query, queryMap).each { t ->
-                    values.add([id:"${t.class.name}:${t.id}", text:"${t.name}", status:"${t.status?.value}"])
+                    values.add([id:"${baseClass}:${t.id}", text:"${t.name}", status:"${t.status?.value}"])
                 }
             }
 
