@@ -1374,7 +1374,7 @@ class KbartImportService {
 
     }
 
-    void createOrUpdateCoverageForTipp(TitleInstancePackagePlatform tipp, def coverage){
+    void createOrUpdateCoverageForTipp(TitleInstancePackagePlatform tipp, List coverage){
         log.debug("createOrUpdateCoverageForTipp Beginn")
         //tipp = tipp.refresh()
 
@@ -1406,7 +1406,7 @@ class KbartImportService {
         else if(countNewCoverages == 0 && countTippCoverages > 0){
             def cStsIDs = tipp.coverageStatements.id.clone()
             cStsIDs.each {
-                tipp.removeFromCoverageStatements(TIPPCoverageStatement.get(it))
+                TIPPCoverageStatement.executeUpdate('delete from TIPPCoverageStatement cs where cs.id = :csID',[csID: it])
             }
             if (!tipp.save()) {
                 log.error("Tipp save error: ")
@@ -1416,7 +1416,17 @@ class KbartImportService {
             }
 
         }else if(countNewCoverages > 0 && countTippCoverages == 0){
-            coverage.each { c ->
+
+            List filtered = coverage.unique(false) { a, b ->
+                a.startDate <=> b.startDate ?:
+                        a.startVolume <=> b.startVolume ?:
+                                a.startIssue <=> b.startIssue ?:
+                                        a.endDate <=> b.endDate ?:
+                                                a.endVolume <=> b.endVolume ?:
+                                                        a.endIssue <=> b.endIssue
+            }
+
+            filtered.each { c ->
                 def parsedStart = TextUtils.completeDateString(c.startDate)
                 def parsedEnd = TextUtils.completeDateString(c.endDate, false)
                 def startAsDate = (parsedStart ? Date.from(parsedStart.atZone(ZoneId.systemDefault()).toInstant()) : null)
@@ -1444,16 +1454,20 @@ class KbartImportService {
         }else if(countNewCoverages > 1 && countTippCoverages >= 1) {
             def cStsIDs = tipp.coverageStatements.id.clone()
             cStsIDs.each {
-                tipp.removeFromCoverageStatements(TIPPCoverageStatement.get(it))
-            }
-            if (!tipp.save()) {
-                log.error("Tipp save error: ")
-                tipp.errors.allErrors.each {
-                    println it
-                }
+                TIPPCoverageStatement.executeUpdate('delete from TIPPCoverageStatement cs where cs.id = :csID',[csID: it])
             }
 
-            coverage.each { c ->
+
+            List filtered = coverage.unique(false) { a, b ->
+                a.startDate <=> b.startDate ?:
+                        a.startVolume <=> b.startVolume ?:
+                                a.startIssue <=> b.startIssue ?:
+                                        a.endDate <=> b.endDate ?:
+                                                a.endVolume <=> b.endVolume ?:
+                                                        a.endIssue <=> b.endIssue
+            }
+
+            filtered.each { c ->
                 def parsedStart = TextUtils.completeDateString(c.startDate)
                 def parsedEnd = TextUtils.completeDateString(c.endDate, false)
                 def startAsDate = (parsedStart ? Date.from(parsedStart.atZone(ZoneId.systemDefault()).toInstant()) : null)
@@ -1465,18 +1479,46 @@ class KbartImportService {
                     cov_depth = RefdataCategory.lookup(RCConstants.TIPPCOVERAGESTATEMENT_COVERAGE_DEPTH, c.coverageDepth) ?: RefdataCategory.lookup(RCConstants.TIPPCOVERAGESTATEMENT_COVERAGE_DEPTH, "Fulltext")
                 }
 
-                tipp.addToCoverageStatements(
-                        'startVolume': c.startVolume,
-                        'startIssue': c.startIssue,
-                        'endVolume': c.endVolume,
-                        'endIssue': c.endIssue,
-                        'embargo': c.embargo,
-                        'coverageDepth': cov_depth,
-                        'coverageNote': c.coverageNote,
-                        'startDate': startAsDate,
-                        'endDate': endAsDate,
-                        'uuid': UUID.randomUUID().toString()
-                )
+                try {
+
+                    TIPPCoverageStatement tippCoverageStatement = new TIPPCoverageStatement(
+                                startVolume: c.startVolume,
+                                startIssue: c.startIssue,
+                                endVolume: c.endVolume,
+                                endIssue: c.endIssue,
+                                embargo: c.embargo,
+                                coverageDepth: cov_depth,
+                                coverageNote: c.coverageNote,
+                                startDate: startAsDate,
+                                endDate: endAsDate,
+                                uuid: UUID.randomUUID().toString(),
+                                tipp: tipp
+                        )
+                       if(!tippCoverageStatement.save()) {
+                           log.error("Tipp save error: ")
+                           tipp.errors.allErrors.each {
+                               println it
+                           }
+                       }
+
+
+/*                    tipp.addToCoverageStatements(
+                            'startVolume': c.startVolume,
+                            'startIssue': c.startIssue,
+                            'endVolume': c.endVolume,
+                            'endIssue': c.endIssue,
+                            'embargo': c.embargo,
+                            'coverageDepth': cov_depth,
+                            'coverageNote': c.coverageNote,
+                            'startDate': startAsDate,
+                            'endDate': endAsDate,
+                            'uuid': UUID.randomUUID().toString()
+                    )*/
+                }
+                catch (Exception e){
+                    log.error("Failed to add coverage statement to tipp:" + e.toString())
+                }
+
             }
 
         }
@@ -2115,8 +2157,7 @@ class KbartImportService {
         // embargo_info, coverage_depth
         if (tipp.publicationType == RDStore.TIPP_PUBLIC_TYPE_SERIAL) {
             if (tippMap.date_first_issue_online || tippMap.date_last_issue_online || tippMap.num_first_vol_online ||
-                    tippMap.num_first_issue_online || tippMap.num_last_vol_online || tippMap.num_last_issue_online ||
-                    tippMap.coverage_depth || tippMap.embargo_info) {
+                    tippMap.num_first_issue_online || tippMap.num_last_vol_online || tippMap.num_last_issue_online) {
                 Map coverageMap = [startDate    : tippMap.date_first_issue_online,
                                    endDate      : tippMap.date_last_issue_online,
                                    startVolume  : tippMap.num_first_vol_online,
@@ -2130,6 +2171,13 @@ class KbartImportService {
                     tippsWithCoverage[tipp.id] << coverageMap
                 } else {
                     tippsWithCoverage[tipp.id] = [coverageMap]
+                }
+            }else{
+                //To cleanup title without coverage
+                if (tippsWithCoverage[tipp.id]) {
+                    tippsWithCoverage[tipp.id] << []
+                } else {
+                    tippsWithCoverage[tipp.id] = []
                 }
             }
 
@@ -2470,8 +2518,7 @@ class KbartImportService {
                     // embargo_info, coverage_depth
                     if (tipp.publicationType == RDStore.TIPP_PUBLIC_TYPE_SERIAL) {
                         if (tippMap.kbartRowMap.date_first_issue_online || tippMap.kbartRowMap.date_last_issue_online || tippMap.kbartRowMap.num_first_vol_online ||
-                                tippMap.kbartRowMap.num_first_issue_online || tippMap.kbartRowMap.num_last_vol_online || tippMap.kbartRowMap.num_last_issue_online ||
-                                tippMap.kbartRowMap.coverage_depth || tippMap.kbartRowMap.embargo_info) {
+                                tippMap.kbartRowMap.num_first_issue_online || tippMap.kbartRowMap.num_last_vol_online || tippMap.kbartRowMap.num_last_issue_online) {
                             Map coverageMap = [startDate    : tippMap.kbartRowMap.date_first_issue_online,
                                                endDate      : tippMap.kbartRowMap.date_last_issue_online,
                                                startVolume  : tippMap.kbartRowMap.num_first_vol_online,
