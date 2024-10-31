@@ -114,7 +114,8 @@
                 </sec:ifAnyGranted>
                 <sec:ifNotGranted roles="ROLE_SUPERUSER">
                     <g:if test="${!createObject}">
-                        <semui:xEditable owner="${d}" type="date" field="lastRun" overwriteEditable="false">${d.lastRun}</semui:xEditable>
+                        <g:formatDate format="${message(code: 'default.date.format.noZ')}"
+                                      date="${d.lastRun}"/>
                     </g:if>
                 </sec:ifNotGranted>
 
@@ -127,7 +128,8 @@
                     <g:message code="kbartsource.nextUpdateTimestamp"/>
                 </dt>
                 <dd>
-                    ${d.getNextUpdateTimestamp()}
+                    <g:formatDate format="${message(code: 'default.date.format.noZ')}"
+                                  date="${d.getNextUpdateTimestamp()}"/>
                 </dd>
             </dl>
 
@@ -138,7 +140,10 @@
                 <dd>
                     <div class="ui bulleted list">
                         <g:each in="${d.getAllNextUpdateTimestamp()}" var="updateDate">
-                            <div class="item">${updateDate}</div>
+                            <div class="item">
+                                <g:formatDate format="${message(code: 'default.date.format.noZ')}"
+                                              date="${updateDate}"/>
+                            </div>
                         </g:each>
                     </div>
                 </dd>
