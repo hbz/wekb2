@@ -1,111 +1,113 @@
 databaseChangeLog = {
 
-    changeSet(author: "djebeniani (generated)", id: "1730728805911-1") {
+    changeSet(author: "djebeniani (generated)", id: "1730800150751-1") {
         addColumn(tableName: "platform") {
-            column(name: "access_platform_id", type: "int8") {
-                constraints(nullable: "false")
-            }
+            column(name: "plat_access_platform_fk_rv", type: "int8")
         }
     }
 
-    changeSet(author: "djebeniani (generated)", id: "1730728805911-2") {
+    changeSet(author: "djebeniani (generated)", id: "1730800150751-2") {
         addColumn(tableName: "platform") {
-            column(name: "database_barrier_free_id", type: "int8") {
-                constraints(nullable: "false")
-            }
+            column(name: "plat_database_barrier_free_fk_rv", type: "int8")
         }
     }
 
-    changeSet(author: "djebeniani (generated)", id: "1730728805911-3") {
+    changeSet(author: "djebeniani (generated)", id: "1730800150751-3") {
         addColumn(tableName: "platform") {
-            column(name: "ebookepub_id", type: "int8") {
-                constraints(nullable: "false")
-            }
+            column(name: "plat_ebook_epub_fk_rv", type: "int8")
         }
     }
 
-    changeSet(author: "djebeniani (generated)", id: "1730728805911-4") {
+    changeSet(author: "djebeniani (generated)", id: "1730800150751-4") {
         addColumn(tableName: "platform") {
-            column(name: "onix_metadata_id", type: "int8") {
-                constraints(nullable: "false")
-            }
+            column(name: "plat_onix_metadata_fk_rv", type: "int8")
         }
     }
 
-    changeSet(author: "djebeniani (generated)", id: "1730728805911-5") {
+    changeSet(author: "djebeniani (generated)", id: "1730800150751-5") {
         addColumn(tableName: "platform") {
-            column(name: "pdf_ua_standard_id", type: "int8") {
-                constraints(nullable: "false")
-            }
+            column(name: "plat_pdf_ua_standard_fk_rv", type: "int8")
         }
     }
 
-    changeSet(author: "djebeniani (generated)", id: "1730728805911-6") {
+    changeSet(author: "djebeniani (generated)", id: "1730800150751-6") {
         addColumn(tableName: "platform") {
-            column(name: "player_for_audio_id", type: "int8") {
-                constraints(nullable: "false")
-            }
+            column(name: "plat_player_for_audio_fk_rv", type: "int8")
         }
     }
 
-    changeSet(author: "djebeniani (generated)", id: "1730728805911-7") {
+    changeSet(author: "djebeniani (generated)", id: "1730800150751-7") {
         addColumn(tableName: "platform") {
-            column(name: "player_for_video_id", type: "int8") {
-                constraints(nullable: "false")
-            }
+            column(name: "plat_player_for_video_fk_rv", type: "int8")
         }
     }
 
-    changeSet(author: "djebeniani (generated)", id: "1730728805911-8") {
+    changeSet(author: "djebeniani (generated)", id: "1730800150751-8") {
         addColumn(tableName: "platform") {
-            column(name: "video_audio_des_id", type: "int8") {
-                constraints(nullable: "false")
-            }
+            column(name: "plat_video_audiodes_fk_rv", type: "int8")
         }
     }
 
-    changeSet(author: "djebeniani (generated)", id: "1730728805911-9") {
+    changeSet(author: "djebeniani (generated)", id: "1730800150751-9") {
         addColumn(tableName: "platform") {
-            column(name: "video_sub_titles_id", type: "int8") {
-                constraints(nullable: "false")
-            }
+            column(name: "plat_video_subtitles_fk_rv", type: "int8")
         }
     }
 
-    changeSet(author: "djebeniani (generated)", id: "1730728805911-10") {
-        addForeignKeyConstraint(baseColumnNames: "player_for_video_id", baseTableName: "platform", constraintName: "FK28s8yov83y4pdhutv1pvc4xo6", deferrable: "false", initiallyDeferred: "false", referencedColumnNames: "rdv_id", referencedTableName: "refdata_value", validate: "true")
+    changeSet(author: "djebeniani (generated)", id: "1730800150751-10") {
+        addForeignKeyConstraint(baseColumnNames: "plat_video_subtitles_fk_rv", baseTableName: "platform", constraintName: "FK7fci0ekcpirol24xepe28bj44", deferrable: "false", initiallyDeferred: "false", referencedColumnNames: "rdv_id", referencedTableName: "refdata_value", validate: "true")
     }
 
-    changeSet(author: "djebeniani (generated)", id: "1730728805911-11") {
-        addForeignKeyConstraint(baseColumnNames: "onix_metadata_id", baseTableName: "platform", constraintName: "FK29rao7dj2nxv683kiotll8mmk", deferrable: "false", initiallyDeferred: "false", referencedColumnNames: "rdv_id", referencedTableName: "refdata_value", validate: "true")
+    changeSet(author: "djebeniani (generated)", id: "1730800150751-11") {
+        addForeignKeyConstraint(baseColumnNames: "plat_player_for_audio_fk_rv", baseTableName: "platform", constraintName: "FKa9p60x26gs19nc8cduc7nl2wg", deferrable: "false", initiallyDeferred: "false", referencedColumnNames: "rdv_id", referencedTableName: "refdata_value", validate: "true")
     }
 
-    changeSet(author: "djebeniani (generated)", id: "1730728805911-12") {
-        addForeignKeyConstraint(baseColumnNames: "pdf_ua_standard_id", baseTableName: "platform", constraintName: "FK58tnkgnljcthdejq6wob471ha", deferrable: "false", initiallyDeferred: "false", referencedColumnNames: "rdv_id", referencedTableName: "refdata_value", validate: "true")
+    changeSet(author: "djebeniani (generated)", id: "1730800150751-12") {
+        addForeignKeyConstraint(baseColumnNames: "plat_player_for_video_fk_rv", baseTableName: "platform", constraintName: "FKg0l7jf2lv2qvr6j16ao0393ww", deferrable: "false", initiallyDeferred: "false", referencedColumnNames: "rdv_id", referencedTableName: "refdata_value", validate: "true")
     }
 
-    changeSet(author: "djebeniani (generated)", id: "1730728805911-13") {
-        addForeignKeyConstraint(baseColumnNames: "database_barrier_free_id", baseTableName: "platform", constraintName: "FK7m105mx4tqrdygu4knyq1gq2u", deferrable: "false", initiallyDeferred: "false", referencedColumnNames: "rdv_id", referencedTableName: "refdata_value", validate: "true")
+    changeSet(author: "djebeniani (generated)", id: "1730800150751-13") {
+        addForeignKeyConstraint(baseColumnNames: "plat_pdf_ua_standard_fk_rv", baseTableName: "platform", constraintName: "FKgkjeqwunm2gq6497ka3soy56p", deferrable: "false", initiallyDeferred: "false", referencedColumnNames: "rdv_id", referencedTableName: "refdata_value", validate: "true")
     }
 
-    changeSet(author: "djebeniani (generated)", id: "1730728805911-14") {
-        addForeignKeyConstraint(baseColumnNames: "video_audio_des_id", baseTableName: "platform", constraintName: "FKcfwj2v6a97ai25jim1s4ehmf5", deferrable: "false", initiallyDeferred: "false", referencedColumnNames: "rdv_id", referencedTableName: "refdata_value", validate: "true")
+    changeSet(author: "djebeniani (generated)", id: "1730800150751-14") {
+        addForeignKeyConstraint(baseColumnNames: "plat_access_platform_fk_rv", baseTableName: "platform", constraintName: "FKh698khtl43xd59tn2kvdk55km", deferrable: "false", initiallyDeferred: "false", referencedColumnNames: "rdv_id", referencedTableName: "refdata_value", validate: "true")
     }
 
-    changeSet(author: "djebeniani (generated)", id: "1730728805911-15") {
-        addForeignKeyConstraint(baseColumnNames: "video_sub_titles_id", baseTableName: "platform", constraintName: "FKex6crxk51e7mp3se3jq0ghb5q", deferrable: "false", initiallyDeferred: "false", referencedColumnNames: "rdv_id", referencedTableName: "refdata_value", validate: "true")
+    changeSet(author: "djebeniani (generated)", id: "1730800150751-15") {
+        addForeignKeyConstraint(baseColumnNames: "plat_ebook_epub_fk_rv", baseTableName: "platform", constraintName: "FKkeneex28r2yxsgpu01j9a4oe6", deferrable: "false", initiallyDeferred: "false", referencedColumnNames: "rdv_id", referencedTableName: "refdata_value", validate: "true")
     }
 
-    changeSet(author: "djebeniani (generated)", id: "1730728805911-16") {
-        addForeignKeyConstraint(baseColumnNames: "access_platform_id", baseTableName: "platform", constraintName: "FKh07vtwru8extoqpe3ob97ybon", deferrable: "false", initiallyDeferred: "false", referencedColumnNames: "rdv_id", referencedTableName: "refdata_value", validate: "true")
+    changeSet(author: "djebeniani (generated)", id: "1730800150751-16") {
+        addForeignKeyConstraint(baseColumnNames: "plat_video_audiodes_fk_rv", baseTableName: "platform", constraintName: "FKov2hrscxtp521n75s3i6tc8qh", deferrable: "false", initiallyDeferred: "false", referencedColumnNames: "rdv_id", referencedTableName: "refdata_value", validate: "true")
     }
 
-    changeSet(author: "djebeniani (generated)", id: "1730728805911-17") {
-        addForeignKeyConstraint(baseColumnNames: "player_for_audio_id", baseTableName: "platform", constraintName: "FKjxlwihw9omkpvmjdmylbpyv13", deferrable: "false", initiallyDeferred: "false", referencedColumnNames: "rdv_id", referencedTableName: "refdata_value", validate: "true")
+    changeSet(author: "djebeniani (generated)", id: "1730800150751-17") {
+        addForeignKeyConstraint(baseColumnNames: "plat_database_barrier_free_fk_rv", baseTableName: "platform", constraintName: "FKqjx8im910dpwqgoofljg8lh5p", deferrable: "false", initiallyDeferred: "false", referencedColumnNames: "rdv_id", referencedTableName: "refdata_value", validate: "true")
     }
 
-    changeSet(author: "djebeniani (generated)", id: "1730728805911-18") {
-        addForeignKeyConstraint(baseColumnNames: "ebookepub_id", baseTableName: "platform", constraintName: "FKn1aainbmfifdju0k4txlvssfc", deferrable: "false", initiallyDeferred: "false", referencedColumnNames: "rdv_id", referencedTableName: "refdata_value", validate: "true")
+    changeSet(author: "djebeniani (generated)", id: "1730800150751-18") {
+        addForeignKeyConstraint(baseColumnNames: "plat_onix_metadata_fk_rv", baseTableName: "platform", constraintName: "FKsy9r2yvwwdtc0m59p0r3fdnh0", deferrable: "false", initiallyDeferred: "false", referencedColumnNames: "rdv_id", referencedTableName: "refdata_value", validate: "true")
+    }
+
+    changeSet(author: "djebeniani (generated)", id: "1730800150751-19") {
+        addColumn(tableName: "platform") {
+            column(name: "plat_accessibility_statement_available_fk_rv", type: "int8")
+        }
+    }
+
+    changeSet(author: "djebeniani (generated)", id: "1730800150751-20") {
+        addColumn(tableName: "platform") {
+            column(name: "plat_roadmap_accessibility_available_fk_rv", type: "int8")
+        }
+    }
+
+    changeSet(author: "djebeniani (generated)", id: "1730800150751-21") {
+        addForeignKeyConstraint(baseColumnNames: "plat_roadmap_accessibility_available_fk_rv", baseTableName: "platform", constraintName: "FKmvtw4yc91lmfi96t21xeerc99", deferrable: "false", initiallyDeferred: "false", referencedColumnNames: "rdv_id", referencedTableName: "refdata_value", validate: "true")
+    }
+
+    changeSet(author: "djebeniani (generated)", id: "1730800150751-22") {
+        addForeignKeyConstraint(baseColumnNames: "plat_accessibility_statement_available_fk_rv", baseTableName: "platform", constraintName: "FKrug4gk33b5e9857dvfjiopaic", deferrable: "false", initiallyDeferred: "false", referencedColumnNames: "rdv_id", referencedTableName: "refdata_value", validate: "true")
     }
 
 }

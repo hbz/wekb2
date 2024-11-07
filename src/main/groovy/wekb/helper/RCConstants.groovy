@@ -94,5 +94,6 @@ class RCConstants {
     public static final String YN = "YN"
 
     public static final String UYNP = "UYNP"
+    public static final String UYN = "UYN"
 
 }

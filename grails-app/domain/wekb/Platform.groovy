@@ -111,6 +111,12 @@ class Platform  extends AbstractBase implements Auditable {
   @RefdataAnnotation(cat = RCConstants.BF_DATABASE)
   RefdataValue databaseBarrierFree
 
+  @RefdataAnnotation(cat = RCConstants.YN)
+  RefdataValue accessibilityStatementAvailable
+
+  @RefdataAnnotation(cat = RCConstants.YN)
+  RefdataValue roadmapAccessibilityAvailable
+
 
 
   static hasMany = [
@@ -162,6 +168,19 @@ class Platform  extends AbstractBase implements Auditable {
     centralApiKey column: 'plat_central_api_key', type: 'text'
     counterR5SushiPlatform column: 'plat_counter_r5_sushi_platform', type: 'text'
 
+    accessPlatform column: 'plat_access_platform_fk_rv'
+    playerForAudio column: 'plat_player_for_audio_fk_rv'
+    playerForVideo column: 'plat_player_for_video_fk_rv'
+    ebookEPub column: 'plat_ebook_epub_fk_rv'
+    onixMetadata column: 'plat_onix_metadata_fk_rv'
+    pdfUaStandard column: 'plat_pdf_ua_standard_fk_rv'
+    videoAudioDes column: 'plat_video_audiodes_fk_rv'
+    videoSubTitles column: 'plat_video_subtitles_fk_rv'
+    databaseBarrierFree column: 'plat_database_barrier_free_fk_rv'
+
+    accessibilityStatementAvailable column: 'plat_accessibility_statement_available_fk_rv'
+    roadmapAccessibilityAvailable column: 'plat_roadmap_accessibility_available_fk_rv'
+
   }
 
   static constraints = {
@@ -205,6 +224,18 @@ class Platform  extends AbstractBase implements Auditable {
     sushiApiAuthenticationMethod (nullable: true, blank: false)
     centralApiKey(nullable: true, blank: true)
     counterR5SushiPlatform (nullable: true, blank: false)
+
+    accessPlatform (nullable: true, blank: false)
+    playerForAudio (nullable: true, blank: false)
+    playerForVideo (nullable: true, blank: false)
+    ebookEPub (nullable: true, blank: false)
+    onixMetadata (nullable: true, blank: false)
+    pdfUaStandard (nullable: true, blank: false)
+    videoAudioDes (nullable: true, blank: false)
+    videoSubTitles (nullable: true, blank: false)
+    databaseBarrierFree (nullable: true, blank: false)
+    accessibilityStatementAvailable (nullable: true, blank: false)
+    roadmapAccessibilityAvailable (nullable: true, blank: false)
   }
 
   @Override

@@ -13,6 +13,9 @@
                 Sushi Api Key Information
             </semui:tabsItemWithoutLink>
         </g:if>
+        <semui:tabsItemWithoutLink tab="accessibility" activeTab="${params.activeTab}">
+            Accessibility to platform
+        </semui:tabsItemWithoutLink>
         <semui:tabsItemWithoutLink tab="titledetails" activeTab="${params.activeTab}" counts="${d.currentTippCount}">
             Hosted Titles
         </semui:tabsItemWithoutLink>
@@ -180,5 +183,143 @@
             </div>
         </semui:tabsItemContent>
     </g:if>
+
+    <semui:tabsItemContent tab="accessibility" activeTab="${params.activeTab}">
+        <div class="sixteen wide column">
+            <div class="ui segment">
+                <div class="content wekb-inline-lists">
+                    <div class="header">
+                        <h2 class="ui header">Access Platform</h2>
+                    </div>
+
+                    <div class="description">
+
+                        <h3>Barrier-free according to
+                        <g:link url="https://www.barrierefreiheit-dienstekonsolidierung.bund.de/Webs/PB/DE/gesetze-und-richtlinien/en301549/en301549-node.html"
+                                target="_blank">
+                            EN 301549
+                        </g:link>
+                        </h3>
+                        <dl>
+                            <dt class="control-label">
+                                Access Platform
+                            </dt>
+                            <dd>
+                                <semui:xEditableRefData owner="${d}" field="accessPlatform"
+                                                        config="${RCConstants.UYNP}"/>
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt class="control-label">
+                                Player for Audio
+                            </dt>
+                            <dd>
+                                <semui:xEditableRefData owner="${d}" field="playerForAudio"
+                                                        config="${RCConstants.UYNP}"/>
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt class="control-label">
+                                Player for Video
+                            </dt>
+                            <dd>
+                                <semui:xEditableRefData owner="${d}" field="playerForVideo"
+                                                        config="${RCConstants.UYNP}"/>
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt class="control-label">
+                                Accessibility Statement available
+                            </dt>
+                            <dd>
+                                <semui:xEditableRefData owner="${d}" field="accessibilityStatementAvailable" config="${RCConstants.YN}"/>
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt class="control-label">
+                                Roadmap to improve accessibility available
+                            </dt>
+                            <dd>
+                                <semui:xEditableRefData owner="${d}" field="roadmapAccessibilityAvailable" config="${RCConstants.YN}"/>
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ui segment">
+                <div class="content wekb-inline-lists">
+                    <div class="header">
+                        <h2 class="ui header">Content</h2>
+                    </div>
+
+                    <div class="description">
+                        <dl>
+                            <dt class="control-label">
+                                eBook: current <g:link url="https://www.w3.org/TR/epub-33/"
+                                                       target="_blank">
+                                    ePub-Standard
+                                </g:link>
+                            </dt>
+                            <dd>
+                                <semui:xEditableRefData owner="${d}" field="ebookEPub" config="${RCConstants.UYN}"/>
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt class="control-label">
+                                <g:link url="https://www.dnb.de/DE/Professionell/Sammeln/Unkoerperliche_Medienwerke/_content/onix_for_books_2_1_akk.html"
+                                        target="_blank">
+                                    ONIX Metadata to accessibility
+                                </g:link>
+                            </dt>
+                            <dd>
+                                <semui:xEditableRefData owner="${d}" field="onixMetadata" config="${RCConstants.UYN}"/>
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt class="control-label">
+                                PDF: PDF/UA-Standard  <g:link url="https://www.pdfa.org/wp-content/uploads/2016/08/MatterhornProtokoll_1-02-2016-06-29.pdf"
+                                                              target="_blank">
+                                    (Matterhorn Protocol)
+                                </g:link>
+                            </dt>
+                            <dd>
+                                <semui:xEditableRefData owner="${d}" field="pdfUaStandard" config="${RCConstants.UYN}"/>
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt class="control-label">
+                                Video: Audio description available
+                            </dt>
+                            <dd>
+                                <semui:xEditableRefData owner="${d}" field="videoAudioDes" config="${RCConstants.UYN}"/>
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt class="control-label">
+                                Video: Subtitles available
+                            </dt>
+                            <dd>
+                                <semui:xEditableRefData owner="${d}" field="videoSubTitles" config="${RCConstants.UYN}"/>
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt class="control-label">
+                                Database: barrier-free according to
+                                <g:link url="https://www.barrierefreiheit-dienstekonsolidierung.bund.de/Webs/PB/DE/gesetze-und-richtlinien/en301549/en301549-node.html"
+                                        target="_blank">
+                                    EN 301549
+                                </g:link>
+                            </dt>
+                            <dd>
+                                <semui:xEditableRefData owner="${d}" field="databaseBarrierFree" config="${RCConstants.UYN}"/>
+                            </dd>
+                        </dl>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </semui:tabsItemContent>
 
 </g:if>

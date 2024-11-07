@@ -1431,6 +1431,18 @@ class Api2Service {
                 result.counterRegistryApiUuid = object.counterRegistryApiUuid
                 result.counterR5SushiPlatform = object.counterR5SushiPlatform
 
+                result.accessPlatform = object.accessPlatform?.value
+                result.playerForAudio = object.playerForAudio?.value
+                result.playerForVideo = object.playerForVideo?.value
+                result.ebookEPub = object.ebookEPub?.value
+                result.onixMetadata = object.onixMetadata?.value
+                result.pdfUaStandard = object.pdfUaStandard?.value
+                result.videoAudioDes = object.videoAudioDes?.value
+                result.videoSubTitles = object.videoSubTitles?.value
+                result.databaseBarrierFree = object.databaseBarrierFree?.value
+                result.accessibilityStatementAvailable = object.accessibilityStatementAvailable?.value
+                result.roadmapAccessibilityAvailable = object.roadmapAccessibilityAvailable?.value
+
                 if (object.hasProperty('curatoryGroups')) {
                     result.curatoryGroups = []
                     object.curatoryGroups?.each {
