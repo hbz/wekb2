@@ -14,7 +14,7 @@
             </semui:tabsItemWithoutLink>
         </g:if>
         <semui:tabsItemWithoutLink tab="accessibility" activeTab="${params.activeTab}">
-            Accessibility to platform
+            Accessibility to Platform
         </semui:tabsItemWithoutLink>
         <semui:tabsItemWithoutLink tab="titledetails" activeTab="${params.activeTab}" counts="${d.currentTippCount}">
             Hosted Titles
