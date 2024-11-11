@@ -25,7 +25,6 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook
 import org.hibernate.Session
 
 import javax.sql.DataSource
-import java.nio.file.Files
 import java.text.SimpleDateFormat
 
 
@@ -537,7 +536,7 @@ class ExportService {
                                     }
                                     break;
                                 case 'languages':
-                                    List<ComponentLanguage> languages = ComponentLanguage.executeQuery('select language.value from ComponentLanguage where tipp.id = :tippID', [tippID: tippID], [readOnly: true])
+                                    List<TippLanguage> languages = TippLanguage.executeQuery('select language.value from TippLanguage where tipp.id = :tippID', [tippID: tippID], [readOnly: true])
 
                                     if (languages.size() > 0) {
                                         row.add(languages.join(';'))

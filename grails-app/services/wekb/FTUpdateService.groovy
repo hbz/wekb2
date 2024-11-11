@@ -1,7 +1,6 @@
 package wekb
 
 import grails.converters.JSON
-import grails.gorm.transactions.Transactional
 import org.elasticsearch.action.admin.indices.flush.FlushRequest
 import org.elasticsearch.action.admin.indices.flush.FlushResponse
 import org.elasticsearch.action.bulk.BulkItemResponse
@@ -11,7 +10,6 @@ import org.elasticsearch.action.index.IndexRequest
 import org.elasticsearch.client.RequestOptions
 import org.elasticsearch.client.RestHighLevelClient
 import org.elasticsearch.xcontent.XContentType
-import org.hibernate.Session
 import org.hibernate.SessionFactory
 import wekb.helper.RDStore
 import wekb.system.FTControl
@@ -452,7 +450,7 @@ class FTUpdateService {
         }
 
         result.languages = []
-        kbc.languages.each { ComponentLanguage kbl ->
+        kbc.languages.each { TippLanguage kbl ->
           result.languages.add([value     : kbl.language.value,
                                 value_de  : kbl.language.value_de,
                                 value_en  : kbl.language.value_en])

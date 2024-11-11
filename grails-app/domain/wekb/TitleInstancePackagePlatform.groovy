@@ -109,7 +109,7 @@ class TitleInstancePackagePlatform  extends AbstractBase implements Auditable {
     ids: Identifier,
     updateTippInfos: UpdateTippInfo,
     prices              : TippPrice,
-    languages           : ComponentLanguage
+    languages           : TippLanguage
 
   ]
 

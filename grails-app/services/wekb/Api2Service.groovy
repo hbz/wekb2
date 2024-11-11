@@ -8,7 +8,6 @@ import groovy.json.JsonSlurper
 import groovy.sql.GroovyRowResult
 import groovy.sql.Sql
 import org.grails.orm.hibernate.cfg.GrailsHibernateUtil
-import wekb.helper.RCConstants
 import wekb.helper.RDStore
 import wekb.utils.DateUtils
 
@@ -1098,7 +1097,7 @@ class Api2Service {
             }
 
             result.languages = []
-            object.languages.each { ComponentLanguage kbl ->
+            object.languages.each { TippLanguage kbl ->
                 result.languages.add([value     : kbl.language.value,
                                       value_de  : kbl.language.value_de,
                                       value_en  : kbl.language.value_en])
@@ -1568,10 +1567,10 @@ class Api2Service {
             }
             */
 
-                result.langugages = ComponentLanguage.executeQuery("select new map(lang.value as value, lang.value_de as value_de, lang.value_en as value_en) from ComponentLanguage cl join cl.language lang where cl.tipp = :obj", [obj: object])
+                result.langugages = TippLanguage.executeQuery("select new map(lang.value as value, lang.value_de as value_de, lang.value_en as value_en) from TippLanguage cl join cl.language lang where cl.tipp = :obj", [obj: object])
                 /*
             result.languages = []
-            object.languages.each { ComponentLanguage kbl ->
+            object.languages.each { TippLanguage kbl ->
                 result.languages.add([value     : kbl.language.value,
                                       value_de  : kbl.language.value_de,
                                       value_en  : kbl.language.value_en])

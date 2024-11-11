@@ -4,7 +4,7 @@ import wekb.annotations.RefdataAnnotation
 import wekb.helper.BeanStore
 import wekb.helper.RCConstants
 
-class ComponentLanguage {
+class TippLanguage {
 
     @RefdataAnnotation(cat = RCConstants.COMPONENT_LANGUAGE)
     RefdataValue language

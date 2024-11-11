@@ -4,12 +4,9 @@ package wekb
 import wekb.helper.RCConstants
 import wekb.helper.RDStore
 import grails.gorm.transactions.Transactional
-import grails.util.Holders
-import groovy.sql.Sql
 import org.grails.web.json.JSONArray
 import org.hibernate.Session
 
-import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.ZoneId
 
@@ -691,18 +688,18 @@ class KbartImportService {
                     if (tipp.languages) {
                         def langIDs = tipp.languages.id.clone()
                         langIDs.each {
-                            ComponentLanguage.executeUpdate('delete from ComponentLanguage lang where lang.id = :langId',[langId: it])
+                            TippLanguage.executeUpdate('delete from TippLanguage lang where lang.id = :langId',[langId: it])
                         }
                         tipp.save()
-                        //ComponentLanguage.executeUpdate("delete from ComponentLanguage where tipp = :tipp", [tipp: tipp])
+                        //TippLanguage.executeUpdate("delete from TippLanguage where tipp = :tipp", [tipp: tipp])
                     }
 
                     tipp_dto.language.each{ String lan ->
                         RefdataValue refdataValue = RefdataCategory.lookup(RCConstants.COMPONENT_LANGUAGE, lan)
                         if(refdataValue){
-                            if(!ComponentLanguage.findByTippAndLanguage(tipp, refdataValue)){
-                                ComponentLanguage componentLanguage = new ComponentLanguage(tipp: tipp, language: refdataValue)
-                                componentLanguage.save()
+                            if(!TippLanguage.findByTippAndLanguage(tipp, refdataValue)){
+                                TippLanguage tippLanguage = new TippLanguage(tipp: tipp, language: refdataValue)
+                                tippLanguage.save()
                             }
                         }
                     }
@@ -2310,8 +2307,8 @@ class KbartImportService {
             if (tipp.languages) {
                 def langIDs = tipp.languages.id.clone()
                 langIDs.each {
-                    tipp.removeFromLanguages(ComponentLanguage.get(it))
-                    ComponentLanguage.get(it).delete()
+                    tipp.removeFromLanguages(TippLanguage.get(it))
+                    TippLanguage.get(it).delete()
                 }
                 if (!tipp.save()) {
                     log.error("Tipp save error: ")
@@ -2319,7 +2316,7 @@ class KbartImportService {
                         println it
                     }
                 }
-                //ComponentLanguage.executeUpdate("delete from ComponentLanguage where tipp = :tipp", [tipp: tipp])
+                //TippLanguage.executeUpdate("delete from TippLanguage where tipp = :tipp", [tipp: tipp])
             }
             List languages = tippMap.language.split(',')
             languages.each { String lan ->
@@ -2331,8 +2328,8 @@ class KbartImportService {
                 }
                 if (refdataValue) {
                     if (!(tipp.languages && refdataValue in tipp.languages.language)) {
-                        ComponentLanguage componentLanguage = new ComponentLanguage(tipp: tipp, language: refdataValue)
-                        componentLanguage.save()
+                        TippLanguage tippLanguage = new TippLanguage(tipp: tipp, language: refdataValue)
+                        tippLanguage.save()
                     }
                 }
             }
@@ -2603,9 +2600,9 @@ class KbartImportService {
                                 refdataValue = RefdataCategory.lookup(RCConstants.COMPONENT_LANGUAGE, lan)
                             }
                             if (refdataValue) {
-                                if (!ComponentLanguage.findByTippAndLanguage(tipp, refdataValue)) {
-                                    ComponentLanguage componentLanguage = new ComponentLanguage(tipp: tipp, language: refdataValue)
-                                    componentLanguage.save()
+                                if (!TippLanguage.findByTippAndLanguage(tipp, refdataValue)) {
+                                    TippLanguage tippLanguage = new TippLanguage(tipp: tipp, language: refdataValue)
+                                    tippLanguage.save()
                                 }
                             }
                         }

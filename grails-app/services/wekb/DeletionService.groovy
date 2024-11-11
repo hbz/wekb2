@@ -1,6 +1,6 @@
 package wekb
 
-import grails.gorm.transactions.Transactional
+
 import wekb.helper.RDStore
 
 //@Transactional
@@ -137,7 +137,7 @@ class DeletionService {
             if (recordDeletedKBComponent(tipp)) {
                 TitleInstancePackagePlatform.withTransaction {
                     Identifier.executeUpdate("delete from Identifier where tipp = :component", [component: tipp])
-                    ComponentLanguage.executeUpdate("delete from ComponentLanguage where tipp = :component", [component: tipp])
+                    TippLanguage.executeUpdate("delete from TippLanguage where tipp = :component", [component: tipp])
                     TIPPCoverageStatement.executeUpdate("delete from TIPPCoverageStatement where tipp = :component", [component: tipp])
                     TippPrice.executeUpdate("delete from TippPrice where tipp = :component", [component: tipp])
                     UpdateTippInfo.executeUpdate("delete from UpdateTippInfo where tipp = :component", [component: tipp])

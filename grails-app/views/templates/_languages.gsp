@@ -1,11 +1,11 @@
 <%@ page import="wekb.helper.RCConstants; wekb.RefdataCategory" %>
 <g:if test="${d.id != null}">
     <div class="ui bulleted list">
-        <g:each in="${d.languages.sort { it.language.getI10n('value') }}" var="componentLanguage">
-            <div class="item">${componentLanguage.language.getI10n('value')}
+        <g:each in="${d.languages.sort { it.language.getI10n('value') }}" var="tippLanguage">
+            <div class="item">${tippLanguage.language.getI10n('value')}
             <g:if test="${editable}">
                 <g:link controller="ajaxHtml"
-                        action="deleteLanguage" id="${componentLanguage.id}"
+                        action="deleteLanguage" id="${tippLanguage.id}"
                         params="[activeTab: 'languages', curationOverride: params.curationOverride]">Delete</g:link>
             </g:if>
             </div>
@@ -23,7 +23,7 @@
                 <input type="hidden" name="__context"
                        value="${d.getOID()}"/>
                 <input type="hidden" name="__newObjectClass"
-                       value="wekb.ComponentLanguage"/>
+                       value="wekb.TippLanguage"/>
                 <input type="hidden" name="__recip" value="tipp"/>
                 <input type="hidden" name="curationOverride" value="${params.curationOverride}"/>
 

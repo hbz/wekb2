@@ -766,19 +766,19 @@ class AjaxHtmlController {
     def deleteLanguage() {
         log.debug("${params}")
         def result = ['result': 'OK', 'params': params]
-        ComponentLanguage componentLanguage = ComponentLanguage.get(params.id)
-        TitleInstancePackagePlatform contextObj = componentLanguage.tipp
+        TippLanguage tippLanguage = TippLanguage.get(params.id)
+        TitleInstancePackagePlatform contextObj = tippLanguage.tipp
 
-        if (componentLanguage != null) {
-            def editable = accessService.checkEditableObject(componentLanguage.tipp, params)
+        if (tippLanguage != null) {
+            def editable = accessService.checkEditableObject(tippLanguage.tipp, params)
 
             if (editable) {
-                componentLanguage.delete()
+                tippLanguage.delete()
             } else {
                 result.message = "No permission to edit language for this object!"
                 flash.error = "No permission to edit language for this object!"
             }
-        } else if (!componentLanguage) {
+        } else if (!tippLanguage) {
             flash.error = g.message(code: 'default.not.found.message', args: ["Language", params.id])
             result.message = "Language with id ${params.id} not found!".toString()
         }

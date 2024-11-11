@@ -65,7 +65,7 @@ class CascadingUpdateService {
         }
     }
 
-    void update(ComponentLanguage obj, Date lastUpdated) {
+    void update(TippLanguage obj, Date lastUpdated) {
         if (obj.tipp) { update(obj.tipp, lastUpdated ?: new Date()) }
     }
 
