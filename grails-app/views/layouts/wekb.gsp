@@ -212,9 +212,6 @@
         <main class="ui main fluid container">
             <g:layoutBody/>
         </main>
-        <br>
-        <br>
-
         <g:render template="/layouts/footer"/>
     </div>
 </div>

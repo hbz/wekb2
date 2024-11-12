@@ -26908,6 +26908,15 @@ footer h2.ui.header {
   font-size: 1.28571429rem;
 }
 
+.wekb-inline-lists .wekb-header:last-child {
+  margin-bottom: 1em;
+  display: block;
+}
+
+.wekb-inline-lists .wekb-header:first-child {
+  margin-top: 1em;
+}
+
 /*******************************
          Site Overrides
 *******************************/
@@ -73172,7 +73181,7 @@ body.pushable > .pusher {
 }
 
 .wekb-content {
-  margin-top: 80px;
+  padding-top: 80px;
   display: flex;
   min-height: 100vh;
   flex-direction: column;
