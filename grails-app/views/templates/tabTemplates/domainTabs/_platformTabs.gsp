@@ -14,7 +14,7 @@
             </semui:tabsItemWithoutLink>
         </g:if>
         <semui:tabsItemWithoutLink tab="accessibility" activeTab="${params.activeTab}">
-            Accessibility to Platform
+            Accessibility
         </semui:tabsItemWithoutLink>
         <semui:tabsItemWithoutLink tab="titledetails" activeTab="${params.activeTab}" counts="${d.currentTippCount}">
             Hosted Titles
@@ -188,21 +188,20 @@
         <div class="sixteen wide column">
             <div class="ui segment">
                 <div class="content wekb-inline-lists">
-                    <div class="header">
-                        <h2 class="ui header">Access Platform</h2>
-                    </div>
-
+                    <h2 class="ui header">Platform</h2>
                     <div class="description">
+                        <dl>
+                            <strong class="ui header wekb-header">Accessibility requirements according to
+                                <g:link url="https://www.barrierefreiheit-dienstekonsolidierung.bund.de/Webs/PB/DE/gesetze-und-richtlinien/en301549/en301549-node.html"
+                                        target="_blank">
+                                    EN 301549
+                                </g:link>
+                            </strong>
+                        </dl>
 
-                        <h3>Barrier-free according to
-                        <g:link url="https://www.barrierefreiheit-dienstekonsolidierung.bund.de/Webs/PB/DE/gesetze-und-richtlinien/en301549/en301549-node.html"
-                                target="_blank">
-                            EN 301549
-                        </g:link>
-                        </h3>
                         <dl>
                             <dt class="control-label">
-                                Access Platform
+                                Accessibility of the platform
                             </dt>
                             <dd>
                                 <semui:xEditableRefData owner="${d}" field="accessPlatform"
@@ -211,7 +210,7 @@
                         </dl>
                         <dl>
                             <dt class="control-label">
-                                Player for Audio
+                                Accessibility of the audio player
                             </dt>
                             <dd>
                                 <semui:xEditableRefData owner="${d}" field="playerForAudio"
@@ -220,12 +219,15 @@
                         </dl>
                         <dl>
                             <dt class="control-label">
-                                Player for Video
+                                Accessibility of the video player
                             </dt>
                             <dd>
                                 <semui:xEditableRefData owner="${d}" field="playerForVideo"
                                                         config="${RCConstants.UYNP}"/>
                             </dd>
+                        </dl>
+                        <dl>
+                            <strong class="ui header wekb-header">Accessibility Statement</strong>
                         </dl>
                         <dl>
                             <dt class="control-label">
@@ -237,10 +239,10 @@
                         </dl>
                         <dl>
                             <dt class="control-label">
-                                Roadmap to improve accessibility available
+                                Link to the Accessibility Statement
                             </dt>
                             <dd>
-                                <semui:xEditableRefData owner="${d}" field="roadmapAccessibilityAvailable" config="${RCConstants.YN}"/>
+                                hier der Link
                             </dd>
                         </dl>
                     </div>
@@ -249,14 +251,14 @@
 
             <div class="ui segment">
                 <div class="content wekb-inline-lists">
-                    <div class="header">
-                        <h2 class="ui header">Content</h2>
-                    </div>
-
+                    <h2 class="ui header">Content on the platform</h2>
                     <div class="description">
                         <dl>
+                            <strong class="ui header wekb-header">eBook</strong>
+                        </dl>
+                        <dl>
                             <dt class="control-label">
-                                eBook: current <g:link url="https://www.w3.org/TR/epub-33/"
+                                Current <g:link url="https://www.w3.org/TR/epub-33/"
                                                        target="_blank">
                                     ePub-Standard
                                 </g:link>
@@ -277,8 +279,11 @@
                             </dd>
                         </dl>
                         <dl>
+                            <strong class="ui header wekb-header">PDF</strong>
+                        </dl>
+                        <dl>
                             <dt class="control-label">
-                                PDF: PDF/UA-Standard  <g:link url="https://www.pdfa.org/wp-content/uploads/2016/08/MatterhornProtokoll_1-02-2016-06-29.pdf"
+                                PDF/UA-Standard  <g:link url="https://www.pdfa.org/wp-content/uploads/2016/08/MatterhornProtokoll_1-02-2016-06-29.pdf"
                                                               target="_blank">
                                     (Matterhorn Protocol)
                                 </g:link>
@@ -288,8 +293,11 @@
                             </dd>
                         </dl>
                         <dl>
+                            <strong class="ui header wekb-header">Video</strong>
+                        </dl>
+                        <dl>
                             <dt class="control-label">
-                                Video: Audio description available
+                                Audio description available
                             </dt>
                             <dd>
                                 <semui:xEditableRefData owner="${d}" field="videoAudioDes" config="${RCConstants.UYN}"/>
@@ -297,15 +305,18 @@
                         </dl>
                         <dl>
                             <dt class="control-label">
-                                Video: Subtitles available
+                                Subtitles available
                             </dt>
                             <dd>
                                 <semui:xEditableRefData owner="${d}" field="videoSubTitles" config="${RCConstants.UYN}"/>
                             </dd>
                         </dl>
                         <dl>
+                            <strong class="ui header wekb-header">Database</strong>
+                        </dl>
+                        <dl>
                             <dt class="control-label">
-                                Database: barrier-free according to
+                                Accessibility according to
                                 <g:link url="https://www.barrierefreiheit-dienstekonsolidierung.bund.de/Webs/PB/DE/gesetze-und-richtlinien/en301549/en301549-node.html"
                                         target="_blank">
                                     EN 301549

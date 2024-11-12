@@ -3,3 +3,14 @@ footer {
     font-size: 1.28571429rem;
   }
 }
+.wekb-inline-lists {
+    .wekb-header {
+        &:last-child  {
+            margin-bottom: 1em;
+            display: block;
+        }
+        &:first-child  {
+            margin-top: 1em;
+        }
+    }
+}
