@@ -1,5 +1,5 @@
 <h2 class="ui header">we:kb News <div class="ui primary  label">
-    Changes in the last <b>14</b> days.
+    Changes in the last <strong>14</strong> days.
 </div></h2>
 
 

@@ -51,7 +51,7 @@
                         <td>
                             <g:link controller="resource" action="show" id="${identifier.tipp.getOID()}">
                                 ${identifier.tipp.name}
-                            </g:link> <b>(${identifier.tipp.status?.value})</b>
+                            </g:link> <strong>(${identifier.tipp.status?.value})</strong>
                         </td>
                         <td>
                             <g:if test="${identifier.tipp.pkg}">
@@ -94,7 +94,7 @@
                         <td>
                             <g:link controller="resource" action="show" id="${identifier.pkg.getOID()}">
                                 ${identifier.pkg.name}
-                            </g:link> <b>(${identifier.pkg.status?.value})</b>
+                            </g:link> <strong>(${identifier.pkg.status?.value})</strong>
                         </td>
                         <td>${identifier.namespace?.value}</td>
                         <g:if test="${editable}">
@@ -130,7 +130,7 @@
                         <td>
                             <g:link controller="resource" action="show" id="${identifier.org.getOID()}">
                                 ${identifier.org.name}
-                            </g:link> <b>(${identifier.org.status?.value})</b>
+                            </g:link> <strong>(${identifier.org.status?.value})</strong>
                         </td>
                         <td>${identifier.namespace?.value}</td>
                         <g:if test="${editable}">
