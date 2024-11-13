@@ -112,7 +112,7 @@
                 <th colspan="${qbeConfig.qbeResults.size() + 1}"></th>
                 --}%%{--<!-- see grails-app/assets/javascripts/gokb/action-forms.js for code relating to bulk actions -->
                 <g:if test="${!hideActions}">
-                  <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Actions <b class="caret"></b></a>
+                  <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Actions <b class="caret"></strong></a>
                     <ul class="dropdown-menu actions"></ul>
                   </li>
                   <li class="divider-vertical"></li>

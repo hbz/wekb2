@@ -57,7 +57,7 @@
                         </td>
                         <td>
                             <g:link controller="resource" action="show" id="${t.getOID()}">
-                                ${t.name} <b>(${t.status.value})</b>
+                                ${t.name} <strong>(${t.status.value})</strong>
                             </g:link>
                         </td>
                         <td>
@@ -122,7 +122,7 @@
                         <td>
                             <g:link controller="resource" action="show" id="${t.getOID()}">
                                 ${t.name}
-                            </g:link> <b>(${t.status.value})</b>
+                            </g:link> <strong>(${t.status.value})</strong>
                         </td>
                         <td>
                             <ul>
@@ -181,7 +181,7 @@
                     </td>
                     <td>
                         <g:link controller="resource" action="show" id="${t.getOID()}">
-                            ${t.name} <b>(${t.status.value})</b>
+                            ${t.name} <strong>(${t.status.value})</strong>
                         </g:link>
                     </td>
                     <td>
