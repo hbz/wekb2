@@ -71,6 +71,7 @@ $(function () {
         '			<div class="editable-buttons">' +
         '			</div>' +
         '		</div>' +
+        '        <div class="editable-error-block"></div>' +
         '        <div id="characters-count"></div>' +
         '		</div>' +
         '	</div>' +
