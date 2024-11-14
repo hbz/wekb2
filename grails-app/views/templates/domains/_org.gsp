@@ -122,6 +122,8 @@
                                 <td>
                                     <semui:xEditableRefData owner="${contact}" field="language"
                                                             config="${RCConstants.COMPONENT_LANGUAGE}"/>
+
+                                    <g:render template="/templates/contactLanguages"/>
                                 </td>
                                 <td>
                                     <g:if test="${editable}">
