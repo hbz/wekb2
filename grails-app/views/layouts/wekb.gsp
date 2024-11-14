@@ -215,30 +215,17 @@
         <g:render template="/layouts/footer"/>
     </div>
 </div>
-<style>
-/* globalLoadingIndicator */
 
-#globalLoadingIndicator {
-
-
-}
-
-/* globalPageDimmer */
-
-#globalPageDimmer {
-    background-color: rgba(0,0,0, 0.40)
-}
-
-</style>
 
 %{-- global loading indicator --}%
 <div class="ui page dimmer" id="globalLoadingIndicator">
     <div class="ui large red text loader">Loading</div>
 </div>
-</body>
-<g:javascript>
+<script>
     $('.we-link').click(function(e) {
         $('#globalLoadingIndicator').addClass('active');
     });
-</g:javascript>
+</script>
+</body>
+
 </html>
