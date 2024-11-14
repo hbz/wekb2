@@ -92,7 +92,7 @@
                 Language
             </dt>
             <dd>
-                <g:render template="/templates/languages"/>
+                <g:render template="/templates/tippLanguages"/>
             </dd>
         </dl>
         <dl>

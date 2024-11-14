@@ -23,12 +23,12 @@ class TippLanguage {
     }
 
     static mapping = {
-        id                    column: 'cl_id'
-        version               column: 'cl_version'
-        language              column: 'cl_rv_fk' , index: 'cl_language_idx'
-        tipp           column: 'cl_tipp_fk', index: 'cl_tipp_idx'
-        dateCreated           column: 'cl_date_created'
-        lastUpdated           column: 'cl_last_updated'
+        id                    column: 'tl_id'
+        version               column: 'tl_version'
+        language              column: 'tl_rv_fk' , index: 'tl_language_idx'
+        tipp           column: 'tl_tipp_fk', index: 'tl_tipp_idx'
+        dateCreated           column: 'tl_date_created'
+        lastUpdated           column: 'tl_last_updated'
     }
 
     def afterInsert (){
