@@ -12,7 +12,7 @@
 
         <semui:flashMessage data="${flash}"/>
 
-        <g:form class="ui form" controller="login" action="authenticate" method="postK" name="loginForm"
+        <g:form class="ui form" controller="login" action="authenticate" method="post" name="loginForm"
                 elementId="loginForm" autocomplete="off">
             <div class="ui stacked segment">
                 <div class="field">
