@@ -21,9 +21,6 @@ class Contact{
 
     @RefdataAnnotation(cat = RCConstants.CONTACT_TYPE)
     RefdataValue type
-
-    @RefdataAnnotation(cat = RCConstants.COMPONENT_LANGUAGE)
-    RefdataValue language
     
     static mapping = {
         id          column:'ct_id'
@@ -33,7 +30,6 @@ class Contact{
         type        column:'ct_type_rv_fk'
         org         column:'ct_org_fk', index: 'ct_org_idx'
         vendor         column:'ct_vendor_fk', index: 'ct_vendor_idx'
-        language    column:'ct_language_rv_fk'
 
         dateCreated column: 'ct_date_created'
         lastUpdated column: 'ct_last_updated'
@@ -44,23 +40,26 @@ class Contact{
         contentType (nullable:true)
         org         (nullable:true)
         vendor      (nullable:true)
-        language    (nullable:true)
     }
+
+    static hasMany = [
+            languages           : ContactLanguage
+
+    ]
     
     @Override
     String toString() {
         contentType?.value + ', ' + content + ' (' + id + '); ' + type?.value
     }
 
-    static Contact lookup(String content, RefdataValue contentType, RefdataValue type, Org organisation, RefdataValue language) {
+    static Contact lookup(String content, RefdataValue contentType, RefdataValue type, Org organisation) {
 
         Contact contact
         List<Contact>  check = Contact.findAllWhere(
                 content: content ?: null,
                 contentType: contentType,
                 type: type,
-                org: organisation,
-                language: language
+                org: organisation
         ).sort({id: 'asc'})
 
         if (check.size() > 0) {
@@ -80,7 +79,7 @@ class Contact{
                 return
             }
 
-            Contact check = Contact.lookup(content, contentType, type, organisation, language)
+            Contact check = Contact.lookup(content, contentType, type, organisation)
             if (check) {
                 result = check
                 info += " > ignored/duplicate"
@@ -99,6 +98,8 @@ class Contact{
                 }
                 else {
                     info += " > OK"
+
+                    new ContactLanguage(contact: result, language: language).save()
                 }
             }
 
@@ -107,15 +108,14 @@ class Contact{
         }
     }
 
-    static Contact lookup(String content, RefdataValue contentType, RefdataValue type, Vendor ven, RefdataValue language) {
+    static Contact lookup(String content, RefdataValue contentType, RefdataValue type, Vendor ven) {
 
         Contact contact
         List<Contact>  check = Contact.findAllWhere(
                 content: content ?: null,
                 contentType: contentType,
                 type: type,
-                vendor: ven,
-                language: language
+                vendor: ven
         ).sort({id: 'asc'})
 
         if (check.size() > 0) {
@@ -135,7 +135,7 @@ class Contact{
                 return
             }
 
-            Contact check = Contact.lookup(content, contentType, type, ven, language)
+            Contact check = Contact.lookup(content, contentType, type, ven)
             if (check) {
                 result = check
                 info += " > ignored/duplicate"
@@ -145,8 +145,7 @@ class Contact{
                         content: content,
                         contentType: contentType,
                         type: type,
-                        vendor: ven,
-                        language: language
+                        vendor: ven
                 )
 
                 if (! result.save()) {
@@ -154,6 +153,7 @@ class Contact{
                 }
                 else {
                     info += " > OK"
+                    new ContactLanguage(contact: result, language: language).save()
                 }
             }
 

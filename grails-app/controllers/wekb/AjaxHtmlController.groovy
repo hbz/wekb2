@@ -814,9 +814,13 @@ class AjaxHtmlController {
                         flash.error = g.message(code: 'contact.email.validation.fail')
                     }
                 } else {
-                    contact = new Contact(content: content, contentType: contentType, language: language, type: type)
+                    contact = new Contact(content: content, contentType: contentType, type: type)
                     contact[objectType] = owner
                     contact.save()
+
+                    if(language){
+                        new ContactLanguage(contact: contact, language: language).save()
+                    }
                 }
             } else {
                 flash.error = g.message(code: 'component.addToList.denied.label')

@@ -26,11 +26,6 @@ class ContactLanguage {
     static constraints = {
     }
 
-    static hasMany = [
-            languages           : ContactLanguage
-
-    ]
-
     String getOID(){
         "${this.class.name}:${id}"
     }
