@@ -8,15 +8,11 @@
 <body>
 <div class="ui middle aligned center aligned grid">
     <div class="six wide column">
-        <h2 class="ui header">
-            <div class="content">
-                Login
-            </div>
-        </h2>
+        <h2 class="ui header">Login</h2>
 
         <semui:flashMessage data="${flash}"/>
 
-        <g:form class="ui form" controller="login" action="authenticate" method="post" name="loginForm"
+        <g:form class="ui form" controller="login" action="authenticate" method="postK" name="loginForm"
                 elementId="loginForm" autocomplete="off">
             <div class="ui stacked segment">
                 <div class="field">
