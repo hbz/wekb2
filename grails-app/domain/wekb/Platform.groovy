@@ -117,6 +117,8 @@ class Platform  extends AbstractBase implements Auditable {
   @RefdataAnnotation(cat = RCConstants.YN)
   RefdataValue roadmapAccessibilityAvailable
 
+  String accessibilityStatementUrl
+
 
 
   static hasMany = [
@@ -181,6 +183,8 @@ class Platform  extends AbstractBase implements Auditable {
     accessibilityStatementAvailable column: 'plat_accessibility_statement_available_fk_rv'
     roadmapAccessibilityAvailable column: 'plat_roadmap_accessibility_available_fk_rv'
 
+    accessibilityStatementUrl column: 'plat_accessibility_statement_url', type: 'text'
+
   }
 
   static constraints = {
@@ -236,6 +240,7 @@ class Platform  extends AbstractBase implements Auditable {
     databaseBarrierFree (nullable: true, blank: false)
     accessibilityStatementAvailable (nullable: true, blank: false)
     roadmapAccessibilityAvailable (nullable: true, blank: false)
+    accessibilityStatementUrl (nullable: true, blank: true)
   }
 
   @Override
