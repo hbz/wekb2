@@ -26915,6 +26915,7 @@ footer h2.ui.header {
 
 .wekb-inline-lists .wekb-header:first-child {
   margin-top: 1em;
+  display: block;
 }
 
 /*******************************

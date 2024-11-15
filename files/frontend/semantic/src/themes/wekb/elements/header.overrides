@@ -11,6 +11,7 @@ footer {
         }
         &:first-child  {
             margin-top: 1em;
+            display: block;
         }
     }
 }

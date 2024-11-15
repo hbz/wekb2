@@ -1,6 +1,6 @@
-<h2 class="ui header">we:kb News <div class="ui primary  label">
+<h2 class="ui header">we:kb News <span class="ui primary  label">
     Changes in the last <strong>14</strong> days.
-</div></h2>
+</span></h2>
 
 
 <div class="ui two column stackable wekb-widescreenMonitorBreakpoint grid">
