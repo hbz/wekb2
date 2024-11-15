@@ -116,4 +116,12 @@ databaseChangeLog = {
         }
     }
 
+    changeSet(author: "djebeniani (generated)", id: "1730800150751-24") {
+        dropForeignKeyConstraint(baseTableName: "platform", constraintName: "FKmvtw4yc91lmfi96t21xeerc99")
+    }
+
+    changeSet(author: "djebeniani (generated)", id: "1730800150751-25") {
+        dropColumn(columnName: "plat_roadmap_accessibility_available_fk_rv", tableName: "platform")
+    }
+
 }

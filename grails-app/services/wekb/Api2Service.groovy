@@ -1441,7 +1441,6 @@ class Api2Service {
                 result.videoSubTitles = object.videoSubTitles?.value
                 result.databaseBarrierFree = object.databaseBarrierFree?.value
                 result.accessibilityStatementAvailable = object.accessibilityStatementAvailable?.value
-                result.roadmapAccessibilityAvailable = object.roadmapAccessibilityAvailable?.value
                 result.accessibilityStatementUrl = object.accessibilityStatementUrl
 
 
