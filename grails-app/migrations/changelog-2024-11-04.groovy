@@ -110,4 +110,18 @@ databaseChangeLog = {
         addForeignKeyConstraint(baseColumnNames: "plat_accessibility_statement_available_fk_rv", baseTableName: "platform", constraintName: "FKrug4gk33b5e9857dvfjiopaic", deferrable: "false", initiallyDeferred: "false", referencedColumnNames: "rdv_id", referencedTableName: "refdata_value", validate: "true")
     }
 
+    changeSet(author: "djebeniani (generated)", id: "1730800150751-23") {
+        addColumn(tableName: "platform") {
+            column(name: "plat_accessibility_statement_url", type: "text")
+        }
+    }
+
+    changeSet(author: "djebeniani (generated)", id: "1730800150751-24") {
+        dropForeignKeyConstraint(baseTableName: "platform", constraintName: "FKmvtw4yc91lmfi96t21xeerc99")
+    }
+
+    changeSet(author: "djebeniani (generated)", id: "1730800150751-25") {
+        dropColumn(columnName: "plat_roadmap_accessibility_available_fk_rv", tableName: "platform")
+    }
+
 }

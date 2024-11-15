@@ -245,7 +245,7 @@
                                 Link to the Accessibility Statement
                             </dt>
                             <dd>
-                                hier der Link
+                                <semui:xEditable owner="${d}" field="accessibilityStatementUrl" validation="url" outGoingLink="true"/>
                             </dd>
                         </dl>
                     </div>

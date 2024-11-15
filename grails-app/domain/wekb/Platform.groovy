@@ -114,8 +114,7 @@ class Platform  extends AbstractBase implements Auditable {
   @RefdataAnnotation(cat = RCConstants.YN)
   RefdataValue accessibilityStatementAvailable
 
-  @RefdataAnnotation(cat = RCConstants.YN)
-  RefdataValue roadmapAccessibilityAvailable
+  String accessibilityStatementUrl
 
 
 
@@ -179,7 +178,7 @@ class Platform  extends AbstractBase implements Auditable {
     databaseBarrierFree column: 'plat_database_barrier_free_fk_rv'
 
     accessibilityStatementAvailable column: 'plat_accessibility_statement_available_fk_rv'
-    roadmapAccessibilityAvailable column: 'plat_roadmap_accessibility_available_fk_rv'
+    accessibilityStatementUrl column: 'plat_accessibility_statement_url', type: 'text'
 
   }
 
@@ -235,7 +234,7 @@ class Platform  extends AbstractBase implements Auditable {
     videoSubTitles (nullable: true, blank: false)
     databaseBarrierFree (nullable: true, blank: false)
     accessibilityStatementAvailable (nullable: true, blank: false)
-    roadmapAccessibilityAvailable (nullable: true, blank: false)
+    accessibilityStatementUrl (nullable: true, blank: true)
   }
 
   @Override
