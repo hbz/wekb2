@@ -191,12 +191,13 @@
                     <h2 class="ui header">Platform</h2>
                     <div class="description">
                         <dl>
-                            <strong class="ui header wekb-header">Accessibility requirements according to
+                            <dt class="ui header wekb-header">Accessibility requirements according to
                                 <g:link url="https://www.barrierefreiheit-dienstekonsolidierung.bund.de/Webs/PB/DE/gesetze-und-richtlinien/en301549/en301549-node.html"
                                         target="_blank">
                                     EN 301549
                                 </g:link>
-                            </strong>
+                            </dt>
+                            <dd></dd>
                         </dl>
 
                         <dl>
@@ -207,6 +208,7 @@
                                 <semui:xEditableRefData owner="${d}" field="accessPlatform"
                                                         config="${RCConstants.UYNP}"/>
                             </dd>
+                            <dd></dd>
                         </dl>
                         <dl>
                             <dt class="control-label">
@@ -227,7 +229,8 @@
                             </dd>
                         </dl>
                         <dl>
-                            <strong class="ui header wekb-header">Accessibility Statement</strong>
+                            <dt class="ui header wekb-header">Accessibility Statement</dt>
+                            <dd></dd>
                         </dl>
                         <dl>
                             <dt class="control-label">
@@ -254,7 +257,8 @@
                     <h2 class="ui header">Content on the platform</h2>
                     <div class="description">
                         <dl>
-                            <strong class="ui header wekb-header">eBook</strong>
+                            <dt class="ui header wekb-header">eBook</dt>
+                            <dd></dd>
                         </dl>
                         <dl>
                             <dt class="control-label">
@@ -279,7 +283,8 @@
                             </dd>
                         </dl>
                         <dl>
-                            <strong class="ui header wekb-header">PDF</strong>
+                            <dt class="ui header wekb-header">PDF</dt>
+                            <dd></dd>
                         </dl>
                         <dl>
                             <dt class="control-label">
@@ -293,7 +298,8 @@
                             </dd>
                         </dl>
                         <dl>
-                            <strong class="ui header wekb-header">Video</strong>
+                            <dt class="ui header wekb-header">Video</dt>
+                            <dd></dd>
                         </dl>
                         <dl>
                             <dt class="control-label">
@@ -312,7 +318,8 @@
                             </dd>
                         </dl>
                         <dl>
-                            <strong class="ui header wekb-header">Database</strong>
+                            <dt class="ui header wekb-header">Database</dt>
+                            <dd></dd>
                         </dl>
                         <dl>
                             <dt class="control-label">

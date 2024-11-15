@@ -210,13 +210,13 @@ class SemanticTagLib {
                 out << attrs.class
             out << ' message">'
             out << '<i class="close icon"></i>'
-            out << '<p>'
             if(message) {
+                out << '<p>'
                 out << message
+                out << '</p>'
             }else{
                 out << body()
             }
-            out << '</p>'
             out << '</div>'
         }
     }
@@ -795,7 +795,7 @@ class SemanticTagLib {
             out << 'active '
         }
 
-        out << (attrs.class ? (' ' + attrs.class) : '') +' tab segment"' +'" data-tab="' + attrs.tab + '">'
+        out << (attrs.class ? (' ' + attrs.class) : '') +' tab segment"' +' data-tab="' + attrs.tab + '">'
         out << body()
         out << '</div>'
     }
