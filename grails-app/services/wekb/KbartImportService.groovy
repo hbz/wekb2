@@ -2279,7 +2279,8 @@ class KbartImportService {
         }
 
         // KBART -> ddc -> ddcs
-        if (tippMap.ddc != "") {
+        if (tippMap.containsKey('ddc')) {
+
             if (tipp.ddcs) {
                 def ddcsIDs = tipp.ddcs.id.clone()
                 ddcsIDs.each {
@@ -2292,21 +2293,22 @@ class KbartImportService {
                     }
                 }
             }
-        }
-        // KBART -> ddc -> ddcs
-        if (tippMap.ddc) {
-            List ddcs = tippMap.ddc.split(',')
+            if (tippMap.ddc) {
+                List ddcs = tippMap.ddc.split(',')
 
-            ddcs.each { String ddc ->
-                RefdataValue refdataValue = RefdataCategory.lookup(RCConstants.DDC, ddc)
-                if (refdataValue && !(refdataValue in tipp.ddcs)) {
-                    tipp.addToDdcs(refdataValue)
+                ddcs.each { String ddc ->
+                    RefdataValue refdataValue = RefdataCategory.lookup(RCConstants.DDC, ddc)
+                    if (refdataValue && !(refdataValue in tipp.ddcs)) {
+                        tipp.addToDdcs(refdataValue)
+                    }
                 }
             }
+
         }
 
+
         // KBART -> language -> language -> languages
-        if (tippMap.language) {
+        if (tippMap.containsKey('language')) {
             if (tipp.languages) {
                 def langIDs = tipp.languages.id.clone()
                 langIDs.each {
