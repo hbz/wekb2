@@ -126,7 +126,7 @@
                             <g:formatNumber number="${row_obj.countNewTipps}" type="number"/>
                         </g:link>
                     </td>
-                    <td>
+                    <td>!!!!!!!!!!!!!!!!!!!!!!
                         <g:link controller="search" action="componentSearch" id=""
                                 params="[qbe: 'g:updateTippInfos', qp_aup_id: row_obj.id, qp_type: RefdataValue.class.name+':'+RDStore.UPDATE_TYPE_FAILED_TITLE.id]">
                             <g:formatNumber number="${row_obj.countInValidTipps}" type="number"/>

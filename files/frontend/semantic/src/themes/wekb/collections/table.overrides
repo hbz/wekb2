@@ -1,0 +1,3 @@
+.ui.sortable.table > thead > tr > th {
+  white-space: wrap;
+}
