@@ -165,13 +165,13 @@
                             </td>
                             </g:if>
                         </sec:ifLoggedIn>--}%
-                        <td>${counter}!!!!!!!!!!!!!</td>
+                        <td>${counter}</td>
                         <g:each in="${r.cols}" var="c">
                             <td>
                                 <g:if test="${c.value instanceof java.util.List}">
                                     <div class="ui bulleted list">
                                         <g:each in="${c.value}" var="element">
-                                            <div class="item">yyyyyyyyyyyy
+                                            <div class="item">
                                                 <g:if test="${c.link}">
                                                     <g:link controller="resource"
                                                             action="show"
@@ -186,7 +186,7 @@
                                     </div>
                                 </g:if>
                                 <g:elseif test="${c.link != null && c.value && c.value != '-Empty-'}">
-                                    xxxxxx<g:link controller="resource"
+                                    <g:link controller="resource"
                                             action="show"
                                             id="${c.link}"
                                                 test="test">
