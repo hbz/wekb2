@@ -289,16 +289,19 @@ class Package  extends AbstractBase implements Auditable {
 
 
   public void deleteSoft(context) {
+    def deleted_status =  RDStore.KBC_STATUS_DELETED
     Package.withTransaction {
-      setStatus(RDStore.KBC_STATUS_DELETED)
-      save()
+      this.status = deleted_status
+      if(this.kbartSource){
+        this.kbartSource.status = deleted_status
+        this.kbartSource.save()
+      }
+      this.save()
     }
 
     // Delete the tipps too as a TIPP should not exist without the associated,
     // package.
     Date now = new Date()
-
-    def deleted_status =  RDStore.KBC_STATUS_DELETED
     TitleInstancePackagePlatform.executeUpdate("update TitleInstancePackagePlatform as t set t.status = :del, t.lastUpdated = :now where t.status != :del and t.pkg = :pkg", [del: deleted_status, pkg: this, now: now])
   }
 
@@ -310,6 +313,10 @@ class Package  extends AbstractBase implements Auditable {
     def retired_status = RDStore.KBC_STATUS_RETIRED
     Package.withTransaction {
       this.status = retired_status
+      if(this.kbartSource){
+        this.kbartSource.status = retired_status
+        this.kbartSource.save()
+      }
       this.save()
     }
 
@@ -324,6 +331,10 @@ class Package  extends AbstractBase implements Auditable {
     def removedStatus = RDStore.KBC_STATUS_REMOVED
     Package.withTransaction {
       this.status = removedStatus
+      if(this.kbartSource){
+        this.kbartSource.status = removedStatus
+        this.kbartSource.save()
+      }
       this.save()
     }
 
@@ -366,6 +377,10 @@ class Package  extends AbstractBase implements Auditable {
     def currentStatus = RDStore.KBC_STATUS_CURRENT
     Package.withTransaction {
       this.status = currentStatus
+      if(this.kbartSource){
+        this.kbartSource.status = currentStatus
+        this.kbartSource.save()
+      }
       this.save()
     }
 
