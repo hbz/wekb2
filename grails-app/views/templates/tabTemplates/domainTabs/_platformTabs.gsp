@@ -257,7 +257,7 @@
                     <h2 class="ui header">Content on the platform</h2>
                     <div class="description">
                         <dl>
-                            <dt class="ui header wekb-header">eBook</dt>
+                            <dt class="ui header wekb-header">E-Books</dt>
                             <dd></dd>
                         </dl>
                         <dl>
@@ -283,7 +283,7 @@
                             </dd>
                         </dl>
                         <dl>
-                            <dt class="ui header wekb-header">PDF</dt>
+                            <dt class="ui header wekb-header">PDFs</dt>
                             <dd></dd>
                         </dl>
                         <dl>
@@ -298,7 +298,7 @@
                             </dd>
                         </dl>
                         <dl>
-                            <dt class="ui header wekb-header">Video</dt>
+                            <dt class="ui header wekb-header">Videos</dt>
                             <dd></dd>
                         </dl>
                         <dl>
@@ -318,7 +318,7 @@
                             </dd>
                         </dl>
                         <dl>
-                            <dt class="ui header wekb-header">Database</dt>
+                            <dt class="ui header wekb-header">Databases</dt>
                             <dd></dd>
                         </dl>
                         <dl>
