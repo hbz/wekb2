@@ -1729,6 +1729,12 @@ class KbartImportService {
                     }
                 }
             }
+        }else {
+            if (!result.newTipp) {
+                valueChanged = true
+                createUpdateTippInfoByTippChange(tipp, updatePackageInfo, kbartProperty, tippProperty, oldValue, newValue)
+            }
+            tipp[tippProperty] = null
         }
 
         if(valueChanged){
@@ -2304,6 +2310,19 @@ class KbartImportService {
                 }
             }
 
+        }else {
+            if (tipp.ddcs) {
+                def ddcsIDs = tipp.ddcs.id.clone()
+                ddcsIDs.each {
+                    tipp.removeFromDdcs(RefdataValue.get(it))
+                }
+                if (!tipp.save()) {
+                    log.error("Tipp save error: ")
+                    tipp.errors.allErrors.each {
+                        println it
+                    }
+                }
+            }
         }
 
 
@@ -2346,7 +2365,23 @@ class KbartImportService {
                 }
             }
             //tipp.refresh()
+        }else {
+            if (tipp.languages) {
+                def langIDs = tipp.languages.id.clone()
+                langIDs.each {
+                    tipp.removeFromLanguages(ComponentLanguage.get(it))
+                    ComponentLanguage.get(it).delete()
+                }
+                if (!tipp.save()) {
+                    log.error("Tipp save error: ")
+                    tipp.errors.allErrors.each {
+                        println it
+                    }
+                }
+                //ComponentLanguage.executeUpdate("delete from ComponentLanguage where tipp = :tipp", [tipp: tipp])
+            }
         }
+
         log.debug("before price section")
         // KBART -> listprice_eur -> prices
         result.changedTipp = createOrUpdatePrice(result, tipp, RDStore.PRICE_TYPE_LIST, RDStore.CURRENCY_EUR, tippMap.listprice_eur, 'listprice_eur', updatePackageInfo)
