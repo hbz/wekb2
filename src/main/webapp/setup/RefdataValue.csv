@@ -588,7 +588,7 @@ Vendor.ElectronicDeliveryDelay;E-Mail;E-Mail;E-Mail
 Vendor.ElectronicDeliveryDelay;EDI;EDI;EDI
 YN;No;No;No
 YN;Yes;Yes;Yes
-UYNP;Unavailable;Unavailable;Unavailable
+UYNP;Unavailable;Not Available;Not Available
 UYNP;Yes;Compliant;Compliant
 UYNP;No;Not Compliant;Not Compliant
 UYNP;Partially;Partially Compliant;Partially Compliant
