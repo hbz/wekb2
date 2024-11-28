@@ -1732,7 +1732,8 @@ class KbartImportService {
         }else {
             if (!result.newTipp) {
                 valueChanged = true
-                createUpdateTippInfoByTippChange(tipp, updatePackageInfo, kbartProperty, tippProperty, oldValue, newValue)
+                String oldValue = renderObjectValue(tipp[tippProperty])
+                createUpdateTippInfoByTippChange(tipp, updatePackageInfo, kbartProperty, tippProperty, oldValue, '')
             }
             tipp[tippProperty] = null
         }
