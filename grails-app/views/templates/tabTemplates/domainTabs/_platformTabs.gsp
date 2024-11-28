@@ -259,10 +259,11 @@
                     <div class="description">
                         <dl>
                             <dt class="ui header wekb-header">Accessibility requirements according to
-                            <g:link url="https://www.barrierefreiheit-dienstekonsolidierung.bund.de/Webs/PB/DE/gesetze-und-richtlinien/en301549/en301549-node.html"
-                                    target="_blank">
-                                EN 301549
-                            </g:link>
+                                <g:link url="https://www.barrierefreiheit-dienstekonsolidierung.bund.de/Webs/PB/DE/gesetze-und-richtlinien/en301549/en301549-node.html"
+                                        target="_blank">
+                                    EN 301549
+                                </g:link>
+                                of the ...
                             </dt>
                             <dd></dd>
                         </dl>
