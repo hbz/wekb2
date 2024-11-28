@@ -589,9 +589,9 @@ Vendor.ElectronicDeliveryDelay;EDI;EDI;EDI
 YN;No;No;No
 YN;Yes;Yes;Yes
 UYNP;Unavailable;Unavailable;Unavailable
-UYNP;Yes;Yes;Yes
-UYNP;No;No;No
-UYNP;Partially;Partially;Partially
+UYNP;Yes;Compliant;Compliant
+UYNP;No;Not Compliant;Not Compliant
+UYNP;Partially;Partially Compliant;Partially Compliant
 UYN;Unavailable;Not Available;Not Available
 UYN;Yes;Yes;Yes
 UYN;No;No;No
