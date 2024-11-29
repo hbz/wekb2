@@ -269,8 +269,11 @@ class KbartProcessService {
                                                 updateTipp.status = RDStore.KBC_STATUS_CURRENT
                                                 setTippsNotToDeleted << updateTipp.id
                                             }
-                                            if(updateTipp) {
+                                            if(updateTipp && (autoUpdateResultTipp.removedTipp || autoUpdateResultTipp.changedTipp)) {
                                                 updateTipp.lastUpdated = new Date()
+                                            }
+
+                                            if(updateTipp) {
                                                 updateTipp = updateTipp.save()
                                                 tippsFound.add(updateTipp.id)
                                             }
@@ -599,11 +602,11 @@ class KbartProcessService {
             UpdatePackageInfo.withTransaction {
 
                 Package aPackage = Package.get(updatePackageInfo.pkg.id)
-                if (aPackage.status != status_deleted) {
-                    aPackage.lastUpdated = new Date()
-                    aPackage.lastUpdateComment = "Updated package with ${kbartRowsCount} Title. (Titles in we:kb previously: ${previouslyTipps}, Titles in we:kb now: ${countExistingTippsAfterImport}, Removed Titles: ${removedTipps}, New Titles in we:kb: ${newTipps})"
-                    aPackage.save()
-                }
+
+                aPackage.lastUpdated = new Date()
+                aPackage.lastUpdateComment = "Updated package with ${kbartRowsCount} Title. (Titles in we:kb previously: ${previouslyTipps}, Titles in we:kb now: ${countExistingTippsAfterImport}, Removed Titles: ${removedTipps}, New Titles in we:kb: ${newTipps})"
+                aPackage.save()
+
 
                 if (aPackage.kbartSource && updatePackageInfo.automaticUpdate) {
                     KbartSource src = KbartSource.get(aPackage.kbartSource.id)

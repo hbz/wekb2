@@ -16,7 +16,7 @@ class CheckMyInfosService {
         curatoryGroups.each { CuratoryGroup curatoryGroup ->
 
             curatoryGroup.providedOrgs.each { Org org ->
-                if(org.contacts.size() == 0){
+                if(org.status == RDStore.KBC_STATUS_CURRENT && org.contacts.size() == 0){
                     orgListWithoutContacts << org
                 }
             }
@@ -33,7 +33,7 @@ class CheckMyInfosService {
         curatoryGroups.each { CuratoryGroup curatoryGroup ->
 
             curatoryGroup.providedPackages.each { Package pkg ->
-                if(pkg.kbartSource && pkg.getTippCountWithoutRemoved() == 0){
+                if(pkg.status in [RDStore.KBC_STATUS_CURRENT, RDStore.KBC_STATUS_RETIRED, RDStore.KBC_STATUS_EXPECTED] && pkg.kbartSource && pkg.getTippCountWithoutRemoved() == 0){
                     packageWithoutTitle << pkg
                 }
             }
@@ -49,7 +49,7 @@ class CheckMyInfosService {
         curatoryGroups.each { CuratoryGroup curatoryGroup ->
 
             curatoryGroup.providedPackages.each { Package pkg ->
-                if(!pkg.kbartSource){
+                if(pkg.status in [RDStore.KBC_STATUS_CURRENT, RDStore.KBC_STATUS_RETIRED, RDStore.KBC_STATUS_EXPECTED] && !pkg.kbartSource){
                     packageWithoutSource << pkg
                 }
             }
@@ -72,7 +72,7 @@ class CheckMyInfosService {
         List<Package> packageWithoutTitle = []
         curatoryGroups.each { CuratoryGroup curatoryGroup ->
             curatoryGroup.providedPackages.each { Package pkg ->
-                if(pkg.tippCountWithoutRemoved > 0 && (TitleInstancePackagePlatform.executeQuery(query, [status: status, pkg: pkg, daysBefore: dateFor30Days])[0] == 0)){
+                if(pkg.status in [RDStore.KBC_STATUS_CURRENT, RDStore.KBC_STATUS_RETIRED, RDStore.KBC_STATUS_EXPECTED] && pkg.tippCountWithoutRemoved > 0 && (TitleInstancePackagePlatform.executeQuery(query, [status: status, pkg: pkg, daysBefore: dateFor30Days])[0] == 0)){
                    packageWithoutTitle << pkg
                 }
             }
@@ -95,7 +95,7 @@ class CheckMyInfosService {
         List<Package> packageWithoutTitle = []
         curatoryGroups.each { CuratoryGroup curatoryGroup ->
             curatoryGroup.providedPackages.each { Package pkg ->
-                if(pkg.kbartSource && pkg.kbartSource.automaticUpdates && pkg.tippCountWithoutRemoved > 0 && (TitleInstancePackagePlatform.executeQuery(query, [status: status, pkg: pkg, daysBefore: dateFor30Days])[0] == 0)){
+                if(pkg.status in [RDStore.KBC_STATUS_CURRENT, RDStore.KBC_STATUS_RETIRED, RDStore.KBC_STATUS_EXPECTED] && pkg.kbartSource && pkg.kbartSource.automaticUpdates && pkg.tippCountWithoutRemoved > 0 && (TitleInstancePackagePlatform.executeQuery(query, [status: status, pkg: pkg, daysBefore: dateFor30Days])[0] == 0)){
                     packageWithoutTitle << pkg
                 }
             }
@@ -111,7 +111,7 @@ class CheckMyInfosService {
         curatoryGroups.each { CuratoryGroup curatoryGroup ->
 
             curatoryGroup.providedPackages.each { Package pkg ->
-                if(pkg.getTippCountWithoutRemoved() == 0){
+                if(pkg.status in [RDStore.KBC_STATUS_CURRENT, RDStore.KBC_STATUS_RETIRED, RDStore.KBC_STATUS_EXPECTED] && pkg.getTippCountWithoutRemoved() == 0){
                     packagesWithoutTitles << pkg
                 }
             }
@@ -126,7 +126,7 @@ class CheckMyInfosService {
         curatoryGroups.each { CuratoryGroup curatoryGroup ->
 
             curatoryGroup.providedPackages.each { Package pkg ->
-                if(pkg.getAnbieterProduktIDs().isEmpty()){
+                if(pkg.status == RDStore.KBC_STATUS_CURRENT && pkg.getAnbieterProduktIDs().isEmpty()){
                     packages << pkg
                 }
             }
@@ -141,7 +141,7 @@ class CheckMyInfosService {
         curatoryGroups.each { CuratoryGroup curatoryGroup ->
 
             curatoryGroup.providedPackages.each { Package pkg ->
-                if(pkg.contentType == null){
+                if(pkg.status == RDStore.KBC_STATUS_CURRENT && pkg.contentType == null){
                     packages << pkg
                 }
             }
