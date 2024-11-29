@@ -188,8 +188,7 @@
                                 <g:elseif test="${c.link != null && c.value && c.value != '-Empty-'}">
                                     <g:link controller="resource"
                                             action="show"
-                                            id="${c.link}"
-                                                test="test">
+                                            id="${c.link}">
                                         <g:render template="/search/qbevalue" model="[c: c]"/>
                                     </g:link>
 
