@@ -192,7 +192,7 @@
                     <div class="description">
                         <dl>
                             <dt class="ui header wekb-header">Accessibility requirements according to
-                                <g:link url="https://www.barrierefreiheit-dienstekonsolidierung.bund.de/Webs/PB/DE/gesetze-und-richtlinien/en301549/en301549-node.html"
+                                <g:link url="https://www.etsi.org/deliver/etsi_en/301500_301599/301549/03.02.01_60/en_301549v030201p.pdf"
                                         target="_blank">
                                     EN 301549
                                 </g:link>
@@ -259,7 +259,7 @@
                     <div class="description">
                         <dl>
                             <dt class="ui header wekb-header">Accessibility requirements according to
-                                <g:link url="https://www.barrierefreiheit-dienstekonsolidierung.bund.de/Webs/PB/DE/gesetze-und-richtlinien/en301549/en301549-node.html"
+                                <g:link url="https://www.etsi.org/deliver/etsi_en/301500_301599/301549/03.02.01_60/en_301549v030201p.pdf"
                                         target="_blank">
                                     EN 301549
                                 </g:link>
