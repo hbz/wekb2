@@ -192,17 +192,18 @@
                     <div class="description">
                         <dl>
                             <dt class="ui header wekb-header">Accessibility requirements according to
-                                <g:link url="https://www.barrierefreiheit-dienstekonsolidierung.bund.de/Webs/PB/DE/gesetze-und-richtlinien/en301549/en301549-node.html"
+                                <g:link url="https://www.etsi.org/deliver/etsi_en/301500_301599/301549/03.02.01_60/en_301549v030201p.pdf"
                                         target="_blank">
                                     EN 301549
                                 </g:link>
+                            of the ...
                             </dt>
                             <dd></dd>
                         </dl>
 
                         <dl>
                             <dt class="control-label">
-                                Accessibility of the platform
+                                ... Platform
                             </dt>
                             <dd>
                                 <semui:xEditableRefData owner="${d}" field="accessPlatform"
@@ -212,7 +213,7 @@
                         </dl>
                         <dl>
                             <dt class="control-label">
-                                Accessibility of the audio player
+                                ... Audio player
                             </dt>
                             <dd>
                                 <semui:xEditableRefData owner="${d}" field="playerForAudio"
@@ -221,7 +222,7 @@
                         </dl>
                         <dl>
                             <dt class="control-label">
-                                Accessibility of the video player
+                                ... Video player
                             </dt>
                             <dd>
                                 <semui:xEditableRefData owner="${d}" field="playerForVideo"
@@ -257,80 +258,47 @@
                     <h2 class="ui header">Content on the platform</h2>
                     <div class="description">
                         <dl>
-                            <dt class="ui header wekb-header">eBook</dt>
-                            <dd></dd>
-                        </dl>
-                        <dl>
-                            <dt class="control-label">
-                                Current <g:link url="https://www.w3.org/TR/epub-33/"
-                                                       target="_blank">
-                                    ePub-Standard
-                                </g:link>
-                            </dt>
-                            <dd>
-                                <semui:xEditableRefData owner="${d}" field="ebookEPub" config="${RCConstants.UYN}"/>
-                            </dd>
-                        </dl>
-                        <dl>
-                            <dt class="control-label">
-                                <g:link url="https://www.dnb.de/DE/Professionell/Sammeln/Unkoerperliche_Medienwerke/_content/onix_for_books_2_1_akk.html"
-                                        target="_blank">
-                                    ONIX Metadata to accessibility
-                                </g:link>
-                            </dt>
-                            <dd>
-                                <semui:xEditableRefData owner="${d}" field="onixMetadata" config="${RCConstants.UYN}"/>
-                            </dd>
-                        </dl>
-                        <dl>
-                            <dt class="ui header wekb-header">PDF</dt>
-                            <dd></dd>
-                        </dl>
-                        <dl>
-                            <dt class="control-label">
-                                PDF/UA-Standard  <g:link url="https://www.pdfa.org/wp-content/uploads/2016/08/MatterhornProtokoll_1-02-2016-06-29.pdf"
-                                                              target="_blank">
-                                    (Matterhorn Protocol)
-                                </g:link>
-                            </dt>
-                            <dd>
-                                <semui:xEditableRefData owner="${d}" field="pdfUaStandard" config="${RCConstants.UYN}"/>
-                            </dd>
-                        </dl>
-                        <dl>
-                            <dt class="ui header wekb-header">Video</dt>
-                            <dd></dd>
-                        </dl>
-                        <dl>
-                            <dt class="control-label">
-                                Audio description available
-                            </dt>
-                            <dd>
-                                <semui:xEditableRefData owner="${d}" field="videoAudioDes" config="${RCConstants.UYN}"/>
-                            </dd>
-                        </dl>
-                        <dl>
-                            <dt class="control-label">
-                                Subtitles available
-                            </dt>
-                            <dd>
-                                <semui:xEditableRefData owner="${d}" field="videoSubTitles" config="${RCConstants.UYN}"/>
-                            </dd>
-                        </dl>
-                        <dl>
-                            <dt class="ui header wekb-header">Database</dt>
-                            <dd></dd>
-                        </dl>
-                        <dl>
-                            <dt class="control-label">
-                                Accessibility according to
-                                <g:link url="https://www.barrierefreiheit-dienstekonsolidierung.bund.de/Webs/PB/DE/gesetze-und-richtlinien/en301549/en301549-node.html"
+                            <dt class="ui header wekb-header">Accessibility requirements according to
+                                <g:link url="https://www.etsi.org/deliver/etsi_en/301500_301599/301549/03.02.01_60/en_301549v030201p.pdf"
                                         target="_blank">
                                     EN 301549
                                 </g:link>
+                                of the ...
+                            </dt>
+                            <dd></dd>
+                        </dl>
+                        <dl>
+                            <dt class="control-label">
+                                ... EPUB e-books
                             </dt>
                             <dd>
-                                <semui:xEditableRefData owner="${d}" field="databaseBarrierFree" config="${RCConstants.UYN}"/>
+                                <semui:xEditableRefData owner="${d}" field="ebookEPub" config="${RCConstants.UYNP}"/>
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt class="control-label">
+                                ... PDF e-books
+                            </dt>
+                            <dd>
+                                <semui:xEditableRefData owner="${d}" field="pdfUaStandard" config="${RCConstants.UYNP}"/>
+                            </dd>
+                        </dl>
+
+                        <dl>
+                            <dt class="control-label">
+                                ... Videos
+                            </dt>
+                            <dd>
+                                <semui:xEditableRefData owner="${d}" field="videoAudioDes" config="${RCConstants.UYNP}"/>
+                            </dd>
+                        </dl>
+
+                        <dl>
+                            <dt class="control-label">
+                                ... Databases
+                            </dt>
+                            <dd>
+                                <semui:xEditableRefData owner="${d}" field="databaseBarrierFree" config="${RCConstants.UYNP}"/>
                             </dd>
                         </dl>
 
