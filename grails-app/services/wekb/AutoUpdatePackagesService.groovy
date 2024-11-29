@@ -17,7 +17,7 @@ import java.util.concurrent.Future
 @Transactional
 class AutoUpdatePackagesService {
 
-    static final THREAD_POOL_SIZE = 5
+    static final THREAD_POOL_SIZE = 1
     public static boolean running = false;
     Map result = [result: JobResult.STATUS_SUCCESS]
     ExportService exportService

@@ -1892,7 +1892,7 @@ class Api2Service {
             principalRows.eachWithIndex { GroovyRowResult row, int i ->
                 //long startInner = System.currentTimeMillis()
                 row['sortname'] = generateSortName(row['name'])
-                if(row.containsKey('publicationType') && row['publicationType'] == RDStore.TIPP_PUBLIC_TYPE_SERIAL.id) {
+                if(row.containsKey('publicationType') && row['publicationType'] == RDStore.TIPP_PUBLIC_TYPE_SERIAL.value) {
                     row['coverage'] = coverageMap.get(row['tipp_id'])
                 }
                 if(!params.containsKey('stubOnly')) {
