@@ -1487,12 +1487,11 @@ class Api2Service {
                 result.accessPlatform = object.accessPlatform?.value
                 result.playerForAudio = object.playerForAudio?.value
                 result.playerForVideo = object.playerForVideo?.value
-                result.ebookEPub = object.ebookEPub?.value
+                result.accessEPub = object.accessEPub?.value
                 result.onixMetadata = object.onixMetadata?.value
-                result.pdfUaStandard = object.pdfUaStandard?.value
-                result.videoAudioDes = object.videoAudioDes?.value
-                result.videoSubTitles = object.videoSubTitles?.value
-                result.databaseBarrierFree = object.databaseBarrierFree?.value
+                result.accessPdf = object.accessPdf?.value
+                result.accessVideo = object.accessVideo?.value
+                result.accessDatabase = object.accessDatabase?.value
                 result.accessibilityStatementAvailable = object.accessibilityStatementAvailable?.value
                 result.accessibilityStatementUrl = object.accessibilityStatementUrl
 
