@@ -168,7 +168,7 @@ class KbartSource extends AbstractBase implements Auditable {
                 //println("today: "+today)
                 LocalDateTime due = getUpdateDay(interval, false)
                 //println("due: "+due)
-                if (today == due.toLocalDate()) {
+                if (due && today == due.toLocalDate()) {
                     //println('true')
                     return true
                 }else {
@@ -341,7 +341,7 @@ class KbartSource extends AbstractBase implements Auditable {
         }
 
         LocalDateTime nextDay = todays.with(TemporalAdjusters.firstDayOfYear())
-        LocalDateTime lastDayOfYear = todays.with(TemporalAdjusters.lastDayOfYear()).toLocalDate().atTime(23,59,59);
+        LocalDateTime lastDayOfYear = todays.plusYears(2).with(TemporalAdjusters.firstDayOfYear())
 
         while (nextDay.isBefore(lastDayOfYear)) {
             updateDays << nextDay
@@ -361,7 +361,7 @@ class KbartSource extends AbstractBase implements Auditable {
         }
 
         LocalDateTime nextDay = todays.with(TemporalAdjusters.firstDayOfYear())
-        LocalDateTime lastDayOfYear = todays.with(TemporalAdjusters.lastDayOfYear()).toLocalDate().atTime(23,59,59);
+        LocalDateTime lastDayOfYear = todays.plusYears(2).with(TemporalAdjusters.firstDayOfYear())
 
         while (nextDay.isBefore(lastDayOfYear)) {
             updateDays << nextDay
@@ -380,7 +380,7 @@ class KbartSource extends AbstractBase implements Auditable {
         }
 
         LocalDateTime firstDayofMonth = todays.with(TemporalAdjusters.firstDayOfYear())
-        LocalDateTime lastDayOfYear = todays.with(TemporalAdjusters.lastDayOfYear())
+        LocalDateTime lastDayOfYear = todays.plusYears(2).with(TemporalAdjusters.firstDayOfYear())
 
         while (firstDayofMonth.isBefore(lastDayOfYear)) {
             firstDayofMonth = firstDayofMonth.with(TemporalAdjusters.firstDayOfMonth())
