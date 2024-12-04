@@ -48,6 +48,9 @@ class BootStrapService {
 
         setRefDatas()
 
+        log.debug("reorderRefdata ..")
+        refdataReorderService.reorderRefdata()
+
         log.info("Ensure default Identifier namespaces")
         def namespaces = [
                 [value: 'cup', name: 'cup', targetType: 'TitleInstancePackagePlatform'],
@@ -94,8 +97,6 @@ class BootStrapService {
                 [value: 'crossref funder id', name: 'Crossref Funder ID', targetType: 'Org'],
 
         ]
-        log.debug("reorderRefdata ..")
-        refdataReorderService.reorderRefdata()
 
         namespaces.each { ns ->
             RefdataValue targetType = RefdataValue.findByValueAndOwner(ns.targetType, RefdataCategory.findByDesc(RCConstants.IDENTIFIER_NAMESPACE_TARGET_TYPE))
