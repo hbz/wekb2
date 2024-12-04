@@ -13,8 +13,6 @@ class RefdataReorderService {
 
     /**
      * This bootstrapped method should capsule every reordering queries so that no manual database migration scripts needs to be executed
-     * !!! Be careful when using rdv.order.
-     * This overwrites the sorting, so it may be sorted according to German values. Then the display is wrongly sorted in English!!!
      */
     void reorderRefdata() {
         // UYNP: Yes, Partially, No and Unavailable
