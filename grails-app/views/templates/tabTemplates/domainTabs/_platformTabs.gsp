@@ -309,10 +309,3 @@
     </semui:tabsItemContent>
 
 </g:if>
-<wekb:script>
-    $('.dropdown')
-  .dropdown({
-    sortSelect: 'natural'
-  })
-;
-</wekb:script>
