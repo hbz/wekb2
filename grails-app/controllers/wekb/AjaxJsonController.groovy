@@ -107,7 +107,7 @@ class AjaxJsonController {
             result.add([text: 'Yes', value: 1])
             result.add([text: 'No', value: 0])
         } else if (params.id) {
-            List rq = RefdataValue.executeQuery('select rdv from RefdataValue as rdv where rdv.owner.desc = :desc order by rdv.value asc, rdv.description asc', [desc: params.id], [max: 400, offset: 0]);
+            List rq = RefdataValue.executeQuery('select rdv from RefdataValue as rdv where rdv.owner.desc = :desc order by rdv.order asc, rdv.value asc, rdv.description asc', [desc: params.id], [max: 400, offset: 0]);
 
             if (!params.required) {
                 result.add([id: '', text: '', value: '']);
