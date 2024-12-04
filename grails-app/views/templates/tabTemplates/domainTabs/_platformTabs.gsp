@@ -192,7 +192,7 @@
                     <div class="description">
                         <dl>
                             <dt class="ui header wekb-header">Accessibility requirements according to
-                                <g:link url="https://www.etsi.org/deliver/etsi_en/301500_301599/301549/03.02.01_60/en_301549v030201p.pdf"
+                                <g:link url="https://accessible-eu-centre.ec.europa.eu/content-corner/digital-library/en-3015492021-accessibility-requirements-ict-products-and-services_en"
                                         target="_blank">
                                     EN 301549
                                 </g:link>
@@ -259,7 +259,7 @@
                     <div class="description">
                         <dl>
                             <dt class="ui header wekb-header">Accessibility requirements according to
-                                <g:link url="https://www.etsi.org/deliver/etsi_en/301500_301599/301549/03.02.01_60/en_301549v030201p.pdf"
+                                <g:link url="https://accessible-eu-centre.ec.europa.eu/content-corner/digital-library/en-3015492021-accessibility-requirements-ict-products-and-services_en"
                                         target="_blank">
                                     EN 301549
                                 </g:link>
