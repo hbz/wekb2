@@ -16,6 +16,8 @@ import javax.servlet.http.HttpServletRequest
 @Transactional
 class BootStrapService {
 
+    RefdataReorderService refdataReorderService
+
     GrailsApplication grailsApplication
     ComponentStatisticService ComponentStatisticService
     ESWrapperService ESWrapperService
@@ -45,6 +47,9 @@ class BootStrapService {
         }
 
         setRefDatas()
+
+        log.debug("reorderRefdata ..")
+        refdataReorderService.reorderRefdata()
 
         log.info("Ensure default Identifier namespaces")
         def namespaces = [
