@@ -2,7 +2,9 @@
     <div class="content wekb-inline-lists">
         <dl>
             <dt class="control-label">Value</dt>
-            <semui:xEditable owner="${d}" field="value"/>
+            <dd>
+                <semui:xEditable owner="${d}" field="value"/>
+            </dd>
         </dl>
 
         <dl>
@@ -11,6 +13,7 @@
             </dt>
             <dd>
                 <semui:xEditable owner="${d}" field="value_en"/>
+            </dd>
         </dl>
 
         <dl>
@@ -19,6 +22,7 @@
             </dt>
             <dd>
                 <semui:xEditable owner="${d}" field="value_de"/>
+            </dd>
         </dl>
 
         <dl>
@@ -27,6 +31,7 @@
             </dt>
             <dd>
                 <semui:xEditable owner="${d}" field="description"/>
+            </dd>
         </dl>
 
 
@@ -36,6 +41,7 @@
             </dt>
             <dd>
                 <semui:xEditableBoolean owner="${d}" field="isHardData" overwriteEditable="false"/>
+            </dd>
         </dl>
         <dl>
             <dt class="control-label">Refdata Category</dt>
