@@ -24540,6 +24540,10 @@ em[data-emoji="regional_indicator_a"]::before {
 /*******************************
              Emojis
 *******************************/
+
+/*******************************
+         Site Overrides
+*******************************/
 /*!
  * # Fomantic-UI 2.9.3 - Flag
  * https://github.com/fomantic/Fomantic-UI/
@@ -41756,7 +41760,7 @@ ol.ui.suffixed.list li::before,
 }
 
 /*******************************
-    User Variable Overrides
+         Site Overrides
 *******************************/
 /*!
  * # Fomantic-UI 2.9.3 - Loader
@@ -52908,7 +52912,7 @@ Floated Menu / Item
 *******************************/
 
 /*******************************
-        Site Overrides
+         Site Overrides
 *******************************/
 /*!
  * # Fomantic-UI 2.9.3 - Table
@@ -57007,6 +57011,41 @@ Floated Menu / Item
   white-space: wrap;
 }
 
+/*---------------------------------------------------------------------------
+  Responsive Table for views with normal tables overrides tables
+----------------------------------------------------------------------------*/
+
+@media only screen and (max-width: 767.98px) {
+  .ui.table > thead {
+    position: absolute;
+    top: -1111px;
+    left: -1111px;
+  }
+
+  .ui.table > tbody > tr .ui.form,
+  .ui.table > tbody > tr .field {
+    display: inline-block;
+  }
+
+  .ui.table > tbody > tr > [class*="center aligned"] {
+    text-align: left!important;
+  }
+
+  .ui.table > tbody > tr > td:before {
+    padding: 0 10px 0 0;
+    content: attr(data-label);
+    font-weight: bold;
+  }
+
+  .ui.table > tbody > tr > td .la-flexbox {
+    display: inline-flex;
+  }
+
+  .ui.table > tbody > tr > td:nth-child(1) {
+    font-weight: bold;
+  }
+}
+
 /*******************************
          Site Overrides
 *******************************/
@@ -57296,7 +57335,7 @@ Floated Menu / Item
 *******************************/
 
 /*******************************
-    User Variable Overrides
+         Site Overrides
 *******************************/
 /*!
  * # Fomantic-UI 2.9.3 - Card
@@ -59444,7 +59483,7 @@ a.inverted.ui.card:hover,
 *******************************/
 
 /*******************************
-    User Variable Overrides
+         Site Overrides
 *******************************/
 /*!
  * # Fomantic-UI 2.9.3 - Comment
@@ -59761,7 +59800,7 @@ a.inverted.ui.card:hover,
 *******************************/
 
 /*******************************
-    User Variable Overrides
+         Site Overrides
 *******************************/
 /*!
  * # Fomantic-UI 2.9.3 - Feed
@@ -60700,7 +60739,7 @@ a.inverted.ui.card:hover,
 *******************************/
 
 /*******************************
-    User Variable Overrides
+         Site Overrides
 *******************************/
 /*!
  * # Fomantic-UI 2.9.3 - Item
@@ -61331,7 +61370,7 @@ a.inverted.ui.card:hover,
 }
 
 /*******************************
-    User Variable Overrides
+         Site Overrides
 *******************************/
 /*!
  * # Fomantic-UI 2.9.3 - Statistic
@@ -62009,7 +62048,7 @@ a.inverted.ui.card:hover,
 *******************************/
 
 /*******************************
-    User Variable Overrides
+         Site Overrides
 *******************************/
 /*!
  * # Fomantic-UI 2.9.3 - Accordion
@@ -62806,6 +62845,10 @@ a.inverted.ui.card:hover,
 
 /*******************************
          Theme Overrides
+*******************************/
+
+/*******************************
+        User Overrides
 *******************************/
 /*!
  * # Fomantic-UI 2.9.3 - Checkbox
@@ -68157,6 +68200,10 @@ a.ui.nag {
 /*******************************
          Theme Overrides
 *******************************/
+
+/*******************************
+         Site Overrides
+*******************************/
 /*!
  * # Fomantic-UI 2.9.3 - Popup
  * https://github.com/fomantic/Fomantic-UI/
@@ -71329,6 +71376,10 @@ a.ui.nag {
 /*******************************
         Slider Overrides
 *******************************/
+
+/*******************************
+        User Overrides
+*******************************/
 /*!
  * # Fomantic-UI 2.9.3 - Rating
  * https://github.com/fomantic/Fomantic-UI/
@@ -73529,6 +73580,10 @@ span.ui.massive.text {
 /*******************************
          Theme Overrides
 *******************************/
+
+/*******************************
+         Site Overrides
+*******************************/
 /*!
  * # Fomantic-UI 2.9.3 - Toast
  * https://github.com/fomantic/Fomantic-UI/
@@ -74453,6 +74508,10 @@ span.ui.massive.text {
 
 /*******************************
          Theme Overrides
+*******************************/
+
+/*******************************
+        User Overrides
 *******************************/
 /*!
  * # Fomantic-UI 2.9.3 - Transition
