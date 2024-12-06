@@ -20,6 +20,8 @@
 
 //=require modules/paginationNavi.js
 
+//=require modules/responsiveTables.js
+
 console.log('+ wekb.js')
 
 
@@ -27,6 +29,7 @@ $(function () {
 
     verticalNavi.go();
     paginationNavi.go();
+    responsiveTables.go();
 
     $('.ui.sticky')
         .sticky({
