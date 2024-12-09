@@ -183,8 +183,8 @@ class WorkflowService {
                     component.save(failOnError: true)
                 }
                 catch (Exception e) {
+                    log.error("objectMethod: ${method_config[1]} -> " + e.message)
                     e.printStackTrace()
-                    log.error("objectMethod: ${method_config[1]} -> " + e.printStackTrace())
                 }
                 break
             case "workFlowSetStatus":

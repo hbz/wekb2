@@ -668,7 +668,8 @@ class CreateComponentService {
                     if(pkg && newCreated){
                         deletionService.expungePkg(pkg.id)
                     }
-                    log.error("Error on package with the name '${name}':" + e.printStackTrace())
+                    log.error("Error on package with the name '${name}':" + e.message)
+                    e.printStackTrace()
                     globalErrors << "Error on package with the name '${name}'. Please try agian!"
                 }
             }

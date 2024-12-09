@@ -63,7 +63,8 @@ class KbartProcessService {
             }
 
         } catch (Exception exception) {
-            log.error("Error by kbartImportManual: ${exception.message}" + exception.printStackTrace())
+            log.error("Error by kbartImportManual: ${exception.message}")
+            e.printStackTrace()
             UpdatePackageInfo.withTransaction {
                 //UpdatePackageInfo updatePackageFail = new UpdatePackageInfo()
                 updatePackageInfo.description = "An error occurred while processing the KBART file. More information can be seen in the system log."
@@ -205,155 +206,164 @@ class KbartProcessService {
                     List kbartRowsToProcess = kbartRows.drop(offset).take(max)
                     for (def kbartRow : kbartRowsToProcess) {
                         idx++
-                        def currentTippError = [index: idx]
-                        log.info("kbartImportProcess (#$idx of $kbartImportProcessInfo): title ${kbartRow.publication_title}")
-                        if (!invalidKbartRowsForTipps.contains(kbartRow.rowIndex)) {
+                        try {
+                            def currentTippError = [index: idx]
+                            log.info("kbartImportProcess (#$idx of $kbartImportProcessInfo): title ${kbartRow.publication_title}")
+                            if (!invalidKbartRowsForTipps.contains(kbartRow.rowIndex)) {
 
-                            kbartRow.pkg = pkg
-                            kbartRow.nominalPlatform = plt
-                            try {
+                                kbartRow.pkg = pkg
+                                kbartRow.nominalPlatform = plt
+                                try {
 
-                                Map tippErrorMap = [:]
-                                def validation_result = kbartImportValidationService.tippValidateForKbart(kbartRow)
-                                if (!validation_result.valid) {
-                                    if (!invalidKbartRowsForTipps.contains(kbartRow.rowIndex)) {
-                                        invalidKbartRowsForTipps << kbartRow.rowIndex
+                                    Map tippErrorMap = [:]
+                                    def validation_result = kbartImportValidationService.tippValidateForKbart(kbartRow)
+                                    if (!validation_result.valid) {
+                                        if (!invalidKbartRowsForTipps.contains(kbartRow.rowIndex)) {
+                                            invalidKbartRowsForTipps << kbartRow.rowIndex
 
-                                        UpdateTippInfo updateTippInfo = new UpdateTippInfo(
-                                                description: validation_result.errorMessage,
-                                                tipp: null,
-                                                startTime: new Date(),
-                                                endTime: new Date(),
-                                                status: RDStore.UPDATE_STATUS_FAILED,
-                                                type: RDStore.UPDATE_TYPE_FAILED_TITLE,
-                                                oldValue: '',
-                                                newValue: '',
-                                                tippProperty: '',
-                                                updatePackageInfo: updatePackageInfo
-                                        ).save()
-                                    }
-                                    log.debug("TIPP Validation failed on ${kbartRow.publication_title}")
-                                    /* def tipp_error = [
+                                            UpdateTippInfo updateTippInfo = new UpdateTippInfo(
+                                                    description: validation_result.errorMessage,
+                                                    tipp: null,
+                                                    startTime: new Date(),
+                                                    endTime: new Date(),
+                                                    status: RDStore.UPDATE_STATUS_FAILED,
+                                                    type: RDStore.UPDATE_TYPE_FAILED_TITLE,
+                                                    oldValue: '',
+                                                    newValue: '',
+                                                    tippProperty: '',
+                                                    updatePackageInfo: updatePackageInfo
+                                            ).save()
+                                        }
+                                        log.debug("TIPP Validation failed on ${kbartRow.publication_title}")
+                                        /* def tipp_error = [
                                              message: validation_result.errorMessage,
                                              baddata: kbartRow
                                      ]
                                      tippErrorMap = tipp_error*/
-                                } else {
-                                    /*if (validation_result.errors?.size() > 0) {
+                                    } else {
+                                        /*if (validation_result.errors?.size() > 0) {
                                                                 tippErrorMap.putAll(validation_result.errors)
                                                             }*/
-                                    TitleInstancePackagePlatform updateTipp = null
-                                    try {
-                                        Map autoUpdateResultTipp = kbartImportService.tippImportForUpdate(kbartRow, tippsWithCoverage, tippDuplicates, updatePackageInfo, kbartRowsToCreateTipps)
+                                        TitleInstancePackagePlatform updateTipp = null
+                                        try {
+                                            Map autoUpdateResultTipp = kbartImportService.tippImportForUpdate(kbartRow, tippsWithCoverage, tippDuplicates, updatePackageInfo, kbartRowsToCreateTipps)
 
-                                        kbartRowsToCreateTipps = autoUpdateResultTipp.kbartRowsToCreateTipps
-                                        tippsWithCoverage = autoUpdateResultTipp.tippsWithCoverage
-                                        tippDuplicates = autoUpdateResultTipp.tippDuplicates
+                                            kbartRowsToCreateTipps = autoUpdateResultTipp.kbartRowsToCreateTipps
+                                            tippsWithCoverage = autoUpdateResultTipp.tippsWithCoverage
+                                            tippDuplicates = autoUpdateResultTipp.tippDuplicates
 
-                                        if (autoUpdateResultTipp.updatePackageInfo) {
-                                            updatePackageInfo = autoUpdateResultTipp.updatePackageInfo
-                                        }
-
-                                        if (!autoUpdateResultTipp.newTipp) {
-                                            updateTipp = autoUpdateResultTipp.tippObject
-
-                                            if (autoUpdateResultTipp.removedTipp) {
-                                                removedTipps++
+                                            if (autoUpdateResultTipp.updatePackageInfo) {
+                                                updatePackageInfo = autoUpdateResultTipp.updatePackageInfo
                                             }
 
-                                            if (autoUpdateResultTipp.changedTipp) {
-                                                changedTipps++
-                                            }
+                                            if (!autoUpdateResultTipp.newTipp) {
+                                                updateTipp = autoUpdateResultTipp.tippObject
 
-                                            if (setAllTippsNotInKbartToDeleted && updateTipp && updateTipp.status != RDStore.KBC_STATUS_CURRENT) {
-                                                updateTipp.status = RDStore.KBC_STATUS_CURRENT
-                                                setTippsNotToDeleted << updateTipp.id
-                                            }
-                                            if(updateTipp && (autoUpdateResultTipp.removedTipp || autoUpdateResultTipp.changedTipp)) {
-                                                updateTipp.lastUpdated = new Date()
-                                            }
-
-                                            if(updateTipp) {
-                                                updateTipp = updateTipp.save()
-                                                tippsFound.add(updateTipp.id)
-                                            }
-                                        }
-
-                                    }
-                                    catch (grails.validation.ValidationException ve) {
-                                        if (!invalidKbartRowsForTipps.contains(kbartRow.rowIndex)) {
-                                            if (updateTipp) {
-                                                invalidKbartRowsForTipps << kbartRow.rowIndex
-                                                UpdateTippInfo.withTransaction {
-                                                    updatePackageInfo.refresh()
-                                                    UpdateTippInfo updateTippInfo = new UpdateTippInfo(
-                                                            description: "An error occurred while processing the title: ${kbartRow.publication_title}. Check KBART row of this title.",
-                                                            tipp: updateTipp,
-                                                            startTime: new Date(),
-                                                            endTime: new Date(),
-                                                            status: RDStore.UPDATE_STATUS_FAILED,
-                                                            type: RDStore.UPDATE_TYPE_FAILED_TITLE,
-                                                            oldValue: '',
-                                                            newValue: '',
-                                                            tippProperty: '',
-                                                            updatePackageInfo: updatePackageInfo
-                                                    ).save()
+                                                if (autoUpdateResultTipp.removedTipp) {
+                                                    removedTipps++
                                                 }
-                                                updateTipp.discard()
-                                            }
-                                        }
-                                        log.error("ValidationException attempting to cross reference the title: ${kbartRow.publication_title} with TIPP ${updateTipp?.id}:", ve.printStackTrace())
-                                        /*tippErrorMap.putAll(messageService.processValidationErrors(ve.errors))*/
-                                    }
-                                    catch (Exception ge) {
-                                        if (!invalidKbartRowsForTipps.contains(kbartRow.rowIndex)) {
-                                            if (updateTipp) {
-                                                invalidKbartRowsForTipps << kbartRow.rowIndex
-                                                UpdateTippInfo.withTransaction {
-                                                    updatePackageInfo.refresh()
-                                                    UpdateTippInfo updateTippInfo = new UpdateTippInfo(
-                                                            description: "An error occurred while processing the title: ${kbartRow.publication_title}. Check KBART row of this title.",
-                                                            tipp: updateTipp,
-                                                            startTime: new Date(),
-                                                            endTime: new Date(),
-                                                            status: RDStore.UPDATE_STATUS_FAILED,
-                                                            type: RDStore.UPDATE_TYPE_FAILED_TITLE,
-                                                            oldValue: '',
-                                                            newValue: '',
-                                                            tippProperty: '',
-                                                            updatePackageInfo: updatePackageInfo
-                                                    ).save()
+
+                                                if (autoUpdateResultTipp.changedTipp) {
+                                                    changedTipps++
                                                 }
-                                                updateTipp.discard()
+
+                                                if (setAllTippsNotInKbartToDeleted && updateTipp && updateTipp.status != RDStore.KBC_STATUS_CURRENT) {
+                                                    updateTipp.status = RDStore.KBC_STATUS_CURRENT
+                                                    setTippsNotToDeleted << updateTipp.id
+                                                }
+                                                if (updateTipp && (autoUpdateResultTipp.removedTipp || autoUpdateResultTipp.changedTipp)) {
+                                                    updateTipp.lastUpdated = new Date()
+                                                }
+
+                                                if (updateTipp) {
+                                                    updateTipp = updateTipp.save()
+                                                    tippsFound.add(updateTipp.id)
+                                                }
                                             }
+
                                         }
-                                        log.error("Exception attempting to cross reference TIPP:", ge.printStackTrace())
-                                        /*                                      def tipp_error = [
+                                        catch (grails.validation.ValidationException ve) {
+                                            if (!invalidKbartRowsForTipps.contains(kbartRow.rowIndex)) {
+                                                if (updateTipp) {
+                                                    invalidKbartRowsForTipps << kbartRow.rowIndex
+                                                    UpdateTippInfo.withTransaction {
+                                                        updatePackageInfo.refresh()
+                                                        UpdateTippInfo updateTippInfo = new UpdateTippInfo(
+                                                                description: "An error occurred while processing the title: ${kbartRow.publication_title}. Check KBART row of this title.",
+                                                                tipp: updateTipp,
+                                                                startTime: new Date(),
+                                                                endTime: new Date(),
+                                                                status: RDStore.UPDATE_STATUS_FAILED,
+                                                                type: RDStore.UPDATE_TYPE_FAILED_TITLE,
+                                                                oldValue: '',
+                                                                newValue: '',
+                                                                tippProperty: '',
+                                                                updatePackageInfo: updatePackageInfo
+                                                        ).save()
+                                                    }
+                                                    updateTipp.discard()
+                                                }
+                                            }
+                                            log.error("ValidationException attempting to cross reference the title: ${kbartRow.publication_title} with TIPP ${updateTipp?.id}:")
+                                            ve.printStackTrace()
+                                            /*tippErrorMap.putAll(messageService.processValidationErrors(ve.errors))*/
+                                        }
+                                        catch (Exception ge) {
+                                            if (!invalidKbartRowsForTipps.contains(kbartRow.rowIndex)) {
+                                                if (updateTipp) {
+                                                    invalidKbartRowsForTipps << kbartRow.rowIndex
+                                                    UpdateTippInfo.withTransaction {
+                                                        updatePackageInfo.refresh()
+                                                        UpdateTippInfo updateTippInfo = new UpdateTippInfo(
+                                                                description: "An error occurred while processing the title: ${kbartRow.publication_title}. Check KBART row of this title.",
+                                                                tipp: updateTipp,
+                                                                startTime: new Date(),
+                                                                endTime: new Date(),
+                                                                status: RDStore.UPDATE_STATUS_FAILED,
+                                                                type: RDStore.UPDATE_TYPE_FAILED_TITLE,
+                                                                oldValue: '',
+                                                                newValue: '',
+                                                                tippProperty: '',
+                                                                updatePackageInfo: updatePackageInfo
+                                                        ).save()
+                                                    }
+                                                    updateTipp.discard()
+                                                }
+                                            }
+                                            log.error("Exception attempting to cross reference TIPP:")
+                                            ge.printStackTrace()
+                                            /*                                      def tipp_error = [
                                                                                       message: messageService.resolveCode('crossRef.package.tipps.error', [kbartRow.publication_title], Locale.ENGLISH),
                                                                                       baddata: kbartRow,
                                                                                       errors : [message: ge.toString()]
                                                                               ]
                                                                               tippErrorMap = tipp_error*/
+                                        }
                                     }
-                                }
 
-                                /*if (tippErrorMap.size() > 0) {
+                                    /*if (tippErrorMap.size() > 0) {
                                     currentTippError.put('tipp', tippErrorMap)
                                 }*/
+                                }
+                                catch (Exception ge) {
+                                    log.error("Exception attempting to cross reference the title: ${kbartRow.publication_title}:")
+                                    ge.printStackTrace()
+                                }
                             }
-                            catch (Exception ge) {
-                                log.error("Exception attempting to cross reference the title: ${kbartRow.publication_title}:", ge.printStackTrace())
-                            }
-                        }
 
-                        /*if (currentTippError.size() > 1) {
+                            /*if (currentTippError.size() > 1) {
                             errors.tipps.add(currentTippError)
                         }*/
 
-                        if (idx % 100 == 0) {
-                            log.info("Clean up");
-                            cleanupService.cleanUpGorm()
+                            if (idx % 100 == 0) {
+                                log.info("Clean up");
+                                cleanupService.cleanUpGorm()
+                            }
+                        } catch (Exception ge) {
+                            log.error("Error: kbartImportProcess (#$idx of $kbartImportProcessInfo): title ${kbartRow.publication_title}")
+                            ge.printStackTrace()
                         }
+
                     }
                     sess.flush()
                     sess.clear()
@@ -621,7 +631,8 @@ class KbartProcessService {
              cleanupService.cleanUpGorm()*/
 
         } catch (Exception e) {
-            log.error("Error by kbartImportProcess: ", e.printStackTrace())
+            log.error("Error by kbartImportProcess: ")
+            e.printStackTrace()
             UpdatePackageInfo.withTransaction {
                 updatePackageInfo.refresh()
                 updatePackageInfo.endTime = new Date()
@@ -899,7 +910,8 @@ class KbartProcessService {
                     }
                 }
             } catch (Exception e) {
-                log.error("Error by KbartProcess: ${e.printStackTrace()}")
+                log.error("Error by KbartProcess: ${e.message}")
+                e.printStackTrace()
                 UpdatePackageInfo.withTransaction {
                     updatePackageInfo.refresh()
                     String description = "An error occurred while processing the KBART file. More information can be seen in the system log. "

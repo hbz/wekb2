@@ -78,7 +78,7 @@
 
     <div class="title">
         <i class="dropdown icon"></i>
-        No title changes for more than 30 days by auto update packages: <span class="ui black circular label">${noChangesPackageLast30DaysAutoUpdate.size()}</span>
+        No title changes for more than 30 days in auto update packages: <span class="ui black circular label">${noChangesPackageLast30DaysAutoUpdate.size()}</span>
     </div>
 
     <div class="content">
