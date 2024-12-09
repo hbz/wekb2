@@ -1329,7 +1329,8 @@ class KbartImportService {
                 }
             }
             catch (Exception e) {
-                log.error("createOrUpdateIdentifierForTipp: -> ${kbartProperty} ${newValue}:" + e.printStackTrace())
+                log.error("createOrUpdateIdentifierForTipp: -> ${kbartProperty} ${newValue}:" + e.message)
+                e.printStackTrace()
             }
         }
 
@@ -1902,7 +1903,8 @@ class KbartImportService {
                     ).save()
                 }
             } catch (Exception e) {
-                log.error("createOrUpdatePrice -> kbartProperty ${newValue}:" + e.printStackTrace())
+                log.error("createOrUpdatePrice -> kbartProperty ${newValue}:" + e.message)
+                e.printStackTrace()
             }
 
             if (cp && priceChanged && !result.newTipp) {
@@ -2434,7 +2436,8 @@ class KbartImportService {
             tipp = tipp.save(failOnError: true)
 
         } catch (Exception e) {
-            log.error("KbartImportService tipp.save() error: " + e.printStackTrace())
+            log.error("KbartImportService tipp.save() error: " + e.message)
+            e.printStackTrace()
            /* updatePackageInfo = updatePackageInfo.refresh()
             UpdateTippInfo updateTippInfo = new UpdateTippInfo(
                         description: "Changes in title fail. More information can be seen in the system log.",
@@ -2734,7 +2737,8 @@ class KbartImportService {
                         }
 
                     } catch (Exception e) {
-                        log.error("createTippBatch: -> ${tippMap.kbartRowMap}:" + e.printStackTrace())
+                        log.error("createTippBatch: -> ${tippMap.kbartRowMap}:" + e.message)
+                        e.printStackTrace()
                     }
 
                     /* if (idx % 250 == 0) {

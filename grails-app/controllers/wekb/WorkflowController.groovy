@@ -38,7 +38,7 @@ class WorkflowController{
           result = workflowService.processAction(result, params)
       }catch (Exception e) {
           log.error("Problem by processAction : ${e.message}")
-          println("Problem by processAction : ${e.printStackTrace()}")
+          e.printStackTrace()
           flash.error = "The operation could not be performed. An unexpected error has occurred. Try again later."
       }
 

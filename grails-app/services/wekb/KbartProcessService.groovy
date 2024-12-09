@@ -63,7 +63,8 @@ class KbartProcessService {
             }
 
         } catch (Exception exception) {
-            log.error("Error by kbartImportManual: ${exception.message}" + exception.printStackTrace())
+            log.error("Error by kbartImportManual: ${exception.message}")
+            e.printStackTrace()
             UpdatePackageInfo.withTransaction {
                 //UpdatePackageInfo updatePackageFail = new UpdatePackageInfo()
                 updatePackageInfo.description = "An error occurred while processing the KBART file. More information can be seen in the system log."
@@ -302,7 +303,8 @@ class KbartProcessService {
                                                 updateTipp.discard()
                                             }
                                         }
-                                        log.error("ValidationException attempting to cross reference the title: ${kbartRow.publication_title} with TIPP ${updateTipp?.id}:", ve.printStackTrace())
+                                        log.error("ValidationException attempting to cross reference the title: ${kbartRow.publication_title} with TIPP ${updateTipp?.id}:")
+                                        ve.printStackTrace()
                                         /*tippErrorMap.putAll(messageService.processValidationErrors(ve.errors))*/
                                     }
                                     catch (Exception ge) {
@@ -327,7 +329,8 @@ class KbartProcessService {
                                                 updateTipp.discard()
                                             }
                                         }
-                                        log.error("Exception attempting to cross reference TIPP:", ge.printStackTrace())
+                                        log.error("Exception attempting to cross reference TIPP:")
+                                        ge.printStackTrace()
                                         /*                                      def tipp_error = [
                                                                                       message: messageService.resolveCode('crossRef.package.tipps.error', [kbartRow.publication_title], Locale.ENGLISH),
                                                                                       baddata: kbartRow,
@@ -342,7 +345,8 @@ class KbartProcessService {
                                 }*/
                             }
                             catch (Exception ge) {
-                                log.error("Exception attempting to cross reference the title: ${kbartRow.publication_title}:", ge.printStackTrace())
+                                log.error("Exception attempting to cross reference the title: ${kbartRow.publication_title}:")
+                                ge.printStackTrace()
                             }
                         }
 
@@ -621,7 +625,8 @@ class KbartProcessService {
              cleanupService.cleanUpGorm()*/
 
         } catch (Exception e) {
-            log.error("Error by kbartImportProcess: ", e.printStackTrace())
+            log.error("Error by kbartImportProcess: ")
+            e.printStackTrace()
             UpdatePackageInfo.withTransaction {
                 updatePackageInfo.refresh()
                 updatePackageInfo.endTime = new Date()
@@ -899,7 +904,8 @@ class KbartProcessService {
                     }
                 }
             } catch (Exception e) {
-                log.error("Error by KbartProcess: ${e.printStackTrace()}")
+                log.error("Error by KbartProcess: ${e.message}")
+                e.printStackTrace()
                 UpdatePackageInfo.withTransaction {
                     updatePackageInfo.refresh()
                     String description = "An error occurred while processing the KBART file. More information can be seen in the system log. "

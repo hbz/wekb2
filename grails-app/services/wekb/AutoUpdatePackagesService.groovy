@@ -164,7 +164,8 @@ class AutoUpdatePackagesService {
                                         }
                                     }
                                     catch (Exception e) {
-                                        log.error("Exception by get kbartFromUrl: ${e.printStackTrace()}")
+                                        log.error("Exception by get kbartFromUrl: ${e.message}")
+                                        e.printStackTrace()
                                     }
                                 }
 
@@ -242,7 +243,8 @@ class AutoUpdatePackagesService {
                 }
 
             } catch (Exception exception) {
-                log.error("Error by startAutoPackageUapdate: ${exception.message}" + exception.printStackTrace())
+                log.error("Error by startAutoPackageUapdate: ${exception.message}")
+                exception.printStackTrace()
                 UpdatePackageInfo.withTransaction {
                     //UpdatePackageInfo updatePackageFail = new UpdatePackageInfo()
                     updatePackageInfo.description = "An error occurred while processing the KBART file. More information can be seen in the system log. File from URL: ${lastUpdateURL}"
