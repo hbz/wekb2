@@ -54,7 +54,12 @@ class AutoUpdatePackagesService {
               }*/
             GParsPool.withPool(THREAD_POOL_SIZE) { pool ->
                 packageNeedsUpdate.anyParallel { aPackage ->
-                    startAutoPackageUpdate(aPackage, onlyRowsWithLastChanged)
+                    try {
+                        startAutoPackageUpdate(aPackage, onlyRowsWithLastChanged)
+                    }catch (Exception exception) {
+                        log.error("Error by findPackageToUpdateAndUpdate (${aPackage.id} -> ${aPackage.name}): ${exception.message}")
+                        exception.printStackTrace()
+                    }
                 }
             }
         }
