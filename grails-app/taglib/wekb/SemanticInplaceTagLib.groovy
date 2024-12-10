@@ -245,10 +245,10 @@ class SemanticInplaceTagLib {
             out << 'class="xEditableManyToOne" '
 
             if ((owner != null) && (owner.id != null)) {
-                out << "data-pk=\"${oid}\" "
+                out << " data-pk=\"${oid}\" "
             }
 
-            out << "data-url=\"${update_link}\" "
+            out << " data-url=\"${update_link}\" "
 
             if (attrs.required) {
                 out << " data-required=\"${attrs.required}\" "
