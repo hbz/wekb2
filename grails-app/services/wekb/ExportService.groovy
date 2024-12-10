@@ -115,7 +115,8 @@ class ExportService {
             connection.addRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:123.0) Gecko/20100101 Firefox/123.0")
         }
         catch (IOException e) {
-            log.error("URL Connection was not established." + ${e.printStackTrace()})
+            log.error("URL Connection was not established." + ${e.message})
+            e.printStackTrace()
             if(updatePackageInfo) {
                 UpdatePackageInfo.withTransaction {
                     updatePackageInfo.description = "URL Connection was not established."
@@ -130,7 +131,8 @@ class ExportService {
         try {
             connection.connect()
         } catch (Exception e) {
-            log.error("Problem with connection of Server with kbart source server: ${e.printStackTrace()}")
+            log.error("Problem with connection of Server with kbart source server: ${e.message}")
+            e.printStackTrace()
             if(updatePackageInfo) {
                 UpdatePackageInfo.withTransaction {
                     updatePackageInfo.description = "Problem with connection with kbart source server."
@@ -164,7 +166,8 @@ class ExportService {
                 }
             }
         } catch (Exception e) {
-            log.error("Problem with kbart file of kbart source server: ${e.printStackTrace()}")
+            log.error("Problem with kbart file of kbart source server: ${e.message}")
+            e.printStackTrace()
             if(updatePackageInfo) {
                 UpdatePackageInfo.withTransaction {
                     updatePackageInfo.description = "Problem with kbart file of kbart source server."
@@ -266,7 +269,7 @@ class ExportService {
             outputStream.close()
 
         } catch (Exception e) {
-            e.printStackTrace();
+            e.printStackTrace()
         }
     }
 
