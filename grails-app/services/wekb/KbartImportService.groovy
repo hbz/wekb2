@@ -1689,7 +1689,7 @@ class KbartImportService {
                     }
                 }
             } else if (dataType == 'RefDataValue') {
-                def v = null
+                RefdataValue v = null
                 if (acceptNullValue && (tippMap[kbartProperty] == null || tippMap[kbartProperty] == "") && (tipp[tippProperty] != null && tipp[tippProperty] != "")) {
                     if (!result.newTipp) {
                         valueChanged = true
@@ -1741,9 +1741,11 @@ class KbartImportService {
             }
         }else {
             if (!result.newTipp) {
-                valueChanged = true
                 String oldValue = renderObjectValue(tipp[tippProperty])
-                createUpdateTippInfoByTippChange(tipp, updatePackageInfo, kbartProperty, tippProperty, oldValue, '')
+                if(oldValue != "" || oldValue != null) {
+                    valueChanged = true
+                    createUpdateTippInfoByTippChange(tipp, updatePackageInfo, kbartProperty, tippProperty, oldValue, '')
+                }
             }
             tipp[tippProperty] = null
         }
@@ -1953,8 +1955,8 @@ class KbartImportService {
                                 newValue: newValue
                         ).save()
                     }
+                   priceChanged = true
                 }
-                priceChanged = true
             }
         }
 
