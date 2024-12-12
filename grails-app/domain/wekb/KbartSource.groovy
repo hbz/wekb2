@@ -383,7 +383,7 @@ class KbartSource extends AbstractBase implements Auditable {
         LocalDateTime lastDayOfYear = todays.plusYears(2).with(TemporalAdjusters.firstDayOfYear())
 
         while (firstDayofMonth.isBefore(lastDayOfYear)) {
-            firstDayofMonth = firstDayofMonth.with(TemporalAdjusters.firstDayOfMonth()).plusDays(8)
+            firstDayofMonth = firstDayofMonth.with(TemporalAdjusters.firstDayOfMonth())
             updateDays << firstDayofMonth
             firstDayofMonth = firstDayofMonth.plusMonths(1)
         }
