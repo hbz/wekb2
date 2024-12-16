@@ -88,6 +88,12 @@ class Platform  extends AbstractBase implements Auditable {
   RefdataValue accessPlatform
 
   @RefdataAnnotation(cat = RCConstants.UYNP)
+  RefdataValue viewerForPdf
+
+  @RefdataAnnotation(cat = RCConstants.UYNP)
+  RefdataValue viewerForEpub
+
+  @RefdataAnnotation(cat = RCConstants.UYNP)
   RefdataValue playerForAudio
 
   @RefdataAnnotation(cat = RCConstants.UYNP)
@@ -101,6 +107,9 @@ class Platform  extends AbstractBase implements Auditable {
 
   @RefdataAnnotation(cat = RCConstants.BF_PDF)
   RefdataValue accessPdf
+
+  @RefdataAnnotation(cat = RCConstants.BF_VIDEO)
+  RefdataValue accessAudio
 
   @RefdataAnnotation(cat = RCConstants.BF_VIDEO)
   RefdataValue accessVideo
@@ -165,11 +174,14 @@ class Platform  extends AbstractBase implements Auditable {
     counterR5SushiPlatform column: 'plat_counter_r5_sushi_platform', type: 'text'
 
     accessPlatform column: 'plat_access_platform_fk_rv'
+    viewerForPdf column: 'plat_viewer_for_pdf_fk_rv'
+    viewerForEpub column: 'plat_viewer_for_epub_fk_rv'
     playerForAudio column: 'plat_player_for_audio_fk_rv'
     playerForVideo column: 'plat_player_for_video_fk_rv'
     accessEPub column: 'plat_access_epub_fk_rv'
     onixMetadata column: 'plat_onix_metadata_fk_rv'
     accessPdf column: 'plat_access_pdf_fk_rv'
+    accessAudio column: 'plat_access_audio_fk_rv'
     accessVideo column: 'plat_access_video_fk_rv'
     accessDatabase column: 'plat_access_database_fk_rv'
 
@@ -221,11 +233,14 @@ class Platform  extends AbstractBase implements Auditable {
     counterR5SushiPlatform (nullable: true, blank: false)
 
     accessPlatform (nullable: true, blank: false)
+    viewerForPdf (nullable: true, blank: false)
+    viewerForEpub (nullable: true, blank: false)
     playerForAudio (nullable: true, blank: false)
     playerForVideo (nullable: true, blank: false)
     accessEPub (nullable: true, blank: false)
     onixMetadata (nullable: true, blank: false)
     accessPdf (nullable: true, blank: false)
+    accessAudio (nullable: true, blank: false)
     accessVideo (nullable: true, blank: false)
     accessDatabase (nullable: true, blank: false)
     accessibilityStatementAvailable (nullable: true, blank: false)
