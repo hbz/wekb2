@@ -213,6 +213,26 @@
                         </dl>
                         <dl>
                             <dt class="control-label">
+                                ... PDF viewer
+                            </dt>
+                            <dd>
+                                <semui:xEditableRefData owner="${d}" field="viewerForPdf"
+                                                        config="${RCConstants.UYNP}"/>
+                            </dd>
+                            <dd></dd>
+                        </dl>
+                        <dl>
+                            <dt class="control-label">
+                                ... ePub viewer
+                            </dt>
+                            <dd>
+                                <semui:xEditableRefData owner="${d}" field="viewerForEpub"
+                                                        config="${RCConstants.UYNP}"/>
+                            </dd>
+                            <dd></dd>
+                        </dl>
+                        <dl>
+                            <dt class="control-label">
                                 ... Audio player
                             </dt>
                             <dd>
@@ -272,7 +292,7 @@
                                 ... EPUB e-books
                             </dt>
                             <dd>
-                                <semui:xEditableRefData owner="${d}" field="ebookEPub" config="${RCConstants.UYNP}"/>
+                                <semui:xEditableRefData owner="${d}" field="accessEPub" config="${RCConstants.UYNP}"/>
                             </dd>
                         </dl>
                         <dl>
@@ -280,7 +300,7 @@
                                 ... PDF e-books
                             </dt>
                             <dd>
-                                <semui:xEditableRefData owner="${d}" field="pdfUaStandard" config="${RCConstants.UYNP}"/>
+                                <semui:xEditableRefData owner="${d}" field="accessPdf" config="${RCConstants.UYNP}"/>
                             </dd>
                         </dl>
 
@@ -289,7 +309,16 @@
                                 ... Videos
                             </dt>
                             <dd>
-                                <semui:xEditableRefData owner="${d}" field="videoAudioDes" config="${RCConstants.UYNP}"/>
+                                <semui:xEditableRefData owner="${d}" field="accessAudio" config="${RCConstants.UYNP}"/>
+                            </dd>
+                        </dl>
+
+                        <dl>
+                            <dt class="control-label">
+                                ... Videos
+                            </dt>
+                            <dd>
+                                <semui:xEditableRefData owner="${d}" field="accessVideo" config="${RCConstants.UYNP}"/>
                             </dd>
                         </dl>
 
@@ -298,7 +327,7 @@
                                 ... Databases
                             </dt>
                             <dd>
-                                <semui:xEditableRefData owner="${d}" field="databaseBarrierFree" config="${RCConstants.UYNP}"/>
+                                <semui:xEditableRefData owner="${d}" field="accessDatabase" config="${RCConstants.UYNP}"/>
                             </dd>
                         </dl>
 
