@@ -16,6 +16,8 @@
 
 //=require loadEcharts.js
 
+//=require modules/icon.js
+
 //=require modules/verticalNavi.js
 
 //=require modules/paginationNavi.js
@@ -27,6 +29,7 @@ console.log('+ wekb.js')
 
 $(function () {
 
+    icon.go();
     verticalNavi.go();
     paginationNavi.go();
     responsiveTables.go();
