@@ -54,6 +54,18 @@
                         <semui:xEditableBoolean owner="${d}" field="passwordExpired"/>
                     </dd>
                 </dl>
+                <dl>
+                    <dt class="control-label">Last Login</dt>
+                    <dd>
+                        <semui:xEditable owner="${d}" field="lastLogin" type="date" overwriteEditable="false"/>
+                    </dd>
+                </dl>
+                <dl>
+                    <dt class="control-label">Invalid Login Attempts</dt>
+                    <dd>
+                        <semui:xEditable owner="${d}" field="invalidLoginAttempts" type="password"/>
+                    </dd>
+                </dl>
             </g:if>
 
             <g:if test="${d.id != null}">

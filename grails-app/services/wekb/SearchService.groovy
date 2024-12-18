@@ -212,6 +212,9 @@ class SearchService {
                             }else if(cobj instanceof KbartSource){
                                 cobj = CuratoryGroupKbartSource.findAllByKbartSource(cobj)?.curatoryGroup
                             }
+                            else if(cobj instanceof User){
+                                cobj = CuratoryGroupUser.findAllByUser(cobj)?.curatoryGroup
+                            }
                         }
                         else {
                             if ( cobj && (cobj.hasProperty(sp) || (cobj.respondsTo(sp)?.size() > 0))) {
