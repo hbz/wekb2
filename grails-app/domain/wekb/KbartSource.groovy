@@ -165,10 +165,26 @@ class KbartSource extends AbstractBase implements Auditable {
             LocalDate today = LocalDateTime.now().toLocalDate()
             def interval = intervals.get(frequency.value)
             if (interval != null) {
+                boolean needsUpdate = false
                 //println("today: "+today)
-                LocalDateTime due = getUpdateDay(interval, false)
+                LocalDate due
+                List<LocalDateTime> dues = getUpdateDays(interval, false)
+
+                if(dues) {
+                    dues = dues.reverse()
+
+                    dues.each { LocalDateTime updateDateTime ->
+                        LocalDate updateDate = updateDateTime.toLocalDate()
+                        if (updateDate == today) {
+                            due = updateDate
+                            needsUpdate = true
+                            return
+                        }
+
+                    }
+                }
                 //println("due: "+due)
-                if (due && today == due.toLocalDate()) {
+                if (needsUpdate) {
                     //println('true')
                     return true
                 }else {
@@ -188,7 +204,7 @@ class KbartSource extends AbstractBase implements Auditable {
     }
 
 
-    LocalDateTime getUpdateDay(int interval, boolean setAutoUpdateTime) {
+/*    LocalDateTime getUpdateDay(int interval, boolean setAutoUpdateTime) {
         LocalDateTime today = LocalDateTime.now()
         LocalDateTime nextUpdate
         List updateDates = []
@@ -210,20 +226,10 @@ class KbartSource extends AbstractBase implements Auditable {
                 break
         }
 
-        if(updateDates) {
-            updateDates = updateDates.reverse()
 
-            updateDates.each { LocalDateTime updateDate ->
-                if (updateDate.isAfter(today)) {
-                    nextUpdate = updateDate
-                    return
-                }
-
-            }
-        }
 
         return nextUpdate
-    }
+    }*/
 
     List getUpdateDays(int interval, boolean setAutoUpdateTime) {
 
@@ -275,7 +281,21 @@ class KbartSource extends AbstractBase implements Auditable {
         if (automaticUpdates && frequency != null) {
             def interval = intervals.get(frequency.value)
             if (interval != null) {
-                LocalDateTime due = getUpdateDay(interval, true)
+                LocalDateTime today = LocalDateTime.now()
+                LocalDateTime due
+                List<LocalDateTime> dues = getUpdateDays(interval, true)
+
+                if(dues) {
+                    dues = dues.reverse()
+
+                    dues.each { LocalDateTime updateDate ->
+                        if (updateDate.isAfter(today)) {
+                            due = updateDate
+                            return
+                        }
+
+                    }
+                }
                 return due
             } else {
                 log.debug("KbartSource ${this.id} getNextUpdateTimestamp(): Frequency (${frequency}) is not null but intervals is null")

@@ -154,7 +154,7 @@ class KbartProcessService {
                 if(headerOfKbart.containsKey("last_changed") && (pkg.kbartSource)) {
                     LocalDate currentLastChangedInKbart = convertToLocalDateViaInstant(lastChangedInKbart)
                     LocalDate lastUpdated = convertToLocalDateViaInstant(pkg.kbartSource.lastRun)
-                    if(currentLastChangedInKbart && currentLastChangedInKbart.isBefore(lastUpdated)){
+                    if(lastUpdated && currentLastChangedInKbart && currentLastChangedInKbart.isBefore(lastUpdated)){
                         lastUpdated = currentLastChangedInKbart
                     }
 

@@ -33,10 +33,15 @@ class AutoUpdatePackagesService {
                 "from Package p " +
                         "where p.kbartSource is not null and " +
                         "p.kbartSource.automaticUpdates = true " +
-                        "and (p.kbartSource.lastRun is null or p.kbartSource.lastRun < current_date) order by p.kbartSource.lastRun")
+                        "and (p.kbartSource.lastRun is null or p.kbartSource.lastRun < current_date) and p.kbartSource.status not in (:status) order by p.kbartSource.lastRun", [status:  [RDStore.KBC_STATUS_REMOVED, RDStore.KBC_STATUS_DELETED]])
         updPacks.each { Package p ->
             if (p.kbartSource.needsUpdate()) {
                 packageNeedsUpdate << p
+            }else if (!p.kbartSource.frequency){
+                if (!(p.status in [RDStore.KBC_STATUS_REMOVED, RDStore.KBC_STATUS_DELETED])) {
+                    UpdatePackageInfo updatePackageInfo = new UpdatePackageInfo(pkg: p, startTime: new Date(), endTime: new Date(), status: RDStore.UPDATE_STATUS_FAILED, description: "Source frequency is not set. Update for this package is not starting.", onlyRowsWithLastChanged: onlyRowsWithLastChanged, automaticUpdate: true, kbartHasWekbFields: false)
+                    updatePackageInfo.save()
+                }
             }
         }
         log.info("findPackageToUpdateAndUpdate: Package with KbartSource and lastRun < currentDate (${packageNeedsUpdate.size()})")
