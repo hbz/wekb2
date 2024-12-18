@@ -1,0 +1,42 @@
+.ui.sortable.table > thead > tr > th {
+  white-space: wrap;
+}
+
+/*---------------------------------------------------------------------------
+  Responsive Table for views with normal tables overrides tables
+----------------------------------------------------------------------------*/
+
+@media only screen and (max-width : @largestMobileScreen) {
+
+
+  .ui.table {
+    > thead {
+      position: absolute;
+      top: -1111px;
+      left: -1111px;
+    }
+    > tbody {
+      > tr {
+        .ui.form,
+        .field {
+          display: inline-block;
+        }
+
+        > [class*="center aligned"] {
+          text-align: left!important;
+        }
+        > td:before {
+          padding: 0 10px 0 0;
+          content: attr(data-label);
+          font-weight: bold;
+        }
+        > td .la-flexbox {
+          display: inline-flex;
+        }
+        > td:nth-child(1) {
+          font-weight: bold;
+        }
+      }
+    }
+  }
+}

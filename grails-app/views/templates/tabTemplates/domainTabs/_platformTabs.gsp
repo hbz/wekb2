@@ -13,6 +13,9 @@
                 Sushi Api Key Information
             </semui:tabsItemWithoutLink>
         </g:if>
+        <semui:tabsItemWithoutLink tab="accessibility" activeTab="${params.activeTab}">
+            Accessibility
+        </semui:tabsItemWithoutLink>
         <semui:tabsItemWithoutLink tab="titledetails" activeTab="${params.activeTab}" counts="${d.currentTippCount}">
             Hosted Titles
         </semui:tabsItemWithoutLink>
@@ -180,5 +183,158 @@
             </div>
         </semui:tabsItemContent>
     </g:if>
+
+    <semui:tabsItemContent tab="accessibility" activeTab="${params.activeTab}">
+        <div class="sixteen wide column">
+            <div class="ui segment">
+                <div class="content wekb-inline-lists">
+                    <h2 class="ui header">Platform</h2>
+                    <div class="description">
+                        <dl>
+                            <dt class="ui header wekb-header">Accessibility requirements according to
+                                <g:link url="https://accessible-eu-centre.ec.europa.eu/content-corner/digital-library/en-3015492021-accessibility-requirements-ict-products-and-services_en"
+                                        target="_blank">
+                                    EN 301549
+                                </g:link>
+                            of the ...
+                            </dt>
+                            <dd></dd>
+                        </dl>
+
+                        <dl>
+                            <dt class="control-label">
+                                ... Platform
+                            </dt>
+                            <dd>
+                                <semui:xEditableRefData owner="${d}" field="accessPlatform"
+                                                        config="${RCConstants.UYNP}"/>
+                            </dd>
+                            <dd></dd>
+                        </dl>
+                        <dl>
+                            <dt class="control-label">
+                                ... PDF viewer
+                            </dt>
+                            <dd>
+                                <semui:xEditableRefData owner="${d}" field="viewerForPdf"
+                                                        config="${RCConstants.UYNP}"/>
+                            </dd>
+                            <dd></dd>
+                        </dl>
+                        <dl>
+                            <dt class="control-label">
+                                ... ePub viewer
+                            </dt>
+                            <dd>
+                                <semui:xEditableRefData owner="${d}" field="viewerForEpub"
+                                                        config="${RCConstants.UYNP}"/>
+                            </dd>
+                            <dd></dd>
+                        </dl>
+                        <dl>
+                            <dt class="control-label">
+                                ... Audio player
+                            </dt>
+                            <dd>
+                                <semui:xEditableRefData owner="${d}" field="playerForAudio"
+                                                        config="${RCConstants.UYNP}"/>
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt class="control-label">
+                                ... Video player
+                            </dt>
+                            <dd>
+                                <semui:xEditableRefData owner="${d}" field="playerForVideo"
+                                                        config="${RCConstants.UYNP}"/>
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt class="ui header wekb-header">Accessibility Statement</dt>
+                            <dd></dd>
+                        </dl>
+                        <dl>
+                            <dt class="control-label">
+                                Accessibility Statement available
+                            </dt>
+                            <dd>
+                                <semui:xEditableRefData owner="${d}" field="accessibilityStatementAvailable" config="${RCConstants.YN}"/>
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt class="control-label">
+                                Link to the Accessibility Statement
+                            </dt>
+                            <dd>
+                                <semui:xEditable owner="${d}" field="accessibilityStatementUrl" validation="url" outGoingLink="true"/>
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ui segment">
+                <div class="content wekb-inline-lists">
+                    <h2 class="ui header">Content on the platform</h2>
+                    <div class="description">
+                        <dl>
+                            <dt class="ui header wekb-header">Accessibility requirements according to
+                                <g:link url="https://accessible-eu-centre.ec.europa.eu/content-corner/digital-library/en-3015492021-accessibility-requirements-ict-products-and-services_en"
+                                        target="_blank">
+                                    EN 301549
+                                </g:link>
+                                of the ...
+                            </dt>
+                            <dd></dd>
+                        </dl>
+                        <dl>
+                            <dt class="control-label">
+                                ... EPUB e-books
+                            </dt>
+                            <dd>
+                                <semui:xEditableRefData owner="${d}" field="accessEPub" config="${RCConstants.UYNP}"/>
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt class="control-label">
+                                ... PDF e-books
+                            </dt>
+                            <dd>
+                                <semui:xEditableRefData owner="${d}" field="accessPdf" config="${RCConstants.UYNP}"/>
+                            </dd>
+                        </dl>
+
+                        <dl>
+                            <dt class="control-label">
+                                ... Videos
+                            </dt>
+                            <dd>
+                                <semui:xEditableRefData owner="${d}" field="accessAudio" config="${RCConstants.UYNP}"/>
+                            </dd>
+                        </dl>
+
+                        <dl>
+                            <dt class="control-label">
+                                ... Videos
+                            </dt>
+                            <dd>
+                                <semui:xEditableRefData owner="${d}" field="accessVideo" config="${RCConstants.UYNP}"/>
+                            </dd>
+                        </dl>
+
+                        <dl>
+                            <dt class="control-label">
+                                ... Databases
+                            </dt>
+                            <dd>
+                                <semui:xEditableRefData owner="${d}" field="accessDatabase" config="${RCConstants.UYNP}"/>
+                            </dd>
+                        </dl>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </semui:tabsItemContent>
 
 </g:if>

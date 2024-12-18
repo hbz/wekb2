@@ -6,6 +6,18 @@ Update.Type;New Title;New Title;New Title
 Update.Type;Changed Title;Changed Title;Changed Title
 Update.Type;Removed Title;Removed Title;Removed Title
 Update.Type;Failed Title;Failed Title;Failed Title
+Barrier-Free.Ebook;eBooks not available;eBooks not available;eBooks not available
+Barrier-Free.Ebook;Yes;Yes;Yes
+Barrier-Free.Ebook;No;No;No
+Barrier-Free.Pdf;Pdf not available;Pdf not available;Pdf not available
+Barrier-Free.Pdf;Yes;Yes;Yes
+Barrier-Free.Pdf;No;No;No
+Barrier-Free.Video;Video not available;Video not available;Video not available
+Barrier-Free.Video;Yes;Yes;Yes
+Barrier-Free.Video;No;No;No
+Barrier-Free.Database;Database not available;Database not available;Database not available
+Barrier-Free.Database;Yes;Yes;Yes
+Barrier-Free.Database;No;No;No
 Contact.Content.Type;E-Mail;E-Mail;E-Mail
 Contact.Content.Type;Fax;Fax;Fax
 Contact.Content.Type;Phone;Phone;Phone
@@ -576,3 +588,11 @@ Vendor.ElectronicDeliveryDelay;E-Mail;E-Mail;E-Mail
 Vendor.ElectronicDeliveryDelay;EDI;EDI;EDI
 YN;No;No;No
 YN;Yes;Yes;Yes
+UYNP;Unavailable;Not Available;Not Available
+UYNP;Yes;Compliant;Compliant
+UYNP;No;Not Compliant;Not Compliant
+UYNP;Partially;Partially Compliant;Partially Compliant
+UYN;Unavailable;Not Available;Not Available
+UYN;Yes;Yes;Yes
+UYN;No;No;No
+

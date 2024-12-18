@@ -32,7 +32,7 @@
             </td>
             <td>
                 <g:link controller="resource" action="show" id="${t.getOID()}">
-                    ${t.name} <b>(${t.status.value})</b>
+                    ${t.name} <strong>(${t.status.value})</strong>
                 </g:link>
             </td>
             <td>

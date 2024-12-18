@@ -27,6 +27,9 @@ class RefdataValue  extends AbstractI10n {
   // indicates this object is created via current bootstrap
   boolean isHardData = false
 
+  // if manual ordering is wanted
+  Long order
+
   static mapping = {
     id column:'rdv_id'
     version column:'rdv_version'
@@ -38,6 +41,7 @@ class RefdataValue  extends AbstractI10n {
     value_de column: 'rdv_value_de'
     value_en column: 'rdv_value_en'
     isHardData column: 'rdv_is_hard_data'
+    order    column: 'rdv_order'
 
     dateCreated column: 'rdv_date_created'
     lastUpdated column: 'rdv_last_updated'
@@ -54,6 +58,8 @@ class RefdataValue  extends AbstractI10n {
 
     value_de (nullable:true, blank:true)
     value_en (nullable:true, blank:true)
+
+    order    (nullable: true)
   }
 
   String getOID() {

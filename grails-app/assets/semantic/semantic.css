@@ -26908,6 +26908,16 @@ footer h2.ui.header {
   font-size: 1.28571429rem;
 }
 
+.wekb-inline-lists .wekb-header:last-child {
+  margin-bottom: 1em;
+  display: block;
+}
+
+.wekb-inline-lists .wekb-header:first-child {
+  margin-top: 1em;
+  display: block;
+}
+
 /*******************************
          Site Overrides
 *******************************/
@@ -56997,6 +57007,45 @@ Floated Menu / Item
            Overrides
 *******************************/
 
+.ui.sortable.table > thead > tr > th {
+  white-space: wrap;
+}
+
+/*---------------------------------------------------------------------------
+  Responsive Table for views with normal tables overrides tables
+----------------------------------------------------------------------------*/
+
+@media only screen and (max-width: 767.98px) {
+  .ui.table > thead {
+    position: absolute;
+    top: -1111px;
+    left: -1111px;
+  }
+
+  .ui.table > tbody > tr .ui.form,
+  .ui.table > tbody > tr .field {
+    display: inline-block;
+  }
+
+  .ui.table > tbody > tr > [class*="center aligned"] {
+    text-align: left!important;
+  }
+
+  .ui.table > tbody > tr > td:before {
+    padding: 0 10px 0 0;
+    content: attr(data-label);
+    font-weight: bold;
+  }
+
+  .ui.table > tbody > tr > td .la-flexbox {
+    display: inline-flex;
+  }
+
+  .ui.table > tbody > tr > td:nth-child(1) {
+    font-weight: bold;
+  }
+}
+
 /*******************************
          Site Overrides
 *******************************/
@@ -73172,7 +73221,7 @@ body.pushable > .pusher {
 }
 
 .wekb-content {
-  margin-top: 80px;
+  padding-top: 80px;
   display: flex;
   min-height: 100vh;
   flex-direction: column;
