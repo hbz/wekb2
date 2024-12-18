@@ -63,7 +63,7 @@ class AutoUpdatePackagesService {
                         startAutoPackageUpdate(aPackage, onlyRowsWithLastChanged)
                     }catch (Exception exception) {
                         log.error("Error by findPackageToUpdateAndUpdate (${aPackage.id} -> ${aPackage.name}): ${exception.message}")
-                        exception.printStackTrace()
+                        //exception.printStackTrace()
                     }
                 }
             }
@@ -173,7 +173,7 @@ class AutoUpdatePackagesService {
                                     }
                                     catch (Exception e) {
                                         log.error("Exception by get kbartFromUrl: ${e.message}")
-                                        e.printStackTrace()
+                                        //e.printStackTrace()
                                     }
                                 }
                                 updatePackageInfo.updateUrl = lastUpdateURL
@@ -254,7 +254,7 @@ class AutoUpdatePackagesService {
 
             } catch (Exception exception) {
                 log.error("Error by startAutoPackageUapdate: ${exception.message}")
-                exception.printStackTrace()
+                //exception.printStackTrace()
                 UpdatePackageInfo.withTransaction {
                     //UpdatePackageInfo updatePackageFail = new UpdatePackageInfo()
                     updatePackageInfo.description = "An error occurred while processing the KBART file. More information can be seen in the system log. File from URL: ${lastUpdateURL}"
