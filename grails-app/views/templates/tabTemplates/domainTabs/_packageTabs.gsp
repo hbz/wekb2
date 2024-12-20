@@ -56,7 +56,7 @@
 
         <div class="content">
             <g:link class="display-inline" controller="search" action="inlineSearch"
-                    params="[s_controllerName: controllerName, s_actionName: actionName, objectUUID: params.id, max: params.max, offset: params.offset, sort: params.sort, order: params.order, qbe: 'g:tippsOfPkg', qp_pkg_id: d.id, inline: true, refOID: d.getOID(), hide: ['qp_pkg_id', 'qp_pkg'], qp_status: RefdataValue.class.name + ':' + RDStore.KBC_STATUS_CURRENT.id, activeTab: 'currentTipps']"
+                    params="[s_controllerName: controllerName, s_actionName: actionName, objectUUID: params.id, max: params.max, offset: params.activeTab == 'currentTipps' ? offset : '', sort: params.sort, order: params.order, qbe: 'g:tippsOfPkg', qp_pkg_id: d.id, inline: true, refOID: d.getOID(), hide: ['qp_pkg_id', 'qp_pkg'], qp_status: RefdataValue.class.name + ':' + RDStore.KBC_STATUS_CURRENT.id, activeTab: 'currentTipps', jumpOffset: params.activeTab == 'currentTipps' ? params.jumpOffset : '']"
                     id="">Packages on this Source</g:link>
 
         </div>
@@ -69,7 +69,7 @@
         <div class="content">
 
             <g:link class="display-inline" controller="search" action="inlineSearch"
-                    params="[s_controllerName: controllerName, s_actionName: actionName, objectUUID: params.id, max: params.max, offset: params.offset, sort: params.sort, order: params.order, qbe: 'g:tippsOfPkg', qp_pkg_id: d.id, inline: true, refOID: d.getOID(), hide: ['qp_pkg_id', 'qp_pkg'], qp_status: RefdataValue.class.name + ':' + RDStore.KBC_STATUS_RETIRED.id, activeTab: 'retiredTipps']"
+                    params="[s_controllerName: controllerName, s_actionName: actionName, objectUUID: params.id, max: params.max, offset: params.activeTab == 'retiredTipps' ? offset : '', sort: params.sort, order: params.order, qbe: 'g:tippsOfPkg', qp_pkg_id: d.id, inline: true, refOID: d.getOID(), hide: ['qp_pkg_id', 'qp_pkg'], qp_status: RefdataValue.class.name + ':' + RDStore.KBC_STATUS_RETIRED.id, activeTab: 'retiredTipps', jumpOffset: params.activeTab == 'retiredTipps' ? params.jumpOffset : '']"
                     id="">Packages on this Source</g:link>
 
         </div>
@@ -82,7 +82,7 @@
         <div class="content">
 
             <g:link class="display-inline" controller="search" action="inlineSearch"
-                    params="[s_controllerName: controllerName, s_actionName: actionName, objectUUID: params.id, max: params.max, offset: params.offset, sort: params.sort, order: params.order, qbe: 'g:tippsOfPkg', qp_pkg_id: d.id, inline: true, refOID: d.getOID(), hide: ['qp_pkg_id', 'qp_pkg'], qp_status: RefdataValue.class.name + ':' + RDStore.KBC_STATUS_EXPECTED.id, activeTab: 'expectedTipps']"
+                    params="[s_controllerName: controllerName, s_actionName: actionName, objectUUID: params.id, max: params.max, offset: params.activeTab == 'expectedTipps' ? offset : '', sort: params.sort, order: params.order, qbe: 'g:tippsOfPkg', qp_pkg_id: d.id, inline: true, refOID: d.getOID(), hide: ['qp_pkg_id', 'qp_pkg'], qp_status: RefdataValue.class.name + ':' + RDStore.KBC_STATUS_EXPECTED.id, activeTab: 'expectedTipps', jumpOffset: params.activeTab == 'expectedTipps' ? params.jumpOffset : '']"
                     id="">Packages on this Source</g:link>
 
         </div>
@@ -95,7 +95,7 @@
         <div class="content">
 
             <g:link class="display-inline" controller="search" action="inlineSearch"
-                    params="[s_controllerName: controllerName, s_actionName: actionName, objectUUID: params.id, max: params.max, offset: params.offset, sort: params.sort, order: params.order, qbe: 'g:tippsOfPkg', qp_pkg_id: d.id, inline: true, refOID: d.getOID(), hide: ['qp_pkg_id', 'qp_pkg'], qp_status: RefdataValue.class.name + ':' + RDStore.KBC_STATUS_DELETED.id, activeTab: 'deletedTipps']"
+                    params="[s_controllerName: controllerName, s_actionName: actionName, objectUUID: params.id, max: params.max, offset: params.activeTab == 'deletedTipps' ? offset : '', sort: params.sort, order: params.order, qbe: 'g:tippsOfPkg', qp_pkg_id: d.id, inline: true, refOID: d.getOID(), hide: ['qp_pkg_id', 'qp_pkg'], qp_status: RefdataValue.class.name + ':' + RDStore.KBC_STATUS_DELETED.id, activeTab: 'deletedTipps', jumpOffset: params.activeTab == 'deletedTipps' ? params.jumpOffset : '']"
                     id="">Packages on this Source</g:link>
 
         </div>
@@ -114,7 +114,7 @@
             <div class="content">
 
                 <g:link class="display-inline" controller="search" action="inlineSearch"
-                        params="[s_controllerName: controllerName, s_actionName: actionName, objectUUID: params.id, max: params.max, offset: params.offset, sort: params.sort, order: params.order, qbe: 'g:updatePackageInfos', qp_pkg_id: d.id, inline: true, refOID: d.getOID(), hide: ['qp_pkg_id', 'qp_pkg'], activeTab: 'autoUpdatePackageInfos', qp_automaticUpdate: RDStore.YN_YES.class.name+':'+RDStore.YN_YES.id]"
+                        params="[s_controllerName: controllerName, s_actionName: actionName, objectUUID: params.id, max: params.max, offset: params.activeTab == 'autoUpdatePackageInfos' ? offset : '', sort: params.sort, order: params.order, qbe: 'g:updatePackageInfos', qp_pkg_id: d.id, inline: true, refOID: d.getOID(), hide: ['qp_pkg_id', 'qp_pkg'], activeTab: 'autoUpdatePackageInfos', qp_automaticUpdate: RDStore.YN_YES.class.name+':'+RDStore.YN_YES.id, jumpOffset: params.activeTab == 'autoUpdatePackageInfos' ? params.jumpOffset : '']"
                         id="">Update Package Info on this Source</g:link>
 
             </div>
@@ -128,7 +128,7 @@
             <div class="content">
 
                 <g:link class="display-inline" controller="search" action="inlineSearch"
-                        params="[s_controllerName: controllerName, s_actionName: actionName, objectUUID: params.id, max: params.max, offset: params.offset, sort: params.sort, order: params.order, qbe: 'g:updatePackageInfos', qp_pkg_id: d.id, inline: true, refOID: d.getOID(), hide: ['qp_pkg_id', 'qp_pkg'], activeTab: 'manualUpdatePackageInfos', qp_automaticUpdate: RDStore.YN_NO.class.name+':'+RDStore.YN_NO.id]"
+                        params="[s_controllerName: controllerName, s_actionName: actionName, objectUUID: params.id, max: params.max, offset: params.activeTab == 'autoUpdatePackageInfos' ? offset : '', sort: params.sort, order: params.order, qbe: 'g:updatePackageInfos', qp_pkg_id: d.id, inline: true, refOID: d.getOID(), hide: ['qp_pkg_id', 'qp_pkg'], activeTab: 'manualUpdatePackageInfos', qp_automaticUpdate: RDStore.YN_NO.class.name+':'+RDStore.YN_NO.id]"
                         id="">Update Package Info on this Source</g:link>
 
             </div>

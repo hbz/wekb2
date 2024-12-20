@@ -59,10 +59,10 @@ class SearchService {
             result.max = 10
         }
 
-        if ( params.jumpToPage ) {
-            result.offset = ( ( Integer.parseInt(params.jumpToPage) - 1 ) * result.max )
+        if ( params.jumpOffset ) {
+            result.offset = Integer.parseInt(params.jumpOffset)
         }
-        params.remove('jumpToPage')
+        params.remove('jumpOffset')
         params.offset = result.offset
         result.hide = params.list("hide") ?: []
 
@@ -212,6 +212,9 @@ class SearchService {
                             }else if(cobj instanceof KbartSource){
                                 cobj = CuratoryGroupKbartSource.findAllByKbartSource(cobj)?.curatoryGroup
                             }
+                            else if(cobj instanceof User){
+                                cobj = CuratoryGroupUser.findAllByUser(cobj)?.curatoryGroup
+                            }
                         }
                         else {
                             if ( cobj && (cobj.hasProperty(sp) || (cobj.respondsTo(sp)?.size() > 0))) {
@@ -259,10 +262,6 @@ class SearchService {
 
         result.new_recset = recSet
         log.debug("Finished new recset!")
-
-        result.withoutJump = cleaned_params
-        result.remove('jumpToPage')
-        result.withoutJump.remove('jumpToPage')
 
 
         [result: result]

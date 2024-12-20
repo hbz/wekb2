@@ -2002,12 +2002,16 @@ class GlobalSearchTemplatesService {
                         qbeResults: [
                                 [heading: 'Username', property: 'username', link: true, sort: 'username', linkInfo: 'Link to User'],
                                 [heading: 'Enabled', property: 'enabled', sort: 'enabled'],
+                                [heading: 'Curatory Groups', property: 'curatoryGroupsCuratoryGroup', link: true, linkInfo: 'Link to Curatory Group'],
                                 [heading: 'User', property: 'userStatus'],
                                 [heading: 'Editor', property: 'editorStatus'],
                                 [heading: 'Vendor-Editor', property: 'vendorEditorStatus'],
                                 [heading: 'API-User', property: 'apiUserStatus'],
                                 [heading: 'Admin', property: 'adminStatus'],
                                 [heading: 'Super-User', property: 'superUserStatus'],
+                                [heading: 'Account Locked', property: 'accountLocked'],
+                                [heading: 'Last Login', property: 'lastLogin'],
+                                [heading: 'Invalid Login Attempts', property: 'invalidLoginAttempts'],
                                 [heading: 'Last Updated', property: 'lastUpdated', sort: 'lastUpdated']
                         ]
                 ]

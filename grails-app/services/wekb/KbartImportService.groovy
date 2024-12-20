@@ -1330,7 +1330,7 @@ class KbartImportService {
             }
             catch (Exception e) {
                 log.error("createOrUpdateIdentifierForTipp: -> ${kbartProperty} ${newValue}:" + e.message)
-                e.printStackTrace()
+                //e.printStackTrace()
             }
         }
 
@@ -1525,7 +1525,7 @@ class KbartImportService {
                     )*/
                 }
                 catch (Exception e){
-                    log.error("Failed to add coverage statement to tipp:" + e.toString())
+                    log.error("Failed to add coverage statement to tipp: " + e.message)
                 }
 
             }
@@ -1672,7 +1672,7 @@ class KbartImportService {
                         }
                     }
                     catch (Exception e) {
-                        log.error("Parse date fail. Date to parse was -> ${newValue}:" + e.toString())
+                        log.error("Parse date fail. Date to parse was -> ${newValue}:" + e.message)
                     }
 
                     if (ldt) {
@@ -1689,7 +1689,7 @@ class KbartImportService {
                     }
                 }
             } else if (dataType == 'RefDataValue') {
-                def v = null
+                RefdataValue v = null
                 if (acceptNullValue && (tippMap[kbartProperty] == null || tippMap[kbartProperty] == "") && (tipp[tippProperty] != null && tipp[tippProperty] != "")) {
                     if (!result.newTipp) {
                         valueChanged = true
@@ -1741,9 +1741,11 @@ class KbartImportService {
             }
         }else {
             if (!result.newTipp) {
-                valueChanged = true
                 String oldValue = renderObjectValue(tipp[tippProperty])
-                createUpdateTippInfoByTippChange(tipp, updatePackageInfo, kbartProperty, tippProperty, oldValue, '')
+                if(oldValue != "" || oldValue != null) {
+                    valueChanged = true
+                    createUpdateTippInfoByTippChange(tipp, updatePackageInfo, kbartProperty, tippProperty, oldValue, '')
+                }
             }
             tipp[tippProperty] = null
         }
@@ -1904,7 +1906,7 @@ class KbartImportService {
                 }
             } catch (Exception e) {
                 log.error("createOrUpdatePrice -> kbartProperty ${newValue}:" + e.message)
-                e.printStackTrace()
+                //e.printStackTrace()
             }
 
             if (cp && priceChanged && !result.newTipp) {
@@ -1953,8 +1955,8 @@ class KbartImportService {
                                 newValue: newValue
                         ).save()
                     }
+                   priceChanged = true
                 }
-                priceChanged = true
             }
         }
 
@@ -1983,7 +1985,7 @@ class KbartImportService {
                         }
                     }
                     catch (Exception e) {
-                        log.error("Parse date fail. Date to parse was -> ${newValue}:" + e.toString())
+                        log.error("Parse date fail. Date to parse was -> ${newValue}:" + e.message)
                     }
 
                     if (ldt) {
@@ -2437,7 +2439,7 @@ class KbartImportService {
 
         } catch (Exception e) {
             log.error("KbartImportService tipp.save() error: " + e.message)
-            e.printStackTrace()
+            //e.printStackTrace()
            /* updatePackageInfo = updatePackageInfo.refresh()
             UpdateTippInfo updateTippInfo = new UpdateTippInfo(
                         description: "Changes in title fail. More information can be seen in the system log.",
@@ -2738,7 +2740,7 @@ class KbartImportService {
 
                     } catch (Exception e) {
                         log.error("createTippBatch: -> ${tippMap.kbartRowMap}:" + e.message)
-                        e.printStackTrace()
+                        //e.printStackTrace()
                     }
 
                     /* if (idx % 250 == 0) {
@@ -2766,7 +2768,7 @@ class KbartImportService {
                 }
             }
             catch (Exception e) {
-                log.error("Parse date fail. Date to parse was -> ${newValue}:" + e.toString())
+                log.error("Parse date fail. Date to parse was -> ${newValue}:" + e.message)
             }
 
             if (ldt) {
