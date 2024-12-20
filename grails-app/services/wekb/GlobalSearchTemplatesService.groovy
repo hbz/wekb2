@@ -794,42 +794,42 @@ class GlobalSearchTemplatesService {
                                         advancedSearch: [title: "Search Titles by ...", category: 'Title']
                                 ],
 
-                               /* [
-                                        type     : 'dropDownGroup',
-                                        dropDownType  : 'subjectArea',
-                                        prompt     : 'Subject Area',
-                                        qparam     : 'qp_subjectArea_tipp',
-                                        placeholder: 'Subject Area',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'tipps.subjectArea'],
-                                        advancedSearch: [title: "Search Titles by ...", category: 'Title']
-                                ],
-                                [
-                                        type     : 'dropDownGroup',
-                                        dropDownType  : 'dateFirstOnlineYear',
-                                        prompt     : 'Date First Online Year',
-                                        qparam     : 'qp_dateFirstOnlineYear',
-                                        placeholder: 'Date First Online Year',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eqYear', 'prop': 'tipps.dateFirstOnline'],
-                                        advancedSearch: [title: "Search Titles by ...", category: 'Title']
-                                ],
-                                [
-                                        type     : 'dropDownGroup',
-                                        dropDownType  : 'accessStartDate',
-                                        prompt     : 'Access Start Date Year',
-                                        qparam     : 'qp_accessStartDate',
-                                        placeholder: 'Access Start Date Year',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eqYear', 'prop': 'tipps.accessStartDate'],
-                                        advancedSearch: [title: "Search Titles by ...", category: 'Title']
-                                ],
-                                [
-                                        type     : 'dropDownGroup',
-                                        dropDownType  : 'accessEndDate',
-                                        prompt     : 'Access End Date Year',
-                                        qparam     : 'qp_accessEndDate',
-                                        placeholder: 'Access End Date Year',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eqYear', 'prop': 'tipps.accessEndDate'],
-                                        advancedSearch: [title: "Search Titles by ...", category: 'Title']
-                                ],*/
+                                /* [
+                                         type     : 'dropDownGroup',
+                                         dropDownType  : 'subjectArea',
+                                         prompt     : 'Subject Area',
+                                         qparam     : 'qp_subjectArea_tipp',
+                                         placeholder: 'Subject Area',
+                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'tipps.subjectArea'],
+                                         advancedSearch: [title: "Search Titles by ...", category: 'Title']
+                                 ],
+                                 [
+                                         type     : 'dropDownGroup',
+                                         dropDownType  : 'dateFirstOnlineYear',
+                                         prompt     : 'Date First Online Year',
+                                         qparam     : 'qp_dateFirstOnlineYear',
+                                         placeholder: 'Date First Online Year',
+                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eqYear', 'prop': 'tipps.dateFirstOnline'],
+                                         advancedSearch: [title: "Search Titles by ...", category: 'Title']
+                                 ],
+                                 [
+                                         type     : 'dropDownGroup',
+                                         dropDownType  : 'accessStartDate',
+                                         prompt     : 'Access Start Date Year',
+                                         qparam     : 'qp_accessStartDate',
+                                         placeholder: 'Access Start Date Year',
+                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eqYear', 'prop': 'tipps.accessStartDate'],
+                                         advancedSearch: [title: "Search Titles by ...", category: 'Title']
+                                 ],
+                                 [
+                                         type     : 'dropDownGroup',
+                                         dropDownType  : 'accessEndDate',
+                                         prompt     : 'Access End Date Year',
+                                         qparam     : 'qp_accessEndDate',
+                                         placeholder: 'Access End Date Year',
+                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eqYear', 'prop': 'tipps.accessEndDate'],
+                                         advancedSearch: [title: "Search Titles by ...", category: 'Title']
+                                 ],*/
                                 [
                                         type       : 'dropDown',
                                         baseClass  : 'wekb.RefdataValue',
@@ -995,8 +995,6 @@ class GlobalSearchTemplatesService {
                         qbeForm   : [
                                 //Hidden Fields
                                 [
-                                        type       : 'dropDown',
-                                        baseClass  : 'wekb.CuratoryGroup',
                                         qparam     : 'qp_curgroups',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'placeHolderForCuratoryGroups'],
                                         hide       : true
@@ -2149,6 +2147,13 @@ class GlobalSearchTemplatesService {
                                         qparam     : 'qp_tipp_id',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'tipp.id', 'type': 'java.lang.Long'],
                                         hide       : true
+                                ],
+                                [
+                                        prompt     : 'Title',
+                                        msgCode    : 'tipp.name',
+                                        qparam     : 'qp_title',
+                                        placeholder: 'Title',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'name', 'wildcard': 'B'],
                                 ],
                                 [
                                         prompt     : 'KBART Field',
