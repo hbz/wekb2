@@ -151,7 +151,7 @@ class SemanticInplaceTagLib {
             // Output an editable link
             out << "<a href=\"#\" id=\"${id}\" "
 
-            out << 'class="xEditableManyToOne"'
+            out << 'class="xEditableManyToOne" '
 
             if ((owner != null) && (owner.id != null)) {
                 out << "data-pk=\"${oid}\" "
@@ -245,10 +245,10 @@ class SemanticInplaceTagLib {
             out << 'class="xEditableManyToOne" '
 
             if ((owner != null) && (owner.id != null)) {
-                out << "data-pk=\"${oid}\" "
+                out << " data-pk=\"${oid}\" "
             }
 
-            out << "data-url=\"${update_link}\" "
+            out << " data-url=\"${update_link}\" "
 
             if (attrs.required) {
                 out << " data-required=\"${attrs.required}\" "
@@ -374,13 +374,13 @@ class SemanticInplaceTagLib {
         out << '"'
 
         if (attrs.style) {
-            out << "style=\"${attrs.style}\" "
+            out << " style=\"${attrs.style}\" "
         }
 
         if (attrs.id) {
-            out << "id=\"${attrs.id}\" "
+            out << " id=\"${attrs.id}\" "
         }
-        out << "/>"
+        out << ">"
 
         out << "<input type=\"hidden\" value=\"${attrs.value ?: ''}\" name=\"${attrs.name}\" data-domain=\"${attrs.baseClass}\" "
 

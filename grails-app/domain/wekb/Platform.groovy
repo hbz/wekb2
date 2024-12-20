@@ -83,6 +83,47 @@ class Platform  extends AbstractBase implements Auditable {
 
   String counterRegistryApiUuid
 
+  //Barrierefrei / Barrier-free
+  @RefdataAnnotation(cat = RCConstants.UYNP)
+  RefdataValue accessPlatform
+
+  @RefdataAnnotation(cat = RCConstants.UYNP)
+  RefdataValue viewerForPdf
+
+  @RefdataAnnotation(cat = RCConstants.UYNP)
+  RefdataValue viewerForEpub
+
+  @RefdataAnnotation(cat = RCConstants.UYNP)
+  RefdataValue playerForAudio
+
+  @RefdataAnnotation(cat = RCConstants.UYNP)
+  RefdataValue playerForVideo
+
+  @RefdataAnnotation(cat = RCConstants.BF_EBOOK)
+  RefdataValue accessEPub
+
+  @RefdataAnnotation(cat = RCConstants.BF_EBOOK)
+  RefdataValue onixMetadata
+
+  @RefdataAnnotation(cat = RCConstants.BF_PDF)
+  RefdataValue accessPdf
+
+  @RefdataAnnotation(cat = RCConstants.BF_VIDEO)
+  RefdataValue accessAudio
+
+  @RefdataAnnotation(cat = RCConstants.BF_VIDEO)
+  RefdataValue accessVideo
+
+  @RefdataAnnotation(cat = RCConstants.BF_DATABASE)
+  RefdataValue accessDatabase
+
+  @RefdataAnnotation(cat = RCConstants.YN)
+  RefdataValue accessibilityStatementAvailable
+
+  String accessibilityStatementUrl
+
+
+
   static hasMany = [
           roles: RefdataValue,
           ids: Identifier,
@@ -132,6 +173,21 @@ class Platform  extends AbstractBase implements Auditable {
     centralApiKey column: 'plat_central_api_key', type: 'text'
     counterR5SushiPlatform column: 'plat_counter_r5_sushi_platform', type: 'text'
 
+    accessPlatform column: 'plat_access_platform_fk_rv'
+    viewerForPdf column: 'plat_viewer_for_pdf_fk_rv'
+    viewerForEpub column: 'plat_viewer_for_epub_fk_rv'
+    playerForAudio column: 'plat_player_for_audio_fk_rv'
+    playerForVideo column: 'plat_player_for_video_fk_rv'
+    accessEPub column: 'plat_access_epub_fk_rv'
+    onixMetadata column: 'plat_onix_metadata_fk_rv'
+    accessPdf column: 'plat_access_pdf_fk_rv'
+    accessAudio column: 'plat_access_audio_fk_rv'
+    accessVideo column: 'plat_access_video_fk_rv'
+    accessDatabase column: 'plat_access_database_fk_rv'
+
+    accessibilityStatementAvailable column: 'plat_accessibility_statement_available_fk_rv'
+    accessibilityStatementUrl column: 'plat_accessibility_statement_url', type: 'text'
+
   }
 
   static constraints = {
@@ -175,6 +231,20 @@ class Platform  extends AbstractBase implements Auditable {
     sushiApiAuthenticationMethod (nullable: true, blank: false)
     centralApiKey(nullable: true, blank: true)
     counterR5SushiPlatform (nullable: true, blank: false)
+
+    accessPlatform (nullable: true, blank: false)
+    viewerForPdf (nullable: true, blank: false)
+    viewerForEpub (nullable: true, blank: false)
+    playerForAudio (nullable: true, blank: false)
+    playerForVideo (nullable: true, blank: false)
+    accessEPub (nullable: true, blank: false)
+    onixMetadata (nullable: true, blank: false)
+    accessPdf (nullable: true, blank: false)
+    accessAudio (nullable: true, blank: false)
+    accessVideo (nullable: true, blank: false)
+    accessDatabase (nullable: true, blank: false)
+    accessibilityStatementAvailable (nullable: true, blank: false)
+    accessibilityStatementUrl (nullable: true, blank: true)
   }
 
   @Override

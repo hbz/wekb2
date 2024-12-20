@@ -2,7 +2,6 @@
 <div class="ui segment">
     <div class="content wekb-inline-lists">
         <dl>
-
             <dt class="control-label"><g:message code="curatorygroup.name"/></dt>
             <dd><semui:xEditable owner="${d}" field="name" required="true"/></dd>
         </dl>

@@ -145,7 +145,7 @@
                     <i class="icon dropdown"></i>
                 ${advancedSearch.value.title}
                 <g:if test="${filterSetInAccordion > 0}">
-                    <b><g:message code="search.filter.set"/>:</b> <div class="ui primary circular label">${filterSetInAccordion}</div>
+                    <strong><g:message code="search.filter.set"/>:</strong> <div class="ui primary circular label">${filterSetInAccordion}</div>
                 </g:if>
             </div>
 

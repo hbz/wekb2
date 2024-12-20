@@ -22,7 +22,7 @@
                     </div>
 
                     <div class="meta">
-                        News object added by <b>${feedEntry.author.name.text()}</b> on <span
+                        News object added by <strong>${feedEntry.author.name.text()}</strong> on <span
                             class="stay"><g:formatDate
                                 format="${message(code: 'default.date.format.notime')}"
                                 date="${new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss'Z'").parse(feedEntry.updated.text())}"/></span>

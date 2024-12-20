@@ -69,7 +69,7 @@ until <g:formatDate date="${new java.util.Date()}" format="${message(code: 'defa
         </table>
     </g:if>
     <g:else>
-        <b>No Auto Update with Fail found. Everything is right.</b>
+        <strong>No Auto Update with Fail found. Everything is right.</strong>
     </g:else>
 </div>
 
