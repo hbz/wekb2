@@ -41759,6 +41759,10 @@ ol.ui.suffixed.list li::before,
   padding: 5px 0;
 }
 
+dd {
+  margin-inline-start: 20px;
+}
+
 /*******************************
          Site Overrides
 *******************************/

@@ -29,7 +29,7 @@ console.log('+ wekb.js')
 
 $(function () {
 
-    icon.go();
+    a11yIcon.go();
     verticalNavi.go();
     paginationNavi.go();
     responsiveTables.go();
