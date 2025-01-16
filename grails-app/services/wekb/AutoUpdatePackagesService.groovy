@@ -17,7 +17,7 @@ import java.util.concurrent.Future
 @Transactional
 class AutoUpdatePackagesService {
 
-    static final THREAD_POOL_SIZE = 1
+    static final THREAD_POOL_SIZE = 2
     public static boolean running = false;
     Map result = [result: JobResult.STATUS_SUCCESS]
     ExportService exportService
@@ -33,10 +33,15 @@ class AutoUpdatePackagesService {
                 "from Package p " +
                         "where p.kbartSource is not null and " +
                         "p.kbartSource.automaticUpdates = true " +
-                        "and (p.kbartSource.lastRun is null or p.kbartSource.lastRun < current_date) order by p.kbartSource.lastRun")
+                        "and (p.kbartSource.lastRun is null or p.kbartSource.lastRun < current_date) and p.kbartSource.status not in (:status) order by p.kbartSource.lastRun", [status:  [RDStore.KBC_STATUS_REMOVED, RDStore.KBC_STATUS_DELETED]])
         updPacks.each { Package p ->
             if (p.kbartSource.needsUpdate()) {
                 packageNeedsUpdate << p
+            }else if (!p.kbartSource.frequency){
+                if (!(p.status in [RDStore.KBC_STATUS_REMOVED, RDStore.KBC_STATUS_DELETED])) {
+                    UpdatePackageInfo updatePackageInfo = new UpdatePackageInfo(pkg: p, startTime: new Date(), endTime: new Date(), status: RDStore.UPDATE_STATUS_FAILED, description: "Source frequency is not set. Update for this package is not starting.", onlyRowsWithLastChanged: onlyRowsWithLastChanged, automaticUpdate: true, kbartHasWekbFields: false)
+                    updatePackageInfo.save()
+                }
             }
         }
         log.info("findPackageToUpdateAndUpdate: Package with KbartSource and lastRun < currentDate (${packageNeedsUpdate.size()})")
@@ -58,7 +63,7 @@ class AutoUpdatePackagesService {
                         startAutoPackageUpdate(aPackage, onlyRowsWithLastChanged)
                     }catch (Exception exception) {
                         log.error("Error by findPackageToUpdateAndUpdate (${aPackage.id} -> ${aPackage.name}): ${exception.message}")
-                        exception.printStackTrace()
+                        //exception.printStackTrace()
                     }
                 }
             }
@@ -159,10 +164,8 @@ class AutoUpdatePackagesService {
                                     lastUpdateURL = url.toString()
                                     try {
                                         file = exportService.kbartFromUrl(lastUpdateURL, updatePackageInfo)
-                                        println(updatePackageInfo.status)
                                         if(file.size() > 0){
                                             updatePackageInfo.status = RDStore.UPDATE_STATUS_SUCCESSFUL
-                                            updatePackageInfo.updateUrl = lastUpdateURL
                                             updatePackageInfo.save()
                                             log.info("Found File by URL: ${lastUpdateURL}")
                                             break
@@ -170,9 +173,11 @@ class AutoUpdatePackagesService {
                                     }
                                     catch (Exception e) {
                                         log.error("Exception by get kbartFromUrl: ${e.message}")
-                                        e.printStackTrace()
+                                        //e.printStackTrace()
                                     }
                                 }
+                                updatePackageInfo.updateUrl = lastUpdateURL
+                                updatePackageInfo.save()
 
                                 if(updatePackageInfo.status != RDStore.UPDATE_STATUS_FAILED) {
 
@@ -249,7 +254,7 @@ class AutoUpdatePackagesService {
 
             } catch (Exception exception) {
                 log.error("Error by startAutoPackageUapdate: ${exception.message}")
-                exception.printStackTrace()
+                //exception.printStackTrace()
                 UpdatePackageInfo.withTransaction {
                     //UpdatePackageInfo updatePackageFail = new UpdatePackageInfo()
                     updatePackageInfo.description = "An error occurred while processing the KBART file. More information can be seen in the system log. File from URL: ${lastUpdateURL}"

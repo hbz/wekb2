@@ -26,13 +26,13 @@
 
     <semui:tabsItemContent tab="titledetails" activeTab="${params.activeTab}">
         <g:link class="display-inline" controller="search" action="inlineSearch"
-                params="[s_controllerName: controllerName, s_actionName: actionName, objectUUID: params.id, max: params.max, offset: params.offset, sort: params.sort, order: params.order, qbe: 'g:tipps', qp_plat_id: d.id, inline: true, refOID: d.getOID(), hide: ['qp_plat', 'qp_plat_id'], qp_status: wekb.RefdataValue.class.name + ':' + RDStore.KBC_STATUS_CURRENT.id, activeTab: 'titledetails']"
+                params="[s_controllerName: controllerName, s_actionName: actionName, objectUUID: params.id, max: params.max, offset: params.activeTab == 'titledetails' ? params.offset : '', sort: params.sort, order: params.order, qbe: 'g:tipps', qp_plat_id: d.id, inline: true, refOID: d.getOID(), hide: ['qp_plat', 'qp_plat_id'], qp_status: wekb.RefdataValue.class.name + ':' + RDStore.KBC_STATUS_CURRENT.id, activeTab: 'titledetails', jumpOffset: params.activeTab == 'titledetails' ? params.jumpOffset : '']"
                 id="">Titles on this Platform</g:link>
     </semui:tabsItemContent>
 
     <semui:tabsItemContent tab="packages" activeTab="${params.activeTab}">
         <g:link class="display-inline" controller="search" action="inlineSearch"
-                params="[s_controllerName: controllerName, s_actionName: actionName, objectUUID: params.id, max: params.max, offset: params.offset, sort: params.sort, order: params.order, qbe: 'g:packages', qp_platform_id: d.id, inline: true, refOID: d.getOID(), hide: ['qp_platform', 'qp_platform_id'], activeTab: 'packages']"
+                params="[s_controllerName: controllerName, s_actionName: actionName, objectUUID: params.id, max: params.max, offset: params.activeTab == 'packages' ? params.offset : '', sort: params.sort, order: params.order, qbe: 'g:packages', qp_platform_id: d.id, inline: true, refOID: d.getOID(), hide: ['qp_platform', 'qp_platform_id'], activeTab: 'packages', jumpOffset: params.activeTab == 'packages' ? params.jumpOffset : '']"
                 id="">Packages on this Platform</g:link>
     </semui:tabsItemContent>
 
@@ -213,6 +213,26 @@
                         </dl>
                         <dl>
                             <dt class="control-label">
+                                ... PDF viewer
+                            </dt>
+                            <dd>
+                                <semui:xEditableRefData owner="${d}" field="viewerForPdf"
+                                                        config="${RCConstants.UYNP}"/>
+                            </dd>
+                            <dd></dd>
+                        </dl>
+                        <dl>
+                            <dt class="control-label">
+                                ... ePub viewer
+                            </dt>
+                            <dd>
+                                <semui:xEditableRefData owner="${d}" field="viewerForEpub"
+                                                        config="${RCConstants.UYNP}"/>
+                            </dd>
+                            <dd></dd>
+                        </dl>
+                        <dl>
+                            <dt class="control-label">
                                 ... Audio player
                             </dt>
                             <dd>
@@ -272,7 +292,7 @@
                                 ... EPUB e-books
                             </dt>
                             <dd>
-                                <semui:xEditableRefData owner="${d}" field="ebookEPub" config="${RCConstants.UYNP}"/>
+                                <semui:xEditableRefData owner="${d}" field="accessEPub" config="${RCConstants.UYNP}"/>
                             </dd>
                         </dl>
                         <dl>
@@ -280,7 +300,7 @@
                                 ... PDF e-books
                             </dt>
                             <dd>
-                                <semui:xEditableRefData owner="${d}" field="pdfUaStandard" config="${RCConstants.UYNP}"/>
+                                <semui:xEditableRefData owner="${d}" field="accessPdf" config="${RCConstants.UYNP}"/>
                             </dd>
                         </dl>
 
@@ -289,7 +309,16 @@
                                 ... Videos
                             </dt>
                             <dd>
-                                <semui:xEditableRefData owner="${d}" field="videoAudioDes" config="${RCConstants.UYNP}"/>
+                                <semui:xEditableRefData owner="${d}" field="accessAudio" config="${RCConstants.UYNP}"/>
+                            </dd>
+                        </dl>
+
+                        <dl>
+                            <dt class="control-label">
+                                ... Videos
+                            </dt>
+                            <dd>
+                                <semui:xEditableRefData owner="${d}" field="accessVideo" config="${RCConstants.UYNP}"/>
                             </dd>
                         </dl>
 
@@ -298,7 +327,7 @@
                                 ... Databases
                             </dt>
                             <dd>
-                                <semui:xEditableRefData owner="${d}" field="databaseBarrierFree" config="${RCConstants.UYNP}"/>
+                                <semui:xEditableRefData owner="${d}" field="accessDatabase" config="${RCConstants.UYNP}"/>
                             </dd>
                         </dl>
 

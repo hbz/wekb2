@@ -29,6 +29,9 @@ class User {
   boolean accountLocked
   boolean passwordExpired
 
+  Date lastLogin
+  Integer invalidLoginAttempts = 0
+
   Long defaultPageSize = new Long(10)
 
   static hasMany      = [ roles: UserRole,
@@ -43,6 +46,8 @@ class User {
     email(blank: true, nullable:true)
     defaultPageSize(blank: true, nullable:true)
     displayName (blank: true, nullable:true)
+    lastLogin                nullable: true
+    invalidLoginAttempts     nullable: true
   }
 
   static mapping = {
@@ -65,6 +70,9 @@ class User {
 
     lastUpdated     column: 'usr_last_updated'
     dateCreated     column: 'usr_date_created'
+
+    lastLogin               column: 'usr_last_login'
+    invalidLoginAttempts    column: 'usr_invalid_login_attempts'
 
   }
 

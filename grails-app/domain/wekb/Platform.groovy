@@ -88,28 +88,34 @@ class Platform  extends AbstractBase implements Auditable {
   RefdataValue accessPlatform
 
   @RefdataAnnotation(cat = RCConstants.UYNP)
+  RefdataValue viewerForPdf
+
+  @RefdataAnnotation(cat = RCConstants.UYNP)
+  RefdataValue viewerForEpub
+
+  @RefdataAnnotation(cat = RCConstants.UYNP)
   RefdataValue playerForAudio
 
   @RefdataAnnotation(cat = RCConstants.UYNP)
   RefdataValue playerForVideo
 
   @RefdataAnnotation(cat = RCConstants.BF_EBOOK)
-  RefdataValue ebookEPub
+  RefdataValue accessEPub
 
   @RefdataAnnotation(cat = RCConstants.BF_EBOOK)
   RefdataValue onixMetadata
 
   @RefdataAnnotation(cat = RCConstants.BF_PDF)
-  RefdataValue pdfUaStandard
+  RefdataValue accessPdf
 
   @RefdataAnnotation(cat = RCConstants.BF_VIDEO)
-  RefdataValue videoAudioDes
+  RefdataValue accessAudio
 
   @RefdataAnnotation(cat = RCConstants.BF_VIDEO)
-  RefdataValue videoSubTitles
+  RefdataValue accessVideo
 
   @RefdataAnnotation(cat = RCConstants.BF_DATABASE)
-  RefdataValue databaseBarrierFree
+  RefdataValue accessDatabase
 
   @RefdataAnnotation(cat = RCConstants.YN)
   RefdataValue accessibilityStatementAvailable
@@ -168,14 +174,16 @@ class Platform  extends AbstractBase implements Auditable {
     counterR5SushiPlatform column: 'plat_counter_r5_sushi_platform', type: 'text'
 
     accessPlatform column: 'plat_access_platform_fk_rv'
+    viewerForPdf column: 'plat_viewer_for_pdf_fk_rv'
+    viewerForEpub column: 'plat_viewer_for_epub_fk_rv'
     playerForAudio column: 'plat_player_for_audio_fk_rv'
     playerForVideo column: 'plat_player_for_video_fk_rv'
-    ebookEPub column: 'plat_ebook_epub_fk_rv'
+    accessEPub column: 'plat_access_epub_fk_rv'
     onixMetadata column: 'plat_onix_metadata_fk_rv'
-    pdfUaStandard column: 'plat_pdf_ua_standard_fk_rv'
-    videoAudioDes column: 'plat_video_audiodes_fk_rv'
-    videoSubTitles column: 'plat_video_subtitles_fk_rv'
-    databaseBarrierFree column: 'plat_database_barrier_free_fk_rv'
+    accessPdf column: 'plat_access_pdf_fk_rv'
+    accessAudio column: 'plat_access_audio_fk_rv'
+    accessVideo column: 'plat_access_video_fk_rv'
+    accessDatabase column: 'plat_access_database_fk_rv'
 
     accessibilityStatementAvailable column: 'plat_accessibility_statement_available_fk_rv'
     accessibilityStatementUrl column: 'plat_accessibility_statement_url', type: 'text'
@@ -225,14 +233,16 @@ class Platform  extends AbstractBase implements Auditable {
     counterR5SushiPlatform (nullable: true, blank: false)
 
     accessPlatform (nullable: true, blank: false)
+    viewerForPdf (nullable: true, blank: false)
+    viewerForEpub (nullable: true, blank: false)
     playerForAudio (nullable: true, blank: false)
     playerForVideo (nullable: true, blank: false)
-    ebookEPub (nullable: true, blank: false)
+    accessEPub (nullable: true, blank: false)
     onixMetadata (nullable: true, blank: false)
-    pdfUaStandard (nullable: true, blank: false)
-    videoAudioDes (nullable: true, blank: false)
-    videoSubTitles (nullable: true, blank: false)
-    databaseBarrierFree (nullable: true, blank: false)
+    accessPdf (nullable: true, blank: false)
+    accessAudio (nullable: true, blank: false)
+    accessVideo (nullable: true, blank: false)
+    accessDatabase (nullable: true, blank: false)
     accessibilityStatementAvailable (nullable: true, blank: false)
     accessibilityStatementUrl (nullable: true, blank: true)
   }

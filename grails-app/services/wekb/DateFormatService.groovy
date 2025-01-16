@@ -23,7 +23,7 @@ class DateFormatService {
       DATE_FORMAT.parse(date)
     }
     catch (NumberFormatException nfe){
-      log.error("Caught NumberFormatException in parseDate() for String \"$date\"")
+      log.error("Caught NumberFormatException in parseDate() for String \"$date\"" + nfe.message)
       return null
     }
   }
