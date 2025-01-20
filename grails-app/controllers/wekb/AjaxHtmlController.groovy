@@ -72,6 +72,54 @@ class AjaxHtmlController {
                         }
                     }
 
+                    if (params.__newObjectClass == "wekb.VendorLibrarySystem") {
+
+                        RefdataValue refdataValue = genericOIDService.resolveOID3(params.supportedLibrarySystem)
+
+                        VendorLibrarySystem exists =  refdataValue ? VendorLibrarySystem.findByVendorAndSupportedLibrarySystem(contextObj, refdataValue) : null
+
+                        if (exists) {
+                            log.debug("found dupes!")
+                            errors.add(g.message(code: 'default.duplicate'))
+                        }
+                    }
+
+                    if (params.__newObjectClass == "wekb.VendorElectronicBilling") {
+
+                        RefdataValue refdataValue = genericOIDService.resolveOID3(params.electronicBilling)
+
+                        VendorElectronicBilling exists =  refdataValue ? VendorElectronicBilling.findByVendorAndElectronicBilling(contextObj, refdataValue) : null
+
+                        if (exists) {
+                            log.debug("found dupes!")
+                            errors.add(g.message(code: 'default.duplicate'))
+                        }
+                    }
+
+                    if (params.__newObjectClass == "wekb.VendorInvoiceDispatch") {
+
+                        RefdataValue refdataValue = genericOIDService.resolveOID3(params.invoiceDispatch)
+
+                        VendorInvoiceDispatch exists =  refdataValue ? VendorInvoiceDispatch.findByVendorAndInvoiceDispatch(contextObj, refdataValue) : null
+
+                        if (exists) {
+                            log.debug("found dupes!")
+                            errors.add(g.message(code: 'default.duplicate'))
+                        }
+                    }
+
+                    if (params.__newObjectClass == "wekb.VendorElectronicDeliveryDelay") {
+
+                        RefdataValue refdataValue = genericOIDService.resolveOID3(params.electronicDeliveryDelay)
+
+                        VendorElectronicDeliveryDelay exists =  refdataValue ? VendorElectronicDeliveryDelay.findByVendorAndElectronicDeliveryDelay(contextObj, refdataValue) : null
+
+                        if (exists) {
+                            log.debug("found dupes!")
+                            errors.add(g.message(code: 'default.duplicate'))
+                        }
+                    }
+
                     if (params.__newObjectClass == "wekb.TitleInstancePackagePlatform") {
 
                         if (!params.title || params.title.size() == 0) {
@@ -89,6 +137,31 @@ class AjaxHtmlController {
                             errors.add(g.message(code: 'tipp.url.nullable', default: 'Please provide an url for the TIPP'))
                         }
                     }
+
+                    if (params.__newObjectClass == "wekb.ProviderInvoiceDispatch") {
+
+                        RefdataValue refdataValue = genericOIDService.resolveOID3(params.invoiceDispatch)
+
+                        ProviderInvoiceDispatch exists =  refdataValue ? ProviderInvoiceDispatch.findByProviderAndInvoiceDispatch(contextObj, refdataValue) : null
+
+                        if (exists) {
+                            log.debug("found dupes!")
+                            errors.add(g.message(code: 'default.duplicate'))
+                        }
+                    }
+
+                    if (params.__newObjectClass == "wekb.ProviderElectronicBilling") {
+
+                        RefdataValue refdataValue = genericOIDService.resolveOID3(params.electronicBilling)
+
+                        ProviderElectronicBilling exists =  refdataValue ? ProviderElectronicBilling.findByProviderAndElectronicBilling(contextObj, refdataValue) : null
+
+                        if (exists) {
+                            log.debug("found dupes!")
+                            errors.add(g.message(code: 'default.duplicate'))
+                        }
+                    }
+
 
                     if (errors.size() == 0) {
                         new_obj = domain_class.getClazz().getDeclaredConstructor().newInstance()

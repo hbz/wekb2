@@ -172,14 +172,14 @@
                     <div class="field">
                         <label>Content Type</label>
                         <semui:simpleReferenceDropdown name="contentType"
-                                                       baseClass="wekb.RefdataValue"
+                                                       baseClass="wekb.RefdataValue" class="required"
                                                        filter1="${RCConstants.CONTACT_CONTENT_TYPE}"/>
                     </div>
 
                     <div class="field">
                         <label>Contact Type</label>
                         <semui:simpleReferenceDropdown name="type"
-                                                       baseClass="wekb.RefdataValue"
+                                                       baseClass="wekb.RefdataValue" class="required"
                                                        filter1="${RCConstants.CONTACT_TYPE}"/>
                     </div>
                 </g:form>

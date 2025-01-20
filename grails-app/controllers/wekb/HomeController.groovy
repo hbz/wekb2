@@ -17,6 +17,7 @@ import groovy.xml.XmlSlurper
 @Secured(['IS_AUTHENTICATED_FULLY'])
 class HomeController {
 
+  AccessService accessService
   SpringSecurityService springSecurityService
   PasswordEncoder passwordEncoder
   SessionFactory sessionFactory
@@ -42,6 +43,7 @@ class HomeController {
   @Secured(['ROLE_USER', 'IS_AUTHENTICATED_FULLY'])
   def index () {
     log.debug("Home::index -- ${params}")
+    accessService.updateLastLogin()
 
     Map result = [:]
 
@@ -88,7 +90,8 @@ class HomeController {
       try {
         result.rssFeed = new XmlSlurper().parseText(wikiRssFeedUrl.toURL().text)
       }catch (Exception exception){
-        log.error("${wikiRssFeedUrl}"+ exception.printStackTrace())
+        log.error("${wikiRssFeedUrl}")
+        exception.printStackTrace()
       }
     } else {
       log.info("No wikiRssFeedUrl set!");

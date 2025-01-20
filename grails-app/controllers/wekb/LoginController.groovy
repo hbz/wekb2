@@ -179,6 +179,8 @@ class LoginController {
                 }else{
                     String newPassword = PasswordUtils.getRandomUserPassword()
                     user.password = newPassword
+                    user.accountLocked = false
+                    user.invalidLoginAttempts = 0
                     if (user.save()) {
                         try {
                             mailService.sendMail {

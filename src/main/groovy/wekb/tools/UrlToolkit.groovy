@@ -16,9 +16,6 @@ class UrlToolkit {
 
     static final String DATESTAMP_PLACEHOLDER = "{YYYY_MM_DD}"
     static final String DATESTAMP_REGEX = "(.*[\\W_])([\\d]{4}-[\\d]{2}-[\\d]{2})([\\W_].*)"
-    static final String DATESTAMP_PLACEHOLDER_REGEX = "(.*[\\W_])(\\{?YYYY_MM_DD}?)([\\W_].*)"
-    static final Pattern DATESTAMP_REGEX_PATTERN = Pattern.compile(DATESTAMP_REGEX)
-    static final Pattern DATESTAMP_PLACEHOLDER_REGEX_PATTERN = Pattern.compile(DATESTAMP_PLACEHOLDER_REGEX)
 
 
     static boolean urlExists(URL url){
@@ -117,12 +114,13 @@ class UrlToolkit {
 
     static List<URL> getUpdateUrlList(String url, LocalDate from, LocalDate lastDate){
         List<URL> result = new ArrayList<>()
-        Matcher urlMatcher = DATESTAMP_REGEX_PATTERN.matcher(url)
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+        Matcher urlMatcher = Pattern.compile("(.*[\\W_])([\\d]{4}-[\\d]{2}-[\\d]{2})([\\W_].*)").matcher(url)
         if (!urlMatcher.matches()){
-            urlMatcher = DATESTAMP_PLACEHOLDER_REGEX_PATTERN.matcher(url)
+            dateFormatter = DateTimeFormatter.ofPattern("yyyy_MM_dd")
+            urlMatcher = Pattern.compile("(.*[\\W_])([\\d]{4}_[\\d]{2}_[\\d]{2})([\\W_].*)").matcher(url)
         }
         if (urlMatcher.matches()){
-            DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
             String prefix = urlMatcher.group(1)
             String appendix = urlMatcher.group(3)
             /*LocalDateTime fromDateTime
