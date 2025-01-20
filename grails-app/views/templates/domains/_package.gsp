@@ -31,6 +31,9 @@
                 <g:if test="${!createObject}">
                     <semui:xEditableManyToOne owner="${d}" field="kbartSource" baseClass="wekb.KbartSource" onylMyComponents="true"/>
                 </g:if>
+                <g:if test="${d.kbartSource}">
+                    <p>(<b>Frequency:</b> <semui:xEditableRefData owner="${d.kbartSource}" field="frequency" config="${RCConstants.SOURCE_FREQUENCY}" overwriteEditable="false"/>, <b>AutomaticUpdates:</b> <semui:xEditableBoolean owner="${d.kbartSource}" field="automaticUpdates" overwriteEditable="false"/>, <b>LastRun:</b> <g:formatDate format="${message(code: 'default.date.format.noZ')}" date="${d.kbartSource.lastRun}"/>)</p>
+                </g:if>
             </dd>
         </dl>
 
