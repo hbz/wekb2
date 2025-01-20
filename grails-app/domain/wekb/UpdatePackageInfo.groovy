@@ -39,6 +39,10 @@ class UpdatePackageInfo {
     Date lastChangedInKbart
 
     String updateUrl
+    String lastUpdateUrl
+    Date lastRun
+    @RefdataAnnotation(cat = RCConstants.SOURCE_FREQUENCY)
+    RefdataValue frequency
 
     @RefdataAnnotation(cat = RCConstants.UPDATE_STATUS)
     RefdataValue status
@@ -87,6 +91,10 @@ class UpdatePackageInfo {
         updateFromFTP column: 'upi_update_from_ftp'
         updateFromURL column: 'upi_update_from_url'
         updateFromFileUpload column: 'upi_update_from_file_upload'
+
+        lastUpdateUrl column: 'upi_last_udpate_url'
+        lastRun column: 'upi_last_run'
+        frequency column: 'upi_frequency'
     }
 
     static constraints = {
@@ -95,6 +103,9 @@ class UpdatePackageInfo {
         //onlyRowsWithLastChanged  (nullable:true)
         lastChangedInKbart (nullable:true, default: null)
         updateUrl (nullable:true)
+        lastUpdateUrl (nullable:true)
+        lastRun (nullable:true)
+        frequency (nullable:true)
     }
 
     def beforeValidate (){

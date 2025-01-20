@@ -1929,6 +1929,7 @@ class KbartImportService {
             if(!result.newTipp) {
                 List<TippPrice> existPrices = TippPrice.findAllByTippAndPriceTypeAndCurrency(tipp, priceType, currency, [sort: 'lastUpdated', order: 'ASC'])
                 if (existPrices.size() > 0) {
+                    oldValue = existPrices.price.join('; ')
                     def pricesIDs = existPrices.id.clone()
                     pricesIDs.each {
                         TippPrice tippPrice = TippPrice.get(it)
