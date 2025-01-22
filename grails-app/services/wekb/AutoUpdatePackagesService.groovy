@@ -182,8 +182,6 @@ class AutoUpdatePackagesService {
                                         updateUrls << pkg.kbartSource.lastUpdateUrl
                                     }
 
-                                    updateUrls << pkg.kbartSource.url
-
                                     for(URL url in updateUrls){
                                         lastUpdateURL = url.toString()
                                         try {
