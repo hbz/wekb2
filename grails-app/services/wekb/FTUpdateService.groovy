@@ -1,7 +1,6 @@
 package wekb
 
 import grails.converters.JSON
-import grails.gorm.transactions.Transactional
 import org.elasticsearch.action.admin.indices.flush.FlushRequest
 import org.elasticsearch.action.admin.indices.flush.FlushResponse
 import org.elasticsearch.action.bulk.BulkItemResponse
@@ -11,7 +10,6 @@ import org.elasticsearch.action.index.IndexRequest
 import org.elasticsearch.client.RequestOptions
 import org.elasticsearch.client.RestHighLevelClient
 import org.elasticsearch.xcontent.XContentType
-import org.hibernate.Session
 import org.hibernate.SessionFactory
 import wekb.helper.RDStore
 import wekb.system.FTControl
@@ -261,13 +259,20 @@ class FTUpdateService {
         result.ipAuthentication = kbc.ipAuthentication?.value
 
         result.shibbolethAuthentication = kbc.shibbolethAuthentication?.value
+        result.refedsSupport = kbc.refedsSupport?.value
+        result.dpfParticipation = kbc.dpfParticipation?.value
+        result.sccSupport = kbc.sccSupport?.value
 
         result.openAthens = kbc.openAthens?.value
 
         result.passwordAuthentication = kbc.passwordAuthentication?.value
+        result.mailDomain = kbc.mailDomain?.value
+        result.referrerAuthentification = kbc.referrerAuthentification?.value
+        result.ezProxy = kbc.ezProxy?.value
+        result.hanServer = kbc.hanServer?.value
+        result.otherProxies = kbc.otherProxies?.value
 
         result.statisticsFormat = kbc.statisticsFormat?.value
-        result.counterR3Supported = kbc.counterR3Supported?.value
         result.counterR4Supported = kbc.counterR4Supported?.value
         result.counterR5Supported = kbc.counterR5Supported?.value
         result.counterR4SushiApiSupported = kbc.counterR4SushiApiSupported?.value
@@ -278,9 +283,27 @@ class FTUpdateService {
         result.counterCertified = kbc.counterCertified?.value
         result.statisticsAdminPortalUrl = kbc.statisticsAdminPortalUrl
         result.statisticsUpdate = kbc.statisticsUpdate?.value
-        result.proxySupported = kbc.proxySupported?.value
 
         result.counterRegistryApiUuid = kbc.counterRegistryApiUuid
+
+        result.accessPlatform = kbc.accessPlatform?.value
+        result.viewerForPdf = kbc.viewerForPdf?.value
+        result.viewerForEpub = kbc.viewerForEpub?.value
+        result.playerForAudio = kbc.playerForAudio?.value
+        result.playerForVideo = kbc.playerForVideo?.value
+        result.accessEPub = kbc.accessEPub?.value
+        result.onixMetadata = kbc.onixMetadata?.value
+        result.accessPdf = kbc.accessPdf?.value
+        result.accessAudio = kbc.accessAudio?.value
+        result.accessVideo = kbc.accessVideo?.value
+        result.accessDatabase = kbc.accessDatabase?.value
+        result.accessibilityStatementAvailable = kbc.accessibilityStatementAvailable?.value
+        result.accessibilityStatementUrl = kbc.accessibilityStatementUrl
+
+        result.platformBlogUrl = kbc.platformBlogUrl
+        result.rssUrl = kbc.rssUrl
+        result.individualDesignLogo = kbc.individualDesignLogo?.value
+        result.fullTextSearch = kbc.fullTextSearch?.value
 
         result.federations = []
         kbc.federations.each { PlatformFederation platformFederation ->
