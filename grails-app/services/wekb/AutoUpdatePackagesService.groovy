@@ -176,6 +176,29 @@ class AutoUpdatePackagesService {
                                         //e.printStackTrace()
                                     }
                                 }
+                                if(updatePackageInfo.status == RDStore.UPDATE_STATUS_FAILED) {
+                                    updateUrls = []
+                                    if(pkg.kbartSource.lastUpdateUrl){
+                                        updateUrls << pkg.kbartSource.lastUpdateUrl
+                                    }
+
+                                    for(URL url in updateUrls){
+                                        lastUpdateURL = url.toString()
+                                        try {
+                                            file = exportService.kbartFromUrl(lastUpdateURL, updatePackageInfo)
+                                            if(file.size() > 0){
+                                                updatePackageInfo.status = RDStore.UPDATE_STATUS_SUCCESSFUL
+                                                updatePackageInfo.save()
+                                                log.info("Found File by URL: ${lastUpdateURL}")
+                                                break
+                                            }
+                                        }
+                                        catch (Exception e) {
+                                            log.error("Exception by get kbartFromUrl: ${e.message}")
+                                            //e.printStackTrace()
+                                        }
+                                    }
+                                }
                                 updatePackageInfo.updateUrl = lastUpdateURL
                                 updatePackageInfo.save()
 
