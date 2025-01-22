@@ -576,8 +576,13 @@ TitleInstancePackagePlatform.PublicationType;Monograph;Monograph;Monograph
 TitleInstancePackagePlatform.PublicationType;Other;Other;Other
 TitleInstancePackagePlatform.PublicationType;Serial;Serial;Serial
 Vendor.SupportedLibrarySystem;Alma;Alma;Alma
-Vendor.SupportedLibrarySystem;Sisis;Sisis;Sisis
+Vendor.SupportedLibrarySystem;Aleph;Aleph;Aleph
+Vendor.SupportedLibrarySystem;aDIS/BMS;aDIS/BMS;aDIS/BMS
 Vendor.SupportedLibrarySystem;Folio;Folio;Folio
+Vendor.SupportedLibrarySystem;Koha;Koha;Koha
+Vendor.SupportedLibrarySystem;LBS;LBS;LBS
+Vendor.SupportedLibrarySystem;Libero;Libero;Libero
+Vendor.SupportedLibrarySystem;Sisis;Sisis;Sisis
 Vendor.ElectronicBilling;X-Invoice;XRechnung;XRechnung
 Vendor.ElectronicBilling;EDI;EDI;EDI
 Vendor.ElectronicBilling;PDF;PDF;PDF
