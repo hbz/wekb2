@@ -40,15 +40,6 @@
                 <semui:xEditable owner="${d}" field="primaryUrl" validation="url" outGoingLink="true"/>
             </dd>
         </dl>
-        %{--<dl>
-            <dt class="control-label">
-                Title Namespace
-            </dt>
-            <dd>
-                <semui:xEditableManyToOne owner="${d}" field="titleNamespace" baseClass="wekb.IdentifierNamespace"
-                                          filter1="TitleInstancePackagePlatform" >${(d.titleNamespace?.name) ?: d.titleNamespace?.value}</semui:xEditableManyToOne>
-            </dd>
-        </dl>--}%
         <dl>
         <dt class="control-label"><g:message code="platform.ipAuthentication"/></dt>
             <dd><semui:xEditableRefData owner="${d}" field="ipAuthentication"

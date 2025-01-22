@@ -254,8 +254,6 @@ class FTUpdateService {
         }
         result.componentType = kbc.class.simpleName
 
-        result.titleNamespace = kbc.titleNamespace?.value
-
         result.lastAuditDate = kbc.lastAuditDate ? dateFormatService.formatIsoTimestamp(kbc.lastAuditDate) : null
 
         result.ipAuthentication = kbc.ipAuthentication?.value

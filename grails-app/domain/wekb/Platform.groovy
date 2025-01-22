@@ -22,9 +22,6 @@ class Platform  extends AbstractBase implements Auditable {
 
   String primaryUrl
 
-  IdentifierNamespace titleNamespace
-
-
   @RefdataAnnotation(cat = RCConstants.PLATFORM_IP_AUTH)
   RefdataValue ipAuthentication
 
@@ -162,7 +159,6 @@ class Platform  extends AbstractBase implements Auditable {
     statisticsAdminPortalUrl column: 'plat_statistics_admin_portal_url'
     statisticsUpdate column: 'plat_statistics_update_fk_rv'
     proxySupported column: 'plat_proxy_supported_fk_rv'
-    titleNamespace column: 'plat_title_namespace_fk'
     lastAuditDate column: 'plat_last_audit_date'
 
     provider column: 'plat_provider_fk'
@@ -222,7 +218,6 @@ class Platform  extends AbstractBase implements Auditable {
     statisticsAdminPortalUrl(nullable: true, blank: false)
     statisticsUpdate(nullable: true, blank: false)
     proxySupported(nullable: true, blank: false)
-    titleNamespace(nullable: true)
     lastAuditDate (nullable: true)
 
     counterRegistryApiUuid(nullable: true, blank: false)

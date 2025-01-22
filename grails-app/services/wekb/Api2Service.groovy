@@ -998,8 +998,6 @@ class Api2Service {
 
             result.primaryUrl = object.primaryUrl
 
-            result.titleNamespace = object.titleNamespace?.value
-
             result.lastAuditDate = object.lastAuditDate ? DateUtils.getSDF_ISO().format(object.lastAuditDate) : ""
 
             result.ipAuthentication = object.ipAuthentication?.value
@@ -1454,8 +1452,6 @@ class Api2Service {
                 result.providerUuid = object.provider ? object.provider.uuid : ""
 
                 result.primaryUrl = object.primaryUrl
-
-                result.titleNamespace = object.titleNamespace?.value
 
                 result.lastAuditDate = object.lastAuditDate ? DateUtils.getSDF_ISO().format(object.lastAuditDate) : ""
 
