@@ -66,7 +66,7 @@
             <div class="content">
 
                 <g:link class="display-inline" controller="search" action="inlineSearch"
-                        params="[s_controllerName: controllerName, s_actionName: actionName, objectUUID: params.id, max: params.max, offset: params.activeTab == 'autoUpdatePackageInfos' ? params.offset : '', sort: params.sort, order: params.order, qbe: 'g:updateTippInfos', qp_tipp_id: d.id, inline: true, refOID: d.getOID(), qp_automaticUpdate: RDStore.YN_YES.class.name+':'+RDStore.YN_YES.id, activeTab: 'autoUpdatePackageInfos', jumpOffset: params.activeTab == 'autoUpdatePackageInfos' ? params.jumpOffset : '']"
+                        params="[s_controllerName: controllerName, s_actionName: actionName, objectUUID: params.id, max: params.max, offset: params.activeTab == 'autoUpdatePackageInfos' ? params.offset : '', sort: params.activeTab == 'autoUpdatePackageInfos' ? params.sort : '', order: params.activeTab == 'autoUpdatePackageInfos' ? params.order : '', qbe: 'g:updateTippInfos', qp_tipp_id: d.id, inline: true, refOID: d.getOID(), qp_automaticUpdate: RDStore.YN_YES.class.name+':'+RDStore.YN_YES.id, activeTab: 'autoUpdatePackageInfos', jumpOffset: params.activeTab == 'autoUpdatePackageInfos' ? params.jumpOffset : '']"
                         id="">Package Update Infos on this Source</g:link>
 
             </div>
@@ -80,7 +80,7 @@
             <div class="content">
 
                 <g:link class="display-inline" controller="search" action="inlineSearch"
-                        params="[s_controllerName: controllerName, s_actionName: actionName, objectUUID: params.id, max: params.max, offset: params.activeTab == 'manualUpdatePackageInfos' ? params.offset : '', sort: params.sort, order: params.order, qbe: 'g:updateTippInfos', qp_tipp_id: d.id, inline: true, refOID: d.getOID(), qp_automaticUpdate: RDStore.YN_NO.class.name+':'+RDStore.YN_NO.id, activeTab: 'manualUpdatePackageInfos', jumpOffset: params.activeTab == 'manualUpdatePackageInfos' ? params.jumpOffset : '']"
+                        params="[s_controllerName: controllerName, s_actionName: actionName, objectUUID: params.id, max: params.max, offset: params.activeTab == 'manualUpdatePackageInfos' ? params.offset : '', sort: params.activeTab == 'manualUpdatePackageInfos' ? params.sort : '', order: params.activeTab == 'manualUpdatePackageInfos' ? params.order : '', qbe: 'g:updateTippInfos', qp_tipp_id: d.id, inline: true, refOID: d.getOID(), qp_automaticUpdate: RDStore.YN_NO.class.name+':'+RDStore.YN_NO.id, activeTab: 'manualUpdatePackageInfos', jumpOffset: params.activeTab == 'manualUpdatePackageInfos' ? params.jumpOffset : '']"
                         id="">Package Update Infos on this Source</g:link>
 
             </div>
