@@ -366,7 +366,7 @@
             </dl>
             <dl>
                 <dt class="control-label">
-                    Update information about new releases within e-book packages
+                    Alerts about new publications within e-book packages
                 </dt>
                 <dd>
                     <semui:xEditableRefData owner="${d}" field="activationForNewReleases"
@@ -397,19 +397,19 @@
         <div class="content wekb-inline-lists">
             <dl>
                 <dt class="control-label">
-                    Prequalification VOL
+                    Prequalification
                 </dt>
                 <dd>
-                    <semui:xEditableRefData owner="${d}" field="prequalificationVOL"
+                    <semui:xEditableRefData owner="${d}" field="prequalification"
                                             config="${RCConstants.YN}"/>
                 </dd>
             </dl>
             <dl>
                 <dt class="control-label">
-                    Info to Prequalification VOL
+                    Info to Prequalification
                 </dt>
                 <dd>
-                    <semui:xEditable owner="${d}" field="prequalificationVOLInfo"/>
+                    <semui:xEditable owner="${d}" field="prequalificationInfo"/>
                 </dd>
             </dl>
         </div>
