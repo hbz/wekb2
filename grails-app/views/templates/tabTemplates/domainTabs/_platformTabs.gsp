@@ -4,8 +4,10 @@
 
 <g:if test="${d}">
     <semui:tabs>
-
-        <semui:tabsItemWithoutLink tab="statistic" defaultTab="statistic" activeTab="${params.activeTab}">
+        <semui:tabsItemWithoutLink tab="authentication" defaultTab="authentication" activeTab="${params.activeTab}">
+            Authentication
+        </semui:tabsItemWithoutLink>
+        <semui:tabsItemWithoutLink tab="statistic" activeTab="${params.activeTab}">
             Statistic
         </semui:tabsItemWithoutLink>
         <g:if test="${user && (SpringSecurityUtils.ifAnyGranted("ROLE_ADMIN, ROLE_SUSHI") || user.curatoryGroupUsers.curatoryGroup.id.intersect(d.curatoryGroups.curatoryGroup.id))}">
@@ -15,6 +17,9 @@
         </g:if>
         <semui:tabsItemWithoutLink tab="accessibility" activeTab="${params.activeTab}">
             Accessibility
+        </semui:tabsItemWithoutLink>
+        <semui:tabsItemWithoutLink tab="additionalServices" activeTab="${params.activeTab}">
+            Additional Services
         </semui:tabsItemWithoutLink>
         <semui:tabsItemWithoutLink tab="titledetails" activeTab="${params.activeTab}" counts="${d.currentTippCount}">
             Hosted Titles
@@ -36,7 +41,105 @@
                 id="">Packages on this Platform</g:link>
     </semui:tabsItemContent>
 
-    <semui:tabsItemContent tab="statistic" defaultTab="statistic" activeTab="${params.activeTab}">
+    <semui:tabsItemContent tab="authentication" defaultTab="authentication" activeTab="${params.activeTab}">
+        <div class="content wekb-inline-lists">
+            <dl>
+                <dt class="control-label"><g:message code="platform.ipAuthentication"/></dt>
+                <dd><semui:xEditableRefData owner="${d}" field="ipAuthentication"
+                                            config="${RCConstants.PLATFORM_IP_AUTH}"/></dd>
+            </dl>
+            <dl>
+                <dt class="control-label"><g:message code="platform.openAthens"/></dt>
+                <dd><semui:xEditableRefData owner="${d}" field="openAthens"
+                                            config="${RCConstants.YN}"/></dd>
+            </dl>
+            <dl>
+                <dt class="control-label"><g:message code="platform.shibbolethAuthentication"/></dt>
+                <dd><semui:xEditableRefData owner="${d}" field="shibbolethAuthentication"
+                                            config="${RCConstants.YN}"/></dd>
+            </dl>
+            <g:if test="${d.shibbolethAuthentication && d.shibbolethAuthentication == wekb.helper.RDStore.YN_YES}">
+                <dl>
+                    <dt class="control-label">
+                        Federations
+                    </dt>
+                    <dd>
+                        <table class="ui small selectable striped celled table">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Federation</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <g:each in="${d.federations?.sort { it.federation?.value }}" var="federation" status="i">
+                                <tr>
+                                    <td>${i + 1}</td>
+                                    <td><semui:xEditableRefData owner="${federation}" field="federation"
+                                                                config="${RCConstants.PLATFORM_FEDERATION}"/>
+                                    <td>
+                                        <g:if test="${editable}">
+                                            <g:link controller='ajaxHtml'
+                                                    action='delete'
+                                                    params="${["__context": "${federation.getOID()}", curationOverride: params.curationOverride]}">Delete</g:link>
+                                        </g:if>
+                                    </td>
+                                </tr>
+                            </g:each>
+                            </tbody>
+                        </table>
+
+                        <g:if test="${editable}">
+                            <a class="ui right floated primary button" href="#"
+                               onclick="$('#pfModal').modal('show');">Add Federations</a>
+
+                            <br>
+                            <br>
+                        </g:if>
+                    </dd>
+                </dl>
+                <dl>
+                    <dt class="control-label"><g:message code="platform.refedsSupport"/></dt>
+                    <dd><semui:xEditableRefData owner="${d}" field="refedsSupport" config="${RCConstants.YN}"/></dd>
+                </dl>
+                <dl>
+                    <dt class="control-label"><g:message code="platform.dpfParticipation"/></dt>
+                    <dd><semui:xEditableRefData owner="${d}" field="dpfParticipation" config="${RCConstants.YN}"/></dd>
+                </dl>
+                <dl>
+                    <dt class="control-label"><g:message code="platform.sccSupport"/></dt>
+                    <dd><semui:xEditableRefData owner="${d}" field="sccSupport" config="${RCConstants.YN}"/></dd>
+                </dl>
+            </g:if>
+            <dl>
+                <dt class="control-label"><g:message code="platform.passwordAuthentication"/></dt>
+                <dd><semui:xEditableRefData owner="${d}" field="passwordAuthentication" config="${RCConstants.YN}"/></dd>
+            </dl>
+            <dl>
+                <dt class="control-label"><g:message code="platform.mailDomain"/></dt>
+                <dd><semui:xEditableRefData owner="${d}" field="mailDomain" config="${RCConstants.YN}"/></dd>
+            </dl>
+            <dl>
+                <dt class="control-label"><g:message code="platform.referrerAuthentification"/></dt>
+                <dd><semui:xEditableRefData owner="${d}" field="referrerAuthentification" config="${RCConstants.YN}"/></dd>
+            </dl>
+            <dl>
+                <dt class="control-label"><g:message code="platform.ezProxy"/></dt>
+                <dd><semui:xEditableRefData owner="${d}" field="ezProxy" config="${RCConstants.YN}"/></dd>
+            </dl>
+            <dl>
+                <dt class="control-label"><g:message code="platform.hanServer"/></dt>
+                <dd><semui:xEditableRefData owner="${d}" field="hanServer" config="${RCConstants.YN}"/></dd>
+            </dl>
+            <dl>
+                <dt class="control-label"><g:message code="platform.otherProxies"/></dt>
+                <dd><semui:xEditableRefData owner="${d}" field="otherProxies" config="${RCConstants.YN}"/></dd>
+            </dl>
+        </div>
+    </semui:tabsItemContent>
+
+    <semui:tabsItemContent tab="statistic" activeTab="${params.activeTab}">
         <div class="content wekb-inline-lists">
             <dl>
                 <dt class="control-label">
@@ -86,14 +189,6 @@
                 </dt>
                 <dd>
                     <semui:xEditable owner="${d}" field="counterRegistryUrl" validation="url" outGoingLink="true"/>
-                </dd>
-            </dl>
-            <dl>
-                <dt class="control-label">
-                    Counter R3 Supported
-                </dt>
-                <dd>
-                    <semui:xEditableRefData owner="${d}" field="counterR3Supported" config="${RCConstants.YN}"/>
                 </dd>
             </dl>
             <dl>
@@ -156,6 +251,10 @@
                 </dd>
 
             </dl>
+            <dl>
+                <dt class="control-label"><g:message code="platform.counterRegistryApiUuid"/></dt>
+                <dd><semui:xEditable owner="${d}" field="counterRegistryApiUuid"/></dd>
+            </dl>
         </div>
     </semui:tabsItemContent>
 
@@ -178,6 +277,22 @@
                     </dt>
                     <dd>
                         <semui:xEditable owner="${d}" field="centralApiKey"/>
+                    </dd>
+                </dl>
+                <dl>
+                    <dt class="control-label">
+                        Label for Customer ID
+                    </dt>
+                    <dd>
+                        <semui:xEditable owner="${d}" field="internLabelForCustomerID"/>
+                    </dd>
+                </dl>
+                <dl>
+                    <dt class="control-label">
+                        Label for Requestor-ID / API-Key
+                    </dt>
+                    <dd>
+                        <semui:xEditable owner="${d}" field="internLabelForRequestorKey"/>
                     </dd>
                 </dl>
             </div>
@@ -306,7 +421,7 @@
 
                         <dl>
                             <dt class="control-label">
-                                ... Videos
+                                ... Audios
                             </dt>
                             <dd>
                                 <semui:xEditableRefData owner="${d}" field="accessAudio" config="${RCConstants.UYNP}"/>
@@ -336,5 +451,45 @@
             </div>
         </div>
     </semui:tabsItemContent>
+
+    <semui:tabsItemContent tab="additionalServices" activeTab="${params.activeTab}">
+        <div class="content wekb-inline-lists">
+            <dl>
+                <dt class="control-label">Platform blog URL</dt>
+                <dd><semui:xEditable owner="${d}" field="platformBlogUrl" validation="url" outGoingLink="true"/></dd>
+            </dl>
+            <dl>
+                <dt class="control-label">RSS URL</dt>
+                <dd><semui:xEditable owner="${d}" field="rssUrl" validation="url" outGoingLink="true"/></dd>
+            </dl>
+            <dl>
+                <dt class="control-label">Individual design / logo</dt>
+                <dd><semui:xEditableRefData owner="${d}" field="individualDesignLogo" config="${RCConstants.YN}"/></dd>
+            </dl>
+            <dl>
+                <dt class="control-label">Full text search</dt>
+                <dd><semui:xEditableRefData owner="${d}" field="fullTextSearch" config="${RCConstants.YN}"/></dd>
+            </dl>
+        </div>
+    </semui:tabsItemContent>
+
+    <g:if test="${editable}">
+        <semui:modal id="pfModal" title="Add Federations">
+
+            <g:form controller="ajaxHtml" action="addToCollection" class="ui form">
+                <input type="hidden" name="__context" value="${d.getOID()}"/>
+                <input type="hidden" name="__newObjectClass" value="wekb.PlatformFederation"/>
+                <input type="hidden" name="__recip" value="platform"/>
+                <input type="hidden" name="curationOverride" value="${params.curationOverride}"/>
+
+                <div class="field">
+                    <label>Federations</label>
+                    <semui:simpleReferenceDropdown name="federation"
+                                                   baseClass="wekb.RefdataValue"
+                                                   filter1="${RCConstants.PLATFORM_FEDERATION}"/>
+                </div>
+            </g:form>
+        </semui:modal>
+    </g:if>
 
 </g:if>

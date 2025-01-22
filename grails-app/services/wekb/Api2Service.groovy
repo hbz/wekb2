@@ -300,12 +300,6 @@ class Api2Service {
                                 [
                                         type       : 'lookup',
                                         baseClass  : 'wekb.RefdataValue',
-                                        qparam     : 'qp_counterR3Supported',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'counterR3Supported'],
-                                ],
-                                [
-                                        type       : 'lookup',
-                                        baseClass  : 'wekb.RefdataValue',
                                         qparam     : 'qp_counterR4Supported',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'counterR4Supported'],
                                 ],
@@ -1011,7 +1005,6 @@ class Api2Service {
             result.passwordAuthentication = object.passwordAuthentication?.value
 
             result.statisticsFormat = object.statisticsFormat?.value
-            result.counterR3Supported = object.counterR3Supported?.value
             result.counterR4Supported = object.counterR4Supported?.value
             result.counterR5Supported = object.counterR5Supported?.value
             result.counterR4SushiApiSupported = object.counterR4SushiApiSupported?.value
@@ -1022,7 +1015,7 @@ class Api2Service {
             result.counterCertified = object.counterCertified?.value
             result.statisticsAdminPortalUrl = object.statisticsAdminPortalUrl
             result.statisticsUpdate = object.statisticsUpdate?.value
-            result.proxySupported = object.proxySupported?.value
+            result.otherProxies = object.otherProxies?.value
 
             result.counterRegistryApiUuid = object.counterRegistryApiUuid
 
@@ -1468,7 +1461,6 @@ class Api2Service {
                 result.passwordAuthentication = object.passwordAuthentication?.value
 
                 result.statisticsFormat = object.statisticsFormat?.value
-                result.counterR3Supported = object.counterR3Supported?.value
                 result.counterR4Supported = object.counterR4Supported?.value
                 result.counterR5Supported = object.counterR5Supported?.value
                 result.counterR4SushiApiSupported = object.counterR4SushiApiSupported?.value
@@ -1479,7 +1471,7 @@ class Api2Service {
                 result.counterCertified = object.counterCertified?.value
                 result.statisticsAdminPortalUrl = object.statisticsAdminPortalUrl
                 result.statisticsUpdate = object.statisticsUpdate?.value
-                result.proxySupported = object.proxySupported?.value
+                result.otherProxies = object.otherProxies?.value
 
                 result.counterRegistryApiUuid = object.counterRegistryApiUuid
                 result.counterR5SushiPlatform = object.counterR5SushiPlatform

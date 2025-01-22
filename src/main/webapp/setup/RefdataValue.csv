@@ -412,7 +412,7 @@ PackageArchivingAgency.PostCancellationAccess;No;No;No
 PackageArchivingAgency.PostCancellationAccess;Partly;Partly;Partly
 Platform.Federation;AAIEduHr;AAI@EduHr;AAI@EduHr
 Platform.Federation;AAIEduMK;AAIEduMK;AAIEduMK
-Platform.Federation;ACOnet Identity Federation;ACOnet Identity Federation;ACOnet Identity Federation
+Platform.Federation;ACOnet Identity Federation;ACOnet Identity Federation (Österreich);ACOnet Identity Federation (Austria)
 Platform.Federation;AFIRE;AFIRE;AFIRE
 Platform.Federation;ARNaai;ARNaai;ARNaai
 Platform.Federation;ArnesAAI;ArnesAAI;ArnesAAI
@@ -428,7 +428,8 @@ Platform.Federation;CIF;CIF;CIF
 Platform.Federation;COFRe;COFRe;COFRe
 Platform.Federation;COLFIRE;COLFIRE;COLFIRE
 Platform.Federation;CST Cloud Federation;CST Cloud Federation;CST Cloud Federation
-Platform.Federation;DFN-AAI;DFN-AAI;DFN-AAI
+Platform.Federation;DFN-AAI;DFN-AAI (Deutschland);DFN-AAI (Germany)
+Platform.Federation;eduGAIN;eduGAIN;eduGAIN
 Platform.Federation;Edugate;Edugate;Edugate
 Platform.Federation;eduID;eduID;eduID
 Platform.Federation;eduID.cz;eduID.cz;eduID.cz
@@ -488,7 +489,7 @@ Platform.Federation;SIR;SIR;SIR
 Platform.Federation;South African Identity Federation;South African Identity Federation (SAFIRE);South African Identity Federation (SAFIRE)
 Platform.Federation;SURFconext;SURFconext;SURFconext
 Platform.Federation;SWAMID;SWAMID;SWAMID
-Platform.Federation;SWITCHaai;SWITCHaai;SWITCHaai
+Platform.Federation;SWITCHaai;SWITCHaai (Schweiz);SWITCHaai (Switzerland)
 Platform.Federation;TAAT;TAAT;TAAT
 Platform.Federation;TARENA Identity Federation;TARENA Identity Federation;TARENA Identity Federation
 Platform.Federation;ThaiIDF;ThaiIDF;ThaiIDF
@@ -595,4 +596,3 @@ UYNP;Partially;Partially Compliant;Partially Compliant
 UYN;Unavailable;Not Available;Not Available
 UYN;Yes;Yes;Yes
 UYN;No;No;No
-
