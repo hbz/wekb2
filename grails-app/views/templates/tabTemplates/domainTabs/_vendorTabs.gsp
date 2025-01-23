@@ -366,7 +366,7 @@
             </dl>
             <dl>
                 <dt class="control-label">
-                    Update information about new releases within e-book packages
+                    Alerts about new publications within e-book packages
                 </dt>
                 <dd>
                     <semui:xEditableRefData owner="${d}" field="activationForNewReleases"
@@ -397,19 +397,19 @@
         <div class="content wekb-inline-lists">
             <dl>
                 <dt class="control-label">
-                    Prequalification VOL
+                    Prequalification
                 </dt>
                 <dd>
-                    <semui:xEditableRefData owner="${d}" field="prequalificationVOL"
+                    <semui:xEditableRefData owner="${d}" field="prequalification"
                                             config="${RCConstants.YN}"/>
                 </dd>
             </dl>
             <dl>
                 <dt class="control-label">
-                    Info to Prequalification VOL
+                    Info to Prequalification
                 </dt>
                 <dd>
-                    <semui:xEditable owner="${d}" field="prequalificationVOLInfo"/>
+                    <semui:xEditable owner="${d}" field="prequalificationInfo"/>
                 </dd>
             </dl>
         </div>
@@ -419,7 +419,7 @@
         <div class="content">
 
             <g:link class="display-inline" controller="search" action="inlineSearch"
-                    params="[s_controllerName: controllerName, s_actionName: actionName, objectUUID: params.id, max: params.max, offset: params.offset, sort: params.sort, order: params.order, qbe: 'g:packages', qp_vendor_id: d.id, inline: true, refOID: d.getOID(), hide: ['qp_vendor', 'qp_vendor_id']]"
+                    params="[s_controllerName: controllerName, s_actionName: actionName, objectUUID: params.id, max: params.max, offset: params.activeTab == 'packages' ? params.offset : '', sort: params.activeTab == 'packages' ? params.sort : '', order: params.activeTab == 'packages' ? params.order : '', qbe: 'g:packages', qp_vendor_id: d.id, inline: true, refOID: d.getOID(), hide: ['qp_vendor', 'qp_vendor_id']]"
                     id="">Packages</g:link>
 
         </div>
@@ -429,7 +429,7 @@
         <div class="content">
 
             <g:link class="display-inline" controller="search" action="inlineSearch"
-                    params="[s_controllerName: controllerName, s_actionName: actionName, objectUUID: params.id, max: params.max, offset: params.offset, sort: params.sort, order: params.order, qbe: 'g:orgs', qp_vendor_id: d.id, inline: true, refOID: d.getOID(), hide: ['qp_vendor', 'qp_vendor_id']]"
+                    params="[s_controllerName: controllerName, s_actionName: actionName, objectUUID: params.id, max: params.max, offset: params.activeTab == 'providers' ? params.offset : '', sort: params.activeTab == 'providers' ? params.sort : '', order: params.activeTab == 'providers' ? params.order : '', qbe: 'g:orgs', qp_vendor_id: d.id, inline: true, refOID: d.getOID(), hide: ['qp_vendor', 'qp_vendor_id']]"
                     id="">Providers</g:link>
 
         </div>

@@ -164,6 +164,23 @@
                                         value="${params[field.qparam]}"/>
                             </div>
                         </g:if>
+                        <g:elseif test="${field.type == 'dropDown'}">
+                            <div class="ui field">
+                                <label><g:message code="${field.msgCode}" default="${field.prompt}"/></label>
+                                <div class="ui fluid search selection clearable dropdown">
+                                    <input type="hidden" name="${field.qparam}" value="${params[field.qparam]}">
+                                    <i class="dropdown icon"></i>
+
+                                    <div class="default text"><g:message code="search.select"/> <g:message code="${field.msgCode}" default="${field.prompt}"/></div>
+
+                                    <div class="menu">
+                                        <g:each in="${dropdownService.componentsDropDown(field.baseClass, field.filter1 ?: '')}" var="item">
+                                            <div class="item" data-value="${item.id}">${item.text}</div>
+                                        </g:each>
+                                    </div>
+                                </div>
+                            </div>
+                        </g:elseif>
                         <g:elseif test="${field.type == 'dropDownGroup'}">
                             <div class="ui field">
                                 <label><g:message code="${field.msgCode}" default="${field.prompt}"/></label>

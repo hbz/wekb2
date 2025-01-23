@@ -22,7 +22,7 @@
             </dl>
 
             <g:if test="${userIsAdmin}">
-                <g:if test="${true}">
+                <g:if test="${controllerName != 'home'}">
                     <dl>
                         <dt class="control-label">Password</dt>
                         <dd>

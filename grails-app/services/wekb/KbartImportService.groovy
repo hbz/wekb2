@@ -1035,62 +1035,6 @@ class KbartImportService {
         result
     }
 
-    @Deprecated
-    TitleInstancePackagePlatform tippMatchingByTitleID(JSONArray identifiers, Package aPackage, Platform platform) {
-        if(identifiers && aPackage.kbartSource && aPackage.kbartSource.targetNamespace){
-
-            String value = identifiers.find {it.type == aPackage.kbartSource.targetNamespace.value}?.value
-
-            List<TitleInstancePackagePlatform> tippList = Identifier.executeQuery('select i.tipp from Identifier as i where LOWER(i.namespace.value) = :namespaceValue and i.value = :value and i.tipp is not null', [namespaceValue: aPackage.kbartSource.targetNamespace.value.toLowerCase(), value: value])
-
-            if(tippList.size() == 1){
-                log.debug("tippsMatchingByTitleID provider internal identifier matching by "+tippList.size() + ": "+ tippList.id)
-                return tippList[0]
-            }
-        }
-        else if(identifiers && platform.titleNamespace){
-            String value = identifiers.find {it.type == platform.titleNamespace.value}?.value
-
-            List<TitleInstancePackagePlatform> tippList = Identifier.executeQuery('select i.tipp from Identifier as i where LOWER(i.namespace.value) = :namespaceValue and i.value = :value and i.tipp is not null', [namespaceValue: platform.titleNamespace.value.toLowerCase(), value: value])
-
-            if(tippList.size() == 1){
-                log.debug("tippsMatchingByTitleID provider internal identifier matching by "+tippList.size() + ": "+ tippList.id)
-                return tippList[0]
-            }
-        }
-
-    }
-
-    @Deprecated
-    List<TitleInstancePackagePlatform> tippsMatchingByTitleID(JSONArray identifiers, Package aPackage, Platform platform) {
-        if(identifiers && aPackage.kbartSource && aPackage.kbartSource.targetNamespace){
-
-            String value = identifiers.find {it.type == aPackage.kbartSource.targetNamespace.value}?.value
-
-            List<TitleInstancePackagePlatform> tippList = Identifier.executeQuery('select i.tipp from Identifier as i where LOWER(i.namespace.value) = :namespaceValue and i.value = :value and i.tipp is not null', [namespaceValue: aPackage.kbartSource.targetNamespace.value.toLowerCase(), value: value])
-
-            tippList = tippList.findAll {it.pkg == aPackage && it.status != RDStore.KBC_STATUS_REMOVED}
-
-            if(tippList.size() > 0){
-                log.debug("tippsMatchingByTitleID provider internal identifier matching by "+tippList.size() + ": "+ tippList.id)
-                return tippList
-            }
-        }
-        else if(identifiers && platform.titleNamespace){
-            String value = identifiers.find {it.type == platform.titleNamespace.value}?.value
-
-            List<TitleInstancePackagePlatform> tippList = Identifier.executeQuery('select i.tipp from Identifier as i where LOWER(i.namespace.value) = :namespaceValue and i.value = :value and i.tipp is not null', [namespaceValue: platform.titleNamespace.value.toLowerCase(), value: value])
-
-            tippList = tippList.findAll {it.pkg == aPackage && it.status != RDStore.KBC_STATUS_REMOVED}
-
-            if(tippList.size() > 0){
-                log.debug("tippsMatchingByTitleID provider internal identifier matching by "+tippList.size() + ": "+ tippList.id)
-                return tippList
-            }
-        }
-
-    }
-
     List<TitleInstancePackagePlatform> tippsMatchingByTitleIDAutoUpdate(String titleID, Package aPackage) {
         List<TitleInstancePackagePlatform> tippList = []
         log.debug("tippsMatchingByTitleID provider internal identifier matching by ")
