@@ -43,7 +43,7 @@ class RCConstants {
     public static final String COMPONENT_VARIANTNAME_STATUS = "ComponentVariantName.Status"
 
     public static final String ORG_ROLE = "Org.Role"
-    public static final String VENDOR_ROLE = "Vendor.Role"
+    public static final String ORG_DRM = "Org.Drm"
 
     public static final String PACKAGE_BREAKABLE = "Package.Breakable"
     public static final String PACKAGE_CONSISTENT = "Package.Consistent"
@@ -90,6 +90,8 @@ class RCConstants {
     public static final String VENDOR_ELECTRONIC_BILLING = "Vendor.ElectronicBilling"
     public static final String VENDOR_INVOICE_DISPATCH = "Vendor.InvoiceDispatch"
     public static final String VENDOR_ELECTRONIC_DELIVERY_DELAY = "Vendor.ElectronicDeliveryDelay"
+
+    public static final String VENDOR_ROLE = "Vendor.Role"
 
     public static final String YN = "YN"
 

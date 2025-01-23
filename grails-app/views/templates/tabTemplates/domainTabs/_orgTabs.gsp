@@ -4,6 +4,15 @@
         <semui:tabsItemWithoutLink tab="invoice" defaultTab="invoice" activeTab="${params.activeTab}">
             Invoicing
         </semui:tabsItemWithoutLink>
+        <semui:tabsItemWithoutLink  tab="supportedLicencingModels" activeTab="${params.activeTab}">
+            Supported licencing models
+        </semui:tabsItemWithoutLink>
+        <semui:tabsItemWithoutLink  tab="usageRights" activeTab="${params.activeTab}">
+            Usage rights
+        </semui:tabsItemWithoutLink>
+        <semui:tabsItemWithoutLink tab="generalServices" activeTab="${params.activeTab}">
+            General services
+       </semui:tabsItemWithoutLink>
         <semui:tabsItemWithoutLink tab="identifiers" activeTab="${params.activeTab}" counts="${d.ids.size()}">
             Identifiers
         </semui:tabsItemWithoutLink>
@@ -26,7 +35,7 @@
 
     <g:render template="/templates/tabTemplates/variantNamesTab" model="${[d: d, showActions: true]}"/>
 
-    <semui:tabsItemContent tab="invoice" activeTab="${params.activeTab}">
+    <semui:tabsItemContent tab="supportedLicencingModels" activeTab="${params.activeTab}">
         <div class="content wekb-inline-lists">
             <dl>
                 <dt class="control-label">
@@ -284,6 +293,155 @@
                             </g:form>
                         </semui:modal>
                     </g:if>
+                </dd>
+            </dl>
+        </div>
+    </semui:tabsItemContent>
+
+
+    <semui:tabsItemContent tab="invoice" activeTab="${params.activeTab}">
+        <div class="content wekb-inline-lists">
+            <dl>
+                <dt class="control-label">
+                    Collections
+                </dt>
+                <dd>
+                    <semui:xEditableRefData owner="${d}" field="collections"
+                                            config="${RCConstants.YN}"/>
+                </dd>
+            </dl>
+            <dl>
+                <dt class="control-label">
+                    Pick and Choose
+                </dt>
+                <dd>
+                    <semui:xEditableRefData owner="${d}" field="pickAndChoose"
+                                            config="${RCConstants.YN}"/>
+                </dd>
+            </dl>
+            <dl>
+                <dt class="control-label">
+                    Prepaid
+                </dt>
+                <dd>
+                    <semui:xEditableRefData owner="${d}" field="prepaid"
+                                            config="${RCConstants.YN}"/>
+                </dd>
+            </dl>
+            <dl>
+                <dt class="control-label">
+                    Upfront
+                </dt>
+                <dd>
+                    <semui:xEditableRefData owner="${d}" field="upfront"
+                                            config="${RCConstants.YN}"/>
+                </dd>
+            </dl>
+            <dl>
+                <dt class="control-label">
+                    Temporary Access
+                </dt>
+                <dd>
+                    <semui:xEditableRefData owner="${d}" field="temporaryAccess"
+                                            config="${RCConstants.YN}"/>
+                </dd>
+            </dl>
+            <dl>
+                <dt class="control-label">
+                    Perpetual Access
+                </dt>
+                <dd>
+                    <semui:xEditableRefData owner="${d}" field="perpetualAccess"
+                                            config="${RCConstants.YN}"/>
+                </dd>
+            </dl>
+        </div>
+    </semui:tabsItemContent>
+
+    <semui:tabsItemContent tab="usageRights" activeTab="${params.activeTab}">
+        <div class="content wekb-inline-lists">
+            <dl>
+                <dt class="control-label">
+                    DRM
+                </dt>
+                <dd>
+                    <semui:xEditableRefData owner="${d}" field="drm"
+                                            config="${RCConstants.ORG_DRM}"/>
+                </dd>
+            </dl>
+            <dl>
+                <dt class="control-label">
+                    Remote Access
+                </dt>
+                <dd>
+                    <semui:xEditableRefData owner="${d}" field="remoteAccess"
+                                            config="${RCConstants.YN}"/>
+                </dd>
+            </dl>
+            <dl>
+                <dt class="control-label">
+                    Print/Download Chapter
+                </dt>
+                <dd>
+                    <semui:xEditableRefData owner="${d}" field="printDownloadChapter"
+                                            config="${RCConstants.YN}"/>
+                </dd>
+            </dl>
+            <dl>
+                <dt class="control-label">
+                    Quotes By Copy/Paste
+                </dt>
+                <dd>
+                    <semui:xEditableRefData owner="${d}" field="quotesByCopyPaste"
+                                            config="${RCConstants.YN}"/>
+                </dd>
+            </dl>
+        </div>
+    </semui:tabsItemContent>
+
+    <semui:tabsItemContent tab="generalServices" activeTab="${params.activeTab}">
+        <div class="content wekb-inline-lists">
+            <dl>
+                <dt class="control-label">
+                    URL price lists
+                </dt>
+                <dd>
+                    <semui:xEditable owner="${d}" field="urlPristLists"/>
+                </dd>
+            </dl>
+            <dl>
+                <dt class="control-label">
+                    URL title lists
+                </dt>
+                <dd>
+                    <semui:xEditable owner="${d}" field="urlTitleLists"/>
+                </dd>
+            </dl>
+            <dl>
+                <dt class="control-label">
+                    Forwarding Usage Statistcs
+                </dt>
+                <dd>
+                    <semui:xEditableRefData owner="${d}" field="forwardingUsageStatistcs"
+                                            config="${RCConstants.YN}"/>
+                </dd>
+            </dl>
+            <dl>
+                <dt class="control-label">
+                    Alerts about new publications within e-book packages
+                </dt>
+                <dd>
+                    <semui:xEditableRefData owner="${d}" field="org_alert_new_ebook_packages"
+                                            config="${RCConstants.YN}"/>
+                </dd>
+            </dl>
+            <dl>
+                <dt class="control-label">
+                    Alerts about exchange of individual titles within e-book packages
+                </dt>
+                <dd>
+                    <semui:xEditableRefData owner="${d}" field="org_alert_exchange_ebook_packages"
+                                            config="${RCConstants.YN}"/>
                 </dd>
             </dl>
         </div>

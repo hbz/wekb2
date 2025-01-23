@@ -20,7 +20,7 @@ ComponentVariantName.Locale;Component VariantName Locale;Component VariantName L
 ComponentVariantName.Status;Component VariantName Status;Component VariantName Status
 ComponentVariantName.VariantType;Component VariantName VariantType;Component VariantName VariantType
 Org.Role;Org Role;Org Role
-Vendor.Role;Vendor Role;Vendor Role
+Org.Drm;Org Drm;Org Drm
 Package.Breakable;Package Breakable;Package Breakable
 Package.Consistent;Package Consistent;Package Consistent
 Package.ContentType;Package Content Type;Package Content Type
@@ -59,6 +59,7 @@ Vendor.SupportedLibrarySystem;Supported Library System;Supported Library System
 Vendor.ElectronicBilling;Electronic Billing;Electronic Billing
 Vendor.InvoiceDispatch;Invoice Dispatch;Invoice Dispatch
 Vendor.ElectronicDeliveryDelay;Electronic Delivery Delay;Electronic Delivery Delay
+Vendor.Role;Vendor Role;Vendor Role
 YN;YN;YN
 UYNP;UYNP;UYNP
 UYN;UYN;UYN

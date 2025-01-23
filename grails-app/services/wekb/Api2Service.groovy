@@ -1392,6 +1392,23 @@ class Api2Service {
                 result.individualInvoiceDesign = object.individualInvoiceDesign ? RDStore.YN_YES.value : RDStore.YN_NO.value
                 result.invoicingYourself = object.invoicingYourself ? RDStore.YN_YES.value : RDStore.YN_NO.value
 
+                result.collections = object.collections?.value
+                result.pickAndChoose = object.pickAndChoose?.value
+                result.prepaid = object.prepaid?.value
+                result.upfront = object.upfront?.value
+                result.temporaryAccess = object.temporaryAccess?.value
+                result.perpetualAccess = object.perpetualAccess?.value
+                result.drm = object.drm?.value
+                result.remoteAccess = object.remoteAccess?.value
+                result.printDownloadChapter = object.printDownloadChapter?.value
+                result.quotesByCopyPaste = object.quotesByCopyPaste?.value
+                result.forwardingUsageStatistcs = object.forwardingUsageStatistcs?.value
+                result.alertNewEbookPackages = object.alertNewEbookPackages?.value
+                result.alertExchangeEbookPackages = object.alertExchangeEbookPackages?.value
+
+                result.urlPristLists = object.urlPristLists
+                result.urlTitleLists = object.urlTitleLists
+
                 result.roles = []
                 object.roles.each { role ->
                     result.roles.add(role.value)

@@ -336,7 +336,8 @@ ComponentVariantName.VariantType;Alternate Title;Alternate Title;Alternate Title
 Org.Role;Content Provider;Content Provider;Content Provider
 Org.Role;Platform Provider;Platform Provider;Platform Provider
 Org.Role;Publisher;Publisher;Publisher
-Vendor.Role;Vendor;Vendor;Vendor
+Org.Drm;Hard;Hard;Hard
+Org.Drm;Soft;Soft (Watermark);SOft (Watermark)
 Package.Breakable;No;No;No
 Package.Breakable;Unknown;Unknown;Unknown
 Package.Breakable;Yes;Yes;Yes
@@ -592,6 +593,7 @@ Vendor.InvoiceDispatch;FTP-Server;FTP-Serverl;FTP-Server
 Vendor.InvoiceDispatch;Peppol;Peppol;Peppol
 Vendor.ElectronicDeliveryDelay;E-Mail;E-Mail;E-Mail
 Vendor.ElectronicDeliveryDelay;EDI;EDI;EDI
+Vendor.Role;Vendor;Vendor;Vendor
 YN;No;No;No
 YN;Yes;Yes;Yes
 UYNP;Unavailable;Not Available;Not Available
