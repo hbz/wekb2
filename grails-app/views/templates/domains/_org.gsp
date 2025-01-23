@@ -101,10 +101,10 @@
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th>Value</th>
-                            <th>Content Type</th>
                             <th>Contact Type</th>
-                            <th>Language</th>
+                            <th>Main Language</th>
+                            <th>Content Type</th>
+                            <th>Value</th>
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -112,10 +112,6 @@
                         <g:each in="${d.contacts?.sort { it.content }}" var="contact" status="i">
                             <tr>
                                 <td>${i + 1}</td>
-                                <td><semui:xEditable owner="${contact}" field="content"
-                                                     validation="${contact.contentType == RDStore.CONTACT_CONTENT_TYPE_EMAIL ? 'email' : ''}"/></td>
-                                <td><semui:xEditableRefData owner="${contact}" field="contentType"
-                                                            config="${RCConstants.CONTACT_CONTENT_TYPE}"/>
                                 <td><semui:xEditableRefData owner="${contact}" field="type"
                                                             config="${RCConstants.CONTACT_TYPE}"/>
                                 </td>
@@ -123,6 +119,13 @@
                                     <semui:xEditableRefData owner="${contact}" field="language"
                                                             config="${RCConstants.COMPONENT_LANGUAGE}"/>
                                 </td>
+                                <td>
+                                    <semui:xEditableRefData owner="${contact}" field="contentType"
+                                                            config="${RCConstants.CONTACT_CONTENT_TYPE}"/>
+                                <td>
+                                <semui:xEditable owner="${contact}" field="content"
+                                                     validation="${contact.contentType == RDStore.CONTACT_CONTENT_TYPE_EMAIL ? 'email' : ''}"/>
+                            </td>
                                 <td>
                                     <g:if test="${editable}">
                                         <g:link controller='ajaxHtml'
