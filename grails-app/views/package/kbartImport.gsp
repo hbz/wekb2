@@ -79,7 +79,7 @@
 
     <div class="ui segment">
         <h3 class="ui header">KBART Import File</h3>
-        <label class="content">
+        <div class="content">
             <g:uploadForm class="ui form" action="processKbartImport" method="post" id="${pkg.id}">
                     <div class="field">
                         <div class="ui checkbox">
@@ -101,8 +101,7 @@
                     </div>
                     <input type="text" name="upload_file_placeholder" readonly="readonly"
                            placeholder="Selected KBART-File">
-                    <input type="file" name="tsvFile" accept=".tsv, .txt" style="display: none;" id="uploadFile"
-                           type="file">
+                    <input type="file" name="tsvFile" accept=".tsv, .txt" style="display: none;" id="uploadFile">
                     <label for="uploadFile" class="ui primary button" style="padding-left:30px; padding-right:30px">
                         <i class="upload icon"></i>
                         Click here to upload KBART-File

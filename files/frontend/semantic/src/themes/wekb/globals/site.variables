@@ -11,6 +11,13 @@
 
 
 @importGoogleFonts : false;
+/* -------------------
+	  Base Sizes
+-------------------- */
+
+
+/* The size of page text */
+@fontSize: 1rem;
 
 /*-------------------
        Links

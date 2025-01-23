@@ -66,3 +66,7 @@
     font-weight: 700;
     color: #e0e1e2;
 }
+
+html {
+    font-size: 100%;
+}

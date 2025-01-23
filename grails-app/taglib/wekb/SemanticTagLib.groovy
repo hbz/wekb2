@@ -332,7 +332,7 @@ class SemanticTagLib {
 
         out << '<!--.pagination-->'
         out << '<div class="ui center aligned basic segment">'
-        out << '<nav class="ui pagination menu" aria-label="pagination2">'
+        out << '<nav class="ui pagination wrapping menu" aria-label="pagination2">'
 
         if (currentstep > firststep) {
             int tmp = (offset - (max * (maxsteps +1)))
@@ -494,7 +494,7 @@ class SemanticTagLib {
 
 
         out << '<div class="ui center aligned basic segment">'
-        out << '<nav class="ui pagination menu">'
+        out << '<nav class="ui pagination wrapping menu">'
 
         if (steps && laststep > firststep) {
             if (maxsteps > laststep) { // | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | > |
