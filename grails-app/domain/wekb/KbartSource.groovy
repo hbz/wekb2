@@ -338,6 +338,11 @@ class KbartSource extends AbstractBase implements Auditable {
         result
     }
 
+    public List<Org> getProviders() {
+        def result = Org.executeQuery('select p.provider from Package as p where p.kbartSource = :source',[source: this])
+        result
+    }
+
     String toString(){
         "${name ?: ''}".toString()
     }

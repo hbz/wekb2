@@ -1344,7 +1344,8 @@ class GlobalSearchTemplatesService {
                         ],
                         qbeResults: [
                                 [heading: 'Source', property: 'name', sort: 'name', link: true, linkInfo: 'Link to Source'],
-                                [heading: 'Packages', property: 'packages', link: true, sort: 'packages.name', linkInfo: 'Link to Package'],
+                                [heading: 'Packages', property: 'packages', link: true, linkInfo: 'Link to Package'],
+                                [heading: 'Providers', property: 'providers', link: true, linkInfo: 'Link to Provider'],
                                 [heading: 'Url', property: 'url', sort: 'url', outGoingLink: true, linkInfo: 'Link to Kbart Url'],
                                 [heading: 'Last Updated', property: 'lastUpdated', sort: 'lastUpdated'],
                                 [heading: 'Status', property: 'status.value', sort: 'status'],
