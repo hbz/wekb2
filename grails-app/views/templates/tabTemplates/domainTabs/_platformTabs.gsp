@@ -69,7 +69,9 @@
                             <tr>
                                 <th>#</th>
                                 <th>Federation</th>
-                                <th>Action</th>
+                                <g:if test="${editable}">
+                                    <th>Action</th>
+                                </g:if>
                             </tr>
                             </thead>
                             <tbody>
@@ -78,13 +80,15 @@
                                     <td>${i + 1}</td>
                                     <td><semui:xEditableRefData owner="${federation}" field="federation"
                                                                 config="${RCConstants.PLATFORM_FEDERATION}"/>
-                                    <td>
-                                        <g:if test="${editable}">
+                                    <g:if test="${editable}">
+                                        <td>
+
                                             <g:link controller='ajaxHtml'
                                                     action='delete'
                                                     params="${["__context": "${federation.getOID()}", curationOverride: params.curationOverride]}">Delete</g:link>
-                                        </g:if>
-                                    </td>
+
+                                        </td>
+                                    </g:if>
                                 </tr>
                             </g:each>
                             </tbody>

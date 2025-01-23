@@ -82,7 +82,9 @@
                             <th>Main Language</th>
                             <th>Content Type</th>
                             <th>Value</th>
-                            <th>Action</th>
+                            <g:if test="${editable}">
+                                <th>Action</th>
+                            </g:if>
                         </tr>
                         </thead>
                         <tbody>
@@ -103,13 +105,15 @@
                                     <semui:xEditable owner="${contact}" field="content"
                                                      validation="${contact.contentType == RDStore.CONTACT_CONTENT_TYPE_EMAIL ? 'email' : ''}"/>
                                 </td>
-                                <td>
-                                    <g:if test="${editable}">
+                                <g:if test="${editable}">
+                                    <td>
+
                                         <g:link controller='ajaxHtml'
                                                 action='delete'
                                                 params="${["__context": "${contact.getOID()}", curationOverride: params.curationOverride]}">Delete</g:link>
-                                    </g:if>
-                                </td>
+
+                                    </td>
+                                </g:if>
                             </tr>
                         </g:each>
                         </tbody>

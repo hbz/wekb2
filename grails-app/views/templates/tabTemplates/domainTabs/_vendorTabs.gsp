@@ -68,7 +68,9 @@
                         <tr>
                             <th>#</th>
                             <th>Supported Library System</th>
-                            <th>Action</th>
+                            <g:if test="${editable}">
+                                <th>Action</th>
+                            </g:if>
                         </tr>
                         </thead>
                         <tbody>
@@ -79,13 +81,14 @@
                                 <td><semui:xEditableRefData owner="${vendorSupportedLibrarySystem}"
                                                             field="supportedLibrarySystem"
                                                             config="${RCConstants.VENDOR_SUPPORTED_LIB_SYSTEM}"/>
-                                <td>
-                                    <g:if test="${editable}">
+
+                                <g:if test="${editable}">
+                                    <td>
                                         <g:link controller='ajaxHtml'
                                                 action='delete'
                                                 params="${["__context": "${vendorSupportedLibrarySystem.getOID()}", curationOverride: params.curationOverride]}">Delete</g:link>
-                                    </g:if>
-                                </td>
+                                    </td>
+                                </g:if>
                             </tr>
                         </g:each>
                         </tbody>
@@ -128,7 +131,9 @@
                         <tr>
                             <th>#</th>
                             <th>Electronic delivery delay notifications via</th>
-                            <th>Action</th>
+                            <g:if test="${editable}">
+                                <th>Action</th>
+                            </g:if>
                         </tr>
                         </thead>
                         <tbody>
@@ -139,13 +144,14 @@
                                 <td><semui:xEditableRefData owner="${vendorElectronicDeliveryDelay}"
                                                             field="electronicDeliveryDelay"
                                                             config="${RCConstants.VENDOR_ELECTRONIC_DELIVERY_DELAY}"/>
-                                <td>
-                                    <g:if test="${editable}">
+
+                                <g:if test="${editable}">
+                                    <td>
                                         <g:link controller='ajaxHtml'
                                                 action='delete'
                                                 params="${["__context": "${vendorElectronicDeliveryDelay.getOID()}", curationOverride: params.curationOverride]}">Delete</g:link>
-                                    </g:if>
-                                </td>
+                                    </td>
+                                </g:if>
                             </tr>
                         </g:each>
                         </tbody>
@@ -193,7 +199,9 @@
                         <tr>
                             <th>#</th>
                             <th>Format</th>
-                            <th>Action</th>
+                            <g:if test="${editable}">
+                                <th>Action</th>
+                            </g:if>
                         </tr>
                         </thead>
                         <tbody>
@@ -203,13 +211,15 @@
                                 <td>${i + 1}</td>
                                 <td><semui:xEditableRefData owner="${vendorElectronicBilling}" field="electronicBilling"
                                                             config="${RCConstants.VENDOR_ELECTRONIC_BILLING}"/>
-                                <td>
+
                                     <g:if test="${editable}">
-                                        <g:link controller='ajaxHtml'
-                                                action='delete'
-                                                params="${["__context": "${vendorElectronicBilling.getOID()}", curationOverride: params.curationOverride]}">Delete</g:link>
+                                        <td>
+                                            <g:link controller='ajaxHtml'
+                                                    action='delete'
+                                                    params="${["__context": "${vendorElectronicBilling.getOID()}", curationOverride: params.curationOverride]}">Delete</g:link>
+                                        </td>
                                     </g:if>
-                                </td>
+
                             </tr>
                         </g:each>
                         </tbody>
@@ -254,7 +264,9 @@
                         <tr>
                             <th>#</th>
                             <th>Method</th>
-                            <th>Action</th>
+                            <g:if test="${editable}">
+                                <th>Action</th>
+                            </g:if>
                         </tr>
                         </thead>
                         <tbody>
@@ -264,13 +276,15 @@
                                 <td>${i + 1}</td>
                                 <td><semui:xEditableRefData owner="${vendorInvoiceDispatch}" field="invoiceDispatch"
                                                             config="${RCConstants.VENDOR_INVOICE_DISPATCH}"/>
-                                <td>
-                                    <g:if test="${editable}">
+
+                                <g:if test="${editable}">
+                                    <td>
                                         <g:link controller='ajaxHtml'
                                                 action='delete'
                                                 params="${["__context": "${vendorInvoiceDispatch.getOID()}", curationOverride: params.curationOverride]}">Delete</g:link>
-                                    </g:if>
-                                </td>
+                                    </td>
+                                </g:if>
+
                             </tr>
                         </g:each>
                         </tbody>
