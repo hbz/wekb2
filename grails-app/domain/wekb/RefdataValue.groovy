@@ -97,15 +97,17 @@ class RefdataValue  extends AbstractI10n {
     Map query_params = [value: "%${params.q.toLowerCase()}%"]
 
     if ( ( params.filter1 != null ) && ( params.filter1.length() > 0 ) ) {
-      query += " and rv.owner.desc = :desc order by rv.value, rv.description"
+      query += " and rv.owner.desc = :desc"
       query_params.desc = params.filter1
     }
+    query += " order by rv.order, rv.value, rv.description"
 
     ql = RefdataValue.findAll(query, query_params, params)
 
     if ( ql ) {
-      ql.sort {it.getI10n('value')}.each { RefdataValue refdataValue ->
+      ql.each { RefdataValue refdataValue ->
         result.add([id:"${refdataValue.class.name}:${refdataValue.id}", text:"${refdataValue.getI10n('value')} ${refdataValue.description ? "- "+refdataValue.description :''}"])
+        log.debug("${refdataValue.order}")
       }
     }
 

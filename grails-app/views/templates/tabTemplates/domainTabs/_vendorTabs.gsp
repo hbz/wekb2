@@ -36,6 +36,14 @@
             </dl>
             <dl>
                 <dt class="control-label">
+                    via E-Mail
+                </dt>
+                <dd>
+                    <semui:xEditableBoolean owner="${d}" field="emailOrders"/>
+                </dd>
+            </dl>
+            <dl>
+                <dt class="control-label">
                     via XML
                 </dt>
                 <dd>
