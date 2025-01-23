@@ -5,13 +5,13 @@
             Invoicing
         </semui:tabsItemWithoutLink>
         <semui:tabsItemWithoutLink  tab="supportedLicencingModels" activeTab="${params.activeTab}">
-            Supported licencing models
+            Supported Licencing Models
         </semui:tabsItemWithoutLink>
         <semui:tabsItemWithoutLink  tab="usageRights" activeTab="${params.activeTab}">
-            Usage rights
+            Usage Rights
         </semui:tabsItemWithoutLink>
         <semui:tabsItemWithoutLink tab="generalServices" activeTab="${params.activeTab}">
-            General services
+            General Services
        </semui:tabsItemWithoutLink>
         <semui:tabsItemWithoutLink tab="identifiers" activeTab="${params.activeTab}" counts="${d.ids.size()}">
             Identifiers
@@ -35,7 +35,7 @@
 
     <g:render template="/templates/tabTemplates/variantNamesTab" model="${[d: d, showActions: true]}"/>
 
-    <semui:tabsItemContent tab="supportedLicencingModels" activeTab="${params.activeTab}">
+    <semui:tabsItemContent tab="invoice" activeTab="${params.activeTab}">
         <div class="content wekb-inline-lists">
             <dl>
                 <dt class="control-label">
@@ -299,7 +299,7 @@
     </semui:tabsItemContent>
 
 
-    <semui:tabsItemContent tab="invoice" activeTab="${params.activeTab}">
+    <semui:tabsItemContent tab="supportedLicencingModels" activeTab="${params.activeTab}">
         <div class="content wekb-inline-lists">
             <dl>
                 <dt class="control-label">
@@ -431,7 +431,7 @@
                     Alerts about new publications within e-book packages
                 </dt>
                 <dd>
-                    <semui:xEditableRefData owner="${d}" field="org_alert_new_ebook_packages"
+                    <semui:xEditableRefData owner="${d}" field="alertNewEbookPackages"
                                             config="${RCConstants.YN}"/>
                 </dd>
             </dl>
@@ -440,7 +440,7 @@
                     Alerts about exchange of individual titles within e-book packages
                 </dt>
                 <dd>
-                    <semui:xEditableRefData owner="${d}" field="org_alert_exchange_ebook_packages"
+                    <semui:xEditableRefData owner="${d}" field="alertExchangeEbookPackages"
                                             config="${RCConstants.YN}"/>
                 </dd>
             </dl>
