@@ -36,6 +36,14 @@
             </dl>
             <dl>
                 <dt class="control-label">
+                    via E-Mail
+                </dt>
+                <dd>
+                    <semui:xEditableBoolean owner="${d}" field="emailOrders"/>
+                </dd>
+            </dl>
+            <dl>
+                <dt class="control-label">
                     via XML
                 </dt>
                 <dd>
@@ -429,7 +437,7 @@
         <div class="content">
 
             <g:link class="display-inline" controller="search" action="inlineSearch"
-                    params="[s_controllerName: controllerName, s_actionName: actionName, objectUUID: params.id, max: params.max, offset: params.activeTab == 'providers' ? params.offset : '',, sort: params.activeTab == 'providers' ? params.sort : '', order: params.activeTab == 'providers' ? params.order : '', qbe: 'g:orgs', qp_vendor_id: d.id, inline: true, refOID: d.getOID(), hide: ['qp_vendor', 'qp_vendor_id']]"
+                    params="[s_controllerName: controllerName, s_actionName: actionName, objectUUID: params.id, max: params.max, offset: params.activeTab == 'providers' ? params.offset : '', sort: params.activeTab == 'providers' ? params.sort : '', order: params.activeTab == 'providers' ? params.order : '', qbe: 'g:orgs', qp_vendor_id: d.id, inline: true, refOID: d.getOID(), hide: ['qp_vendor', 'qp_vendor_id']]"
                     id="">Providers</g:link>
 
         </div>

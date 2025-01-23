@@ -1506,6 +1506,8 @@ class Api2Service {
                 result.referrerAuthentification = object.referrerAuthentification?.value
                 result.ezProxy = object.ezProxy?.value
                 result.hanServer = object.hanServer?.value
+                //backwards-compatibility for LAS:eR 3.4
+                result.proxySupported = object.otherProxies?.value
                 result.otherProxies = object.otherProxies?.value
 
                 result.statisticsFormat = object.statisticsFormat?.value
@@ -1754,6 +1756,9 @@ class Api2Service {
                 result.researchPlatformForEbooks = object.researchPlatformForEbooks
                 result.prequalification = object.prequalification ? RDStore.YN_YES.value : RDStore.YN_NO.value
                 result.prequalificationInfo = object.prequalificationInfo
+                //backwards-compatibility for LAS:eR 3.4
+                result.prequalificationVOL = object.prequalification ? RDStore.YN_YES.value : RDStore.YN_NO.value
+                result.prequalificationInfoVOL = object.prequalificationInfo
 
                 result.roles = []
                 object.roles.each { role ->
