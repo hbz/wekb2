@@ -8,10 +8,9 @@ a11yIcon = {
 
     init: function () {
 
-
-        $('.ui.icon.button i.icon').attr( {
+        $('i.icon').not('.dropdown.icon').attr( {
             'aria-hidden' : 'true',
-            'focusable' : 'false'
+            'focusable' : 'false' // no focusstop additional to the focusstop at button or link
         });
     }
 }
