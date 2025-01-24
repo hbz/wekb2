@@ -79,42 +79,41 @@
 
     <div class="ui segment">
         <h3 class="ui header">KBART Import File</h3>
-        <label class="content">
-        <g:uploadForm class="ui form" action="processKbartImport" method="post" id="${pkg.id}">
-                <div class="field">
-                    <div class="ui checkbox">
-                        <input type="checkbox" name="onlyRowsWithLastChanged">
-                        <label>Only update titles with the latest last_changed time stamp in your we:kb/KBART file. Last registered date is:
-                        <g:if test="${lastSuccessfulUpdateInfo && lastSuccessfulUpdateInfo.lastChangedInKbart}">
-                            <strong><g:formatDate format="${message(code: 'default.date.format.notime')}"
-                                                date="${lastSuccessfulUpdateInfo.lastChangedInKbart}"/></strong>
-                        </g:if><g:else>
-                            <strong>Empty</strong>
-                        </g:else>
-                        </label>
+        <div class="content">
+            <g:uploadForm class="ui form" action="processKbartImport" method="post" id="${pkg.id}">
+                    <div class="field">
+                        <div class="ui checkbox">
+                            <input type="checkbox" name="onlyRowsWithLastChanged">
+                            <label>Only update titles with the latest last_changed time stamp in your we:kb/KBART file. Last registered date is:
+                            <g:if test="${lastSuccessfulUpdateInfo && lastSuccessfulUpdateInfo.lastChangedInKbart}">
+                                <strong><g:formatDate format="${message(code: 'default.date.format.notime')}"
+                                                    date="${lastSuccessfulUpdateInfo.lastChangedInKbart}"/></strong>
+                            </g:if><g:else>
+                                <strong>Empty</strong>
+                            </g:else>
+                            </label>
+                        </div>
                     </div>
-                </div>
 
-            <div class="ui fluid action input labeled">
-                <div class="ui label">
-                    KBART-File:
+                <div class="ui fluid action input labeled">
+                    <div class="ui label">
+                        KBART-File:
+                    </div>
+                    <input type="text" name="upload_file_placeholder" readonly="readonly"
+                           placeholder="Selected KBART-File">
+                    <input type="file" name="tsvFile" accept=".tsv, .txt" style="display: none;" id="uploadFile">
+                    <label for="uploadFile" class="ui primary button" style="padding-left:30px; padding-right:30px">
+                        <i class="upload icon"></i>
+                        Click here to upload KBART-File
+                    </label>
                 </div>
-                <input type="text" name="upload_file_placeholder" readonly="readonly"
-                       placeholder="Selected KBART-File">
-                <input type="file" name="tsvFile" accept=".tsv, .txt" style="display: none;" id="uploadFile"
-                       type="file">
-                <label for="uploadFile" class="ui primary button" style="padding-left:30px; padding-right:30px">
-                    <i class="upload icon"></i>
-                    Click here to upload KBART-File
-                </label>
-            </div>
-            <br>
-            <br>
+                <br>
+                <br>
 
-            <button class="ui primary button" type="submit">Process Kbart Import</button>
-        </g:uploadForm>
+                <button class="ui primary button" type="submit">Process Kbart Import</button>
+            </g:uploadForm>
+        </div>
     </div>
-
 
 </g:if>
 

@@ -163,10 +163,37 @@
 
         <dl>
             <dt class="control-label">
-                Last Update Url
+                Update Url
             </dt>
             <dd>
                 <semui:xEditable owner="${d}" field="updateUrl" overwriteEditable="false"/>
+            </dd>
+        </dl>
+
+        <dl>
+            <dt class="control-label">
+                Frequency
+            </dt>
+            <dd>
+                <semui:xEditable owner="${d}" field="frequency" overwriteEditable="false"/>
+            </dd>
+        </dl>
+
+        <dl>
+            <dt class="control-label">
+               Last Run
+            </dt>
+            <dd>
+                <semui:xEditable owner="${d}" field="lastRun" overwriteEditable="false"/>
+            </dd>
+        </dl>
+
+        <dl>
+            <dt class="control-label">
+                Last UpdateUrl
+            </dt>
+            <dd>
+                <semui:xEditable owner="${d}" field="lastUpdateUrl" overwriteEditable="false"/>
             </dd>
         </dl>
 

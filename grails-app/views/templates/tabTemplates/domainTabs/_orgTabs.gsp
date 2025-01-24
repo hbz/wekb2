@@ -4,6 +4,15 @@
         <semui:tabsItemWithoutLink tab="invoice" defaultTab="invoice" activeTab="${params.activeTab}">
             Invoicing
         </semui:tabsItemWithoutLink>
+        <semui:tabsItemWithoutLink  tab="supportedLicencingModels" activeTab="${params.activeTab}">
+            Supported Licencing Models
+        </semui:tabsItemWithoutLink>
+        <semui:tabsItemWithoutLink  tab="usageRights" activeTab="${params.activeTab}">
+            Usage Rights
+        </semui:tabsItemWithoutLink>
+        <semui:tabsItemWithoutLink tab="generalServices" activeTab="${params.activeTab}">
+            General Services
+       </semui:tabsItemWithoutLink>
         <semui:tabsItemWithoutLink tab="identifiers" activeTab="${params.activeTab}" counts="${d.ids.size()}">
             Identifiers
         </semui:tabsItemWithoutLink>
@@ -289,20 +298,169 @@
         </div>
     </semui:tabsItemContent>
 
+
+    <semui:tabsItemContent tab="supportedLicencingModels" activeTab="${params.activeTab}">
+        <div class="content wekb-inline-lists">
+            <dl>
+                <dt class="control-label">
+                    Collections
+                </dt>
+                <dd>
+                    <semui:xEditableRefData owner="${d}" field="collections"
+                                            config="${RCConstants.YN}"/>
+                </dd>
+            </dl>
+            <dl>
+                <dt class="control-label">
+                    Pick and Choose
+                </dt>
+                <dd>
+                    <semui:xEditableRefData owner="${d}" field="pickAndChoose"
+                                            config="${RCConstants.YN}"/>
+                </dd>
+            </dl>
+            <dl>
+                <dt class="control-label">
+                    Prepaid
+                </dt>
+                <dd>
+                    <semui:xEditableRefData owner="${d}" field="prepaid"
+                                            config="${RCConstants.YN}"/>
+                </dd>
+            </dl>
+            <dl>
+                <dt class="control-label">
+                    Upfront
+                </dt>
+                <dd>
+                    <semui:xEditableRefData owner="${d}" field="upfront"
+                                            config="${RCConstants.YN}"/>
+                </dd>
+            </dl>
+            <dl>
+                <dt class="control-label">
+                    Temporary Access
+                </dt>
+                <dd>
+                    <semui:xEditableRefData owner="${d}" field="temporaryAccess"
+                                            config="${RCConstants.YN}"/>
+                </dd>
+            </dl>
+            <dl>
+                <dt class="control-label">
+                    Perpetual Access
+                </dt>
+                <dd>
+                    <semui:xEditableRefData owner="${d}" field="perpetualAccess"
+                                            config="${RCConstants.YN}"/>
+                </dd>
+            </dl>
+        </div>
+    </semui:tabsItemContent>
+
+    <semui:tabsItemContent tab="usageRights" activeTab="${params.activeTab}">
+        <div class="content wekb-inline-lists">
+            <dl>
+                <dt class="control-label">
+                    DRM
+                </dt>
+                <dd>
+                    <semui:xEditableRefData owner="${d}" field="drm"
+                                            config="${RCConstants.ORG_DRM}"/>
+                </dd>
+            </dl>
+            <dl>
+                <dt class="control-label">
+                    Remote Access
+                </dt>
+                <dd>
+                    <semui:xEditableRefData owner="${d}" field="remoteAccess"
+                                            config="${RCConstants.YN}"/>
+                </dd>
+            </dl>
+            <dl>
+                <dt class="control-label">
+                    Print/Download Chapter
+                </dt>
+                <dd>
+                    <semui:xEditableRefData owner="${d}" field="printDownloadChapter"
+                                            config="${RCConstants.YN}"/>
+                </dd>
+            </dl>
+            <dl>
+                <dt class="control-label">
+                    Quotes By Copy/Paste
+                </dt>
+                <dd>
+                    <semui:xEditableRefData owner="${d}" field="quotesByCopyPaste"
+                                            config="${RCConstants.YN}"/>
+                </dd>
+            </dl>
+        </div>
+    </semui:tabsItemContent>
+
+    <semui:tabsItemContent tab="generalServices" activeTab="${params.activeTab}">
+        <div class="content wekb-inline-lists">
+            <dl>
+                <dt class="control-label">
+                    URL price lists
+                </dt>
+                <dd>
+                    <semui:xEditable owner="${d}" field="urlPristLists"/>
+                </dd>
+            </dl>
+            <dl>
+                <dt class="control-label">
+                    URL title lists
+                </dt>
+                <dd>
+                    <semui:xEditable owner="${d}" field="urlTitleLists"/>
+                </dd>
+            </dl>
+            <dl>
+                <dt class="control-label">
+                    Forwarding Usage Statistcs
+                </dt>
+                <dd>
+                    <semui:xEditableRefData owner="${d}" field="forwardingUsageStatistcs"
+                                            config="${RCConstants.YN}"/>
+                </dd>
+            </dl>
+            <dl>
+                <dt class="control-label">
+                    Alerts about new publications within e-book packages
+                </dt>
+                <dd>
+                    <semui:xEditableRefData owner="${d}" field="alertNewEbookPackages"
+                                            config="${RCConstants.YN}"/>
+                </dd>
+            </dl>
+            <dl>
+                <dt class="control-label">
+                    Alerts about exchange of individual titles within e-book packages
+                </dt>
+                <dd>
+                    <semui:xEditableRefData owner="${d}" field="alertExchangeEbookPackages"
+                                            config="${RCConstants.YN}"/>
+                </dd>
+            </dl>
+        </div>
+    </semui:tabsItemContent>
+
     <semui:tabsItemContent tab="platforms" activeTab="${params.activeTab}">
         <g:link class="display-inline" controller="search" action="inlineSearch"
-                params="[s_controllerName: controllerName, s_actionName: actionName, objectUUID: params.id, max: params.max, offset: params.activeTab == 'platforms' ? params.offset : '', sort: params.sort, order: params.order, qbe: 'g:platforms', refOID: d.getOID(), inline: true, qp_provider_id: d.id, hide: ['qp_provider', 'qp_provider_id'], activeTab: 'platforms', jumpOffset: params.activeTab == 'platforms' ? params.jumpOffset : '']"
+                params="[s_controllerName: controllerName, s_actionName: actionName, objectUUID: params.id, max: params.max, offset: params.activeTab == 'platforms' ? params.offset : '', sort: params.activeTab == 'platforms' ? params.sort : '', order: params.activeTab == 'platforms' ? params.order : '', qbe: 'g:platforms', refOID: d.getOID(), inline: true, qp_provider_id: d.id, hide: ['qp_provider', 'qp_provider_id'], activeTab: 'platforms', jumpOffset: params.activeTab == 'platforms' ? params.jumpOffset : '']"
                 id="">Titles published</g:link>
     </semui:tabsItemContent>
     <semui:tabsItemContent tab="titles" activeTab="${params.activeTab}">
         <g:link class="display-inline" controller="search" action="inlineSearch"
-                params="[s_controllerName: controllerName, s_actionName: actionName, objectUUID: params.id, max: params.max, offset: params.activeTab == 'titles' ? params.offset : '', sort: params.sort, order: params.order, qbe: 'g:tipps', refOID: d.getOID(), inline: true, qp_provider_id: d.id, hide: ['qp_provider', 'qp_provider_id'], activeTab: 'titles', jumpOffset: params.activeTab == 'titles' ? params.jumpOffset : '']"
+                params="[s_controllerName: controllerName, s_actionName: actionName, objectUUID: params.id, max: params.max, offset: params.activeTab == 'titles' ? params.offset : '', sort: params.activeTab == 'titles' ? params.sort : '', order: params.activeTab == 'titles' ? params.order : '', qbe: 'g:tipps', refOID: d.getOID(), inline: true, qp_provider_id: d.id, hide: ['qp_provider', 'qp_provider_id'], activeTab: 'titles', jumpOffset: params.activeTab == 'titles' ? params.jumpOffset : '']"
                 id="">Titles published</g:link>
     </semui:tabsItemContent>
 
     <semui:tabsItemContent tab="packages" activeTab="${params.activeTab}">
         <g:link class="display-inline" controller="search" action="inlineSearch"
-                params="[s_controllerName: controllerName, s_actionName: actionName, objectUUID: params.id, max: params.max, offset: params.activeTab == 'packages' ? params.offset : '', sort: params.sort, order: params.order, qbe: 'g:packages', refOID: d.getOID(), inline: true, qp_provider_id: d.id, hide: ['qp_provider', 'qp_provider_id'], activeTab: 'packages', jumpOffset: params.activeTab == 'packages' ? params.jumpOffset : '']"
+                params="[s_controllerName: controllerName, s_actionName: actionName, objectUUID: params.id, max: params.max, offset: params.activeTab == 'packages' ? params.offset : '', sort: params.activeTab == 'packages' ? params.sort : '', order: params.activeTab == 'packages' ? params.order : '', qbe: 'g:packages', refOID: d.getOID(), inline: true, qp_provider_id: d.id, hide: ['qp_provider', 'qp_provider_id'], activeTab: 'packages', jumpOffset: params.activeTab == 'packages' ? params.jumpOffset : '']"
                 id="">Packages on this Platform</g:link>
     </semui:tabsItemContent>
 

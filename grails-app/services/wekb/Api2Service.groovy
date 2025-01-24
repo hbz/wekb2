@@ -294,14 +294,38 @@ class Api2Service {
                                 [
                                         type       : 'lookup',
                                         baseClass  : 'wekb.RefdataValue',
-                                        qparam     : 'qp_statisticsFormat',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'statisticsFormat'],
+                                        qparam     : 'qp_mailDomain',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'mailDomain'],
                                 ],
                                 [
                                         type       : 'lookup',
                                         baseClass  : 'wekb.RefdataValue',
-                                        qparam     : 'qp_counterR3Supported',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'counterR3Supported'],
+                                        qparam     : 'qp_referrerAuthentification',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'referrerAuthentification'],
+                                ],
+                                [
+                                        type       : 'lookup',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        qparam     : 'qp_ezProxy',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'ezProxy'],
+                                ],
+                                [
+                                        type       : 'lookup',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        qparam     : 'qp_hanServer',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'hanServer'],
+                                ],
+                                [
+                                        type       : 'lookup',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        qparam     : 'qp_otherProxies',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'otherProxies'],
+                                ],
+                                [
+                                        type       : 'lookup',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        qparam     : 'qp_statisticsFormat',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'statisticsFormat'],
                                 ],
                                 [
                                         type       : 'lookup',
@@ -998,8 +1022,6 @@ class Api2Service {
 
             result.primaryUrl = object.primaryUrl
 
-            result.titleNamespace = object.titleNamespace?.value
-
             result.lastAuditDate = object.lastAuditDate ? DateUtils.getSDF_ISO().format(object.lastAuditDate) : ""
 
             result.ipAuthentication = object.ipAuthentication?.value
@@ -1011,7 +1033,6 @@ class Api2Service {
             result.passwordAuthentication = object.passwordAuthentication?.value
 
             result.statisticsFormat = object.statisticsFormat?.value
-            result.counterR3Supported = object.counterR3Supported?.value
             result.counterR4Supported = object.counterR4Supported?.value
             result.counterR5Supported = object.counterR5Supported?.value
             result.counterR4SushiApiSupported = object.counterR4SushiApiSupported?.value
@@ -1022,7 +1043,7 @@ class Api2Service {
             result.counterCertified = object.counterCertified?.value
             result.statisticsAdminPortalUrl = object.statisticsAdminPortalUrl
             result.statisticsUpdate = object.statisticsUpdate?.value
-            result.proxySupported = object.proxySupported?.value
+            result.otherProxies = object.otherProxies?.value
 
             result.counterRegistryApiUuid = object.counterRegistryApiUuid
 
@@ -1371,6 +1392,23 @@ class Api2Service {
                 result.individualInvoiceDesign = object.individualInvoiceDesign ? RDStore.YN_YES.value : RDStore.YN_NO.value
                 result.invoicingYourself = object.invoicingYourself ? RDStore.YN_YES.value : RDStore.YN_NO.value
 
+                result.collections = object.collections?.value
+                result.pickAndChoose = object.pickAndChoose?.value
+                result.prepaid = object.prepaid?.value
+                result.upfront = object.upfront?.value
+                result.temporaryAccess = object.temporaryAccess?.value
+                result.perpetualAccess = object.perpetualAccess?.value
+                result.drm = object.drm?.value
+                result.remoteAccess = object.remoteAccess?.value
+                result.printDownloadChapter = object.printDownloadChapter?.value
+                result.quotesByCopyPaste = object.quotesByCopyPaste?.value
+                result.forwardingUsageStatistcs = object.forwardingUsageStatistcs?.value
+                result.alertNewEbookPackages = object.alertNewEbookPackages?.value
+                result.alertExchangeEbookPackages = object.alertExchangeEbookPackages?.value
+
+                result.urlPristLists = object.urlPristLists
+                result.urlTitleLists = object.urlTitleLists
+
                 result.roles = []
                 object.roles.each { role ->
                     result.roles.add(role.value)
@@ -1455,8 +1493,6 @@ class Api2Service {
 
                 result.primaryUrl = object.primaryUrl
 
-                result.titleNamespace = object.titleNamespace?.value
-
                 result.lastAuditDate = object.lastAuditDate ? DateUtils.getSDF_ISO().format(object.lastAuditDate) : ""
 
                 result.ipAuthentication = object.ipAuthentication?.value
@@ -1466,9 +1502,15 @@ class Api2Service {
                 result.openAthens = object.openAthens?.value
 
                 result.passwordAuthentication = object.passwordAuthentication?.value
+                result.mailDomain = object.mailDomain?.value
+                result.referrerAuthentification = object.referrerAuthentification?.value
+                result.ezProxy = object.ezProxy?.value
+                result.hanServer = object.hanServer?.value
+                //backwards-compatibility for LAS:eR 3.4
+                result.proxySupported = object.otherProxies?.value
+                result.otherProxies = object.otherProxies?.value
 
                 result.statisticsFormat = object.statisticsFormat?.value
-                result.counterR3Supported = object.counterR3Supported?.value
                 result.counterR4Supported = object.counterR4Supported?.value
                 result.counterR5Supported = object.counterR5Supported?.value
                 result.counterR4SushiApiSupported = object.counterR4SushiApiSupported?.value
@@ -1479,7 +1521,6 @@ class Api2Service {
                 result.counterCertified = object.counterCertified?.value
                 result.statisticsAdminPortalUrl = object.statisticsAdminPortalUrl
                 result.statisticsUpdate = object.statisticsUpdate?.value
-                result.proxySupported = object.proxySupported?.value
 
                 result.counterRegistryApiUuid = object.counterRegistryApiUuid
                 result.counterR5SushiPlatform = object.counterR5SushiPlatform
@@ -1492,13 +1533,16 @@ class Api2Service {
                 result.accessEPub = object.accessEPub?.value
                 result.onixMetadata = object.onixMetadata?.value
                 result.accessPdf = object.accessPdf?.value
-                result.accessAudio = object.accessAudio
-                        ?.value
+                result.accessAudio = object.accessAudio?.value
                 result.accessVideo = object.accessVideo?.value
                 result.accessDatabase = object.accessDatabase?.value
                 result.accessibilityStatementAvailable = object.accessibilityStatementAvailable?.value
                 result.accessibilityStatementUrl = object.accessibilityStatementUrl
 
+                result.platformBlogUrl = object.platformBlogUrl
+                result.rssUrl = object.rssUrl
+                result.individualDesignLogo = object.individualDesignLogo?.value
+                result.fullTextSearch = object.fullTextSearch?.value
 
                 if (object.hasProperty('curatoryGroups')) {
                     result.curatoryGroups = []
@@ -1710,8 +1754,11 @@ class Api2Service {
                 result.activationForNewReleases = object.activationForNewReleases ? RDStore.YN_YES.value : RDStore.YN_NO.value
                 result.exchangeOfIndividualTitles = object.exchangeOfIndividualTitles ? RDStore.YN_YES.value : RDStore.YN_NO.value
                 result.researchPlatformForEbooks = object.researchPlatformForEbooks
-                result.prequalificationVOL = object.prequalificationVOL ? RDStore.YN_YES.value : RDStore.YN_NO.value
-                result.prequalificationVOLInfo = object.prequalificationVOLInfo
+                result.prequalification = object.prequalification ? RDStore.YN_YES.value : RDStore.YN_NO.value
+                result.prequalificationInfo = object.prequalificationInfo
+                //backwards-compatibility for LAS:eR 3.4
+                result.prequalificationVOL = object.prequalification ? RDStore.YN_YES.value : RDStore.YN_NO.value
+                result.prequalificationInfoVOL = object.prequalificationInfo
 
                 result.roles = []
                 object.roles.each { role ->
@@ -2256,19 +2303,19 @@ class Api2Service {
 
         counter4Platforms.each { Platform platform ->
             result.counter4ApiSources."${platform.uuid}" = mapDomainFieldsToSpecFields(platform)
-
             result.counter4ApiSources."${platform.uuid}".sushiApiAuthenticationMethod = platform.sushiApiAuthenticationMethod?.value
             result.counter4ApiSources."${platform.uuid}".centralApiKey = platform.centralApiKey
-
+            result.counter4ApiSources."${platform.uuid}".internLabelForCustomerID = platform.internLabelForCustomerID
+            result.counter4ApiSources."${platform.uuid}".internLabelForRequestorKey = platform.internLabelForRequestorKey
         }
 
         counter5Platforms.each { Platform platform ->
             result.counter5ApiSources."${platform.uuid}" = mapDomainFieldsToSpecFields(platform)
-
             result.counter5ApiSources."${platform.uuid}".sushiApiAuthenticationMethod = platform.sushiApiAuthenticationMethod?.value
             result.counter5ApiSources."${platform.uuid}".centralApiKey = platform.centralApiKey
             result.counter5ApiSources."${platform.uuid}".counterR5SushiPlatform = platform.counterR5SushiPlatform
-
+            result.counter5ApiSources."${platform.uuid}".internLabelForCustomerID = platform.internLabelForCustomerID
+            result.counter5ApiSources."${platform.uuid}".internLabelForRequestorKey = platform.internLabelForRequestorKey
         }
 
         result

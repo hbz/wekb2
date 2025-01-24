@@ -897,23 +897,67 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'dropDown',
                                         baseClass  : 'wekb.RefdataValue',
-                                        filter1    : RCConstants.PLATFORM_STATISTICS_FORMAT,
-                                        prompt     : 'Statistics Format',
-                                        msgCode     : 'platform.statisticsFormat',
-                                        qparam     : 'qp_statisticsFormat_platform',
-                                        placeholder: 'Statistics Format',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'nominalPlatform.statisticsFormat'],
+                                        filter1    : RCConstants.YN,
+                                        prompt     : 'Mail Domain Auth Supported',
+                                        msgCode    : 'platform.mailDomain',
+                                        qparam     : 'qp_mailDomain',
+                                        placeholder: 'Mail Domain Auth Supported',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'mailDomain'],
                                         advancedSearch: [title: "Search Platform by ...", category: 'Platform']
                                 ],
                                 [
                                         type       : 'dropDown',
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.YN,
-                                        prompt     : 'Counter R3 Supported',
-                                        msgCode     : 'platform.counterR3Supported',
-                                        qparam     : 'qp_counterR3Supported_platform',
-                                        placeholder: 'Counter R3 Supported',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'nominalPlatform.counterR3Supported'],
+                                        prompt     : 'Referrer Authentification Auth Supported',
+                                        msgCode    : 'platform.referrerAuthentification',
+                                        qparam     : 'qp_referrerAuthentification',
+                                        placeholder: 'Referrer Authentification Auth Supported',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'referrerAuthentification'],
+                                        advancedSearch: [title: "Search Platform by ...", category: 'Platform']
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.YN,
+                                        prompt     : 'EZ Proxy Auth Supported',
+                                        msgCode    : 'platform.ezProxy',
+                                        qparam     : 'qp_ezProxy',
+                                        placeholder: 'EZ Proxy Auth Supported',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'ezProxy'],
+                                        advancedSearch: [title: "Search Platform by ...", category: 'Platform']
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.YN,
+                                        prompt     : 'HAN-Server Auth Supported',
+                                        msgCode    : 'platform.hanServer',
+                                        qparam     : 'qp_hanServer',
+                                        placeholder: 'HAN-Server Auth Supported',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'hanServer'],
+                                        advancedSearch: [title: "Search Platform by ...", category: 'Platform']
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.YN,
+                                        prompt     : 'Other Proxies Auth Supported',
+                                        msgCode    : 'platform.otherProxies',
+                                        qparam     : 'qp_hanServer',
+                                        placeholder: 'Other Proxies Auth Supported',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'otherProxies'],
+                                        advancedSearch: [title: "Search Platform by ...", category: 'Platform']
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.PLATFORM_STATISTICS_FORMAT,
+                                        prompt     : 'Statistics Format',
+                                        msgCode     : 'platform.statisticsFormat',
+                                        qparam     : 'qp_statisticsFormat_platform',
+                                        placeholder: 'Statistics Format',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'nominalPlatform.statisticsFormat'],
                                         advancedSearch: [title: "Search Platform by ...", category: 'Platform']
                                 ],
                                 [
@@ -1066,6 +1110,7 @@ class GlobalSearchTemplatesService {
                                         qparam     : 'qp_shibbolethAuthentication',
                                         placeholder: 'Shibboleth Supported',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'shibbolethAuthentication'],
+                                        advancedSearch: [title: "Authentication", category: 'Authentication']
                                 ],
                                 [
                                         type       : 'dropDown',
@@ -1075,7 +1120,8 @@ class GlobalSearchTemplatesService {
                                         msgCode     : 'platform.openAthens',
                                         qparam     : 'qp_openAthens',
                                         placeholder: 'Open Athens Supported',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'openAthens']
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'openAthens'],
+                                        advancedSearch: [title: "Authentication", category: 'Authentication']
                                 ],
                                 [
                                         type       : 'dropDown',
@@ -1086,6 +1132,62 @@ class GlobalSearchTemplatesService {
                                         qparam     : 'qp_ipAuthentication',
                                         placeholder: 'IP Auth Supported',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'ipAuthentication'],
+                                        advancedSearch: [title: "Authentication", category: 'Authentication']
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.YN,
+                                        prompt     : 'Mail Domain Auth Supported',
+                                        msgCode    : 'platform.mailDomain',
+                                        qparam     : 'qp_mailDomain',
+                                        placeholder: 'Mail Domain Auth Supported',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'mailDomain'],
+                                        advancedSearch: [title: "Authentication", category: 'Authentication']
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.YN,
+                                        prompt     : 'Referrer Authentification Auth Supported',
+                                        msgCode    : 'platform.referrerAuthentification',
+                                        qparam     : 'qp_referrerAuthentification',
+                                        placeholder: 'Referrer Authentification Auth Supported',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'referrerAuthentification'],
+                                        advancedSearch: [title: "Authentication", category: 'Authentication']
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.YN,
+                                        prompt     : 'EZ Proxy Auth Supported',
+                                        msgCode    : 'platform.ezProxy',
+                                        qparam     : 'qp_ezProxy',
+                                        placeholder: 'EZ Proxy Auth Supported',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'ezProxy'],
+                                        advancedSearch: [title: "Authentication", category: 'Authentication']
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.YN,
+                                        prompt     : 'HAN-Server Auth Supported',
+                                        msgCode    : 'platform.hanServer',
+                                        qparam     : 'qp_hanServer',
+                                        placeholder: 'HAN-Server Auth Supported',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'hanServer'],
+                                        advancedSearch: [title: "Authentication", category: 'Authentication']
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.YN,
+                                        prompt     : 'Other Proxies Auth Supported',
+                                        msgCode    : 'platform.otherProxies',
+                                        qparam     : 'qp_hanServer',
+                                        placeholder: 'Other Proxies Auth Supported',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'otherProxies'],
+                                        advancedSearch: [title: "Authentication", category: 'Authentication']
                                 ],
                                 [
                                         type       : 'dropDown',
@@ -1096,16 +1198,7 @@ class GlobalSearchTemplatesService {
                                         qparam     : 'qp_statisticsFormat',
                                         placeholder: 'Statistics Format',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'statisticsFormat'],
-                                ],
-                                [
-                                        type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
-                                        filter1    : RCConstants.YN,
-                                        prompt     : 'Counter R3 Supported',
-                                        msgCode     : 'platform.counterR3Supported',
-                                        qparam     : 'qp_counterR3Supported',
-                                        placeholder: 'Counter R3 Supported',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'counterR3Supported'],
+                                        advancedSearch: [title: "Statistics", category: 'Statistics']
                                 ],
                                 [
                                         type       : 'dropDown',
@@ -1116,6 +1209,7 @@ class GlobalSearchTemplatesService {
                                         qparam     : 'qp_counterR4Supported',
                                         placeholder: 'Counter R4 Supported',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'counterR4Supported'],
+                                        advancedSearch: [title: "Statistics", category: 'Statistics']
                                 ],
                                 [
                                         type       : 'dropDown',
@@ -1126,6 +1220,7 @@ class GlobalSearchTemplatesService {
                                         qparam     : 'qp_counterR5Supported',
                                         placeholder: 'Counter R5 Supported',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'counterR5Supported'],
+                                        advancedSearch: [title: "Statistics", category: 'Statistics']
                                 ],
                                 [
                                         type       : 'dropDown',
@@ -1136,6 +1231,7 @@ class GlobalSearchTemplatesService {
                                         qparam     : 'qp_counterR4SushiApiSupported',
                                         placeholder: 'Counter R4 Sushi Api Supported',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'counterR4SushiApiSupported'],
+                                        advancedSearch: [title: "Statistics", category: 'Statistics']
                                 ],
                                 [
                                         type       : 'dropDown',
@@ -1146,7 +1242,175 @@ class GlobalSearchTemplatesService {
                                         qparam     : 'qp_counterR5SushiApiSupported',
                                         placeholder: 'Counter R5 Sushi Api Supported',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'counterR5SushiApiSupported'],
+                                        advancedSearch: [title: "Statistics", category: 'Statistics']
                                 ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.UYNP,
+                                        prompt     : 'Platform',
+                                        msgCode     : 'platform.accessPlatform',
+                                        qparam     : 'qp_accessPlatform',
+                                        placeholder: 'Platform',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'accessPlatform'],
+                                        advancedSearch: [title: "Accessibility", category: 'Accessibility']
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.UYNP,
+                                        prompt     : 'PDF viewer',
+                                        msgCode     : 'platform.viewerForPdf',
+                                        qparam     : 'qp_viewerForPdf',
+                                        placeholder: 'PDF viewer',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'viewerForPdf'],
+                                        advancedSearch: [title: "Accessibility", category: 'Accessibility']
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.UYNP,
+                                        prompt     : 'ePub viewer',
+                                        msgCode     : 'platform.viewerForEpub',
+                                        qparam     : 'qp_viewerForEpub',
+                                        placeholder: 'ePub viewer',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'viewerForEpub'],
+                                        advancedSearch: [title: "Accessibility", category: 'Accessibility']
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.UYNP,
+                                        prompt     : 'Audio player',
+                                        msgCode     : 'platform.playerForAudio',
+                                        qparam     : 'qp_playerForAudio',
+                                        placeholder: 'Audio player',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'playerForAudio'],
+                                        advancedSearch: [title: "Accessibility", category: 'Accessibility']
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.UYNP,
+                                        prompt     : 'Video player',
+                                        msgCode     : 'platform.playerForVideo',
+                                        qparam     : 'qp_playerForVideo',
+                                        placeholder: 'Video player',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'playerForVideo'],
+                                        advancedSearch: [title: "Accessibility", category: 'Accessibility']
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.YN,
+                                        prompt     : 'Accessibility Statement available',
+                                        msgCode     : 'platform.accessibilityStatementAvailable',
+                                        qparam     : 'qp_accessibilityStatementAvailable',
+                                        placeholder: 'Accessibility Statement available',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'accessibilityStatementAvailable'],
+                                        advancedSearch: [title: "Accessibility", category: 'Accessibility']
+                                ],
+                                [
+                                        prompt     : 'Link to the Accessibility Statement',
+                                        qparam     : 'qp_accessibilityStatementUrl',
+                                        msgCode     : 'platform.accessibilityStatementUrl',
+                                        placeholder: 'Link to the Accessibility Statement',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'accessibilityStatementUrl'],
+                                        advancedSearch: [title: "Accessibility", category: 'Accessibility']
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.UYNP,
+                                        prompt     : 'EPUB e-books content',
+                                        msgCode     : 'platform.accessEPub',
+                                        qparam     : 'qp_accessEPub',
+                                        placeholder: 'EPUB e-books content',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'accessEPub'],
+                                        advancedSearch: [title: "Accessibility", category: 'Accessibility']
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.UYNP,
+                                        prompt     : 'PDF e-books content',
+                                        msgCode     : 'platform.accessPdf',
+                                        qparam     : 'qp_accessPdf',
+                                        placeholder: 'PDF e-books content',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'accessPdf'],
+                                        advancedSearch: [title: "Accessibility", category: 'Accessibility']
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.UYNP,
+                                        prompt     : 'Audio content',
+                                        msgCode    : 'platform.accessAudio',
+                                        qparam     : 'qp_accessAudio',
+                                        placeholder: 'Audio content',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'accessAudio'],
+                                        advancedSearch: [title: "Accessibility", category: 'Accessibility']
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.UYNP,
+                                        prompt     : 'Video content',
+                                        msgCode    : 'platform.accessVideo',
+                                        qparam     : 'qp_accessVideo',
+                                        placeholder: 'Video content',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'accessVideo'],
+                                        advancedSearch: [title: "Accessibility", category: 'Accessibility']
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.UYNP,
+                                        prompt     : 'Database content',
+                                        msgCode    : 'platform.accessDatabase',
+                                        qparam     : 'qp_accessDatabase',
+                                        placeholder: 'Database content',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'accessDatabase'],
+                                        advancedSearch: [title: "Accessibility", category: 'Accessibility']
+                                ],
+                                [
+                                        prompt     : 'Platform blog URL',
+                                        qparam     : 'qp_platformBlogUrl',
+                                        msgCode    : 'platform.platformBlogUrl',
+                                        placeholder: 'Platform blog URL',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'platformBlogUrl'],
+                                        advancedSearch: [title: "Additional services", category: 'Additional services']
+                                ],
+                                [
+                                        prompt     : 'RSS URL',
+                                        qparam     : 'qp_rssUrl',
+                                        msgCode    : 'platform.rssUrl',
+                                        placeholder: 'RSS URL',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'rssUrl'],
+                                        advancedSearch: [title: "Additional services", category: 'Additional services']
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.YN,
+                                        prompt     : 'Individual design / logo',
+                                        qparam     : 'qp_individualDesignLogo',
+                                        msgCode    : 'platform.individualDesignLogo',
+                                        placeholder: 'Individual design / logo',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'individualDesignLogo'],
+                                        advancedSearch: [title: "Additional services", category: 'Additional services']
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.YN,
+                                        prompt     : 'Full text search',
+                                        qparam     : 'qp_fullTextSearch',
+                                        msgCode    : 'platform.fullTextSearch',
+                                        placeholder: 'Full text search',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'fullTextSearch'],
+                                        advancedSearch: [title: "Additional services", category: 'Additional services']
+                                ]
                         ],
                         qbeResults: [
                                 [heading: 'Platform', property: 'name', sort: 'name', link: true, linkInfo: 'Link to Platform'],
@@ -1158,6 +1422,7 @@ class GlobalSearchTemplatesService {
                                 [heading: 'Current Packages', property: 'packagesCount'],
                         ]
                 ]
+
         ]
         result
     }

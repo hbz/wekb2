@@ -39,7 +39,7 @@ class AutoUpdatePackagesService {
                 packageNeedsUpdate << p
             }else if (!p.kbartSource.frequency){
                 if (!(p.status in [RDStore.KBC_STATUS_REMOVED, RDStore.KBC_STATUS_DELETED])) {
-                    UpdatePackageInfo updatePackageInfo = new UpdatePackageInfo(pkg: p, startTime: new Date(), endTime: new Date(), status: RDStore.UPDATE_STATUS_FAILED, description: "Source frequency is not set. Update for this package is not starting.", onlyRowsWithLastChanged: onlyRowsWithLastChanged, automaticUpdate: true, kbartHasWekbFields: false)
+                    UpdatePackageInfo updatePackageInfo = new UpdatePackageInfo(pkg: p, startTime: new Date(), endTime: new Date(), status: RDStore.UPDATE_STATUS_FAILED, description: "Source frequency is not set. Update for this package is not starting.", onlyRowsWithLastChanged: onlyRowsWithLastChanged, automaticUpdate: true, kbartHasWekbFields: false, lastRun: p.kbartSource.lastRun, lastUpdateUrl: p.kbartSource.lastUpdateUrl)
                     updatePackageInfo.save()
                 }
             }
@@ -93,13 +93,13 @@ class AutoUpdatePackagesService {
         String lastUpdateURL = ""
         Date startTime = new Date()
         if (pkg.status in [RDStore.KBC_STATUS_REMOVED, RDStore.KBC_STATUS_DELETED]) {
-            UpdatePackageInfo updatePackageInfo = new UpdatePackageInfo(pkg: pkg, startTime: startTime, endTime: new Date(), status: RDStore.UPDATE_STATUS_SUCCESSFUL, description: "Package status is ${pkg.status.value}. Update for this package is not starting.", onlyRowsWithLastChanged: onlyRowsWithLastChanged, automaticUpdate: true, kbartHasWekbFields: false)
+            UpdatePackageInfo updatePackageInfo = new UpdatePackageInfo(pkg: pkg, startTime: startTime, endTime: new Date(), status: RDStore.UPDATE_STATUS_SUCCESSFUL, description: "Package status is ${pkg.status.value}. Update for this package is not starting.", onlyRowsWithLastChanged: onlyRowsWithLastChanged, automaticUpdate: true, kbartHasWekbFields: false, lastRun: pkg.kbartSource.lastRun, lastUpdateUrl: pkg.kbartSource.lastUpdateUrl, frequency: pkg.kbartSource.frequency)
             updatePackageInfo.save()
         }else if (!pkg.nominalPlatform) {
-            UpdatePackageInfo updatePackageInfo = new UpdatePackageInfo(pkg: pkg, startTime: startTime, endTime: new Date(), status: RDStore.UPDATE_STATUS_SUCCESSFUL, description: "No nominal platform is set for this package! Please put a nominal platform on the package level.", onlyRowsWithLastChanged: onlyRowsWithLastChanged, automaticUpdate: true, kbartHasWekbFields: false)
+            UpdatePackageInfo updatePackageInfo = new UpdatePackageInfo(pkg: pkg, startTime: startTime, endTime: new Date(), status: RDStore.UPDATE_STATUS_SUCCESSFUL, description: "No nominal platform is set for this package! Please put a nominal platform on the package level.", onlyRowsWithLastChanged: onlyRowsWithLastChanged, automaticUpdate: true, kbartHasWekbFields: false, lastRun: pkg.kbartSource.lastRun, lastUpdateUrl: pkg.kbartSource.lastUpdateUrl, frequency: pkg.kbartSource.frequency)
             updatePackageInfo.save()
         } else {
-            UpdatePackageInfo updatePackageInfo = new UpdatePackageInfo(pkg: pkg, startTime: startTime, status: RDStore.UPDATE_STATUS_SUCCESSFUL, description: "Starting Update package.", onlyRowsWithLastChanged: onlyRowsWithLastChanged, automaticUpdate: true).save()
+            UpdatePackageInfo updatePackageInfo = new UpdatePackageInfo(pkg: pkg, startTime: startTime, status: RDStore.UPDATE_STATUS_SUCCESSFUL, description: "Starting Update package.", onlyRowsWithLastChanged: onlyRowsWithLastChanged, automaticUpdate: true, lastRun: pkg.kbartSource.lastRun, lastUpdateUrl: pkg.kbartSource.lastUpdateUrl, frequency: pkg.kbartSource.frequency).save()
             try {
                 if (pkg.kbartSource) {
                     if (pkg.kbartSource.defaultSupplyMethod == RDStore.KS_DSMETHOD_FTP) {
@@ -174,6 +174,29 @@ class AutoUpdatePackagesService {
                                     catch (Exception e) {
                                         log.error("Exception by get kbartFromUrl: ${e.message}")
                                         //e.printStackTrace()
+                                    }
+                                }
+                                if(updatePackageInfo.status == RDStore.UPDATE_STATUS_FAILED) {
+                                    updateUrls = []
+                                    if(pkg.kbartSource.lastUpdateUrl){
+                                        updateUrls << pkg.kbartSource.lastUpdateUrl
+                                    }
+
+                                    for(URL url in updateUrls){
+                                        lastUpdateURL = url.toString()
+                                        try {
+                                            file = exportService.kbartFromUrl(lastUpdateURL, updatePackageInfo)
+                                            if(file.size() > 0){
+                                                updatePackageInfo.status = RDStore.UPDATE_STATUS_SUCCESSFUL
+                                                updatePackageInfo.save()
+                                                log.info("Found File by URL: ${lastUpdateURL}")
+                                                break
+                                            }
+                                        }
+                                        catch (Exception e) {
+                                            log.error("Exception by get kbartFromUrl: ${e.message}")
+                                            //e.printStackTrace()
+                                        }
                                     }
                                 }
                                 updatePackageInfo.updateUrl = lastUpdateURL

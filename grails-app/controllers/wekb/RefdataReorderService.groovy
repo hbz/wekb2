@@ -35,5 +35,25 @@ class RefdataReorderService {
             ct.save()
         }
 
+        //Federations: ACOnet, DFN, SWITCH, eduGAIN, other, none, rest
+        RefdataCategory platformFederation = RefdataCategory.findByDesc(RCConstants.PLATFORM_FEDERATION)
+        order = 40
+        int i = 0
+        RefdataValue.findAllByOwner(platformFederation).each { RefdataValue federation ->
+            switch(federation.value) {
+                case 'ACOnet Identity Federation': federation.order = 0
+                    break
+                case 'DFN-AAI': federation.order = 10
+                    break
+                case 'SWITCHaai': federation.order = 20
+                    break
+                case 'eduGAIN': federation.order = 30
+                    break
+                default: federation.order = i*10+order
+                    i++
+                    break
+            }
+            federation.save()
+        }
     }
 }

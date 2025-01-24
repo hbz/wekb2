@@ -332,7 +332,7 @@ class SemanticTagLib {
 
         out << '<!--.pagination-->'
         out << '<div class="ui center aligned basic segment">'
-        out << '<nav class="ui pagination menu" aria-label="pagination2">'
+        out << '<nav class="ui pagination wrapping menu" aria-label="pagination2">'
 
         if (currentstep > firststep) {
             int tmp = (offset - (max * (maxsteps +1)))
@@ -494,7 +494,7 @@ class SemanticTagLib {
 
 
         out << '<div class="ui center aligned basic segment">'
-        out << '<nav class="ui pagination menu">'
+        out << '<nav class="ui pagination wrapping menu">'
 
         if (steps && laststep > firststep) {
             if (maxsteps > laststep) { // | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | > |
@@ -507,6 +507,19 @@ class SemanticTagLib {
                     def prevLinkAttrs2 = linkTagAttrs.clone()
                     out << callLink((prevLinkAttrs2 += prevMap), '<i class="angle left icon"></i>')
                 }
+
+                if (currentstep != 1) {
+                    def fristLinkAttrs = linkTagAttrs.clone()
+                    fristLinkAttrs.params.offset = 0
+                    fristLinkAttrs.class = 'item '
+                    out << callLink(fristLinkAttrs, "1")
+
+                    // | ... |
+                    out << '  <div class="disabled item">\n' +
+                            '    ...\n' +
+                            '  </div>'
+                }
+
                 // steps
                 for (int i in currentstep..(currentstep + maxsteps)) {
                     if (((i - 1) * max) < total) {
@@ -549,6 +562,20 @@ class SemanticTagLib {
                     def prevLinkAttrs2 = linkTagAttrs.clone()
                     out << callLink((prevLinkAttrs2 += prevMap), '<i class="angle left icon"></i>')
                 }
+
+                if (currentstep != 1) {
+                    def fristLinkAttrs = linkTagAttrs.clone()
+                    fristLinkAttrs.params.offset = 0
+                    fristLinkAttrs.class = 'item '
+                    out << callLink(fristLinkAttrs, "1")
+
+                    // | ... |
+                    out << '  <div class="disabled item">\n' +
+                            '    ...\n' +
+                            '  </div>'
+                }
+
+
                 // steps | 1 | 2 | 3 | 4 |
                 for (int i in currentstep..(currentstep + maxsteps)) {
                     if (((i) * max) < total) {
@@ -573,11 +600,8 @@ class SemanticTagLib {
                 } else {
                     linkTagAttrs.class = "item"
                 }
-
                 def lastLinkAttrs = linkTagAttrs.clone()
-
-                int tmp = linkParams.offset + (max * maxsteps)
-                linkParams.offset = tmp < total ? tmp : ((laststep - 1) * max)
+                linkParams.offset = (laststep-1) * max
                 out << callLink(lastLinkAttrs) {laststep.toString() }
 
                 // | > | >> |
@@ -590,6 +614,7 @@ class SemanticTagLib {
                     out << callLink((nextLinkAttrs1 += nextMap), '<i class="angle right icon"></i>')
                     if (currentstep < laststep-maxsteps-1) {
                         // | >> |
+                        int tmp
                         tmp = linkParams.offset + (max * maxsteps)
                         linkParams.offset = tmp < total ? tmp : ((laststep - 1) * max)
                         linkTagAttrs.class = (currentstep == laststep) ? "item disabled nextLink" : "item nextLink"

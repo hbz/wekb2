@@ -101,21 +101,19 @@
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th>Value</th>
-                            <th>Content Type</th>
                             <th>Contact Type</th>
-                            <th>Language</th>
-                            <th>Action</th>
+                            <th>Main Language</th>
+                            <th>Content Type</th>
+                            <th>Value</th>
+                            <g:if test="${editable}">
+                                <th>Action</th>
+                            </g:if>
                         </tr>
                         </thead>
                         <tbody>
                         <g:each in="${d.contacts?.sort { it.content }}" var="contact" status="i">
                             <tr>
                                 <td>${i + 1}</td>
-                                <td><semui:xEditable owner="${contact}" field="content"
-                                                     validation="${contact.contentType == RDStore.CONTACT_CONTENT_TYPE_EMAIL ? 'email' : ''}"/></td>
-                                <td><semui:xEditableRefData owner="${contact}" field="contentType"
-                                                            config="${RCConstants.CONTACT_CONTENT_TYPE}"/>
                                 <td><semui:xEditableRefData owner="${contact}" field="type"
                                                             config="${RCConstants.CONTACT_TYPE}"/>
                                 </td>
@@ -124,12 +122,20 @@
                                                             config="${RCConstants.COMPONENT_LANGUAGE}"/>
                                 </td>
                                 <td>
-                                    <g:if test="${editable}">
+                                    <semui:xEditableRefData owner="${contact}" field="contentType"
+                                                            config="${RCConstants.CONTACT_CONTENT_TYPE}"/>
+                                <td>
+                                <semui:xEditable owner="${contact}" field="content"
+                                                     validation="${contact.contentType == RDStore.CONTACT_CONTENT_TYPE_EMAIL ? 'email' : ''}"/>
+                                </td>
+                                <g:if test="${editable}">
+                                    <td>
+
                                         <g:link controller='ajaxHtml'
                                                 action='delete'
                                                 params="${["__context": "${contact.getOID()}", curationOverride: params.curationOverride]}">Delete</g:link>
-                                    </g:if>
-                                </td>
+                                    </td>
+                                </g:if>
                             </tr>
                         </g:each>
                         </tbody>
@@ -172,14 +178,14 @@
                     <div class="field">
                         <label>Content Type</label>
                         <semui:simpleReferenceDropdown name="contentType"
-                                                       baseClass="wekb.RefdataValue"
+                                                       baseClass="wekb.RefdataValue" class="required"
                                                        filter1="${RCConstants.CONTACT_CONTENT_TYPE}"/>
                     </div>
 
                     <div class="field">
                         <label>Contact Type</label>
                         <semui:simpleReferenceDropdown name="type"
-                                                       baseClass="wekb.RefdataValue"
+                                                       baseClass="wekb.RefdataValue" class="required"
                                                        filter1="${RCConstants.CONTACT_TYPE}"/>
                     </div>
                 </g:form>
