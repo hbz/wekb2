@@ -242,7 +242,7 @@
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th>Vendor</th>
+                            <th>Library Supplier</th>
                             <g:if test="${editable}">
                                 <th>Action</th>
                             </g:if>
@@ -270,12 +270,12 @@
 
                     <g:if test="${editable}">
                         <a class="ui right floated primary button" href="#"
-                           onclick="$('#invoicingVendorsModal').modal('show');">Add Vendor</a>
+                           onclick="$('#invoicingVendorsModal').modal('show');">Add Library Supplier</a>
 
                         <br>
                         <br>
 
-                        <semui:modal id="invoicingVendorsModal" title="Add Vendor">
+                        <semui:modal id="invoicingVendorsModal" title="Add Library Supplier">
 
                             <g:form controller="ajaxHtml" action="addToCollection" class="ui form">
                                 <input type="hidden" name="__context" value="${d.getOID()}"/>
@@ -286,7 +286,7 @@
 
 
                                 <div class="field">
-                                    <label>Vendor:</label> <semui:simpleReferenceDropdown
+                                    <label>Library Supplier:</label> <semui:simpleReferenceDropdown
                                         name="vendor"
                                         baseClass="wekb.Vendor"/>
                                 </div>

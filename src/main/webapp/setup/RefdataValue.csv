@@ -280,7 +280,7 @@ Country;ZM;Sambia;Zambia
 Country;ZW;Zimbabwe;Zimbabwe
 CuratoryGroup.Type;Other;Sonstige;Other
 CuratoryGroup.Type;Provider;Anbieter;Provider
-CuratoryGroup.Type;Vendor;Lieferant;Vendor
+CuratoryGroup.Type;Vendor;Lieferant;Library Supplier
 Currency;EUR;EUR;EUR
 Currency;GBP;GBP;GBP
 Currency;USD;USD;USD
@@ -593,7 +593,7 @@ Vendor.InvoiceDispatch;FTP-Server;FTP-Serverl;FTP-Server
 Vendor.InvoiceDispatch;Peppol;Peppol;Peppol
 Vendor.ElectronicDeliveryDelay;E-Mail;E-Mail;E-Mail
 Vendor.ElectronicDeliveryDelay;EDI;EDI;EDI
-Vendor.Role;Vendor;Vendor;Vendor
+Vendor.Role;Vendor;Library Supplier;Library Supplier
 YN;No;No;No
 YN;Yes;Yes;Yes
 UYNP;Unavailable;Not Available;Not Available

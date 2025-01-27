@@ -2634,7 +2634,7 @@ class GlobalSearchTemplatesService {
 
                         ],
                         qbeResults: [
-                                [heading: 'Vendor', property: 'name', sort: 'name', link: true, linkInfo: 'Link to Vendor'],
+                                [heading: 'Library Supplier', property: 'name', sort: 'name', link: true, linkInfo: 'Link to Library Supplier'],
                                 [heading: 'Abbreviated Name', property: 'abbreviatedName', sort: 'abbreviatedName', link: true, linkInfo: 'Link to Provider'],
                                 [heading: 'Homepage', property: 'homepage', sort: 'homepage', outGoingLink: true, linkInfo: 'Link to Homepage'],
                                 [heading: 'Last Updated', property: 'lastUpdated', sort: 'lastUpdated'],
@@ -2714,7 +2714,7 @@ class GlobalSearchTemplatesService {
                                 [heading: 'Curatory Groups', property: 'curatoryGroupsCuratoryGroup', link: true, linkInfo: 'Link to Curatory Group'],
                                 [heading: 'User', property: 'userStatus'],
                                 [heading: 'Editor', property: 'editorStatus'],
-                                [heading: 'Vendor-Editor', property: 'vendorEditorStatus'],
+                                [heading: 'Library Supplier-Editor', property: 'vendorEditorStatus'],
                                 [heading: 'API-User', property: 'apiUserStatus'],
                                 [heading: 'Admin', property: 'adminStatus'],
                                 [heading: 'Super-User', property: 'superUserStatus'],

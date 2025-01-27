@@ -111,9 +111,9 @@ class WorkflowService {
             case Vendor.class.name:
                 if (springSecurityService.currentUser.isAdmin()) {
                     [
-                            [code: 'workFlowSetStatus::Deleted', label: 'Mark the Vendor as deleted', message: '', onlyAdmin: true, group: 1],
-                            [code: 'workFlowSetStatus::Current', label: 'Mark the Vendor as current', message: '', onlyAdmin: true, group: 1],
-                            [code: 'workFlowSetStatus::Removed', label: 'Remove Vendor', message: '', onlyAdmin: true, group: 2]
+                            [code: 'workFlowSetStatus::Deleted', label: 'Mark the Library Supplier as deleted', message: '', onlyAdmin: true, group: 1],
+                            [code: 'workFlowSetStatus::Current', label: 'Mark the Library Supplier as current', message: '', onlyAdmin: true, group: 1],
+                            [code: 'workFlowSetStatus::Removed', label: 'Remove Library Supplier', message: '', onlyAdmin: true, group: 2]
                     ]
                 } else {
                     []

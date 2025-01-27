@@ -44,7 +44,7 @@
                 <g:link class="item" controller="create" action="index"
                         params="[tmpl: 'wekb.Org']">Provider</g:link>
                 <g:link class="item" controller="create" action="index"
-                        params="[tmpl: 'wekb.Vendor']">Vendor</g:link>
+                        params="[tmpl: 'wekb.Vendor']">Library Supplier</g:link>
                 <g:link class="item" controller="create" action="index"
                         params="[tmpl: 'wekb.auth.User']">User</g:link>
             </div>
