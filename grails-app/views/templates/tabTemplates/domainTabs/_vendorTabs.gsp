@@ -397,7 +397,7 @@
             </dl>
             <dl>
                 <dt class="control-label">
-                    Exchange of individual titles within e-book packages
+                    Alerts about exchange of individual titles within e-book packages
                 </dt>
                 <dd>
                     <semui:xEditableRefData owner="${d}" field="exchangeOfIndividualTitles"

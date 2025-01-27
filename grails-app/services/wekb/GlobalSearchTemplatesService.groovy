@@ -2591,10 +2591,10 @@ class GlobalSearchTemplatesService {
                                         type       : 'dropDown',
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.YN,
-                                        prompt     : 'Exchange of individual titles within e-book packages',
+                                        prompt     : 'Alerts about exchange of individual titles within e-book packages',
                                         msgCode     : 'vendor.exchangeOfIndividualTitles',
                                         qparam     : 'exchangeOfIndividualTitles',
-                                        placeholder: 'Exchange of individual titles within e-book packages',
+                                        placeholder: 'Alerts about exchange of individual titles within e-book packages',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'exchangeOfIndividualTitles'],
                                         advancedSearch: [title: "General Services", category: 'generalServices']
                                 ],
