@@ -442,7 +442,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'dropDown',
                                         baseClass  : 'wekb.RefdataValue',
-                                        filter1    : RCConstants.YN,
+                                        filter1    : RCConstants.ORG_DRM,
                                         prompt     : 'DRM',
                                         msgCode     : 'org.drm',
                                         qparam     : 'drm',
