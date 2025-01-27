@@ -6,8 +6,8 @@ responsiveTables = {
     responsiveTables.init('body')
   },
 
-  init: function(ctxSel) {
-    console.log('responsiveTables.init( ' + ctxSel + ' )')
+  init: function() {
+
 
     // smaller then 1200px
     if (window.matchMedia('(max-width: 1200px)').matches) {
