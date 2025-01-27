@@ -219,6 +219,54 @@ class FTUpdateService {
         result
       }
 
+      updateES(wekb.Vendor.class) { wekb.Org kbc ->
+        def result = [:]
+        result.recid = "${kbc.class.name}:${kbc.id}"
+        result.uuid = kbc.uuid
+        result.name = kbc.name
+        result.abbreviatedName = kbc.abbreviatedName
+        result.sortname = generateSortName(kbc.name)
+        result.altname = []
+        result.updater = 'vendor'
+        kbc.variantNames.each { vn ->
+          result.altname.add(vn.variantName)
+        }
+        result.lastUpdatedDisplay = dateFormatService.formatIsoTimestamp(kbc.lastUpdated)
+        result.roles = []
+        kbc.roles.each { role ->
+          result.roles.add(role.value)
+        }
+
+        if(kbc.hasProperty('curatoryGroups')) {
+          result.curatoryGroups = []
+          kbc.curatoryGroups?.each {
+            result.curatoryGroups.add([name: it.curatoryGroup.name,
+                                       type: it.curatoryGroup.type?.value,
+                                       curatoryGroup: it.curatoryGroup.getOID()])
+          }
+        }
+
+        result.status = kbc.status?.value
+        result.identifiers = []
+        kbc.ids.each { idc ->
+          result.identifiers.add([namespace    : idc.namespace.value,
+                                  value        : idc.value,
+                                  namespaceName: idc.namespace.name])
+        }
+        result.componentType = kbc.class.simpleName
+
+        result.contacts = []
+        kbc.contacts.each { Contact contact ->
+          result.contacts.add([  content: contact.content,
+                                 contentType: contact.contentType?.value,
+                                 type: contact.type?.value,
+                                 language: contact.language?.value])
+        }
+        result.homepage = kbc.homepage
+
+        result
+      }
+
       updateES(wekb.Platform.class) { wekb.Platform kbc ->
         def result = [:]
         result.recid = "${kbc.class.name}:${kbc.id}"
@@ -310,7 +358,6 @@ class FTUpdateService {
 
         result
       }
-
 
       updateES(wekb.TitleInstancePackagePlatform.class) { wekb.TitleInstancePackagePlatform kbc ->
 
