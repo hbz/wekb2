@@ -244,11 +244,11 @@ class Org extends AbstractBase implements Auditable {
   }
 
   @Transient
-  public String getDomainName() {
+  String getDomainName() {
     return "Provider"
   }
 
-  public String getShowName() {
+  String getShowName() {
     return this.name
   }
 
@@ -257,7 +257,7 @@ class Org extends AbstractBase implements Auditable {
   }
 
     @Transient
-    public getCurrentTippCount() {
+    int getCurrentTippCount() {
         def refdata_current = RDStore.KBC_STATUS_CURRENT
 
         int result = 0
@@ -270,17 +270,27 @@ class Org extends AbstractBase implements Auditable {
     }
 
   @Transient
-  def getProvidedPackages(){
+  List<Package> getProvidedPackages(){
     Package.executeQuery('select p from Package as p where provider = :provider', [provider: this])
   }
 
   @Transient
-  def getProvidedPlatforms(){
+  List<Platform> getProvidedPlatforms(){
     Platform.executeQuery('select p from Platform as p where provider = :provider', [provider: this])
   }
 
   @Transient
-  public List<CuratoryGroup> getCuratoryGroupObjects() {
+  int getProvidedPackagesCount(){
+    Package.executeQuery('select count(*) from Package as p where provider = :provider', [provider: this])[0]
+  }
+
+  @Transient
+  int getProvidedPlatformsCount(){
+    Platform.executeQuery('select count(*) from Platform as p where provider = :provider', [provider: this])[0]
+  }
+
+  @Transient
+  List<CuratoryGroup> getCuratoryGroupObjects() {
     List<CuratoryGroup> curatoryGroups
     if(this.curatoryGroups.size() > 0){
       curatoryGroups = this.curatoryGroups.curatoryGroup

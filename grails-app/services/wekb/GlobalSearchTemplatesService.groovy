@@ -522,10 +522,13 @@ class GlobalSearchTemplatesService {
                         ],
                         qbeResults: [
                                 [heading: 'Provider', property: 'name', sort: 'name', link: true, linkInfo: 'Link to Provider'],
+                                [heading: 'Abbreviated Name', property: 'abbreviatedName', sort: 'abbreviatedName', link: true, linkInfo: 'Link to Provider'],
                                 [heading: 'Homepage', property: 'homepage', sort: 'homepage', outGoingLink: true, linkInfo: 'Link to Homepage'],
                                 [heading: 'Last Updated', property: 'lastUpdated', sort: 'lastUpdated'],
                                 [heading: 'Status', property: 'status.value', sort: 'status'],
-                                [heading: 'Current Titles', property: 'currentTippCount']
+                                [heading: 'Current Titles', property: 'currentTippCount', jumpToLink: '/search/componentSearch/wekb.Org:objectID?qbe=g:tipps&hide=qp_provider&hide=qp_provider_id&refOID=wekb.Org:objectID&qp_provider_id=objectID&qp_status_value=Current', linkInfo: 'Link to Current Titles'],
+                                [heading: 'Packages', property: 'providedPackagesCount', jumpToLink: '/search/componentSearch/wekb.Org:objectID?qbe=g:packages&hide=qp_provider&hide=qp_provider_id&refOID=wekb.Org:objectID&qp_provider_id=objectID', linkInfo: 'Link to Packages'],
+                                [heading: 'Platforms', property: 'providedPlatformsCount', jumpToLink: '/search/componentSearch/wekb.Org:objectID?qbe=g:platforms&hide=qp_provider&hide=qp_provider_id&refOID=wekb.Org:objectID&qp_provider_id=objectID', linkInfo: 'Link to Platforms']
 
                         ]
                 ]
@@ -1889,6 +1892,11 @@ class GlobalSearchTemplatesService {
                                 [
                                         qparam     : 'qp_plat_id',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'hostPlatform.id', 'type': 'java.lang.Long'],
+                                        hide       : true
+                                ],
+                                [
+                                        qparam     : 'qp_status_value',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'status.value'],
                                         hide       : true
                                 ],
                                 [
