@@ -20,7 +20,7 @@
         <div class="content">
             The KBART import allows you to update this package with titles.
             <br><br>
-            <strong> Please keep in mind that:</strong>
+            <strong>Please keep in mind that:</strong>
 
             <div class="ui ordered list">
                 <div class="item">The KBART file must be <strong><u>tab-delimited</u></strong> and encoded in <strong><u>UTF-8</u></strong> as recommended by NISO.</div>
@@ -79,21 +79,22 @@
 
     <div class="ui segment">
         <h3 class="ui header">KBART Import File</h3>
+
         <div class="content">
             <g:uploadForm class="ui form" action="processKbartImport" method="post" id="${pkg.id}">
-                    <div class="field">
-                        <div class="ui checkbox">
-                            <input type="checkbox" name="onlyRowsWithLastChanged">
-                            <label>Only update titles with the latest last_changed time stamp in your we:kb/KBART file. Last registered date is:
+                <div class="field">
+                    <div class="ui checkbox">
+                        <input type="checkbox" name="onlyRowsWithLastChanged">
+                        <label>Only update titles with the latest last_changed time stamp in your we:kb/KBART file. Last registered date is:
                             <g:if test="${lastSuccessfulUpdateInfo && lastSuccessfulUpdateInfo.lastChangedInKbart}">
                                 <strong><g:formatDate format="${message(code: 'default.date.format.notime')}"
-                                                    date="${lastSuccessfulUpdateInfo.lastChangedInKbart}"/></strong>
+                                                      date="${lastSuccessfulUpdateInfo.lastChangedInKbart}"/></strong>
                             </g:if><g:else>
-                                <strong>Empty</strong>
-                            </g:else>
-                            </label>
-                        </div>
+                            <strong>Empty</strong>
+                        </g:else>
+                        </label>
                     </div>
+                </div>
 
                 <div class="ui fluid action input labeled">
                     <div class="ui label">
@@ -118,7 +119,7 @@
 </g:if>
 
 <g:javascript>
-    $('input:file', '.ui.action.input').on('change', function(e) {
+    $('input:file', '.ui.action.input').on('change', function (e) {
         var name = e.target.files[0].name;
         $('input:text', $(e.target).parent()).val(name);
     });
