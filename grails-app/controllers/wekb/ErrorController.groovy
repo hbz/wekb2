@@ -33,14 +33,14 @@ class ErrorController {
                             "Date/Time: " + new Date() + nl +
                             "Class: " + (root?.class?.name ?: exception.class.name) + nl
 
-            if(springSecurityService.isLoggedIn()) {
+            /*if(springSecurityService.isLoggedIn()) {
                 if (excep.message) {
                     resp.mailString += "Message: " + excep.message + nl
                 }
                 if (root?.message != excep.message) {
                     resp.mailString += "Cause: " + root.message + nl
                 }
-            }
+            }*/
 
             log.error(excep?.getMessage())
             //log.error(excep?.getStackTrace())
