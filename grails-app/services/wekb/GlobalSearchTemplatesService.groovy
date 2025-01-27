@@ -82,7 +82,10 @@ class GlobalSearchTemplatesService {
                                 [heading: 'Curatory Group', property: 'name', sort: 'name', link: true, linkInfo: 'Link to Curatory Group'],
                                 [heading: 'Last Updated', property: 'lastUpdated', sort: 'lastUpdated'],
                                 [heading: 'Status', property: 'status.value', sort: 'status'],
-                                [heading: 'Type', property: 'type.value', sort: 'type']
+                                [heading: 'Type', property: 'type.value', sort: 'type'],
+                                [heading: 'Current Titles', property: 'currentTippCount', jumpToLink: '/search/componentSearch/wekb.CuratoryGroup:objectID?qbe=g:tipps&hide=qp_curgroups&refOID=wekb.CuratoryGroup:objectID&qp_curgroups=objectID&qp_status_value=Current', linkInfo: 'Link to Current Titles'],
+                                [heading: 'Packages', property: 'providedPackagesCount', jumpToLink: '/search/componentSearch/wekb.CuratoryGroup:objectID?qbe=g:packages&hide=qp_curgroups&&refOID=wekb.CuratoryGroup:objectID&qp_curgroups=objectID', linkInfo: 'Link to Packages'],
+                                [heading: 'Platforms', property: 'providedPlatformsCount', jumpToLink: '/search/componentSearch/wekb.CuratoryGroup:objectID?qbe=g:platforms&hide=qp_curgroups&refOID=wekb.CuratoryGroup:objectID&qp_curgroups=objectID', linkInfo: 'Link to Platforms']
 
                         ]
                 ]
@@ -576,6 +579,11 @@ class GlobalSearchTemplatesService {
                                 [
                                         qparam     : 'createdSince',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'greater', 'prop': 'dateCreated', 'type': 'java.util.Date'],
+                                        hide       : true
+                                ],
+                                [
+                                        qparam     : 'qp_status_value',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'status.value'],
                                         hide       : true
                                 ],
                                 //General Fields
@@ -1275,6 +1283,8 @@ class GlobalSearchTemplatesService {
                         qbeForm   : [
                                 //Hidden Fields
                                 [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.CuratoryGroup',
                                         qparam     : 'qp_curgroups',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'placeHolderForCuratoryGroups'],
                                         hide       : true
@@ -1654,8 +1664,8 @@ class GlobalSearchTemplatesService {
                                 [heading: 'Provider', property: 'provider.name', sort: 'provider.name', link: true, linkInfo: 'Link to Provider'],
                                 [heading: 'Last Updated', property: 'lastUpdated', sort: 'lastUpdated'],
                                 [heading: 'Status', property: 'status.value', sort: 'status'],
-                                [heading: 'Current Titles', property: 'currentTippCount'],
-                                [heading: 'Current Packages', property: 'packagesCount'],
+                                [heading: 'Current Titles', property: 'currentTippCount', jumpToLink: '/search/componentSearch/wekb.Platform:objectID?qbe=g:tipps&hide=qp_platform&hide=qp_platform_id&refOID=wekb.Platform:objectID&qp_platform_id=objectID&qp_status_value=Current', linkInfo: 'Link to Current Titles'],
+                                [heading: 'Current Packages', property: 'packagesCount', jumpToLink: '/search/componentSearch/wekb.Platform:objectID?qbe=g:packages&hide=qp_platform&hide=qp_platform_id&refOID=wekb.Platform:objectID&qp_platform_id=objectID&qp_status_value=Current', linkInfo: 'Link to Current Packages'],
                         ]
                 ]
 
@@ -1890,7 +1900,7 @@ class GlobalSearchTemplatesService {
                                         hide       : true
                                 ],
                                 [
-                                        qparam     : 'qp_plat_id',
+                                        qparam     : 'qp_platform_id',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'hostPlatform.id', 'type': 'java.lang.Long'],
                                         hide       : true
                                 ],
@@ -2114,7 +2124,8 @@ class GlobalSearchTemplatesService {
                                 [heading: 'Medium', property: 'medium.value', sort: 'medium.value'],
                                 [heading: 'First Author', property: 'firstAuthor', sort: 'firstAuthor'],
                                 [heading: 'Package', qpEquiv: 'qp_pkg_id', property: 'pkg.name', sort: 'pkg.name', link: true, linkInfo: 'Link to Package'],
-                                [heading: 'Platform', qpEquiv: 'qp_plat_id', property: 'hostPlatform.name', sort: 'hostPlatform.name', link: true, linkInfo: 'Link to Platform'],
+                                [heading: 'Platform', qpEquiv: 'qp_platform_id', property: 'hostPlatform.name', sort: 'hostPlatform.name', link: true, linkInfo: 'Link to Platform'],
+                                [heading: 'Provider', qpEquiv: 'qp_provider_id', property: 'pkg.provider.name', sort: 'pkg.provider.name', link: true, linkInfo: 'Link to Provider'],
                                 [heading: 'Last Updated', property: 'lastUpdated', sort: 'lastUpdated'],
                                 [heading: 'Status', property: 'status.value', sort: 'status.value'],
                                 [heading: 'URL', property: 'url', sort: 'url', outGoingLink: true, linkInfo: 'Link to Title Url']
@@ -2154,7 +2165,7 @@ class GlobalSearchTemplatesService {
                                         hide       : true
                                 ],
                                 [
-                                        qparam     : 'qp_plat_id',
+                                        qparam     : 'qp_platform_id',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'hostPlatform.id', 'type': 'java.lang.Long'],
                                         hide       : true
                                 ],
@@ -2324,7 +2335,7 @@ class GlobalSearchTemplatesService {
                                 [heading: 'Type', property: 'publicationType.value', sort: 'publicationType.value'],
                                 [heading: 'Medium', property: 'medium.value', sort: 'medium.value'],
                                 [heading: 'First Author', property: 'firstAuthor', sort: 'firstAuthor'],
-                                [heading: 'Platform', qpEquiv: 'qp_plat_id', property: 'hostPlatform.name', sort: 'hostPlatform.name',  link: true, linkInfo: 'Link to Platform'],
+                                [heading: 'Platform', qpEquiv: 'qp_platform_id', property: 'hostPlatform.name', sort: 'hostPlatform.name',  link: true, linkInfo: 'Link to Platform'],
                                 [heading: 'Last Updated', property: 'lastUpdated', sort: 'lastUpdated'],
                                 [heading: 'Status', property: 'status.value', sort: 'status.value'],
                                 [heading: 'URL', property: 'url', sort: 'url', outGoingLink: true, linkInfo: 'Link to Title URL']
@@ -2399,38 +2410,232 @@ class GlobalSearchTemplatesService {
                                         placeholder: 'Role',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'roles'],
                                 ],
+                                //---------------------------------------------------------------------------------------------------
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.YN,
+                                        prompt     : 'via Webshop',
+                                        msgCode     : 'vendor.webShopOrders',
+                                        qparam     : 'webShopOrders',
+                                        placeholder: 'via Webshop',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'webShopOrders'],
+                                        advancedSearch: [title: "Ordering", category: 'ordering']
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.YN,
+                                        prompt     : 'via E-Mail',
+                                        msgCode     : 'vendor.emailOrders',
+                                        qparam     : 'emailOrders',
+                                        placeholder: 'via E-Mail',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'emailOrders'],
+                                        advancedSearch: [title: "Ordering", category: 'ordering']
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.YN,
+                                        prompt     : 'via XML',
+                                        msgCode     : 'vendor.xmlOrders',
+                                        qparam     : 'xmlOrders',
+                                        placeholder: 'via XML',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'xmlOrders'],
+                                        advancedSearch: [title: "Ordering", category: 'ordering']
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.YN,
+                                        prompt     : 'via EDI',
+                                        msgCode     : 'vendor.ediOrders',
+                                        qparam     : 'ediOrders',
+                                        placeholder: 'via EDI',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'ediOrders'],
+                                        advancedSearch: [title: "Ordering", category: 'ordering']
+                                ],
                                 [
                                         type       : 'dropDown',
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.VENDOR_SUPPORTED_LIB_SYSTEM,
                                         prompt     : 'Supported Library Systems',
-                                        msgCode    : 'vendor.supportedLibrarySystems',
-                                        qparam     : 'qp_supportedLibrarySystems',
-                                        placeholder: 'Role',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'supportedLibrarySystems'],
+                                        msgCode     : 'vendor.supportedLibrarySystems',
+                                        qparam     : 'supportedLibrarySystems',
+                                        placeholder: 'Supported Library Systems',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'supportedLibrarySystems'],
+                                        advancedSearch: [title: "Ordering", category: 'ordering']
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.VENDOR_ELECTRONIC_DELIVERY_DELAY,
+                                        prompt     : 'Electronic delivery delay notifications via',
+                                        msgCode     : 'vendor.electronicDeliveryDelays',
+                                        qparam     : 'electronicDeliveryDelays',
+                                        placeholder: 'Electronic delivery delay notifications via',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'electronicDeliveryDelays'],
+                                        advancedSearch: [title: "Ordering", category: 'ordering']
                                 ],
                                 [
                                         type       : 'dropDown',
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.VENDOR_ELECTRONIC_BILLING,
-                                        prompt     : 'Electronic Billings',
-                                        msgCode    : 'vendor.electronicBillings',
-                                        qparam     : 'qp_electronicBillings',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'electronicBillings'],
+                                        prompt     : 'Electronic Invoice Formats',
+                                        msgCode     : 'vendor.electronicBillings',
+                                        qparam     : 'electronicBillings',
+                                        placeholder: 'Electronic Invoice Formats',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'electronicBillings'],
+                                        advancedSearch: [title: "Invoicing", category: 'invoice']
                                 ],
                                 [
                                         type       : 'dropDown',
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.VENDOR_INVOICE_DISPATCH,
-                                        prompt     : 'Invoice Dispatchs',
-                                        msgCode    : 'vendor.invoiceDispatchs',
-                                        qparam     : 'qp_invoiceDispatchs',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'invoiceDispatchs'],
+                                        prompt     : 'Invoice dispatch via',
+                                        msgCode     : 'vendor.invoiceDispatchs',
+                                        qparam     : 'invoiceDispatchs',
+                                        placeholder: 'Invoice dispatch via',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'invoiceDispatchs'],
+                                        advancedSearch: [title: "Invoicing", category: 'invoice']
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.YN,
+                                        prompt     : 'Paper Invoice',
+                                        msgCode     : 'vendor.paperInvoice',
+                                        qparam     : 'paperInvoice',
+                                        placeholder: 'Paper Invoice',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'paperInvoice'],
+                                        advancedSearch: [title: "Invoicing", category: 'invoice']
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.YN,
+                                        prompt     : 'Management of Credits',
+                                        msgCode     : 'vendor.managementOfCredits',
+                                        qparam     : 'managementOfCredits',
+                                        placeholder: 'Management of Credits',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'managementOfCredits'],
+                                        advancedSearch: [title: "Invoicing", category: 'invoice']
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.YN,
+                                        prompt     : 'Processing of compensation payments (credits/subsequent debits)',
+                                        msgCode     : 'vendor.processingOfCompensationPayments',
+                                        qparam     : 'processingOfCompensationPayments',
+                                        placeholder: 'Processing of compensation payments (credits/subsequent debits)',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'processingOfCompensationPayments'],
+                                        advancedSearch: [title: "Invoicing", category: 'invoice']
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.YN,
+                                        prompt     : 'Individual invoice design',
+                                        msgCode     : 'vendor.individualInvoiceDesign',
+                                        qparam     : 'individualInvoiceDesign',
+                                        placeholder: 'Individual invoice design',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'individualInvoiceDesign'],
+                                        advancedSearch: [title: "Invoicing", category: 'invoice']
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.YN,
+                                        prompt     : 'Technical Support',
+                                        msgCode     : 'vendor.technicalSupport',
+                                        qparam     : 'technicalSupport',
+                                        placeholder: 'Technical Support',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'technicalSupport'],
+                                        advancedSearch: [title: "General Services", category: 'generalServices']
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.YN,
+                                        prompt     : 'Metadata (MARC records)',
+                                        msgCode     : 'vendor.shippingMetadata',
+                                        qparam     : 'shippingMetadata',
+                                        placeholder: 'Metadata (MARC records)',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'shippingMetadata'],
+                                        advancedSearch: [title: "General Services", category: 'generalServices']
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.YN,
+                                        prompt     : 'Forwarding usage statistics from the publisher',
+                                        msgCode     : 'vendor.forwardingUsageStatisticsFromPublisher',
+                                        qparam     : 'forwardingUsageStatisticsFromPublisher',
+                                        placeholder: 'Forwarding usage statistics from the publisher',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'forwardingUsageStatisticsFromPublisher'],
+                                        advancedSearch: [title: "General Services", category: 'generalServices']
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.YN,
+                                        prompt     : 'Alerts about new publications within e-book packages',
+                                        msgCode     : 'vendor.activationForNewReleases',
+                                        qparam     : 'activationForNewReleases',
+                                        placeholder: 'Alerts about new publications within e-book packages',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'activationForNewReleases'],
+                                        advancedSearch: [title: "General Services", category: 'generalServices']
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.YN,
+                                        prompt     : 'Exchange of individual titles within e-book packages',
+                                        msgCode     : 'vendor.exchangeOfIndividualTitles',
+                                        qparam     : 'exchangeOfIndividualTitles',
+                                        placeholder: 'Exchange of individual titles within e-book packages',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'exchangeOfIndividualTitles'],
+                                        advancedSearch: [title: "General Services", category: 'generalServices']
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.YN,
+                                        prompt     : 'Research platform for e-books',
+                                        msgCode     : 'vendor.researchPlatformForEbooks',
+                                        qparam     : 'researchPlatformForEbooks',
+                                        placeholder: 'Research platform for e-booksr',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'researchPlatformForEbooks'],
+                                        advancedSearch: [title: "General Services", category: 'generalServices']
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.YN,
+                                        prompt     : 'Prequalification',
+                                        msgCode     : 'vendor.prequalification',
+                                        qparam     : 'prequalification',
+                                        placeholder: 'Prequalificationt',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'prequalification'],
+                                        advancedSearch: [title: "Supplier information", category: 'supplierInformation']
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.YN,
+                                        prompt     : 'Info to Prequalification',
+                                        msgCode     : 'vendor.prequalificationInfo',
+                                        qparam     : 'prequalificationInfo',
+                                        placeholder: 'Info to Prequalification',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'prequalificationInfo'],
+                                        advancedSearch: [title: "Supplier information", category: 'supplierInformation']
                                 ],
 
                         ],
                         qbeResults: [
                                 [heading: 'Vendor', property: 'name', sort: 'name', link: true, linkInfo: 'Link to Vendor'],
+                                [heading: 'Abbreviated Name', property: 'abbreviatedName', sort: 'abbreviatedName', link: true, linkInfo: 'Link to Provider'],
                                 [heading: 'Homepage', property: 'homepage', sort: 'homepage', outGoingLink: true, linkInfo: 'Link to Homepage'],
                                 [heading: 'Last Updated', property: 'lastUpdated', sort: 'lastUpdated'],
                                 [heading: 'Status', property: 'status.value', sort: 'status']
