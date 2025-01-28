@@ -68,6 +68,9 @@ class GlobalSearchTemplatesService {
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'type'],
                                 ],
                                 [
+
+
+
                                         type       : 'dropDown',
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.COMPONENT_STATUS,
@@ -1384,6 +1387,17 @@ class GlobalSearchTemplatesService {
                                         type       : 'dropDown',
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.YN,
+                                        prompt     : 'User/Pass Supported',
+                                        msgCode    : 'platform.passwordAuthentication',
+                                        qparam     : 'qp_passwordAuthentication',
+                                        placeholder: 'User/Pass Supported',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'passwordAuthentication'],
+                                        advancedSearch: [title: "Authentication", category: 'Authentication']
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.YN,
                                         prompt     : 'Mail Domain Auth Supported',
                                         msgCode    : 'platform.mailDomain',
                                         qparam     : 'qp_mailDomain',
@@ -1618,22 +1632,6 @@ class GlobalSearchTemplatesService {
                                         placeholder: 'Database content',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'accessDatabase'],
                                         advancedSearch: [title: "Accessibility", category: 'Accessibility']
-                                ],
-                                [
-                                        prompt     : 'Platform blog URL',
-                                        qparam     : 'qp_platformBlogUrl',
-                                        msgCode    : 'platform.platformBlogUrl',
-                                        placeholder: 'Platform blog URL',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'platformBlogUrl'],
-                                        advancedSearch: [title: "Additional services", category: 'Additional services']
-                                ],
-                                [
-                                        prompt     : 'RSS URL',
-                                        qparam     : 'qp_rssUrl',
-                                        msgCode    : 'platform.rssUrl',
-                                        placeholder: 'RSS URL',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'rssUrl'],
-                                        advancedSearch: [title: "Additional services", category: 'Additional services']
                                 ],
                                 [
                                         type       : 'dropDown',
