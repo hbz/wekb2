@@ -8,7 +8,7 @@
             Authentication
         </semui:tabsItemWithoutLink>
         <semui:tabsItemWithoutLink tab="statistic" activeTab="${params.activeTab}">
-            Statistic
+            Statistics
         </semui:tabsItemWithoutLink>
         <g:if test="${user && (SpringSecurityUtils.ifAnyGranted("ROLE_ADMIN, ROLE_SUSHI") || user.curatoryGroupUsers.curatoryGroup.id.intersect(d.curatoryGroups.curatoryGroup.id))}">
             <semui:tabsItemWithoutLink tab="sushiApiInfo" activeTab="${params.activeTab}">
