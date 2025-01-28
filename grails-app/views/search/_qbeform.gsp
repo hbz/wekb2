@@ -46,6 +46,8 @@
         <g:each in="${hide}" var="hidden_var">
             <input type="hidden" name="hide" value="${hidden_var}"/>
         </g:each>
+
+
         <div class="two fields">
         <g:each in="${formdefn}" var="fld" status="frmidx">
             <g:if test="${((hide?.contains(fld.qparam)) || (fld.hide == true))}">
