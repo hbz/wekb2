@@ -385,7 +385,7 @@
         <div class="ui fluid card" style="margin-bottom:0">
             <div class="content">
                 <div class="header">
-                    Vendors
+                    Library Suppliers
                 </div>
             </div>
 

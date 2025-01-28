@@ -8,7 +8,7 @@
         <h1 class="ui header">Bulk Process</h1>
 
         <div class="field">
-            <label>Vendors:</label>
+            <label>Library Suppliers:</label>
 
             <g:select from="${Vendor.findAllByStatus(RDStore.KBC_STATUS_CURRENT).sort { it.name }}"
                       class="dropdown fluid"
@@ -56,7 +56,7 @@
             </tr>
             <tr>
                 <th>#</th>
-                <th>Vendors</th>
+                <th>Library Suppliers</th>
                 <th>Action</th>
             </tr>
             </thead>

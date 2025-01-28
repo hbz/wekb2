@@ -2350,7 +2350,7 @@ class GlobalSearchTemplatesService {
         Map result = [
                 baseclass   : 'wekb.Vendor',
                 msgCode    : 'vendor.plural',
-                title       : 'Vendors',
+                title       : 'Library Suppliers',
                 defaultSort : 'name',
                 defaultOrder: 'asc',
                 qbeConfig   : [

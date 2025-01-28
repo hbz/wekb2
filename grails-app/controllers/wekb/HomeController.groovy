@@ -196,7 +196,7 @@ class HomeController {
             'Platforms' : [
                     'componentName' : 'Platform',
             ],
-            'Vendors' : [
+            'Library Suppliers' : [
                     'componentName' : 'Vendor',
             ],
     ]
