@@ -56,7 +56,22 @@
             <dl>
                 <dt class="control-label"><g:message code="platform.shibbolethAuthentication"/></dt>
                 <dd><semui:xEditableRefData owner="${d}" field="shibbolethAuthentication"
-                                            config="${RCConstants.YN}"/></dd>
+                                            config="${RCConstants.YN}"/>
+                    <g:if test="${editable}">
+                        <g:form controller="ajaxHtml" action="setShibbolethAuthentication" id="${d.id}">
+                            <g:select from="${RefdataCategory.lookup(RCConstants.YN).sort { it.value }}"
+                                      class="ui dropdown fluid"
+                                      id="shibbolethAuthentication"
+                                      optionKey="value"
+                                      optionValue="${{ it.getI10n('value') }}"
+                                      name="shibbolethAuthentication"
+                                      value="${d.shibbolethAuthentication ? RDStore.YN_YES.value : RDStore.YN_NO.value}" onChange="this.form.submit()"/>
+                        </g:form>
+                    </g:if>
+                    <g:else>
+                        ${d.shibbolethAuthentication ? RDStore.YN_YES.getI10n('value') : RDStore.YN_NO.getI10n('value') }
+                    </g:else>
+                </dd>
             </dl>
             <g:if test="${d.shibbolethAuthentication && d.shibbolethAuthentication == wekb.helper.RDStore.YN_YES}">
                 <dl>
