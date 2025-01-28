@@ -159,6 +159,10 @@ class SemanticInplaceTagLib {
 
             out << "data-url=\"${update_link}\" "
 
+            if (owner[field]) {
+                out << " data-value=\"${RefdataValue.class.name}:${owner[field].id}\" "
+            }
+
             if (attrs.required) {
                 out << " data-required=\"${attrs.required}\" "
             }
@@ -252,6 +256,14 @@ class SemanticInplaceTagLib {
 
             if (attrs.required) {
                 out << " data-required=\"${attrs.required}\" "
+            }
+
+            if (owner[field] == true) {
+                out << " data-value=\"1\" "
+            }
+
+            if (owner[field] == false) {
+                out << " data-value=\"0\" "
             }
 
             if (attrs.disabled) {
