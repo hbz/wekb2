@@ -337,7 +337,7 @@ Org.Role;Content Provider;Content Provider;Content Provider
 Org.Role;Platform Provider;Platform Provider;Platform Provider
 Org.Role;Publisher;Publisher;Publisher
 Org.Drm;Hard;Hard;Hard
-Org.Drm;Soft;Soft (Watermark);SOft (Watermark)
+Org.Drm;Soft;Soft (Watermark);Soft (Watermark)
 Package.Breakable;No;No;No
 Package.Breakable;Unknown;Unknown;Unknown
 Package.Breakable;Yes;Yes;Yes
