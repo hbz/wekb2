@@ -20,7 +20,7 @@
         </div>
 
         <div class="grouped fields">
-            <label>What should be done with vendor?</label>
+            <label>What should be done with Library Supplier?</label>
             <div class="field">
                 <div class="ui radio checkbox">
                     <input type="radio" name="processLinkVendor" value="linkVendor" checked="checked">

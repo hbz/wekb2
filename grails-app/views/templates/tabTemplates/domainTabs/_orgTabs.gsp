@@ -195,7 +195,7 @@
                                     Paper Invoice
                                 </dt>
                                 <dd>
-                                    <semui:xEditableRefData owner="${d}" field="paperInvoice"
+                                    <semui:xEditableBoolean owner="${d}" field="paperInvoice"
                                                             config="${RCConstants.YN}"/>
                                 </dd>
                             </dl>
@@ -204,7 +204,7 @@
                                     Management of Credits
                                 </dt>
                                 <dd>
-                                    <semui:xEditableRefData owner="${d}" field="managementOfCredits"
+                                    <semui:xEditableBoolean owner="${d}" field="managementOfCredits"
                                                             config="${RCConstants.YN}"/>
                                 </dd>
                             </dl>
@@ -213,7 +213,7 @@
                                     Processing of compensation payments (credits/subsequent debits)
                                 </dt>
                                 <dd>
-                                    <semui:xEditableRefData owner="${d}" field="processingOfCompensationPayments"
+                                    <semui:xEditableBoolean owner="${d}" field="processingOfCompensationPayments"
                                                             config="${RCConstants.YN}"/>
                                 </dd>
                             </dl>
@@ -222,7 +222,7 @@
                                     Individual invoice design
                                 </dt>
                                 <dd>
-                                    <semui:xEditableRefData owner="${d}" field="individualInvoiceDesign"
+                                    <semui:xEditableBoolean owner="${d}" field="individualInvoiceDesign"
                                                             config="${RCConstants.YN}"/>
                                 </dd>
                             </dl>

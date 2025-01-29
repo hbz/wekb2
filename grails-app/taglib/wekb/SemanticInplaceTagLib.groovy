@@ -159,7 +159,7 @@ class SemanticInplaceTagLib {
 
             out << "data-url=\"${update_link}\" "
 
-            if (owner[field]) {
+            if (owner[field] && owner[field].id) {
                 out << " data-value=\"${RefdataValue.class.name}:${owner[field].id}\" "
             }
 

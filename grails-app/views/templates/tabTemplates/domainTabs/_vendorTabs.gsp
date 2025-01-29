@@ -323,7 +323,7 @@
                     Paper Invoice
                 </dt>
                 <dd>
-                    <semui:xEditableRefData owner="${d}" field="paperInvoice"
+                    <semui:xEditableBoolean owner="${d}" field="paperInvoice"
                                             config="${RCConstants.YN}"/>
                 </dd>
             </dl>
@@ -332,7 +332,7 @@
                     Management of Credits
                 </dt>
                 <dd>
-                    <semui:xEditableRefData owner="${d}" field="managementOfCredits"
+                    <semui:xEditableBoolean owner="${d}" field="managementOfCredits"
                                             config="${RCConstants.YN}"/>
                 </dd>
             </dl>
@@ -341,7 +341,7 @@
                     Processing of compensation payments (credits/subsequent debits)
                 </dt>
                 <dd>
-                    <semui:xEditableRefData owner="${d}" field="processingOfCompensationPayments"
+                    <semui:xEditableBoolean owner="${d}" field="processingOfCompensationPayments"
                                             config="${RCConstants.YN}"/>
                 </dd>
             </dl>
@@ -350,7 +350,7 @@
                     Individual invoice design
                 </dt>
                 <dd>
-                    <semui:xEditableRefData owner="${d}" field="individualInvoiceDesign"
+                    <semui:xEditableBoolean owner="${d}" field="individualInvoiceDesign"
                                             config="${RCConstants.YN}"/>
                 </dd>
             </dl>
@@ -364,7 +364,7 @@
                     Technical Support
                 </dt>
                 <dd>
-                    <semui:xEditableRefData owner="${d}" field="technicalSupport"
+                    <semui:xEditableBoolean owner="${d}" field="technicalSupport"
                                             config="${RCConstants.YN}"/>
                 </dd>
             </dl>
@@ -373,7 +373,7 @@
                     Metadata (MARC records)
                 </dt>
                 <dd>
-                    <semui:xEditableRefData owner="${d}" field="shippingMetadata"
+                    <semui:xEditableBoolean owner="${d}" field="shippingMetadata"
                                             config="${RCConstants.YN}"/>
                 </dd>
             </dl>
@@ -382,7 +382,7 @@
                     Forwarding usage statistics from the publisher
                 </dt>
                 <dd>
-                    <semui:xEditableRefData owner="${d}" field="forwardingUsageStatisticsFromPublisher"
+                    <semui:xEditableBoolean owner="${d}" field="forwardingUsageStatisticsFromPublisher"
                                             config="${RCConstants.YN}"/>
                 </dd>
             </dl>
@@ -391,7 +391,7 @@
                     Alerts about new publications within e-book packages
                 </dt>
                 <dd>
-                    <semui:xEditableRefData owner="${d}" field="activationForNewReleases"
+                    <semui:xEditableBoolean owner="${d}" field="activationForNewReleases"
                                             config="${RCConstants.YN}"/>
                 </dd>
             </dl>
@@ -400,7 +400,7 @@
                     Alerts about exchange of individual titles within e-book packages
                 </dt>
                 <dd>
-                    <semui:xEditableRefData owner="${d}" field="exchangeOfIndividualTitles"
+                    <semui:xEditableBoolean owner="${d}" field="exchangeOfIndividualTitles"
                                             config="${RCConstants.YN}"/>
                 </dd>
             </dl>
@@ -422,7 +422,7 @@
                     Prequalification
                 </dt>
                 <dd>
-                    <semui:xEditableRefData owner="${d}" field="prequalification"
+                    <semui:xEditableBoolean owner="${d}" field="prequalification"
                                             config="${RCConstants.YN}"/>
                 </dd>
             </dl>
