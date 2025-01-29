@@ -195,8 +195,7 @@
                                     Paper Invoice
                                 </dt>
                                 <dd>
-                                    <semui:xEditableBoolean owner="${d}" field="paperInvoice"
-                                                            config="${RCConstants.YN}"/>
+                                    <semui:xEditableBoolean owner="${d}" field="paperInvoice"/>
                                 </dd>
                             </dl>
                             <dl>
@@ -204,8 +203,7 @@
                                     Management of Credits
                                 </dt>
                                 <dd>
-                                    <semui:xEditableBoolean owner="${d}" field="managementOfCredits"
-                                                            config="${RCConstants.YN}"/>
+                                    <semui:xEditableBoolean owner="${d}" field="managementOfCredits"/>
                                 </dd>
                             </dl>
                             <dl>
@@ -213,8 +211,7 @@
                                     Processing of compensation payments (credits/subsequent debits)
                                 </dt>
                                 <dd>
-                                    <semui:xEditableBoolean owner="${d}" field="processingOfCompensationPayments"
-                                                            config="${RCConstants.YN}"/>
+                                    <semui:xEditableBoolean owner="${d}" field="processingOfCompensationPayments"/>
                                 </dd>
                             </dl>
                             <dl>
@@ -222,8 +219,7 @@
                                     Individual invoice design
                                 </dt>
                                 <dd>
-                                    <semui:xEditableBoolean owner="${d}" field="individualInvoiceDesign"
-                                                            config="${RCConstants.YN}"/>
+                                    <semui:xEditableBoolean owner="${d}" field="individualInvoiceDesign"/>
                                 </dd>
                             </dl>
                         </div>

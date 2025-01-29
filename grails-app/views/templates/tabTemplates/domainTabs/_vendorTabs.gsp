@@ -323,8 +323,7 @@
                     Paper Invoice
                 </dt>
                 <dd>
-                    <semui:xEditableBoolean owner="${d}" field="paperInvoice"
-                                            config="${RCConstants.YN}"/>
+                    <semui:xEditableBoolean owner="${d}" field="paperInvoice"/>
                 </dd>
             </dl>
             <dl>
@@ -332,8 +331,7 @@
                     Management of Credits
                 </dt>
                 <dd>
-                    <semui:xEditableBoolean owner="${d}" field="managementOfCredits"
-                                            config="${RCConstants.YN}"/>
+                    <semui:xEditableBoolean owner="${d}" field="managementOfCredits"/>
                 </dd>
             </dl>
             <dl>
@@ -341,8 +339,7 @@
                     Processing of compensation payments (credits/subsequent debits)
                 </dt>
                 <dd>
-                    <semui:xEditableBoolean owner="${d}" field="processingOfCompensationPayments"
-                                            config="${RCConstants.YN}"/>
+                    <semui:xEditableBoolean owner="${d}" field="processingOfCompensationPayments"/>
                 </dd>
             </dl>
             <dl>
@@ -350,8 +347,7 @@
                     Individual invoice design
                 </dt>
                 <dd>
-                    <semui:xEditableBoolean owner="${d}" field="individualInvoiceDesign"
-                                            config="${RCConstants.YN}"/>
+                    <semui:xEditableBoolean owner="${d}" field="individualInvoiceDesign"/>
                 </dd>
             </dl>
         </div>
@@ -364,8 +360,7 @@
                     Technical Support
                 </dt>
                 <dd>
-                    <semui:xEditableBoolean owner="${d}" field="technicalSupport"
-                                            config="${RCConstants.YN}"/>
+                    <semui:xEditableBoolean owner="${d}" field="technicalSupport"/>
                 </dd>
             </dl>
             <dl>
@@ -373,8 +368,7 @@
                     Metadata (MARC records)
                 </dt>
                 <dd>
-                    <semui:xEditableBoolean owner="${d}" field="shippingMetadata"
-                                            config="${RCConstants.YN}"/>
+                    <semui:xEditableBoolean owner="${d}" field="shippingMetadata"/>
                 </dd>
             </dl>
             <dl>
@@ -382,8 +376,7 @@
                     Forwarding usage statistics from the publisher
                 </dt>
                 <dd>
-                    <semui:xEditableBoolean owner="${d}" field="forwardingUsageStatisticsFromPublisher"
-                                            config="${RCConstants.YN}"/>
+                    <semui:xEditableBoolean owner="${d}" field="forwardingUsageStatisticsFromPublisher"/>
                 </dd>
             </dl>
             <dl>
@@ -391,8 +384,7 @@
                     Alerts about new publications within e-book packages
                 </dt>
                 <dd>
-                    <semui:xEditableBoolean owner="${d}" field="activationForNewReleases"
-                                            config="${RCConstants.YN}"/>
+                    <semui:xEditableBoolean owner="${d}" field="activationForNewReleases"/>
                 </dd>
             </dl>
             <dl>
@@ -400,8 +392,7 @@
                     Alerts about exchange of individual titles within e-book packages
                 </dt>
                 <dd>
-                    <semui:xEditableBoolean owner="${d}" field="exchangeOfIndividualTitles"
-                                            config="${RCConstants.YN}"/>
+                    <semui:xEditableBoolean owner="${d}" field="exchangeOfIndividualTitles"/>
                 </dd>
             </dl>
             <dl>
@@ -422,8 +413,7 @@
                     Prequalification
                 </dt>
                 <dd>
-                    <semui:xEditableBoolean owner="${d}" field="prequalification"
-                                            config="${RCConstants.YN}"/>
+                    <semui:xEditableBoolean owner="${d}" field="prequalification"/>
                 </dd>
             </dl>
             <dl>
