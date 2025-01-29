@@ -50,14 +50,14 @@ class Platform  extends AbstractBase implements Auditable {
   RefdataValue counterR5Supported
 
   @RefdataAnnotation(cat = RCConstants.YN)
-  RefdataValue counterR4SushiApiSupported
+  RefdataValue counterR4CounterApiSupported
 
   @RefdataAnnotation(cat = RCConstants.YN)
-  RefdataValue counterR5SushiApiSupported
+  RefdataValue counterR5CounterApiSupported
 
-  String counterR4SushiServerUrl
+  String counterR4CounterServerUrl
 
-  String counterR5SushiServerUrl
+  String counterR5CounterServerUrl
   String counterRegistryUrl
 
   String statisticsAdminPortalUrl
@@ -71,11 +71,11 @@ class Platform  extends AbstractBase implements Auditable {
   @RefdataAnnotation(cat = RCConstants.YN)
   RefdataValue counterCertified
 
-  @RefdataAnnotation(cat = RCConstants.PLATFORM_SUSHI_API_AUTH_METHOD)
-  RefdataValue sushiApiAuthenticationMethod
+  @RefdataAnnotation(cat = RCConstants.PLATFORM_COUNTER_API_AUTH_METHOD)
+  RefdataValue counterApiAuthenticationMethod
 
   String centralApiKey
-  String counterR5SushiPlatform
+  String counterR5CounterPlatform
 
   Date lastAuditDate
 
@@ -112,10 +112,10 @@ class Platform  extends AbstractBase implements Auditable {
     counterR3Supported column: 'plat_counter_r3_supported_fk_rv'
     counterR4Supported column: 'plat_counter_r4_supported_fk_rv'
     counterR5Supported column: 'plat_counter_r5_supported_fk_rv'
-    counterR4SushiApiSupported column: 'plat_counter_r4_sushi_api_supported_fk_rv'
-    counterR5SushiApiSupported column: 'plat_counter_r5_sushi_api_supported_fk_rv'
-    counterR4SushiServerUrl column: 'plat_counter_r4_sushi_server_url'
-    counterR5SushiServerUrl column: 'plat_counter_r5_sushi_server_url'
+    counterR4CounterApiSupported column: 'plat_counter_r4_counter_api_supported_fk_rv'
+    counterR5CounterApiSupported column: 'plat_counter_r5_counter_api_supported_fk_rv'
+    counterR4CounterServerUrl column: 'plat_counter_r4_counter_server_url'
+    counterR5CounterServerUrl column: 'plat_counter_r5_counter_server_url'
     counterRegistryUrl column: 'plat_counter_registry_url'
     counterCertified column: 'plat_counter_certified'
     statisticsAdminPortalUrl column: 'plat_statistics_admin_portal_url'
@@ -128,9 +128,9 @@ class Platform  extends AbstractBase implements Auditable {
 
     counterRegistryApiUuid column: 'plat_counter_registry_api_uuid'
 
-    sushiApiAuthenticationMethod column: 'plat_sushi_api_authentication_method'
+    counterApiAuthenticationMethod column: 'plat_counter_api_authentication_method'
     centralApiKey column: 'plat_central_api_key', type: 'text'
-    counterR5SushiPlatform column: 'plat_counter_r5_sushi_platform', type: 'text'
+    counterR5CounterPlatform column: 'plat_counter_r5_counter_platform', type: 'text'
 
   }
 
@@ -157,10 +157,10 @@ class Platform  extends AbstractBase implements Auditable {
     counterR3Supported(nullable: true, blank: false)
     counterR4Supported(nullable: true, blank: false)
     counterR5Supported(nullable: true, blank: false)
-    counterR4SushiApiSupported(nullable: true, blank: false)
-    counterR5SushiApiSupported(nullable: true, blank: false)
-    counterR4SushiServerUrl(nullable: true, blank: false)
-    counterR5SushiServerUrl(nullable: true, blank: false)
+    counterR4CounterApiSupported(nullable: true, blank: false)
+    counterR5CounterApiSupported(nullable: true, blank: false)
+    counterR4CounterServerUrl(nullable: true, blank: false)
+    counterR5CounterServerUrl(nullable: true, blank: false)
     counterRegistryUrl(nullable: true, blank: false)
     counterCertified(nullable: true, blank: false)
     statisticsAdminPortalUrl(nullable: true, blank: false)
@@ -172,9 +172,9 @@ class Platform  extends AbstractBase implements Auditable {
     counterRegistryApiUuid(nullable: true, blank: false)
 
     provider(nullable: true, blank: false)
-    sushiApiAuthenticationMethod (nullable: true, blank: false)
+    counterApiAuthenticationMethod (nullable: true, blank: false)
     centralApiKey(nullable: true, blank: true)
-    counterR5SushiPlatform (nullable: true, blank: false)
+    counterR5CounterPlatform (nullable: true, blank: false)
   }
 
   @Override

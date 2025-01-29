@@ -503,10 +503,10 @@ Platform.Statistics.Update;Monthly;Monthly;Monthly
 Platform.Statistics.Update;Quarterly;Quarterly;Quarterly
 Platform.Statistics.Update;Half-Yearly;Half-Yearly;Half-Yearly
 Platform.Statistics.Update;Yearly;Yearly;Yearly
-Platform.Sushi.Api.Authentication.Method;Requestor Key+Customer ID;Requestor Key+Customer ID;Requestor Key+Customer ID
-Platform.Sushi.Api.Authentication.Method;Customer ID+API Key;Customer ID+API Key;Customer ID+API Key
-Platform.Sushi.Api.Authentication.Method;Requestor Key+Customer ID+central API Key;Requestor Key+Customer ID+central API Key;Requestor Key+Customer ID+central API Key
-Platform.Sushi.Api.Authentication.Method;IP whitelisting;IP whitelisting;IP whitelisting
+Platform.Counter.Api.Authentication.Method;Requestor Key+Customer ID;Requestor Key+Customer ID;Requestor Key+Customer ID
+Platform.Counter.Api.Authentication.Method;Customer ID+API Key;Customer ID+API Key;Customer ID+API Key
+Platform.Counter.Api.Authentication.Method;Requestor Key+Customer ID+central API Key;Requestor Key+Customer ID+central API Key;Requestor Key+Customer ID+central API Key
+Platform.Counter.Api.Authentication.Method;IP whitelisting;IP whitelisting;IP whitelisting
 Price.type;list;list;list
 Price.type;on-off;on-off;on-off
 Price.type;open access apc;open access apc;open access apc

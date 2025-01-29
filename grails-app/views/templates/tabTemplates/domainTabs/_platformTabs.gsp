@@ -8,9 +8,9 @@
         <semui:tabsItemWithoutLink tab="statistic" defaultTab="statistic" activeTab="${params.activeTab}">
             Statistic
         </semui:tabsItemWithoutLink>
-        <g:if test="${user && (SpringSecurityUtils.ifAnyGranted("ROLE_ADMIN, ROLE_SUSHI") || user.curatoryGroupUsers.curatoryGroup.id.intersect(d.curatoryGroups.curatoryGroup.id))}">
-            <semui:tabsItemWithoutLink tab="sushiApiInfo" activeTab="${params.activeTab}">
-                Sushi Api Key Information
+        <g:if test="${user && (SpringSecurityUtils.ifAnyGranted("ROLE_ADMIN, ROLE_COUNTER") || user.curatoryGroupUsers.curatoryGroup.id.intersect(d.curatoryGroups.curatoryGroup.id))}">
+            <semui:tabsItemWithoutLink tab="counterApiInfo" activeTab="${params.activeTab}">
+                Counter Api Key Information
             </semui:tabsItemWithoutLink>
         </g:if>
         <semui:tabsItemWithoutLink tab="titledetails" activeTab="${params.activeTab}" counts="${d.currentTippCount}">
@@ -111,62 +111,62 @@
             </dl>
             <dl>
                 <dt class="control-label">
-                    Counter R4 Sushi Api Supported
+                    Counter R4 Counter Api Supported
                 </dt>
                 <dd>
-                    <semui:xEditableRefData owner="${d}" field="counterR4SushiApiSupported"
+                    <semui:xEditableRefData owner="${d}" field="counterR4CounterApiSupported"
                                             config="${RCConstants.YN}"/>
                 </dd>
             </dl>
             <dl>
                 <dt class="control-label">
-                    Counter R5 Sushi Api Supported
+                    Counter R5 Counter Api Supported
                 </dt>
                 <dd>
-                    <semui:xEditableRefData owner="${d}" field="counterR5SushiApiSupported"
+                    <semui:xEditableRefData owner="${d}" field="counterR5CounterApiSupported"
                                             config="${RCConstants.YN}"/>
                 </dd>
             </dl>
             <dl>
                 <dt class="control-label">
-                    Counter R4 Sushi Server Url
+                    Counter R4 Counter Server Url
                 </dt>
                 <dd>
-                    <semui:xEditable owner="${d}" field="counterR4SushiServerUrl" validation="url"/>
+                    <semui:xEditable owner="${d}" field="counterR4CounterServerUrl" validation="url"/>
                 </dd>
             </dl>
             <dl>
                 <dt class="control-label">
-                    Counter R5 Sushi Server Url
+                    Counter R5 Counter Server Url
                 </dt>
                 <dd>
-                    <semui:xEditable owner="${d}" field="counterR5SushiServerUrl" validation="url"/>
+                    <semui:xEditable owner="${d}" field="counterR5CounterServerUrl" validation="url"/>
                 </dd>
 
             </dl>
             <dl>
                 <dt class="control-label">
-                    Counter R5 Sushi Platform Name
+                    Counter R5 Counter Platform Name
                 </dt>
                 <dd>
-                    <semui:xEditable owner="${d}" field="counterR5SushiPlatform"/>
+                    <semui:xEditable owner="${d}" field="counterR5CounterPlatform"/>
                 </dd>
 
             </dl>
         </div>
     </semui:tabsItemContent>
 
-    <g:if test="${user && (SpringSecurityUtils.ifAnyGranted("ROLE_ADMIN, ROLE_SUSHI") || user.curatoryGroupUsers.curatoryGroup.id.intersect(d.curatoryGroups.curatoryGroup.id))}">
+    <g:if test="${user && (SpringSecurityUtils.ifAnyGranted("ROLE_ADMIN, ROLE_COUNTER") || user.curatoryGroupUsers.curatoryGroup.id.intersect(d.curatoryGroups.curatoryGroup.id))}">
 
-        <semui:tabsItemContent tab="sushiApiInfo" activeTab="${params.activeTab}">
+        <semui:tabsItemContent tab="counterApiInfo" activeTab="${params.activeTab}">
             <div class="content wekb-inline-lists">
                 <dl>
                     <dt class="control-label">
-                        Sushi Api Authentication Method
+                        Counter Api Authentication Method
                     </dt>
                     <dd>
-                        <semui:xEditableRefData owner="${d}" field="sushiApiAuthenticationMethod"
-                                                config="${RCConstants.PLATFORM_SUSHI_API_AUTH_METHOD}"/>
+                        <semui:xEditableRefData owner="${d}" field="counterApiAuthenticationMethod"
+                                                config="${RCConstants.PLATFORM_COUNTER_API_AUTH_METHOD}"/>
                     </dd>
                 </dl>
                 <dl>

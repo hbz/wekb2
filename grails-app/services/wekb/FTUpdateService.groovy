@@ -270,10 +270,10 @@ class FTUpdateService {
         result.counterR3Supported = kbc.counterR3Supported?.value
         result.counterR4Supported = kbc.counterR4Supported?.value
         result.counterR5Supported = kbc.counterR5Supported?.value
-        result.counterR4SushiApiSupported = kbc.counterR4SushiApiSupported?.value
-        result.counterR5SushiApiSupported = kbc.counterR5SushiApiSupported?.value
-        result.counterR4SushiServerUrl = kbc.counterR4SushiServerUrl
-        result.counterR5SushiServerUrl = kbc.counterR5SushiServerUrl
+        result.counterR4CounterApiSupported = kbc.counterR4CounterApiSupported?.value
+        result.counterR5CounterApiSupported = kbc.counterR5CounterApiSupported?.value
+        result.counterR4CounterServerUrl = kbc.counterR4CounterServerUrl
+        result.counterR5CounterServerUrl = kbc.counterR5CounterServerUrl
         result.counterRegistryUrl = kbc.counterRegistryUrl
         result.counterCertified = kbc.counterCertified?.value
         result.statisticsAdminPortalUrl = kbc.statisticsAdminPortalUrl

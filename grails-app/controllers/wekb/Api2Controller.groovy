@@ -186,11 +186,11 @@ class Api2Controller {
     }
 
     def sushiSources() {
-        log.info("Api2Controller:sushiSources ${params}")
-        Map<String, Object> result = checkPermisson(params, 'ROLE_SUSHI')
+        log.info("Api2Controller:counterSources ${params}")
+        Map<String, Object> result = checkPermisson(params, 'ROLE_COUNTER')
 
         if(result.code == 'success') {
-           result = api2Service.sushiSources(params, result)
+           result = api2Service.counterSources(params, result)
         }
         render result as JSON
     }
@@ -224,7 +224,7 @@ class Api2Controller {
         user = springSecurityService.getCurrentUser()
 
         if(checkRole){
-            if (!user.hasRole('ROLE_SUSHI')) {
+            if (!user.hasRole('ROLE_COUNTER')) {
                 result.code = 'error'
                 result.message = 'This user does not have permission to access the api!'
                 log.warn('checkPermisson: This user does not have permission to access the api!')
