@@ -43,7 +43,7 @@
                 </dt>
                 <dd>
                     <g:if test="${editable}">
-                        <g:form controller="ajaxHtml" action="setInvoicingYourself" id="${d.id}">
+                        <g:form controller="ajaxHtml" action="setInvoicingYourself" id="${d.id}" params="[curationOverride: params.curationOverride]">
                             <g:select from="${RefdataCategory.lookup(RCConstants.YN).sort { it.value }}"
                                       class="ui dropdown fluid"
                                       id="invoicingYourself"

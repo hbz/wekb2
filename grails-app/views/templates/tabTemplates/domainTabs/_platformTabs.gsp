@@ -58,7 +58,7 @@
                 <dd><semui:xEditableRefData owner="${d}" field="shibbolethAuthentication"
                                             config="${RCConstants.YN}"/>
                     <g:if test="${editable}">
-                        <g:form controller="ajaxHtml" action="setShibbolethAuthentication" id="${d.id}">
+                        <g:form controller="ajaxHtml" action="setShibbolethAuthentication" id="${d.id}" params="[curationOverride: params.curationOverride]">
                             <g:select from="${RefdataCategory.lookup(RCConstants.YN).sort { it.value }}"
                                       class="ui dropdown fluid"
                                       id="shibbolethAuthentication"
