@@ -1,4 +1,4 @@
-<%@ page import="grails.plugin.springsecurity.SpringSecurityUtils; wekb.helper.RCConstants; wekb.helper.RDStore;" %>
+<%@ page import="grails.plugin.springsecurity.SpringSecurityUtils; wekb.helper.RCConstants; wekb.helper.RDStore; wekb.RefdataCategory;" %>
 <wekb:serviceInjection/>
 <g:set var="user" scope="page" value="${springSecurityService.currentUser}"/>
 
