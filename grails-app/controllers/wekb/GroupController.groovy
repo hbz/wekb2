@@ -295,6 +295,8 @@ class GroupController {
         params.hide = ['qp_curgroup', 'qp_curgroups']
 
         params.max = params.max ?: '1000'
+        params.sort = params.sort ?: 'name'
+        params.order = params.order ?: 'asc'
 
         searchResult = searchService.search(searchResult.user, searchResult, params)
 

@@ -369,12 +369,16 @@ class ManagementService {
                 if (params.processOption == 'changeDdcs') {
                     packages.each { Package pkg ->
                         if (accessService.checkEditableObject(pkg, params)) {
-                            List splitDdcParam = params['ddc'].split(':')
-                            Long refDdcId = Long.parseLong(splitDdcParam[1])
-                            if (refDdcId) {
-                                RefdataValue refdataValue = RefdataValue.get(refDdcId)
-                                if (refdataValue && !(refdataValue in pkg.ddcs)) {
-                                    pkg.addToDdcs(refdataValue)
+                            List ddcs = params.list("ddcs")
+                            ddcs.each {
+                                println(it)
+                                List splitDdcParam = it.split(':')
+                                Long refDdcId = Long.parseLong(splitDdcParam[1])
+                                if (refDdcId) {
+                                    RefdataValue refdataValue = RefdataValue.get(refDdcId)
+                                    if (refdataValue && !(refdataValue in pkg.ddcs)) {
+                                        pkg.addToDdcs(refdataValue)
+                                    }
                                 }
                             }
                         }

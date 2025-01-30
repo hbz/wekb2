@@ -11,16 +11,17 @@
             <label>Dewey Decimal Classification:</label>
 
             <g:select from="${RefdataCategory.lookup(RCConstants.DDC).sort { it.value }}"
-                      class="dropdown fluid"
+                      class="ui dropdown fluid selection"
                       id="ddcSelection"
                       optionKey="${{ it.class.name + ':' + it.id }}"
                       optionValue="${{ it.value + ': ' + it.getI10n('value') }}"
-                      name="ddc"
-                      value=""/>
+                      name="ddcs"
+                      value=""
+                      multiple="true"/>
         </div>
 
         <button class="ui button primary" type="submit" value="changeDdcs"
-                name="processOption">Do bulk process to the selected items</button>
+                name="processOption">Start Bulk Process</button>
 
         <br>
         <br>
