@@ -55,8 +55,7 @@
             </dl>
             <dl>
                 <dt class="control-label"><g:message code="platform.shibbolethAuthentication"/></dt>
-                <dd><semui:xEditableRefData owner="${d}" field="shibbolethAuthentication"
-                                            config="${RCConstants.YN}"/>
+                <dd>
                     <g:if test="${editable}">
                         <g:form controller="ajaxHtml" action="setShibbolethAuthentication" id="${d.id}" params="[curationOverride: params.curationOverride]">
                             <g:select from="${RefdataCategory.lookup(RCConstants.YN).sort { it.value }}"
@@ -65,7 +64,7 @@
                                       optionKey="value"
                                       optionValue="${{ it.getI10n('value') }}"
                                       name="shibbolethAuthentication"
-                                      value="${d.shibbolethAuthentication ? RDStore.YN_YES.value : RDStore.YN_NO.value}" onChange="this.form.submit()"/>
+                                      value="${d.shibbolethAuthentication ? RDStore.YN_YES : RDStore.YN_NO}" onChange="this.form.submit()"/>
                         </g:form>
                     </g:if>
                     <g:else>
