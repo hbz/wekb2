@@ -372,10 +372,10 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'dropDown',
                                         baseClass  : 'wekb.Vendor',
-                                        prompt     : 'Invoicing possible by vendor',
+                                        prompt     : 'Invoicing possible by library supplier',
                                         msgCode     : 'org.invoicingVendors',
                                         qparam     : 'invoicingVendors',
-                                        placeholder: 'Invoicing possible by vendor',
+                                        placeholder: 'Invoicing possible by library supplier',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'invoicingVendors'],
                                         advancedSearch: [title: "Invoicing", category: 'invoice']
                                 ],

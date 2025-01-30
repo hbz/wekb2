@@ -158,7 +158,7 @@ class Vendor extends AbstractBase implements Auditable {
 
   @Transient
   public String getDomainName() {
-    return "Vendor"
+    return "Library Supplier"
   }
 
   public String getShowName() {

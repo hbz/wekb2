@@ -230,7 +230,7 @@
         <div class="content wekb-inline-lists">
             <dl>
                 <dt class="control-label">
-                    Invoicing possible by vendor
+                    Invoicing possible by library supplier
                 </dt>
                 <dd>
 
