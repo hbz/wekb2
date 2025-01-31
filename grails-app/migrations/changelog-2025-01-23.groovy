@@ -152,4 +152,10 @@ databaseChangeLog = {
         dropColumn(columnName: "plat_title_namespace_fk", tableName: "platform")
     }
 
+    changeSet(author: "djebeniani (generated)", id: "1737559948415-31") {
+        addColumn(tableName: "org") {
+            column(name: "org_url_to_training_materials", type: "varchar(255)")
+        }
+    }
+
 }

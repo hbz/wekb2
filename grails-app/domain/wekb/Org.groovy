@@ -78,6 +78,8 @@ class Org extends AbstractBase implements Auditable {
   String urlPristLists
   String urlTitleLists
 
+  String urlToTrainingMaterials
+
 
   Set variantNames = []
 
@@ -152,6 +154,7 @@ class Org extends AbstractBase implements Auditable {
     urlPristLists column: 'org_url_prist_lists'
 
     urlTitleLists column: 'org_url_title_lists'
+    urlToTrainingMaterials column: 'org_url_to_training_materials'
   }
 
   static constraints = {
@@ -191,6 +194,7 @@ class Org extends AbstractBase implements Auditable {
 
     urlPristLists(nullable: true, blank: true)
     urlTitleLists(nullable: true, blank: true)
+    urlToTrainingMaterials(nullable: true, blank: true)
   }
 
   @Override

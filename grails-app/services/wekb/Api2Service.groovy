@@ -1383,6 +1383,7 @@ class Api2Service {
 
                 result.kbartDownloaderURL = object.kbartDownloaderURL
                 result.metadataDownloaderURL = object.metadataDownloaderURL
+                result.urlToTrainingMaterials = object.urlToTrainingMaterials
                 result.homepage = object.homepage
                 result.description = object.description
 

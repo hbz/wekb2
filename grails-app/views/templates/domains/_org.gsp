@@ -63,6 +63,14 @@
                 <semui:xEditable owner="${d}" field="kbartDownloaderURL" validation="url" outGoingLink="true"/>
             </dd>
         </dl>
+        <dl>
+            <dt class="control-label">
+                <g:message code="org.urlToTrainingMaterials"/>
+            </dt>
+            <dd>
+                <semui:xEditable owner="${d}" field="urlToTrainingMaterials" validation="url" outGoingLink="true"/>
+            </dd>
+        </dl>
         <g:if test="${d.id != null}">
             <dl>
                 <dt class="control-label">
