@@ -24,7 +24,8 @@ class AutoUpdatePackagesJob {
     if (grailsApplication.config.getProperty('wekb.packageUpdate.enabled', Boolean)) {
       log.debug("Beginning scheduled auto update packages job.")
 
-        autoUpdatePackagesService.findPackageToUpdateAndUpdate(true)
+        //autoUpdatePackagesService.findPackageToUpdateAndUpdate(true)
+      autoUpdatePackagesService.findPackageToUpdateAndUpdate(false)
 
       log.info("auto update packages job completed.")
     } else {
