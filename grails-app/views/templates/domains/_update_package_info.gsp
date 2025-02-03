@@ -166,7 +166,7 @@
                 Update Url
             </dt>
             <dd>
-                <semui:xEditable owner="${d}" field="updateUrl" overwriteEditable="false"/>
+                <semui:xEditable owner="${d}" field="updateUrl" overwriteEditable="false" outGoingLink="true"/>
             </dd>
         </dl>
 
@@ -193,7 +193,7 @@
                 Last UpdateUrl
             </dt>
             <dd>
-                <semui:xEditable owner="${d}" field="lastUpdateUrl" overwriteEditable="false"/>
+                <semui:xEditable owner="${d}" field="lastUpdateUrl" overwriteEditable="false" outGoingLink="true"/>
             </dd>
         </dl>
 
