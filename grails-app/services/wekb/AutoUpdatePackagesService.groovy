@@ -90,20 +90,22 @@ class AutoUpdatePackagesService {
     void startAutoPackageUpdate(Package pkg, boolean onlyRowsWithLastChanged = false) {
         log.info("Begin startAutoPackageUpdate Package ($pkg.name)")
         List kbartRows = []
-        String lastUpdateURL = ""
+        String lastUpdateURL = pkg.kbartSource.lastUpdateUrl ?: pkg.kbartSource.url
         Date startTime = new Date()
         if (pkg.status in [RDStore.KBC_STATUS_REMOVED, RDStore.KBC_STATUS_DELETED]) {
-            UpdatePackageInfo updatePackageInfo = new UpdatePackageInfo(pkg: pkg, startTime: startTime, endTime: new Date(), status: RDStore.UPDATE_STATUS_SUCCESSFUL, description: "Package status is ${pkg.status.value}. Update for this package is not starting.", onlyRowsWithLastChanged: onlyRowsWithLastChanged, automaticUpdate: true, kbartHasWekbFields: false, lastRun: pkg.kbartSource.lastRun, lastUpdateUrl: pkg.kbartSource.lastUpdateUrl, frequency: pkg.kbartSource.frequency)
+            UpdatePackageInfo updatePackageInfo = new UpdatePackageInfo(pkg: pkg, startTime: startTime, endTime: new Date(), status: RDStore.UPDATE_STATUS_SUCCESSFUL, description: "Package status is ${pkg.status.value}. Update for this package is not starting.", onlyRowsWithLastChanged: onlyRowsWithLastChanged, automaticUpdate: true, kbartHasWekbFields: false, lastRun: pkg.kbartSource.lastRun, frequency: pkg.kbartSource.frequency)
             updatePackageInfo.save()
         }else if (!pkg.nominalPlatform) {
-            UpdatePackageInfo updatePackageInfo = new UpdatePackageInfo(pkg: pkg, startTime: startTime, endTime: new Date(), status: RDStore.UPDATE_STATUS_SUCCESSFUL, description: "No nominal platform is set for this package! Please put a nominal platform on the package level.", onlyRowsWithLastChanged: onlyRowsWithLastChanged, automaticUpdate: true, kbartHasWekbFields: false, lastRun: pkg.kbartSource.lastRun, lastUpdateUrl: pkg.kbartSource.lastUpdateUrl, frequency: pkg.kbartSource.frequency)
+            UpdatePackageInfo updatePackageInfo = new UpdatePackageInfo(pkg: pkg, startTime: startTime, endTime: new Date(), status: RDStore.UPDATE_STATUS_SUCCESSFUL, description: "No nominal platform is set for this package! Please put a nominal platform on the package level.", onlyRowsWithLastChanged: onlyRowsWithLastChanged, automaticUpdate: true, kbartHasWekbFields: false, lastRun: pkg.kbartSource.lastRun, frequency: pkg.kbartSource.frequency)
             updatePackageInfo.save()
         } else {
-            UpdatePackageInfo updatePackageInfo = new UpdatePackageInfo(pkg: pkg, startTime: startTime, status: RDStore.UPDATE_STATUS_SUCCESSFUL, description: "Starting Update package.", onlyRowsWithLastChanged: onlyRowsWithLastChanged, automaticUpdate: true, lastRun: pkg.kbartSource.lastRun, lastUpdateUrl: pkg.kbartSource.lastUpdateUrl, frequency: pkg.kbartSource.frequency).save()
+            UpdatePackageInfo updatePackageInfo = new UpdatePackageInfo(pkg: pkg, startTime: startTime, status: RDStore.UPDATE_STATUS_SUCCESSFUL, description: "Starting Update package.", onlyRowsWithLastChanged: onlyRowsWithLastChanged, automaticUpdate: true, lastRun: pkg.kbartSource.lastRun, frequency: pkg.kbartSource.frequency).save()
             try {
                 if (pkg.kbartSource) {
                     if (pkg.kbartSource.defaultSupplyMethod == RDStore.KS_DSMETHOD_FTP) {
                         updatePackageInfo.updateFromFTP = true
+                        updatePackageInfo.lastUpdateUrl = null
+                        updatePackageInfo.updateUrl = null
                         updatePackageInfo.save()
                         if (pkg.kbartSource.ftpServerUrl) {
                             File file = ftpConnectService.ftpConnectAndGetFile(pkg.kbartSource)
@@ -141,6 +143,7 @@ class AutoUpdatePackagesService {
                         }
                     }else if (pkg.kbartSource.defaultSupplyMethod == RDStore.KS_DSMETHOD_HTTP_URL) {
                         updatePackageInfo.updateFromURL = true
+                        updatePackageInfo.lastUpdateUrl = lastUpdateURL
                         updatePackageInfo.save()
                         if (pkg.kbartSource.url) {
                             List<URL> updateUrls

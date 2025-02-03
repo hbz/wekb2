@@ -166,7 +166,15 @@
                 Update Url
             </dt>
             <dd>
-                <semui:xEditable owner="${d}" field="updateUrl" overwriteEditable="false" outGoingLink="true"/>
+                <g:if test="${d.updateFromFTP}">
+                    The update ran over FTP!
+                </g:if>
+                <g:elseif test="${d.updateFromFileUpload}">
+                    The update ran over manuel upload!
+                </g:elseif>
+                <g:else>
+                    <semui:xEditable owner="${d}" field="updateUrl" overwriteEditable="false" outGoingLink="true"/>
+                </g:else>
             </dd>
         </dl>
 
@@ -193,7 +201,15 @@
                 Last UpdateUrl
             </dt>
             <dd>
-                <semui:xEditable owner="${d}" field="lastUpdateUrl" overwriteEditable="false" outGoingLink="true"/>
+                <g:if test="${d.updateFromFTP}">
+                    The update ran over FTP!
+                </g:if>
+                <g:elseif test="${d.updateFromFileUpload}">
+                    The update ran over manuel upload!
+                </g:elseif>
+                <g:else>
+                                <semui:xEditable owner="${d}" field="lastUpdateUrl" overwriteEditable="false" outGoingLink="true"/>
+                </g:else>
             </dd>
         </dl>
 
