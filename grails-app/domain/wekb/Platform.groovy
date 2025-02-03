@@ -186,18 +186,18 @@ class Platform  extends AbstractBase implements Auditable {
     statisticsFormat column: 'plat_statistics_format_fk_rv'
     counterR4Supported column: 'plat_counter_r4_supported_fk_rv'
     counterR5Supported column: 'plat_counter_r5_supported_fk_rv'
-    counterR4SushiApiSupported column: 'plat_counter_r4_sushi_api_supported_fk_rv'
-    counterR5SushiApiSupported column: 'plat_counter_r5_sushi_api_supported_fk_rv'
-    counterR4SushiServerUrl column: 'plat_counter_r4_sushi_server_url'
-    counterR5SushiServerUrl column: 'plat_counter_r5_sushi_server_url'
+    counterR4CounterApiSupported column: 'plat_counter_r4_counter_api_supported_fk_rv'
+    counterR5CounterApiSupported column: 'plat_counter_r5_counter_api_supported_fk_rv'
+    counterR4CounterServerUrl column: 'plat_counter_r4_counter_server_url'
+    counterR5CounterServerUrl column: 'plat_counter_r5_counter_server_url'
     counterRegistryUrl column: 'plat_counter_registry_url'
     counterCertified column: 'plat_counter_certified'
     statisticsAdminPortalUrl column: 'plat_statistics_admin_portal_url'
     statisticsUpdate column: 'plat_statistics_update_fk_rv'
     counterRegistryApiUuid column: 'plat_counter_registry_api_uuid'
-    sushiApiAuthenticationMethod column: 'plat_sushi_api_authentication_method'
+    counterApiAuthenticationMethod column: 'plat_counter_api_authentication_method'
     centralApiKey column: 'plat_central_api_key', type: 'text'
-    counterR5SushiPlatform column: 'plat_counter_r5_sushi_platform', type: 'text'
+    counterR5CounterPlatform column: 'plat_counter_r5_counter_platform', type: 'text'
     internLabelForCustomerID column: 'plat_intern_label_for_customer_id', type: 'text'
     internLabelForRequestorKey column: 'plat_intern_label_for_requestor_key', type: 'text'
     lastAuditDate column: 'plat_last_audit_date'
@@ -264,9 +264,9 @@ class Platform  extends AbstractBase implements Auditable {
     counterCertified(nullable: true, blank: false)
     statisticsAdminPortalUrl(nullable: true, blank: false)
     statisticsUpdate(nullable: true, blank: false)
-    sushiApiAuthenticationMethod (nullable: true, blank: false)
+    counterApiAuthenticationMethod (nullable: true, blank: false)
     centralApiKey(nullable: true, blank: true)
-    counterR5SushiPlatform(nullable: true, blank: false)
+    counterR5CounterPlatform(nullable: true, blank: false)
     internLabelForCustomerID(nullable: true, blank: true)
     internLabelForRequestorKey(nullable: true, blank: true)
     lastAuditDate (nullable: true)

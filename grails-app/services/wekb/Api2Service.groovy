@@ -2304,7 +2304,7 @@ class Api2Service {
 
         counter4Platforms.each { Platform platform ->
             result.counter4ApiSources."${platform.uuid}" = mapDomainFieldsToSpecFields(platform)
-            result.counter4ApiSources."${platform.uuid}".sushiApiAuthenticationMethod = platform.sushiApiAuthenticationMethod?.value
+            result.counter4ApiSources."${platform.uuid}".sushiApiAuthenticationMethod = platform.counterApiAuthenticationMethod?.value
             result.counter4ApiSources."${platform.uuid}".centralApiKey = platform.centralApiKey
             result.counter4ApiSources."${platform.uuid}".internLabelForCustomerID = platform.internLabelForCustomerID
             result.counter4ApiSources."${platform.uuid}".internLabelForRequestorKey = platform.internLabelForRequestorKey
@@ -2312,9 +2312,9 @@ class Api2Service {
 
         counter5Platforms.each { Platform platform ->
             result.counter5ApiSources."${platform.uuid}" = mapDomainFieldsToSpecFields(platform)
-            result.counter5ApiSources."${platform.uuid}".sushiApiAuthenticationMethod = platform.sushiApiAuthenticationMethod?.value
+            result.counter5ApiSources."${platform.uuid}".sushiApiAuthenticationMethod = platform.counterApiAuthenticationMethod?.value
             result.counter5ApiSources."${platform.uuid}".centralApiKey = platform.centralApiKey
-            result.counter5ApiSources."${platform.uuid}".counterR5SushiPlatform = platform.counterR5SushiPlatform
+            result.counter5ApiSources."${platform.uuid}".counterR5SushiPlatform = platform.counterR5CounterPlatform
             result.counter5ApiSources."${platform.uuid}".internLabelForCustomerID = platform.internLabelForCustomerID
             result.counter5ApiSources."${platform.uuid}".internLabelForRequestorKey = platform.internLabelForRequestorKey
         }
