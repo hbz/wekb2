@@ -149,14 +149,14 @@
         <g:if test="${editable}">
             <semui:modal id="contactModal" title="Add Contact">
 
-                <g:form controller="ajaxHtml" action="addContact" class="ui form">
+                <g:form controller="ajaxHtml" action="addContact" class="ui form contactModal">
                     <input type="hidden" name="__context" value="${d.getOID()}"/>
                     <input type="hidden" name="__newObjectClass" value="wekb.Contact"/>
                     <input type="hidden" name="__recip" value="org"/>
                     <input type="hidden" name="activeTab" value="contact"/>
                     <input type="hidden" name="curationOverride" value="${params.curationOverride}"/>
 
-                    <div class="field">
+                    <div class="required field">
                         <label>Value</label>
 
                         <input type="text" name="content"/>
@@ -166,22 +166,23 @@
                         <label>Language</label>
                         <semui:simpleReferenceDropdown name="language"
                                                        baseClass="wekb.RefdataValue"
-                                                       filter1="${RCConstants.COMPONENT_LANGUAGE}"/>
+                                                       filter1="${RCConstants.COMPONENT_LANGUAGE}" />
                     </div>
 
-                    <div class="field">
+                    <div class="required field">
                         <label>Content Type</label>
                         <semui:simpleReferenceDropdown name="contentType"
-                                                       baseClass="wekb.RefdataValue" class="required"
+                                                       baseClass="wekb.RefdataValue"
                                                        filter1="${RCConstants.CONTACT_CONTENT_TYPE}"/>
                     </div>
 
-                    <div class="field">
+                    <div class="required field">
                         <label>Contact Type</label>
                         <semui:simpleReferenceDropdown name="type"
-                                                       baseClass="wekb.RefdataValue" class="required"
+                                                       baseClass="wekb.RefdataValue"
                                                        filter1="${RCConstants.CONTACT_TYPE}"/>
                     </div>
+                    <div class="ui error message"></div>
                 </g:form>
             </semui:modal>
 
@@ -199,6 +200,43 @@
                     </div>
                 </g:form>
             </semui:modal>
+
+            <g:javascript>
+                $('.contactModal').form({
+                    on: 'blur',
+                    fields: {
+                        content: {
+                            identifier: 'content',
+                            rules: [
+                                {
+                                    type: 'empty',
+                                    prompt: 'Please enter a value'
+                                }
+                            ]
+                        },
+                        contentType: {
+                            identifier: 'contentType',
+                            rules: [
+                                {
+                                    type: 'empty',
+                                    prompt: 'Please select a content type'
+                                }
+                            ]
+                        },
+                        type: {
+                            identifier: 'type',
+                            rules: [
+                                {
+                                    type: 'empty',
+                                    prompt: 'Please select a contact type'
+                                }
+                            ]
+                        }
+                    }
+                })
+                ;
+
+            </g:javascript>
         </g:if>
 
     </div>
