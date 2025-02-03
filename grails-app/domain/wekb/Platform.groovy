@@ -69,14 +69,14 @@ class Platform  extends AbstractBase implements Auditable {
   RefdataValue counterR5Supported
 
   @RefdataAnnotation(cat = RCConstants.YN)
-  RefdataValue counterR4SushiApiSupported
+  RefdataValue counterR4CounterApiSupported
 
   @RefdataAnnotation(cat = RCConstants.YN)
-  RefdataValue counterR5SushiApiSupported
+  RefdataValue counterR5CounterApiSupported
 
-  String counterR4SushiServerUrl
+  String counterR4CounterServerUrl
 
-  String counterR5SushiServerUrl
+  String counterR5CounterServerUrl
   String counterRegistryUrl
 
   String statisticsAdminPortalUrl
@@ -87,11 +87,11 @@ class Platform  extends AbstractBase implements Auditable {
   @RefdataAnnotation(cat = RCConstants.YN)
   RefdataValue counterCertified
 
-  @RefdataAnnotation(cat = RCConstants.PLATFORM_SUSHI_API_AUTH_METHOD)
-  RefdataValue sushiApiAuthenticationMethod
+  @RefdataAnnotation(cat = RCConstants.PLATFORM_COUNTER_API_AUTH_METHOD)
+  RefdataValue counterApiAuthenticationMethod
 
   String centralApiKey
-  String counterR5SushiPlatform
+  String counterR5CounterPlatform
 
   Date lastAuditDate
   String counterRegistryApiUuid
@@ -256,10 +256,10 @@ class Platform  extends AbstractBase implements Auditable {
     statisticsFormat(nullable: true, blank: false)
     counterR4Supported(nullable: true, blank: false)
     counterR5Supported(nullable: true, blank: false)
-    counterR4SushiApiSupported(nullable: true, blank: false)
-    counterR5SushiApiSupported(nullable: true, blank: false)
-    counterR4SushiServerUrl(nullable: true, blank: false)
-    counterR5SushiServerUrl(nullable: true, blank: false)
+    counterR4CounterApiSupported(nullable: true, blank: false)
+    counterR5CounterApiSupported(nullable: true, blank: false)
+    counterR4CounterServerUrl(nullable: true, blank: false)
+    counterR5CounterServerUrl(nullable: true, blank: false)
     counterRegistryUrl(nullable: true, blank: false)
     counterCertified(nullable: true, blank: false)
     statisticsAdminPortalUrl(nullable: true, blank: false)

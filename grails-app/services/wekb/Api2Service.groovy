@@ -342,14 +342,14 @@ class Api2Service {
                                 [
                                         type       : 'lookup',
                                         baseClass  : 'wekb.RefdataValue',
-                                        qparam     : 'qp_counterR4SushiApiSupported',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'counterR4SushiApiSupported'],
+                                        qparam     : 'qp_counterR4CounterApiSupported',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'counterR4CounterApiSupported'],
                                 ],
                                 [
                                         type       : 'lookup',
                                         baseClass  : 'wekb.RefdataValue',
-                                        qparam     : 'qp_counterR5SushiApiSupported',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'counterR5SushiApiSupported'],
+                                        qparam     : 'qp_counterR5CounterApiSupported',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'counterR5CounterApiSupported'],
                                 ],
                         ],
                         qbeSortFields: [
@@ -1035,10 +1035,10 @@ class Api2Service {
             result.statisticsFormat = object.statisticsFormat?.value
             result.counterR4Supported = object.counterR4Supported?.value
             result.counterR5Supported = object.counterR5Supported?.value
-            result.counterR4SushiApiSupported = object.counterR4SushiApiSupported?.value
-            result.counterR5SushiApiSupported = object.counterR5SushiApiSupported?.value
-            result.counterR4SushiServerUrl = object.counterR4SushiServerUrl
-            result.counterR5SushiServerUrl = object.counterR5SushiServerUrl
+            result.counterR4CounterApiSupported = object.counterR4CounterApiSupported?.value
+            result.counterR5CounterApiSupported = object.counterR5CounterApiSupported?.value
+            result.counterR4CounterServerUrl = object.counterR4CounterServerUrl
+            result.counterR5CounterServerUrl = object.counterR5CounterServerUrl
             result.counterRegistryUrl = object.counterRegistryUrl
             result.counterCertified = object.counterCertified?.value
             result.statisticsAdminPortalUrl = object.statisticsAdminPortalUrl
@@ -1514,17 +1514,17 @@ class Api2Service {
                 result.statisticsFormat = object.statisticsFormat?.value
                 result.counterR4Supported = object.counterR4Supported?.value
                 result.counterR5Supported = object.counterR5Supported?.value
-                result.counterR4SushiApiSupported = object.counterR4SushiApiSupported?.value
-                result.counterR5SushiApiSupported = object.counterR5SushiApiSupported?.value
-                result.counterR4SushiServerUrl = object.counterR4SushiServerUrl
-                result.counterR5SushiServerUrl = object.counterR5SushiServerUrl
+                result.counterR4SushiApiSupported = object.counterR4CounterApiSupported?.value
+                result.counterR5SushiApiSupported = object.counterR5CounterApiSupported?.value
+                result.counterR4SushiServerUrl = object.counterR4CounterServerUrl
+                result.counterR5SushiServerUrl = object.counterR5CounterServerUrl
                 result.counterRegistryUrl = object.counterRegistryUrl
                 result.counterCertified = object.counterCertified?.value
                 result.statisticsAdminPortalUrl = object.statisticsAdminPortalUrl
                 result.statisticsUpdate = object.statisticsUpdate?.value
 
                 result.counterRegistryApiUuid = object.counterRegistryApiUuid
-                result.counterR5SushiPlatform = object.counterR5SushiPlatform
+                result.counterR5SushiPlatform = object.counterR5CounterPlatform
 
                 result.accessPlatform = object.accessPlatform?.value
                 result.viewerForPdf = object.viewerForPdf?.value
@@ -2263,9 +2263,9 @@ class Api2Service {
         if(parameterMap.counterSushiSupport) {
             List counterVersions = parameterMap.list('counterSushiSupport')
             if('counter4' in counterVersions)
-                cleaned_params.put('qp_counterR4SushiApiSupported', RDStore.YN_YES.getOID())
+                cleaned_params.put('qp_counterR4CounterApiSupported', RDStore.YN_YES.getOID())
             if('counter5' in counterVersions)
-                cleaned_params.put('qp_counterR5SushiApiSupported', RDStore.YN_YES.getOID())
+                cleaned_params.put('qp_counterR5CounterApiSupported', RDStore.YN_YES.getOID())
         }
 
 
@@ -2283,7 +2283,7 @@ class Api2Service {
 
     }
 
-    Map sushiSources(GrailsParameterMap params, Map result){
+    Map counterSources(GrailsParameterMap params, Map result){
 
         RefdataValue yes = RDStore.YN_YES
 
@@ -2295,11 +2295,11 @@ class Api2Service {
 
 
         if(params.uuid){
-            counter4Platforms = Platform.executeQuery("from Platform plat where plat.counterR4SushiApiSupported = :r4support and plat.counterR5SushiApiSupported != :r5support and plat.counterR4SushiServerUrl is not null and plat.uuid = :uuid", [r4support: yes, r5support: yes, uuid: params.uuid]).toSet()
-            counter5Platforms = Platform.executeQuery("from Platform plat where plat.counterR5SushiApiSupported = :r5support and (plat.counterRegistryApiUuid is not null or plat.counterR5SushiServerUrl is not null) and plat.uuid = :uuid", [r5support: yes, uuid: params.uuid]).toSet()
+            counter4Platforms = Platform.executeQuery("from Platform plat where plat.counterR4CounterApiSupported = :r4support and plat.counterR5CounterApiSupported != :r5support and plat.counterR4CounterServerUrl is not null and plat.uuid = :uuid", [r4support: yes, r5support: yes, uuid: params.uuid]).toSet()
+            counter5Platforms = Platform.executeQuery("from Platform plat where plat.counterR5CounterApiSupported = :r5support and (plat.counterRegistryApiUuid is not null or plat.counterR5CounterServerUrl is not null) and plat.uuid = :uuid", [r5support: yes, uuid: params.uuid]).toSet()
         }else {
-            counter4Platforms = Platform.executeQuery("from Platform plat where plat.counterR4SushiApiSupported = :r4support and plat.counterR5SushiApiSupported != :r5support and plat.counterR4SushiServerUrl is not null", [r4support: yes, r5support: yes]).toSet()
-            counter5Platforms = Platform.executeQuery("from Platform plat where plat.counterR5SushiApiSupported = :r5support and (plat.counterRegistryApiUuid is not null or plat.counterR5SushiServerUrl is not null)", [r5support: yes]).toSet()
+            counter4Platforms = Platform.executeQuery("from Platform plat where plat.counterR4CounterApiSupported = :r4support and plat.counterR5CounterApiSupported != :r5support and plat.counterR4CounterServerUrl is not null", [r4support: yes, r5support: yes]).toSet()
+            counter5Platforms = Platform.executeQuery("from Platform plat where plat.counterR5CounterApiSupported = :r5support and (plat.counterRegistryApiUuid is not null or plat.counterR5CounterServerUrl is not null)", [r5support: yes]).toSet()
         }
 
         counter4Platforms.each { Platform platform ->

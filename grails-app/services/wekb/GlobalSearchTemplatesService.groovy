@@ -68,9 +68,6 @@ class GlobalSearchTemplatesService {
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'type'],
                                 ],
                                 [
-
-
-
                                         type       : 'dropDown',
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.COMPONENT_STATUS,
@@ -1233,22 +1230,22 @@ class GlobalSearchTemplatesService {
                                         type       : 'dropDown',
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.YN,
-                                        prompt     : 'Counter R4 Sushi Api Supported',
-                                        msgCode     : 'platform.counterR4SushiApiSupported',
-                                        qparam     : 'qp_counterR4SushiApiSupported_platform',
-                                        placeholder: 'Counter R4 Sushi Api Supported',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'nominalPlatform.counterR4SushiApiSupported'],
+                                        prompt     : 'Counter R4 Counter Api Supported',
+                                        msgCode     : 'platform.counterR4CounterApiSupported',
+                                        qparam     : 'qp_counterR4CounterApiSupported_platform',
+                                        placeholder: 'Counter R4 Counter Api Supported',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'nominalPlatform.counterR4CounterApiSupported'],
                                         advancedSearch: [title: "Search Platform by ...", category: 'Platform']
                                 ],
                                 [
                                         type       : 'dropDown',
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.YN,
-                                        prompt     : 'Counter R5 Sushi Api Supported',
-                                        msgCode     : 'platform.counterR5SushiApiSupported',
-                                        qparam     : 'qp_counterR5SushiApiSupported_platform',
-                                        placeholder: 'Counter R5 Sushi Api Supported',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'nominalPlatform.counterR5SushiApiSupported'],
+                                        prompt     : 'Counter R5 Counter Api Supported',
+                                        msgCode     : 'platform.counterR5CounterApiSupported',
+                                        qparam     : 'qp_counterR5CounterApiSupported_platform',
+                                        placeholder: 'Counter R5 Counter Api Supported',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'nominalPlatform.counterR5CounterApiSupported'],
                                         advancedSearch: [title: "Search Platform by ...", category: 'Platform']
                                 ],
 
@@ -1666,7 +1663,6 @@ class GlobalSearchTemplatesService {
                                 [heading: 'Current Packages', property: 'packagesCount', jumpToLink: '/search/componentSearch/wekb.Platform:objectID?qbe=g:packages&hide=qp_platform&hide=qp_platform_id&refOID=wekb.Platform:objectID&qp_platform_id=objectID&qp_status_value=Current', linkInfo: 'Link to Current Packages'],
                         ]
                 ]
-
         ]
         result
     }
@@ -1853,7 +1849,8 @@ class GlobalSearchTemplatesService {
                         ],
                         qbeResults: [
                                 [heading: 'Source', property: 'name', sort: 'name', link: true, linkInfo: 'Link to Source'],
-                                [heading: 'Packages', property: 'packages', link: true, sort: 'packages.name', linkInfo: 'Link to Package'],
+                                [heading: 'Packages', property: 'packages', link: true, linkInfo: 'Link to Package'],
+                                [heading: 'Providers', property: 'providers', link: true, linkInfo: 'Link to Provider'],
                                 [heading: 'Url', property: 'url', sort: 'url', outGoingLink: true, linkInfo: 'Link to Kbart Url'],
                                 [heading: 'Last Updated', property: 'lastUpdated', sort: 'lastUpdated'],
                                 [heading: 'Status', property: 'status.value', sort: 'status'],

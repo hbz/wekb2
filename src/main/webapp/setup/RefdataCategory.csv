@@ -42,7 +42,7 @@ Platform.Service;Platform Service;Platform Service
 Platform.Software;Platform Software;Platform Software
 Platform.Statistics.Format;Platform Statistics Format;Platform Statistics Format
 Platform.Statistics.Update;Platform Statistics Update;Platform Statistics Update
-Platform.Sushi.Api.Authentication.Method;Platform Sushi Api Authentication Method;Platform Sushi Api Authentication Method
+Platform.Counter.Api.Authentication.Method;Platform Counter Api Authentication Method;Platform Counter Api Authentication Method
 Price.type;Price type;Price type
 Source.DataFormat;Source Data Format;Source Data Format
 Source.DataSupplyMethod;Source Data Supply Method;Source Data Supply Method
