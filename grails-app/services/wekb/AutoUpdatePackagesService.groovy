@@ -179,7 +179,7 @@ class AutoUpdatePackagesService {
                                 if(updatePackageInfo.status == RDStore.UPDATE_STATUS_FAILED) {
                                     updateUrls = []
                                     if(pkg.kbartSource.lastUpdateUrl){
-                                        updateUrls << pkg.kbartSource.lastUpdateUrl
+                                        updateUrls << new URL(pkg.kbartSource.lastUpdateUrl)
                                     }
 
                                     for(URL url in updateUrls){
