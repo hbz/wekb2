@@ -1801,9 +1801,10 @@ class KbartImportService {
             } catch (Exception e) {
                 log.error("createOrUpdatePrice -> kbartProperty ${newValue}:" + e.message)
                 //e.printStackTrace()
+                priceUpdateFail = true
             }
 
-            if (cp && priceChanged && !result.newTipp) {
+            if (!priceUpdateFail && cp && priceChanged && !result.newTipp) {
                 //updatePackageInfo = updatePackageInfo.refresh()
                 UpdateTippInfo updateTippInfo = new UpdateTippInfo(
                         description: "Create or update price of title '${tipp.name}'",
@@ -1818,6 +1819,22 @@ class KbartImportService {
                         oldValue: oldValue,
                         newValue: newValue
                 ).save()
+            }else {
+                UpdateTippInfo.withNewTransaction {
+                    UpdateTippInfo updateTippInfo = new UpdateTippInfo(
+                            description: "Problem by create or update price of title '${tipp.name}'",
+                            tipp: tipp,
+                            startTime: new Date(),
+                            endTime: new Date(),
+                            status: RDStore.UPDATE_STATUS_FAILED,
+                            type: RDStore.UPDATE_TYPE_CHANGED_TITLE,
+                            updatePackageInfo: updatePackageInfo,
+                            kbartProperty: kbartProperty,
+                            tippProperty: "prices[${priceType.value}]",
+                            oldValue: oldValue,
+                            newValue: newValue
+                    ).save()
+                }
             }
         }else{
             if(!result.newTipp) {
