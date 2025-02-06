@@ -1820,7 +1820,6 @@ class KbartImportService {
                         newValue: newValue
                 ).save()
             }else {
-                UpdateTippInfo.withNewTransaction {
                     UpdateTippInfo updateTippInfo = new UpdateTippInfo(
                             description: "Problem by create or update price of title '${tipp.name}'",
                             tipp: tipp,
@@ -1834,7 +1833,6 @@ class KbartImportService {
                             oldValue: oldValue,
                             newValue: newValue
                     ).save()
-                }
             }
         }else{
             if(!result.newTipp) {
