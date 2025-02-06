@@ -11,10 +11,7 @@ class ComponentLanguage {
 
     Date dateCreated
     Date lastUpdated
-
-    static belongsTo = [
-            tipp: TitleInstancePackagePlatform
-    ]
+    TitleInstancePackagePlatform tipp
 
     static constraints = {
         tipp(unique: ['tipp', 'language'])
@@ -26,7 +23,7 @@ class ComponentLanguage {
         id                    column: 'cl_id'
         version               column: 'cl_version'
         language              column: 'cl_rv_fk' , index: 'cl_language_idx'
-        tipp           column: 'cl_tipp_fk', index: 'cl_tipp_idx'
+        tipp                  column: 'cl_tipp_fk', index: 'cl_tipp_idx'
         dateCreated           column: 'cl_date_created'
         lastUpdated           column: 'cl_last_updated'
     }

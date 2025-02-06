@@ -1716,6 +1716,7 @@ class KbartImportService {
         String newValue = price
         String oldValue = ''
         TippPrice cp = null
+        boolean priceUpdateFail = false
         if (price && priceType && currency) {
             try {
                 String uniformedThousandSeparator = price.replaceAll("[,.](\\d{3})", '$1')
@@ -2244,9 +2245,11 @@ class KbartImportService {
         if (tippMap.containsKey('language')) {
             if (tipp.languages) {
                 def langIDs = tipp.languages.id.clone()
-                langIDs.each {
-                    tipp.removeFromLanguages(ComponentLanguage.get(it))
-                    ComponentLanguage.get(it).delete()
+                ComponentLanguage.withNewTransaction {
+                    langIDs.each {
+                        tipp.removeFromLanguages(ComponentLanguage.get(it))
+                        ComponentLanguage.get(it).delete()
+                    }
                 }
                 if (!tipp.save()) {
                     log.error("Tipp save error: ")
@@ -2290,8 +2293,12 @@ class KbartImportService {
             if (tipp.languages) {
                 def langIDs = tipp.languages.id.clone()
                 langIDs.each {
-                    tipp.removeFromLanguages(ComponentLanguage.get(it))
-                    ComponentLanguage.get(it).delete()
+                    ComponentLanguage.withNewTransaction {
+                        langIDs.each {
+                            tipp.removeFromLanguages(ComponentLanguage.get(it))
+                            ComponentLanguage.get(it).delete()
+                        }
+                    }
                 }
                 if (!tipp.save()) {
                     log.error("Tipp save error: ")
