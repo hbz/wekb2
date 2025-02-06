@@ -85,7 +85,7 @@ class KbartProcessService {
         log.info("Begin kbartImportProcess Package ($pkg.name)")
         boolean addOnly = false //Thing about it where to set or to change
 
-        boolean processFailed = true
+        boolean processFailed = false
 
         RefdataValue status_current = RDStore.KBC_STATUS_CURRENT
         RefdataValue status_deleted = RDStore.KBC_STATUS_DELETED
@@ -616,7 +616,6 @@ class KbartProcessService {
                 }
 
             }
-
 
             if(!processFailed) {
                 String description = "Package Update: (KbartLines: ${kbartRowsCount}, " +
