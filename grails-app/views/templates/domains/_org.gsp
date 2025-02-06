@@ -123,7 +123,7 @@
                             <tr>
                                 <td>${i + 1}</td>
                                 <td><semui:xEditableRefData owner="${contact}" field="type"
-                                                            config="${RCConstants.CONTACT_TYPE}"/>
+                                                            config="${RCConstants.CONTACT_TYPE}" required="true"/>
                                 </td>
                                 <td>
                                     <semui:xEditableRefData owner="${contact}" field="language"
@@ -131,10 +131,10 @@
                                 </td>
                                 <td>
                                     <semui:xEditableRefData owner="${contact}" field="contentType"
-                                                            config="${RCConstants.CONTACT_CONTENT_TYPE}"/>
+                                                            config="${RCConstants.CONTACT_CONTENT_TYPE}" required="true"/>
                                 <td>
                                 <semui:xEditable owner="${contact}" field="content"
-                                                     validation="${contact.contentType == RDStore.CONTACT_CONTENT_TYPE_EMAIL ? 'email' : ''}"/>
+                                                     validation="${contact.contentType == RDStore.CONTACT_CONTENT_TYPE_EMAIL ? 'email' : ''}" required="true"/>
                                 </td>
                                 <g:if test="${editable}">
                                     <td>
@@ -171,13 +171,14 @@
                     <input type="hidden" name="curationOverride" value="${params.curationOverride}"/>
 
                     <div class="required field">
-                        <label>Value</label>
-
-                        <input type="text" name="content"/>
+                        <label>Contact Type</label>
+                        <semui:simpleReferenceDropdown name="type"
+                                                       baseClass="wekb.RefdataValue"
+                                                       filter1="${RCConstants.CONTACT_TYPE}"/>
                     </div>
 
                     <div class="field">
-                        <label>Language</label>
+                        <label>Main Language</label>
                         <semui:simpleReferenceDropdown name="language"
                                                        baseClass="wekb.RefdataValue"
                                                        filter1="${RCConstants.COMPONENT_LANGUAGE}" />
@@ -190,12 +191,13 @@
                                                        filter1="${RCConstants.CONTACT_CONTENT_TYPE}"/>
                     </div>
 
-                    <div class="required field">
-                        <label>Contact Type</label>
-                        <semui:simpleReferenceDropdown name="type"
-                                                       baseClass="wekb.RefdataValue"
-                                                       filter1="${RCConstants.CONTACT_TYPE}"/>
+                     <div class="required field">
+                        <label>Value</label>
+
+                        <input type="text" name="content"/>
                     </div>
+
+                  
                     <div class="ui error message"></div>
                 </g:form>
             </semui:modal>
