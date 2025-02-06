@@ -85,6 +85,8 @@ class KbartProcessService {
         log.info("Begin kbartImportProcess Package ($pkg.name)")
         boolean addOnly = false //Thing about it where to set or to change
 
+        boolean processFailed = true
+
         RefdataValue status_current = RDStore.KBC_STATUS_CURRENT
         RefdataValue status_deleted = RDStore.KBC_STATUS_DELETED
         RefdataValue status_retired = RDStore.KBC_STATUS_RETIRED
@@ -244,7 +246,8 @@ class KbartProcessService {
                                         /*if (validation_result.errors?.size() > 0) {
                                                                 tippErrorMap.putAll(validation_result.errors)
                                                             }*/
-                                        TitleInstancePackagePlatform updateTipp = null
+                                        Map findTipp = kbartImportService.findTheCorrectTipp(kbartRow, tippDuplicates)
+                                        TitleInstancePackagePlatform updateTipp = findTipp.tipp ?: null
                                         try {
                                             Map autoUpdateResultTipp = kbartImportService.tippImportForUpdate(kbartRow, tippsWithCoverage, tippDuplicates, updatePackageInfo, kbartRowsToCreateTipps)
 
@@ -305,6 +308,7 @@ class KbartProcessService {
                                                 }
                                             }
                                             log.error("ValidationException attempting to cross reference the title: ${kbartRow.publication_title} with TIPP ${updateTipp?.id}: " + ve.message)
+                                            processFailed = true
                                             //ve.printStackTrace()
                                             /*tippErrorMap.putAll(messageService.processValidationErrors(ve.errors))*/
                                         }
@@ -331,6 +335,7 @@ class KbartProcessService {
                                                 }
                                             }
                                             log.error("Exception attempting to cross reference TIPP: "+ge.message)
+                                            processFailed = true
                                             //ge.printStackTrace()
                                             /*                                      def tipp_error = [
                                                                                       message: messageService.resolveCode('crossRef.package.tipps.error', [kbartRow.publication_title], Locale.ENGLISH),
@@ -347,6 +352,23 @@ class KbartProcessService {
                                 }
                                 catch (Exception ge) {
                                     log.error("Exception attempting to cross reference the title: ${kbartRow.publication_title}: "+ ge.message)
+                                    UpdateTippInfo.withTransaction {
+                                        updatePackageInfo.refresh()
+                                        UpdateTippInfo updateTippInfo = new UpdateTippInfo(
+                                                description: "An error occurred while processing the title: ${kbartRow.publication_title}. Check KBART row of this title.",
+                                                tipp: updateTipp,
+                                                startTime: new Date(),
+                                                endTime: new Date(),
+                                                status: RDStore.UPDATE_STATUS_FAILED,
+                                                type: RDStore.UPDATE_TYPE_FAILED_TITLE,
+                                                oldValue: '',
+                                                newValue: '',
+                                                tippProperty: '',
+                                                updatePackageInfo: updatePackageInfo
+                                        ).save()
+                                    }
+
+                                    processFailed = true
                                     //ge.printStackTrace()
                                 }
                             }
@@ -362,6 +384,7 @@ class KbartProcessService {
                         } catch (Exception ge) {
                             log.error("Error: kbartImportProcess (#$idx of $kbartImportProcessInfo): title ${kbartRow.publication_title}: " + ge.message)
                             //ge.printStackTrace()
+                            processFailed = true
                         }
 
                     }
@@ -463,6 +486,7 @@ class KbartProcessService {
             if (kbartRows.size() > 0 && kbartRows.size() > countInvalidKbartRowsForTipps) {
             } else {
                 log.info("imported Package $pkg.name contains no valid TIPPs")
+                processFailed = true
             }
 
 
@@ -593,38 +617,41 @@ class KbartProcessService {
 
             }
 
-            String description = "Package Update: (KbartLines: ${kbartRowsCount}, " +
-                    "Processed Titles in this run: ${idx}, Titles in we:kb previously: ${previouslyTipps}, Titles in we:kb now: ${countExistingTippsAfterImport}, Removed Titles: ${removedTipps}, New Titles in we:kb: ${newTipps}, Changed Titles in we:kb: ${changedTipps})"
 
-            UpdatePackageInfo.executeUpdate("update UpdatePackageInfo set countKbartRows = ${kbartRowsCount}, " +
-                    "countChangedTipps = ${changedTipps}, " +
-                    "countNowTippsInWekb = ${countExistingTippsAfterImport}, " +
-                    "countPreviouslyTippsInWekb = ${previouslyTipps}, " +
-                    "countNewTipps = ${newTipps}, " +
-                    "countRemovedTipps = ${removedTipps}, " +
-                    "countInValidTipps = ${countInvalidKbartRowsForTipps}, " +
-                    "countProcessedKbartRows = ${idx}, " +
-                    "endTime = :currentDate, " +
-                    "description = ${description}, " +
-                    "lastUpdated = :currentDate " +
-                    "where id = ${updatePackageInfo.id}", [currentDate: new Date()])
+            if(!processFailed) {
+                String description = "Package Update: (KbartLines: ${kbartRowsCount}, " +
+                        "Processed Titles in this run: ${idx}, Titles in we:kb previously: ${previouslyTipps}, Titles in we:kb now: ${countExistingTippsAfterImport}, Removed Titles: ${removedTipps}, New Titles in we:kb: ${newTipps}, Changed Titles in we:kb: ${changedTipps})"
 
-            UpdatePackageInfo.withTransaction {
+                UpdatePackageInfo.executeUpdate("update UpdatePackageInfo set countKbartRows = ${kbartRowsCount}, " +
+                        "countChangedTipps = ${changedTipps}, " +
+                        "countNowTippsInWekb = ${countExistingTippsAfterImport}, " +
+                        "countPreviouslyTippsInWekb = ${previouslyTipps}, " +
+                        "countNewTipps = ${newTipps}, " +
+                        "countRemovedTipps = ${removedTipps}, " +
+                        "countInValidTipps = ${countInvalidKbartRowsForTipps}, " +
+                        "countProcessedKbartRows = ${idx}, " +
+                        "endTime = :currentDate, " +
+                        "description = ${description}, " +
+                        "lastUpdated = :currentDate " +
+                        "where id = ${updatePackageInfo.id}", [currentDate: new Date()])
 
-                Package aPackage = Package.get(updatePackageInfo.pkg.id)
+                UpdatePackageInfo.withTransaction {
 
-                aPackage.lastUpdated = new Date()
-                aPackage.lastUpdateComment = "Updated package with ${kbartRowsCount} Title. (Titles in we:kb previously: ${previouslyTipps}, Titles in we:kb now: ${countExistingTippsAfterImport}, Removed Titles: ${removedTipps}, New Titles in we:kb: ${newTipps})"
-                aPackage.save()
+                    Package aPackage = Package.get(updatePackageInfo.pkg.id)
+
+                    aPackage.lastUpdated = new Date()
+                    aPackage.lastUpdateComment = "Updated package with ${kbartRowsCount} Title. (Titles in we:kb previously: ${previouslyTipps}, Titles in we:kb now: ${countExistingTippsAfterImport}, Removed Titles: ${removedTipps}, New Titles in we:kb: ${newTipps})"
+                    aPackage.save()
 
 
-                if (aPackage.kbartSource && updatePackageInfo.automaticUpdate) {
-                    KbartSource src = KbartSource.get(aPackage.kbartSource.id)
-                    src.kbartHasWekbFields = !setAllTippsNotInKbartToDeleted
-                    src.lastRun = new Date()
-                    src.lastUpdateUrl = (src.defaultSupplyMethod == RDStore.KS_DSMETHOD_HTTP_URL ? lastUpdateURL : "")
-                    src.lastChangedInKbart = lastChangedInKbart
-                    src.save()
+                    if (aPackage.kbartSource && updatePackageInfo.automaticUpdate) {
+                        KbartSource src = KbartSource.get(aPackage.kbartSource.id)
+                        src.kbartHasWekbFields = !setAllTippsNotInKbartToDeleted
+                        src.lastRun = new Date()
+                        src.lastUpdateUrl = (src.defaultSupplyMethod == RDStore.KS_DSMETHOD_HTTP_URL ? lastUpdateURL : "")
+                        src.lastChangedInKbart = lastChangedInKbart
+                        src.save()
+                    }
                 }
             }
             /* log.debug("final flush");
@@ -632,19 +659,38 @@ class KbartProcessService {
 
         } catch (Exception e) {
             log.error("Error by kbartImportProcess: "+ e.message)
+            processFailed = true
             //e.printStackTrace()
-            UpdatePackageInfo.withTransaction {
-                updatePackageInfo.refresh()
-                updatePackageInfo.endTime = new Date()
-                String description = "An error occurred while processing the KBART file. More information can be seen in the system log. "
-                if(lastUpdateURL && updatePackageInfo.automaticUpdate){
-                    description = description+ "File from URL: ${lastUpdateURL}"
+
+        }
+        if(processFailed){
+            UpdatePackageInfo.withNewTransaction {
+                Package aPackage = Package.get(updatePackageInfo.pkg.id)
+                UpdatePackageInfo newUpdatePackageInfo = new UpdatePackageInfo(pkg: aPackage, startTime: updatePackageInfo.startTime, automaticUpdate: updatePackageInfo.automaticUpdate, kbartHasWekbFields:  updatePackageInfo.kbartHasWekbFields, lastRun:  updatePackageInfo.lastRun)
+                newUpdatePackageInfo.endTime = new Date()
+                String description2 = "An error occurred while processing the KBART file. More information can be seen in the system log. "
+                if(lastUpdateURL && newUpdatePackageInfo.automaticUpdate){
+                    description2 = description2+ "File from URL: ${lastUpdateURL}"
                 }
-                updatePackageInfo.description = description
-                updatePackageInfo.status = RDStore.UPDATE_STATUS_FAILED
-                updatePackageInfo.onlyRowsWithLastChanged = onlyRowsWithLastChanged
-                updatePackageInfo.updateUrl = lastUpdateURL
-                updatePackageInfo.save()
+                newUpdatePackageInfo.description = description2
+                newUpdatePackageInfo.countChangedTipps = 0
+                newUpdatePackageInfo.countInValidTipps = 0
+                newUpdatePackageInfo.countKbartRows = 0
+                newUpdatePackageInfo.countNewTipps = 0
+                newUpdatePackageInfo.countNowTippsInWekb = 0
+                newUpdatePackageInfo.countPreviouslyTippsInWekb = 0
+                newUpdatePackageInfo.countRemovedTipps = 0
+                newUpdatePackageInfo.countProcessedKbartRows = 0
+                newUpdatePackageInfo.status = RDStore.UPDATE_STATUS_FAILED
+                newUpdatePackageInfo.onlyRowsWithLastChanged = onlyRowsWithLastChanged
+                newUpdatePackageInfo.updateUrl = lastUpdateURL
+                newUpdatePackageInfo.updateFromURL = lastUpdateURL ? true : false
+                newUpdatePackageInfo.updateFromFTP = lastUpdateURL ? false : true
+                newUpdatePackageInfo.updateFromFileUpload = false
+                newUpdatePackageInfo.frequency = aPackage.kbartSource.frequency
+                newUpdatePackageInfo.lastUpdateUrl = aPackage.kbartSource.lastUpdateUrl
+                newUpdatePackageInfo.lastChangedInKbart = new Date()
+                newUpdatePackageInfo.save()
             }
         }
 
