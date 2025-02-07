@@ -175,6 +175,21 @@ $(function () {
     });
 
     $('.xEditableManyToOne').editable({
+        validate: function(value) {
+            if ($(this).attr('data-required')) {
+                if($.trim(value) == '') {
+                    return "This field is required";
+                }
+            }
+            var dVal = $(this).attr('data-validation')
+            if (dVal) {
+                if (dVal.includes('notEmpty')) {
+                    if($.trim(value) == '') {
+                        return "This field cannot be left empty.";
+                    }
+                }
+            }
+        },
         tpl: '<select class="ui search selection dropdown"></select>',
         success: function(response, newValue) {
             if(response) {
