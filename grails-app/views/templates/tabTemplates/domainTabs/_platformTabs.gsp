@@ -68,7 +68,7 @@
                         </g:form>
                     </g:if>
                     <g:else>
-                        ${d.shibbolethAuthentication ? RDStore.YN_YES.getI10n('value') : RDStore.YN_NO.getI10n('value') }
+                        ${d.shibbolethAuthentication == wekb.helper.RDStore.YN_YES ? RDStore.YN_YES.getI10n('value') : RDStore.YN_NO.getI10n('value') }
                     </g:else>
                 </dd>
             </dl>
