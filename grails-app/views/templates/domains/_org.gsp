@@ -127,7 +127,7 @@
                                 </td>
                                 <td>
                                     <semui:xEditableRefData owner="${contact}" field="language"
-                                                            config="${RCConstants.COMPONENT_LANGUAGE}"/>
+                                                            config="${RCConstants.COMPONENT_LANGUAGE}" required="true"/>
                                 </td>
                                 <td>
                                     <semui:xEditableRefData owner="${contact}" field="contentType"
@@ -177,7 +177,7 @@
                                                        filter1="${RCConstants.CONTACT_TYPE}"/>
                     </div>
 
-                    <div class="field">
+                    <div class="required field">
                         <label>Main Language</label>
                         <semui:simpleReferenceDropdown name="language"
                                                        baseClass="wekb.RefdataValue"
@@ -221,6 +221,15 @@
                 $('.contactModal').form({
                     on: 'blur',
                     fields: {
+                        language: {
+                            identifier: 'language',
+                            rules: [
+                                {
+                                    type: 'empty',
+                                    prompt: 'Please select a language'
+                                }
+                            ]
+                        },
                         content: {
                             identifier: 'content',
                             rules: [
