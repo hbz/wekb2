@@ -195,9 +195,9 @@
                 <div class="content wekb-inline-lists">
                     <div class="header">
                         <g:if test="${d.defaultSupplyMethod == wekb.helper.RDStore.KS_DSMETHOD_FTP}">
-                            <div class="ui green ribbon label">Activ</div>
+                            <div class="ui green ribbon label">Active</div>
                         </g:if><g:else>
-                        <div class="ui red ribbon label">Not activ</div>
+                        <div class="ui red ribbon label">Not active</div>
                     </g:else>
                         FTP Configuration
                     </div>
