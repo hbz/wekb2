@@ -105,7 +105,7 @@
                                         <br>
                                         <br>
 
-                                        <semui:modal id="electronicBillingsModal" title="Add supported Library System">
+                                        <semui:modal id="electronicBillingsModal" title="Add Electronic Invoice Format">
 
                                             <g:form controller="ajaxHtml" action="addToCollection" class="ui form">
                                                 <input type="hidden" name="__context" value="${d.getOID()}"/>
@@ -169,7 +169,7 @@
                                         <br>
                                         <br>
 
-                                        <semui:modal id="invoiceDispatchsModal" title="Add supported Library System">
+                                        <semui:modal id="invoiceDispatchsModal" title="Add Invoice dispatch">
 
                                             <g:form controller="ajaxHtml" action="addToCollection" class="ui form">
                                                 <input type="hidden" name="__context" value="${d.getOID()}"/>
