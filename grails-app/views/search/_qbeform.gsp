@@ -190,7 +190,14 @@
                                     <input type="hidden" name="${field.qparam}" value="${params[field.qparam]}">
                                     <i class="dropdown icon"></i>
 
-                                    <div class="default text"><g:message code="search.select"/> <g:message code="${field.msgCode}" default="${field.prompt}"/></div>
+                                    <div class="default text">
+                                        <g:if test="${selectPlaceHolder}">
+                                            <g:message code="search.select"/> ${selectPlaceHolder}
+                                        </g:if>
+                                        <g:else>
+                                            <g:message code="search.select"/> <g:message code="${field.msgCode}" default="${field.prompt}"/></div>
+                                        </g:else>
+
 
                                     <div class="menu">
                                         <g:each in="${dropdownService.selectedDropDown(field.dropDownType, refObject, params.qp_status_id)}" var="item">
