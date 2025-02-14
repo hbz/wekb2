@@ -376,7 +376,7 @@ class GlobalSearchTemplatesService {
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'invoicingVendors'],
                                         advancedSearch: [title: "Invoicing", category: 'invoice']
                                 ],
-                                [
+                               /* [
                                         type       : 'dropDown',
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.YN,
@@ -441,7 +441,7 @@ class GlobalSearchTemplatesService {
                                         placeholder: 'Perpetual Access',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'perpetualAccess'],
                                         advancedSearch: [title: "Supported licencing models", category: 'supportedLicencingModels']
-                                ],
+                                ],*/
                                 [
                                         type       : 'dropDown',
                                         baseClass  : 'wekb.RefdataValue',
@@ -449,7 +449,7 @@ class GlobalSearchTemplatesService {
                                         prompt     : 'DRM',
                                         msgCode     : 'org.drm',
                                         qparam     : 'drm',
-                                        placeholder: 'DRM',
+                                        selectPlaceHolder: 'value',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'drm'],
                                         advancedSearch: [title: "Usage rights", category: 'usageRights']
                                 ],
@@ -460,18 +460,18 @@ class GlobalSearchTemplatesService {
                                         prompt     : 'Remote Access',
                                         msgCode     : 'org.remoteAccess',
                                         qparam     : 'remoteAccess',
-                                        placeholder: 'Remote Access',
+                                        selectPlaceHolder: 'value',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'remoteAccess'],
                                         advancedSearch: [title: "Usage rights", category: 'usageRights']
                                 ],
                                 [
                                         type       : 'dropDown',
                                         baseClass  : 'wekb.RefdataValue',
-                                        filter1    : RCConstants.YN,
-                                        prompt     : 'Print/Download Chapter',
-                                        msgCode     : 'org.printDownloadChapter',
+                                        filter1    : RCConstants.ProviderPrintDownloadChapter,
+                                        prompt     : 'Print/Download',
+                                        //msgCode     : 'org.printDownloadChapter',
                                         qparam     : 'printDownloadChapter',
-                                        placeholder: 'Print/Download Chapter',
+                                        selectPlaceHolder: 'value',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'printDownloadChapter'],
                                         advancedSearch: [title: "Usage rights", category: 'usageRights']
                                 ],
@@ -482,11 +482,11 @@ class GlobalSearchTemplatesService {
                                         prompt     : 'Quotes By Copy/Paste',
                                         msgCode     : 'org.quotesByCopyPaste',
                                         qparam     : 'quotesByCopyPaste',
-                                        placeholder: 'Quotes By Copy/Paste',
+                                        selectPlaceHolder: 'value',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'quotesByCopyPaste'],
                                         advancedSearch: [title: "Usage rights", category: 'usageRights']
                                 ],
-                                [
+                                /*[
                                         type       : 'dropDown',
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.YN,
@@ -518,7 +518,7 @@ class GlobalSearchTemplatesService {
                                         placeholder: 'Alerts about exchange of individual titles within e-book packages',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'org_alert_exchange_ebook_packages'],
                                         advancedSearch: [title: "General Services", category: 'generalServices']
-                                ],
+                                ],*/
 
 
 
@@ -1505,10 +1505,10 @@ class GlobalSearchTemplatesService {
                                         type       : 'dropDown',
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.UYNP,
-                                        prompt     : 'Platform',
-                                        msgCode     : 'platform.accessPlatform',
+                                        prompt     : 'Platform accessibility',
+                                        //msgCode     : 'platform.accessPlatform',
                                         qparam     : 'qp_accessPlatform',
-                                        placeholder: 'Platform',
+                                        selectPlaceHolder: 'value',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'accessPlatform'],
                                         advancedSearch: [title: "Accessibility", category: 'Accessibility']
                                 ],
@@ -1516,10 +1516,10 @@ class GlobalSearchTemplatesService {
                                         type       : 'dropDown',
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.UYNP,
-                                        prompt     : 'PDF viewer',
-                                        msgCode     : 'platform.viewerForPdf',
+                                        prompt     : 'PDF viewer accessibility',
+                                        //msgCode     : 'platform.viewerForPdf',
                                         qparam     : 'qp_viewerForPdf',
-                                        placeholder: 'PDF viewer',
+                                        selectPlaceHolder: 'value',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'viewerForPdf'],
                                         advancedSearch: [title: "Accessibility", category: 'Accessibility']
                                 ],
@@ -1527,10 +1527,10 @@ class GlobalSearchTemplatesService {
                                         type       : 'dropDown',
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.UYNP,
-                                        prompt     : 'ePub viewer',
-                                        msgCode     : 'platform.viewerForEpub',
+                                        prompt     : 'ePub viewer accessibility',
+                                        //msgCode     : 'platform.viewerForEpub',
                                         qparam     : 'qp_viewerForEpub',
-                                        placeholder: 'ePub viewer',
+                                        selectPlaceHolder: 'value',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'viewerForEpub'],
                                         advancedSearch: [title: "Accessibility", category: 'Accessibility']
                                 ],
@@ -1538,10 +1538,10 @@ class GlobalSearchTemplatesService {
                                         type       : 'dropDown',
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.UYNP,
-                                        prompt     : 'Audio player',
-                                        msgCode     : 'platform.playerForAudio',
+                                        prompt     : 'Audio player accessibility',
+                                        //msgCode     : 'platform.playerForAudio',
                                         qparam     : 'qp_playerForAudio',
-                                        placeholder: 'Audio player',
+                                        selectPlaceHolder: 'value',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'playerForAudio'],
                                         advancedSearch: [title: "Accessibility", category: 'Accessibility']
                                 ],
@@ -1549,10 +1549,10 @@ class GlobalSearchTemplatesService {
                                         type       : 'dropDown',
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.UYNP,
-                                        prompt     : 'Video player',
-                                        msgCode     : 'platform.playerForVideo',
+                                        prompt     : 'Video player accessibility',
+                                        //msgCode     : 'platform.playerForVideo',
                                         qparam     : 'qp_playerForVideo',
-                                        placeholder: 'Video player',
+                                        selectPlaceHolder: 'value',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'playerForVideo'],
                                         advancedSearch: [title: "Accessibility", category: 'Accessibility']
                                 ],
@@ -1561,28 +1561,20 @@ class GlobalSearchTemplatesService {
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Accessibility Statement available',
-                                        msgCode     : 'platform.accessibilityStatementAvailable',
+                                        //msgCode     : 'platform.accessibilityStatementAvailable',
                                         qparam     : 'qp_accessibilityStatementAvailable',
-                                        placeholder: 'Accessibility Statement available',
+                                        selectPlaceHolder: 'value',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'accessibilityStatementAvailable'],
-                                        advancedSearch: [title: "Accessibility", category: 'Accessibility']
-                                ],
-                                [
-                                        prompt     : 'Link to the Accessibility Statement',
-                                        qparam     : 'qp_accessibilityStatementUrl',
-                                        msgCode     : 'platform.accessibilityStatementUrl',
-                                        placeholder: 'Link to the Accessibility Statement',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'accessibilityStatementUrl'],
                                         advancedSearch: [title: "Accessibility", category: 'Accessibility']
                                 ],
                                 [
                                         type       : 'dropDown',
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.UYNP,
-                                        prompt     : 'EPUB e-books content',
-                                        msgCode     : 'platform.accessEPub',
+                                        prompt     : 'EPUB e-books content accessibility',
+                                        //msgCode     : 'platform.accessEPub',
                                         qparam     : 'qp_accessEPub',
-                                        placeholder: 'EPUB e-books content',
+                                        selectPlaceHolder: 'value',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'accessEPub'],
                                         advancedSearch: [title: "Accessibility", category: 'Accessibility']
                                 ],
@@ -1590,10 +1582,10 @@ class GlobalSearchTemplatesService {
                                         type       : 'dropDown',
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.UYNP,
-                                        prompt     : 'PDF e-books content',
-                                        msgCode     : 'platform.accessPdf',
+                                        prompt     : 'PDF e-books content accessibility',
+                                        //msgCode     : 'platform.accessPdf',
                                         qparam     : 'qp_accessPdf',
-                                        placeholder: 'PDF e-books content',
+                                        selectPlaceHolder: 'value',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'accessPdf'],
                                         advancedSearch: [title: "Accessibility", category: 'Accessibility']
                                 ],
@@ -1601,10 +1593,10 @@ class GlobalSearchTemplatesService {
                                         type       : 'dropDown',
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.UYNP,
-                                        prompt     : 'Audio content',
-                                        msgCode    : 'platform.accessAudio',
+                                        prompt     : 'Audio content accessibility',
+                                        //msgCode    : 'platform.accessAudio',
                                         qparam     : 'qp_accessAudio',
-                                        placeholder: 'Audio content',
+                                        selectPlaceHolder: 'value',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'accessAudio'],
                                         advancedSearch: [title: "Accessibility", category: 'Accessibility']
                                 ],
@@ -1612,10 +1604,10 @@ class GlobalSearchTemplatesService {
                                         type       : 'dropDown',
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.UYNP,
-                                        prompt     : 'Video content',
-                                        msgCode    : 'platform.accessVideo',
+                                        prompt     : 'Video content accessibility',
+                                        //msgCode    : 'platform.accessVideo',
                                         qparam     : 'qp_accessVideo',
-                                        placeholder: 'Video content',
+                                        selectPlaceHolder: 'value',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'accessVideo'],
                                         advancedSearch: [title: "Accessibility", category: 'Accessibility']
                                 ],
@@ -1623,10 +1615,10 @@ class GlobalSearchTemplatesService {
                                         type       : 'dropDown',
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.UYNP,
-                                        prompt     : 'Database content',
-                                        msgCode    : 'platform.accessDatabase',
+                                        prompt     : 'Database content accessibility',
+                                        //msgCode    : 'platform.accessDatabase',
                                         qparam     : 'qp_accessDatabase',
-                                        placeholder: 'Database content',
+                                        selectPlaceHolder: 'value',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'accessDatabase'],
                                         advancedSearch: [title: "Accessibility", category: 'Accessibility']
                                 ],
@@ -1637,7 +1629,7 @@ class GlobalSearchTemplatesService {
                                         prompt     : 'Individual design / logo',
                                         qparam     : 'qp_individualDesignLogo',
                                         msgCode    : 'platform.individualDesignLogo',
-                                        placeholder: 'Individual design / logo',
+                                        selectPlaceHolder: 'value',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'individualDesignLogo'],
                                         advancedSearch: [title: "Additional services", category: 'Additional services']
                                 ],
@@ -1648,7 +1640,7 @@ class GlobalSearchTemplatesService {
                                         prompt     : 'Full text search',
                                         qparam     : 'qp_fullTextSearch',
                                         msgCode    : 'platform.fullTextSearch',
-                                        placeholder: 'Full text search',
+                                        selectPlaceHolder: 'value',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'fullTextSearch'],
                                         advancedSearch: [title: "Additional services", category: 'Additional services']
                                 ]

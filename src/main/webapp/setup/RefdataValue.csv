@@ -576,6 +576,9 @@ TitleInstancePackagePlatform.PublicationType;Database;Database;Database
 TitleInstancePackagePlatform.PublicationType;Monograph;Monograph;Monograph
 TitleInstancePackagePlatform.PublicationType;Other;Other;Other
 TitleInstancePackagePlatform.PublicationType;Serial;Serial;Serial
+Provider.Print.Download.Chapter;No;No;No
+Provider.Print.Download.Chapter;Yes;Yes;Yes
+Provider.Print.Download.Chapter;only chapters;only chapters;only chapters
 Vendor.SupportedLibrarySystem;Alma;Alma;Alma
 Vendor.SupportedLibrarySystem;Aleph;Aleph;Aleph
 Vendor.SupportedLibrarySystem;aDIS/BMS;aDIS/BMS;aDIS/BMS

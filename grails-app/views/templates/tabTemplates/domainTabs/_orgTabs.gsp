@@ -4,15 +4,15 @@
         <semui:tabsItemWithoutLink tab="invoice" defaultTab="invoice" activeTab="${params.activeTab}">
             Invoicing
         </semui:tabsItemWithoutLink>
-        <semui:tabsItemWithoutLink  tab="supportedLicencingModels" activeTab="${params.activeTab}">
+      %{--  <semui:tabsItemWithoutLink  tab="supportedLicencingModels" activeTab="${params.activeTab}">
             Supported Licencing Models
-        </semui:tabsItemWithoutLink>
+        </semui:tabsItemWithoutLink>--}%
         <semui:tabsItemWithoutLink  tab="usageRights" activeTab="${params.activeTab}">
             Usage Rights
         </semui:tabsItemWithoutLink>
-        <semui:tabsItemWithoutLink tab="generalServices" activeTab="${params.activeTab}">
+      %{--  <semui:tabsItemWithoutLink tab="generalServices" activeTab="${params.activeTab}">
             General Services
-       </semui:tabsItemWithoutLink>
+       </semui:tabsItemWithoutLink>--}%
         <semui:tabsItemWithoutLink tab="identifiers" activeTab="${params.activeTab}" counts="${d.ids.size()}">
             Identifiers
         </semui:tabsItemWithoutLink>
@@ -295,7 +295,7 @@
     </semui:tabsItemContent>
 
 
-    <semui:tabsItemContent tab="supportedLicencingModels" activeTab="${params.activeTab}">
+    %{--<semui:tabsItemContent tab="supportedLicencingModels" activeTab="${params.activeTab}">
         <div class="content wekb-inline-lists">
             <dl>
                 <dt class="control-label">
@@ -352,7 +352,7 @@
                 </dd>
             </dl>
         </div>
-    </semui:tabsItemContent>
+    </semui:tabsItemContent>--}%
 
     <semui:tabsItemContent tab="usageRights" activeTab="${params.activeTab}">
         <div class="content wekb-inline-lists">
@@ -395,7 +395,7 @@
         </div>
     </semui:tabsItemContent>
 
-    <semui:tabsItemContent tab="generalServices" activeTab="${params.activeTab}">
+    %{--<semui:tabsItemContent tab="generalServices" activeTab="${params.activeTab}">
         <div class="content wekb-inline-lists">
             <dl>
                 <dt class="control-label">
@@ -441,7 +441,7 @@
                 </dd>
             </dl>
         </div>
-    </semui:tabsItemContent>
+    </semui:tabsItemContent>--}%
 
     <semui:tabsItemContent tab="platforms" activeTab="${params.activeTab}">
         <g:link class="display-inline" controller="search" action="inlineSearch"
