@@ -467,7 +467,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'dropDown',
                                         baseClass  : 'wekb.RefdataValue',
-                                        filter1    : RCConstants.ProviderPrintDownloadChapter,
+                                        filter1    : RCConstants.PROVIDER_PRINT_DOWNLOAD,
                                         prompt     : 'Print/Download',
                                         //msgCode     : 'org.printDownloadChapter',
                                         qparam     : 'printDownloadChapter',
@@ -508,17 +508,7 @@ class GlobalSearchTemplatesService {
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'org_alert_new_ebook_packages'],
                                         advancedSearch: [title: "General Services", category: 'generalServices']
                                 ],
-                                [
-                                        type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
-                                        filter1    : RCConstants.YN,
-                                        prompt     : 'Alerts about exchange of individual titles within e-book packages',
-                                        msgCode     : 'org.org_alert_exchange_ebook_packages',
-                                        qparam     : 'org_alert_exchange_ebook_packages',
-                                        placeholder: 'Alerts about exchange of individual titles within e-book packages',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'org_alert_exchange_ebook_packages'],
-                                        advancedSearch: [title: "General Services", category: 'generalServices']
-                                ],*/
+                              */
 
 
 
@@ -2567,22 +2557,11 @@ class GlobalSearchTemplatesService {
                                         type       : 'dropDown',
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.YN,
-                                        prompt     : 'Alerts about new publications within e-book packages',
+                                        prompt     : 'Alerts about new publications within packages',
                                         msgCode     : 'vendor.activationForNewReleases',
                                         qparam     : 'activationForNewReleases',
-                                        placeholder: 'Alerts about new publications within e-book packages',
+                                        placeholder: 'Alerts about new publications within packages',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'activationForNewReleases'],
-                                        advancedSearch: [title: "General Services", category: 'generalServices']
-                                ],
-                                [
-                                        type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
-                                        filter1    : RCConstants.YN,
-                                        prompt     : 'Alerts about exchange of individual titles within e-book packages',
-                                        msgCode     : 'vendor.exchangeOfIndividualTitles',
-                                        qparam     : 'exchangeOfIndividualTitles',
-                                        placeholder: 'Alerts about exchange of individual titles within e-book packages',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'exchangeOfIndividualTitles'],
                                         advancedSearch: [title: "General Services", category: 'generalServices']
                                 ],
                                 [

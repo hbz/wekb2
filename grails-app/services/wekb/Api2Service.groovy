@@ -1403,12 +1403,12 @@ class Api2Service {
                 result.remoteAccess = object.remoteAccess?.value
                 result.printDownloadChapter = object.printDownloadChapter?.value
                 result.quotesByCopyPaste = object.quotesByCopyPaste?.value
-                result.forwardingUsageStatistcs = object.forwardingUsageStatistcs?.value
+                //result.forwardingUsageStatistcs = object.forwardingUsageStatistcs?.value
                 result.alertNewEbookPackages = object.alertNewEbookPackages?.value
-                result.alertExchangeEbookPackages = object.alertExchangeEbookPackages?.value
+                //result.alertExchangeEbookPackages = object.alertExchangeEbookPackages?.value
 
                 result.urlPristLists = object.urlPristLists
-                result.urlTitleLists = object.urlTitleLists
+                //result.urlTitleLists = object.urlTitleLists
 
                 result.roles = []
                 object.roles.each { role ->
@@ -1544,6 +1544,7 @@ class Api2Service {
                 result.rssUrl = object.rssUrl
                 result.individualDesignLogo = object.individualDesignLogo?.value
                 result.fullTextSearch = object.fullTextSearch?.value
+                result.forwardingUsageStatistcs = object.forwardingUsageStatistcs?.value
 
                 if (object.hasProperty('curatoryGroups')) {
                     result.curatoryGroups = []
@@ -1753,7 +1754,7 @@ class Api2Service {
                 result.shippingMetadata = object.shippingMetadata ? RDStore.YN_YES.value : RDStore.YN_NO.value
                 result.forwardingUsageStatisticsFromPublisher = object.forwardingUsageStatisticsFromPublisher ? RDStore.YN_YES.value : RDStore.YN_NO.value
                 result.activationForNewReleases = object.activationForNewReleases ? RDStore.YN_YES.value : RDStore.YN_NO.value
-                result.exchangeOfIndividualTitles = object.exchangeOfIndividualTitles ? RDStore.YN_YES.value : RDStore.YN_NO.value
+                //result.exchangeOfIndividualTitles = object.exchangeOfIndividualTitles ? RDStore.YN_YES.value : RDStore.YN_NO.value
                 result.researchPlatformForEbooks = object.researchPlatformForEbooks
                 result.prequalification = object.prequalification ? RDStore.YN_YES.value : RDStore.YN_NO.value
                 result.prequalificationInfo = object.prequalificationInfo
