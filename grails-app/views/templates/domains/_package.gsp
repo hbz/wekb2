@@ -228,7 +228,7 @@
 
                     <g:if test="${editable}">
                         <a class="ui right floated primary button" href="#"
-                           onclick="$('#paaModal').modal('show');"><g:message code="default.add.label" args="['Archiving Agency']"/>y</a>
+                           onclick="$('#paaModal').modal('show');"><g:message code="default.add.label" args="['Archiving Agency']"/></a>
 
                         <br>
                         <br>

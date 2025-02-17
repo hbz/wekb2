@@ -10,9 +10,9 @@
         <semui:tabsItemWithoutLink  tab="usageRights" activeTab="${params.activeTab}">
             Usage Rights
         </semui:tabsItemWithoutLink>
-      %{--  <semui:tabsItemWithoutLink tab="generalServices" activeTab="${params.activeTab}">
-            General Services
-       </semui:tabsItemWithoutLink>--}%
+        <semui:tabsItemWithoutLink tab="metdaServices" activeTab="${params.activeTab}">
+            Metadata Services
+       </semui:tabsItemWithoutLink>
         <semui:tabsItemWithoutLink tab="identifiers" activeTab="${params.activeTab}" counts="${d.ids.size()}">
             Identifiers
         </semui:tabsItemWithoutLink>
@@ -376,11 +376,11 @@
             </dl>
             <dl>
                 <dt class="control-label">
-                    Print/Download Chapter
+                    Print/Download
                 </dt>
                 <dd>
                     <semui:xEditableRefData owner="${d}" field="printDownloadChapter"
-                                            config="${RCConstants.YN}"/>
+                                            config="${RCConstants.PROVIDER_PRINT_DOWNLOAD}"/>
                 </dd>
             </dl>
             <dl>
@@ -395,8 +395,24 @@
         </div>
     </semui:tabsItemContent>
 
-    %{--<semui:tabsItemContent tab="generalServices" activeTab="${params.activeTab}">
+    <semui:tabsItemContent tab="metdaServices" activeTab="${params.activeTab}">
         <div class="content wekb-inline-lists">
+            <dl>
+                <dt class="control-label">
+                    <g:message code="org.metadataDownloaderURL"/>
+                </dt>
+                <dd>
+                    <semui:xEditable owner="${d}" field="metadataDownloaderURL" validation="url" outGoingLink="true"/>
+                </dd>
+            </dl>
+            <dl>
+                <dt class="control-label">
+                    <g:message code="org.kbartDownloaderURL"/>
+                </dt>
+                <dd>
+                    <semui:xEditable owner="${d}" field="kbartDownloaderURL" validation="url" outGoingLink="true"/>
+                </dd>
+            </dl>
             <dl>
                 <dt class="control-label">
                     URL price lists
@@ -407,31 +423,14 @@
             </dl>
             <dl>
                 <dt class="control-label">
-                    URL title lists
-                </dt>
-                <dd>
-                    <semui:xEditable owner="${d}" field="urlTitleLists"/>
-                </dd>
-            </dl>
-            <dl>
-                <dt class="control-label">
-                    Forwarding Usage Statistcs
-                </dt>
-                <dd>
-                    <semui:xEditableRefData owner="${d}" field="forwardingUsageStatistcs"
-                                            config="${RCConstants.YN}"/>
-                </dd>
-            </dl>
-            <dl>
-                <dt class="control-label">
-                    Alerts about new publications within e-book packages
+                    Alerts about new publications within packages
                 </dt>
                 <dd>
                     <semui:xEditableRefData owner="${d}" field="alertNewEbookPackages"
                                             config="${RCConstants.YN}"/>
                 </dd>
             </dl>
-            <dl>
+           %{-- <dl>
                 <dt class="control-label">
                     Alerts about exchange of individual titles within e-book packages
                 </dt>
@@ -439,9 +438,9 @@
                     <semui:xEditableRefData owner="${d}" field="alertExchangeEbookPackages"
                                             config="${RCConstants.YN}"/>
                 </dd>
-            </dl>
+            </dl>--}%
         </div>
-    </semui:tabsItemContent>--}%
+    </semui:tabsItemContent>
 
     <semui:tabsItemContent tab="platforms" activeTab="${params.activeTab}">
         <g:link class="display-inline" controller="search" action="inlineSearch"

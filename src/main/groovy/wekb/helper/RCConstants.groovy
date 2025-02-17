@@ -86,7 +86,7 @@ class RCConstants {
 
     public static final String TITLEINSTANCE_MEDIUM = "TitleInstance.Medium"
 
-    public static final String ProviderPrintDownloadChapter = "Provider.Print.Download.Chapter"
+    public static final String PROVIDER_PRINT_DOWNLOAD = "Provider.Print.Download.Chapter"
 
     public static final String VENDOR_SUPPORTED_LIB_SYSTEM = "Vendor.SupportedLibrarySystem"
     public static final String VENDOR_ELECTRONIC_BILLING = "Vendor.ElectronicBilling"

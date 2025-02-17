@@ -381,20 +381,20 @@
             </dl>
             <dl>
                 <dt class="control-label">
-                    Alerts about new publications within e-book packages
+                    Alerts about new publications within packages
                 </dt>
                 <dd>
                     <semui:xEditableBoolean owner="${d}" field="activationForNewReleases"/>
                 </dd>
             </dl>
-            <dl>
+           %{-- <dl>
                 <dt class="control-label">
                     Alerts about exchange of individual titles within e-book packages
                 </dt>
                 <dd>
                     <semui:xEditableBoolean owner="${d}" field="exchangeOfIndividualTitles"/>
                 </dd>
-            </dl>
+            </dl>--}%
             <dl>
                 <dt class="control-label">
                     Research platform for e-books

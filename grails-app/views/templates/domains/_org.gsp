@@ -49,22 +49,6 @@
         </dl>
         <dl>
             <dt class="control-label">
-                <g:message code="org.metadataDownloaderURL"/>
-            </dt>
-            <dd>
-                <semui:xEditable owner="${d}" field="metadataDownloaderURL" validation="url" outGoingLink="true"/>
-            </dd>
-        </dl>
-        <dl>
-            <dt class="control-label">
-                <g:message code="org.kbartDownloaderURL"/>
-            </dt>
-            <dd>
-                <semui:xEditable owner="${d}" field="kbartDownloaderURL" validation="url" outGoingLink="true"/>
-            </dd>
-        </dl>
-        <dl>
-            <dt class="control-label">
                 <g:message code="org.urlToTrainingMaterials"/>
             </dt>
             <dd>

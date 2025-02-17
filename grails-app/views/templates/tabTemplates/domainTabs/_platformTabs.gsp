@@ -179,14 +179,6 @@
             </dl>
             <dl>
                 <dt class="control-label">
-                    Statistics Admin Portal Url
-                </dt>
-                <dd>
-                    <semui:xEditable owner="${d}" field="statisticsAdminPortalUrl" validation="url" outGoingLink="true"/>
-                </dd>
-            </dl>
-            <dl>
-                <dt class="control-label">
                     Counter Certified
                 </dt>
                 <dd>
@@ -272,6 +264,24 @@
             <dl>
                 <dt class="control-label"><g:message code="platform.counterRegistryApiUuid"/></dt>
                 <dd><semui:xEditable owner="${d}" field="counterRegistryApiUuid"/></dd>
+            </dl>
+
+            <dl>
+                <dt class="control-label">
+                    Forwarding Usage Statistcs
+                </dt>
+                <dd>
+                    <semui:xEditableRefData owner="${d}" field="forwardingUsageStatistcs"
+                                            config="${RCConstants.YN}"/>
+                </dd>
+            </dl>
+            <dl>
+                <dt class="control-label">
+                    Statistics Admin Portal Url
+                </dt>
+                <dd>
+                    <semui:xEditable owner="${d}" field="statisticsAdminPortalUrl" validation="url" outGoingLink="true"/>
+                </dd>
             </dl>
         </div>
     </semui:tabsItemContent>
