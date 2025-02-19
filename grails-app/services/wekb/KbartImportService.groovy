@@ -1577,14 +1577,16 @@ class KbartImportService {
                 }
             }
         }else {
-            if (!result.newTipp) {
-                String oldValue = renderObjectValue(tipp[tippProperty])
-                if(!(oldValue == "" || oldValue == null)) {
-                    valueChanged = true
-                    createUpdateTippInfoByTippChange(tipp, updatePackageInfo, kbartProperty, tippProperty, oldValue, '')
+            if(acceptNullValue) {
+                if (!result.newTipp) {
+                    String oldValue = renderObjectValue(tipp[tippProperty])
+                    if (!(oldValue == "" || oldValue == null)) {
+                        valueChanged = true
+                        createUpdateTippInfoByTippChange(tipp, updatePackageInfo, kbartProperty, tippProperty, oldValue, '')
+                    }
                 }
+                tipp[tippProperty] = null
             }
-            tipp[tippProperty] = null
         }
 
         if(valueChanged){
