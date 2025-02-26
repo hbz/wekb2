@@ -119,6 +119,15 @@ $(function () {
                         return "Please enter a valid email address."
                     }
                 }
+                if (dVal.includes('password')) {
+                    let regex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!$%&@#^+*~=:;])(?=\S+$).{8,20}$/
+                    let test = regex.test($.trim(value)) || $.trim(value) === ''
+                    if(!test) {
+                        return "The password must be between 8 and 20 characters long." +
+                            "It must contain at least one uppercase letter, one lowercase letter, one number and one special character from the list ( !\$%&@#^+*~=:; )." +
+                            "Spaces are not allowed."
+                    }
+                }
                 if (dVal.includes('maxlength')) {
                     if(value.length > $(this).attr("data-maxlength")) {
                         return "The value is too long.";
