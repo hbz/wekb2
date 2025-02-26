@@ -254,24 +254,46 @@ class WorkflowService {
         result
     }
 
-    void updateListOfPackageWithKbart(List<Package> packageList, boolean allTitles = false){
-        GParsPool.withPool(5) { pool ->
-            packageList.anyParallel { aPackage ->
-                Set<Thread> threadSet = Thread.getAllStackTraces().keySet()
-                Thread[] threadArray = threadSet.toArray(new Thread[threadSet.size()])
-                boolean processRunning = false
-                threadArray.each { Thread thread ->
-                    if (thread.name == 'uPFKS' + aPackage.id) {
-                        processRunning = true
-                    }
-                }
+    Map updateListOfPackageWithKbart(List<Package> packageList, boolean allTitles = false, List<CuratoryGroup> curatoryGroups){
+        Map result = [:]
 
-                if (!processRunning) {
-                        Thread.currentThread().setName('uPFKS' + aPackage.id)
-                        autoUpdatePackagesService.startAutoPackageUpdate(aPackage, !allTitles)
-                }
+        Set<Thread> threadSetMain = Thread.getAllStackTraces().keySet()
+        Thread[] threadArrayMain = threadSetMain.toArray(new Thread[threadSetMain.size()])
+        boolean processRunningMain = false
+        threadArrayMain.each { Thread thread ->
+            if (thread.name == 'uOPWK' + curatoryGroups.id.join('_')) {
+                processRunningMain = true
             }
         }
+
+        if (processRunningMain) {
+            result.error = "The package update for ${packageList.size()} Package is already running. Please wait this has finished."
+        } else {
+            executorService.execute({
+                GParsPool.withPool(5) { pool ->
+                    packageList.anyParallel { aPackage ->
+                        Set<Thread> threadSet = Thread.getAllStackTraces().keySet()
+                        Thread[] threadArray = threadSet.toArray(new Thread[threadSet.size()])
+                        boolean processRunning = false
+                        threadArray.each { Thread thread ->
+                            if (thread.name == 'uPFKS' + aPackage.id) {
+                                processRunning = true
+                            }
+                        }
+
+                        if (!processRunning) {
+                            Thread.currentThread().setName('uPFKS' + aPackage.id)
+                            autoUpdatePackagesService.startAutoPackageUpdate(aPackage, !allTitles)
+                        }
+                    }
+                }
+            })
+
+            result.message = "The package update for ${packageList.size()} Package was started. This runs in the background."
+        }
+
+        result
+
     }
 
     private Map deleteIdentifierNamespace(IdentifierNamespace identifierNamespace) {

@@ -342,11 +342,18 @@ class GroupController {
 
         boolean allTitles = params.allTitles == 'true' ? true : false
 
+        Map result = [:]
         if(packageList.size() > 0){
-            workflowService.updateListOfPackageWithKbart(packageList, allTitles)
+            result = workflowService.updateListOfPackageWithKbart(packageList, allTitles, searchResult.groups)
         }
 
-        flash.message = "The package update for ${packageList.size()} Package was started. This runs in the background."
+        if(result.error){
+            flash.error = result.error
+        }
+
+        if(result.message){
+            flash.message = result.message
+        }
 
         redirect(url: request.getHeader('referer'))
 
