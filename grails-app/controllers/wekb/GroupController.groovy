@@ -324,6 +324,7 @@ class GroupController {
             return
         }
 
+        List<CuratoryGroup> curatoryGroupList = searchResult.groups
         params.qbe = 'g:packages'
         params.qp_curgroups = searchResult.groups.id
         params.hide = ['qp_curgroup', 'qp_curgroups']
@@ -344,7 +345,9 @@ class GroupController {
 
         Map result = [:]
         if(packageList.size() > 0){
-            result = workflowService.updateListOfPackageWithKbart(packageList, allTitles, searchResult.groups)
+            result = workflowService.updateListOfPackageWithKbart(packageList, allTitles, curatoryGroupList)
+        }else{
+            flash.error = 'Your packages have no source set / Your packages have no automatic updates set in source!'
         }
 
         if(result.error){

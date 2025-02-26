@@ -261,7 +261,7 @@ class WorkflowService {
         Thread[] threadArrayMain = threadSetMain.toArray(new Thread[threadSetMain.size()])
         boolean processRunningMain = false
         threadArrayMain.each { Thread thread ->
-            if (thread.name == 'uOPWK' + curatoryGroups.id.join('_')) {
+            if (thread.name == 'uOPWK' + curatoryGroups.id.join('_').substring(0,7)) {
                 processRunningMain = true
             }
         }
@@ -270,22 +270,18 @@ class WorkflowService {
             result.error = "The package update for ${packageList.size()} Package is already running. Please wait this has finished."
         } else {
             executorService.execute({
-                GParsPool.withPool(5) { pool ->
-                    packageList.anyParallel { aPackage ->
-                        Set<Thread> threadSet = Thread.getAllStackTraces().keySet()
-                        Thread[] threadArray = threadSet.toArray(new Thread[threadSet.size()])
-                        boolean processRunning = false
-                        threadArray.each { Thread thread ->
-                            if (thread.name == 'uPFKS' + aPackage.id) {
-                                processRunning = true
-                            }
+                Thread.currentThread().setName('uOPWK' + curatoryGroups.id.join('_').substring(0,7))
+
+                    packageList.each { aPackage ->
+                        Package aPackage1 = Package.get(aPackage.id)
+
+                        try {
+                            autoUpdatePackagesService.startAutoPackageUpdate(aPackage1, !allTitles)
+                        }catch (Exception exception) {
+                            log.error("Error by updateListOfPackageWithKbart (${aPackage1.id} -> ${aPackage1.name}): ${exception.message}")
+                            //exception.printStackTrace()
                         }
 
-                        if (!processRunning) {
-                            Thread.currentThread().setName('uPFKS' + aPackage.id)
-                            autoUpdatePackagesService.startAutoPackageUpdate(aPackage, !allTitles)
-                        }
-                    }
                 }
             })
 
