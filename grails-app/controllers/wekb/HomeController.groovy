@@ -8,6 +8,7 @@ import org.springframework.security.access.annotation.Secured
 import wekb.helper.RDStore
 import wekb.system.FTControl
 import wekb.system.SavedSearch
+import wekb.utils.PasswordUtils
 
 import java.text.SimpleDateFormat
 import java.time.LocalDate
@@ -162,11 +163,16 @@ class HomeController {
     if ( params.newpass != '' && params.newpass == params.repeatpass ) {
       User user = springSecurityService.currentUser
       if (passwordEncoder.matches(params.origpass, user.password)) {
-        User.withTransaction {
-          user.password = params.newpass
-          user.save()
+        if (PasswordUtils.isUserPasswordValid(params.newpass)) {
+          User.withTransaction {
+            user.password = params.newpass
+            user.save()
+          }
+          flash.success = "Password Changed!"
         }
-        flash.success = "Password Changed!"
+        else {
+          flash.error = PasswordUtils.USER_PASSWORD_INFO as String
+        }
       }
       else {
         flash.error = "Existing password does not match: Not changing!"
