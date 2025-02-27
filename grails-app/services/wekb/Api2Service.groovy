@@ -274,81 +274,85 @@ class Api2Service {
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'provider.uuid']
                                 ],
                                 [
+                                        qparam     : 'provider',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike_Combine_Name_And_VariantNames_And_AbbreviatedName_Provider_Pkg', 'prop': 'provider.name', 'wildcard': 'B']
+                                ],
+                                [
                                         type       : 'lookup',
                                         baseClass  : 'wekb.RefdataValue',
-                                        qparam     : 'qp_shibbolethAuthentication',
+                                        qparam     : 'shibbolethAuthentication',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'shibbolethAuthentication'],
                                 ],
                                 [
                                         type       : 'lookup',
                                         baseClass  : 'wekb.RefdataValue',
-                                        qparam     : 'qp_openAthens',
+                                        qparam     : 'openAthens',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'openAthens']
                                 ],
                                 [
                                         type       : 'lookup',
                                         baseClass  : 'wekb.RefdataValue',
-                                        qparam     : 'qp_ipAuthentication',
+                                        qparam     : 'ipAuthentication',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'ipAuthentication'],
                                 ],
                                 [
                                         type       : 'lookup',
                                         baseClass  : 'wekb.RefdataValue',
-                                        qparam     : 'qp_mailDomain',
+                                        qparam     : 'mailDomain',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'mailDomain'],
                                 ],
                                 [
                                         type       : 'lookup',
                                         baseClass  : 'wekb.RefdataValue',
-                                        qparam     : 'qp_referrerAuthentification',
+                                        qparam     : 'referrerAuthentification',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'referrerAuthentification'],
                                 ],
                                 [
                                         type       : 'lookup',
                                         baseClass  : 'wekb.RefdataValue',
-                                        qparam     : 'qp_ezProxy',
+                                        qparam     : 'ezProxy',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'ezProxy'],
                                 ],
                                 [
                                         type       : 'lookup',
                                         baseClass  : 'wekb.RefdataValue',
-                                        qparam     : 'qp_hanServer',
+                                        qparam     : 'hanServer',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'hanServer'],
                                 ],
                                 [
                                         type       : 'lookup',
                                         baseClass  : 'wekb.RefdataValue',
-                                        qparam     : 'qp_otherProxies',
+                                        qparam     : 'otherProxies',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'otherProxies'],
                                 ],
                                 [
                                         type       : 'lookup',
                                         baseClass  : 'wekb.RefdataValue',
-                                        qparam     : 'qp_statisticsFormat',
+                                        qparam     : 'statisticsFormat',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'statisticsFormat'],
                                 ],
                                 [
                                         type       : 'lookup',
                                         baseClass  : 'wekb.RefdataValue',
-                                        qparam     : 'qp_counterR4Supported',
+                                        qparam     : 'counterR4Supported',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'counterR4Supported'],
                                 ],
                                 [
                                         type       : 'lookup',
                                         baseClass  : 'wekb.RefdataValue',
-                                        qparam     : 'qp_counterR5Supported',
+                                        qparam     : 'counterR5Supported',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'counterR5Supported'],
                                 ],
                                 [
                                         type       : 'lookup',
                                         baseClass  : 'wekb.RefdataValue',
-                                        qparam     : 'qp_counterR4CounterApiSupported',
+                                        qparam     : 'counterR4CounterApiSupported',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'counterR4CounterApiSupported'],
                                 ],
                                 [
                                         type       : 'lookup',
                                         baseClass  : 'wekb.RefdataValue',
-                                        qparam     : 'qp_counterR5CounterApiSupported',
+                                        qparam     : 'counterR5CounterApiSupported',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'counterR5CounterApiSupported'],
                                 ],
                         ],
@@ -2264,9 +2268,9 @@ class Api2Service {
         if(parameterMap.counterSushiSupport) {
             List counterVersions = parameterMap.list('counterSushiSupport')
             if('counter4' in counterVersions)
-                cleaned_params.put('qp_counterR4CounterApiSupported', RDStore.YN_YES.getOID())
+                cleaned_params.put('counterR4CounterApiSupported', RDStore.YN_YES.getOID())
             if('counter5' in counterVersions)
-                cleaned_params.put('qp_counterR5CounterApiSupported', RDStore.YN_YES.getOID())
+                cleaned_params.put('counterR5CounterApiSupported', RDStore.YN_YES.getOID())
         }
 
 
