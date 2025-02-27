@@ -86,7 +86,7 @@ class Api2Controller {
                     result = api2Service.search(result, params)
                 } catch (Throwable e) {
                     result.code = 'error'
-                    result.message = e.message
+                    result.message = "Error in Api. For more informationen see in log."
                     log.error("Problem by search api: ", e)
                 }
             }
