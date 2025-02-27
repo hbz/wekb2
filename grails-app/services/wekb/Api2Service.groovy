@@ -2136,8 +2136,7 @@ class Api2Service {
             List listOfStatus = parameterMap.status.split(',')
             parameterMap.status = listOfStatus
         }
-
-        setRefdataValueFromGrailsParameterMap(cleaned_params, parameterMap, 'status', 'status')
+        setRefdataValueFromGrailsParameterMap(cleaned_params, parameterMap, 'status', 'status', RCConstants.COMPONENT_STATUS)
         return
     }
 
@@ -2217,11 +2216,11 @@ class Api2Service {
         return
     }
 
-    private void setRefdataValueFromGrailsParameterMap(GrailsParameterMap cleaned_params, GrailsParameterMap parameterMap, String cleanedFieldName, String parameterMapFieldName){
+    private void setRefdataValueFromGrailsParameterMap(GrailsParameterMap cleaned_params, GrailsParameterMap parameterMap, String cleanedFieldName, String parameterMapFieldName, String refdataCategoryConst){
         if (parameterMap."${parameterMapFieldName}".getClass().isArray() || parameterMap."${parameterMapFieldName}" instanceof List){
             List<String> refdataValueOIDs = []
             parameterMap."${parameterMapFieldName}".each {
-                List refdataValues = RefdataValue.executeQuery("from RefdataValue where LOWER(value) = LOWER(:value)", [value: it])
+                List refdataValues = RefdataValue.executeQuery("from RefdataValue where LOWER(value) = LOWER(:value) and owner.desc = :desc", [value: it, desc: refdataCategoryConst])
 
                 refdataValues.each {
                     refdataValueOIDs << it.getOID()
@@ -2231,14 +2230,14 @@ class Api2Service {
             cleaned_params.put(cleanedFieldName, refdataValueOIDs)
         }
         else if (parameterMap."${parameterMapFieldName}" instanceof String){
-            List<RefdataValue> refdataValues = RefdataValue.executeQuery("from RefdataValue where LOWER(value) = LOWER(:value)", [value: parameterMap."${parameterMapFieldName}"])
+            List<RefdataValue> refdataValues = RefdataValue.executeQuery("from RefdataValue where LOWER(value) = LOWER(:value) and owner.desc = :desc", [value: parameterMap."${parameterMapFieldName}", desc: refdataCategoryConst])
 
             if(refdataValues){
                 List<String> refdataValueOIDs = []
                 refdataValues.each {
                     refdataValueOIDs << it.getOID()
                 }
-                cleaned_params.put(cleanedFieldName, refdataValueOIDs)
+                cleaned_params.put(cleanedFieldName, refdataValueOIDs.size() > 1 ? refdataValueOIDs : refdataValueOIDs[0])
             }
         }
     }
@@ -2246,23 +2245,23 @@ class Api2Service {
     private void processRefDataFields(GrailsParameterMap cleaned_params, GrailsParameterMap parameterMap) {
 
         if(parameterMap.ddc) {
-            setRefdataValueFromGrailsParameterMap(cleaned_params, parameterMap, 'ddc', 'ddc')
+            setRefdataValueFromGrailsParameterMap(cleaned_params, parameterMap, 'ddc', 'ddc', RCConstants.DDC)
         }
         else if(parameterMap.ddcs) {
-            setRefdataValueFromGrailsParameterMap(cleaned_params, parameterMap, 'ddc', 'ddcs')
+            setRefdataValueFromGrailsParameterMap(cleaned_params, parameterMap, 'ddc', 'ddcs', RCConstants.DDC)
         }
         if(parameterMap.language) {
-            setRefdataValueFromGrailsParameterMap(cleaned_params, parameterMap, 'languages', 'language')
+            setRefdataValueFromGrailsParameterMap(cleaned_params, parameterMap, 'languages', 'language', RCConstants.COMPONENT_LANGUAGE)
         }
         else if(parameterMap.languages) {
-            setRefdataValueFromGrailsParameterMap(cleaned_params, parameterMap, 'languages', 'languages')
+            setRefdataValueFromGrailsParameterMap(cleaned_params, parameterMap, 'languages', 'languages', RCConstants.COMPONENT_LANGUAGE)
         }
         if(parameterMap.curatoryGroupType) {
-            setRefdataValueFromGrailsParameterMap(cleaned_params, parameterMap, 'type', 'curatoryGroupType')
+            setRefdataValueFromGrailsParameterMap(cleaned_params, parameterMap, 'type', 'curatoryGroupType', RCConstants.CURATORY_GROUP_TYPE)
         }
 
         if(parameterMap.role) {
-            setRefdataValueFromGrailsParameterMap(cleaned_params, parameterMap, 'roles', 'curatoryGroupType')
+            setRefdataValueFromGrailsParameterMap(cleaned_params, parameterMap, 'roles', 'curatoryGroupType', RCConstants.CURATORY_GROUP_TYPE)
         }
 
         if(parameterMap.counterSushiSupport) {
@@ -2275,15 +2274,15 @@ class Api2Service {
 
 
         if(parameterMap.shibbolethAuthentication) {
-            setRefdataValueFromGrailsParameterMap(cleaned_params, parameterMap, 'shibbolethAuthentication', 'shibbolethAuthentication')
+            setRefdataValueFromGrailsParameterMap(cleaned_params, parameterMap, 'shibbolethAuthentication', 'shibbolethAuthentication', RCConstants.YN)
         }
 
         if(parameterMap.counterCertified) {
-            setRefdataValueFromGrailsParameterMap(cleaned_params, parameterMap, 'counterCertified', 'counterCertified')
+            setRefdataValueFromGrailsParameterMap(cleaned_params, parameterMap, 'counterCertified', 'counterCertified', RCConstants.YN)
         }
 
         if(parameterMap.ipAuthentication) {
-            setRefdataValueFromGrailsParameterMap(cleaned_params, parameterMap, 'ipAuthentication', 'ipAuthentication')
+            setRefdataValueFromGrailsParameterMap(cleaned_params, parameterMap, 'ipAuthentication', 'ipAuthentication', RCConstants.PLATFORM_IP_AUTH)
         }
 
     }
