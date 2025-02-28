@@ -166,13 +166,25 @@ class Api2Controller {
 
         if(result.code == 'success') {
             def results = []
-            CuratoryGroup.list(sort: 'name').each {
-                results << [
-                        'id'    : it.id,
-                        'name'  : it.name,
-                        'status': it.status?.value ?: null,
-                        'uuid'  : it.uuid
-                ]
+            switch(params.componentType) {
+                case 'Package':
+                    List rows = CuratoryGroup.executeQuery('select new map(cg.id as id, cg.name as name, cg.status.value as status, cg.uuid as uuid, pkg.uuid as packageUuid) from Package pkg join pkg.curatoryGroups pcg join pcg.curatoryGroup cg order by cg.name')
+                    results.addAll(rows)
+                    break
+                case 'Platform':
+                    List rows = CuratoryGroup.executeQuery('select new map(cg.id as id, cg.name as name, cg.status.value as status, cg.uuid as uuid, plat.uuid as platformUuid) from Platform plat join plat.curatoryGroups pcg join pcg.curatoryGroup cg order by cg.name')
+                    results.addAll(rows)
+                    break
+                default:
+                    CuratoryGroup.list(sort: 'name').each {
+                        results << [
+                                'id'    : it.id,
+                                'name'  : it.name,
+                                'status': it.status?.value ?: null,
+                                'uuid'  : it.uuid
+                        ]
+                    }
+                    break
             }
             result.result = results
             //Add information to result
