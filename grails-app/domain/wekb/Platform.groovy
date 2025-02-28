@@ -117,22 +117,22 @@ class Platform  extends AbstractBase implements Auditable {
   @RefdataAnnotation(cat = RCConstants.UYNP)
   RefdataValue playerForVideo
 
-  @RefdataAnnotation(cat = RCConstants.BF_EBOOK)
+  @RefdataAnnotation(cat = RCConstants.UYNP)
   RefdataValue accessEPub
 
-  @RefdataAnnotation(cat = RCConstants.BF_EBOOK)
+  @RefdataAnnotation(cat = RCConstants.UYNP)
   RefdataValue onixMetadata
 
-  @RefdataAnnotation(cat = RCConstants.BF_PDF)
+  @RefdataAnnotation(cat = RCConstants.UYNP)
   RefdataValue accessPdf
 
-  @RefdataAnnotation(cat = RCConstants.BF_VIDEO)
+  @RefdataAnnotation(cat = RCConstants.UYNP)
   RefdataValue accessAudio
 
-  @RefdataAnnotation(cat = RCConstants.BF_VIDEO)
+  @RefdataAnnotation(cat = RCConstants.UYNP)
   RefdataValue accessVideo
 
-  @RefdataAnnotation(cat = RCConstants.BF_DATABASE)
+  @RefdataAnnotation(cat = RCConstants.UYNP)
   RefdataValue accessDatabase
 
   @RefdataAnnotation(cat = RCConstants.YN)
