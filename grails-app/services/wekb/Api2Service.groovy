@@ -627,6 +627,7 @@ class Api2Service {
                                         name: 'cg_name',
                                         type: '(select rdv_value from refdata_value where rdv_id = cg_type_rv_fk)',
                                         curatoryGroup: "concat('${CuratoryGroup.class.name}',':',cg_id)",
+                                        curatoryGroupUuid: 'cg_uuid'
                                 ]
                         ],
                         qbeSortFields: [
@@ -963,7 +964,8 @@ class Api2Service {
                 object.curatoryGroups.each {
                     result.curatoryGroups.add([name: it.curatoryGroup.name,
                                                type: it.curatoryGroup.type?.value,
-                                               curatoryGroup: it.curatoryGroup.getOID()])
+                                               curatoryGroup: it.curatoryGroup.getOID(),
+                                               curatoryGroupUuid: it.curatoryGroup.uuid])
                 }
             }
 
@@ -1036,7 +1038,8 @@ class Api2Service {
                 object.curatoryGroups?.each {
                     result.curatoryGroups.add([name: it.curatoryGroup.name,
                                                type: it.curatoryGroup.type?.value,
-                                               curatoryGroup: it.curatoryGroup.getOID()])
+                                               curatoryGroup: it.curatoryGroup.getOID(),
+                                               curatoryGroupUuid: it.curatoryGroup.uuid])
                 }
             }
 
@@ -1104,7 +1107,8 @@ class Api2Service {
                 object.curatoryGroups?.each {
                     result.curatoryGroups.add([name: it.curatoryGroup.name,
                                                type: it.curatoryGroup.type?.value,
-                                               curatoryGroup: it.curatoryGroup.getOID()])
+                                               curatoryGroup: it.curatoryGroup.getOID(),
+                                               curatoryGroupUuid: it.curatoryGroup.uuid])
                 }
             }
 
@@ -1234,7 +1238,8 @@ class Api2Service {
             object.pkg?.curatoryGroups?.each {
                 result.curatoryGroups.add([name: it.curatoryGroup.name,
                                            type: it.curatoryGroup.type?.value,
-                                           curatoryGroup: it.curatoryGroup.getOID()])
+                                           curatoryGroup: it.curatoryGroup.getOID(),
+                                           curatoryGroupUuid: it.curatoryGroup.uuid])
             }
 
             result
@@ -1359,7 +1364,8 @@ class Api2Service {
                     object.curatoryGroups.each {
                         result.curatoryGroups.add([name         : it.curatoryGroup.name,
                                                    type         : it.curatoryGroup.type?.value,
-                                                   curatoryGroup: it.curatoryGroup.getOID()])
+                                                   curatoryGroup: it.curatoryGroup.getOID(),
+                                                   curatoryGroupUuid: it.curatoryGroup.uuid])
                     }
                 }
 
@@ -1478,7 +1484,8 @@ class Api2Service {
                     object.curatoryGroups?.each {
                         result.curatoryGroups.add([name         : it.curatoryGroup.name,
                                                    type         : it.curatoryGroup.type?.value,
-                                                   curatoryGroup: it.curatoryGroup.getOID()])
+                                                   curatoryGroup: it.curatoryGroup.getOID(),
+                                                   curatoryGroupUuid: it.curatoryGroup.uuid])
                     }
                 }
 
@@ -1603,7 +1610,8 @@ class Api2Service {
                     object.curatoryGroups?.each {
                         result.curatoryGroups.add([name         : it.curatoryGroup.name,
                                                    type         : it.curatoryGroup.type?.value,
-                                                   curatoryGroup: it.curatoryGroup.getOID()])
+                                                   curatoryGroup: it.curatoryGroup.getOID(),
+                                                   curatoryGroupUuid: it.curatoryGroup.uuid])
                     }
                 }
 
@@ -1749,7 +1757,8 @@ class Api2Service {
                 object.pkg?.curatoryGroups?.each {
                     result.curatoryGroups.add([name         : it.curatoryGroup.name,
                                                type         : it.curatoryGroup.type?.value,
-                                               curatoryGroup: it.curatoryGroup.getOID()])
+                                               curatoryGroup: it.curatoryGroup.getOID(),
+                                               curatoryGroupUuid: it.curatoryGroup.uuid])
                 }
                 //log.debug("record finished after ${System.currentTimeMillis()-start} msecs")
             }
@@ -1825,7 +1834,8 @@ class Api2Service {
                     object.curatoryGroups?.each {
                         result.curatoryGroups.add([name         : it.curatoryGroup.name,
                                                    type         : it.curatoryGroup.type?.value,
-                                                   curatoryGroup: it.curatoryGroup.getOID()])
+                                                   curatoryGroup: it.curatoryGroup.getOID(),
+                                                   curatoryGroupUuid: it.curatoryGroup.uuid])
                     }
                 }
 
