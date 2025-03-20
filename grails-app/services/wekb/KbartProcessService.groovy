@@ -543,6 +543,12 @@ class KbartProcessService {
 
             //TODO: countExistingTippsAfterImport > (kbartRowsCount-countInvalidKbartRowsForTipps) ??? nötig noch
             log.info("before deleteTipps from wekb -------------------------------------------------------------------------------------")
+            println(checkAllTitles)
+            println(tippsFound.size())
+            println(kbartRowsCount)
+            println(countExistingTippsAfterImport)
+            println(countInvalidKbartRowsForTipps)
+            println(kbartRowsCount-countInvalidKbartRowsForTipps)
             if(checkAllTitles && tippsFound.size() > 0 && kbartRowsCount > 0 && countExistingTippsAfterImport > (kbartRowsCount-countInvalidKbartRowsForTipps)){
 
                 List<Long> existingTippsAfterImport = TitleInstancePackagePlatform.executeQuery(
@@ -601,7 +607,7 @@ class KbartProcessService {
                 }
 
             }
-
+            println("processFailed:"+processFailed)
             if(!processFailed) {
                 String description = "Package Update: (KbartLines: ${kbartRowsCount}, " +
                         "Processed Titles in this run: ${idx}, Titles in we:kb previously: ${previouslyTipps}, Titles in we:kb now: ${countExistingTippsAfterImport}, Removed Titles: ${removedTipps}, New Titles in we:kb: ${newTipps}, Changed Titles in we:kb: ${changedTipps})"
