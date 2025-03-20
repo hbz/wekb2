@@ -229,9 +229,9 @@ class FTUpdateService {
         result.sortname = generateSortName(kbc.name)
         result.altname = []
         result.updater = 'vendor'
-        kbc.variantNames.each { vn ->
+       /* kbc.variantNames.each { vn ->
           result.altname.add(vn.variantName)
-        }
+        }*/
         result.lastUpdatedDisplay = dateFormatService.formatIsoTimestamp(kbc.lastUpdated)
         result.roles = []
         kbc.roles.each { role ->
