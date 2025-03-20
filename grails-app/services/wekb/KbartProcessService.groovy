@@ -29,7 +29,7 @@ class KbartProcessService {
 
     void kbartImportManual(Package pkg, File tsvFile, Boolean onlyRowsWithLastChanged){
         log.info("Beginn kbartImportManual ${pkg.name}")
-        List kbartRows = []
+        Set kbartRows = []
         String lastUpdateURL = ""
         Date startTime = new Date()
         UpdatePackageInfo updatePackageInfo = new UpdatePackageInfo(
@@ -81,7 +81,7 @@ class KbartProcessService {
         log.info("End kbartImportManual ${pkg.name}")
     }
 
-    UpdatePackageInfo kbartImportProcess(List kbartRows, Package pkg, String lastUpdateURL, UpdatePackageInfo updatePackageInfo, Boolean onlyRowsWithLastChanged) {
+    UpdatePackageInfo kbartImportProcess(Set kbartRows, Package pkg, String lastUpdateURL, UpdatePackageInfo updatePackageInfo, Boolean onlyRowsWithLastChanged) {
         log.info("Begin kbartImportProcess Package ($pkg.name)")
         boolean addOnly = false //Thing about it where to set or to change
 
@@ -543,6 +543,12 @@ class KbartProcessService {
 
             //TODO: countExistingTippsAfterImport > (kbartRowsCount-countInvalidKbartRowsForTipps) ??? nötig noch
             log.info("before deleteTipps from wekb -------------------------------------------------------------------------------------")
+            println(checkAllTitles)
+            println(tippsFound.size())
+            println(kbartRowsCount)
+            println(countExistingTippsAfterImport)
+            println(countInvalidKbartRowsForTipps)
+            println(kbartRowsCount-countInvalidKbartRowsForTipps)
             if(checkAllTitles && tippsFound.size() > 0 && kbartRowsCount > 0 && countExistingTippsAfterImport > (kbartRowsCount-countInvalidKbartRowsForTipps)){
 
                 List<Long> existingTippsAfterImport = TitleInstancePackagePlatform.executeQuery(
@@ -601,7 +607,7 @@ class KbartProcessService {
                 }
 
             }
-
+            println("processFailed:"+processFailed)
             if(!processFailed) {
                 String description = "Package Update: (KbartLines: ${kbartRowsCount}, " +
                         "Processed Titles in this run: ${idx}, Titles in we:kb previously: ${previouslyTipps}, Titles in we:kb now: ${countExistingTippsAfterImport}, Removed Titles: ${removedTipps}, New Titles in we:kb: ${newTipps}, Changed Titles in we:kb: ${changedTipps})"
@@ -706,11 +712,11 @@ class KbartProcessService {
         return updatePackageInfo
     }
 
-    List kbartProcess(File tsvFile, String lastUpdateURL, UpdatePackageInfo updatePackageInfo) {
+    Set kbartProcess(File tsvFile, String lastUpdateURL, UpdatePackageInfo updatePackageInfo) {
         log.info("Begin KbartProcess, transmitted: ${tsvFile.length()}")
         boolean encodingPass
         int countRows = 0
-        List result = []
+        Set result = []
         String encoding
         if(StandardCharsets.US_ASCII.newEncoder().canEncode(tsvFile.newInputStream().text)) {
             encodingPass = true

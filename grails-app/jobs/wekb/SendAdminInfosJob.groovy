@@ -11,6 +11,9 @@ import wekb.system.FTControl
 import wekb.utils.ServerUtils
 import grails.plugins.mail.MailService
 
+import java.time.LocalDateTime
+import java.time.ZoneId
+
 class SendAdminInfosJob {
 
     MailService mailService
@@ -35,7 +38,16 @@ class SendAdminInfosJob {
 
     private sendPackageUpdateInfos() {
 
-        List<UpdatePackageInfo> autoUpdates = UpdatePackageInfo.executeQuery("from UpdatePackageInfo where automaticUpdate = true and status = :status and dateCreated > (NOW() - INTERVAL '1 DAY') and pkg.status != :pkgStatus order by dateCreated desc", [pkgStatus: RDStore.KBC_STATUS_DELETED, status: RDStore.UPDATE_STATUS_FAILED])
+        List<UpdatePackageInfo> autoUpdates = UpdatePackageInfo.executeQuery("from UpdatePackageInfo where automaticUpdate = true and status = :status and dateCreated > (CURRENT_DATE-1) and pkg.status != :pkgStatus order by dateCreated desc", [pkgStatus: RDStore.KBC_STATUS_DELETED, status: RDStore.UPDATE_STATUS_FAILED])
+
+        List<UpdatePackageInfo> filteredAutoUpdates = []
+        LocalDateTime today = LocalDateTime.now()
+        LocalDateTime yesterday = today.minusDays(1)
+        autoUpdates.each { UpdatePackageInfo updatePackageInfo ->
+            if(updatePackageInfo.dateCreated.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime() > yesterday){
+                filteredAutoUpdates << updatePackageInfo
+            }
+        }
 
         String currentServer = ServerUtils.getCurrentServer()
         String subjectSystemPraefix = (currentServer == ServerUtils.SERVER_PROD) ? "" : (ServerUtils.getCurrentServerSystemId() + " - ")
@@ -47,7 +59,7 @@ class SendAdminInfosJob {
                 to "laser@hbz-nrw.de", "moetez.djebeniani@hbz-nrw.de"
                 from "wekb Server <wekb-managePackageUpdateJobs@wekbServer>"
                 subject mailSubject
-                html(view: "/mailTemplate/html/packageUpdateJobsMail", model: [autoUpdates: autoUpdates])
+                html(view: "/mailTemplate/html/packageUpdateJobsMail", model: [autoUpdates: filteredAutoUpdates])
             }
         } catch (Exception e) {
             String eMsg = e.message

@@ -220,7 +220,7 @@ class FTUpdateService {
         result
       }
 
-      updateES(wekb.Vendor.class) { wekb.Org kbc ->
+      updateES(wekb.Vendor.class) { wekb.Vendor kbc ->
         def result = [:]
         result.recid = "${kbc.class.name}:${kbc.id}"
         result.uuid = kbc.uuid
@@ -229,9 +229,9 @@ class FTUpdateService {
         result.sortname = generateSortName(kbc.name)
         result.altname = []
         result.updater = 'vendor'
-        kbc.variantNames.each { vn ->
+       /* kbc.variantNames.each { vn ->
           result.altname.add(vn.variantName)
-        }
+        }*/
         result.lastUpdatedDisplay = dateFormatService.formatIsoTimestamp(kbc.lastUpdated)
         result.roles = []
         kbc.roles.each { role ->

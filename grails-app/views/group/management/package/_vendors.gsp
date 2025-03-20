@@ -11,11 +11,12 @@
             <label>Library Suppliers:</label>
 
             <g:select from="${Vendor.findAllByStatus(RDStore.KBC_STATUS_CURRENT).sort { it.name }}"
-                      class="dropdown fluid"
+                      class="ui dropdown fluid "
+                      multiple="true"
                       id="vendorSelection"
                       optionKey="${{ it.class.name + ':' + it.id }}"
                       optionValue="${{ it.name }}"
-                      name="vendor"
+                      name="vendors"
                       value=""/>
         </div>
 

@@ -2484,12 +2484,28 @@ class Api2Service {
             setRefdataValueFromGrailsParameterMap(cleaned_params, parameterMap, 'roles', 'curatoryGroupType', RCConstants.CURATORY_GROUP_TYPE)
         }
 
-        if(parameterMap.counterSushiSupport) {
+        if(parameterMap.counterAPISupport) {
+            List counterVersions = parameterMap.list('counterAPISupport')
+            if('counter4' in counterVersions)
+                cleaned_params.put('counterR4CounterApiSupported', RDStore.YN_YES.getOID())
+            if('counter5' in counterVersions)
+                cleaned_params.put('counterR5CounterApiSupported', RDStore.YN_YES.getOID())
+        }
+        //backwards-compatibility until release of LAS:eR 3.5
+        else if(parameterMap.counterSushiSupport) {
             List counterVersions = parameterMap.list('counterSushiSupport')
             if('counter4' in counterVersions)
                 cleaned_params.put('counterR4CounterApiSupported', RDStore.YN_YES.getOID())
             if('counter5' in counterVersions)
                 cleaned_params.put('counterR5CounterApiSupported', RDStore.YN_YES.getOID())
+        }
+
+        if(parameterMap.counterSupport) {
+            List counterVersions = parameterMap.list('counterSupport')
+            if('counter4' in counterVersions)
+                cleaned_params.put('counterR4Supported', RDStore.YN_YES.getOID())
+            if('counter5' in counterVersions)
+                cleaned_params.put('counterR5Supported', RDStore.YN_YES.getOID())
         }
 
     }
