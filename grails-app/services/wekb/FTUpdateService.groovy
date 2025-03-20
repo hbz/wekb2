@@ -248,12 +248,12 @@ class FTUpdateService {
         }
 
         result.status = kbc.status?.value
-        result.identifiers = []
+       /* result.identifiers = []
         kbc.ids.each { idc ->
           result.identifiers.add([namespace    : idc.namespace.value,
                                   value        : idc.value,
                                   namespaceName: idc.namespace.name])
-        }
+        }*/
         result.componentType = kbc.class.simpleName
 
         result.contacts = []

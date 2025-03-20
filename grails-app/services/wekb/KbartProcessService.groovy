@@ -29,7 +29,7 @@ class KbartProcessService {
 
     void kbartImportManual(Package pkg, File tsvFile, Boolean onlyRowsWithLastChanged){
         log.info("Beginn kbartImportManual ${pkg.name}")
-        Set kbartRows = []
+        List kbartRows = []
         String lastUpdateURL = ""
         Date startTime = new Date()
         UpdatePackageInfo updatePackageInfo = new UpdatePackageInfo(
@@ -712,11 +712,11 @@ class KbartProcessService {
         return updatePackageInfo
     }
 
-    Set kbartProcess(File tsvFile, String lastUpdateURL, UpdatePackageInfo updatePackageInfo) {
+    List kbartProcess(File tsvFile, String lastUpdateURL, UpdatePackageInfo updatePackageInfo) {
         log.info("Begin KbartProcess, transmitted: ${tsvFile.length()}")
         boolean encodingPass
         int countRows = 0
-        Set result = []
+        List result = []
         String encoding
         if(StandardCharsets.US_ASCII.newEncoder().canEncode(tsvFile.newInputStream().text)) {
             encodingPass = true

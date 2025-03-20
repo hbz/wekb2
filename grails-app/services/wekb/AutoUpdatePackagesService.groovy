@@ -89,7 +89,7 @@ class AutoUpdatePackagesService {
 
     void startAutoPackageUpdate(Package pkg, boolean onlyRowsWithLastChanged = false) {
         log.info("Begin startAutoPackageUpdate Package ($pkg.name)")
-        Set kbartRows = []
+        List kbartRows = []
         String lastUpdateURL = pkg.kbartSource.lastUpdateUrl ?: pkg.kbartSource.url
         Date startTime = new Date()
         if (pkg.status in [RDStore.KBC_STATUS_REMOVED, RDStore.KBC_STATUS_DELETED]) {
