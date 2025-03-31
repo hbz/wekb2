@@ -567,6 +567,14 @@ class Api2Service {
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'curatoryGroups.curatoryGroup.name']
                                 ],
                                 [
+                                        qparam     : 'curatoryGroupType',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'curatoryGroups.curatoryGroup.type.value']
+                                ],
+                                [
+                                        qparam     : 'automaticUpdates',
+                                        contextTree: ['ctxtp': 'qry', 'type': 'boolean', 'comparator': 'eq', 'prop': 'pkg.kbartSource.automaticUpdates']
+                                ],
+                                [
                                         type       : 'lookup',
                                         baseClass  : 'wekb.RefdataValue',
                                         refdataCategory    : RCConstants.COMPONENT_STATUS,
@@ -630,7 +638,7 @@ class Api2Service {
                                 //General Fields
                                 [
                                         qparam     : 'name',
-                                        whereClause    : 'tipp_name ilike :name'
+                                        whereClause    : "tipp_name ilike :name"
                                 ],
                                 [
                                         qparam     : 'identifier',
@@ -643,6 +651,10 @@ class Api2Service {
                                 [
                                         qparam     : 'curatoryGroup',
                                         whereClause    : 'exists (select cgp_id from curatory_group_package join curatory_group on cgp_curatory_group_fk = cg_id where cgp_pkg_fk = tipp_pkg_fk and cg_name = :name)'
+                                ],
+                                [
+                                        qparam     : 'curatoryGroupType',
+                                        whereClause    : 'exists (select cgp_id from curatory_group_package join curatory_group on cgp_curatory_group_fk = cg_id join refdata_value on cg_type_rv_fk = rdv_id where cgp_pkg_fk = tipp_pkg_fk and rdv_value = :name)'
                                 ],
                                 [
                                         qparam     : 'status',
@@ -669,7 +681,10 @@ class Api2Service {
                                         qparam     : 'platformUuid',
                                         whereClause    : 'plat_uuid = :platformUuid'
                                 ],
-
+                                [
+                                        qparam     : 'automaticUpdates',
+                                        whereClause: '(select ks_automatic_updates from kbart_source where ks_id = pkg_kbart_source_fk) = :automaticUpdates'
+                                ]
                         ],
                         sqlCols: [
                                 stubOnly: [
@@ -2104,6 +2119,8 @@ class Api2Service {
                     else if(fieldMap.qparam in ['changedSince', 'changedBefore']) {
                         sqlParams[fieldMap.qparam] = DateUtils.parseDateGeneric(cleaned_params[fieldMap.qparam]).toTimestamp()
                     }
+                    else if(fieldMap.qparam == 'name')
+                        sqlParams[fieldMap.qparam] = '%'+cleaned_params[fieldMap.qparam]+'%'
                     else
                         sqlParams[fieldMap.qparam] = cleaned_params[fieldMap.qparam]
                 }
