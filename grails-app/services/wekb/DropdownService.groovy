@@ -67,7 +67,7 @@ class DropdownService {
             String query
             Map queryMap
             if(baseClass == RefdataValue.class.name){
-                query = "select rv from ${baseClass} as rv where rv.owner.desc = :desc order by rv.value, rv.description"
+                query = "select rv from ${baseClass} as rv where rv.owner.desc = :desc order by rv.order, rv.value, rv.description"
                 queryMap = [desc: filter]
                 RefdataValue.executeQuery(query, queryMap).each { t ->
                     values.add([id:"${RefdataValue.class.name}:${t.id}", text:"${t.getI10n('value')}"])

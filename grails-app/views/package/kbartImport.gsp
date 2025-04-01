@@ -20,12 +20,12 @@
         <div class="content">
             The KBART import allows you to update this package with titles.
             <br><br>
-            <b> Please keep in mind that:</b>
+            <strong>Please keep in mind that:</strong>
 
             <div class="ui ordered list">
-                <div class="item">The KBART file must be <b><u>tab-delimited</u></b> and encoded in <b><u>UTF-8</u></b> as recommended by NISO.</div>
+                <div class="item">The KBART file must be <strong><u>tab-delimited</u></strong> and encoded in <strong><u>UTF-8</u></strong> as recommended by NISO.</div>
 
-                <div class="item">The KBART file must contain <b><u>all titles</u></b> for the package, not only those you wish to update.</div>
+                <div class="item">The KBART file must contain <strong><u>all titles</u></strong> for the package, not only those you wish to update.</div>
             </div>
         </div>
     </div>
@@ -79,21 +79,22 @@
 
     <div class="ui segment">
         <h3 class="ui header">KBART Import File</h3>
-        <label class="content">
+
+        <div class="content">
             <g:uploadForm class="ui form" action="processKbartImport" method="post" id="${pkg.id}">
-                    <div class="field">
-                        <div class="ui checkbox">
-                            <input type="checkbox" name="onlyRowsWithLastChanged">
-                            <label>Only update titles with the latest last_changed time stamp in your we:kb/KBART file. Last registered date is:
+                <div class="field">
+                    <div class="ui checkbox">
+                        <input type="checkbox" name="onlyRowsWithLastChanged">
+                        <label>Only update titles with the latest last_changed time stamp in your we:kb/KBART file. Last registered date is:
                             <g:if test="${lastSuccessfulUpdateInfo && lastSuccessfulUpdateInfo.lastChangedInKbart}">
-                                <b><g:formatDate format="${message(code: 'default.date.format.notime')}"
-                                                    date="${lastSuccessfulUpdateInfo.lastChangedInKbart}"/></b>
+                                <strong><g:formatDate format="${message(code: 'default.date.format.notime')}"
+                                                      date="${lastSuccessfulUpdateInfo.lastChangedInKbart}"/></strong>
                             </g:if><g:else>
-                                <b>Empty</b>
-                            </g:else>
-                            </label>
-                        </div>
+                            <strong>Empty</strong>
+                        </g:else>
+                        </label>
                     </div>
+                </div>
 
                 <div class="ui fluid action input labeled">
                     <div class="ui label">
@@ -101,8 +102,7 @@
                     </div>
                     <input type="text" name="upload_file_placeholder" readonly="readonly"
                            placeholder="Selected KBART-File">
-                    <input type="file" name="tsvFile" accept=".tsv, .txt" style="display: none;" id="uploadFile"
-                           type="file">
+                    <input type="file" name="tsvFile" accept=".tsv, .txt" style="display: none;" id="uploadFile">
                     <label for="uploadFile" class="ui primary button" style="padding-left:30px; padding-right:30px">
                         <i class="upload icon"></i>
                         Click here to upload KBART-File
@@ -119,7 +119,7 @@
 </g:if>
 
 <g:javascript>
-    $('input:file', '.ui.action.input').on('change', function(e) {
+    $('input:file', '.ui.action.input').on('change', function (e) {
         var name = e.target.files[0].name;
         $('input:text', $(e.target).parent()).val(name);
     });

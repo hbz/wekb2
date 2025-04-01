@@ -39,7 +39,8 @@ class ESWrapperService {
           "wekborgs": "Org" ,
           "wekbpackages": "Package",
           "wekbplatforms": "Platform",
-          "wekbdeletedcomponents": "DeletedKBComponent"
+          "wekbdeletedcomponents": "DeletedKBComponent",
+          "wekbvendors": "Vendor" ,
   ]
 
   static Map indicesPerType = [
@@ -47,7 +48,8 @@ class ESWrapperService {
           "Org" : "wekborgs",
           "Package" : "wekbpackages",
           "Platform" : "wekbplatforms",
-          "DeletedKBComponent": "wekbdeletedcomponents"
+          "DeletedKBComponent": "wekbdeletedcomponents",
+          "Vendor" : "wekbvendors",
   ]
 
 

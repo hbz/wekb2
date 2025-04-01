@@ -1,6 +1,6 @@
-<h2 class="ui header">we:kb News <div class="ui primary  label">
-    Changes in the last <b>14</b> days.
-</div></h2>
+<h2 class="ui header">we:kb News <span class="ui primary  label">
+    Changes in the last <strong>14</strong> days.
+</span></h2>
 
 
 <div class="ui two column stackable wekb-widescreenMonitorBreakpoint grid">
@@ -385,7 +385,7 @@
         <div class="ui fluid card" style="margin-bottom:0">
             <div class="content">
                 <div class="header">
-                    Vendors
+                    Library Suppliers
                 </div>
             </div>
 

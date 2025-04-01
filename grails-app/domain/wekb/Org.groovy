@@ -1,6 +1,7 @@
 package wekb
 
 import grails.plugins.orm.auditable.Auditable
+import wekb.annotations.RefdataAnnotation
 import wekb.base.AbstractBase
 import wekb.helper.RCConstants
 import groovy.util.logging.Slf4j
@@ -34,6 +35,51 @@ class Org extends AbstractBase implements Auditable {
   boolean individualInvoiceDesign  = false
 
   boolean invoicingYourself  = false
+
+  @RefdataAnnotation(cat = RCConstants.YN)
+  RefdataValue collections
+
+  @RefdataAnnotation(cat = RCConstants.YN)
+  RefdataValue pickAndChoose
+
+  @RefdataAnnotation(cat = RCConstants.YN)
+  RefdataValue prepaid
+
+  @RefdataAnnotation(cat = RCConstants.YN)
+  RefdataValue upfront
+
+  @RefdataAnnotation(cat = RCConstants.YN)
+  RefdataValue temporaryAccess
+
+  @RefdataAnnotation(cat = RCConstants.YN)
+  RefdataValue perpetualAccess
+
+  @RefdataAnnotation(cat = RCConstants.ORG_DRM)
+  RefdataValue drm
+
+  @RefdataAnnotation(cat = RCConstants.YN)
+  RefdataValue remoteAccess
+
+  @RefdataAnnotation(cat = RCConstants.YN)
+  RefdataValue printDownloadChapter
+
+  @RefdataAnnotation(cat = RCConstants.YN)
+  RefdataValue quotesByCopyPaste
+
+  @RefdataAnnotation(cat = RCConstants.YN)
+  RefdataValue forwardingUsageStatistcs
+
+  @RefdataAnnotation(cat = RCConstants.YN)
+  RefdataValue alertNewEbookPackages
+
+  @RefdataAnnotation(cat = RCConstants.YN)
+  RefdataValue alertExchangeEbookPackages
+
+  String urlPristLists
+  String urlTitleLists
+
+  String urlToTrainingMaterials
+
 
   Set variantNames = []
 
@@ -78,6 +124,37 @@ class Org extends AbstractBase implements Auditable {
     description column: 'org_description', type: 'text'
 
     invoicingYourself column: 'org_invoicing_yourself'
+
+    collections column: 'org_collections'
+
+    pickAndChoose column: 'org_pick_and_choose'
+
+    prepaid column: 'org_prepaid'
+
+    upfront column: 'org_upfront'
+
+    temporaryAccess column: 'org_temporary_access'
+
+    perpetualAccess column: 'org_perpetual_access'
+
+    drm column: 'org_drm'
+
+    remoteAccess column: 'org_remote_access'
+
+    printDownloadChapter column: 'org_print_download_chapter'
+
+    quotesByCopyPaste column: 'org_quotes_by_copy_paste'
+
+    forwardingUsageStatistcs column: 'org_forwarding_usage_statistcs'
+
+    alertNewEbookPackages column: 'org_alert_new_ebook_packages'
+
+    alertExchangeEbookPackages column: 'org_alert_exchange_ebook_packages'
+
+    urlPristLists column: 'org_url_prist_lists'
+
+    urlTitleLists column: 'org_url_title_lists'
+    urlToTrainingMaterials column: 'org_url_to_training_materials'
   }
 
   static constraints = {
@@ -100,6 +177,24 @@ class Org extends AbstractBase implements Auditable {
     })
 
     description(nullable: true, blank: true)
+
+    collections(nullable: true, blank: false)
+    pickAndChoose(nullable: true, blank: false)
+    prepaid(nullable: true, blank: false)
+    upfront(nullable: true, blank: false)
+    temporaryAccess(nullable: true, blank: false)
+    perpetualAccess(nullable: true, blank: false)
+    drm(nullable: true, blank: false)
+    remoteAccess(nullable: true, blank: false)
+    printDownloadChapter(nullable: true, blank: false)
+    quotesByCopyPaste(nullable: true, blank: false)
+    forwardingUsageStatistcs(nullable: true, blank: false)
+    alertNewEbookPackages(nullable: true, blank: false)
+    alertExchangeEbookPackages(nullable: true, blank: false)
+
+    urlPristLists(nullable: true, blank: true)
+    urlTitleLists(nullable: true, blank: true)
+    urlToTrainingMaterials(nullable: true, blank: true)
   }
 
   @Override
@@ -153,11 +248,11 @@ class Org extends AbstractBase implements Auditable {
   }
 
   @Transient
-  public String getDomainName() {
+  String getDomainName() {
     return "Provider"
   }
 
-  public String getShowName() {
+  String getShowName() {
     return this.name
   }
 
@@ -166,7 +261,7 @@ class Org extends AbstractBase implements Auditable {
   }
 
     @Transient
-    public getCurrentTippCount() {
+    int getCurrentTippCount() {
         def refdata_current = RDStore.KBC_STATUS_CURRENT
 
         int result = 0
@@ -179,17 +274,27 @@ class Org extends AbstractBase implements Auditable {
     }
 
   @Transient
-  def getProvidedPackages(){
+  List<Package> getProvidedPackages(){
     Package.executeQuery('select p from Package as p where provider = :provider', [provider: this])
   }
 
   @Transient
-  def getProvidedPlatforms(){
+  List<Platform> getProvidedPlatforms(){
     Platform.executeQuery('select p from Platform as p where provider = :provider', [provider: this])
   }
 
   @Transient
-  public List<CuratoryGroup> getCuratoryGroupObjects() {
+  int getProvidedPackagesCount(){
+    Package.executeQuery('select count(*) from Package as p where provider = :provider', [provider: this])[0]
+  }
+
+  @Transient
+  int getProvidedPlatformsCount(){
+    Platform.executeQuery('select count(*) from Platform as p where provider = :provider', [provider: this])[0]
+  }
+
+  @Transient
+  List<CuratoryGroup> getCuratoryGroupObjects() {
     List<CuratoryGroup> curatoryGroups
     if(this.curatoryGroups.size() > 0){
       curatoryGroups = this.curatoryGroups.curatoryGroup

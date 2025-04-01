@@ -369,12 +369,16 @@ class ManagementService {
                 if (params.processOption == 'changeDdcs') {
                     packages.each { Package pkg ->
                         if (accessService.checkEditableObject(pkg, params)) {
-                            List splitDdcParam = params['ddc'].split(':')
-                            Long refDdcId = Long.parseLong(splitDdcParam[1])
-                            if (refDdcId) {
-                                RefdataValue refdataValue = RefdataValue.get(refDdcId)
-                                if (refdataValue && !(refdataValue in pkg.ddcs)) {
-                                    pkg.addToDdcs(refdataValue)
+                            List ddcs = params.list("ddcs")
+                            ddcs.each {
+                                println(it)
+                                List splitDdcParam = it.split(':')
+                                Long refDdcId = Long.parseLong(splitDdcParam[1])
+                                if (refDdcId) {
+                                    RefdataValue refdataValue = RefdataValue.get(refDdcId)
+                                    if (refdataValue && !(refdataValue in pkg.ddcs)) {
+                                        pkg.addToDdcs(refdataValue)
+                                    }
                                 }
                             }
                         }
@@ -410,14 +414,17 @@ class ManagementService {
                     if(params.processLinkVendor == 'linkVendor') {
                         packages.each { Package pkg ->
                             if (accessService.checkEditableObject(pkg, params)) {
-                                List splitVendorParam = params['vendor'].split(':')
-                                Long refVendorId = Long.parseLong(splitVendorParam[1])
-                                Vendor vendor = Vendor.get(refVendorId)
-                                if (vendor) {
-                                    PackageVendor packageVendor = PackageVendor.findByPkgAndVendor(pkg, vendor)
-                                    if (!packageVendor) {
-                                        packageVendor = new PackageVendor(vendor: vendor, pkg: pkg)
-                                        packageVendor.save()
+                                List vendors = params.list('vendors')
+                                vendors.each { String vendorOBID ->
+                                    List splitVendorParam = vendorOBID.split(':')
+                                    Long refVendorId = Long.parseLong(splitVendorParam[1])
+                                    Vendor vendor = Vendor.get(refVendorId)
+                                    if (vendor) {
+                                        PackageVendor packageVendor = PackageVendor.findByPkgAndVendor(pkg, vendor)
+                                        if (!packageVendor) {
+                                            packageVendor = new PackageVendor(vendor: vendor, pkg: pkg)
+                                            packageVendor.save()
+                                        }
                                     }
                                 }
                             }

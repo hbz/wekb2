@@ -73,6 +73,7 @@ class Api2Service {
                                 [
                                         type       : 'lookup',
                                         baseClass  : 'wekb.RefdataValue',
+                                        refdataCategory    : RCConstants.COMPONENT_STATUS,
                                         qparam     : 'status',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'status']
                                 ],
@@ -96,6 +97,7 @@ class Api2Service {
                                 [
                                         type       : 'lookup',
                                         baseClass  : 'wekb.RefdataValue',
+                                        refdataCategory    : RCConstants.YN,
                                         qparam     : 'roles',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'roles'],
                                 ],
@@ -143,6 +145,7 @@ class Api2Service {
                                 [
                                         type       : 'lookup',
                                         baseClass  : 'wekb.RefdataValue',
+                                        refdataCategory    : RCConstants.COMPONENT_STATUS,
                                         qparam     : 'status',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'status']
                                 ],
@@ -182,6 +185,7 @@ class Api2Service {
                                 [
                                         type       : 'lookup',
                                         baseClass  : 'wekb.RefdataValue',
+                                        refdataCategory    : RCConstants.DDC,
                                         qparam     : 'ddc',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'ddcs'],
                                 ],
@@ -249,6 +253,7 @@ class Api2Service {
                                 [
                                         type       : 'lookup',
                                         baseClass  : 'wekb.RefdataValue',
+                                        refdataCategory    : RCConstants.COMPONENT_STATUS,
                                         qparam     : 'status',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'status']
                                 ],
@@ -274,58 +279,253 @@ class Api2Service {
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'provider.uuid']
                                 ],
                                 [
+                                        qparam     : 'provider',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike_Combine_Name_And_VariantNames_And_AbbreviatedName_Provider_Pkg', 'prop': 'provider.name', 'wildcard': 'B']
+                                ],
+                                [
                                         type       : 'lookup',
                                         baseClass  : 'wekb.RefdataValue',
-                                        qparam     : 'qp_shibbolethAuthentication',
+                                        refdataCategory    : RCConstants.YN,
+                                        qparam     : 'shibbolethAuthentication',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'shibbolethAuthentication'],
                                 ],
                                 [
                                         type       : 'lookup',
                                         baseClass  : 'wekb.RefdataValue',
-                                        qparam     : 'qp_openAthens',
+                                        refdataCategory    : RCConstants.YN,
+                                        qparam     : 'openAthens',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'openAthens']
                                 ],
                                 [
                                         type       : 'lookup',
                                         baseClass  : 'wekb.RefdataValue',
-                                        qparam     : 'qp_ipAuthentication',
+                                        refdataCategory    : RCConstants.PLATFORM_IP_AUTH,
+                                        qparam     : 'ipAuthentication',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'ipAuthentication'],
                                 ],
                                 [
                                         type       : 'lookup',
                                         baseClass  : 'wekb.RefdataValue',
-                                        qparam     : 'qp_statisticsFormat',
+                                        refdataCategory    : RCConstants.PLATFORM_STATISTICS_UPDATE,
+                                        qparam     : 'statisticsUpdate',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'statisticsUpdate'],
+                                ],
+                                [
+                                        type       : 'lookup',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        refdataCategory    : RCConstants.PLATFORM_COUNTER_API_AUTH_METHOD,
+                                        qparam     : 'counterApiAuthenticationMethod',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'counterApiAuthenticationMethod'],
+                                ],
+                                [
+                                        type       : 'lookup',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        refdataCategory    : RCConstants.YN,
+                                        qparam     : 'counterCertified',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'counterCertified'],
+                                ],
+                                [
+                                        type       : 'lookup',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        refdataCategory    : RCConstants.YN,
+                                        qparam     : 'refedsSupport',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'refedsSupport'],
+                                ],
+                                [
+                                        type       : 'lookup',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        refdataCategory    : RCConstants.YN,
+                                        qparam     : 'dpfParticipation',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'dpfParticipation'],
+                                ],
+                                [
+                                        type       : 'lookup',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        refdataCategory    : RCConstants.YN,
+                                        qparam     : 'sccSupport',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'sccSupport'],
+                                ],
+                                [
+                                        type       : 'lookup',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        refdataCategory    : RCConstants.YN,
+                                        qparam     : 'passwordAuthentication',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'passwordAuthentication'],
+                                ],
+                                [
+                                        type       : 'lookup',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        refdataCategory    : RCConstants.YN,
+                                        qparam     : 'mailDomain',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'mailDomain'],
+                                ],
+                                [
+                                        type       : 'lookup',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        refdataCategory    : RCConstants.YN,
+                                        qparam     : 'referrerAuthentification',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'referrerAuthentification'],
+                                ],
+                                [
+                                        type       : 'lookup',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        refdataCategory    : RCConstants.YN,
+                                        qparam     : 'ezProxy',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'ezProxy'],
+                                ],
+                                [
+                                        type       : 'lookup',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        refdataCategory    : RCConstants.YN,
+                                        qparam     : 'hanServer',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'hanServer'],
+                                ],
+                                [
+                                        type       : 'lookup',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        refdataCategory    : RCConstants.YN,
+                                        qparam     : 'otherProxies',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'otherProxies'],
+                                ],
+                                [
+                                        type       : 'lookup',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        refdataCategory    : RCConstants.PLATFORM_STATISTICS_FORMAT,
+                                        qparam     : 'statisticsFormat',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'statisticsFormat'],
                                 ],
                                 [
                                         type       : 'lookup',
                                         baseClass  : 'wekb.RefdataValue',
-                                        qparam     : 'qp_counterR3Supported',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'counterR3Supported'],
-                                ],
-                                [
-                                        type       : 'lookup',
-                                        baseClass  : 'wekb.RefdataValue',
-                                        qparam     : 'qp_counterR4Supported',
+                                        refdataCategory    : RCConstants.YN,
+                                        qparam     : 'counterR4Supported',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'counterR4Supported'],
                                 ],
                                 [
                                         type       : 'lookup',
                                         baseClass  : 'wekb.RefdataValue',
-                                        qparam     : 'qp_counterR5Supported',
+                                        refdataCategory    : RCConstants.YN,
+                                        qparam     : 'counterR5Supported',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'counterR5Supported'],
                                 ],
                                 [
                                         type       : 'lookup',
                                         baseClass  : 'wekb.RefdataValue',
-                                        qparam     : 'qp_counterR4SushiApiSupported',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'counterR4SushiApiSupported'],
+                                        refdataCategory    : RCConstants.YN,
+                                        qparam     : 'counterR4CounterApiSupported',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'counterR4CounterApiSupported'],
                                 ],
                                 [
                                         type       : 'lookup',
                                         baseClass  : 'wekb.RefdataValue',
-                                        qparam     : 'qp_counterR5SushiApiSupported',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'counterR5SushiApiSupported'],
+                                        refdataCategory    : RCConstants.YN,
+                                        qparam     : 'counterR5CounterApiSupported',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'counterR5CounterApiSupported'],
+                                ],
+                                [
+                                        type       : 'lookup',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        refdataCategory    : RCConstants.UYNP,
+                                        qparam     : 'accessPlatform',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'accessPlatform'],
+                                ],
+                                [
+                                        type       : 'lookup',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        refdataCategory    : RCConstants.UYNP,
+                                        qparam     : 'viewerForPdf',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'viewerForPdf'],
+                                ],
+                                [
+                                        type       : 'lookup',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        refdataCategory    : RCConstants.UYNP,
+                                        qparam     : 'viewerForEpub',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'viewerForEpub'],
+                                ],
+                                [
+                                        type       : 'lookup',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        refdataCategory    : RCConstants.UYNP,
+                                        qparam     : 'playerForAudio',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'playerForAudio'],
+                                ],
+                                [
+                                        type       : 'lookup',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        refdataCategory    : RCConstants.UYNP,
+                                        qparam     : 'playerForVideo',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'playerForVideo'],
+                                ],
+                                [
+                                        type       : 'lookup',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        refdataCategory    : RCConstants.UYNP,
+                                        qparam     : 'accessEPub',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'accessEPub'],
+                                ],
+                                [
+                                        type       : 'lookup',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        refdataCategory    : RCConstants.UYNP,
+                                        qparam     : 'onixMetadata',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'onixMetadata'],
+                                ],
+                                [
+                                        type       : 'lookup',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        refdataCategory    : RCConstants.UYNP,
+                                        qparam     : 'accessPdf',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'accessPdf'],
+                                ],
+                                [
+                                        type       : 'lookup',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        refdataCategory    : RCConstants.UYNP,
+                                        qparam     : 'accessAudio',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'accessAudio'],
+                                ],
+                                [
+                                        type       : 'lookup',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        refdataCategory    : RCConstants.UYNP,
+                                        qparam     : 'accessVideo',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'accessVideo'],
+                                ],
+                                [
+                                        type       : 'lookup',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        refdataCategory    : RCConstants.UYNP,
+                                        qparam     : 'accessDatabase',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'accessDatabase'],
+                                ],
+                                [
+                                        type       : 'lookup',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        refdataCategory    : RCConstants.YN,
+                                        qparam     : 'accessibilityStatementAvailable',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'accessibilityStatementAvailable'],
+                                ],
+                                [
+                                        type       : 'lookup',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        refdataCategory    : RCConstants.YN,
+                                        qparam     : 'individualDesignLogo',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'individualDesignLogo'],
+                                ],
+                                [
+                                        type       : 'lookup',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        refdataCategory    : RCConstants.YN,
+                                        qparam     : 'fullTextSearch',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'fullTextSearch'],
+                                ],
+                                [
+                                        type       : 'lookup',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        refdataCategory    : RCConstants.YN,
+                                        qparam     : 'forwardingUsageStatistcs',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'forwardingUsageStatistcs'],
                                 ],
                         ],
                         qbeSortFields: [
@@ -367,8 +567,17 @@ class Api2Service {
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'curatoryGroups.curatoryGroup.name']
                                 ],
                                 [
+                                        qparam     : 'curatoryGroupType',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'curatoryGroups.curatoryGroup.type.value']
+                                ],
+                                [
+                                        qparam     : 'automaticUpdates',
+                                        contextTree: ['ctxtp': 'qry', 'type': 'boolean', 'comparator': 'eq', 'prop': 'pkg.kbartSource.automaticUpdates']
+                                ],
+                                [
                                         type       : 'lookup',
                                         baseClass  : 'wekb.RefdataValue',
+                                        refdataCategory    : RCConstants.COMPONENT_STATUS,
                                         qparam     : 'status',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'status']
                                 ],
@@ -429,7 +638,7 @@ class Api2Service {
                                 //General Fields
                                 [
                                         qparam     : 'name',
-                                        whereClause    : 'tipp_name ilike :name'
+                                        whereClause    : "tipp_name ilike :name"
                                 ],
                                 [
                                         qparam     : 'identifier',
@@ -442,6 +651,10 @@ class Api2Service {
                                 [
                                         qparam     : 'curatoryGroup',
                                         whereClause    : 'exists (select cgp_id from curatory_group_package join curatory_group on cgp_curatory_group_fk = cg_id where cgp_pkg_fk = tipp_pkg_fk and cg_name = :name)'
+                                ],
+                                [
+                                        qparam     : 'curatoryGroupType',
+                                        whereClause    : 'exists (select cgp_id from curatory_group_package join curatory_group on cgp_curatory_group_fk = cg_id join refdata_value on cg_type_rv_fk = rdv_id where cgp_pkg_fk = tipp_pkg_fk and rdv_value = :name)'
                                 ],
                                 [
                                         qparam     : 'status',
@@ -468,7 +681,10 @@ class Api2Service {
                                         qparam     : 'platformUuid',
                                         whereClause    : 'plat_uuid = :platformUuid'
                                 ],
-
+                                [
+                                        qparam     : 'automaticUpdates',
+                                        whereClause: '(select ks_automatic_updates from kbart_source where ks_id = pkg_kbart_source_fk) = :automaticUpdates'
+                                ]
                         ],
                         sqlCols: [
                                 stubOnly: [
@@ -551,6 +767,7 @@ class Api2Service {
                                         name: 'cg_name',
                                         type: '(select rdv_value from refdata_value where rdv_id = cg_type_rv_fk)',
                                         curatoryGroup: "concat('${CuratoryGroup.class.name}',':',cg_id)",
+                                        curatoryGroupUuid: 'cg_uuid'
                                 ]
                         ],
                         qbeSortFields: [
@@ -585,6 +802,7 @@ class Api2Service {
                                 [
                                         type       : 'lookup',
                                         baseClass  : 'wekb.RefdataValue',
+                                        refdataCategory    : RCConstants.COMPONENT_STATUS,
                                         qparam     : 'status',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'status']
                                 ],
@@ -608,24 +826,28 @@ class Api2Service {
                                 [
                                         type       : 'lookup',
                                         baseClass  : 'wekb.RefdataValue',
+                                        refdataCategory    : RCConstants.VENDOR_ROLE,
                                         qparam     : 'roles',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'roles'],
                                 ],
                                 [
                                         type       : 'lookup',
                                         baseClass  : 'wekb.RefdataValue',
+                                        refdataCategory    : RCConstants.VENDOR_SUPPORTED_LIB_SYSTEM,
                                         qparam     : 'qp_supportedLibrarySystems',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'supportedLibrarySystems'],
                                 ],
                                 [
                                         type       : 'lookup',
                                         baseClass  : 'wekb.RefdataValue',
+                                        refdataCategory    : RCConstants.VENDOR_ELECTRONIC_BILLING,
                                         qparam     : 'qp_electronicBillings',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'electronicBillings'],
                                 ],
                                 [
                                         type       : 'lookup',
                                         baseClass  : 'wekb.RefdataValue',
+                                        refdataCategory    : RCConstants.VENDOR_INVOICE_DISPATCH,
                                         qparam     : 'qp_invoiceDispatchs',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'invoiceDispatchs'],
                                 ],
@@ -662,6 +884,7 @@ class Api2Service {
                                 [
                                         type       : 'lookup',
                                         baseClass  : 'wekb.RefdataValue',
+                                        refdataCategory    : RCConstants.COMPONENT_STATUS,
                                         qparam     : 'status',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'status']
                                 ],
@@ -887,7 +1110,8 @@ class Api2Service {
                 object.curatoryGroups.each {
                     result.curatoryGroups.add([name: it.curatoryGroup.name,
                                                type: it.curatoryGroup.type?.value,
-                                               curatoryGroup: it.curatoryGroup.getOID()])
+                                               curatoryGroup: it.curatoryGroup.getOID(),
+                                               curatoryGroupUuid: it.curatoryGroup.uuid])
                 }
             }
 
@@ -960,7 +1184,8 @@ class Api2Service {
                 object.curatoryGroups?.each {
                     result.curatoryGroups.add([name: it.curatoryGroup.name,
                                                type: it.curatoryGroup.type?.value,
-                                               curatoryGroup: it.curatoryGroup.getOID()])
+                                               curatoryGroup: it.curatoryGroup.getOID(),
+                                               curatoryGroupUuid: it.curatoryGroup.uuid])
                 }
             }
 
@@ -998,8 +1223,6 @@ class Api2Service {
 
             result.primaryUrl = object.primaryUrl
 
-            result.titleNamespace = object.titleNamespace?.value
-
             result.lastAuditDate = object.lastAuditDate ? DateUtils.getSDF_ISO().format(object.lastAuditDate) : ""
 
             result.ipAuthentication = object.ipAuthentication?.value
@@ -1011,18 +1234,17 @@ class Api2Service {
             result.passwordAuthentication = object.passwordAuthentication?.value
 
             result.statisticsFormat = object.statisticsFormat?.value
-            result.counterR3Supported = object.counterR3Supported?.value
             result.counterR4Supported = object.counterR4Supported?.value
             result.counterR5Supported = object.counterR5Supported?.value
-            result.counterR4SushiApiSupported = object.counterR4SushiApiSupported?.value
-            result.counterR5SushiApiSupported = object.counterR5SushiApiSupported?.value
-            result.counterR4SushiServerUrl = object.counterR4SushiServerUrl
-            result.counterR5SushiServerUrl = object.counterR5SushiServerUrl
+            result.counterR4CounterApiSupported = object.counterR4CounterApiSupported?.value
+            result.counterR5CounterApiSupported = object.counterR5CounterApiSupported?.value
+            result.counterR4CounterServerUrl = object.counterR4CounterServerUrl
+            result.counterR5CounterServerUrl = object.counterR5CounterServerUrl
             result.counterRegistryUrl = object.counterRegistryUrl
             result.counterCertified = object.counterCertified?.value
             result.statisticsAdminPortalUrl = object.statisticsAdminPortalUrl
             result.statisticsUpdate = object.statisticsUpdate?.value
-            result.proxySupported = object.proxySupported?.value
+            result.otherProxies = object.otherProxies?.value
 
             result.counterRegistryApiUuid = object.counterRegistryApiUuid
 
@@ -1031,7 +1253,8 @@ class Api2Service {
                 object.curatoryGroups?.each {
                     result.curatoryGroups.add([name: it.curatoryGroup.name,
                                                type: it.curatoryGroup.type?.value,
-                                               curatoryGroup: it.curatoryGroup.getOID()])
+                                               curatoryGroup: it.curatoryGroup.getOID(),
+                                               curatoryGroupUuid: it.curatoryGroup.uuid])
                 }
             }
 
@@ -1161,7 +1384,8 @@ class Api2Service {
             object.pkg?.curatoryGroups?.each {
                 result.curatoryGroups.add([name: it.curatoryGroup.name,
                                            type: it.curatoryGroup.type?.value,
-                                           curatoryGroup: it.curatoryGroup.getOID()])
+                                           curatoryGroup: it.curatoryGroup.getOID(),
+                                           curatoryGroupUuid: it.curatoryGroup.uuid])
             }
 
             result
@@ -1286,7 +1510,8 @@ class Api2Service {
                     object.curatoryGroups.each {
                         result.curatoryGroups.add([name         : it.curatoryGroup.name,
                                                    type         : it.curatoryGroup.type?.value,
-                                                   curatoryGroup: it.curatoryGroup.getOID()])
+                                                   curatoryGroup: it.curatoryGroup.getOID(),
+                                                   curatoryGroupUuid: it.curatoryGroup.uuid])
                     }
                 }
 
@@ -1362,6 +1587,7 @@ class Api2Service {
 
                 result.kbartDownloaderURL = object.kbartDownloaderURL
                 result.metadataDownloaderURL = object.metadataDownloaderURL
+                result.urlToTrainingMaterials = object.urlToTrainingMaterials
                 result.homepage = object.homepage
                 result.description = object.description
 
@@ -1370,6 +1596,23 @@ class Api2Service {
                 result.processingOfCompensationPayments = object.processingOfCompensationPayments ? RDStore.YN_YES.value : RDStore.YN_NO.value
                 result.individualInvoiceDesign = object.individualInvoiceDesign ? RDStore.YN_YES.value : RDStore.YN_NO.value
                 result.invoicingYourself = object.invoicingYourself ? RDStore.YN_YES.value : RDStore.YN_NO.value
+
+                result.collections = object.collections?.value
+                result.pickAndChoose = object.pickAndChoose?.value
+                result.prepaid = object.prepaid?.value
+                result.upfront = object.upfront?.value
+                result.temporaryAccess = object.temporaryAccess?.value
+                result.perpetualAccess = object.perpetualAccess?.value
+                result.drm = object.drm?.value
+                result.remoteAccess = object.remoteAccess?.value
+                result.printDownloadChapter = object.printDownloadChapter?.value
+                result.quotesByCopyPaste = object.quotesByCopyPaste?.value
+                //result.forwardingUsageStatistcs = object.forwardingUsageStatistcs?.value
+                result.alertNewEbookPackages = object.alertNewEbookPackages?.value
+                //result.alertExchangeEbookPackages = object.alertExchangeEbookPackages?.value
+
+                result.urlPristLists = object.urlPristLists
+                //result.urlTitleLists = object.urlTitleLists
 
                 result.roles = []
                 object.roles.each { role ->
@@ -1387,7 +1630,8 @@ class Api2Service {
                     object.curatoryGroups?.each {
                         result.curatoryGroups.add([name         : it.curatoryGroup.name,
                                                    type         : it.curatoryGroup.type?.value,
-                                                   curatoryGroup: it.curatoryGroup.getOID()])
+                                                   curatoryGroup: it.curatoryGroup.getOID(),
+                                                   curatoryGroupUuid: it.curatoryGroup.uuid])
                     }
                 }
 
@@ -1455,8 +1699,6 @@ class Api2Service {
 
                 result.primaryUrl = object.primaryUrl
 
-                result.titleNamespace = object.titleNamespace?.value
-
                 result.lastAuditDate = object.lastAuditDate ? DateUtils.getSDF_ISO().format(object.lastAuditDate) : ""
 
                 result.ipAuthentication = object.ipAuthentication?.value
@@ -1466,30 +1708,56 @@ class Api2Service {
                 result.openAthens = object.openAthens?.value
 
                 result.passwordAuthentication = object.passwordAuthentication?.value
+                result.mailDomain = object.mailDomain?.value
+                result.referrerAuthentification = object.referrerAuthentification?.value
+                result.ezProxy = object.ezProxy?.value
+                result.hanServer = object.hanServer?.value
+                //backwards-compatibility for LAS:eR 3.4
+                result.proxySupported = object.otherProxies?.value
+                result.otherProxies = object.otherProxies?.value
 
                 result.statisticsFormat = object.statisticsFormat?.value
-                result.counterR3Supported = object.counterR3Supported?.value
                 result.counterR4Supported = object.counterR4Supported?.value
                 result.counterR5Supported = object.counterR5Supported?.value
-                result.counterR4SushiApiSupported = object.counterR4SushiApiSupported?.value
-                result.counterR5SushiApiSupported = object.counterR5SushiApiSupported?.value
-                result.counterR4SushiServerUrl = object.counterR4SushiServerUrl
-                result.counterR5SushiServerUrl = object.counterR5SushiServerUrl
+                result.counterR4SushiApiSupported = object.counterR4CounterApiSupported?.value
+                result.counterR5SushiApiSupported = object.counterR5CounterApiSupported?.value
+                result.counterR4SushiServerUrl = object.counterR4CounterServerUrl
+                result.counterR5SushiServerUrl = object.counterR5CounterServerUrl
                 result.counterRegistryUrl = object.counterRegistryUrl
                 result.counterCertified = object.counterCertified?.value
                 result.statisticsAdminPortalUrl = object.statisticsAdminPortalUrl
                 result.statisticsUpdate = object.statisticsUpdate?.value
-                result.proxySupported = object.proxySupported?.value
 
                 result.counterRegistryApiUuid = object.counterRegistryApiUuid
-                result.counterR5SushiPlatform = object.counterR5SushiPlatform
+                result.counterR5SushiPlatform = object.counterR5CounterPlatform
+
+                result.accessPlatform = object.accessPlatform?.value
+                result.viewerForPdf = object.viewerForPdf?.value
+                result.viewerForEpub = object.viewerForEpub?.value
+                result.playerForAudio = object.playerForAudio?.value
+                result.playerForVideo = object.playerForVideo?.value
+                result.accessEPub = object.accessEPub?.value
+                result.onixMetadata = object.onixMetadata?.value
+                result.accessPdf = object.accessPdf?.value
+                result.accessAudio = object.accessAudio?.value
+                result.accessVideo = object.accessVideo?.value
+                result.accessDatabase = object.accessDatabase?.value
+                result.accessibilityStatementAvailable = object.accessibilityStatementAvailable?.value
+                result.accessibilityStatementUrl = object.accessibilityStatementUrl
+
+                result.platformBlogUrl = object.platformBlogUrl
+                result.rssUrl = object.rssUrl
+                result.individualDesignLogo = object.individualDesignLogo?.value
+                result.fullTextSearch = object.fullTextSearch?.value
+                result.forwardingUsageStatistcs = object.forwardingUsageStatistcs?.value
 
                 if (object.hasProperty('curatoryGroups')) {
                     result.curatoryGroups = []
                     object.curatoryGroups?.each {
                         result.curatoryGroups.add([name         : it.curatoryGroup.name,
                                                    type         : it.curatoryGroup.type?.value,
-                                                   curatoryGroup: it.curatoryGroup.getOID()])
+                                                   curatoryGroup: it.curatoryGroup.getOID(),
+                                                   curatoryGroupUuid: it.curatoryGroup.uuid])
                     }
                 }
 
@@ -1635,7 +1903,8 @@ class Api2Service {
                 object.pkg?.curatoryGroups?.each {
                     result.curatoryGroups.add([name         : it.curatoryGroup.name,
                                                type         : it.curatoryGroup.type?.value,
-                                               curatoryGroup: it.curatoryGroup.getOID()])
+                                               curatoryGroup: it.curatoryGroup.getOID(),
+                                               curatoryGroupUuid: it.curatoryGroup.uuid])
                 }
                 //log.debug("record finished after ${System.currentTimeMillis()-start} msecs")
             }
@@ -1692,10 +1961,13 @@ class Api2Service {
                 result.shippingMetadata = object.shippingMetadata ? RDStore.YN_YES.value : RDStore.YN_NO.value
                 result.forwardingUsageStatisticsFromPublisher = object.forwardingUsageStatisticsFromPublisher ? RDStore.YN_YES.value : RDStore.YN_NO.value
                 result.activationForNewReleases = object.activationForNewReleases ? RDStore.YN_YES.value : RDStore.YN_NO.value
-                result.exchangeOfIndividualTitles = object.exchangeOfIndividualTitles ? RDStore.YN_YES.value : RDStore.YN_NO.value
+                //result.exchangeOfIndividualTitles = object.exchangeOfIndividualTitles ? RDStore.YN_YES.value : RDStore.YN_NO.value
                 result.researchPlatformForEbooks = object.researchPlatformForEbooks
-                result.prequalificationVOL = object.prequalificationVOL ? RDStore.YN_YES.value : RDStore.YN_NO.value
-                result.prequalificationVOLInfo = object.prequalificationVOLInfo
+                result.prequalification = object.prequalification ? RDStore.YN_YES.value : RDStore.YN_NO.value
+                result.prequalificationInfo = object.prequalificationInfo
+                //backwards-compatibility for LAS:eR 3.4
+                result.prequalificationVOL = object.prequalification ? RDStore.YN_YES.value : RDStore.YN_NO.value
+                result.prequalificationInfoVOL = object.prequalificationInfo
 
                 result.roles = []
                 object.roles.each { role ->
@@ -1708,7 +1980,8 @@ class Api2Service {
                     object.curatoryGroups?.each {
                         result.curatoryGroups.add([name         : it.curatoryGroup.name,
                                                    type         : it.curatoryGroup.type?.value,
-                                                   curatoryGroup: it.curatoryGroup.getOID()])
+                                                   curatoryGroup: it.curatoryGroup.getOID(),
+                                                   curatoryGroupUuid: it.curatoryGroup.uuid])
                     }
                 }
 
@@ -1846,6 +2119,8 @@ class Api2Service {
                     else if(fieldMap.qparam in ['changedSince', 'changedBefore']) {
                         sqlParams[fieldMap.qparam] = DateUtils.parseDateGeneric(cleaned_params[fieldMap.qparam]).toTimestamp()
                     }
+                    else if(fieldMap.qparam == 'name')
+                        sqlParams[fieldMap.qparam] = '%'+cleaned_params[fieldMap.qparam]+'%'
                     else
                         sqlParams[fieldMap.qparam] = cleaned_params[fieldMap.qparam]
                 }
@@ -1931,6 +2206,37 @@ class Api2Service {
 
                 log.debug("Execute query")
                 GrailsParameterMap cleaned_params = processCleanParameterMap(params)
+
+                apiSearchTemplate.qbeConfig.qbeForm.each { Map fieldMap ->
+                    if(fieldMap.refdataCategory && cleaned_params.containsKey(fieldMap.qparam)) {
+                        if (cleaned_params."${fieldMap.qparam}".getClass().isArray() || cleaned_params."${fieldMap.qparam}" instanceof List){
+                            if(!cleaned_params[fieldMap.qparam][0].contains('wekb.RefdataValue')) {
+                                List<String> refdataValueOIDs = []
+                                cleaned_params."${fieldMap.qparam}".each {
+                                    List refdataValues = RefdataValue.executeQuery("from RefdataValue where LOWER(value) = LOWER(:value) and owner.desc = :desc", [value: it, desc: fieldMap.refdataCategory])
+                                    refdataValues.each {
+                                        refdataValueOIDs << it.getOID()
+                                    }
+                                }
+
+                                cleaned_params.put(fieldMap.qparam, refdataValueOIDs)
+                            }
+                        }
+                        else if (cleaned_params."${fieldMap.qparam}" instanceof String){
+                            if(!cleaned_params[fieldMap.qparam].contains('wekb.RefdataValue')) {
+                                List<RefdataValue> refdataValues = RefdataValue.executeQuery("from RefdataValue where LOWER(value) = LOWER(:value) and owner.desc = :desc", [value: cleaned_params."${fieldMap.qparam}", desc: fieldMap.refdataCategory])
+                                if (refdataValues) {
+                                    List<String> refdataValueOIDs = []
+                                    refdataValues.each {
+                                        refdataValueOIDs << it.getOID()
+                                    }
+                                    cleaned_params.put(fieldMap.qparam, refdataValueOIDs.size() > 1 ? refdataValueOIDs : refdataValueOIDs[0])
+                                }
+                            }
+                        }
+                    }
+                }
+
 
                 target_class = grailsApplication.getArtefact("Domain", apiSearchTemplate.baseclass)
                 //HQLBuilder.build(grailsApplication, apiSearchTemplate, cleaned_params, searchResult, target_class, genericOIDService, "rows")
@@ -2067,8 +2373,7 @@ class Api2Service {
             List listOfStatus = parameterMap.status.split(',')
             parameterMap.status = listOfStatus
         }
-
-        setRefdataValueFromGrailsParameterMap(cleaned_params, parameterMap, 'status', 'status')
+        setRefdataValueFromGrailsParameterMap(cleaned_params, parameterMap, 'status', 'status', RCConstants.COMPONENT_STATUS)
         return
     }
 
@@ -2148,11 +2453,11 @@ class Api2Service {
         return
     }
 
-    private void setRefdataValueFromGrailsParameterMap(GrailsParameterMap cleaned_params, GrailsParameterMap parameterMap, String cleanedFieldName, String parameterMapFieldName){
+    private void setRefdataValueFromGrailsParameterMap(GrailsParameterMap cleaned_params, GrailsParameterMap parameterMap, String cleanedFieldName, String parameterMapFieldName, String refdataCategoryConst){
         if (parameterMap."${parameterMapFieldName}".getClass().isArray() || parameterMap."${parameterMapFieldName}" instanceof List){
             List<String> refdataValueOIDs = []
             parameterMap."${parameterMapFieldName}".each {
-                List refdataValues = RefdataValue.executeQuery("from RefdataValue where LOWER(value) = LOWER(:value)", [value: it])
+                List refdataValues = RefdataValue.executeQuery("from RefdataValue where LOWER(value) = LOWER(:value) and owner.desc = :desc", [value: it, desc: refdataCategoryConst])
 
                 refdataValues.each {
                     refdataValueOIDs << it.getOID()
@@ -2162,14 +2467,14 @@ class Api2Service {
             cleaned_params.put(cleanedFieldName, refdataValueOIDs)
         }
         else if (parameterMap."${parameterMapFieldName}" instanceof String){
-            List<RefdataValue> refdataValues = RefdataValue.executeQuery("from RefdataValue where LOWER(value) = LOWER(:value)", [value: parameterMap."${parameterMapFieldName}"])
+            List<RefdataValue> refdataValues = RefdataValue.executeQuery("from RefdataValue where LOWER(value) = LOWER(:value) and owner.desc = :desc", [value: parameterMap."${parameterMapFieldName}", desc: refdataCategoryConst])
 
             if(refdataValues){
                 List<String> refdataValueOIDs = []
                 refdataValues.each {
                     refdataValueOIDs << it.getOID()
                 }
-                cleaned_params.put(cleanedFieldName, refdataValueOIDs)
+                cleaned_params.put(cleanedFieldName, refdataValueOIDs.size() > 1 ? refdataValueOIDs : refdataValueOIDs[0])
             }
         }
     }
@@ -2177,49 +2482,52 @@ class Api2Service {
     private void processRefDataFields(GrailsParameterMap cleaned_params, GrailsParameterMap parameterMap) {
 
         if(parameterMap.ddc) {
-            setRefdataValueFromGrailsParameterMap(cleaned_params, parameterMap, 'ddc', 'ddc')
+            setRefdataValueFromGrailsParameterMap(cleaned_params, parameterMap, 'ddc', 'ddc', RCConstants.DDC)
         }
         else if(parameterMap.ddcs) {
-            setRefdataValueFromGrailsParameterMap(cleaned_params, parameterMap, 'ddc', 'ddcs')
+            setRefdataValueFromGrailsParameterMap(cleaned_params, parameterMap, 'ddc', 'ddcs', RCConstants.DDC)
         }
         if(parameterMap.language) {
-            setRefdataValueFromGrailsParameterMap(cleaned_params, parameterMap, 'languages', 'language')
+            setRefdataValueFromGrailsParameterMap(cleaned_params, parameterMap, 'languages', 'language', RCConstants.COMPONENT_LANGUAGE)
         }
         else if(parameterMap.languages) {
-            setRefdataValueFromGrailsParameterMap(cleaned_params, parameterMap, 'languages', 'languages')
+            setRefdataValueFromGrailsParameterMap(cleaned_params, parameterMap, 'languages', 'languages', RCConstants.COMPONENT_LANGUAGE)
         }
         if(parameterMap.curatoryGroupType) {
-            setRefdataValueFromGrailsParameterMap(cleaned_params, parameterMap, 'type', 'curatoryGroupType')
+            setRefdataValueFromGrailsParameterMap(cleaned_params, parameterMap, 'type', 'curatoryGroupType', RCConstants.CURATORY_GROUP_TYPE)
         }
 
         if(parameterMap.role) {
-            setRefdataValueFromGrailsParameterMap(cleaned_params, parameterMap, 'roles', 'curatoryGroupType')
+            setRefdataValueFromGrailsParameterMap(cleaned_params, parameterMap, 'roles', 'curatoryGroupType', RCConstants.CURATORY_GROUP_TYPE)
         }
 
-        if(parameterMap.counterSushiSupport) {
+        if(parameterMap.counterAPISupport) {
+            List counterVersions = parameterMap.list('counterAPISupport')
+            if('counter4' in counterVersions)
+                cleaned_params.put('counterR4CounterApiSupported', RDStore.YN_YES.getOID())
+            if('counter5' in counterVersions)
+                cleaned_params.put('counterR5CounterApiSupported', RDStore.YN_YES.getOID())
+        }
+        //backwards-compatibility until release of LAS:eR 3.5
+        else if(parameterMap.counterSushiSupport) {
             List counterVersions = parameterMap.list('counterSushiSupport')
             if('counter4' in counterVersions)
-                cleaned_params.put('qp_counterR4SushiApiSupported', RDStore.YN_YES.getOID())
+                cleaned_params.put('counterR4CounterApiSupported', RDStore.YN_YES.getOID())
             if('counter5' in counterVersions)
-                cleaned_params.put('qp_counterR5SushiApiSupported', RDStore.YN_YES.getOID())
+                cleaned_params.put('counterR5CounterApiSupported', RDStore.YN_YES.getOID())
         }
 
-
-        if(parameterMap.shibbolethAuthentication) {
-            setRefdataValueFromGrailsParameterMap(cleaned_params, parameterMap, 'shibbolethAuthentication', 'shibbolethAuthentication')
-        }
-
-        if(parameterMap.counterCertified) {
-            setRefdataValueFromGrailsParameterMap(cleaned_params, parameterMap, 'counterCertified', 'counterCertified')
-        }
-
-        if(parameterMap.ipAuthentication) {
-            setRefdataValueFromGrailsParameterMap(cleaned_params, parameterMap, 'ipAuthentication', 'ipAuthentication')
+        if(parameterMap.counterSupport) {
+            List counterVersions = parameterMap.list('counterSupport')
+            if('counter4' in counterVersions)
+                cleaned_params.put('counterR4Supported', RDStore.YN_YES.getOID())
+            if('counter5' in counterVersions)
+                cleaned_params.put('counterR5Supported', RDStore.YN_YES.getOID())
         }
 
     }
 
-    Map sushiSources(GrailsParameterMap params, Map result){
+    Map counterSources(GrailsParameterMap params, Map result){
 
         RefdataValue yes = RDStore.YN_YES
 
@@ -2231,28 +2539,28 @@ class Api2Service {
 
 
         if(params.uuid){
-            counter4Platforms = Platform.executeQuery("from Platform plat where plat.counterR4SushiApiSupported = :r4support and plat.counterR5SushiApiSupported != :r5support and plat.counterR4SushiServerUrl is not null and plat.uuid = :uuid", [r4support: yes, r5support: yes, uuid: params.uuid]).toSet()
-            counter5Platforms = Platform.executeQuery("from Platform plat where plat.counterR5SushiApiSupported = :r5support and (plat.counterRegistryApiUuid is not null or plat.counterR5SushiServerUrl is not null) and plat.uuid = :uuid", [r5support: yes, uuid: params.uuid]).toSet()
+            counter4Platforms = Platform.executeQuery("from Platform plat where plat.counterR4CounterApiSupported = :r4support and plat.counterR5CounterApiSupported != :r5support and plat.counterR4CounterServerUrl is not null and plat.uuid = :uuid", [r4support: yes, r5support: yes, uuid: params.uuid]).toSet()
+            counter5Platforms = Platform.executeQuery("from Platform plat where plat.counterR5CounterApiSupported = :r5support and (plat.counterRegistryApiUuid is not null or plat.counterR5CounterServerUrl is not null) and plat.uuid = :uuid", [r5support: yes, uuid: params.uuid]).toSet()
         }else {
-            counter4Platforms = Platform.executeQuery("from Platform plat where plat.counterR4SushiApiSupported = :r4support and plat.counterR5SushiApiSupported != :r5support and plat.counterR4SushiServerUrl is not null", [r4support: yes, r5support: yes]).toSet()
-            counter5Platforms = Platform.executeQuery("from Platform plat where plat.counterR5SushiApiSupported = :r5support and (plat.counterRegistryApiUuid is not null or plat.counterR5SushiServerUrl is not null)", [r5support: yes]).toSet()
+            counter4Platforms = Platform.executeQuery("from Platform plat where plat.counterR4CounterApiSupported = :r4support and plat.counterR5CounterApiSupported != :r5support and plat.counterR4CounterServerUrl is not null", [r4support: yes, r5support: yes]).toSet()
+            counter5Platforms = Platform.executeQuery("from Platform plat where plat.counterR5CounterApiSupported = :r5support and (plat.counterRegistryApiUuid is not null or plat.counterR5CounterServerUrl is not null)", [r5support: yes]).toSet()
         }
 
         counter4Platforms.each { Platform platform ->
             result.counter4ApiSources."${platform.uuid}" = mapDomainFieldsToSpecFields(platform)
-
-            result.counter4ApiSources."${platform.uuid}".sushiApiAuthenticationMethod = platform.sushiApiAuthenticationMethod?.value
+            result.counter4ApiSources."${platform.uuid}".sushiApiAuthenticationMethod = platform.counterApiAuthenticationMethod?.value
             result.counter4ApiSources."${platform.uuid}".centralApiKey = platform.centralApiKey
-
+            result.counter4ApiSources."${platform.uuid}".internLabelForCustomerID = platform.internLabelForCustomerID
+            result.counter4ApiSources."${platform.uuid}".internLabelForRequestorKey = platform.internLabelForRequestorKey
         }
 
         counter5Platforms.each { Platform platform ->
             result.counter5ApiSources."${platform.uuid}" = mapDomainFieldsToSpecFields(platform)
-
-            result.counter5ApiSources."${platform.uuid}".sushiApiAuthenticationMethod = platform.sushiApiAuthenticationMethod?.value
+            result.counter5ApiSources."${platform.uuid}".sushiApiAuthenticationMethod = platform.counterApiAuthenticationMethod?.value
             result.counter5ApiSources."${platform.uuid}".centralApiKey = platform.centralApiKey
-            result.counter5ApiSources."${platform.uuid}".counterR5SushiPlatform = platform.counterR5SushiPlatform
-
+            result.counter5ApiSources."${platform.uuid}".counterR5SushiPlatform = platform.counterR5CounterPlatform
+            result.counter5ApiSources."${platform.uuid}".internLabelForCustomerID = platform.internLabelForCustomerID
+            result.counter5ApiSources."${platform.uuid}".internLabelForRequestorKey = platform.internLabelForRequestorKey
         }
 
         result

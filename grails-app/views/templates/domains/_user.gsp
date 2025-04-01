@@ -22,11 +22,11 @@
             </dl>
 
             <g:if test="${userIsAdmin}">
-                <g:if test="${true}">
+                <g:if test="${controllerName != 'home'}">
                     <dl>
                         <dt class="control-label">Password</dt>
                         <dd>
-                            <semui:xEditable owner="${d}" field="password" type="password"/>
+                            <semui:xEditable owner="${d}" field="password" type="password" validation="password"/>
                         </dd>
                     </dl>
                 </g:if>

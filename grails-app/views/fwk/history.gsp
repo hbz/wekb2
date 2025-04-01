@@ -1,6 +1,6 @@
 <div class="modal-header">
 	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-	<h3 class="modal-title">Recent History for <i><b>${name}</b></i></h3>
+	<h3 class="modal-title">Recent History for <i><strong>${name}</strong></i></h3>
 </div>
 <div class="modal-body">
   <table class="ui selectable striped sortable celled table">

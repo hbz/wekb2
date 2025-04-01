@@ -8,19 +8,20 @@
         <h1 class="ui header">Bulk Process</h1>
 
         <div class="field">
-            <label>Vendors:</label>
+            <label>Library Suppliers:</label>
 
             <g:select from="${Vendor.findAllByStatus(RDStore.KBC_STATUS_CURRENT).sort { it.name }}"
-                      class="dropdown fluid"
+                      class="ui dropdown fluid "
+                      multiple="true"
                       id="vendorSelection"
                       optionKey="${{ it.class.name + ':' + it.id }}"
                       optionValue="${{ it.name }}"
-                      name="vendor"
+                      name="vendors"
                       value=""/>
         </div>
 
         <div class="grouped fields">
-            <label>What should be done with vendor?</label>
+            <label>What should be done with Library Supplier?</label>
             <div class="field">
                 <div class="ui radio checkbox">
                     <input type="radio" name="processLinkVendor" value="linkVendor" checked="checked">
@@ -36,7 +37,7 @@
         </div>
 
         <button class="ui button primary" type="submit" value="addVendor"
-                name="processOption">Do bulk process to the selected items</button>
+                name="processOption">Start Bulk Process</button>
 
         <br>
         <br>
@@ -56,7 +57,7 @@
             </tr>
             <tr>
                 <th>#</th>
-                <th>Vendors</th>
+                <th>Library Suppliers</th>
                 <th>Action</th>
             </tr>
             </thead>

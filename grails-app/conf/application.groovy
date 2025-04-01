@@ -141,14 +141,14 @@ apiClasses = [
 ]
 
 wekb.es.globalSearch = [
-        'indices'     : ['wekbtipps', 'wekborgs', 'wekbpackages', 'wekbplatforms'],
+        'indices'     : ['wekbtipps', 'wekborgs', 'wekbpackages', 'wekbplatforms', 'wekbvendors'],
         'types'       : 'component',
         'port'        : 9300
 ]
 
 wekb.es.searchApi = [
         'path'        : '/',
-        'indices'     : ['wekbtipps', 'wekborgs', 'wekbpackages', 'wekbplatforms', 'wekbdeletedcomponents'],
+        'indices'     : ['wekbtipps', 'wekborgs', 'wekbpackages', 'wekbplatforms', 'wekbvendors', 'wekbdeletedcomponents'],
         'types'       : 'component',
         'port'        : 9200
 ]
@@ -165,6 +165,7 @@ wekb.es.indices = [
         orgs              : 'wekborgs',
         packages          : 'wekbpackages',
         platforms         : 'wekbplatforms',
+        vendors           : 'wekbvendors',
         deletedKBComponent: 'wekbdeletedcomponents']
 
 

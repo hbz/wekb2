@@ -6,6 +6,18 @@ Update.Type;New Title;New Title;New Title
 Update.Type;Changed Title;Changed Title;Changed Title
 Update.Type;Removed Title;Removed Title;Removed Title
 Update.Type;Failed Title;Failed Title;Failed Title
+Barrier-Free.Ebook;eBooks not available;eBooks not available;eBooks not available
+Barrier-Free.Ebook;Yes;Yes;Yes
+Barrier-Free.Ebook;No;No;No
+Barrier-Free.Pdf;Pdf not available;Pdf not available;Pdf not available
+Barrier-Free.Pdf;Yes;Yes;Yes
+Barrier-Free.Pdf;No;No;No
+Barrier-Free.Video;Video not available;Video not available;Video not available
+Barrier-Free.Video;Yes;Yes;Yes
+Barrier-Free.Video;No;No;No
+Barrier-Free.Database;Database not available;Database not available;Database not available
+Barrier-Free.Database;Yes;Yes;Yes
+Barrier-Free.Database;No;No;No
 Contact.Content.Type;E-Mail;E-Mail;E-Mail
 Contact.Content.Type;Fax;Fax;Fax
 Contact.Content.Type;Phone;Phone;Phone
@@ -16,7 +28,7 @@ Contact.Type;Technical Support;Technical Support;Technical Support
 Contact.Type;Service Support;Service Support;Service Support
 Contact.Type;Metadata Contact;Metadata Contact;Metadata Contact
 Contact.Type;Invoicing Contact;Invoicing Contact;Invoicing Contact
-Contact.Type;Statistical Support;Statistical Support;Statistical Support
+Contact.Type;Statistical Support;Statistics Support;Statistics Support
 Country;AD;Andorra;Andorra
 Country;AE;Vereinigte Arabische Emirate;United Arab Emirates
 Country;AF;Afghanistan;Afghanistan
@@ -268,7 +280,7 @@ Country;ZM;Sambia;Zambia
 Country;ZW;Zimbabwe;Zimbabwe
 CuratoryGroup.Type;Other;Sonstige;Other
 CuratoryGroup.Type;Provider;Anbieter;Provider
-CuratoryGroup.Type;Vendor;Lieferant;Vendor
+CuratoryGroup.Type;Vendor;Lieferant;Library Supplier
 Currency;EUR;EUR;EUR
 Currency;GBP;GBP;GBP
 Currency;USD;USD;USD
@@ -324,7 +336,8 @@ ComponentVariantName.VariantType;Alternate Title;Alternate Title;Alternate Title
 Org.Role;Content Provider;Content Provider;Content Provider
 Org.Role;Platform Provider;Platform Provider;Platform Provider
 Org.Role;Publisher;Publisher;Publisher
-Vendor.Role;Vendor;Vendor;Vendor
+Org.Drm;Hard;Hard;Hard
+Org.Drm;Soft;Soft (Watermark);Soft (Watermark)
 Package.Breakable;No;No;No
 Package.Breakable;Unknown;Unknown;Unknown
 Package.Breakable;Yes;Yes;Yes
@@ -400,7 +413,7 @@ PackageArchivingAgency.PostCancellationAccess;No;No;No
 PackageArchivingAgency.PostCancellationAccess;Partly;Partly;Partly
 Platform.Federation;AAIEduHr;AAI@EduHr;AAI@EduHr
 Platform.Federation;AAIEduMK;AAIEduMK;AAIEduMK
-Platform.Federation;ACOnet Identity Federation;ACOnet Identity Federation;ACOnet Identity Federation
+Platform.Federation;ACOnet Identity Federation;ACOnet Identity Federation (Österreich);ACOnet Identity Federation (Austria)
 Platform.Federation;AFIRE;AFIRE;AFIRE
 Platform.Federation;ARNaai;ARNaai;ARNaai
 Platform.Federation;ArnesAAI;ArnesAAI;ArnesAAI
@@ -416,7 +429,8 @@ Platform.Federation;CIF;CIF;CIF
 Platform.Federation;COFRe;COFRe;COFRe
 Platform.Federation;COLFIRE;COLFIRE;COLFIRE
 Platform.Federation;CST Cloud Federation;CST Cloud Federation;CST Cloud Federation
-Platform.Federation;DFN-AAI;DFN-AAI;DFN-AAI
+Platform.Federation;DFN-AAI;DFN-AAI (Deutschland);DFN-AAI (Germany)
+Platform.Federation;eduGAIN;eduGAIN;eduGAIN
 Platform.Federation;Edugate;Edugate;Edugate
 Platform.Federation;eduID;eduID;eduID
 Platform.Federation;eduID.cz;eduID.cz;eduID.cz
@@ -476,7 +490,7 @@ Platform.Federation;SIR;SIR;SIR
 Platform.Federation;South African Identity Federation;South African Identity Federation (SAFIRE);South African Identity Federation (SAFIRE)
 Platform.Federation;SURFconext;SURFconext;SURFconext
 Platform.Federation;SWAMID;SWAMID;SWAMID
-Platform.Federation;SWITCHaai;SWITCHaai;SWITCHaai
+Platform.Federation;SWITCHaai;SWITCHaai (Schweiz);SWITCHaai (Switzerland)
 Platform.Federation;TAAT;TAAT;TAAT
 Platform.Federation;TARENA Identity Federation;TARENA Identity Federation;TARENA Identity Federation
 Platform.Federation;ThaiIDF;ThaiIDF;ThaiIDF
@@ -503,10 +517,10 @@ Platform.Statistics.Update;Monthly;Monthly;Monthly
 Platform.Statistics.Update;Quarterly;Quarterly;Quarterly
 Platform.Statistics.Update;Half-Yearly;Half-Yearly;Half-Yearly
 Platform.Statistics.Update;Yearly;Yearly;Yearly
-Platform.Sushi.Api.Authentication.Method;Requestor Key+Customer ID;Requestor Key+Customer ID;Requestor Key+Customer ID
-Platform.Sushi.Api.Authentication.Method;Customer ID+API Key;Customer ID+API Key;Customer ID+API Key
-Platform.Sushi.Api.Authentication.Method;Requestor Key+Customer ID+central API Key;Requestor Key+Customer ID+central API Key;Requestor Key+Customer ID+central API Key
-Platform.Sushi.Api.Authentication.Method;IP whitelisting;IP whitelisting;IP whitelisting
+Platform.Counter.Api.Authentication.Method;Requestor Key+Customer ID;Requestor Key+Customer ID;Requestor Key+Customer ID
+Platform.Counter.Api.Authentication.Method;Customer ID+API Key;Customer ID+API Key;Customer ID+API Key
+Platform.Counter.Api.Authentication.Method;Requestor Key+Customer ID+central API Key;Requestor Key+Customer ID+central API Key;Requestor Key+Customer ID+central API Key
+Platform.Counter.Api.Authentication.Method;IP whitelisting;IP whitelisting;IP whitelisting
 Price.type;list;list;list
 Price.type;on-off;on-off;on-off
 Price.type;open access apc;open access apc;open access apc
@@ -562,9 +576,17 @@ TitleInstancePackagePlatform.PublicationType;Database;Database;Database
 TitleInstancePackagePlatform.PublicationType;Monograph;Monograph;Monograph
 TitleInstancePackagePlatform.PublicationType;Other;Other;Other
 TitleInstancePackagePlatform.PublicationType;Serial;Serial;Serial
+Provider.Print.Download.Chapter;No;No;No
+Provider.Print.Download.Chapter;Yes;Yes;Yes
+Provider.Print.Download.Chapter;only chapters;only chapters;only chapters
 Vendor.SupportedLibrarySystem;Alma;Alma;Alma
-Vendor.SupportedLibrarySystem;Sisis;Sisis;Sisis
+Vendor.SupportedLibrarySystem;Aleph;Aleph;Aleph
+Vendor.SupportedLibrarySystem;aDIS/BMS;aDIS/BMS;aDIS/BMS
 Vendor.SupportedLibrarySystem;Folio;Folio;Folio
+Vendor.SupportedLibrarySystem;Koha;Koha;Koha
+Vendor.SupportedLibrarySystem;LBS;LBS;LBS
+Vendor.SupportedLibrarySystem;Libero;Libero;Libero
+Vendor.SupportedLibrarySystem;Sisis;Sisis;Sisis
 Vendor.ElectronicBilling;X-Invoice;XRechnung;XRechnung
 Vendor.ElectronicBilling;EDI;EDI;EDI
 Vendor.ElectronicBilling;PDF;PDF;PDF
@@ -574,5 +596,13 @@ Vendor.InvoiceDispatch;FTP-Server;FTP-Serverl;FTP-Server
 Vendor.InvoiceDispatch;Peppol;Peppol;Peppol
 Vendor.ElectronicDeliveryDelay;E-Mail;E-Mail;E-Mail
 Vendor.ElectronicDeliveryDelay;EDI;EDI;EDI
+Vendor.Role;Vendor;Library Supplier;Library Supplier
 YN;No;No;No
 YN;Yes;Yes;Yes
+UYNP;Unavailable;Not Available;Not Available
+UYNP;Yes;Compliant;Compliant
+UYNP;No;Not Compliant;Not Compliant
+UYNP;Partially;Partially Compliant;Partially Compliant
+UYN;Unavailable;Not Available;Not Available
+UYN;Yes;Yes;Yes
+UYN;No;No;No

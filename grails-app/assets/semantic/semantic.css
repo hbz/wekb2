@@ -3,7 +3,7 @@
  * https://github.com/fomantic/Fomantic-UI
  * https://fomantic-ui.com/
  *
- * Copyright 2024 Contributors
+ * Copyright 2025 Contributors
  * Released under the MIT license
  * https://opensource.org/licenses/MIT
  *
@@ -539,7 +539,7 @@ body {
   min-width: 320px;
   background: #fff;
   font-family: "Lato", system-ui, -apple-system, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  font-size: 14px;
+  font-size: 1rem;
   line-height: 1.4285em;
   color: rgba(0, 0, 0, 0.87);
 }
@@ -800,6 +800,10 @@ input::selection {
   display: block;
   font-weight: 700;
   color: #e0e1e2;
+}
+
+html {
+  font-size: 100%;
 }
 
 /*******************************
@@ -26908,6 +26912,16 @@ footer h2.ui.header {
   font-size: 1.28571429rem;
 }
 
+.wekb-inline-lists .wekb-header:last-child {
+  margin-bottom: 1em;
+  display: block;
+}
+
+.wekb-inline-lists .wekb-header:first-child {
+  margin-top: 1em;
+  display: block;
+}
+
 /*******************************
          Site Overrides
 *******************************/
@@ -41747,6 +41761,10 @@ ol.ui.suffixed.list li::before,
 
 .ui.bulleted.list > .item:has(> a) {
   padding: 5px 0;
+}
+
+dd {
+  margin-inline-start: 20px;
 }
 
 /*******************************
@@ -56996,6 +57014,45 @@ Floated Menu / Item
 /*******************************
            Overrides
 *******************************/
+
+.ui.sortable.table > thead > tr > th {
+  white-space: wrap;
+}
+
+/*---------------------------------------------------------------------------
+  Responsive Table for views with normal tables overrides tables
+----------------------------------------------------------------------------*/
+
+@media only screen and (max-width: 767.98px) {
+  .ui.table > thead {
+    position: absolute;
+    top: -1111px;
+    left: -1111px;
+  }
+
+  .ui.table > tbody > tr .ui.form,
+  .ui.table > tbody > tr .field {
+    display: inline-block;
+  }
+
+  .ui.table > tbody > tr > [class*="center aligned"] {
+    text-align: left!important;
+  }
+
+  .ui.table > tbody > tr > td:before {
+    padding: 0 10px 0 0;
+    content: attr(data-label);
+    font-weight: bold;
+  }
+
+  .ui.table > tbody > tr > td .la-flexbox {
+    display: inline-flex;
+  }
+
+  .ui.table > tbody > tr > td:nth-child(1) {
+    font-weight: bold;
+  }
+}
 
 /*******************************
          Site Overrides
@@ -73172,7 +73229,7 @@ body.pushable > .pusher {
 }
 
 .wekb-content {
-  margin-top: 80px;
+  padding-top: 5rem;
   display: flex;
   min-height: 100vh;
   flex-direction: column;

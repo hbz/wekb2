@@ -11,6 +11,11 @@ class RCConstants {
 
     public static final String UPDATE_TYPE = "Update.Type"
 
+    public static final String BF_EBOOK = "Barrier-Free.Ebook"
+    public static final String BF_PDF = "Barrier-Free.Pdf"
+    public static final String BF_VIDEO = "Barrier-Free.Video"
+    public static final String BF_DATABASE = "Barrier-Free.Database"
+
     public static final String CONTACT_CONTENT_TYPE   = 'Contact.Content.Type'
     public static final String CONTACT_TYPE           = 'Contact.Type'
 
@@ -38,7 +43,7 @@ class RCConstants {
     public static final String COMPONENT_VARIANTNAME_STATUS = "ComponentVariantName.Status"
 
     public static final String ORG_ROLE = "Org.Role"
-    public static final String VENDOR_ROLE = "Vendor.Role"
+    public static final String ORG_DRM = "Org.Drm"
 
     public static final String PACKAGE_BREAKABLE = "Package.Breakable"
     public static final String PACKAGE_CONSISTENT = "Package.Consistent"
@@ -63,7 +68,7 @@ class RCConstants {
     public static final String PLATFORM_SOFTWARE = "Platform.Software"
     public static final String PLATFORM_STATISTICS_FORMAT = "Platform.Statistics.Format"
     public static final String PLATFORM_STATISTICS_UPDATE = "Platform.Statistics.Update"
-    public static final String PLATFORM_SUSHI_API_AUTH_METHOD = "Platform.Sushi.Api.Authentication.Method"
+    public static final String PLATFORM_COUNTER_API_AUTH_METHOD = "Platform.Counter.Api.Authentication.Method"
 
     public static final String PRICE_TYPE = "Price.type"
 
@@ -81,11 +86,18 @@ class RCConstants {
 
     public static final String TITLEINSTANCE_MEDIUM = "TitleInstance.Medium"
 
+    public static final String PROVIDER_PRINT_DOWNLOAD = "Provider.Print.Download.Chapter"
+
     public static final String VENDOR_SUPPORTED_LIB_SYSTEM = "Vendor.SupportedLibrarySystem"
     public static final String VENDOR_ELECTRONIC_BILLING = "Vendor.ElectronicBilling"
     public static final String VENDOR_INVOICE_DISPATCH = "Vendor.InvoiceDispatch"
     public static final String VENDOR_ELECTRONIC_DELIVERY_DELAY = "Vendor.ElectronicDeliveryDelay"
 
+    public static final String VENDOR_ROLE = "Vendor.Role"
+
     public static final String YN = "YN"
+
+    public static final String UYNP = "UYNP"
+    public static final String UYN = "UYN"
 
 }

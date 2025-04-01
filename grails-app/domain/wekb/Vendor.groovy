@@ -26,6 +26,7 @@ class Vendor extends AbstractBase implements Auditable {
   boolean webShopOrders  = false
   boolean xmlOrders  = false
   boolean ediOrders  = false
+  boolean emailOrders  = false
 
   boolean paperInvoice  = false
   boolean managementOfCredits  = false
@@ -39,8 +40,8 @@ class Vendor extends AbstractBase implements Auditable {
   boolean exchangeOfIndividualTitles  = false
   String researchPlatformForEbooks
 
-  boolean prequalificationVOL = false
-  String prequalificationVOLInfo
+  boolean prequalification = false
+  String prequalificationInfo
 
 
 
@@ -76,6 +77,7 @@ class Vendor extends AbstractBase implements Auditable {
     xmlOrders column: 'ven_xml_orders'
     ediOrders column: 'ven_edi_orders'
     webShopOrders column: 'ven_web_shop_orders'
+    emailOrders column: 'ven_email_orders'
 
     paperInvoice column: 'ven_paper_invoice'
     managementOfCredits column: 'ven_management_of_credits'
@@ -89,8 +91,8 @@ class Vendor extends AbstractBase implements Auditable {
     exchangeOfIndividualTitles column: 'ven_exchange_of_ind_titles'
     researchPlatformForEbooks column: 'ven_research_platform_for_ebooks'
 
-    prequalificationVOL column: 'ven_prequalification_vol'
-    prequalificationVOLInfo column: 'ven_prequalification_vol_info', type: 'text'
+    prequalification column: 'ven_prequalification'
+    prequalificationInfo column: 'ven_prequalification_info', type: 'text'
   }
 
   static constraints = {
@@ -111,7 +113,7 @@ class Vendor extends AbstractBase implements Auditable {
     })
 
     researchPlatformForEbooks (nullable: true, blank: true)
-    prequalificationVOLInfo (nullable: true, blank: true)
+    prequalificationInfo (nullable: true, blank: true)
 
   }
 
@@ -156,7 +158,7 @@ class Vendor extends AbstractBase implements Auditable {
 
   @Transient
   public String getDomainName() {
-    return "Vendor"
+    return "Library Supplier"
   }
 
   public String getShowName() {

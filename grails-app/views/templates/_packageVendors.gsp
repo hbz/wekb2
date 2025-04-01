@@ -18,19 +18,19 @@
     </div>
 
     <g:if test="${editable}">
-        <a class="ui right floated primary button" href="#" onclick="$('#vendorsModal').modal('show');">Add Vendor</a>
+        <a class="ui right floated primary button" href="#" onclick="$('#vendorsModal').modal('show');">Add Library Supplier</a>
 
         <br>
         <br>
 
-        <semui:modal id="vendorsModal" title="Add Vendor">
+        <semui:modal id="vendorsModal" title="Add Library Supplier">
             <g:form controller="ajaxHtml" action="addVendorToPackage" class="ui form">
                 <input type="hidden" name="__context" value="${d.getOID()}"/>
                 <input type="hidden" name="__property" value="vendors"/>
                 <input type="hidden" name="curationOverride" value="${params.curationOverride}"/>
 
                 <div class="field">
-                    <label>Vendor:</label>
+                    <label>Library Supplier:</label>
 
                     <semui:simpleReferenceDropdown name="__relatedObject"
                                                    baseClass="wekb.Vendor"

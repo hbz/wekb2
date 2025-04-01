@@ -36,6 +36,14 @@
             </dl>
             <dl>
                 <dt class="control-label">
+                    via E-Mail
+                </dt>
+                <dd>
+                    <semui:xEditableBoolean owner="${d}" field="emailOrders"/>
+                </dd>
+            </dl>
+            <dl>
+                <dt class="control-label">
                     via XML
                 </dt>
                 <dd>
@@ -60,7 +68,9 @@
                         <tr>
                             <th>#</th>
                             <th>Supported Library System</th>
-                            <th>Action</th>
+                            <g:if test="${editable}">
+                                <th>Action</th>
+                            </g:if>
                         </tr>
                         </thead>
                         <tbody>
@@ -71,13 +81,14 @@
                                 <td><semui:xEditableRefData owner="${vendorSupportedLibrarySystem}"
                                                             field="supportedLibrarySystem"
                                                             config="${RCConstants.VENDOR_SUPPORTED_LIB_SYSTEM}"/>
-                                <td>
-                                    <g:if test="${editable}">
+
+                                <g:if test="${editable}">
+                                    <td>
                                         <g:link controller='ajaxHtml'
                                                 action='delete'
                                                 params="${["__context": "${vendorSupportedLibrarySystem.getOID()}", curationOverride: params.curationOverride]}">Delete</g:link>
-                                    </g:if>
-                                </td>
+                                    </td>
+                                </g:if>
                             </tr>
                         </g:each>
                         </tbody>
@@ -120,7 +131,9 @@
                         <tr>
                             <th>#</th>
                             <th>Electronic delivery delay notifications via</th>
-                            <th>Action</th>
+                            <g:if test="${editable}">
+                                <th>Action</th>
+                            </g:if>
                         </tr>
                         </thead>
                         <tbody>
@@ -131,13 +144,14 @@
                                 <td><semui:xEditableRefData owner="${vendorElectronicDeliveryDelay}"
                                                             field="electronicDeliveryDelay"
                                                             config="${RCConstants.VENDOR_ELECTRONIC_DELIVERY_DELAY}"/>
-                                <td>
-                                    <g:if test="${editable}">
+
+                                <g:if test="${editable}">
+                                    <td>
                                         <g:link controller='ajaxHtml'
                                                 action='delete'
                                                 params="${["__context": "${vendorElectronicDeliveryDelay.getOID()}", curationOverride: params.curationOverride]}">Delete</g:link>
-                                    </g:if>
-                                </td>
+                                    </td>
+                                </g:if>
                             </tr>
                         </g:each>
                         </tbody>
@@ -185,7 +199,9 @@
                         <tr>
                             <th>#</th>
                             <th>Format</th>
-                            <th>Action</th>
+                            <g:if test="${editable}">
+                                <th>Action</th>
+                            </g:if>
                         </tr>
                         </thead>
                         <tbody>
@@ -195,13 +211,15 @@
                                 <td>${i + 1}</td>
                                 <td><semui:xEditableRefData owner="${vendorElectronicBilling}" field="electronicBilling"
                                                             config="${RCConstants.VENDOR_ELECTRONIC_BILLING}"/>
-                                <td>
+
                                     <g:if test="${editable}">
-                                        <g:link controller='ajaxHtml'
-                                                action='delete'
-                                                params="${["__context": "${vendorElectronicBilling.getOID()}", curationOverride: params.curationOverride]}">Delete</g:link>
+                                        <td>
+                                            <g:link controller='ajaxHtml'
+                                                    action='delete'
+                                                    params="${["__context": "${vendorElectronicBilling.getOID()}", curationOverride: params.curationOverride]}">Delete</g:link>
+                                        </td>
                                     </g:if>
-                                </td>
+
                             </tr>
                         </g:each>
                         </tbody>
@@ -214,7 +232,7 @@
                         <br>
                         <br>
 
-                        <semui:modal id="electronicBillingsModal" title="Add supported Library System">
+                        <semui:modal id="electronicBillingsModal" title="Add Electronic Invoice Format">
 
                             <g:form controller="ajaxHtml" action="addToCollection" class="ui form">
                                 <input type="hidden" name="__context" value="${d.getOID()}"/>
@@ -246,7 +264,9 @@
                         <tr>
                             <th>#</th>
                             <th>Method</th>
-                            <th>Action</th>
+                            <g:if test="${editable}">
+                                <th>Action</th>
+                            </g:if>
                         </tr>
                         </thead>
                         <tbody>
@@ -256,13 +276,15 @@
                                 <td>${i + 1}</td>
                                 <td><semui:xEditableRefData owner="${vendorInvoiceDispatch}" field="invoiceDispatch"
                                                             config="${RCConstants.VENDOR_INVOICE_DISPATCH}"/>
-                                <td>
-                                    <g:if test="${editable}">
+
+                                <g:if test="${editable}">
+                                    <td>
                                         <g:link controller='ajaxHtml'
                                                 action='delete'
                                                 params="${["__context": "${vendorInvoiceDispatch.getOID()}", curationOverride: params.curationOverride]}">Delete</g:link>
-                                    </g:if>
-                                </td>
+                                    </td>
+                                </g:if>
+
                             </tr>
                         </g:each>
                         </tbody>
@@ -275,7 +297,7 @@
                         <br>
                         <br>
 
-                        <semui:modal id="invoiceDispatchsModal" title="Add supported Library System">
+                        <semui:modal id="invoiceDispatchsModal" title="Add Invoice dispatch">
 
                             <g:form controller="ajaxHtml" action="addToCollection" class="ui form">
                                 <input type="hidden" name="__context" value="${d.getOID()}"/>
@@ -301,8 +323,7 @@
                     Paper Invoice
                 </dt>
                 <dd>
-                    <semui:xEditableRefData owner="${d}" field="paperInvoice"
-                                            config="${RCConstants.YN}"/>
+                    <semui:xEditableBoolean owner="${d}" field="paperInvoice"/>
                 </dd>
             </dl>
             <dl>
@@ -310,8 +331,7 @@
                     Management of Credits
                 </dt>
                 <dd>
-                    <semui:xEditableRefData owner="${d}" field="managementOfCredits"
-                                            config="${RCConstants.YN}"/>
+                    <semui:xEditableBoolean owner="${d}" field="managementOfCredits"/>
                 </dd>
             </dl>
             <dl>
@@ -319,8 +339,7 @@
                     Processing of compensation payments (credits/subsequent debits)
                 </dt>
                 <dd>
-                    <semui:xEditableRefData owner="${d}" field="processingOfCompensationPayments"
-                                            config="${RCConstants.YN}"/>
+                    <semui:xEditableBoolean owner="${d}" field="processingOfCompensationPayments"/>
                 </dd>
             </dl>
             <dl>
@@ -328,8 +347,7 @@
                     Individual invoice design
                 </dt>
                 <dd>
-                    <semui:xEditableRefData owner="${d}" field="individualInvoiceDesign"
-                                            config="${RCConstants.YN}"/>
+                    <semui:xEditableBoolean owner="${d}" field="individualInvoiceDesign"/>
                 </dd>
             </dl>
         </div>
@@ -342,8 +360,7 @@
                     Technical Support
                 </dt>
                 <dd>
-                    <semui:xEditableRefData owner="${d}" field="technicalSupport"
-                                            config="${RCConstants.YN}"/>
+                    <semui:xEditableBoolean owner="${d}" field="technicalSupport"/>
                 </dd>
             </dl>
             <dl>
@@ -351,8 +368,7 @@
                     Metadata (MARC records)
                 </dt>
                 <dd>
-                    <semui:xEditableRefData owner="${d}" field="shippingMetadata"
-                                            config="${RCConstants.YN}"/>
+                    <semui:xEditableBoolean owner="${d}" field="shippingMetadata"/>
                 </dd>
             </dl>
             <dl>
@@ -360,28 +376,25 @@
                     Forwarding usage statistics from the publisher
                 </dt>
                 <dd>
-                    <semui:xEditableRefData owner="${d}" field="forwardingUsageStatisticsFromPublisher"
-                                            config="${RCConstants.YN}"/>
+                    <semui:xEditableBoolean owner="${d}" field="forwardingUsageStatisticsFromPublisher"/>
                 </dd>
             </dl>
             <dl>
                 <dt class="control-label">
-                    Update information about new releases within e-book packages
+                    Alerts about new publications within packages
                 </dt>
                 <dd>
-                    <semui:xEditableRefData owner="${d}" field="activationForNewReleases"
-                                            config="${RCConstants.YN}"/>
+                    <semui:xEditableBoolean owner="${d}" field="activationForNewReleases"/>
                 </dd>
             </dl>
-            <dl>
+           %{-- <dl>
                 <dt class="control-label">
-                    Exchange of individual titles within e-book packages
+                    Alerts about exchange of individual titles within e-book packages
                 </dt>
                 <dd>
-                    <semui:xEditableRefData owner="${d}" field="exchangeOfIndividualTitles"
-                                            config="${RCConstants.YN}"/>
+                    <semui:xEditableBoolean owner="${d}" field="exchangeOfIndividualTitles"/>
                 </dd>
-            </dl>
+            </dl>--}%
             <dl>
                 <dt class="control-label">
                     Research platform for e-books
@@ -397,19 +410,18 @@
         <div class="content wekb-inline-lists">
             <dl>
                 <dt class="control-label">
-                    Prequalification VOL
+                    Prequalification
                 </dt>
                 <dd>
-                    <semui:xEditableRefData owner="${d}" field="prequalificationVOL"
-                                            config="${RCConstants.YN}"/>
+                    <semui:xEditableBoolean owner="${d}" field="prequalification"/>
                 </dd>
             </dl>
             <dl>
                 <dt class="control-label">
-                    Info to Prequalification VOL
+                    Info to Prequalification
                 </dt>
                 <dd>
-                    <semui:xEditable owner="${d}" field="prequalificationVOLInfo"/>
+                    <semui:xEditable owner="${d}" field="prequalificationInfo"/>
                 </dd>
             </dl>
         </div>

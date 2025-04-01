@@ -28,21 +28,25 @@
 
         <semui:card text="Change Password" class="fluid">
             <div class="content wekb-inline-lists">
-                <g:form action="changePass" class="ui form">
-                    <dl>
-                        <dt id="labelOriginalPassword" class="dt-label">Original Password:</dt>
-                        <dd><input aria-labelledby="labelOriginalPassword" name="origpass" type="password"/></dd>
-                    </dl>
-                    <dl>
-                        <dt id="labelNewPassword" class="dt-label">New Password:</dt>
-                        <dd><input aria-labelledby="labelNewPassword" name="newpass" type="password"/></dd>
-                    </dl>
-                    <dl>
-                        <dt id="labeNRepeatNewPassword" class="dt-label">Repeat New Password:</dt>
-                        <dd><input aria-labelledby="labeNRepeatNewPassword" name="repeatpass" type="password"/></dd>
-                    </dl>
+                <g:form action="changePass" class="ui js-changePassword form">
+                    <div class="field required">
+                        <label for="origpass">Original Password (mandatory field):</label>
+                        <input aria-labelledby="origpass" type="password" name="origpass" id="origpass" class="pw"/>
+                    </div>
+                    <div class="field required">
+                        <label for="newpass">New Password (mandatory field):</label>
+                        <input aria-labelledby="newpass" type="password" name="newpass" id="newpass" class="pw pwn"/>
+                    </div>
+                    <div class="field required">
+                        <label for="repeatpass">Repeat New Password (mandatory field):</label>
+                        <input aria-labelledby="newpass" type="password" name="repeatpass" id="repeatpass" class="pw pwn"/>
+                    </div>
+                    <div class="field">
+                        <label for="password_show_toggler">Show Passwords</label>
+                        <input type="checkbox" name="showPasswords" id="password_show_toggler">
+                    </div>
 
-                    <button type="submit" class="ui primary button">Change Password</button>
+                    <button type="submit" class="ui primary button" id="password_submit">Change Password</button>
                 </g:form>
             </div>
         </semui:card>
@@ -61,6 +65,64 @@
     </div>
 
 </div>
+
+<script>
+    $('.js-changePassword .form').form({
+        on: 'change',
+        inline: true,
+        fields: {
+            origpass: {
+                identifier  : 'origpass',
+                rules: [
+                    {
+                        type   : 'empty',
+                        prompt : '{name} needs to be filled out'
+                    }
+                ]
+            },
+            newpass: {
+                identifier  : 'newpass',
+                rules: [
+                    {
+                        type   : 'empty',
+                        prompt : '{name} needs to be filled out'
+                    }
+                ]
+            },
+            repeatpass: {
+                identifier  : 'repeatpass',
+                rules: [
+                    {
+                        type   : 'empty',
+                        prompt : '{name} needs to be filled out'
+                    },
+                    {
+                        type: 'match[newpass]',
+                        prompt : '{name} must match'
+                    }
+                ]
+            }
+        }
+    });
+
+    $('#password_show_toggler').on('change', function(e) {
+        $('input.pw').attr('type', ($(this).is(":checked") ? 'text' : 'password'))
+    })
+
+    $('#password_submit').on('click', function(e) {
+        e.preventDefault()
+        var pw1 = $('input[name=newpass]')
+        var pw2 = $('input[name=repeatpass]')
+
+        $('input.pwn').parents('div.field').removeClass('error')
+
+        if ( pw1.val() && (pw1.val() == pw2.val()) ) {
+            $(this).parents('form').submit()
+        } else {
+            $('input.pwn').parents('div.field').addClass('error')
+        }
+    })
+</script>
 
 </body>
 </html>

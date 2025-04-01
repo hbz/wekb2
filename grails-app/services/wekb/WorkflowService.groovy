@@ -70,7 +70,7 @@ class WorkflowService {
                         [code: 'objectMethod::currentWithTipps', label: 'Mark the package as current (with all Titles)', message: '', onlyAdmin: false, group: 2],
                         [code: 'objectMethod::deleteSoft', label: 'Mark the package as deleted (with all Titles)', message: '', onlyAdmin: false, group: 2],
                         [code: 'objectMethod::retireWithTipps', label: 'Mark the package as retired (with all Titles)', message: '', onlyAdmin: false, group: 2],
-                        [code: 'objectMethod::removeOnlyTipps', modalID: 'removeOnlyTipps', label: 'Remove only all Titles', message: '', onlyAdmin: false, group: 5],
+                        [code: 'objectMethod::removeOnlyTipps', modalID: 'removeOnlyTipps', label: 'Remove all Titles', message: '', onlyAdmin: false, group: 5],
                         [code: 'objectMethod::removeOnlyDeletedTipps', modalID: 'removeOnlyDeletedTipps', label: 'Remove only deleted Titles', message: '', onlyAdmin: false, group: 4],
                         [code: 'objectMethod::removeWithTipps', modalID: 'removeWithTipps', label: 'Remove the package (with all Titles)', message: '', onlyAdmin: false, group: 6],
 
@@ -111,9 +111,9 @@ class WorkflowService {
             case Vendor.class.name:
                 if (springSecurityService.currentUser.isAdmin()) {
                     [
-                            [code: 'workFlowSetStatus::Deleted', label: 'Mark the Vendor as deleted', message: '', onlyAdmin: true, group: 1],
-                            [code: 'workFlowSetStatus::Current', label: 'Mark the Vendor as current', message: '', onlyAdmin: true, group: 1],
-                            [code: 'workFlowSetStatus::Removed', label: 'Remove Vendor', message: '', onlyAdmin: true, group: 2]
+                            [code: 'workFlowSetStatus::Deleted', label: 'Mark the Library Supplier as deleted', message: '', onlyAdmin: true, group: 1],
+                            [code: 'workFlowSetStatus::Current', label: 'Mark the Library Supplier as current', message: '', onlyAdmin: true, group: 1],
+                            [code: 'workFlowSetStatus::Removed', label: 'Remove Library Supplier', message: '', onlyAdmin: true, group: 2]
                     ]
                 } else {
                     []
@@ -129,8 +129,8 @@ class WorkflowService {
         switch (domainClassName) {
             case Package.class.name:
                 [
-                        [modalID: 'removeOnlyDeletedTipps', code: 'objectMethod::removeOnlyDeletedTipps', label: 'Remove only all Titles', info: 'You are about to permanently remove all deleted titles from your package. Are you sure you want to continue?'],
-                        [modalID: 'removeOnlyTipps', code: 'objectMethod::removeOnlyTipps', label: 'Remove only all Titles', info: 'You are about to permanently remove all titles from your package. Are you sure you want to continue?'],
+                        [modalID: 'removeOnlyDeletedTipps', code: 'objectMethod::removeOnlyDeletedTipps', label: 'Remove only deleted Titles', info: 'You are about to permanently remove all deleted titles from your package. Are you sure you want to continue?'],
+                        [modalID: 'removeOnlyTipps', code: 'objectMethod::removeOnlyTipps', label: 'Remove all Titles', info: 'You are about to permanently remove all titles from your package. Are you sure you want to continue?'],
                         [modalID: 'removeWithTipps', code: 'objectMethod::removeWithTipps', label: 'Remove the package (with all Titles)', info: 'You are about to permanently remove all titles from your package. Are you sure you want to continue?'],
                 ]
                 break
@@ -254,30 +254,48 @@ class WorkflowService {
         result
     }
 
-    void updateListOfPackageWithKbart(List<Package> packageList, boolean allTitles = false){
-        GParsPool.withPool(5) { pool ->
-            packageList.anyParallel { aPackage ->
-                Set<Thread> threadSet = Thread.getAllStackTraces().keySet()
-                Thread[] threadArray = threadSet.toArray(new Thread[threadSet.size()])
-                boolean processRunning = false
-                threadArray.each { Thread thread ->
-                    if (thread.name == 'uPFKS' + aPackage.id) {
-                        processRunning = true
-                    }
-                }
+    Map updateListOfPackageWithKbart(List<Package> packageList, boolean allTitles = false, List<CuratoryGroup> curatoryGroups){
+        Map result = [:]
 
-                if (!processRunning) {
-                        Thread.currentThread().setName('uPFKS' + aPackage.id)
-                        autoUpdatePackagesService.startAutoPackageUpdate(aPackage, !allTitles)
-                }
+        Set<Thread> threadSetMain = Thread.getAllStackTraces().keySet()
+        Thread[] threadArrayMain = threadSetMain.toArray(new Thread[threadSetMain.size()])
+        boolean processRunningMain = false
+        threadArrayMain.each { Thread thread ->
+            if (thread.name == 'uOPWK' + curatoryGroups.id.join('_').substring(0,7)) {
+                processRunningMain = true
             }
         }
+
+        if (processRunningMain) {
+            result.error = "The package update for ${packageList.size()} Package is already running. Please wait this has finished."
+        } else {
+            executorService.execute({
+                Thread.currentThread().setName('uOPWK' + curatoryGroups.id.join('_').substring(0,7))
+
+                    packageList.each { aPackage ->
+                        Package aPackage1 = Package.get(aPackage.id)
+
+                        try {
+                            autoUpdatePackagesService.startAutoPackageUpdate(aPackage1, !allTitles)
+                        }catch (Exception exception) {
+                            log.error("Error by updateListOfPackageWithKbart (${aPackage1.id} -> ${aPackage1.name}): ${exception.message}")
+                            //exception.printStackTrace()
+                        }
+
+                }
+            })
+
+            result.message = "The package update for ${packageList.size()} Package was started. This runs in the background."
+        }
+
+        result
+
     }
 
     private Map deleteIdentifierNamespace(IdentifierNamespace identifierNamespace) {
         Map result = [:]
         log.info("deleteIdentifierNamespace: ${identifierNamespace}..")
-        if (!Platform.findByTitleNamespace(identifierNamespace) && !Identifier.findByNamespace(identifierNamespace)) {
+        if (!Identifier.findByNamespace(identifierNamespace)) {
             identifierNamespace.delete()
         } else {
             result.error = "Identifier Namespace is linked with identifier or org or source or platform! Please unlink first!"

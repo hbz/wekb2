@@ -168,5 +168,20 @@ class CuratoryGroup extends AbstractBase implements Auditable {
     Platform.executeQuery('select o from Org as o where exists ( select cgo from CuratoryGroupOrg cgo where cgo.org = o and cgo.curatoryGroup = :curGroup)', [curGroup: this])
   }
 
+  @Transient
+  int getProvidedPackagesCount(){
+    Package.executeQuery('select count(*) from Package as p where exists ( select cgp from CuratoryGroupPackage cgp where cgp.pkg = p and cgp.curatoryGroup = :curGroup)', [curGroup: this])[0]
+  }
+
+  @Transient
+  int getProvidedPlatformsCount(){
+    Platform.executeQuery('select count(*) from Platform as p where exists ( select cgp from CuratoryGroupPlatform cgp where cgp.platform = p and cgp.curatoryGroup = :curGroup)', [curGroup: this])[0]
+  }
+
+  @Transient
+  int getProvidedOrgsCount(){
+    Platform.executeQuery('select count(*) from Org as o where exists ( select cgo from CuratoryGroupOrg cgo where cgo.org = o and cgo.curatoryGroup = :curGroup)', [curGroup: this])[0]
+  }
+
 }
 

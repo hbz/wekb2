@@ -25,6 +25,7 @@ class AutoUpdatePackagesJob {
       log.debug("Beginning scheduled auto update packages job.")
 
         autoUpdatePackagesService.findPackageToUpdateAndUpdate(true)
+      //autoUpdatePackagesService.findPackageToUpdateAndUpdate(false)
 
       log.info("auto update packages job completed.")
     } else {

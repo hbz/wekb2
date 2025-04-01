@@ -1,7 +1,6 @@
 package wekb
 
 import grails.converters.JSON
-import grails.gorm.transactions.Transactional
 import org.elasticsearch.action.admin.indices.flush.FlushRequest
 import org.elasticsearch.action.admin.indices.flush.FlushResponse
 import org.elasticsearch.action.bulk.BulkItemResponse
@@ -11,7 +10,6 @@ import org.elasticsearch.action.index.IndexRequest
 import org.elasticsearch.client.RequestOptions
 import org.elasticsearch.client.RestHighLevelClient
 import org.elasticsearch.xcontent.XContentType
-import org.hibernate.Session
 import org.hibernate.SessionFactory
 import wekb.helper.RDStore
 import wekb.system.FTControl
@@ -216,6 +214,55 @@ class FTUpdateService {
 
         result.kbartDownloaderURL = kbc.kbartDownloaderURL
         result.metadataDownloaderURL = kbc.metadataDownloaderURL
+        result.urlToTrainingMaterials = kbc.urlToTrainingMaterials
+        result.homepage = kbc.homepage
+
+        result
+      }
+
+      updateES(wekb.Vendor.class) { wekb.Vendor kbc ->
+        def result = [:]
+        result.recid = "${kbc.class.name}:${kbc.id}"
+        result.uuid = kbc.uuid
+        result.name = kbc.name
+        result.abbreviatedName = kbc.abbreviatedName
+        result.sortname = generateSortName(kbc.name)
+        result.altname = []
+        result.updater = 'vendor'
+       /* kbc.variantNames.each { vn ->
+          result.altname.add(vn.variantName)
+        }*/
+        result.lastUpdatedDisplay = dateFormatService.formatIsoTimestamp(kbc.lastUpdated)
+        result.roles = []
+        kbc.roles.each { role ->
+          result.roles.add(role.value)
+        }
+
+        if(kbc.hasProperty('curatoryGroups')) {
+          result.curatoryGroups = []
+          kbc.curatoryGroups?.each {
+            result.curatoryGroups.add([name: it.curatoryGroup.name,
+                                       type: it.curatoryGroup.type?.value,
+                                       curatoryGroup: it.curatoryGroup.getOID()])
+          }
+        }
+
+        result.status = kbc.status?.value
+       /* result.identifiers = []
+        kbc.ids.each { idc ->
+          result.identifiers.add([namespace    : idc.namespace.value,
+                                  value        : idc.value,
+                                  namespaceName: idc.namespace.name])
+        }*/
+        result.componentType = kbc.class.simpleName
+
+        result.contacts = []
+        kbc.contacts.each { Contact contact ->
+          result.contacts.add([  content: contact.content,
+                                 contentType: contact.contentType?.value,
+                                 type: contact.type?.value,
+                                 language: contact.language?.value])
+        }
         result.homepage = kbc.homepage
 
         result
@@ -254,33 +301,56 @@ class FTUpdateService {
         }
         result.componentType = kbc.class.simpleName
 
-        result.titleNamespace = kbc.titleNamespace?.value
-
         result.lastAuditDate = kbc.lastAuditDate ? dateFormatService.formatIsoTimestamp(kbc.lastAuditDate) : null
 
         result.ipAuthentication = kbc.ipAuthentication?.value
 
         result.shibbolethAuthentication = kbc.shibbolethAuthentication?.value
+        result.refedsSupport = kbc.refedsSupport?.value
+        result.dpfParticipation = kbc.dpfParticipation?.value
+        result.sccSupport = kbc.sccSupport?.value
 
         result.openAthens = kbc.openAthens?.value
 
         result.passwordAuthentication = kbc.passwordAuthentication?.value
+        result.mailDomain = kbc.mailDomain?.value
+        result.referrerAuthentification = kbc.referrerAuthentification?.value
+        result.ezProxy = kbc.ezProxy?.value
+        result.hanServer = kbc.hanServer?.value
+        result.otherProxies = kbc.otherProxies?.value
 
         result.statisticsFormat = kbc.statisticsFormat?.value
-        result.counterR3Supported = kbc.counterR3Supported?.value
         result.counterR4Supported = kbc.counterR4Supported?.value
         result.counterR5Supported = kbc.counterR5Supported?.value
-        result.counterR4SushiApiSupported = kbc.counterR4SushiApiSupported?.value
-        result.counterR5SushiApiSupported = kbc.counterR5SushiApiSupported?.value
-        result.counterR4SushiServerUrl = kbc.counterR4SushiServerUrl
-        result.counterR5SushiServerUrl = kbc.counterR5SushiServerUrl
+        result.counterR4CounterApiSupported = kbc.counterR4CounterApiSupported?.value
+        result.counterR5CounterApiSupported = kbc.counterR5CounterApiSupported?.value
+        result.counterR4CounterServerUrl = kbc.counterR4CounterServerUrl
+        result.counterR5CounterServerUrl = kbc.counterR5CounterServerUrl
         result.counterRegistryUrl = kbc.counterRegistryUrl
         result.counterCertified = kbc.counterCertified?.value
         result.statisticsAdminPortalUrl = kbc.statisticsAdminPortalUrl
         result.statisticsUpdate = kbc.statisticsUpdate?.value
-        result.proxySupported = kbc.proxySupported?.value
 
         result.counterRegistryApiUuid = kbc.counterRegistryApiUuid
+
+        result.accessPlatform = kbc.accessPlatform?.value
+        result.viewerForPdf = kbc.viewerForPdf?.value
+        result.viewerForEpub = kbc.viewerForEpub?.value
+        result.playerForAudio = kbc.playerForAudio?.value
+        result.playerForVideo = kbc.playerForVideo?.value
+        result.accessEPub = kbc.accessEPub?.value
+        result.onixMetadata = kbc.onixMetadata?.value
+        result.accessPdf = kbc.accessPdf?.value
+        result.accessAudio = kbc.accessAudio?.value
+        result.accessVideo = kbc.accessVideo?.value
+        result.accessDatabase = kbc.accessDatabase?.value
+        result.accessibilityStatementAvailable = kbc.accessibilityStatementAvailable?.value
+        result.accessibilityStatementUrl = kbc.accessibilityStatementUrl
+
+        result.platformBlogUrl = kbc.platformBlogUrl
+        result.rssUrl = kbc.rssUrl
+        result.individualDesignLogo = kbc.individualDesignLogo?.value
+        result.fullTextSearch = kbc.fullTextSearch?.value
 
         result.federations = []
         kbc.federations.each { PlatformFederation platformFederation ->
@@ -289,7 +359,6 @@ class FTUpdateService {
 
         result
       }
-
 
       updateES(wekb.TitleInstancePackagePlatform.class) { wekb.TitleInstancePackagePlatform kbc ->
 

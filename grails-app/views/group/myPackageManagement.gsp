@@ -31,7 +31,7 @@
 
     <semui:tabs>
         <semui:tabsItemWithLink controller="$controllerName" action="$actionName" activeTab="generalInfos" text="General Information" params="${cleaned_params+[activeTab: "generalInfos"]}"/>
-        <semui:tabsItemWithLink controller="$controllerName" action="$actionName" activeTab="vendors" text="Vendors" params="${cleaned_params+[activeTab: "vendors"]}"/>
+        <semui:tabsItemWithLink controller="$controllerName" action="$actionName" activeTab="vendors" text="Library Suppliers" params="${cleaned_params+[activeTab: "vendors"]}"/>
 
        %{-- <semui:tabsItemWithLink controller="$controllerName" action="$actionName" activeTab="rangeInfos" text="Range Information" params="${cleaned_params+[activeTab: "rangeInfos"]}"/
            --}%

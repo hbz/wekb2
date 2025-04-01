@@ -1,6 +1,10 @@
 token;desc_de;desc_en
 Update.Status;Update Status;Update Status
 Update.Type;Update Type;Update Type
+Barrier-Free.Ebook;Barrier-Free.Ebook;Barrier-Free.Ebook
+Barrier-Free.Pdf;Barrier-Free.Pdf;Barrier-Free.Pdf
+Barrier-Free.Video;Barrier-Free.Video;Barrier-Free.Video
+Barrier-Free.Database;Barrier-Free.Database;Barrier-Free.Database
 Contact.Content.Type; Contact Content Type; Contact Content Type
 Contact.Type; Contact Type; Contact Type
 Country;Country;Country
@@ -16,7 +20,7 @@ ComponentVariantName.Locale;Component VariantName Locale;Component VariantName L
 ComponentVariantName.Status;Component VariantName Status;Component VariantName Status
 ComponentVariantName.VariantType;Component VariantName VariantType;Component VariantName VariantType
 Org.Role;Org Role;Org Role
-Vendor.Role;Vendor Role;Vendor Role
+Org.Drm;Org Drm;Org Drm
 Package.Breakable;Package Breakable;Package Breakable
 Package.Consistent;Package Consistent;Package Consistent
 Package.ContentType;Package Content Type;Package Content Type
@@ -38,7 +42,8 @@ Platform.Service;Platform Service;Platform Service
 Platform.Software;Platform Software;Platform Software
 Platform.Statistics.Format;Platform Statistics Format;Platform Statistics Format
 Platform.Statistics.Update;Platform Statistics Update;Platform Statistics Update
-Platform.Sushi.Api.Authentication.Method;Platform Sushi Api Authentication Method;Platform Sushi Api Authentication Method
+Platform.Counter.Api.Authentication.Method;Platform Counter Api Authentication Method;Platform Counter Api Authentication Method
+Provider.Print.Download.Chapter;Print/Download Chapter;Print/Download Chapter
 Price.type;Price type;Price type
 Source.DataFormat;Source Data Format;Source Data Format
 Source.DataSupplyMethod;Source Data Supply Method;Source Data Supply Method
@@ -55,4 +60,7 @@ Vendor.SupportedLibrarySystem;Supported Library System;Supported Library System
 Vendor.ElectronicBilling;Electronic Billing;Electronic Billing
 Vendor.InvoiceDispatch;Invoice Dispatch;Invoice Dispatch
 Vendor.ElectronicDeliveryDelay;Electronic Delivery Delay;Electronic Delivery Delay
+Vendor.Role;Library Supplier Role;Library Supplier Role
 YN;YN;YN
+UYNP;UYNP;UYNP
+UYN;UYN;UYN

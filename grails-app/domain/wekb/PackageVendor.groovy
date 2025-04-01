@@ -39,4 +39,9 @@ class PackageVendor {
         log.debug("afterUpdate for ${this}")
         BeanStore.getCascadingUpdateService().update(this, lastUpdated)
     }
+
+    def beforeDelete() {
+        log.debug("beforeDelete for ${this}")
+        BeanStore.getCascadingUpdateService().update(this, lastUpdated)
+    }
 }

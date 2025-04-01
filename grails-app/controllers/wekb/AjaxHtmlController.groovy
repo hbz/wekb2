@@ -1245,9 +1245,37 @@ class AjaxHtmlController {
 
                 if (editable) {
                     org.invoicingYourself = params.invoicingYourself == RDStore.YN_YES.value ? true : false
+                    org.save()
                 } else {
                     flash.error = g.message(code: 'default.noPermissons')
                 }
+        } else {
+            fail = true
+        }
+
+        if (fail) {
+            flash.error = g.message(code: 'default.action.fail')
+        }
+
+        redirect(url: request.getHeader('referer'))
+    }
+
+    @Transactional
+    @Secured(['ROLE_EDITOR'])
+    def setShibbolethAuthentication() {
+        log.debug("setShibbolethAuthentication - ${params}")
+        Platform platform = Platform.get(params.id)
+        boolean fail = false
+
+        if (platform) {
+            def editable = accessService.checkEditableObject(platform, params)
+
+            if (editable) {
+                platform.shibbolethAuthentication = params.shibbolethAuthentication == RDStore.YN_YES.value ? RDStore.YN_YES : RDStore.YN_NO
+                platform.save()
+            } else {
+                flash.error = g.message(code: 'default.noPermissons')
+            }
         } else {
             fail = true
         }

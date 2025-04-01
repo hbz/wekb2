@@ -29,7 +29,7 @@
         </div>
 
         <button class="ui button primary" type="submit" value="changeArchivingAgencies"
-                name="processOption">Do bulk process to the selected items</button>
+                name="processOption">Start Bulk Process</button>
 
         <br>
         <br>

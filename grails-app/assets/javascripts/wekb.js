@@ -16,17 +16,23 @@
 
 //=require loadEcharts.js
 
+//=require modules/icon.js
+
 //=require modules/verticalNavi.js
 
 //=require modules/paginationNavi.js
+
+//=require modules/responsiveTables.js
 
 console.log('+ wekb.js')
 
 
 $(function () {
 
+    a11yIcon.go();
     verticalNavi.go();
     paginationNavi.go();
+    responsiveTables.go();
 
     $('.ui.sticky')
         .sticky({
@@ -71,6 +77,7 @@ $(function () {
         '			<div class="editable-buttons">' +
         '			</div>' +
         '		</div>' +
+        '        <div class="editable-error-block"></div>' +
         '        <div id="characters-count"></div>' +
         '		</div>' +
         '	</div>' +
@@ -81,13 +88,13 @@ $(function () {
         validate: function(value) {
             if ($(this).attr('data-format') && value) {
                 if(! (value.match(/^\d{4}-\d{1,2}-\d{1,2}$/)) ) {
-                    return "Wrong format";
+                    return "Invalid format.";
                 }
             }
 
             if ($(this).attr('data-required')) {
                 if($.trim(value) == '') {
-                    return 'This field is required';
+                    return "This field is required";
                 }
             }
             // custom validate functions via semui:xEditable validation="xy"
@@ -95,26 +102,35 @@ $(function () {
             if (dVal) {
                 if (dVal.includes('notEmpty')) {
                     if($.trim(value) == '') {
-                        return "This field is not allowed to be empty";
+                        return "This field cannot be left empty.";
                     }
                 }
                 if (dVal.includes('url')) {
                     var regex = /^(https?|ftp|http):\/\/(.)*/;
                     var test = regex.test($.trim(value)) || $.trim(value) == ''
                     if (! test) {
-                        return "The url must beginn with 'http://' or 'https://' or 'ftp://'."
+                        return "The URL must begin with \"http://\", \"https://\", or \"ftp://\"."
                     }
                 }
                 if (dVal.includes('email')) {
                     let regex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)+$/
                     let test = regex.test($.trim(value)) || $.trim(value) === ''
                     if(!test) {
-                        return "Please check your mail-addres!"
+                        return "Please enter a valid email address."
+                    }
+                }
+                if (dVal.includes('password')) {
+                    let regex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!$%&@#^+*~=:;])(?=\S+$).{8,20}$/
+                    let test = regex.test($.trim(value)) || $.trim(value) === ''
+                    if(!test) {
+                        return "The password must be between 8 and 20 characters long." +
+                            "It must contain at least one uppercase letter, one lowercase letter, one number and one special character from the list ( !\$%&@#^+*~=:; )." +
+                            "Spaces are not allowed."
                     }
                 }
                 if (dVal.includes('maxlength')) {
                     if(value.length > $(this).attr("data-maxlength")) {
-                        return "The value is to long!";
+                        return "The value is too long.";
                     }
                 }
             }
@@ -126,7 +142,7 @@ $(function () {
         },
         error: function(response, newValue) {
             if(response.status === 500) {
-                return 'Service unavailable. Please try later.';
+                return "Service unavailable. Please try again later.";
             } else {
                 return response.responseText;
             }
@@ -168,6 +184,21 @@ $(function () {
     });
 
     $('.xEditableManyToOne').editable({
+        validate: function(value) {
+            if ($(this).attr('data-required')) {
+                if($.trim(value) == '') {
+                    return "This field is required";
+                }
+            }
+            var dVal = $(this).attr('data-validation')
+            if (dVal) {
+                if (dVal.includes('notEmpty')) {
+                    if($.trim(value) == '') {
+                        return "This field cannot be left empty.";
+                    }
+                }
+            }
+        },
         tpl: '<select class="ui search selection dropdown"></select>',
         success: function(response, newValue) {
             if(response) {
@@ -180,13 +211,13 @@ $(function () {
 
     $('#spotlightSearch').search({
         error : {
-            source      : 'Cannot search. No source used, and Semantic API module was not included',
-            noResults   : 'Your search returned no results',
-            logging     : 'Error in debug logging, exiting.',
-            noTemplate  : 'A valid template name was not specified.',
-            serverError : 'There was an issue with querying the server.',
-            maxResults  : 'Results must be an array to use maxResults setting',
-            method      : 'The method you called is not defined.'
+            source      : 'Cannot perform search. No source specified, and Semantic API module not included.',
+            noResults   : 'No results found for your search.',
+            logging     : 'Error encountered during debug logging; operation aborted.',
+            noTemplate  : 'No valid template name specified.',
+            serverError : 'An issue occurred while querying the server.',
+            maxResults  : 'The maxResults setting requires an array of results.',
+            method      : 'The specified method is not defined.'
         },
 
         type: 'category',
@@ -245,13 +276,13 @@ $(function () {
             forceSelection: false,
             preserveHTML : false,
             error : {
-                source      : 'Cannot search. No source used, and Semantic API module was not included',
-                noResults   : 'Your search returned no results',
-                logging     : 'Error in debug logging, exiting.',
-                noTemplate  : 'A valid template name was not specified.',
-                serverError : 'There was an issue with querying the server.',
-                maxResults  : 'Results must be an array to use maxResults setting',
-                method      : 'The method you called is not defined.'
+                source      : 'Cannot perform search. No source specified, and Semantic API module not included.',
+                noResults   : 'No results found for your search.',
+                logging     : 'Error encountered during debug logging; operation aborted.',
+                noTemplate  : 'No valid template name specified.',
+                serverError : 'An issue occurred while querying the server.',
+                maxResults  : 'The maxResults setting requires an array of results.',
+                method      : 'The specified method is not defined.'
             },
             apiSettings: {
                 // this url parses query server side and returns filtered results
@@ -286,6 +317,5 @@ $(function () {
     $('.wekb.popup').each(function() {
         $(this).popup()
     });
-
 });
 

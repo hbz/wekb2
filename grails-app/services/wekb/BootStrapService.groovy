@@ -16,6 +16,8 @@ import javax.servlet.http.HttpServletRequest
 @Transactional
 class BootStrapService {
 
+    RefdataReorderService refdataReorderService
+
     GrailsApplication grailsApplication
     ComponentStatisticService ComponentStatisticService
     ESWrapperService ESWrapperService
@@ -40,11 +42,14 @@ class BootStrapService {
             def adminRole = Role.findByAuthority('ROLE_ADMIN') ?: new Role(authority: 'ROLE_ADMIN', roleType: 'global').save(failOnError: true)
             def apiRole = Role.findByAuthority('ROLE_API') ?: new Role(authority: 'ROLE_API', roleType: 'global').save(failOnError: true)
             def suRole = Role.findByAuthority('ROLE_SUPERUSER') ?: new Role(authority: 'ROLE_SUPERUSER', roleType: 'global').save(failOnError: true)
-            def sushiRole = Role.findByAuthority('ROLE_SUSHI') ?: new Role(authority: 'ROLE_SUSHI', roleType: 'global').save(failOnError: true)
+            def counterRole = Role.findByAuthority('ROLE_COUNTER') ?: new Role(authority: 'ROLE_COUNTER', roleType: 'global').save(failOnError: true)
             def vendorEditorRole = Role.findByAuthority('ROLE_VENDOR_EDITOR') ?: new Role(authority: 'ROLE_VENDOR_EDITOR', roleType: 'global').save(failOnError: true)
         }
 
         setRefDatas()
+
+        log.debug("reorderRefdata ..")
+        refdataReorderService.reorderRefdata()
 
         log.info("Ensure default Identifier namespaces")
         def namespaces = [

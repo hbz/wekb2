@@ -26,15 +26,21 @@
             <g:if test="${curatoryGroups}">
                 <dt class="control-label">User-Emails:</dt>
                 <dd>
-                    <div class="ui bulleted list">
+                    <div class="ui middle aligned divided list">
                         <g:each in="${curatoryGroups.sort { it.name }}" var="curatoryGroup">
                             <g:each in="${curatoryGroup.curatoryGroupUsers.sort { it.user?.email }}" var="curatoryGroupUser">
                                 <g:if test="${curatoryGroupUser.user.email}">
                                     <div class="item">
-                                        ${curatoryGroupUser.user.email}
-                                        <a href="mailto:${curatoryGroupUser.user.email}" class="ui icon">
-                                            <i class="mail icon"></i>
-                                        </a>
+                                        <div class="right floated content">
+                                            <a href="mailto:${curatoryGroupUser.user.email}" class="ui icon button">
+                                                <i class="mail icon"></i>
+                                            </a>
+                                        </div>
+                                        <div class="content">
+                                            <div class="header">
+                                                ${curatoryGroupUser.user.email}
+                                            </div>
+                                        </div>
                                     </div>
                                 </g:if>
                             </g:each>

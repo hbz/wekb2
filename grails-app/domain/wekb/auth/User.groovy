@@ -5,8 +5,10 @@ import groovy.util.logging.Slf4j
 import wekb.CuratoryGroup
 import wekb.CuratoryGroupUser
 import wekb.RefdataValue
+import wekb.UpdatePackageInfo
 import wekb.helper.BeanStore
 import wekb.system.SavedSearch
+import wekb.utils.PasswordUtils
 
 import javax.persistence.Transient
 import java.lang.reflect.Field

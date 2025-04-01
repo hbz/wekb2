@@ -4,6 +4,15 @@
         <semui:tabsItemWithoutLink tab="invoice" defaultTab="invoice" activeTab="${params.activeTab}">
             Invoicing
         </semui:tabsItemWithoutLink>
+      %{--  <semui:tabsItemWithoutLink  tab="supportedLicencingModels" activeTab="${params.activeTab}">
+            Supported Licencing Models
+        </semui:tabsItemWithoutLink>--}%
+        <semui:tabsItemWithoutLink  tab="usageRights" activeTab="${params.activeTab}">
+            Usage Rights
+        </semui:tabsItemWithoutLink>
+        <semui:tabsItemWithoutLink tab="metdaServices" activeTab="${params.activeTab}">
+            Metadata Services
+       </semui:tabsItemWithoutLink>
         <semui:tabsItemWithoutLink tab="identifiers" activeTab="${params.activeTab}" counts="${d.ids.size()}">
             Identifiers
         </semui:tabsItemWithoutLink>
@@ -34,7 +43,7 @@
                 </dt>
                 <dd>
                     <g:if test="${editable}">
-                        <g:form controller="ajaxHtml" action="setInvoicingYourself" id="${d.id}">
+                        <g:form controller="ajaxHtml" action="setInvoicingYourself" id="${d.id}" params="[curationOverride: params.curationOverride]">
                             <g:select from="${RefdataCategory.lookup(RCConstants.YN).sort { it.value }}"
                                       class="ui dropdown fluid"
                                       id="invoicingYourself"
@@ -96,7 +105,7 @@
                                         <br>
                                         <br>
 
-                                        <semui:modal id="electronicBillingsModal" title="Add supported Library System">
+                                        <semui:modal id="electronicBillingsModal" title="Add Electronic Invoice Format">
 
                                             <g:form controller="ajaxHtml" action="addToCollection" class="ui form">
                                                 <input type="hidden" name="__context" value="${d.getOID()}"/>
@@ -160,7 +169,7 @@
                                         <br>
                                         <br>
 
-                                        <semui:modal id="invoiceDispatchsModal" title="Add supported Library System">
+                                        <semui:modal id="invoiceDispatchsModal" title="Add Invoice dispatch">
 
                                             <g:form controller="ajaxHtml" action="addToCollection" class="ui form">
                                                 <input type="hidden" name="__context" value="${d.getOID()}"/>
@@ -186,8 +195,7 @@
                                     Paper Invoice
                                 </dt>
                                 <dd>
-                                    <semui:xEditableRefData owner="${d}" field="paperInvoice"
-                                                            config="${RCConstants.YN}"/>
+                                    <semui:xEditableBoolean owner="${d}" field="paperInvoice"/>
                                 </dd>
                             </dl>
                             <dl>
@@ -195,8 +203,7 @@
                                     Management of Credits
                                 </dt>
                                 <dd>
-                                    <semui:xEditableRefData owner="${d}" field="managementOfCredits"
-                                                            config="${RCConstants.YN}"/>
+                                    <semui:xEditableBoolean owner="${d}" field="managementOfCredits"/>
                                 </dd>
                             </dl>
                             <dl>
@@ -204,8 +211,7 @@
                                     Processing of compensation payments (credits/subsequent debits)
                                 </dt>
                                 <dd>
-                                    <semui:xEditableRefData owner="${d}" field="processingOfCompensationPayments"
-                                                            config="${RCConstants.YN}"/>
+                                    <semui:xEditableBoolean owner="${d}" field="processingOfCompensationPayments"/>
                                 </dd>
                             </dl>
                             <dl>
@@ -213,8 +219,7 @@
                                     Individual invoice design
                                 </dt>
                                 <dd>
-                                    <semui:xEditableRefData owner="${d}" field="individualInvoiceDesign"
-                                                            config="${RCConstants.YN}"/>
+                                    <semui:xEditableBoolean owner="${d}" field="individualInvoiceDesign"/>
                                 </dd>
                             </dl>
                         </div>
@@ -225,7 +230,7 @@
         <div class="content wekb-inline-lists">
             <dl>
                 <dt class="control-label">
-                    Invoicing possible by vendor
+                    Invoicing possible by library supplier
                 </dt>
                 <dd>
 
@@ -233,7 +238,7 @@
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th>Vendor</th>
+                            <th>Library Supplier</th>
                             <g:if test="${editable}">
                                 <th>Action</th>
                             </g:if>
@@ -261,12 +266,12 @@
 
                     <g:if test="${editable}">
                         <a class="ui right floated primary button" href="#"
-                           onclick="$('#invoicingVendorsModal').modal('show');">Add Vendor</a>
+                           onclick="$('#invoicingVendorsModal').modal('show');">Add Library Supplier</a>
 
                         <br>
                         <br>
 
-                        <semui:modal id="invoicingVendorsModal" title="Add Vendor">
+                        <semui:modal id="invoicingVendorsModal" title="Add Library Supplier">
 
                             <g:form controller="ajaxHtml" action="addToCollection" class="ui form">
                                 <input type="hidden" name="__context" value="${d.getOID()}"/>
@@ -277,7 +282,7 @@
 
 
                                 <div class="field">
-                                    <label>Vendor:</label> <semui:simpleReferenceDropdown
+                                    <label>Library Supplier:</label> <semui:simpleReferenceDropdown
                                         name="vendor"
                                         baseClass="wekb.Vendor"/>
                                 </div>
@@ -286,6 +291,154 @@
                     </g:if>
                 </dd>
             </dl>
+        </div>
+    </semui:tabsItemContent>
+
+
+    %{--<semui:tabsItemContent tab="supportedLicencingModels" activeTab="${params.activeTab}">
+        <div class="content wekb-inline-lists">
+            <dl>
+                <dt class="control-label">
+                    Collections
+                </dt>
+                <dd>
+                    <semui:xEditableRefData owner="${d}" field="collections"
+                                            config="${RCConstants.YN}"/>
+                </dd>
+            </dl>
+            <dl>
+                <dt class="control-label">
+                    Pick and Choose
+                </dt>
+                <dd>
+                    <semui:xEditableRefData owner="${d}" field="pickAndChoose"
+                                            config="${RCConstants.YN}"/>
+                </dd>
+            </dl>
+            <dl>
+                <dt class="control-label">
+                    Prepaid
+                </dt>
+                <dd>
+                    <semui:xEditableRefData owner="${d}" field="prepaid"
+                                            config="${RCConstants.YN}"/>
+                </dd>
+            </dl>
+            <dl>
+                <dt class="control-label">
+                    Upfront
+                </dt>
+                <dd>
+                    <semui:xEditableRefData owner="${d}" field="upfront"
+                                            config="${RCConstants.YN}"/>
+                </dd>
+            </dl>
+            <dl>
+                <dt class="control-label">
+                    Temporary Access
+                </dt>
+                <dd>
+                    <semui:xEditableRefData owner="${d}" field="temporaryAccess"
+                                            config="${RCConstants.YN}"/>
+                </dd>
+            </dl>
+            <dl>
+                <dt class="control-label">
+                    Perpetual Access
+                </dt>
+                <dd>
+                    <semui:xEditableRefData owner="${d}" field="perpetualAccess"
+                                            config="${RCConstants.YN}"/>
+                </dd>
+            </dl>
+        </div>
+    </semui:tabsItemContent>--}%
+
+    <semui:tabsItemContent tab="usageRights" activeTab="${params.activeTab}">
+        <div class="content wekb-inline-lists">
+            <dl>
+                <dt class="control-label">
+                    DRM
+                </dt>
+                <dd>
+                    <semui:xEditableRefData owner="${d}" field="drm"
+                                            config="${RCConstants.ORG_DRM}"/>
+                </dd>
+            </dl>
+            <dl>
+                <dt class="control-label">
+                    Remote Access
+                </dt>
+                <dd>
+                    <semui:xEditableRefData owner="${d}" field="remoteAccess"
+                                            config="${RCConstants.YN}"/>
+                </dd>
+            </dl>
+            <dl>
+                <dt class="control-label">
+                    Print/Download
+                </dt>
+                <dd>
+                    <semui:xEditableRefData owner="${d}" field="printDownloadChapter"
+                                            config="${RCConstants.PROVIDER_PRINT_DOWNLOAD}"/>
+                </dd>
+            </dl>
+            <dl>
+                <dt class="control-label">
+                    Quotes By Copy/Paste
+                </dt>
+                <dd>
+                    <semui:xEditableRefData owner="${d}" field="quotesByCopyPaste"
+                                            config="${RCConstants.YN}"/>
+                </dd>
+            </dl>
+        </div>
+    </semui:tabsItemContent>
+
+    <semui:tabsItemContent tab="metdaServices" activeTab="${params.activeTab}">
+        <div class="content wekb-inline-lists">
+            <dl>
+                <dt class="control-label">
+                    <g:message code="org.metadataDownloaderURL"/>
+                </dt>
+                <dd>
+                    <semui:xEditable owner="${d}" field="metadataDownloaderURL" validation="url" outGoingLink="true"/>
+                </dd>
+            </dl>
+            <dl>
+                <dt class="control-label">
+                    <g:message code="org.kbartDownloaderURL"/>
+                </dt>
+                <dd>
+                    <semui:xEditable owner="${d}" field="kbartDownloaderURL" validation="url" outGoingLink="true"/>
+                </dd>
+            </dl>
+            <dl>
+                <dt class="control-label">
+                    URL price lists
+                </dt>
+                <dd>
+                    <semui:xEditable owner="${d}" field="urlPristLists"/>
+                </dd>
+            </dl>
+            <dl>
+                <dt class="control-label">
+                    Alerts about new publications within packages
+                </dt>
+                <dd>
+                    <semui:xEditableRefData owner="${d}" field="alertNewEbookPackages"
+                                            config="${RCConstants.YN}"/>
+                </dd>
+            </dl>
+           %{-- <dl>
+                <dt class="control-label">
+                    Alerts about exchange of individual titles within e-book packages
+                </dt>
+                <dd>
+                    <semui:xEditableRefData owner="${d}" field="alertExchangeEbookPackages"
+                                            config="${RCConstants.YN}"/>
+                </dd>
+            </dl>--}%
         </div>
     </semui:tabsItemContent>
 

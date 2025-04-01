@@ -86,7 +86,7 @@ class Api2Controller {
                     result = api2Service.search(result, params)
                 } catch (Throwable e) {
                     result.code = 'error'
-                    result.message = e.message
+                    result.message = "Error in Api. For more informationen see in log."
                     log.error("Problem by search api: ", e)
                 }
             }
@@ -166,13 +166,25 @@ class Api2Controller {
 
         if(result.code == 'success') {
             def results = []
-            CuratoryGroup.list(sort: 'name').each {
-                results << [
-                        'id'    : it.id,
-                        'name'  : it.name,
-                        'status': it.status?.value ?: null,
-                        'uuid'  : it.uuid
-                ]
+            switch(params.componentType) {
+                case 'Package':
+                    List rows = CuratoryGroup.executeQuery('select new map(cg.id as id, cg.name as name, cg.status.value as status, cg.uuid as uuid, pkg.uuid as packageUuid) from Package pkg join pkg.curatoryGroups pcg join pcg.curatoryGroup cg order by cg.name')
+                    results.addAll(rows)
+                    break
+                case 'Platform':
+                    List rows = CuratoryGroup.executeQuery('select new map(cg.id as id, cg.name as name, cg.status.value as status, cg.uuid as uuid, plat.uuid as platformUuid) from Platform plat join plat.curatoryGroups pcg join pcg.curatoryGroup cg order by cg.name')
+                    results.addAll(rows)
+                    break
+                default:
+                    CuratoryGroup.list(sort: 'name').each {
+                        results << [
+                                'id'    : it.id,
+                                'name'  : it.name,
+                                'status': it.status?.value ?: null,
+                                'uuid'  : it.uuid
+                        ]
+                    }
+                    break
             }
             result.result = results
             //Add information to result
@@ -186,11 +198,11 @@ class Api2Controller {
     }
 
     def sushiSources() {
-        log.info("Api2Controller:sushiSources ${params}")
-        Map<String, Object> result = checkPermisson(params, 'ROLE_SUSHI')
+        log.info("Api2Controller:counterSources ${params}")
+        Map<String, Object> result = checkPermisson(params, 'ROLE_COUNTER')
 
         if(result.code == 'success') {
-           result = api2Service.sushiSources(params, result)
+           result = api2Service.counterSources(params, result)
         }
         render result as JSON
     }
@@ -224,7 +236,7 @@ class Api2Controller {
         user = springSecurityService.getCurrentUser()
 
         if(checkRole){
-            if (!user.hasRole('ROLE_SUSHI')) {
+            if (!user.hasRole('ROLE_COUNTER')) {
                 result.code = 'error'
                 result.message = 'This user does not have permission to access the api!'
                 log.warn('checkPermisson: This user does not have permission to access the api!')
