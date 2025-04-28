@@ -2121,6 +2121,8 @@ class Api2Service {
                     }
                     else if(fieldMap.qparam == 'name')
                         sqlParams[fieldMap.qparam] = '%'+cleaned_params[fieldMap.qparam]+'%'
+                    else if(fieldMap.qparam == 'status' && !(cleaned_params.status instanceof List))
+                        sqlParams[fieldMap.qparam] = sql.getDataSource().getConnection().createArrayOf('bigint', [genericOIDService.resolveOID(cleaned_params[fieldMap.qparam]).id] as Object[] ) //because clause is hard-coded to any()
                     else
                         sqlParams[fieldMap.qparam] = cleaned_params[fieldMap.qparam]
                 }
