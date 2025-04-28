@@ -308,7 +308,21 @@ public class HQLBuilder {
         break;
       case 'in':
         hql_builder_context."${addToQuery}".add("${crit.defn.contextTree.negate?'not ':''}${scoped_property} in (:${crit.defn.qparam})")
-        hql_builder_context.bindvars[crit.defn.qparam] = crit.value
+        if ( crit.defn.type=='lookup' || crit.defn.type=='dropDown' ) {
+          List values = [], parsedValues = []
+          if(crit.value instanceof String)
+            values << crit.value
+          else values.addAll(crit.value)
+          values.each { String rawVal ->
+            def value = hql_builder_context.genericOIDService.resolveOID(rawVal)
+            value = (crit.defn.propType == 'Boolean') ? (value == RDStore.YN_YES ? true : false) : value
+            parsedValues << value
+          }
+          hql_builder_context.bindvars[crit.defn.qparam] = parsedValues
+        }
+        else {
+          hql_builder_context.bindvars[crit.defn.qparam] = crit.value
+        }
         break
 
       case 'ilike':
