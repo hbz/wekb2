@@ -190,6 +190,34 @@ class Api2Service {
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'ddcs'],
                                 ],
                                 [
+                                        type       : 'lookup',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        refdataCategory    : RCConstants.PACKAGE_PAYMENT_TYPE,
+                                        qparam     : 'paymentType',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'paymentType']
+                                ],
+                                [
+                                        type       : 'lookup',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        refdataCategory    : RCConstants.PACKAGE_OPEN_ACCESS,
+                                        qparam     : 'openAccess',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'openAccess']
+                                ],
+                                [
+                                        type       : 'lookup',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        refdataCategory    : RCConstants.PAA_ARCHIVING_AGENCY,
+                                        qparam     : 'archivingAgency',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'paas']
+                                ],
+                                [
+                                        type       : 'lookup',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        refdataCategory    : RCConstants.PACKAGE_CONTENT_TYPE,
+                                        qparam     : 'contentType',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'contentType']
+                                ],
+                                [
                                         qparam     : 'curatoryGroupType',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'curatoryGroups.curatoryGroup.type.value']
                                 ],
