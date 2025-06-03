@@ -202,7 +202,6 @@ abstract class KBComponent implements Auditable{
    */
   User lastUpdatedBy
 
-  String lastUpdateComment
 
   // Timestamps
   Date dateCreated
@@ -256,7 +255,6 @@ abstract class KBComponent implements Auditable{
     lastSeen column: 'kbc_last_seen'
     insertBenchmark column: 'kbc_insert_benchmark'
     updateBenchmark column: 'kbc_update_benchmark'
-    lastUpdateComment column: 'kbc_last_update_comment'
     componentHash column: 'kbc_component_hash', index: 'kbc_component_hash_idx'
     bucketHash column: 'kbc_bucket_hash', index: 'kbc_bucket_hash_idx'
     componentDiscriminator column: 'kbc_component_descriminator'
@@ -273,7 +271,6 @@ abstract class KBComponent implements Auditable{
     normname(nullable: true, blank: false, maxSize: 2048)
     status(nullable: true, blank: false)
     lastSeen(nullable: true, blank: false)
-    lastUpdateComment(nullable: true, blank: false)
     insertBenchmark(nullable: true, blank: false)
     updateBenchmark(nullable: true, blank: false)
     bucketHash(nullable: true, blank: false)

@@ -24,8 +24,6 @@ class Package  extends AbstractBase implements Auditable {
 
   String description
 
-  String lastUpdateComment
-
   Org provider
   Platform nominalPlatform
 
@@ -100,7 +98,6 @@ class Package  extends AbstractBase implements Auditable {
 
     freeTrialPhase column: 'pkg_free_trial_phase', type: 'text'
     description column: 'pkg_description', type: 'text'
-    lastUpdateComment column: 'pkg_last_update_comment', type: 'text'
     normname column: 'pkg_normname', type: 'text', index: 'pkg_normname_idx'
 
     ddcs             joinTable: [
@@ -134,7 +131,6 @@ class Package  extends AbstractBase implements Auditable {
     freeTrialPhase(nullable: true, blank: true)
 
     description(nullable: true, blank: true)
-    lastUpdateComment(nullable: true, blank: true)
     scope(nullable: true)
     breakable(nullable: true)
     consistent(nullable: true)
