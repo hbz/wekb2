@@ -49,7 +49,6 @@ class Vendor extends AbstractBase implements Auditable {
   ]
 
   static hasMany = [
-    roles: RefdataValue,
     contacts: Contact,
     curatoryGroups   : CuratoryGroupVendor,
     packages: PackageVendor,

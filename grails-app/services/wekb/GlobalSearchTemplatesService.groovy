@@ -2377,16 +2377,6 @@ class GlobalSearchTemplatesService {
                                         placeholder: 'Component Status',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'status']
                                 ],
-                                [
-                                        type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
-                                        filter1    : RCConstants.VENDOR_ROLE,
-                                        prompt     : 'Role',
-                                        msgCode    : 'vendor.role',
-                                        qparam     : 'qp_roles',
-                                        placeholder: 'Role',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'roles'],
-                                ],
                                 //---------------------------------------------------------------------------------------------------
                                 [
                                         type       : 'dropDown',
