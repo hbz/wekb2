@@ -42,31 +42,6 @@
 
         <g:if test="${d.id != null}">
             <dl>
-                <dt class="control-label">
-                    <g:message code="vendor.role"/>
-                </dt>
-                <dd>
-                    <div class="ui bulleted list">
-                        <g:each in="${d.roles?.sort { it.getI10n('value') }}" var="t">
-                            <div class="item">
-                                ${t.value}
-                                <g:if test="${editable}">
-                                    <g:link class='ui mini button negative' controller='ajaxHtml'
-                                            action='unlinkManyToMany'
-                                            params="${["__context": "${d.getOID()}", "__property": "roles", "__itemToRemove": "${t.getOID()}"]}">Delete</g:link>
-                                </g:if>
-                            </div>
-                        </g:each>
-                    </div>
-
-                    <g:if test="${editable}">
-                        <a class="ui right floated primary button" href="#"
-                           onclick="$('#rolesModal').modal('show');">Add Role</a>
-
-                        <br>
-                        <br>
-                    </g:if>
-                </dd>
             </dl>
             <dl>
                 <dt class="control-label">
@@ -168,21 +143,6 @@
                     </div>
 
                 
-                </g:form>
-            </semui:modal>
-
-            <semui:modal id="rolesModal" title="Add Role">
-
-                <g:form controller="ajaxHtml" action="addToStdCollection" class="ui form">
-                    <input type="hidden" name="__context" value="${d.getOID()}"/>
-                    <input type="hidden" name="__property" value="roles"/>
-                    <input type="hidden" name="curationOverride" value="${params.curationOverride}"/>
-
-                    <div class="field">
-                        <label>Role:</label> <semui:simpleReferenceDropdown name="__relatedObject"
-                                                                            baseClass="wekb.RefdataValue"
-                                                                            filter1="${RCConstants.ORG_ROLE}"/>
-                    </div>
                 </g:form>
             </semui:modal>
 

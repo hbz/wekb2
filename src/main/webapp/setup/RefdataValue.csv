@@ -597,7 +597,6 @@ Vendor.InvoiceDispatch;FTP-Server;FTP-Serverl;FTP-Server
 Vendor.InvoiceDispatch;Peppol;Peppol;Peppol
 Vendor.ElectronicDeliveryDelay;E-Mail;E-Mail;E-Mail
 Vendor.ElectronicDeliveryDelay;EDI;EDI;EDI
-Vendor.Role;Vendor;Library Supplier;Library Supplier
 YN;No;No;No
 YN;Yes;Yes;Yes
 UYNP;Unavailable;Not Available;Not Available
