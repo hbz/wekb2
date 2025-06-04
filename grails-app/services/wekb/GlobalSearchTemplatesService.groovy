@@ -2663,6 +2663,16 @@ class GlobalSearchTemplatesService {
                                         propType   : 'Boolean',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'passwordExpired'],
                                 ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.CURATORY_GROUP_TYPE,
+                                        prompt     : 'Type',
+                                        msgCode     : 'default.type',
+                                        qparam     : 'qp_type',
+                                        placeholder: 'Type',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'curatoryGroupUsers.curatoryGroup.type'],
+                                ],
                         ],
                         qbeResults: [
                                 [heading: 'Username', property: 'username', link: true, sort: 'username', linkInfo: 'Link to User'],
