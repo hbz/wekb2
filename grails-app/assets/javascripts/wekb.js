@@ -317,5 +317,37 @@ $(function () {
     $('.wekb.popup').each(function() {
         $(this).popup()
     });
+
+
+    // universal copy item
+    $('.js-copyTrigger').click(function(){
+        var element = $(this).parents('.js-copyTriggerParent').find('.js-copyTopic');
+        var html = $(element).html();
+        var $temp = $("<input>");
+        var dontShow;
+        $(element).hasClass('la-display-none') ? dontShow = true : dontShow = false;
+        $("body").append($temp);
+        $temp.val($.trim($(element).text())).select();
+        document.execCommand("copy");
+        clearTimeout(timeout);
+        dontShow ?  $(element).css('display','inline'): $(element).addClass('');
+        $(element).html('Copied!');
+        var timeout = setTimeout(function() {
+            $(element).html(html);
+            dontShow ? $(element).css('display','none') : $(element).addClass('');
+        }, 2000); // change the HTML after 2 seconds
+        $temp.remove();
+    });
+    $('.js-copyTrigger').hover(
+        function(){ $(this).parent().find('.la-js-copyTriggerIcon').addClass('open') },
+        function(){ $(this).parent().find('.la-js-copyTriggerIcon').removeClass('open') }
+    );
+
+    $('.wekb-filter').on( 'submit', function() {
+        let fields = $(this).find('input[type=text], input[type=hidden], select');
+        let emptyFields = fields.filter(function(){ return !this.value; });
+        // remove unused filter params
+        emptyFields.attr('disabled', 'disabled');
+    });
 });
 
