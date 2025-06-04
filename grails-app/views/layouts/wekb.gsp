@@ -1,4 +1,4 @@
-<%@ page import="wekb.utils.ServerUtils; wekb.utils.ServerUtils; wekb.helper.RDStore;" %>
+<%@ page import="wekb.utils.ServerUtils; wekb.utils.ServerUtils; wekb.helper.RDStore; wekb.RefdataValue;" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -58,7 +58,7 @@
                     params="[qbe: 'g:platforms']"><g:message code="public.platforms"/></g:link>
             <g:link class="item we-link" controller="search" action="componentSearch"
                     params="[qbe: 'g:orgs']"><g:message code="public.providers"/></g:link>
-            <g:link class="item we-link" controller="search" action="componentSearch" params="[qbe: 'g:tipps']"><g:message code="public.titles"/></g:link>
+            <g:link class="item we-link" controller="search" action="componentSearch" params="[qbe: 'g:tipps', qp_status: RefdataValue.class.name + ':' + RDStore.KBC_STATUS_CURRENT.id]"><g:message code="public.titles"/></g:link>
             <g:link class="item we-link" controller="search" action="componentSearch"
                     params="[qbe: 'g:vendors']"><g:message code="public.vendors"/></g:link>
         </div>

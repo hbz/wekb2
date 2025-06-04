@@ -875,7 +875,7 @@ class GlobalSearchTemplatesService {
                                         qparam     : 'qp_contentType',
                                         placeholder: 'Content Type',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'contentType'],
-                                        advancedSearch: [title: "Search Packages by ...", category: 'Package']
+                                        advancedSearch: [title: "Other fields", category: 'Package']
                                 ],
                                 [
                                         type       : 'dropDown',
@@ -886,7 +886,7 @@ class GlobalSearchTemplatesService {
                                         qparam     : 'qp_status',
                                         placeholder: 'Component Status',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'status'],
-                                        advancedSearch: [title: "Search Packages by ...", category: 'Package']
+                                        advancedSearch: [title: "Other fields", category: 'Package']
                                 ],
                                 [
                                         type       : 'dropDown',
@@ -897,7 +897,7 @@ class GlobalSearchTemplatesService {
                                         qparam     : 'qp_ddc',
                                         placeholder: 'DDC',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'ddcs'],
-                                        advancedSearch: [title: "Search Packages by ...", category: 'Package']
+                                        advancedSearch: [title: "Other fields", category: 'Package']
                                 ],
                                 [
                                         type       : 'dropDown',
@@ -908,7 +908,7 @@ class GlobalSearchTemplatesService {
                                         qparam     : 'qp_paymentType',
                                         placeholder: 'Paid',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'paymentType'],
-                                        advancedSearch: [title: "Search Packages by ...", category: 'Package']
+                                        advancedSearch: [title: "Other fields", category: 'Package']
                                 ],
                                 [
                                         type       : 'dropDown',
@@ -919,7 +919,7 @@ class GlobalSearchTemplatesService {
                                         qparam     : 'qp_oa',
                                         placeholder: 'Open Access',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'openAccess'],
-                                        advancedSearch: [title: "Search Packages by ...", category: 'Package']
+                                        advancedSearch: [title: "Other fields", category: 'Package']
                                 ],
 
                                 [
@@ -931,9 +931,9 @@ class GlobalSearchTemplatesService {
                                         qparam     : 'qp_archivingAgency',
                                         placeholder: 'Package Archiving Agency',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'paas.archivingAgency'],
-                                        advancedSearch: [title: "Search Packages by ...", category: 'Package']
+                                        advancedSearch: [title: "Other fields", category: 'Package']
                                 ],
-                                //Title Filter
+                               /* //Title Filter
                                 [
                                         prompt     : 'Title',
                                         msgCode     : 'package.label',
@@ -994,7 +994,7 @@ class GlobalSearchTemplatesService {
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'tipps.accessType'],
                                         advancedSearch: [title: "Search Titles by ...", category: 'Title']
                                 ],
-                                /*[
+                                *//*[
                                         type     : 'dropDownGroup',
                                         dropDownType  : 'publisher',
                                         prompt     : 'Publisher',
@@ -1002,7 +1002,7 @@ class GlobalSearchTemplatesService {
                                         placeholder: 'Publisher',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'tipps.publisherName'],
                                         advancedSearch: [title: "Search Titles by ...", category: 'Title']
-                                ],*/
+                                ],*//*
                                 [
                                         prompt     : 'Publisher',
                                         msgCode     : 'titleinstancepackageplatform.label',
@@ -1028,7 +1028,7 @@ class GlobalSearchTemplatesService {
                                         advancedSearch: [title: "Search Titles by ...", category: 'Title']
                                 ],
 
-                                /* [
+                                *//* [
                                          type     : 'dropDownGroup',
                                          dropDownType  : 'subjectArea',
                                          prompt     : 'Subject Area',
@@ -1063,7 +1063,7 @@ class GlobalSearchTemplatesService {
                                          placeholder: 'Access End Date Year',
                                          contextTree: ['ctxtp': 'qry', 'comparator': 'eqYear', 'prop': 'tipps.accessEndDate'],
                                          advancedSearch: [title: "Search Titles by ...", category: 'Title']
-                                 ],*/
+                                 ],*//*
                                 [
                                         type       : 'dropDown',
                                         baseClass  : 'wekb.RefdataValue',
@@ -1237,7 +1237,7 @@ class GlobalSearchTemplatesService {
                                         placeholder: 'Counter R5 Counter Api Supported',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'nominalPlatform.counterR5CounterApiSupported'],
                                         advancedSearch: [title: "Search Platform by ...", category: 'Platform']
-                                ],
+                                ],*/
 
                         ],
                         qbeResults: [
@@ -1921,80 +1921,6 @@ class GlobalSearchTemplatesService {
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'ids.value']
                                 ],
                                 [
-                                        prompt     : 'Url',
-                                        msgCode    : 'titleinstancepackageplatform.url',
-                                        qparam     : 'qp_url',
-                                        placeholder: 'Url',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'url'],
-                                ],
-                                [
-                                        type       : 'dropDown',
-                                        baseClass  : 'wekb.Org',
-                                        prompt     : 'Provider',
-                                        msgCode    : 'provider.label',
-                                        qparam     : 'qp_provider',
-                                        placeholder: 'Provider',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'pkg.provider'],
-
-                                ],
-                                [
-                                        type       : 'dropDown',
-                                        baseClass  : 'wekb.Package',
-                                        prompt     : 'Package',
-                                        msgCode    : 'titleinstancepackageplatform.pkg.name',
-                                        qparam     : 'qp_pkg',
-                                        placeholder: 'Package',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'pkg']
-                                ],
-                                [
-                                        type       : 'dropDown',
-                                        baseClass  : 'wekb.Platform',
-                                        prompt     : 'Platform',
-                                        msgCode    : 'titleinstancepackageplatform.hostPlatform',
-                                        qparam     : 'qp_plat',
-                                        placeholder: 'Platform',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'hostPlatform']
-                                ],
-                                [
-                                        type       : 'dropDown',
-                                        baseClass  : 'wekb.CuratoryGroup',
-                                        prompt     : 'Curatory Group',
-                                        msgCode    : 'curatoryGroup.label',
-                                        qparam     : 'qp_curgroup',
-                                        placeholder: 'Curatory Group',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'pkg.curatoryGroups.curatoryGroup'],
-
-                                ],
-                                [
-                                        type     : 'dropDownGroup',
-                                        dropDownType  : 'publisher',
-                                        prompt     : 'Publisher',
-                                        msgCode    : 'titleinstancepackageplatform.publisherName',
-                                        qparam     : 'qp_publisherName',
-                                        placeholder: 'Publisher',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'publisherName'],
-                                ],
-                                [
-                                        type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
-                                        filter1    : RCConstants.TIPP_PUBLICATION_TYPE,
-                                        prompt     : 'Publication Type',
-                                        msgCode    : 'titleinstancepackageplatform.publicationType',
-                                        qparam     : 'qp_publicationType',
-                                        placeholder: 'Type of item',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'publicationType'],
-                                ],
-                                [
-                                        type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
-                                        filter1    : RCConstants.TIPP_MEDIUM,
-                                        prompt     : 'Medium',
-                                        msgCode    : 'titleinstancepackageplatform.medium',
-                                        qparam     : 'qp_medium',
-                                        placeholder: 'Medium of item',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'medium'],
-                                ],
-                                [
                                         prompt     : 'Author',
                                         msgCode    : 'titleinstancepackageplatform.firstAuthor',
                                         qparam     : 'qp_firstAuthor',
@@ -2010,79 +1936,23 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
-                                        filter1    : RCConstants.TIPP_ACCESS_TYPE,
-                                        prompt     : 'Access Type',
-                                        msgCode    : 'titleinstancepackageplatform.accessType',
-                                        qparam     : 'qp_accessType',
-                                        placeholder: 'Access Type',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'accessType'],
-                                ],
-                                [
-                                        type     : 'dropDownGroup',
-                                        dropDownType  : 'subjectArea',
-                                        prompt     : 'Subject Area',
-                                        msgCode    : 'titleinstancepackageplatform.subjectArea',
-                                        qparam     : 'qp_subjectArea_tipp',
-                                        placeholder: 'Subject Area',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'subjectArea'],
-                                ],
-                                [
-                                        type     : 'dropDownGroup',
-                                        dropDownType  : 'dateFirstOnlineYear',
-                                        prompt     : 'Date First Online Year',
-                                        msgCode    : 'titleinstancepackageplatform.dateFirstOnline',
-                                        qparam     : 'qp_dateFirstOnlineYear',
-                                        placeholder: 'Date First Online Year',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eqYear', 'prop': 'dateFirstOnline'],
-                                ],
-                                [
-                                        type     : 'dropDownGroup',
-                                        dropDownType  : 'accessStartDate',
-                                        prompt     : 'Access Start Date Year',
-                                        msgCode    : 'titleinstancepackageplatform.accessStartDate',
-                                        qparam     : 'qp_accessStartDate',
-                                        placeholder: 'Access Start Date Year',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eqYear', 'prop': 'accessStartDate'],
-                                ],
-                                [
-                                        type     : 'dropDownGroup',
-                                        dropDownType  : 'accessEndDate',
-                                        prompt     : 'Access End Date Year',
-                                        msgCode    : 'titleinstancepackageplatform.accessEndDate',
-                                        qparam     : 'qp_accessEndDate',
-                                        placeholder: 'Access End Date Year',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eqYear', 'prop': 'accessEndDate'],
+                                        baseClass  : 'wekb.Org',
+                                        prompt     : 'Provider',
+                                        msgCode    : 'provider.label',
+                                        qparam     : 'qp_provider',
+                                        placeholder: 'Provider',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'pkg.provider'],
+
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
-                                        filter1    : RCConstants.DDC,
-                                        prompt     : 'DDC',
-                                        msgCode    : 'titleinstancepackageplatform.ddcs',
-                                        qparam     : 'qp_ddc',
-                                        placeholder: 'DDC',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'ddcs'],
-                                ],
-                                [
-                                        type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
-                                        filter1    : RCConstants.TIPP_OPEN_ACCESS,
-                                        prompt     : 'Open Access',
-                                        msgCode    : 'titleinstancepackageplatform.openAccess',
-                                        qparam     : 'qp_openAccess',
-                                        placeholder: 'Open Access',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'openAccess'],
-                                ],
-                                [
-                                        type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
-                                        filter1    : RCConstants.COMPONENT_LANGUAGE,
-                                        prompt     : 'Language',
-                                        msgCode    : 'titleinstancepackageplatform.language',
-                                        qparam     : 'qp_language',
-                                        placeholder: 'Language',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'languages.language'],
+                                        baseClass  : 'wekb.CuratoryGroup',
+                                        prompt     : 'Curatory Group',
+                                        msgCode    : 'curatoryGroup.label',
+                                        qparam     : 'qp_curgroup',
+                                        placeholder: 'Curatory Group',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'pkg.curatoryGroups.curatoryGroup'],
+
                                 ],
                                 [
                                         type       : 'dropDown',
@@ -2093,7 +1963,121 @@ class GlobalSearchTemplatesService {
                                         qparam     : 'qp_status',
                                         placeholder: 'Status',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'status']
-                                ]
+                                ],
+
+
+
+                                //Other Filter
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.TIPP_ACCESS_TYPE,
+                                        prompt     : 'Access Type',
+                                        msgCode    : 'titleinstancepackageplatform.accessType',
+                                        qparam     : 'qp_accessType',
+                                        placeholder: 'Access Type',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'accessType'],
+                                        advancedSearch: [title: "Other fields", category: 'OtherFields']
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.TIPP_OPEN_ACCESS,
+                                        prompt     : 'Open Access',
+                                        msgCode    : 'titleinstancepackageplatform.openAccess',
+                                        qparam     : 'qp_openAccess',
+                                        placeholder: 'Open Access',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'openAccess'],
+                                        advancedSearch: [title: "Other fields", category: 'OtherFields']
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.TIPP_PUBLICATION_TYPE,
+                                        prompt     : 'Publication Type',
+                                        msgCode    : 'titleinstancepackageplatform.publicationType',
+                                        qparam     : 'qp_publicationType',
+                                        placeholder: 'Type of item',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'publicationType'],
+                                        advancedSearch: [title: "Other fields", category: 'OtherFields']
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.TIPP_MEDIUM,
+                                        prompt     : 'Medium',
+                                        msgCode    : 'titleinstancepackageplatform.medium',
+                                        qparam     : 'qp_medium',
+                                        placeholder: 'Medium of item',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'medium'],
+                                        advancedSearch: [title: "Other fields", category: 'OtherFields']
+                                ],
+                                [
+                                        type     : 'dropDownGroup',
+                                        dropDownType  : 'accessStartDate',
+                                        prompt     : 'Access Start Date Year',
+                                        msgCode    : 'titleinstancepackageplatform.accessStartDate',
+                                        qparam     : 'qp_accessStartDate',
+                                        placeholder: 'Access Start Date Year',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eqYear', 'prop': 'accessStartDate'],
+                                        advancedSearch: [title: "Other fields", category: 'OtherFields']
+                                ],
+                                [
+                                        type     : 'dropDownGroup',
+                                        dropDownType  : 'accessEndDate',
+                                        prompt     : 'Access End Date Year',
+                                        msgCode    : 'titleinstancepackageplatform.accessEndDate',
+                                        qparam     : 'qp_accessEndDate',
+                                        placeholder: 'Access End Date Year',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eqYear', 'prop': 'accessEndDate'],
+                                        advancedSearch: [title: "Other fields", category: 'OtherFields']
+                                ],
+                                [
+                                        type     : 'dropDownGroup',
+                                        dropDownType  : 'dateFirstOnlineYear',
+                                        prompt     : 'Date First Online Year',
+                                        msgCode    : 'titleinstancepackageplatform.dateFirstOnline',
+                                        qparam     : 'qp_dateFirstOnlineYear',
+                                        placeholder: 'Date First Online Year',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eqYear', 'prop': 'dateFirstOnline'],
+                                        advancedSearch: [title: "Other fields", category: 'OtherFields']
+                                ],
+                                [
+                                        type     : 'dropDownGroup',
+                                        dropDownType  : 'subjectArea',
+                                        prompt     : 'Subject Area',
+                                        msgCode    : 'titleinstancepackageplatform.subjectArea',
+                                        qparam     : 'qp_subjectArea_tipp',
+                                        placeholder: 'Subject Area',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'subjectArea'],
+                                        advancedSearch: [title: "Other fields", category: 'OtherFields']
+                                ],
+
+
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.DDC,
+                                        prompt     : 'DDC',
+                                        msgCode    : 'titleinstancepackageplatform.ddcs',
+                                        qparam     : 'qp_ddc',
+                                        placeholder: 'DDC',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'ddcs'],
+                                        advancedSearch: [title: "Other fields", category: 'OtherFields']
+                                ],
+
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.COMPONENT_LANGUAGE,
+                                        prompt     : 'Language',
+                                        msgCode    : 'titleinstancepackageplatform.language',
+                                        qparam     : 'qp_language',
+                                        placeholder: 'Language',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'languages.language'],
+                                        advancedSearch: [title: "Other fields", category: 'OtherFields']
+                                ],
+
                         ],
                         qbeResults: [
                                 [heading: 'Title', property: 'name', link: true, sort: 'name', linkInfo: 'Link to Title'],
