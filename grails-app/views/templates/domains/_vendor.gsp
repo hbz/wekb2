@@ -19,14 +19,6 @@
         </dl>
         <dl>
             <dt class="control-label">
-                <g:message code="vendor.homepage"/>
-            </dt>
-            <dd>
-                <semui:xEditable owner="${d}" field="homepage" outGoingLink="true"/>
-            </dd>
-        </dl>
-        <dl>
-            <dt class="control-label">
                 <g:message code="default.status"/>
             </dt>
             <dd>
@@ -37,6 +29,22 @@
                   <sec:ifNotGranted roles="ROLE_SUPERUSER">
                       ${d.status?.value ?: 'Not Set'}
                   </sec:ifNotGranted>--}%
+            </dd>
+        </dl>
+        <dl>
+            <dt class="control-label"><g:message code="package.description"/></dt>
+            <dd><g:if test="${!createObject}">
+                <semui:xEditable owner="${d}" type="textarea" field="description"/>
+            </g:if>
+            </dd>
+
+        </dl>
+        <dl>
+            <dt class="control-label">
+                <g:message code="vendor.homepage"/>
+            </dt>
+            <dd>
+                <semui:xEditable owner="${d}" field="homepage" outGoingLink="true"/>
             </dd>
         </dl>
 
