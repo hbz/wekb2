@@ -2,7 +2,7 @@
 <head>
     <meta name="layout" content="wekb"/>
     <title>we:kb : <g:message
-            code='forgottenPassword.title'/></title>
+            code='forgottenUsername.title'/></title>
 </head>
 
 <body>
@@ -11,7 +11,7 @@
 
 <g:if test="${emailSent == true}">
     <semui:message>
-        <g:message code='forgottenPassword.sent'/>
+        <g:message code='forgottenUsername.sent'/>
     </semui:message>
 </g:if>
 
@@ -20,22 +20,22 @@
     <div class="six wide column">
         <h2 class="ui header">
             <div class="content">
-                <g:message code='forgottenPassword.title'/>
+                <g:message code='forgottenUsername.title'/>
             </div>
         </h2>
 
         <g:if test="${!emailSent}">
-            <g:form action='resetForgottenPassword' name="forgotPasswordForm" autocomplete='off' class="ui form">
+            <g:form action='getForgottenUsername' name="forgotUsernameForm" autocomplete='off' class="ui form">
 
                 <div class="ui stacked segment">
                     <div class="field">
                         <div class="ui left icon input">
                             <i class="user icon"></i>
-                            <g:textField id="username" placeholder="Requested Username" name="fgp_username" size="25"/>
+                            <g:textField id="email" placeholder="Requested Email" name="fgp_email" size="25"/>
                         </div>
                     </div>
 
-                    <button class="ui fluid submit primary button" type="submit">Send Password Recovery Email...</button>
+                    <button class="ui fluid submit primary button" type="submit">Send Username Recovery Email...</button>
                 </div>
 
             </g:form>
