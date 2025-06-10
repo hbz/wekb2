@@ -1178,7 +1178,7 @@ class GlobalSearchTemplatesService {
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Other Proxies Auth Supported',
                                         msgCode    : 'platform.otherProxies',
-                                        qparam     : 'qp_hanServer',
+                                        qparam     : 'qp_otherProvies',
                                         placeholder: 'Other Proxies Auth Supported',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'otherProxies'],
                                         advancedSearch: [title: "Search Platform by ...", category: 'Platform']
@@ -1431,7 +1431,7 @@ class GlobalSearchTemplatesService {
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Other Proxies Auth Supported',
                                         msgCode    : 'platform.otherProxies',
-                                        qparam     : 'qp_hanServer',
+                                        qparam     : 'qp_otherProxies',
                                         placeholder: 'Other Proxies Auth Supported',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'otherProxies'],
                                         advancedSearch: [title: "Authentication", category: 'Authentication']
