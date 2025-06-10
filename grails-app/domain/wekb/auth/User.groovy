@@ -254,11 +254,22 @@ class User {
     return this.username
   }
 
-  boolean showMyComponents() {
+  boolean showMyComponentsForProvider() {
     boolean show = true
 
     if(this.vendorEditorStatus && !(this.editorStatus || this.adminStatus || this.superUserStatus)){
       show = false
+    }
+
+
+    return show
+  }
+
+  boolean showMyComponentsVendor() {
+    boolean show = false
+
+    if(this.vendorEditorStatus){
+      show = true
     }
 
 
