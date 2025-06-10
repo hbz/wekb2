@@ -211,6 +211,41 @@ class LoginController {
         result
     }
 
+    def forgottenUsername() {
+        def result = [:]
+        result.emailSent = params.emailSent
+
+        result
+    }
+
+    def getForgottenUsername() {
+        boolean emailSent = false
+        if(!params.fgp_email) {
+            flash.error = g.message(code:'forgottenUsername.emailMissing') as String
+        } else {
+            List<User> users = User.findAllByEmail(params.fgp_email)
+            if (users.size() > 0) {
+                users.each { User user ->
+                    try {
+                        mailService.sendMail {
+                            to user.email
+                            from 'laser@hbz-nrw.de'
+                            subject grailsApplication.config.getProperty('systemId', String) + ' - Username Forgot'
+                            body(view: '/mailTemplate/text/sendUsername', model: [username: user.username])
+                        }
+                        emailSent = true
+                    }
+                    catch (Exception e) {
+                        emailSent = false
+                        println "Unable to perform email due to exception ${e.message}"
+                        flash.error = g.message(code: 'forgottenUsername.error') as String
+                    }
+                }
+            }
+        }
+        redirect action: 'forgottenUsername', params: [emailSent: emailSent]
+    }
+
     private boolean _fuzzyCheck(DefaultSavedRequest savedRequest) {
 
         if (!savedRequest) {
