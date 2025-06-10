@@ -48,17 +48,6 @@
                 <semui:xEditableRefData owner="${d}" field="status" config="${RCConstants.COMPONENT_STATUS}" overwriteEditable="${controllerName == 'create' ? 'true' : 'false' }"/>
             </dd>
         </dl>
-        <g:if test="${controllerName != 'create' && (d.getCountManualUpdateInfos() > 0 || d.getCountAutoUpdateInfos() > 0)}">
-            <dl>
-                <dt class="control-label"><g:message code="package.lastUpdateComment"/></dt>
-                <dd><semui:xEditable owner="${d}" field="lastUpdateComment" overwriteEditable="false"/>
-                    <br>
-                    <br>
-                    <g:link class="ui mini primary button" id="${d.id}" controller="package"
-                            action="packageChangeHistory">Change History</g:link>
-                </dd>
-            </dl>
-        </g:if>
         <dl>
             <dt class="control-label"><g:message code="package.description"/></dt>
             <dd><g:if test="${!createObject}">

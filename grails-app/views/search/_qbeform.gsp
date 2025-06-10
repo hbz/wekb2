@@ -6,7 +6,7 @@
 <g:if test="${hide.contains('SEARCH_FORM')}">
 </g:if>
 <g:elseif test="${params.inline}">
-    <g:form method="get" class="ui form" controller="search" action="componentSearch" id="${params.id}">
+    <g:form method="get" class="ui form wekb-filter" controller="search" action="componentSearch" id="${params.id}">
         <input type="hidden" name="qbe" value="${params.qbe}"/>
         <input type="hidden" name="hideResetButton" value="${true}"/>
 
@@ -35,7 +35,7 @@
     <% Map advancedSearchMap = [:] %>
     <div class="ui segment">
         <h1 class="ui header"><g:message code="search.filter"/></h1>
-    <g:form method="get" class="ui form" controller="${controllerName}" action="${actionName}" id="${params.id}">
+    <g:form method="get" class="ui form wekb-filter" controller="${controllerName}" action="${actionName}" id="${params.id}">
 
         <input type="hidden" name="qbe" value="${params.qbe}"/>
 

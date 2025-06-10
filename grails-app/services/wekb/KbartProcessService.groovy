@@ -625,7 +625,6 @@ class KbartProcessService {
                     Package aPackage = Package.get(updatePackageInfo.pkg.id)
 
                     aPackage.lastUpdated = new Date()
-                    aPackage.lastUpdateComment = "Updated package with ${kbartRowsCount} Title. (Titles in we:kb previously: ${previouslyTipps}, Titles in we:kb now: ${countExistingTippsAfterImport}, Removed Titles: ${removedTipps}, New Titles in we:kb: ${newTipps})"
                     aPackage.save()
 
 

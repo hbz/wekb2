@@ -13,6 +13,9 @@
         <semui:tabsItemWithoutLink tab="supplierInformation" activeTab="${params.activeTab}">
             Supplier information
         </semui:tabsItemWithoutLink>
+        <semui:tabsItemWithoutLink tab="variantNames" activeTab="${params.activeTab}" counts="${d.variantNames.size()}">
+            Alternate Names
+        </semui:tabsItemWithoutLink>
 
         <semui:tabsItemWithoutLink tab="packages" activeTab="${params.activeTab}" counts="${d.packages.size()}">
             Packages
@@ -447,4 +450,6 @@
         </div>
     </semui:tabsItemContent>
 
+
+    <g:render template="/templates/tabTemplates/variantNamesTab" model="${[d: d, showActions: true]}"/>
 </g:if>

@@ -93,8 +93,6 @@ class RCConstants {
     public static final String VENDOR_INVOICE_DISPATCH = "Vendor.InvoiceDispatch"
     public static final String VENDOR_ELECTRONIC_DELIVERY_DELAY = "Vendor.ElectronicDeliveryDelay"
 
-    public static final String VENDOR_ROLE = "Vendor.Role"
-
     public static final String YN = "YN"
 
     public static final String UYNP = "UYNP"

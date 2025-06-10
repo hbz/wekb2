@@ -551,6 +551,7 @@ TitleInstancePackagePlatform.Medium;Book;Book;Book
 TitleInstancePackagePlatform.Medium;Cartography;Cartography;Cartography
 TitleInstancePackagePlatform.Medium;Database;Database;Database
 TitleInstancePackagePlatform.Medium;Dataset;Dataset;Dataset
+TitleInstancePackagePlatform.Medium;E-Learning Material;E-Learning Material;E-Learning Material
 TitleInstancePackagePlatform.Medium;Encyclopedia;Encyclopedia;Encyclopedia
 TitleInstancePackagePlatform.Medium;Film;Film;Film
 TitleInstancePackagePlatform.Medium;Image;Image;Image
@@ -596,7 +597,6 @@ Vendor.InvoiceDispatch;FTP-Server;FTP-Serverl;FTP-Server
 Vendor.InvoiceDispatch;Peppol;Peppol;Peppol
 Vendor.ElectronicDeliveryDelay;E-Mail;E-Mail;E-Mail
 Vendor.ElectronicDeliveryDelay;EDI;EDI;EDI
-Vendor.Role;Vendor;Library Supplier;Library Supplier
 YN;No;No;No
 YN;Yes;Yes;Yes
 UYNP;Unavailable;Not Available;Not Available

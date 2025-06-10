@@ -39,6 +39,8 @@
         <div class="ui message">
             <g:link controller="login" action="forgotPassword"><g:message
                     code="forgottenPassword.forgotPassword"/></g:link>
+            <br><g:link controller="login" action="forgottenUsername"><g:message
+                code="forgottenUsername.forgotUsername"/></g:link>
             <br>
             <a href="#" onclick="$('#infoModal').modal('show');">Not yet registered for a we:kb: account?</a>
         </div>

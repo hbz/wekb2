@@ -21,6 +21,8 @@ class Vendor extends AbstractBase implements Auditable {
   Date dateCreated
   Date lastUpdated
 
+  String description
+
   String homepage
 
   boolean webShopOrders  = false
@@ -43,20 +45,20 @@ class Vendor extends AbstractBase implements Auditable {
   boolean prequalification = false
   String prequalificationInfo
 
-
+  Set variantNames = []
 
   static mappedBy = [
   ]
 
   static hasMany = [
-    roles: RefdataValue,
     contacts: Contact,
     curatoryGroups   : CuratoryGroupVendor,
     packages: PackageVendor,
     supportedLibrarySystems: VendorLibrarySystem,
     electronicBillings: VendorElectronicBilling,
     invoiceDispatchs: VendorInvoiceDispatch,
-    electronicDeliveryDelays: VendorElectronicDeliveryDelay
+    electronicDeliveryDelays: VendorElectronicDeliveryDelay,
+    variantNames        : ComponentVariantName,
   ]
 
   static mapping = {
@@ -69,6 +71,8 @@ class Vendor extends AbstractBase implements Auditable {
 
     lastUpdated column: 'ven_last_updated'
     dateCreated column: 'ven_date_created'
+
+    description column: 'ven_description', type: 'text'
 
     status column: 'ven_status_rv_fk'
 
@@ -93,6 +97,8 @@ class Vendor extends AbstractBase implements Auditable {
 
     prequalification column: 'ven_prequalification'
     prequalificationInfo column: 'ven_prequalification_info', type: 'text'
+
+    variantNames cascade: "all,delete-orphan", lazy: false
   }
 
   static constraints = {
@@ -114,6 +120,7 @@ class Vendor extends AbstractBase implements Auditable {
 
     researchPlatformForEbooks (nullable: true, blank: true)
     prequalificationInfo (nullable: true, blank: true)
+    description(nullable: true, blank: true)
 
   }
 

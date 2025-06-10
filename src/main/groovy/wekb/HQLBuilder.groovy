@@ -381,6 +381,9 @@ public class HQLBuilder {
               }else if(baseclass.toString() == 'class wekb.UpdatePackageInfo') {
                 hql_builder_context."${addToQuery}".add("${crit.defn.contextTree.negate ? 'not ' : ''} exists (select cgp from CuratoryGroupPackage cgp where cgp.pkg = o.pkg and cgp.curatoryGroup = :${crit.defn.qparam}) ");
                 hql_builder_context.bindvars[crit.defn.qparam] = value
+              }else if(baseclass.toString() == 'class wekb.Vendor') {
+                hql_builder_context."${addToQuery}".add("${crit.defn.contextTree.negate ? 'not ' : ''} exists (select cgk from CuratoryGroupVendor cgk where cgk.vendor = o and cgk.curatoryGroup = :${crit.defn.qparam}) ");
+                hql_builder_context.bindvars[crit.defn.qparam] = value
               }
             }
           }

@@ -362,4 +362,24 @@ class GroupController {
 
     }
 
+    @Secured(['ROLE_USER', 'IS_AUTHENTICATED_FULLY'])
+    def myVendors() {
+        def searchResult = [:]
+        searchResult = getResultGenerics()
+
+        if(!searchResult.groups){
+            flash.error = "You are not assigned to any curatory group to view this area!"
+            redirect(controller: 'public', action: 'index')
+            return
+        }
+
+        params.qbe = 'g:vendors'
+        params.qp_curgroups = searchResult.groups.id
+        params.hide = ['qp_curgroup', 'qp_curgroups']
+
+        searchResult = searchService.search(searchResult.user, searchResult, params)
+
+        searchResult.result
+    }
+
 }
