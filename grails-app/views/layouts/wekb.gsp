@@ -76,27 +76,35 @@
         </div>
     </div>
     <g:if test="${isUserLoggedIn}">
-        <g:if test="${user.curatoryGroupUsers.size() > 0 && user.showMyComponents()}">
+        <g:if test="${user.curatoryGroupUsers.size() > 0 && (user.showMyComponentsForProvider() || user.showMyComponentsVendor)}">
             <div class="item">
                 <div class="header"><g:message code="public.myComponents"/></div>
-                <div class="menu">
-                    <g:link class="item we-link" controller="group" action="checkMyInfos">Check my Infos</g:link>
-                </div>
+                <g:if test="${user.showMyComponentsForProvider()}">
+                    <div class="menu">
+                        <g:link class="item we-link" controller="group" action="checkMyInfos">Check my Infos</g:link>
+                    </div>
 
-                <div class="menu">
-                    <g:link class="item we-link" controller="group" action="myPackages"><g:message code="public.myPackages"/></g:link>
-                    <g:link class="item we-link" controller="group" action="myPlatforms"><g:message code="public.myPlatforms"/></g:link>
-                    <g:link class="item we-link" controller="group" action="myProviders"><g:message code="public.myProviders"/></g:link>
-                    <g:link class="item we-link" controller="group" action="mySources"><g:message code="public.mySources"/></g:link>
-                    <g:link class="item we-link" controller="group" action="myTitles"><g:message code="public.myTitles"/></g:link>
-                </div>
 
-                <div class="menu">
-                    <g:link class="item we-link" controller="group" action="myPackageManagement"><g:message code="public.myPackageManagement"/></g:link>
-                    <g:link class="item we-link" controller="group"
-                            action="myPackagesNeedsAutoUpdates"><g:message code="public.myPackagesNeedsAutoUpdates"/></g:link>
-                    <g:link class="item we-link" controller="group" action="myAutoUpdateInfos"><g:message code="public.myAutoUpdateInfos"/></g:link>
-                </div>
+                    <div class="menu">
+                        <g:link class="item we-link" controller="group" action="myPackages"><g:message code="public.myPackages"/></g:link>
+                        <g:link class="item we-link" controller="group" action="myPlatforms"><g:message code="public.myPlatforms"/></g:link>
+                        <g:link class="item we-link" controller="group" action="myProviders"><g:message code="public.myProviders"/></g:link>
+                        <g:link class="item we-link" controller="group" action="mySources"><g:message code="public.mySources"/></g:link>
+                        <g:link class="item we-link" controller="group" action="myTitles"><g:message code="public.myTitles"/></g:link>
+                    </div>
+
+                    <div class="menu">
+                        <g:link class="item we-link" controller="group" action="myPackageManagement"><g:message code="public.myPackageManagement"/></g:link>
+                        <g:link class="item we-link" controller="group"
+                                action="myPackagesNeedsAutoUpdates"><g:message code="public.myPackagesNeedsAutoUpdates"/></g:link>
+                        <g:link class="item we-link" controller="group" action="myAutoUpdateInfos"><g:message code="public.myAutoUpdateInfos"/></g:link>
+                    </div>
+                </g:if>
+                <g:if test="${user.showMyComponentsVendor()}">
+                    <div class="menu">
+                        <g:link class="item we-link" controller="group" action="myVendors"><g:message code="public.myVendors"/></g:link>
+                    </div>
+                </g:if>
             </div>
         </g:if>
 
