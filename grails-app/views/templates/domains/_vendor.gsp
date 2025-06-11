@@ -77,15 +77,19 @@
                                     <semui:xEditableRefData owner="${contact}" field="contentType"
                                                             config="${RCConstants.CONTACT_CONTENT_TYPE}" required="true"/>
                                 <td>
-                                    <semui:xEditable owner="${contact}" field="content"
-                                                     validation="${contact.contentType == RDStore.CONTACT_CONTENT_TYPE_EMAIL ? 'email' : ''}" config="${RCConstants.CONTACT_TYPE}" required="true"/>
-
-                                    <span class="js-copyTriggerParent">
-                                        <span class="ui small basic image label js-copyTrigger la-popup-tooltip" data-position="top center" data-tooltip="${message(code: 'tooltip.clickToCopy', args: [contact.contentType?.value_en])}">
-                                            <i class="copy black icon la-js-copyTriggerIcon"></i>
-                                            <span class="detail js-copyTopic">Copy</span>
+                                    <g:if test="${editable}">
+                                        <semui:xEditable owner="${contact}" field="content"
+                                                         validation="${contact.contentType == RDStore.CONTACT_CONTENT_TYPE_EMAIL ? 'email' : ''}" required="true"/>
+                                    </g:if>
+                                    <g:else>
+                                        <span class="js-copyTriggerParent">
+                                            <span class="ui small basic image label js-copyTrigger la-popup-tooltip" data-position="top center"
+                                                  data-tooltip="${message(code: 'tooltip.clickToCopy', args: [contact.contentType?.value_en])}">
+                                                <i class="copy black icon la-js-copyTriggerIcon"></i>
+                                                <span class="detail js-copyTopic">${contact.content}</span>
+                                            </span>
                                         </span>
-                                    </span>
+                                    </g:else>
                                 </td>
                                 <g:if test="${editable}">
                                     <td>
