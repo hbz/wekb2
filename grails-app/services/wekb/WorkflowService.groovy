@@ -75,7 +75,7 @@ class WorkflowService {
                         [code: 'objectMethod::removeWithTipps', modalID: 'removeWithTipps', label: 'Remove the package (with all Titles)', message: '', onlyAdmin: false, group: 6],
 
                         [code: 'workFlowMethod::manualKbartImport', label: 'Manual KBART Import', message: '', onlyAdmin: false, group: 1],
-                        [code: 'workFlowMethod::updatePackageFromKbartSource', label: 'Trigger KBART Update (Changed Titles)', message: '', onlyAdmin: false, group: 1],
+                       /* [code: 'workFlowMethod::updatePackageFromKbartSource', label: 'Trigger KBART Update (Changed Titles)', message: '', onlyAdmin: false, group: 1],*/
                         [code: 'workFlowMethod::updatePackageAllTitlesFromKbartSource', label: 'Trigger KBART Update (all Titles)', message: '', onlyAdmin: false, group: 1]
                 ]
                 break

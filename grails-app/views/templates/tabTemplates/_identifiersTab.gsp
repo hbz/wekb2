@@ -22,14 +22,19 @@
                         ${identifier.namespace.value}
                     </td>
                     <td>
-                        <semui:xEditable owner="${identifier}" field="value" />
 
-                        <span class="js-copyTriggerParent">
-                            <span class="ui small basic image label js-copyTrigger la-popup-tooltip" data-position="top center" data-tooltip="${message(code: 'tooltip.clickToCopy', args: [identifier.namespace.name])}">
-                                <i class="copy black icon la-js-copyTriggerIcon"></i>
-                                <span class="detail js-copyTopic">Copy</span>
+                        <g:if test="${editable}">
+                            <semui:xEditable owner="${identifier}" field="value" />
+                        </g:if>
+                        <g:else>
+                            <span class="js-copyTriggerParent">
+                                <span class="ui small basic image label js-copyTrigger la-popup-tooltip" data-position="top center"
+                                      data-tooltip="${message(code: 'tooltip.clickToCopy', args: [identifier.namespace.name])}">
+                                    <i class="copy black icon la-js-copyTriggerIcon"></i>
+                                    <span class="detail js-copyTopic">${identifier.value}</span>
+                                </span>
                             </span>
-                        </span>
+                        </g:else>
 
                         <g:if test="${identifier.namespace.value == 'doi'}">
                             <g:set value="${identifier.value ? (identifier.value.startsWith('http') ? identifier.value : 'https://www.doi.org/'+identifier.value) : ""}"

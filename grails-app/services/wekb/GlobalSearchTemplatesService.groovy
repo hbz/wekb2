@@ -775,7 +775,7 @@ class GlobalSearchTemplatesService {
                                 [heading: 'Deleted Titles', property: 'deletedTippCount', sort: 'deletedTippCount'],
                                 [heading: 'Product IDs', property: 'anbieterProduktIDs'],
                                 [heading: 'Source', property: 'kbartSource.name', link: true, sort: 'kbartSource.name', linkInfo: 'Link to Source'],
-                                [heading: 'Automatic Updates', property: 'kbartSource.automaticUpdates', link: true, linkInfo: 'Link to Source']
+                                [heading: 'Automatic Updates', property: 'kbartSource.automaticUpdates']
                         ],
                         actions   : [
                         ]
@@ -1252,7 +1252,7 @@ class GlobalSearchTemplatesService {
                                 [heading: 'Expected Titles', property: 'expectedTippCount', sort: 'expectedTippCount'],
                                 [heading: 'Deleted Titles', property: 'deletedTippCount', sort: 'deletedTippCount'],
                                 [heading: 'Last Updated', property: 'lastUpdated', sort: 'lastUpdated'],
-                                [heading: 'Automatic Updates', property: 'kbartSource.automaticUpdates', link: true, linkInfo: 'Link to Source']
+                                [heading: 'Automatic Updates', property: 'kbartSource.automaticUpdates']
                         ],
                         actions   : [
                         ]
@@ -2774,7 +2774,6 @@ class GlobalSearchTemplatesService {
                                 [heading: 'Automatic Update', property: 'automaticUpdate', sort: 'automaticUpdate'],
                                 [heading: 'Start Time', property: 'startTime', sort: 'startTime'],
                                 [heading: 'End Time', property: 'endTime', sort: 'endTime'],
-                                [heading: 'Only Last Changed Update', property: 'onlyRowsWithLastChanged', sort: 'onlyRowsWithLastChanged'],
                                 [heading: 'Titles in we:kb before update', property: 'countPreviouslyTippsInWekb', sort: 'countPreviouslyTippsInWekb'],
                                 [heading: 'Titles in we:kb after update', property: 'countNowTippsInWekb', sort: 'countNowTippsInWekb'],
                                 [heading: 'Rows in KBART-File', property: 'countKbartRows', sort: 'countKbartRows'],
