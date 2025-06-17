@@ -785,7 +785,7 @@ class GlobalSearchTemplatesService {
                                 [heading: 'Deleted Titles', property: 'deletedTippCount', sort: 'deletedTippCount'],
                                 [heading: 'Product IDs', property: 'anbieterProduktIDs'],
                                 [heading: 'Source', property: 'kbartSource.name', link: true, sort: 'kbartSource.name', linkInfo: 'Link to Source'],
-                                [heading: 'Automatic Updates', property: 'kbartSource.automaticUpdates', link: true, linkInfo: 'Link to Source']
+                                [heading: 'Automatic Updates', property: 'kbartSource.automaticUpdates']
                         ],
                         actions   : [
                         ]
@@ -1262,7 +1262,7 @@ class GlobalSearchTemplatesService {
                                 [heading: 'Expected Titles', property: 'expectedTippCount', sort: 'expectedTippCount'],
                                 [heading: 'Deleted Titles', property: 'deletedTippCount', sort: 'deletedTippCount'],
                                 [heading: 'Last Updated', property: 'lastUpdated', sort: 'lastUpdated'],
-                                [heading: 'Automatic Updates', property: 'kbartSource.automaticUpdates', link: true, linkInfo: 'Link to Source']
+                                [heading: 'Automatic Updates', property: 'kbartSource.automaticUpdates']
                         ],
                         actions   : [
                         ]
