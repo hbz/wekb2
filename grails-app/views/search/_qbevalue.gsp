@@ -1,11 +1,9 @@
 <g:if test="${c.value instanceof Boolean}">
     <g:if test="${c.value}">
-        <i class="check green circle icon"
-           title="${message(code: 'default.boolean.true')}"></i>
+        <i class="check green circle icon"></i>
     </g:if>
     <g:else>
-        <i class="times red circle icon"
-           title="${message(code: 'default.boolean.false')}"></i>
+        <i class="times red circle icon"></i>
     </g:else>
 </g:if>
 <g:elseif test="${c.value instanceof java.lang.Integer}">
