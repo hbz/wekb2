@@ -74,11 +74,11 @@ class DropdownService {
                 }
 
             }else {
-                query = "select o from ${baseClass} as o where o.status not in :status order by o.name"
+                query = "select o.id, o.name from ${baseClass} as o where o.status not in :status order by o.name"
                 queryMap = [status: [RDStore.KBC_STATUS_DELETED, RDStore.KBC_STATUS_REMOVED]]
 
                 baseclass.executeQuery(query, queryMap).each { t ->
-                    values.add([id:"${baseClass}:${t.id}", text:"${t.name}", status:"${t.status?.value}"])
+                    values.add([id:"${baseClass}:${t[0]}", text:"${t[1]}"])
                 }
             }
 
