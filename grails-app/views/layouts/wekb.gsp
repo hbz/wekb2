@@ -76,7 +76,7 @@
         </div>
     </div>
     <g:if test="${isUserLoggedIn}">
-        <g:if test="${user.curatoryGroupUsers.size() > 0 && (user.showMyComponentsForProvider() || user.showMyComponentsVendor)}">
+        <g:if test="${user.curatoryGroupUsers.size() > 0 && (user.showMyComponentsForProvider() || user.showMyComponentsVendor())}">
             <div class="item">
                 <div class="header"><g:message code="public.myComponents"/></div>
                 <g:if test="${user.showMyComponentsForProvider()}">
