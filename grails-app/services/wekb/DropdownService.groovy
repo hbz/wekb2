@@ -82,8 +82,6 @@ class DropdownService {
                 }
             }
 
-
-
         } else {
             log.error("selectedDropDown: Unable to locate domain class ${baseClass} or not readable");
             values = []
