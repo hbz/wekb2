@@ -12,6 +12,7 @@
 
     <g:javascript> var spotlightSearchUrl="${g.createLink(controller: 'search', action: 'spotlightSearch')}";</g:javascript>
     <g:javascript> var ajaxLookUp="${g.createLink(controller: 'ajaxJson', action: 'lookup')}";</g:javascript>
+    <g:javascript> var componentsDropDown="${g.createLink(controller: 'ajaxJson', action: 'lookup')}";</g:javascript>
 
     <asset:javascript src="wekb.js"/>
     <asset:stylesheet src="wekb.css"/>
@@ -76,7 +77,7 @@
         </div>
     </div>
     <g:if test="${isUserLoggedIn}">
-        <g:if test="${user.curatoryGroupUsers.size() > 0 && (user.showMyComponentsForProvider() || user.showMyComponentsVendor)}">
+        <g:if test="${user.curatoryGroupUsers.size() > 0 && (user.showMyComponentsForProvider() || user.showMyComponentsVendor())}">
             <div class="item">
                 <div class="header"><g:message code="public.myComponents"/></div>
                 <g:if test="${user.showMyComponentsForProvider()}">

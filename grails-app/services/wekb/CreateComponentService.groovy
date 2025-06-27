@@ -93,7 +93,7 @@ class CreateComponentService {
                                 }
                             }
                             else {
-                                log.debug("Scalar property");
+                                log.debug("Scalar property: Type -> ${pprop.getType().name}");
                                 if ( pprop.getType().name == 'java.lang.String' ) {
                                     result.newobj[p.key] = p.value?.trim() ?: null
                                 }
@@ -114,7 +114,7 @@ class CreateComponentService {
                                         log.error(e.toString())
                                     }
 
-                                }else if ( pprop.getType().name == 'java.lang.Boolean' ) {
+                                }else if ( pprop.getType().name == 'boolean' ) {
                                     result.newobj[p.key] = (p.value == '1') ? true : false
                                 }
                                 propertyWasSet = propertyWasSet || (p.value != null)

@@ -12,6 +12,7 @@ import wekb.helper.RDStore
 class AjaxJsonController {
 
     SpringSecurityService springSecurityService
+    DropdownService dropdownService
 
     /**
      *  lookup : Calls the refdataFind function of a specific class and returns a simple result list.
@@ -130,6 +131,30 @@ class AjaxJsonController {
                 [value: 50, text: '50'],
                 [value: 100, text: '100'],
         ]
+        render result as JSON
+    }
+
+    def componentsDropDown() {
+        log.debug("AjaxJsonController::componentsDropDown ${params}")
+        def result = [:]
+        result.values = []
+        if (params.baseClass) {
+            if(params.dropDownGroup == 'true'){
+                dropdownService.selectedDropDown(params.dropDownType, refObject, params.qp_status_id).each {
+                    result.values << [value: it.id, text: "${it.text}"]
+                }
+            }else {
+                dropdownService.componentsDropDown(params.baseClass, params.filter1 ?: '').each {
+                    result.values << [value: it.id, text: "${it.text}"]
+                }
+            }
+
+        }
+        else {
+            log.debug("Unable to locate domain class ${params.baseClass} or not readable");
+            result.error = "Unable to locate domain class ${params.baseClass}, or this user is not permitted to view it."
+        }
+
         render result as JSON
     }
 

@@ -2,6 +2,7 @@ package wekb
 
 import wekb.helper.RCConstants
 import grails.gorm.transactions.Transactional
+import wekb.helper.RDStore
 
 @Transactional
 class GlobalSearchTemplatesService {
@@ -1853,6 +1854,7 @@ class GlobalSearchTemplatesService {
                 title    : 'Titles',
                 defaultSort : 'name',
                 defaultOrder: 'asc',
+                defaultStatus: RefdataValue.class.name + ':' + RDStore.KBC_STATUS_CURRENT.id,
                 qbeConfig: [
                         qbeForm   : [
                                 //Hidden Fields
@@ -2588,6 +2590,7 @@ class GlobalSearchTemplatesService {
 
     Map users() {
         Map result = [
+                useDistinct: true,
                 baseclass   : 'wekb.auth.User',
                 msgCode    : 'user.plural',
                 title       : 'Users',
