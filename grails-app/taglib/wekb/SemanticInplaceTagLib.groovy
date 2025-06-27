@@ -421,6 +421,38 @@ class SemanticInplaceTagLib {
 
     }
 
+    def componentsDropDown = { attrs, body ->
+
+        out << '<div class="ui fluid search selection clearable dropdown componentsDropDown '
+
+        out << '"'
+
+
+        if (attrs.id) {
+            out << " id=\"${attrs.id}\" "
+        }
+        out << ">"
+
+        out << "<input type=\"hidden\" value=\"${attrs.value ?: ''}\" name=\"${attrs.name}\" data-domain=\"${attrs.baseClass}\" "
+
+        if ((attrs.value != null) && (attrs.value instanceof String && attrs.value.length() > 0)) {
+            def o = genericOIDService.resolveOID(attrs.value)
+            out << "data-displayValue=\"${o.toString()}\" "
+        }
+
+
+        if (attrs.filter1) {
+            out << "data-filter1=\"${attrs.filter1}\" "
+        }
+        out << "/>"
+        out << '<i class="remove icon"></i>'
+        out << '<i class="dropdown icon"></i>'
+        out << '<div class="default text">Search for...</div>'
+        out << '<div class="menu"></div>'
+        out << '</div>'
+
+    }
+
     def xEditableManyToOne = { attrs, body ->
 
         boolean editable = isEditable(request.getAttribute('editable'), attrs.overwriteEditable)
