@@ -26,7 +26,7 @@ class KbartProcessService {
     KbartImportService kbartImportService
     CleanupService cleanupService
     SessionFactory sessionFactory
-    LaserCleanUpService laserCleanUpService
+    //LaserCleanUpService laserCleanUpService
 
     void kbartImportManual(Package pkg, File tsvFile, Boolean onlyRowsWithLastChanged){
         log.info("Beginn kbartImportManual ${pkg.name}")
@@ -231,7 +231,7 @@ class KbartProcessService {
                                                     startTime: new Date(),
                                                     endTime: new Date(),
                                                     status: RDStore.UPDATE_STATUS_FAILED,
-                                                    type: RDStore.UPDATE_TYPE_INVAILD_TITLE,
+                                                    type: RDStore.UPDATE_TYPE_FAILED_TITLE,
                                                     oldValue: '',
                                                     newValue: '',
                                                     tippProperty: '',
@@ -248,7 +248,7 @@ class KbartProcessService {
                                         /*if (validation_result.errors?.size() > 0) {
                                                                 tippErrorMap.putAll(validation_result.errors)
                                                             }*/
-                                        println('tippDuplicates'+tippDuplicates.size())
+                                        //println('tippDuplicates'+tippDuplicates.size())
                                         Map findTipp = kbartImportService.findTheCorrectTipp(kbartRow, tippDuplicates)
                                         TitleInstancePackagePlatform updateTipp = findTipp.tipp ?: null
                                         try {
@@ -434,7 +434,7 @@ class KbartProcessService {
                             Transaction tx = session.beginTransaction()
 
                             TitleInstancePackagePlatform tipp = TitleInstancePackagePlatform.get(tippID)
-
+/*
                             String title_ID = tipp.getTitleID()
                             TitleInstancePackagePlatform correctTipp
                             if (title_ID) {
@@ -450,7 +450,7 @@ class KbartProcessService {
 
                                     laserCleanUpService.cleanUpLaserTipp(tipp.uuid, correctTipp.uuid)
                                 }
-                            }
+                            }*/
 
                             UpdateTippInfo updateTippInfo = new UpdateTippInfo(
                                     description: "Remove Title '${tipp.name}' because is a duplicate in wekb!",
