@@ -2588,6 +2588,7 @@ class GlobalSearchTemplatesService {
 
     Map users() {
         Map result = [
+                useDistinct: true,
                 baseclass   : 'wekb.auth.User',
                 msgCode    : 'user.plural',
                 title       : 'Users',
