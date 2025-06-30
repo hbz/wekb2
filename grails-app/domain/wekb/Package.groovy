@@ -3,6 +3,7 @@ package wekb
 import grails.plugins.orm.auditable.Auditable
 import wekb.annotations.RefdataAnnotation
 import wekb.base.AbstractBase
+import wekb.helper.BeanStore
 import wekb.helper.RCConstants
 import wekb.helper.RDStore
 import groovy.time.TimeCategory
@@ -607,4 +608,16 @@ class Package  extends AbstractBase implements Auditable {
     }
     return curatoryGroups
   }
+
+  @Transient
+  public boolean isPackageLinkedInLaser() {
+    boolean linked = false
+    int packageLinkedInLLaserCount = BeanStore.getLaserCleanUpService().packageLinkedInLaserCount(uuid)
+    if (packageLinkedInLLaserCount > 0) {
+      linked = true
+    }
+    return linked
+  }
+
+
 }

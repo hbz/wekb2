@@ -37,6 +37,7 @@ class AdminController {
   FtpConnectService ftpConnectService
   DeletionService deletionService
   SearchService searchService
+  LaserCleanUpService laserCleanUpService
 
 
   def systemThreads() {
