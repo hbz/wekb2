@@ -626,5 +626,12 @@ class Package  extends AbstractBase implements Auditable {
     return packageLinkedInLLaserCount
   }
 
+  @Transient
+  public boolean tippsInLaserCount() {
+    int tippsInLaserCount = BeanStore.getLaserCleanUpService().packageLinkedInLaserCount(uuid)
+
+    return tippsInLaserCount
+  }
+
 
 }

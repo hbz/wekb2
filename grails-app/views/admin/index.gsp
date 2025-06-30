@@ -92,6 +92,7 @@
             <h2 class="ui header">Laser Infos</h2>
 
             <div class="ui divided large relaxed list">
+                <g:link class="item" controller="admin" action="tippsWekbVsLaser">Title Count Wekb vs Laser</g:link>
                 <g:link class="item" controller="admin" action="linkedPackageInLaser">Show linked Package in Laser</g:link>
                 <g:link class="item" controller="admin" action="notLinkedPackageInLaser">Show not linked Package in Laser</g:link>
             </div>
