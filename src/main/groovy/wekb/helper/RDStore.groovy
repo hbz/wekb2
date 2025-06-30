@@ -36,6 +36,7 @@ class RDStore {
     public static final TIPP_PUBLIC_TYPE_MONO = getRefdataValue('Monograph', RCConstants.TIPP_PUBLICATION_TYPE)
     public static final TIPP_PUBLIC_TYPE_DB = getRefdataValue('Database', RCConstants.TIPP_PUBLICATION_TYPE)
     public static final TIPP_PUBLIC_TYPE_OTHER = getRefdataValue('Other', RCConstants.TIPP_PUBLICATION_TYPE)
+    public static final TIPP_PUBLIC_TYPE_NOSET = getRefdataValue('Not Set', RCConstants.TIPP_PUBLICATION_TYPE)
 
     public static final TIPP_ACCESS_TYPE_FREE = getRefdataValue('Free', RCConstants.TIPP_ACCESS_TYPE)
     public static final TIPP_ACCESS_TYPE_PAID = getRefdataValue('Paid', RCConstants.TIPP_ACCESS_TYPE)
@@ -48,6 +49,7 @@ class RDStore {
     public static final UPDATE_TYPE_CHANGED_TITLE    = getRefdataValue('Changed Title', RCConstants.UPDATE_TYPE)
     public static final UPDATE_TYPE_REMOVED_TITLE    = getRefdataValue('Removed Title', RCConstants.UPDATE_TYPE)
     public static final UPDATE_TYPE_FAILED_TITLE    = getRefdataValue('Failed Title', RCConstants.UPDATE_TYPE)
+    public static final UPDATE_TYPE_INVAILD_TITLE    = getRefdataValue('Invaild Title', RCConstants.UPDATE_TYPE)
 
     public static final YN_YES              = getRefdataValue('Yes', RCConstants.YN)
     public static final YN_NO               = getRefdataValue('No', RCConstants.YN)

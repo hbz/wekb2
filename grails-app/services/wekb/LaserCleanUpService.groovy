@@ -9,6 +9,157 @@ import javax.sql.DataSource
 @Transactional
 class LaserCleanUpService {
 
+    int laserTippsCount() {
+        Sql sql
+        int count
+        try {
+            String url = 'jdbc:postgresql://localhost:5433/laser3'
+            String user = 'laseruser'
+            String password = 'laseruser'
+            String driver = 'org.postgresql.Driver'
+
+            sql = Sql.newInstance(url, user, password, driver)
+
+            count = sql.rows("select count(*) from title_instance_package_platform ")[0]['count']
+
+            sql.close()
+        }catch (Exception ex){
+            log.error("Problem by cleanUpLaserTipp:", ex)
+        }
+        finally {
+            try {
+                sql.close()
+            }
+            catch (Exception e) {
+                log.error("Problem by Close SQL Client:", e)
+            }
+        }
+
+        count
+
+    }
+
+    int laserPackagesCount() {
+        Sql sql
+        int count
+        try {
+            String url = 'jdbc:postgresql://localhost:5433/laser3'
+            String user = 'laseruser'
+            String password = 'laseruser'
+            String driver = 'org.postgresql.Driver'
+
+            sql = Sql.newInstance(url, user, password, driver)
+
+            count = sql.rows("select count(*) from package ")[0]['count']
+
+            sql.close()
+        }catch (Exception ex){
+            log.error("Problem by cleanUpLaserTipp:", ex)
+        }
+        finally {
+            try {
+                sql.close()
+            }
+            catch (Exception e) {
+                log.error("Problem by Close SQL Client:", e)
+            }
+        }
+
+        count
+
+    }
+
+    int laserProviderCount() {
+        Sql sql
+        int count
+        try {
+            String url = 'jdbc:postgresql://localhost:5433/laser3'
+            String user = 'laseruser'
+            String password = 'laseruser'
+            String driver = 'org.postgresql.Driver'
+
+            sql = Sql.newInstance(url, user, password, driver)
+
+            count = sql.rows("select count(*) from provider ")[0]['count']
+
+            sql.close()
+        }catch (Exception ex){
+            log.error("Problem by cleanUpLaserTipp:", ex)
+        }
+        finally {
+            try {
+                sql.close()
+            }
+            catch (Exception e) {
+                log.error("Problem by Close SQL Client:", e)
+            }
+        }
+
+        count
+
+    }
+
+    int laserPlaformCount() {
+        Sql sql
+        int count
+        try {
+            String url = 'jdbc:postgresql://localhost:5433/laser3'
+            String user = 'laseruser'
+            String password = 'laseruser'
+            String driver = 'org.postgresql.Driver'
+
+            sql = Sql.newInstance(url, user, password, driver)
+
+            count = sql.rows("select count(*) from platform ")[0]['count']
+
+            sql.close()
+        }catch (Exception ex){
+            log.error("Problem by cleanUpLaserTipp:", ex)
+        }
+        finally {
+            try {
+                sql.close()
+            }
+            catch (Exception e) {
+                log.error("Problem by Close SQL Client:", e)
+            }
+        }
+
+        count
+
+    }
+
+    int laserVendorCount() {
+        Sql sql
+        int count
+        try {
+            String url = 'jdbc:postgresql://localhost:5433/laser3'
+            String user = 'laseruser'
+            String password = 'laseruser'
+            String driver = 'org.postgresql.Driver'
+
+            sql = Sql.newInstance(url, user, password, driver)
+
+            count = sql.rows("select count(*) from vendor ")[0]['count']
+
+            sql.close()
+        }catch (Exception ex){
+            log.error("Problem by cleanUpLaserTipp:", ex)
+        }
+        finally {
+            try {
+                sql.close()
+            }
+            catch (Exception e) {
+                log.error("Problem by Close SQL Client:", e)
+            }
+        }
+
+        count
+
+    }
+
+
     int getLaserTipp(String wekbUuid) {
         Sql sql
         int tippCount
@@ -20,8 +171,7 @@ class LaserCleanUpService {
 
             sql = Sql.newInstance(url, user, password, driver)
 
-            tippCount = sql.rows("select count(*) as tippCount from title_instance_package_platform where tipp_gokb_id = :tipp_gokb_id", [tipp_gokb_id: wekbUuid])[0]['count']
-            println(tippCount)
+            tippCount = sql.rows("select count(*) from title_instance_package_platform where tipp_gokb_id = :tipp_gokb_id", [tipp_gokb_id: wekbUuid])[0]['count']
 
             sql.close()
         }catch (Exception ex){
@@ -52,7 +202,6 @@ class LaserCleanUpService {
             sql = Sql.newInstance(url, user, password, driver)
 
             packageLinkedCount = sql.rows("select count(*) from subscription_package left join public.package p on p.pkg_id = subscription_package.sp_pkg_fk where pkg_gokb_id = :wekbUuid", [wekbUuid: wekbUuid])[0]['count']
-            println(packageLinkedCount)
 
             sql.close()
         }catch (Exception ex){
