@@ -52,7 +52,7 @@ class SearchService {
             result.refObject = genericOIDService.resolveOID(result.refOID)
         }
 
-        result.max = params.max ? Integer.parseInt(params.max) : user ? user.defaultPageSizeAsInteger : 25
+        result.max = params.max ? Integer.parseInt(params.max) : user ? user.defaultPageSizeAsInteger : 10
         result.offset = params.offset ? Integer.parseInt(params.offset) : 0;
 
         if( params.inline && !params.max) {
