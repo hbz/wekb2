@@ -362,33 +362,111 @@ class AdminController {
     result
   }
 
+  def findPackagesWithoutTitle_ID() {
+    log.debug("findPackagesWithoutTitle_ID::${params}")
+    def result = [:]
+
+    List pkgs = []
+
+    Package.findAllByStatus(RDStore.KBC_STATUS_CURRENT, [sort: 'name']).eachWithIndex { Package aPackage, int index ->
+      Integer tippsWithoutTitleIDCount = aPackage.getTippsWithoutTitleIDCount()
+
+      if(tippsWithoutTitleIDCount > 0 ){
+        pkgs << [pkg: aPackage, tippsWithoutTitleIDCount: tippsWithoutTitleIDCount]
+      }
+    }
+
+    //result.offset = params.offset ? Integer.parseInt(params.offset) : 0
+    //result.max = params.max ? Integer.parseInt(params.max) : 250
+
+    result.totalCount = pkgs.size()
+
+   if (params.sort == 'tippsWithoutTitleIDCount') {
+      result.pkgs = pkgs.sort {
+        it.tippsWithoutTitleIDCount
+      }
+      result.pkgs = result.pkgs.reverse()
+    } else {
+      result.pkgs = pkgs
+    }
+
+    //result.pkgs = result.pkgs.drop((int) result.offset).take((int) result.max)
+    result
+  }
+
+
   def findTippDuplicatesByPkg() {
     log.debug("findTippDuplicates::${params}")
     def result = [:]
 
     Package aPackage = Package.findByUuid(params.id)
 
-    List<TitleInstancePackagePlatform> tippsDuplicatesByName = aPackage.findTippDuplicatesByName()
-    List<TitleInstancePackagePlatform> tippsDuplicatesByUrl = aPackage.findTippDuplicatesByURL()
+    //List<TitleInstancePackagePlatform> tippsDuplicatesByName = aPackage.findTippDuplicatesByName()
+    //List<TitleInstancePackagePlatform> tippsDuplicatesByUrl = aPackage.findTippDuplicatesByURL()
     List<TitleInstancePackagePlatform> tippsDuplicatesByTitleID = aPackage.findTippDuplicatesByTitleID()
 
-    result.offsetByName = params.papaginateByName ? Integer.parseInt(params.offset) : 0
-    result.maxByName = params.papaginateByName ? Integer.parseInt(params.max) : 100
+    //result.offsetByName = params.papaginateByName ? Integer.parseInt(params.offset) : 0
+    //result.maxByName = params.papaginateByName ? Integer.parseInt(params.max) : 100
 
-    result.offsetByUrl = params.papaginateByUrl ? Integer.parseInt(params.offset) : 0
-    result.maxByUrl = params.papaginateByUrl ? Integer.parseInt(params.max) : 100
+    //result.offsetByUrl = params.papaginateByUrl ? Integer.parseInt(params.offset) : 0
+    //result.maxByUrl = params.papaginateByUrl ? Integer.parseInt(params.max) : 100
 
     result.offsetByTitleID = params.papaginateByTitleID ? Integer.parseInt(params.offset) : 0
     result.maxByTitleID = params.papaginateByTitleID ? Integer.parseInt(params.max) : 100
 
-    result.totalCountByName = tippsDuplicatesByName.size()
-    result.totalCountByUrl = tippsDuplicatesByUrl.size()
+    //result.totalCountByName = tippsDuplicatesByName.size()
+    //result.totalCountByUrl = tippsDuplicatesByUrl.size()
     result.totalCountByTitleID = tippsDuplicatesByTitleID.size()
 
-    result.tippsDuplicatesByName = tippsDuplicatesByName.drop((int) result.offsetByName).take((int) result.maxByName)
-    result.tippsDuplicatesByUrl = tippsDuplicatesByUrl.drop((int) result.offsetByUrl).take((int) result.maxByUrl)
+    //result.tippsDuplicatesByName = tippsDuplicatesByName.drop((int) result.offsetByName).take((int) result.maxByName)
+    //result.tippsDuplicatesByUrl = tippsDuplicatesByUrl.drop((int) result.offsetByUrl).take((int) result.maxByUrl)
     result.tippsDuplicatesByTitleID = tippsDuplicatesByTitleID.drop((int) result.offsetByTitleID).take((int) result.maxByTitleID)
 
+    result.pkg = aPackage
+
+    result
+  }
+
+  def findTippWithoutTitleIDByPkg() {
+    log.debug("findTippWithoutTitleIDByPkg::${params}")
+    def result = [:]
+
+    Package aPackage = Package.findByUuid(params.id)
+
+    List<TitleInstancePackagePlatform> tippsByWithoutTitleID = aPackage.findTippByWithoutTitleID()
+
+
+    result.offsetByWithoutTitleID = params.papaginateByWithoutTitleID ? Integer.parseInt(params.offset) : 0
+    result.maxByWithoutTitleID = params.papaginateByWithoutTitleID ? Integer.parseInt(params.max) : 100
+
+    result.totalCountByWithoutTitleID = tippsByWithoutTitleID.size()
+
+    result.tippsByWithoutTitleID = tippsByWithoutTitleID.drop((int) result.offsetByWithoutTitleID).take((int) result.maxByWithoutTitleID)
+
+    result.pkg = aPackage
+
+    result
+  }
+
+  def notLinkedPackageInLaser() {
+    log.debug("notLinkedPackageInLaser::${params}")
+      def result = [:]
+
+      List pkgs = laserCleanUpService.packageNotLinkedInLaser()
+
+      result.totalCount = pkgs.size()
+      result.pkgs = pkgs
+      result
+    }
+
+  def linkedPackageInLaser() {
+    log.debug("linkedPackageInLaser::${params}")
+    def result = [:]
+
+    List pkgs = laserCleanUpService.packageLinkedInLaser()
+
+    result.totalCount = pkgs.size()
+    result.pkgs = pkgs
     result
   }
 
@@ -414,15 +492,14 @@ class AdminController {
     def result = [:]
 
     List pkgs = []
-    List<KbartSource> sourceList = KbartSource.findAllByAutomaticUpdates(true)
 
     Package.findAllByStatus(RDStore.KBC_STATUS_CURRENT, [sort: 'name']).eachWithIndex { Package aPackage, int index ->
-      Integer tippDuplicatesByNameCount = aPackage.getTippDuplicatesByNameCount()
-      Integer tippDuplicatesByUrlCount = aPackage.getTippDuplicatesByURLCount()
+      Integer tippDuplicatesByNameCount = 0  //aPackage.getTippDuplicatesByNameCount()
+      Integer tippDuplicatesByUrlCount = 0 //aPackage.getTippDuplicatesByURLCount()
       Integer tippDuplicatesByTitleIDCount = aPackage.getTippDuplicatesByTitleIDCount()
       //log.debug("Package ${aPackage.name} : ${index}")
 
-      if(tippDuplicatesByNameCount > 0 || tippDuplicatesByUrlCount > 0 || tippDuplicatesByTitleIDCount > 0){
+      if(tippDuplicatesByNameCount > 0 || tippDuplicatesByUrlCount > 0 || tippDuplicatesByTitleIDCount == 0){
         pkgs << [pkg: aPackage, tippDuplicatesByNameCount: tippDuplicatesByNameCount, tippDuplicatesByUrlCount: tippDuplicatesByUrlCount, tippDuplicatesByTitleIDCount: tippDuplicatesByTitleIDCount]
       }
     }
@@ -584,7 +661,7 @@ class AdminController {
 
     result.componentsInfos = []
 
-    def components = ["DeletedKBComponent", "CuratoryGroup","KbartSource", "Org", "Package", "Platform", "TitleInstancePackagePlatform"]
+    def components = ["DeletedKBComponent", "CuratoryGroup","KbartSource", "Org", "Package", "Platform", "TitleInstancePackagePlatform", "Vendor"]
     components.each{ def component ->
       Map info = [:]
       info.name = component
@@ -595,8 +672,22 @@ class AdminController {
       info.countDeletedInDB = FTControl.executeQuery(query+ " where status = :status", [status: RDStore.KBC_STATUS_DELETED])[0]
       info.countRemovedInDB = FTControl.executeQuery(query+ " where status = :status", [status: RDStore.KBC_STATUS_REMOVED])[0]
 
+      if(component == 'Package'){
+          info.countLaser = laserCleanUpService.laserPackagesCount()
+      }else if(component == 'Org'){
+        info.countLaser = laserCleanUpService.laserProviderCount()
+      }else if(component == 'Platform'){
+        info.countLaser = laserCleanUpService.laserPlaformCount()
+      }else if(component == 'TitleInstancePackagePlatform'){
+        info.countLaser = laserCleanUpService.laserTippsCount()
+      }else if(component == 'Vendor'){
+        info.countLaser = laserCleanUpService.laserVendorCount()
+      }
+
       result.componentsInfos << info
     }
+
+
 
     result
 

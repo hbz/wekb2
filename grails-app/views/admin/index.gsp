@@ -82,6 +82,7 @@
                 <g:link class="item" controller="admin" action="systemThreads">Show Threads</g:link>
                 <g:link class="item" controller="admin" action="autoUpdatesFails">Automatic update fails</g:link>
                 <g:link class="item" controller="admin" action="findPackagesWithTippDuplicates">Packages with Tipp Duplicates</g:link>
+                <g:link class="item" controller="admin" action="findPackagesWithoutTitle_ID">Packages with Tipp without Title_ID</g:link>
                 <g:link class="item" controller="admin" action="findPackagesAutoUpdatesTippsDiff">Auto Update Packages with Tipp Diff</g:link>
                 <g:link class="item" controller="admin" action="tippIdentifiersWithSameNameSpace">Title Identifiers with same Identifier Namespace</g:link>
                 <g:link class="item" controller="admin" action="checkCuratoryGroups">Check Curatory Groups</g:link>
@@ -108,6 +109,7 @@
         <thead>
         <tr>
             <th>Name</th>
+            <th>count in LAS:er-DB</th>
             <th>count in DB</th>
             <th>count status deleted in DB</th>
             <th>count status removed in DB</th>
@@ -117,6 +119,7 @@
         <g:each in="${componentsInfos.sort { it.type }}" var="componentsInfo">
             <tr>
                 <td>${componentsInfo.name}</td>
+                <td><g:formatNumber number="${componentsInfo.countLaser}" type="number"/></td>
                 <td><g:formatNumber number="${componentsInfo.countDB}" type="number"/></td>
                 <td><g:formatNumber number="${componentsInfo.countDeletedInDB}" type="number"/></td>
                 <td><g:formatNumber number="${componentsInfo.countRemovedInDB}" type="number"/></td>
