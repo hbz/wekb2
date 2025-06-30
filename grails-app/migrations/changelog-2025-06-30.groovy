@@ -3,7 +3,7 @@ databaseChangeLog = {
     changeSet(author: "djebeniani (hand-coded)", id: "1751292072308-1") {
         grailsChange {
             change {
-                sql.execute('''INSERT INTO refdata_value (rdv_id, rdv_version, rdv_owner, rdv_value) VALUES ((select nextval ('hibernate_sequence')), 0, (SELECT rdc_id FROM refdata_category WHERE rdc_description = 'TitleInstancePackagePlatform.PublicationType'), 'Not Set');''')
+                sql.execute('''INSERT INTO refdata_value (rdv_id, rdv_version, rdv_owner, rdv_value, rdv_is_hard_data) VALUES ((select nextval ('hibernate_sequence')), 0, (SELECT rdc_id FROM refdata_category WHERE rdc_description = 'TitleInstancePackagePlatform.PublicationType'), 'Not Set', true);''')
             }
             rollback {}
         }
