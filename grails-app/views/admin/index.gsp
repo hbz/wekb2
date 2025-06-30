@@ -87,6 +87,15 @@
                 <g:link class="item" controller="admin" action="checkCuratoryGroups">Check Curatory Groups</g:link>
             </div>
         </div>
+
+        <div class="column">
+            <h2 class="ui header">Laser Infos</h2>
+
+            <div class="ui divided large relaxed list">
+                <g:link class="item" controller="admin" action="linkedPackageInLaser">Show linked Package in Laser</g:link>
+                <g:link class="item" controller="admin" action="notLinkedPackageInLaser">Show not linked Package in Laser</g:link>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -107,9 +116,9 @@
         <g:each in="${componentsInfos.sort { it.type }}" var="componentsInfo">
             <tr>
                 <td>${componentsInfo.name}</td>
-                <td>${componentsInfo.countDB}</td>
-                <td>${componentsInfo.countDeletedInDB}</td>
-                <td>${componentsInfo.countRemovedInDB}</td>
+                <td><g:formatNumber number="${componentsInfo.countDB}" type="number"/></td>
+                <td><g:formatNumber number="${componentsInfo.countDeletedInDB}" type="number"/></td>
+                <td><g:formatNumber number="${componentsInfo.countRemovedInDB}" type="number"/></td>
             </tr>
         </g:each>
         </tbody>
