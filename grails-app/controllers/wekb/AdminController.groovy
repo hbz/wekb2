@@ -470,6 +470,23 @@ class AdminController {
     result
   }
 
+  def tippsWekbVsLaser() {
+    log.debug("tippsWekbVsLaser::${params}")
+    def result = [:]
+
+    params.max = params.max ?: 500
+    params.offset = params.offset ?: 0
+
+    List pkgs = Package.findAll([sort: 'name', max: params.max, offset: params.offset])
+    result.totalPkgs = Package.count()
+
+    result.totalCount = pkgs.size()
+    result.pkgs = pkgs
+    result
+  }
+
+
+
   def findPackagesWithTippDuplicates() {
     log.debug("findPackagesWithTippDuplicates::${params}")
     def result = [:]
