@@ -222,7 +222,7 @@ class KbartImportValidationService {
 
         }
 
-        if(result.valid) {
+/*        if(result.valid) {
             if (tippMap.publication_type) {
                 //log.debug("before publication type determination")
                 RefdataValue publicationType = kbartImportService.determinePublicationType(tippMap.publication_type)
@@ -235,7 +235,7 @@ class KbartImportValidationService {
                 result.valid = false
                 errorMessage = "No publication type set by title: $tippMap.publication_title"
             }
-        }
+        }*/
 
         if (result.valid && !tippMap.title_url) {
             result.valid = false
@@ -243,11 +243,17 @@ class KbartImportValidationService {
 
         }
 
-        if (result.valid && (!tippMap.title_id && !tippMap.print_identifier && !tippMap.online_identifier)) {
+        if (result.valid && (!tippMap.title_id)) {
+            result.valid = false
+            errorMessage = "Missing title_id by title: $tippMap.publication_title"
+
+        }
+
+      /*  if (result.valid && (!tippMap.title_id && !tippMap.print_identifier && !tippMap.online_identifier)) {
             result.valid = false
             errorMessage = "Missing title_id or print_identifier or online_identifier by title: $tippMap.publication_title"
 
-        }
+        }*/
 
         /*String idJsonKey = 'ids'
         def ids_list = tippMap[idJsonKey]

@@ -3,6 +3,7 @@ package wekb
 import grails.plugins.orm.auditable.Auditable
 import wekb.annotations.RefdataAnnotation
 import wekb.base.AbstractBase
+import wekb.helper.BeanStore
 import wekb.helper.RCConstants
 import wekb.helper.RDStore
 import groovy.time.TimeCategory
@@ -496,6 +497,21 @@ class Package  extends AbstractBase implements Auditable {
   }
 
   @Transient
+  List<TitleInstancePackagePlatform> findTippByWithoutTitleID() {
+
+    IdentifierNamespace identifierNamespace = IdentifierNamespace.findByValueAndTargetType('title_id', RDStore.IDENTIFIER_NAMESPACE_TARGET_TYPE_TIPP)
+
+    if(identifierNamespace) {
+      List<TitleInstancePackagePlatform> tippsDuplicates = TitleInstancePackagePlatform.executeQuery("select tipp from TitleInstancePackagePlatform as tipp join tipp.ids as ident" +
+              " where tipp.pkg = :pkg and tipp.status != :removed " +
+              " and not exists(select id from Identifier id where id.tipp = tipp and id.namespace = :namespace)",
+              [pkg: this, namespace: identifierNamespace, removed: RDStore.KBC_STATUS_REMOVED]) ?: []
+    }else {
+      return []
+    }
+  }
+
+  @Transient
   Integer getTippDuplicatesByNameCount() {
 
     int result = TitleInstancePackagePlatform.executeQuery("select count(*) from TitleInstancePackagePlatform as tipp" +
@@ -525,6 +541,36 @@ class Package  extends AbstractBase implements Auditable {
               " where tipp.pkg = :pkg and tipp.status != :removed " +
               " and ident.value in (select ident2.value FROM Identifier AS ident2, TitleInstancePackagePlatform as tipp2 WHERE ident2.namespace = :namespace and ident2.tipp = tipp2 and tipp2.pkg = :pkg and tipp2.status != :removed" +
               " group by ident2.value having count(ident2.value) > 1)",
+              [pkg: this, namespace: identifierNamespace, removed: RDStore.KBC_STATUS_REMOVED])[0]
+      return result
+    }else {
+      return 0
+    }
+  }
+
+  @Transient
+  Integer getTippsByTitleIDCount() {
+    IdentifierNamespace identifierNamespace = IdentifierNamespace.findByValueAndTargetType('title_id', RDStore.IDENTIFIER_NAMESPACE_TARGET_TYPE_TIPP)
+
+    if(identifierNamespace) {
+      int result = TitleInstancePackagePlatform.executeQuery("select count(*) from TitleInstancePackagePlatform as tipp join tipp.ids as ident" +
+              " where tipp.pkg = :pkg and tipp.status != :removed " +
+              " and exists(select id from Identifier id where id.tipp = tipp and id.namespace = :namespace)",
+              [pkg: this, namespace: identifierNamespace, removed: RDStore.KBC_STATUS_REMOVED])[0]
+      return result
+    }else {
+      return 0
+    }
+  }
+
+  @Transient
+  Integer getTippsWithoutTitleIDCount() {
+    IdentifierNamespace identifierNamespace = IdentifierNamespace.findByValueAndTargetType('title_id', RDStore.IDENTIFIER_NAMESPACE_TARGET_TYPE_TIPP)
+
+    if(identifierNamespace) {
+      int result = TitleInstancePackagePlatform.executeQuery("select count(*) from TitleInstancePackagePlatform as tipp" +
+              " where tipp.pkg = :pkg and tipp.status != :removed " +
+              " and not exists(select id from Identifier id where id.tipp = tipp and id.namespace = :namespace)",
               [pkg: this, namespace: identifierNamespace, removed: RDStore.KBC_STATUS_REMOVED])[0]
       return result
     }else {
@@ -607,4 +653,30 @@ class Package  extends AbstractBase implements Auditable {
     }
     return curatoryGroups
   }
+
+  @Transient
+  public boolean isPackageLinkedInLaser() {
+    boolean linked = false
+    int packageLinkedInLLaserCount = BeanStore.getLaserCleanUpService().packageLinkedInLaserCount(uuid)
+    if (packageLinkedInLLaserCount > 0) {
+      linked = true
+    }
+    return linked
+  }
+
+  @Transient
+  public int packageLinkedInLaserCount() {
+    int packageLinkedInLLaserCount = BeanStore.getLaserCleanUpService().packageLinkedInLaserCount(uuid)
+
+    return packageLinkedInLLaserCount
+  }
+
+  @Transient
+  public int tippsInLaserCount() {
+    int tippsInLaserCount = BeanStore.getLaserCleanUpService().tippsInLaserCount(uuid)
+
+    return tippsInLaserCount
+  }
+
+
 }

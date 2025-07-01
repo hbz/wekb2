@@ -2,15 +2,16 @@
 <html>
 <head>
     <meta name="layout" content="wekb"/>
-    <title>we:kb : Packages with Tipp Duplicates</title>
+    <title>we:kb : Packages with Tipp without Title_ID</title>
 </head>
 
 <body>
 
 <wekb:serviceInjection/>
 
-<h1 class="ui header">Packages with Tipp Duplicates (${totalCount})</h1>
+<h1 class="ui header">Packages with Tipp without Title_ID (${totalCount})</h1>
 
+<g:set var="allCount" value="${0}"/>
 
 <div class="container">
 
@@ -24,15 +25,13 @@
             <th>Curatory Groups</th>
             <th>Auto Update</th>
             <th>Titles</th>
-            <semui:sortableColumn property="tippDuplicatesByNameCount" title="Tipp Duplicates By Name"/>
-            <semui:sortableColumn property="tippDuplicatesByUrlCount" title="Tipp Duplicates By Url"/>
-            <semui:sortableColumn property="tippDuplicatesByTitleIDCount" title="Tipp Duplicates By Title ID"/>
+            <semui:sortableColumn property="tippsWithoutTitleIDCount" title="Tipp without Title ID"/>
         </tr>
         </thead>
         <tbody>
         <g:each in="${pkgs}" var="pkgMap" status="i">
             <g:set var="pkg" value="${pkgMap.pkg}"/>
-            <tr class="${pkgMap.tippDuplicatesByTitleIDCount > 0 ? 'info' : (pkgMap.tippDuplicatesByUrlCount > 0 ? 'success' : '')}">
+            <tr>
                 <td>
                     ${(params.offset ? params.offset.toInteger() : 0) + i + 1}
                 </td>
@@ -58,7 +57,7 @@
                            title="${message(code: 'default.boolean.true')}"></i>
                     </g:if>
                     <g:else>
-                        <<i class="times red circle icon"
+                        <i class="times red circle icon"
                            title="${message(code: 'default.boolean.false')}"></i>
                     </g:else>
                 </td>
@@ -74,26 +73,29 @@
                     </g:else>
                 </td>
                 <td>
-                    <g:link controller="admin" action="findTippDuplicatesByPkg" id="${pkg.uuid}" target="_blank"
-                            params="[papaginateByName: true, max: 100, offset: 0]">
-                        ${pkgMap.tippDuplicatesByNameCount}
+                    <g:set var="tippCount" value="${pkgMap.tippsWithoutTitleIDCount}"/>
+                    <g:link controller="admin" action="findTippWithoutTitleIDByPkg" id="${pkg.uuid}" target="_blank"
+                            params="[max: 100, offset: 0]">
+                        ${tippCount}
                     </g:link>
-                </td>
-                <td>
-                    <g:link controller="admin" action="findTippDuplicatesByPkg" id="${pkg.uuid}" target="_blank"
-                            params="[papaginateByUrl: true, max: 100, offset: 0]">
-                        ${pkgMap.tippDuplicatesByUrlCount}
-                    </g:link>
-                </td>
-                <td>
-                    <g:link controller="admin" action="findTippDuplicatesByPkg" id="${pkg.uuid}" target="_blank"
-                            params="[papaginateByTitleID: true, max: 100, offset: 0]">
-                        ${pkgMap.tippDuplicatesByTitleIDCount}
-                    </g:link>
+
+                    <g:set var="allCount" value="${allCount+tippCount}"/>
                 </td>
             </tr>
         </g:each>
         </tbody>
+        <tfoot>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>${allCount}</td>
+        </tr>
+        </tfoot>
     </table>
 
 </div>

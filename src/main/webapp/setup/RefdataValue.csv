@@ -6,6 +6,7 @@ Update.Type;New Title;New Title;New Title
 Update.Type;Changed Title;Changed Title;Changed Title
 Update.Type;Removed Title;Removed Title;Removed Title
 Update.Type;Failed Title;Failed Title;Failed Title
+Update.Type;Invaild Title;Invaild Title;Invaild Title
 Barrier-Free.Ebook;eBooks not available;eBooks not available;eBooks not available
 Barrier-Free.Ebook;Yes;Yes;Yes
 Barrier-Free.Ebook;No;No;No
@@ -577,6 +578,7 @@ TitleInstancePackagePlatform.PublicationType;Database;Database;Database
 TitleInstancePackagePlatform.PublicationType;Monograph;Monograph;Monograph
 TitleInstancePackagePlatform.PublicationType;Other;Other;Other
 TitleInstancePackagePlatform.PublicationType;Serial;Serial;Serial
+TitleInstancePackagePlatform.PublicationType;Not Set;Not Set;Not Set
 Provider.Print.Download.Chapter;No;No;No
 Provider.Print.Download.Chapter;Yes;Yes;Yes
 Provider.Print.Download.Chapter;only chapters;only chapters;only chapters
