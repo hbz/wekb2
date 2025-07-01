@@ -965,6 +965,8 @@ class KbartImportService {
         RefdataValue tipp_publicationType = null
         if (tipp_fields.type) {
             tipp_publicationType = determinePublicationType(tipp_fields.type)
+        }else{
+            tipp_publicationType = RDStore.TIPP_PUBLIC_TYPE_NOSET
         }
         long start = System.currentTimeMillis()
         TitleInstancePackagePlatform result = new TitleInstancePackagePlatform(
@@ -1013,7 +1015,7 @@ class KbartImportService {
                     return RDStore.TIPP_PUBLIC_TYPE_OTHER
                     break;
                 default:
-                    return null
+                    return RDStore.TIPP_PUBLIC_TYPE_NOSET
                     break;
             }
         }
@@ -2660,7 +2662,42 @@ class KbartImportService {
 
             List<TitleInstancePackagePlatform> tipps = []
 
-            String title = tippMap.publication_title
+            if(tippMap.title_id) {
+
+                tipps = tippsMatchingByTitleIDAutoUpdate(tippMap.title_id, pkg)
+                countTipps = tipps.size()
+
+                switch (countTipps) {
+                    case 0:
+                        log.debug("not found Tipp: [pkg: ${pkg}, platform: ${plt}, title_id: ${tippMap.title_id}]")
+                        break
+                    case 1:
+                        log.debug("found tipp by direct match: Tipp = [pkg: ${pkg}, platform: ${plt}, title_id: ${tippMap.title_id}]")
+                        tipp = tipps[0]
+                        break
+                    default:
+                        tipps = tipps.sort { it.lastUpdated }
+                       /* tipps.each {
+                            println(it.lastUpdated)
+                        }*/
+                        tipps.reverse(true)
+                        if (tipps.size() > 1) {
+                            tipps.eachWithIndex { TitleInstancePackagePlatform titleInstancePackagePlatform, int index ->
+                                if (index == 0) {
+                                    tipp = titleInstancePackagePlatform
+                                } else {
+                                    //println("${tippMap.title_id}: "+titleInstancePackagePlatform.id)
+                                    result.tippDuplicates.add(titleInstancePackagePlatform.id)
+                                }
+                            }
+                        }
+                        break
+                }
+
+            }
+
+
+            /*String title = tippMap.publication_title
 
             countTipps = TitleInstancePackagePlatform.executeQuery('select count(*) from TitleInstancePackagePlatform as tipp ' +
                     'where tipp.pkg = :pkg and tipp.status != :removed and tipp.name = :tiDtoName ',
@@ -2766,7 +2803,7 @@ class KbartImportService {
                         break
                 }
 
-            }
+            }*/
         }
         result.tipp = tipp
         result
