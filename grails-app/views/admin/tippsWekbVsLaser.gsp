@@ -2,14 +2,14 @@
 <html>
 <head>
     <meta name="layout" content="wekb"/>
-    <title>we:kb : Packages linked in Laser</title>
+    <title>we:kb : Titles WEKB VS LASER</title>
 </head>
 
 <body>
 
 <wekb:serviceInjection/>
 
-<h1 class="ui header">Packages linked in Laser (${totalCount})</h1>
+<h1 class="ui header">Titles WEKB VS LASER (${totalPkgs})</h1>
 
 
 <div class="container">

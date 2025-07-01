@@ -68,6 +68,9 @@
                     <g:if test="${allTipps1 != allTipps2}">
                     ${allTipps1} / ${allTipps2}
                     </g:if>
+                    <g:else>
+                        ${allTipps2}
+                    </g:else>
                 </td>
                 <td>
                     <g:set var="tippCount" value="${pkgMap.tippsWithoutTitleIDCount}"/>
