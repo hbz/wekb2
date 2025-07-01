@@ -97,7 +97,7 @@
                                 <i class="dropdown icon"></i>
 
                                 <g:if test="${fld.selectPlaceHolder}">
-                                    <g:message code="search.select"/> ${fld.selectPlaceHolder}
+                                    <div class="default text"><g:message code="search.select"/> ${fld.selectPlaceHolder}</div>
                                 </g:if>
                                 <g:else>
                                     <div class="default text"><g:message code="search.select"/>
@@ -132,7 +132,7 @@
                                 <input type="hidden" name="${fld.qparam}" value="${params[fld.qparam]}">
                                 <i class="dropdown icon"></i>
                                 <g:if test="${fld.selectPlaceHolder}">
-                                    <g:message code="search.select"/> ${fld.selectPlaceHolder}
+                                    <div class="default text"><g:message code="search.select"/> ${fld.selectPlaceHolder}</div>
                                 </g:if>
                                 <g:else>
                                     <div class="default text"><g:message code="search.select"/>
@@ -239,7 +239,7 @@
                                     <i class="dropdown icon"></i>
 
                                     <g:if test="${field.selectPlaceHolder}">
-                                        <g:message code="search.select"/> ${field.selectPlaceHolder}
+                                        <div class="default text"><g:message code="search.select"/> ${field.selectPlaceHolder}</div>
                                     </g:if>
                                     <g:else>
                                         <div class="default text"><g:message code="search.select"/>
@@ -286,8 +286,8 @@
                                             <g:else>
                                                 ${field.prompt}
                                             </g:else>
-                                            </div>
                                         </g:else>
+                                    </div>
 
 
                                     <div class="menu">
