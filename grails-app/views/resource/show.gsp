@@ -44,7 +44,7 @@
                                 Package used in LAS:er
                             </div>
 
-                            <p>Package is linked in LAS:er. Count:  displayobj.packageLinkedInLaserCount()</p>
+                            <p>Package is linked in LAS:er. Count:  ${displayobj.packageLinkedInLaserCount()}</p>
                         </div>
                     </div>
                 </g:if>
