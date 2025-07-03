@@ -21,7 +21,7 @@
             <th>Name</th>
             <th>Provider</th>
             <th>Platform</th>
-            <th>Curatory Groups</th>
+            <semui:sortableColumn property="curatoryGroups" title="Curatory Groups"/>
             <th>Auto Update</th>
             <th>Titles</th>
             <semui:sortableColumn property="tippDuplicatesByNameCount" title="Tipp Duplicates By Name"/>
