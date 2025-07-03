@@ -368,7 +368,7 @@ class AdminController {
 
     List pkgs = []
 
-    Package.findAllByStatus(RDStore.KBC_STATUS_CURRENT, [sort: 'name']).eachWithIndex { Package aPackage, int index ->
+    Package.findAllByStatusInList([RDStore.KBC_STATUS_CURRENT, RDStore.KBC_STATUS_RETIRED, RDStore.KBC_STATUS_EXPECTED], [sort: 'name']).eachWithIndex { Package aPackage, int index ->
       Integer tippsWithoutTitleIDCount = aPackage.getTippsWithoutTitleIDCount()
 
       if(tippsWithoutTitleIDCount > 0 ){
@@ -386,7 +386,9 @@ class AdminController {
         it.tippsWithoutTitleIDCount
       }
       result.pkgs = result.pkgs.reverse()
-    } else {
+    }else if (params.sort == 'curatoryGroups') {
+     result.pkgs = pkgs.sort { it.pkg.curatoryGroups.curatoryGroup.name[0]}
+   } else {
       result.pkgs = pkgs
     }
 
@@ -450,20 +452,28 @@ class AdminController {
 
   def notLinkedPackageInLaser() {
     log.debug("notLinkedPackageInLaser::${params}")
-      def result = [:]
+    def result = [:]
 
-      List pkgs = laserCleanUpService.packageNotLinkedInLaser()
+    List pkgs = laserCleanUpService.packageNotLinkedInLaser()
 
-      result.totalCount = pkgs.size()
-      result.pkgs = pkgs
-      result
+    if (params.sort == 'curatoryGroups') {
+      pkgs = pkgs.sort { it.pkg.curatoryGroups.curatoryGroup.name[0]}
     }
+
+    result.totalCount = pkgs.size()
+    result.pkgs = pkgs
+    result
+  }
 
   def linkedPackageInLaser() {
     log.debug("linkedPackageInLaser::${params}")
     def result = [:]
 
     List pkgs = laserCleanUpService.packageLinkedInLaser()
+
+    if (params.sort == 'curatoryGroups') {
+      pkgs = pkgs.sort { it.pkg.curatoryGroups.curatoryGroup.name[0]}
+    }
 
     result.totalCount = pkgs.size()
     result.pkgs = pkgs
@@ -474,11 +484,20 @@ class AdminController {
     log.debug("tippsWekbVsLaser::${params}")
     def result = [:]
 
-    params.max = params.max ?: 500
+  /*  params.max = params.max ?: 500
     params.offset = params.offset ?: 0
 
     List pkgs = Package.findAll([sort: 'name', max: params.max, offset: params.offset])
     result.totalPkgs = Package.count()
+
+    result.totalCount = pkgs.size()
+    result.pkgs = pkgs*/
+
+    List pkgs = laserCleanUpService.packageLinkedInLaser()
+
+    if (params.sort == 'curatoryGroups') {
+      pkgs = pkgs.sort { it.pkg.curatoryGroups.curatoryGroup.name[0]}
+    }
 
     result.totalCount = pkgs.size()
     result.pkgs = pkgs
