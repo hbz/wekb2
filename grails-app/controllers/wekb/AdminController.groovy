@@ -518,7 +518,7 @@ class AdminController {
       Integer tippDuplicatesByTitleIDCount = aPackage.getTippDuplicatesByTitleIDCount()
       //log.debug("Package ${aPackage.name} : ${index}")
 
-      if(tippDuplicatesByNameCount > 0 || tippDuplicatesByUrlCount > 0 || tippDuplicatesByTitleIDCount == 0){
+      if(tippDuplicatesByNameCount > 0 || tippDuplicatesByUrlCount > 0 || tippDuplicatesByTitleIDCount > 0){
         pkgs << [pkg: aPackage, tippDuplicatesByNameCount: tippDuplicatesByNameCount, tippDuplicatesByUrlCount: tippDuplicatesByUrlCount, tippDuplicatesByTitleIDCount: tippDuplicatesByTitleIDCount]
       }
     }
