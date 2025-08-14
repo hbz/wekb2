@@ -2228,11 +2228,18 @@ class Api2Service {
 
                 apiSearchTemplate.qbeConfig.qbeForm.each { Map fieldMap ->
                     if(fieldMap.refdataCategory && cleaned_params.containsKey(fieldMap.qparam)) {
+                        Set<String> refdataCategories = []
+                        //TODO @Moe: why two refdata categories???
+                        if(fieldMap.refdataCategory == 'Component.Status') {
+                            refdataCategories << 'Component.Status'
+                            refdataCategories << 'DeletedComponent.Status'
+                        }
+                        else refdataCategories << fieldMap.refdataCategory
                         if (cleaned_params."${fieldMap.qparam}".getClass().isArray() || cleaned_params."${fieldMap.qparam}" instanceof List){
                             if(!cleaned_params[fieldMap.qparam][0].contains('wekb.RefdataValue')) {
                                 List<String> refdataValueOIDs = []
                                 cleaned_params."${fieldMap.qparam}".each {
-                                    List refdataValues = RefdataValue.executeQuery("from RefdataValue where LOWER(value) = LOWER(:value) and owner.desc = :desc", [value: it, desc: fieldMap.refdataCategory])
+                                    List refdataValues = RefdataValue.executeQuery("from RefdataValue where LOWER(value) = LOWER(:value) and owner.desc in (:desc)", [value: it, desc: refdataCategories])
                                     refdataValues.each {
                                         refdataValueOIDs << it.getOID()
                                     }
@@ -2243,7 +2250,7 @@ class Api2Service {
                         }
                         else if (cleaned_params."${fieldMap.qparam}" instanceof String){
                             if(!cleaned_params[fieldMap.qparam].contains('wekb.RefdataValue')) {
-                                List<RefdataValue> refdataValues = RefdataValue.executeQuery("from RefdataValue where LOWER(value) = LOWER(:value) and owner.desc = :desc", [value: cleaned_params."${fieldMap.qparam}", desc: fieldMap.refdataCategory])
+                                List<RefdataValue> refdataValues = RefdataValue.executeQuery("from RefdataValue where LOWER(value) = LOWER(:value) and owner.desc in (:desc)", [value: cleaned_params."${fieldMap.qparam}", desc: refdataCategories])
                                 if (refdataValues) {
                                     List<String> refdataValueOIDs = []
                                     refdataValues.each {
