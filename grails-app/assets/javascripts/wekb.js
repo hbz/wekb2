@@ -124,7 +124,7 @@ $(function () {
                     let test = regex.test($.trim(value)) || $.trim(value) === ''
                     if(!test) {
                         return "The password must be between 8 and 20 characters long." +
-                            "It must contain at least one uppercase letter, one lowercase letter, one number and one special character from the list ( !\$%&@#^+*~=:; )." +
+                            "It must contain at least one uppercase letter, one lowercase letter, one number and one special character from the list ( !\$%&@#^+*~=:;- )." +
                             "Spaces are not allowed."
                     }
                 }
