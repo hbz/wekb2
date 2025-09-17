@@ -27,6 +27,9 @@ class PublicController {
     if(ServerUtils.getCurrentServer() == ServerUtils.SERVER_PROD) {
       text += "Disallow: /search/index/ \n"
       text += "Disallow: /search/componentSearch/ \n"
+      text += "Disallow: /resource/index/ \n"
+      text += "Disallow: /resource/show/ \n"
+
     }
     else {
       text += "Disallow: / \n"
