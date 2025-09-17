@@ -435,7 +435,7 @@ class KbartProcessService {
 
                             TitleInstancePackagePlatform tipp = TitleInstancePackagePlatform.get(tippID)
 
-                            String title_ID = tipp.getTitleID()
+                            /*String title_ID = tipp.getTitleID()
                             TitleInstancePackagePlatform correctTipp
                             if (title_ID) {
                                 List tippDublic = kbartImportService.tippsMatchingByTitleIDAutoUpdate(title_ID, pkg)
@@ -450,7 +450,7 @@ class KbartProcessService {
 
                                     laserCleanUpService.cleanUpLaserTipp(tipp.uuid, correctTipp.uuid)
                                 }
-                            }
+                            }*/
 
                             UpdateTippInfo updateTippInfo = new UpdateTippInfo(
                                     description: "Remove Title '${tipp.name}' because is a duplicate in wekb!",
