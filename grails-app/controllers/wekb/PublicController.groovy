@@ -276,12 +276,6 @@ class PublicController {
     }
   }
 
-  def ygor() {
-    log.info("ygor::${params}")
-    def result = [:]
-    result
-  }
-
   private void logRequestFrom(){
     log.info 'Request from ' + request.getRemoteAddr() + ' for ' + request.requestURI + ' ---> Host: ' + request.getRemoteHost() + ''
 
