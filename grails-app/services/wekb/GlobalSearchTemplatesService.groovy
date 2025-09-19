@@ -664,9 +664,9 @@ class GlobalSearchTemplatesService {
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'openAccess'],
                                 ],
                                 [
-                                        type       : 'dropDown',
+                                        type     : 'dropDownGroup',
+                                        dropDownType  : 'ddcForPackages',
                                         baseClass  : 'wekb.RefdataValue',
-                                        filter1    : RCConstants.DDC,
                                         prompt     : 'DDC',
                                         msgCode     : 'package.ddcs',
                                         qparam     : 'qp_ddc',
@@ -890,9 +890,9 @@ class GlobalSearchTemplatesService {
                                         advancedSearch: [title: "Other fields", category: 'Package']
                                 ],
                                 [
-                                        type       : 'dropDown',
+                                        type     : 'dropDownGroup',
+                                        dropDownType  : 'ddcForPackages',
                                         baseClass  : 'wekb.RefdataValue',
-                                        filter1    : RCConstants.DDC,
                                         prompt     : 'DDC',
                                         msgCode     : 'package.ddcs',
                                         qparam     : 'qp_ddc',
@@ -2244,9 +2244,9 @@ class GlobalSearchTemplatesService {
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eqYear', 'prop': 'accessEndDate'],
                                 ],
                                 [
-                                        type       : 'dropDown',
+                                        type     : 'dropDownGroup',
+                                        dropDownType  : 'ddc',
                                         baseClass  : 'wekb.RefdataValue',
-                                        filter1    : RCConstants.DDC,
                                         prompt     : 'DDC',
                                         msgCode    : 'titleinstancepackageplatform.ddcs',
                                         qparam     : 'qp_ddc',
@@ -2777,7 +2777,6 @@ class GlobalSearchTemplatesService {
                                 [heading: 'Automatic Update', property: 'automaticUpdate', sort: 'automaticUpdate'],
                                 [heading: 'Start Time', property: 'startTime', sort: 'startTime'],
                                 [heading: 'End Time', property: 'endTime', sort: 'endTime'],
-                                [heading: 'Only Last Changed Update', property: 'onlyRowsWithLastChanged', sort: 'onlyRowsWithLastChanged'],
                                 [heading: 'Titles in we:kb before update', property: 'countPreviouslyTippsInWekb', sort: 'countPreviouslyTippsInWekb'],
                                 [heading: 'Titles in we:kb after update', property: 'countNowTippsInWekb', sort: 'countNowTippsInWekb'],
                                 [heading: 'Rows in KBART-File', property: 'countKbartRows', sort: 'countKbartRows'],
