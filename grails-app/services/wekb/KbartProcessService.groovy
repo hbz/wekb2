@@ -649,7 +649,7 @@ class KbartProcessService {
 
                     aPackage.lastUpdated = new Date()
                     aPackage.save()
-
+                    updatePackageInfo.refresh()
                     updatePackageInfo.endTime = new Date()
                     updatePackageInfo.description = description
                     updatePackageInfo.countChangedTipps = changedTipps > 0 ? changedTipps : 0
