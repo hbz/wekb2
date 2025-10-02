@@ -227,7 +227,7 @@ class KbartProcessService {
                                             invalidKbartRowsForTipps << kbartRow.rowIndex
 
                                             UpdateTippInfo updateTippInfo = new UpdateTippInfo(
-                                                    description: validation_result.errorMessage,
+                                                    description: validation_result.errorMessage+" (Row: "+kbartRow.rowIndex+")",
                                                     tipp: null,
                                                     startTime: new Date(),
                                                     endTime: new Date(),

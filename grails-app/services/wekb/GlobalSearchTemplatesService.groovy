@@ -2777,14 +2777,15 @@ class GlobalSearchTemplatesService {
                                 [heading: 'Automatic Update', property: 'automaticUpdate', sort: 'automaticUpdate'],
                                 [heading: 'Start Time', property: 'startTime', sort: 'startTime'],
                                 [heading: 'End Time', property: 'endTime', sort: 'endTime'],
+                                [heading: 'Only Last Changed Update', property: 'onlyRowsWithLastChanged', sort: 'onlyRowsWithLastChanged'],
                                 [heading: 'Titles in we:kb before update', property: 'countPreviouslyTippsInWekb', sort: 'countPreviouslyTippsInWekb'],
                                 [heading: 'Titles in we:kb after update', property: 'countNowTippsInWekb', sort: 'countNowTippsInWekb'],
                                 [heading: 'Rows in KBART-File', property: 'countKbartRows', sort: 'countKbartRows'],
                                 [heading: 'Processed KBART Rows', property: 'countProcessedKbartRows', sort: 'countProcessedKbartRows'],
-                                [heading: 'Changed Titles ', property: 'countChangedTipps', sort: 'countChangedTipps', jumpToLink: '/search/componentSearch/wekb.UpdatePackageInfo:objectID?qbe=g:updateTippInfos&qp_aup_id=objectID&&qp_type_value=Changed%20Title', linkInfo: 'Link to Changed Titles'],
-                                [heading: 'Removed Titles ', property: 'countRemovedTipps', sort: 'countRemovedTipps', jumpToLink: '/search/componentSearch/wekb.UpdatePackageInfo:objectID?qbe=g:updateTippInfos&qp_aup_id=objectID&&qp_type_value=Removed%20Title', linkInfo: 'Link to Removed Titles'],
-                                [heading: 'New Titles', property: 'countNewTipps', sort: 'countNewTipps', jumpToLink: '/search/componentSearch/wekb.UpdatePackageInfo:objectID?qbe=g:updateTippInfos&qp_aup_id=objectID&&qp_type_value=New%20Title', linkInfo: 'Link to New Titles'],
-                                [heading: 'Invalid Titles', property: 'countInValidTipps', sort: 'countInValidTipps', jumpToLink: '/search/componentSearch/wekb.UpdatePackageInfo:objectID?qbe=g:updateTippInfos&qp_aup_id=objectID&&qp_type_value=Failed%20Title', linkInfo: 'Link to Invalid Titles'],
+                                [heading: 'Changed Titles / Changes in Titles ', property: 'countInfosAboutChangedTitles', sort: 'countChangedTipps', jumpToLink: '/search/componentSearch/wekb.UpdatePackageInfo:objectID?qbe=g:updateTippInfos&qp_aup_id=objectID&&qp_type='+RefdataValue.class.name + ':' + RDStore.UPDATE_TYPE_CHANGED_TITLE.id, linkInfo: 'Link to Changed Titles'],
+                                [heading: 'Removed Titles ', property: 'countRemovedTipps', sort: 'countRemovedTipps', jumpToLink: '/search/componentSearch/wekb.UpdatePackageInfo:objectID?qbe=g:updateTippInfos&qp_aup_id=objectID&&qp_type='+RefdataValue.class.name + ':' + RDStore.UPDATE_TYPE_REMOVED_TITLE.id, linkInfo: 'Link to Removed Titles'],
+                                [heading: 'New Titles', property: 'countNewTipps', sort: 'countNewTipps', jumpToLink: '/search/componentSearch/wekb.UpdatePackageInfo:objectID?qbe=g:updateTippInfos&qp_aup_id=objectID&&qp_type='+RefdataValue.class.name + ':' + RDStore.UPDATE_TYPE_NEW_TITLE.id, linkInfo: 'Link to New Titles'],
+                                [heading: 'Invalid Titles', property: 'countInValidTipps', sort: 'countInValidTipps', jumpToLink: '/search/componentSearch/wekb.UpdatePackageInfo:objectID?qbe=g:updateTippInfos&qp_aup_id=objectID&&qp_type='+RefdataValue.class.name + ':' + RDStore.UPDATE_TYPE_INVAILD_TITLE.id, linkInfo: 'Link to Invalid Titles'],
 
                         ]
                 ]

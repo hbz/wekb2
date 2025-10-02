@@ -2,6 +2,7 @@ package wekb
 
 import wekb.annotations.RefdataAnnotation
 import wekb.helper.RCConstants
+import wekb.helper.RDStore
 
 import javax.persistence.Transient
 
@@ -132,6 +133,17 @@ class UpdatePackageInfo {
     public int getCountUpdateTippInfos() {
         int result = UpdateTippInfo.executeQuery("select count(*) from UpdateTippInfo where updatePackageInfo = :updatePackageInfo", [updatePackageInfo: this])[0]
         result
+    }
+
+    @Transient
+    public int getCountChangedTitles() {
+        int result = UpdateTippInfo.executeQuery("select count(*) from UpdateTippInfo where updatePackageInfo = :updatePackageInfo and type = :type group by tipp", [updatePackageInfo: this, type: RDStore.UPDATE_TYPE_CHANGED_TITLE]).size()
+        result
+    }
+
+    @Transient
+    public String getCountInfosAboutChangedTitles() {
+        getCountChangedTitles()+" / " + countChangedTipps
     }
 
     String getOID(){
