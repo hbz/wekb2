@@ -92,12 +92,12 @@
         </dl>
         <dl>
             <dt class="control-label">
-                Changed Titles by Update
+                Changed Titles by Update / Changes in Titles
             </dt>
             <dd>
                 <g:link controller="search" action="componentSearch" id=""
                         params="[qbe: 'g:updateTippInfos', qp_aup_id: d.id, qp_type: RefdataValue.class.name + ':' + RDStore.UPDATE_TYPE_CHANGED_TITLE.id]">
-                    <g:formatNumber number="${d.countChangedTipps}" type="number"/>
+                    <g:formatNumber number="${d.getCountInfosAboutChangedTitles()}" type="number"/>
                 </g:link>
             </dd>
         </dl>
