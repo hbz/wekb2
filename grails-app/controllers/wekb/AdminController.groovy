@@ -683,7 +683,7 @@ class AdminController {
     def components = ["DeletedKBComponent", "CuratoryGroup","KbartSource", "Org", "Package", "Platform", "TitleInstancePackagePlatform", "Vendor"]
     components.each{ def component ->
       Map info = [:]
-      info.name = component
+      info.name = component == 'Org' ? 'Provider' : component
 
 
       String query = "select count(*) from ${component}"
