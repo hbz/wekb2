@@ -37,7 +37,7 @@ class AdminController {
   FtpConnectService ftpConnectService
   DeletionService deletionService
   SearchService searchService
-  LaserCleanUpService laserCleanUpService
+  LaserService laserService
 
 
   def systemThreads() {
@@ -454,7 +454,7 @@ class AdminController {
     log.debug("notLinkedPackageInLaser::${params}")
     def result = [:]
 
-    List pkgs = laserCleanUpService.packageNotLinkedInLaser()
+    List pkgs = laserService.packageNotLinkedInLaser()
 
     if (params.sort == 'curatoryGroups') {
       pkgs = pkgs.sort { it.pkg.curatoryGroups.curatoryGroup.name[0]}
@@ -469,7 +469,7 @@ class AdminController {
     log.debug("linkedPackageInLaser::${params}")
     def result = [:]
 
-    List pkgs = laserCleanUpService.packageLinkedInLaser()
+    List pkgs = laserService.packageLinkedInLaser()
 
     if (params.sort == 'curatoryGroups') {
       pkgs = pkgs.sort { it.pkg.curatoryGroups.curatoryGroup.name[0]}
@@ -480,20 +480,24 @@ class AdminController {
     result
   }
 
+    def linkedSubsInLaser() {
+        log.debug("linkedSubsInLaser::${params}")
+        def result = [:]
+
+        result.pkg = Package.get(params.id)
+
+        List linkedSubs = laserService.linkedSubsInLaser(result.pkg.uuid)
+
+        result.totalCount = linkedSubs.size()
+        result.linkedSubs = linkedSubs
+        result
+    }
+
   def tippsWekbVsLaser() {
     log.debug("tippsWekbVsLaser::${params}")
     def result = [:]
 
-  /*  params.max = params.max ?: 500
-    params.offset = params.offset ?: 0
-
-    List pkgs = Package.findAll([sort: 'name', max: params.max, offset: params.offset])
-    result.totalPkgs = Package.count()
-
-    result.totalCount = pkgs.size()
-    result.pkgs = pkgs*/
-
-    List pkgs = laserCleanUpService.packageLinkedInLaser()
+    List pkgs = laserService.packageLinkedInLaser()
 
     if (params.sort == 'curatoryGroups') {
       pkgs = pkgs.sort { it.pkg.curatoryGroups.curatoryGroup.name[0]}
@@ -692,15 +696,15 @@ class AdminController {
       info.countRemovedInDB = FTControl.executeQuery(query+ " where status = :status", [status: RDStore.KBC_STATUS_REMOVED])[0]
 
       if(component == 'Package'){
-          info.countLaser = laserCleanUpService.laserPackagesCount()
+          info.countLaser = laserService.laserPackagesCount()
       }else if(component == 'Org'){
-        info.countLaser = laserCleanUpService.laserProviderCount()
+        info.countLaser = laserService.laserProviderCount()
       }else if(component == 'Platform'){
-        info.countLaser = laserCleanUpService.laserPlaformCount()
+        info.countLaser = laserService.laserPlaformCount()
       }else if(component == 'TitleInstancePackagePlatform'){
-        info.countLaser = laserCleanUpService.laserTippsCount()
+        info.countLaser = laserService.laserTippsCount()
       }else if(component == 'Vendor'){
-        info.countLaser = laserCleanUpService.laserVendorCount()
+        info.countLaser = laserService.laserVendorCount()
       }
 
       result.componentsInfos << info

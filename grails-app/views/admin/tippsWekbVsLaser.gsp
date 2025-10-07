@@ -9,7 +9,7 @@
 
 <wekb:serviceInjection/>
 
-<h1 class="ui header">Titles WEKB VS LASER (${totalPkgs})</h1>
+<h1 class="ui header">Titles WEKB VS LASER (${totalCount}): Only Packages that linked with subscriptions in LASER</h1>
 
 
 <div class="container">
@@ -78,10 +78,6 @@
         </g:each>
         </tbody>
     </table>
-
-
-    <semui:paginate controller="${controllerName}" action="${actionName}"
-                    max="${params.max}" offset="${params.offset}" total="${totalCount}"/>
 
 </div>
 

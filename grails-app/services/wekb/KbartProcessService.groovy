@@ -26,7 +26,7 @@ class KbartProcessService {
     KbartImportService kbartImportService
     CleanupService cleanupService
     SessionFactory sessionFactory
-    LaserCleanUpService laserCleanUpService
+    LaserService laserService
 
     void kbartImportManual(Package pkg, File tsvFile, Boolean onlyRowsWithLastChanged){
         log.info("Beginn kbartImportManual ${pkg.name}")

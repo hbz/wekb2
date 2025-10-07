@@ -2,12 +2,11 @@ package wekb
 
 import grails.core.GrailsApplication
 import grails.gorm.transactions.Transactional
-import grails.util.Holders
 import groovy.sql.Sql
 
 
 @Transactional
-class LaserCleanUpService {
+class LaserService {
 
     GrailsApplication grailsApplication
 
@@ -392,6 +391,54 @@ class LaserCleanUpService {
 
     }
 
+    def linkedSubsInLaser(String wekbUuid) {
+        Sql sql
+        List linkedSubs
+        try {
+            Map config = getConfig()
+
+            if(config.laserDBUrl && config.laserDBUser && config.laserDBPassword) {
+                sql = Sql.newInstance(config.laserDBUrl, config.laserDBUser, config.laserDBPassword, config.laserDBDriver)
+
+                linkedSubs = sql.rows('''select pkg_gokb_id,
+                                                   org_name,
+                                                   org_id,
+                                                   org_sortname,
+                                                   sub_name,
+                                                   sub_id,
+                                                   rv.rdv_value_en as status,
+                                                   sub_start_date,
+                                                   sub_end_date,
+                                                   sub_has_perpetual_access,
+                                                   rv2.rdv_value_en as holding_selection
+                                            from subscription_package
+                                                     left join public.package p on p.pkg_id = subscription_package.sp_pkg_fk
+                                                     left join subscription s on subscription_package.sp_sub_fk = s.sub_id
+                                                     left join public.org_role o on s.sub_id = o.or_sub_fk
+                                                     left join org oo on oo.org_id = o.or_org_fk
+                                                     left join public.refdata_value rv on s.sub_status_rv_fk = rv.rdv_id
+                                                     left join public.refdata_value rv2 on s.sub_holding_selection_rv_fk = rv2.rdv_id
+                                            where pkg_gokb_id = :wekbUuid order by org_sortname''', [wekbUuid: wekbUuid])
+
+                sql.close()
+            }
+        }catch (Exception ex){
+            log.error("Problem by packageLinkedInLaser:", ex)
+        }
+        finally {
+            try {
+                if(sql)
+                    sql.close()
+            }
+            catch (Exception e) {
+                log.error("Problem by Close SQL Client:", e)
+            }
+        }
+
+        linkedSubs
+
+    }
+
     Map getConfig(){
         Map result = [:]
         result.laserDBUrl = grailsApplication.config.getProperty('laserDBUrl', String)
@@ -399,5 +446,17 @@ class LaserCleanUpService {
         result.laserDBPassword = grailsApplication.config.getProperty('laserDBPassword', String)
         result.laserDBDriver = 'org.postgresql.Driver'
         result
+    }
+
+    String getLaserURL() {
+        grailsApplication.config.getProperty('laserUrl', String)
+    }
+
+    String getLaserSubURL() {
+        getLaserURL() + '/subscription/show'
+    }
+
+    String getLaserOrgURL() {
+        getLaserURL() + '/org/show'
     }
 }
