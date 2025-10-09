@@ -97,7 +97,7 @@
             <dd>
                 <g:link controller="search" action="componentSearch" id=""
                         params="[qbe: 'g:updateTippInfos', qp_aup_id: d.id, qp_type: RefdataValue.class.name + ':' + RDStore.UPDATE_TYPE_CHANGED_TITLE.id]">
-                    <g:formatNumber number="${d.getCountInfosAboutChangedTitles()}" type="number"/>
+                    ${d.getCountInfosAboutChangedTitles()}
                 </g:link>
             </dd>
         </dl>

@@ -137,13 +137,19 @@ class UpdatePackageInfo {
 
     @Transient
     public int getCountChangedTitles() {
-        int result = UpdateTippInfo.executeQuery("select count(*) from UpdateTippInfo where updatePackageInfo = :updatePackageInfo and type = :type group by tipp", [updatePackageInfo: this, type: RDStore.UPDATE_TYPE_CHANGED_TITLE]).size()
+        int result = UpdateTippInfo.executeQuery("select count(tipp.id) from UpdateTippInfo where updatePackageInfo = :updatePackageInfo and type = :type group by tipp.id", [updatePackageInfo: this, type: RDStore.UPDATE_TYPE_CHANGED_TITLE]).size()
+        result
+    }
+
+    @Transient
+    public int getCountUpdateTippInfosAboutChangedTitles() {
+        int result = UpdateTippInfo.executeQuery("select count(*) from UpdateTippInfo where updatePackageInfo = :updatePackageInfo and type = :type", [updatePackageInfo: this, type: RDStore.UPDATE_TYPE_CHANGED_TITLE])[0]
         result
     }
 
     @Transient
     public String getCountInfosAboutChangedTitles() {
-        getCountChangedTitles()+" / " + countChangedTipps
+        getCountChangedTitles()+" / " + getCountUpdateTippInfosAboutChangedTitles()
     }
 
     String getOID(){
