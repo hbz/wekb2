@@ -491,6 +491,9 @@ class AdminController {
         result.totalCount = linkedSubs.size()
         result.linkedSubs = linkedSubs
         result
+        result.totalCount = linkedSubs.size()
+        result.linkedSubs = linkedSubs
+        result
     }
 
   def tippsWekbVsLaser() {
