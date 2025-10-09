@@ -1673,11 +1673,11 @@ class KbartImportService {
                 if (!f.isNaN()) {
                     List<TippPrice> existPrices = TippPrice.findAllByTippAndPriceTypeAndCurrency(tipp, priceType, currency, [sort: 'lastUpdated', order: 'ASC'])
                     if (existPrices.size() == 1) {
-                        TippPrice existPrice = existPrices[0]
-                        if (existPrice.price != f) {
-                            oldValue = existPrice.price.toString()
-                            existPrice.price = f
-                            existPrice.save()
+                        cp = existPrices[0]
+                        oldValue = cp.price.toString()
+                        if (cp.price != f) {
+                            cp.price = f
+                            cp.save()
                             if (!tipp.save()) {
                                 log.error("Tipp save error: ")
                                 tipp.errors.allErrors.each {
@@ -1734,6 +1734,8 @@ class KbartImportService {
                         priceChanged = true
                     }
                 } else {
+
+                    List<TippPrice> existPrices = TippPrice.findAllByTippAndPriceTypeAndCurrency(tipp, priceType, currency, [sort: 'lastUpdated', order: 'ASC'])
                     //updatePackageInfo = updatePackageInfo.refresh()
                     UpdateTippInfo updateTippInfo = new UpdateTippInfo(
                             description: "The value '${newValue}' can not parse to a price",
@@ -1745,7 +1747,7 @@ class KbartImportService {
                             updatePackageInfo: updatePackageInfo,
                             kbartProperty: kbartProperty,
                             tippProperty: "prices[${priceType.value}]",
-                            oldValue: oldValue,
+                            oldValue: existPrices.size() > 0 ? existPrices.price.join(';') : '',
                             newValue: newValue
                     ).save()
                 }
@@ -1755,22 +1757,24 @@ class KbartImportService {
                 priceUpdateFail = true
             }
 
-            if (!priceUpdateFail && cp && priceChanged && !result.newTipp) {
-                //updatePackageInfo = updatePackageInfo.refresh()
-                UpdateTippInfo updateTippInfo = new UpdateTippInfo(
-                        description: "Create or update price of title '${tipp.name}'",
-                        tipp: tipp,
-                        startTime: new Date(),
-                        endTime: new Date(),
-                        status: RDStore.UPDATE_STATUS_SUCCESSFUL,
-                        type: RDStore.UPDATE_TYPE_CHANGED_TITLE,
-                        updatePackageInfo: updatePackageInfo,
-                        kbartProperty: kbartProperty,
-                        tippProperty: "prices[${priceType.value}]",
-                        oldValue: oldValue,
-                        newValue: newValue
-                ).save()
-            }else {
+            if(!result.newTipp){
+                if (!priceUpdateFail && cp && priceChanged) {
+                    //updatePackageInfo = updatePackageInfo.refresh()
+                    UpdateTippInfo updateTippInfo = new UpdateTippInfo(
+                            description: "Create or update price of title '${tipp.name}'",
+                            tipp: tipp,
+                            startTime: new Date(),
+                            endTime: new Date(),
+                            status: RDStore.UPDATE_STATUS_SUCCESSFUL,
+                            type: RDStore.UPDATE_TYPE_CHANGED_TITLE,
+                            updatePackageInfo: updatePackageInfo,
+                            kbartProperty: kbartProperty,
+                            tippProperty: "prices[${priceType.value}]",
+                            oldValue: oldValue,
+                            newValue: newValue
+                    ).save()
+                }
+                else if (priceUpdateFail || (cp == null && !priceChanged)) {
                     UpdateTippInfo updateTippInfo = new UpdateTippInfo(
                             description: "Problem by create or update price of title '${tipp.name}'",
                             tipp: tipp,
@@ -1784,7 +1788,9 @@ class KbartImportService {
                             oldValue: oldValue,
                             newValue: newValue
                     ).save()
+                }
             }
+
         }else{
             if(!result.newTipp) {
                 List<TippPrice> existPrices = TippPrice.findAllByTippAndPriceTypeAndCurrency(tipp, priceType, currency, [sort: 'lastUpdated', order: 'ASC'])
