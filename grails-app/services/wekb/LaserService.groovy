@@ -418,7 +418,7 @@ class LaserService {
                                                      left join org oo on oo.org_id = o.or_org_fk
                                                      left join public.refdata_value rv on s.sub_status_rv_fk = rv.rdv_id
                                                      left join public.refdata_value rv2 on s.sub_holding_selection_rv_fk = rv2.rdv_id
-                                            where pkg_gokb_id = :wekbUuid order by org_sortname''', [wekbUuid: wekbUuid])
+                                            where pkg_gokb_id = :wekbUuid order by sub_id, org_sortname''', [wekbUuid: wekbUuid])
 
                 sql.close()
             }
