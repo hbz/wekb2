@@ -2803,6 +2803,11 @@ class GlobalSearchTemplatesService {
                 qbeConfig: [
                         qbeForm   : [
                                 [
+                                        qparam     : 'qp_type_value',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'type.value'],
+                                        hide: true
+                                ],
+                                [
                                         qparam     : 'qp_aup_id',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'updatePackageInfo.id', 'type': 'java.lang.Long'],
                                         hide       : true
@@ -2859,10 +2864,16 @@ class GlobalSearchTemplatesService {
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'status'],
                                 ],
                                 [
-                                        qparam     : 'qp_type_value',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'type.value'],
-                                        hide: true
-                                ],
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.YN,
+                                        prompt     : 'Automatic Update',
+                                        msgCode    : 'updatepackageinfo.automaticUpdate',
+                                        qparam     : 'qp_automaticUpdate',
+                                        placeholder: 'Automatic Update',
+                                        propType   : 'Boolean',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'updatePackageInfo.automaticUpdate'],
+                                ]
                         ],
                         qbeResults: [
                                 [heading: 'Description', property: 'description', link: true, linkInfo: 'Link to Title Update Info'],
