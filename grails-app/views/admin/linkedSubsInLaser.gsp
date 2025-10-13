@@ -13,6 +13,18 @@
 
 <h1 class="ui header">Linked Subs in Laser for Package ${pkg.name} (${totalCount})</h1>
 
+<g:set var="laserService" bean="${wekb.LaserService}"/>
+<div class="ui warning icon huge message">
+    <i class="info icon"></i>
+
+    <div class="content">
+        <div class="header">
+            PerpetualAccess
+        </div>
+
+        <p> Subs with PerpetualAccess: <g:link action="linkedSubsInLaser" controller="admin" id="${pkg.id}" params="[perpetualAccess: true]">${laserService.packageLinkedWithPerpetualAccessInLaserCount(pkg.uuid)}</g:link>, Subs without PerpetualAccess: <g:link action="linkedSubsInLaser" controller="admin" id="${pkg.id}" params="[perpetualAccess: false]">${laserService.packageLinkedWithOutPerpetualAccessInLaserCount(pkg.uuid)}</g:link></p>
+    </div>
+</div>
 
 <div class="container">
 
@@ -27,6 +39,7 @@
             <th>Endate</th>
             <th>Perpetual Access</th>
             <th>Holding Selection</th>
+            <th>Typ</th>
         </tr>
         </thead>
         <tbody>
@@ -55,6 +68,9 @@
                 </td>
                 <td>
                     ${subInfo.holding_selection}
+                </td>
+                <td>
+                    ${subInfo.sub_typ}
                 </td>
             </tr>
         </g:each>

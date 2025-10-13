@@ -486,7 +486,17 @@ class AdminController {
 
         result.pkg = Package.get(params.id)
 
-        List linkedSubs = laserService.linkedSubsInLaser(result.pkg.uuid)
+        List linkedSubs = []
+
+        linkedSubs = laserService.linkedSubsInLaser(result.pkg.uuid)
+
+        if(params.boolean('perpetualAccess') == true){
+            linkedSubs = laserService.linkedSubsWithPerpetualAccessInLaser(result.pkg.uuid)
+        }
+
+        if(params.boolean('perpetualAccess') == false){
+            linkedSubs = laserService.linkedSubsWithOutPerpetualAccessInLaser(result.pkg.uuid)
+        }
 
         result.totalCount = linkedSubs.size()
         result.linkedSubs = linkedSubs

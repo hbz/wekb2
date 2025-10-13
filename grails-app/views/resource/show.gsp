@@ -36,6 +36,7 @@
 
             <sec:ifAnyGranted roles="ROLE_ADMIN">
                 <g:if test="${displayobj instanceof wekb.Package && displayobj.isPackageLinkedInLaser()}">
+                    <g:set var="laserService" bean="${wekb.LaserService}"/>
                     <div class="ui warning icon huge message">
                         <i class="info icon"></i>
 
@@ -44,7 +45,7 @@
                                 Package used in LAS:er
                             </div>
 
-                            <p>Package is linked in LAS:er. Count:  <g:link action="linkedSubsInLaser" controller="admin" id="${displayobj.id}">${displayobj.packageLinkedInLaserCount()}</g:link></p>
+                            <p>Package is linked in LAS:er. Count:  <g:link action="linkedSubsInLaser" controller="admin" id="${displayobj.id}">${displayobj.packageLinkedInLaserCount()} -> PerpetualAccess: ${laserService.packageLinkedWithPerpetualAccessInLaserCount(displayobj.uuid)} , ${laserService.packageLinkedWithOutPerpetualAccessInLaserCount(displayobj.uuid)}</g:link></p>
                         </div>
                     </div>
                 </g:if>
