@@ -1689,10 +1689,13 @@ class KbartImportService {
 
                     } else if (existPrices.size() > 1) {
                         def pricesIDs = existPrices.id.clone()
-                        pricesIDs.each {
-                            TippPrice tippPrice = TippPrice.get(it)
-                            tipp.removeFromPrices(tippPrice)
-                            //TippPrice.executeUpdate("delete from TippPrice id = ${it}")
+                        TippPrice.withNewTransaction {
+                            pricesIDs.each {
+                                TippPrice tippPrice = TippPrice.get(it)
+                                tipp.removeFromPrices(tippPrice)
+                                tippPrice.delete()
+                                //TippPrice.executeUpdate("delete from TippPrice id = ${it}")
+                            }
                         }
                         if (!tipp.save()) {
                             log.error("Tipp save error: ")
@@ -1788,9 +1791,12 @@ class KbartImportService {
                 if (existPrices.size() > 0) {
                     oldValue = existPrices.price.join('; ')
                     def pricesIDs = existPrices.id.clone()
-                    pricesIDs.each {
-                        TippPrice tippPrice = TippPrice.get(it)
-                        tipp.removeFromPrices(tippPrice)
+                    TippPrice.withNewTransaction {
+                        pricesIDs.each {
+                            TippPrice tippPrice = TippPrice.get(it)
+                            tipp.removeFromPrices(tippPrice)
+                            tippPrice.delete()
+                        }
                     }
                     if (!tipp.save()) {
                         log.error("Tipp save error: ")
@@ -2067,8 +2073,11 @@ class KbartImportService {
             ClassUtils.setStringIfDifferent(tipp, 'note', tipp.coverageStatements[0].coverageNote)
             if (tipp.coverageStatements && tipp.coverageStatements.size() > 0) {
                 def cStsIDs = tipp.coverageStatements.id.clone()
-                cStsIDs.each {
-                    tipp.removeFromCoverageStatements(TIPPCoverageStatement.get(it))
+                TIPPCoverageStatement.withNewTransaction {
+                    cStsIDs.each {
+                        tipp.removeFromCoverageStatements(TIPPCoverageStatement.get(it))
+                        TIPPCoverageStatement.get(it).delete()
+                    }
                 }
                 if (!tipp.save()) {
                     log.error("Tipp save error: ")
@@ -2662,7 +2671,7 @@ class KbartImportService {
 
             List<TitleInstancePackagePlatform> tipps = []
 
-            if(tippMap.title_id) {
+            /*if(tippMap.title_id) {
 
                 tipps = tippsMatchingByTitleIDAutoUpdate(tippMap.title_id, pkg)
                 countTipps = tipps.size()
@@ -2677,9 +2686,9 @@ class KbartImportService {
                         break
                     default:
                         tipps = tipps.sort { it.lastUpdated }
-                       /* tipps.each {
-                            println(it.lastUpdated)
-                        }*/
+                        *//* tipps.each {
+                             println(it.lastUpdated)
+                         }*//*
                         tipps.reverse(true)
                         if (tipps.size() > 1) {
                             tipps.eachWithIndex { TitleInstancePackagePlatform titleInstancePackagePlatform, int index ->
@@ -2694,10 +2703,9 @@ class KbartImportService {
                         break
                 }
 
-            }
+            }*/
 
-
-            /*String title = tippMap.publication_title
+            String title = tippMap.publication_title
 
             countTipps = TitleInstancePackagePlatform.executeQuery('select count(*) from TitleInstancePackagePlatform as tipp ' +
                     'where tipp.pkg = :pkg and tipp.status != :removed and tipp.name = :tiDtoName ',
@@ -2803,7 +2811,7 @@ class KbartImportService {
                         break
                 }
 
-            }*/
+            }
         }
         result.tipp = tipp
         result

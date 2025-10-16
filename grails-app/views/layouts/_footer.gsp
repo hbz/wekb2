@@ -69,7 +69,7 @@
                 <h2 class="ui  header"><g:message code="footer.contactUs"/></h2>
 
                 <div class="ui  link list ">
-                    <div class="item"><a class="content" href="mailto:laser@hbz-nrw.de">E-Mail</a></div>
+                    <div class="item"><a class="content" href="mailto:wekb@hbz-nrw.de">E-Mail</a></div>
 
                     <div class="item"><a target="_blank" class="content"
                                          href="https://www.hbz-nrw.de/ueber-uns/kontakt/anreise"><g:message code="footer.howToReachUs"/></a>

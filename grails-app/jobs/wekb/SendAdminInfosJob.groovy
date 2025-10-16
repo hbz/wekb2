@@ -57,7 +57,7 @@ class SendAdminInfosJob {
 
         try {
             mailService.sendMail {
-                to "laser@hbz-nrw.de", "moetez.djebeniani@hbz-nrw.de"
+                to "wekb@hbz-nrw.de", "moetez.djebeniani@hbz-nrw.de"
                 from "wekb Server <wekb-managePackageUpdateJobs@wekbServer>"
                 subject mailSubject
                 html(view: "/mailTemplate/html/packageUpdateJobsMail", model: [autoUpdates: filteredAutoUpdates])
@@ -89,7 +89,7 @@ class SendAdminInfosJob {
         if(pkgs.size() > 0) {
             try {
                 mailService.sendMail {
-                    to "laser@hbz-nrw.de", "moetez.djebeniani@hbz-nrw.de"
+                    to "wekb@hbz-nrw.de", "moetez.djebeniani@hbz-nrw.de"
                     from "wekb Server <wekb-manageTitleDublicatesJob@wekbServer>"
                     subject mailSubject
                     html(view: "/mailTemplate/html/titleDublicatesJobMail", model: [totalCount: pkgs.size(), pkgs: pkgs])
@@ -152,7 +152,7 @@ class SendAdminInfosJob {
 
             try {
                 mailService.sendMail {
-                    to "laser@hbz-nrw.de","moetez.djebeniani@hbz-nrw.de"
+                    to "wekb@hbz-nrw.de","moetez.djebeniani@hbz-nrw.de"
                     from "wekb Server <wekb-esIndexCheckJob@wekbServer>"
                     subject mailSubject
                     html(view: "/mailTemplate/html/indexAlert", model: [indices: indices])

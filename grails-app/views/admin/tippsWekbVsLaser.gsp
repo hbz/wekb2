@@ -22,7 +22,7 @@
             <th>Status</th>
             <th>Provider</th>
             <th>Platform</th>
-            <th>Curatory Groups</th>
+            <semui:sortableColumn property="curatoryGroups" title="Curatory Groups"/>
             <th>Auto Update</th>
             <th>Titles WEKB / Laser</th>
         </tr>

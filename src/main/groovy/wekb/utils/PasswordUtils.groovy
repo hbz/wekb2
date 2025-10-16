@@ -19,7 +19,7 @@ class PasswordUtils {
                     '(?=.*[A-Z])' +             // an upper case alphabet that must occur at least once
                     '(?=.*[a-z])' +             // a lower case alphabet must occur at least once
                     '(?=.*[0-9])' +             // a digit must occur at least once
-                    '(?=.*[!$%&@#^+*~=:;-])' +   // a special character that must occur at least once: !$%&@#^+*~=:;-
+                    '(?=.*[!$%&@#^+*~=:;-])' +   // a special character that must occur at least once: !$%&@#^+*~=:;
                     '(?=\\S+$)' +               // white spaces are not allowed
                     '.{8,20}' +                 // 8 - 20 characters
                     '$'

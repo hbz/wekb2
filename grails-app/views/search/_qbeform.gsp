@@ -147,7 +147,7 @@
 
                                 <div class="menu">
                                     <g:each in="${dropdownService.selectedDropDown(fld.dropDownType, refObject, params.qp_status_id)}" var="item">
-                                        <div class="item" data-value="${item}">${item}</div>
+                                        <div class="item" data-value="${item.id}">${item.text}</div>
                                     </g:each>
                                 </div>
                             </div>
@@ -292,7 +292,7 @@
 
                                     <div class="menu">
                                         <g:each in="${dropdownService.selectedDropDown(field.dropDownType, refObject, params.qp_status_id)}" var="item">
-                                            <div class="item" data-value="${item}">${item}</div>
+                                            <div class="item" data-value="${item.id}">${item.text}</div>
                                         </g:each>
                                     </div>
                                 </div>
