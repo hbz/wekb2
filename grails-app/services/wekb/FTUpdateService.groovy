@@ -233,10 +233,6 @@ class FTUpdateService {
           result.altname.add(vn.variantName)
         }*/
         result.lastUpdatedDisplay = dateFormatService.formatIsoTimestamp(kbc.lastUpdated)
-        result.roles = []
-        kbc.roles.each { role ->
-          result.roles.add(role.value)
-        }
 
         if(kbc.hasProperty('curatoryGroups')) {
           result.curatoryGroups = []

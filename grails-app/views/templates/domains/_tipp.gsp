@@ -31,6 +31,22 @@
         </dl>
         <dl>
             <dt class="control-label">
+                Provider
+            </dt>
+            <dd>
+                <g:if test="${controllerName != 'create'}">
+                    <g:if test="${d.pkg.provider}">
+                        <g:link controller="resource" action="show"
+                                id="${d.pkg.provider.getOID()}">
+                            ${(d.pkg.provider.name) ?: 'Empty'}
+                        </g:link>
+                    </g:if>
+                    <g:else>Empty</g:else>
+                </g:if>
+            </dd>
+        </dl>
+        <dl>
+            <dt class="control-label">
                 Platform
             </dt>
             <dd>

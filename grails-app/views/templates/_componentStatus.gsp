@@ -38,7 +38,13 @@
                                         </div>
                                         <div class="content">
                                             <div class="header">
-                                                ${curatoryGroupUser.user.email}
+
+                                                <span class="js-copyTriggerParent">
+                                                    <span class="ui small basic image label js-copyTrigger la-popup-tooltip" data-position="top center" data-tooltip="${message(code: 'tooltip.clickToCopy', args: ['E-Mail'])}">
+                                                        <i class="copy black icon la-js-copyTriggerIcon"></i>
+                                                        <span class="detail js-copyTopic">${curatoryGroupUser.user.email}</span>
+                                                    </span>
+                                                </span>
                                             </div>
                                         </div>
                                     </div>

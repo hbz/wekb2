@@ -1,4 +1,4 @@
-<%@ page import="wekb.utils.ServerUtils; wekb.utils.ServerUtils; wekb.helper.RDStore;" %>
+<%@ page import="wekb.utils.ServerUtils; wekb.utils.ServerUtils; wekb.helper.RDStore; wekb.RefdataValue;" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,6 +12,7 @@
 
     <g:javascript> var spotlightSearchUrl="${g.createLink(controller: 'search', action: 'spotlightSearch')}";</g:javascript>
     <g:javascript> var ajaxLookUp="${g.createLink(controller: 'ajaxJson', action: 'lookup')}";</g:javascript>
+    <g:javascript> var componentsDropDown="${g.createLink(controller: 'ajaxJson', action: 'lookup')}";</g:javascript>
 
     <asset:javascript src="wekb.js"/>
     <asset:stylesheet src="wekb.css"/>
@@ -58,7 +59,7 @@
                     params="[qbe: 'g:platforms']"><g:message code="public.platforms"/></g:link>
             <g:link class="item we-link" controller="search" action="componentSearch"
                     params="[qbe: 'g:orgs']"><g:message code="public.providers"/></g:link>
-            <g:link class="item we-link" controller="search" action="componentSearch" params="[qbe: 'g:tipps']"><g:message code="public.titles"/></g:link>
+            <g:link class="item we-link" controller="search" action="componentSearch" params="[qbe: 'g:tipps', qp_status: RefdataValue.class.name + ':' + RDStore.KBC_STATUS_CURRENT.id]"><g:message code="public.titles"/></g:link>
             <g:link class="item we-link" controller="search" action="componentSearch"
                     params="[qbe: 'g:vendors']"><g:message code="public.vendors"/></g:link>
         </div>
@@ -76,27 +77,35 @@
         </div>
     </div>
     <g:if test="${isUserLoggedIn}">
-        <g:if test="${user.curatoryGroupUsers.size() > 0 && user.showMyComponents()}">
+        <g:if test="${user.curatoryGroupUsers.size() > 0 && (user.showMyComponentsForProvider() || user.showMyComponentsVendor())}">
             <div class="item">
                 <div class="header"><g:message code="public.myComponents"/></div>
-                <div class="menu">
-                    <g:link class="item we-link" controller="group" action="checkMyInfos">Check my Infos</g:link>
-                </div>
+                <g:if test="${user.showMyComponentsForProvider()}">
+                    <div class="menu">
+                        <g:link class="item we-link" controller="group" action="checkMyInfos">Check my Infos</g:link>
+                    </div>
 
-                <div class="menu">
-                    <g:link class="item we-link" controller="group" action="myPackages"><g:message code="public.myPackages"/></g:link>
-                    <g:link class="item we-link" controller="group" action="myPlatforms"><g:message code="public.myPlatforms"/></g:link>
-                    <g:link class="item we-link" controller="group" action="myProviders"><g:message code="public.myProviders"/></g:link>
-                    <g:link class="item we-link" controller="group" action="mySources"><g:message code="public.mySources"/></g:link>
-                    <g:link class="item we-link" controller="group" action="myTitles"><g:message code="public.myTitles"/></g:link>
-                </div>
 
-                <div class="menu">
-                    <g:link class="item we-link" controller="group" action="myPackageManagement"><g:message code="public.myPackageManagement"/></g:link>
-                    <g:link class="item we-link" controller="group"
-                            action="myPackagesNeedsAutoUpdates"><g:message code="public.myPackagesNeedsAutoUpdates"/></g:link>
-                    <g:link class="item we-link" controller="group" action="myAutoUpdateInfos"><g:message code="public.myAutoUpdateInfos"/></g:link>
-                </div>
+                    <div class="menu">
+                        <g:link class="item we-link" controller="group" action="myPackages"><g:message code="public.myPackages"/></g:link>
+                        <g:link class="item we-link" controller="group" action="myPlatforms"><g:message code="public.myPlatforms"/></g:link>
+                        <g:link class="item we-link" controller="group" action="myProviders"><g:message code="public.myProviders"/></g:link>
+                        <g:link class="item we-link" controller="group" action="mySources"><g:message code="public.mySources"/></g:link>
+                        <g:link class="item we-link" controller="group" action="myTitles"><g:message code="public.myTitles"/></g:link>
+                    </div>
+
+                    <div class="menu">
+                        <g:link class="item we-link" controller="group" action="myPackageManagement"><g:message code="public.myPackageManagement"/></g:link>
+                        <g:link class="item we-link" controller="group"
+                                action="myPackagesNeedsAutoUpdates"><g:message code="public.myPackagesNeedsAutoUpdates"/></g:link>
+                        <g:link class="item we-link" controller="group" action="myAutoUpdateInfos"><g:message code="public.myAutoUpdateInfos"/></g:link>
+                    </div>
+                </g:if>
+                <g:if test="${user.showMyComponentsVendor()}">
+                    <div class="menu">
+                        <g:link class="item we-link" controller="group" action="myVendors"><g:message code="public.myVendors"/></g:link>
+                    </div>
+                </g:if>
             </div>
         </g:if>
 

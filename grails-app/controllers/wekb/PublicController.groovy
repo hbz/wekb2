@@ -25,8 +25,24 @@ class PublicController {
     String text = "User-agent: *\n"
 
     if(ServerUtils.getCurrentServer() == ServerUtils.SERVER_PROD) {
-      text += "Disallow: /search/index/ \n"
-      text += "Disallow: /search/componentSearch/ \n"
+        text += "Disallow: /search/index/ \n"
+        text += "Disallow: /search/componentSearch/ \n"
+        text += "Disallow: /resource/index/ \n"
+        text += "Disallow: /resource/show/ \n"
+        text += "Disallow: /login/ \n"
+        text += "Disallow: /public/api2/ \n"
+        text += "Disallow: /public/wcagFeedbackForm/ \n"
+        text += "Disallow: /public/sendFeedbackForm/ \n"
+        text += "Disallow: /public/wcagPlainEnglish/ \n"
+        text += "Disallow: /public/packageContent/ \n"
+        text += "Disallow: /public/packageContent/ \n"
+        text += "Disallow: /public/tippContent/ \n"
+        text += "Disallow: /public/identifierContent/ \n"
+        text += "Disallow: /public/orgContent/ \n"
+        text += "Disallow: /public/platformContent/ \n"
+        text += "Disallow: /public/kbart/ \n"
+        text += "Disallow: /public/packageTSVExport/ \n"
+
     }
     else {
       text += "Disallow: / \n"
@@ -271,12 +287,6 @@ class PublicController {
       redirect(url: request.getHeader('referer'))
       return
     }
-  }
-
-  def ygor() {
-    log.info("ygor::${params}")
-    def result = [:]
-    result
   }
 
   private void logRequestFrom(){

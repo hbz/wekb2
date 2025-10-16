@@ -6,7 +6,7 @@
 <g:if test="${hide.contains('SEARCH_FORM')}">
 </g:if>
 <g:elseif test="${params.inline}">
-    <g:form method="get" class="ui form" controller="search" action="componentSearch" id="${params.id}">
+    <g:form method="get" class="ui form wekb-filter" controller="search" action="componentSearch" id="${params.id}">
         <input type="hidden" name="qbe" value="${params.qbe}"/>
         <input type="hidden" name="hideResetButton" value="${true}"/>
 
@@ -35,7 +35,7 @@
     <% Map advancedSearchMap = [:] %>
     <div class="ui segment">
         <h1 class="ui header"><g:message code="search.filter"/></h1>
-    <g:form method="get" class="ui form" controller="${controllerName}" action="${actionName}" id="${params.id}">
+    <g:form method="get" class="ui form wekb-filter" controller="${controllerName}" action="${actionName}" id="${params.id}">
 
         <input type="hidden" name="qbe" value="${params.qbe}"/>
 
@@ -97,7 +97,7 @@
                                 <i class="dropdown icon"></i>
 
                                 <g:if test="${fld.selectPlaceHolder}">
-                                    <g:message code="search.select"/> ${fld.selectPlaceHolder}
+                                    <div class="default text"><g:message code="search.select"/> ${fld.selectPlaceHolder}</div>
                                 </g:if>
                                 <g:else>
                                     <div class="default text"><g:message code="search.select"/>
@@ -132,7 +132,7 @@
                                 <input type="hidden" name="${fld.qparam}" value="${params[fld.qparam]}">
                                 <i class="dropdown icon"></i>
                                 <g:if test="${fld.selectPlaceHolder}">
-                                    <g:message code="search.select"/> ${fld.selectPlaceHolder}
+                                    <div class="default text"><g:message code="search.select"/> ${fld.selectPlaceHolder}</div>
                                 </g:if>
                                 <g:else>
                                     <div class="default text"><g:message code="search.select"/>
@@ -147,7 +147,7 @@
 
                                 <div class="menu">
                                     <g:each in="${dropdownService.selectedDropDown(fld.dropDownType, refObject, params.qp_status_id)}" var="item">
-                                        <div class="item" data-value="${item}">${item}</div>
+                                        <div class="item" data-value="${item.id}">${item.text}</div>
                                     </g:each>
                                 </div>
                             </div>
@@ -239,7 +239,7 @@
                                     <i class="dropdown icon"></i>
 
                                     <g:if test="${field.selectPlaceHolder}">
-                                        <g:message code="search.select"/> ${field.selectPlaceHolder}
+                                        <div class="default text"><g:message code="search.select"/> ${field.selectPlaceHolder}</div>
                                     </g:if>
                                     <g:else>
                                         <div class="default text"><g:message code="search.select"/>
@@ -286,13 +286,13 @@
                                             <g:else>
                                                 ${field.prompt}
                                             </g:else>
-                                            </div>
                                         </g:else>
+                                    </div>
 
 
                                     <div class="menu">
                                         <g:each in="${dropdownService.selectedDropDown(field.dropDownType, refObject, params.qp_status_id)}" var="item">
-                                            <div class="item" data-value="${item}">${item}</div>
+                                            <div class="item" data-value="${item.id}">${item.text}</div>
                                         </g:each>
                                     </div>
                                 </div>

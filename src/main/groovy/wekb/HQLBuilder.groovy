@@ -287,7 +287,7 @@ public class HQLBuilder {
     switch ( crit.defn.contextTree.comparator ) {
       case 'eq':
         hql_builder_context."${addToQuery}".add("${crit.defn.contextTree.negate?'not ':''}${scoped_property} = :${crit.defn.qparam}");
-        if ( crit.defn.type=='lookup' || crit.defn.type=='dropDown' ) {
+        if ( crit.defn.type=='lookup' || crit.defn.type=='dropDown' || crit.defn.type=='dropDownGroup' ) {
           def value = hql_builder_context.genericOIDService.resolveOID(crit.value)
           value = (crit.defn.propType == 'Boolean') ? (value == RDStore.YN_YES ? true : false) : value
           hql_builder_context.bindvars[crit.defn.qparam] = value
@@ -308,7 +308,7 @@ public class HQLBuilder {
         break;
       case 'in':
         hql_builder_context."${addToQuery}".add("${crit.defn.contextTree.negate?'not ':''}${scoped_property} in (:${crit.defn.qparam})")
-        if ( crit.defn.type=='lookup' || crit.defn.type=='dropDown' ) {
+        if ( crit.defn.type=='lookup' || crit.defn.type=='dropDown' || crit.defn.type=='dropDownGroup' ) {
           List values = [], parsedValues = []
           if(crit.value instanceof String)
             values << crit.value
@@ -348,7 +348,7 @@ public class HQLBuilder {
         break;
 
       case 'exists':
-        if ( crit.defn.type=='lookup' || crit.defn.type=='dropDown') {
+        if ( crit.defn.type=='lookup' || crit.defn.type=='dropDown' || crit.defn.type=='dropDownGroup' ) {
 
           if(crit.defn.baseClass == 'wekb.RefdataValue') {
             def value = hql_builder_context.genericOIDService.resolveOID(crit.value)
@@ -380,6 +380,9 @@ public class HQLBuilder {
                 hql_builder_context.bindvars[crit.defn.qparam] = value
               }else if(baseclass.toString() == 'class wekb.UpdatePackageInfo') {
                 hql_builder_context."${addToQuery}".add("${crit.defn.contextTree.negate ? 'not ' : ''} exists (select cgp from CuratoryGroupPackage cgp where cgp.pkg = o.pkg and cgp.curatoryGroup = :${crit.defn.qparam}) ");
+                hql_builder_context.bindvars[crit.defn.qparam] = value
+              }else if(baseclass.toString() == 'class wekb.Vendor') {
+                hql_builder_context."${addToQuery}".add("${crit.defn.contextTree.negate ? 'not ' : ''} exists (select cgk from CuratoryGroupVendor cgk where cgk.vendor = o and cgk.curatoryGroup = :${crit.defn.qparam}) ");
                 hql_builder_context.bindvars[crit.defn.qparam] = value
               }
             }

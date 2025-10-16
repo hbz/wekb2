@@ -29,6 +29,7 @@ class SendAdminInfosJob {
         if (grailsApplication.config.getProperty('wekb.sendJobInfosJob', Boolean)) {
             log.debug("Beginning scheduled send job infos job.")
             sendPackageUpdateInfos()
+            sendTitleDublicatesInfos()
             //sendEsIndexCheck()
             log.info("send job infos job completed.")
         } else {
@@ -37,7 +38,7 @@ class SendAdminInfosJob {
     }
 
     private sendPackageUpdateInfos() {
-
+        log.info("sendPackageUpdateInfos: Begin")
         List<UpdatePackageInfo> autoUpdates = UpdatePackageInfo.executeQuery("from UpdatePackageInfo where automaticUpdate = true and status = :status and dateCreated > (CURRENT_DATE-1) and pkg.status != :pkgStatus order by dateCreated desc", [pkgStatus: RDStore.KBC_STATUS_DELETED, status: RDStore.UPDATE_STATUS_FAILED])
 
         List<UpdatePackageInfo> filteredAutoUpdates = []
@@ -65,6 +66,42 @@ class SendAdminInfosJob {
             String eMsg = e.message
             log.error("SendAdminInfosJob - sendPackageUpdateInfos() :: Unable to perform email due to exception ${eMsg}")
         }
+
+        log.info("sendPackageUpdateInfos: End")
+    }
+
+    private sendTitleDublicatesInfos() {
+        log.info("sendTitleDublicatesInfos: Begin")
+        List<Package> pkgs = []
+        Package.findAll([sort: 'name']).eachWithIndex { Package aPackage, int index ->
+            Integer tippDuplicatesByTitleIDCount = aPackage.getTippDuplicatesByTitleIDCount()
+
+            if(tippDuplicatesByTitleIDCount > 0){
+                pkgs << [pkg: aPackage, tippDuplicatesByTitleIDCount: tippDuplicatesByTitleIDCount]
+            }
+        }
+
+        String currentServer = ServerUtils.getCurrentServer()
+        String subjectSystemPraefix = (currentServer == ServerUtils.SERVER_PROD) ? "" : (ServerUtils.getCurrentServerSystemId() + " - ")
+        String mailSubject = subjectSystemPraefix + "we:kb Manage Title Dublicates Job"
+        String currentSystemId = ServerUtils.getCurrentServerSystemId()
+
+        if(pkgs.size() > 0) {
+            try {
+                mailService.sendMail {
+                    to "wekb@hbz-nrw.de", "moetez.djebeniani@hbz-nrw.de"
+                    from "wekb Server <wekb-manageTitleDublicatesJob@wekbServer>"
+                    subject mailSubject
+                    html(view: "/mailTemplate/html/titleDublicatesJobMail", model: [totalCount: pkgs.size(), pkgs: pkgs])
+                }
+            } catch (Exception e) {
+                String eMsg = e.message
+                log.error("SendAdminInfosJob - sendTitleDublicatesInfos() :: Unable to perform email due to exception ${eMsg}")
+            }
+        }else {
+
+        }
+        log.info("sendTitleDublicatesInfos: End")
     }
 
     private sendEsIndexCheck() {

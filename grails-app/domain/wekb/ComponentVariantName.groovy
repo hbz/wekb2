@@ -6,6 +6,7 @@ class ComponentVariantName {
 
   Org org
   Package pkg
+  Vendor vendor
 
 
   RefdataValue variantType
@@ -23,6 +24,7 @@ class ComponentVariantName {
         version column:'cvn_version'
         org column:'cvn_org_fk'
         pkg column:'cvn_pkg_fk'
+        vendor column:'cvn_vendor_fk'
         variantName column:'cvn_variant_name'
         normVariantName column:'cvn_norm_variant_name', index:'cvn_norm_variant_name_idx'
         variantType column:'cvn_type_rv_fk'
@@ -45,14 +47,16 @@ class ComponentVariantName {
 
       org(nullable:true, blank:false)
       pkg(nullable:true, blank:false)
+      vendor(nullable:true, blank:false)
   }
 
   String getOID() {
       "${this.class.name}:${id}"
   }
 
-  static belongsTo = [org: Org,
-                    pkg: Package]
+    static belongsTo = [org   : Org,
+                        pkg   : Package,
+                        vendor: Vendor]
 
   def beforeInsert() {
     // Generate the any necessary values.
@@ -86,6 +90,7 @@ class ComponentVariantName {
 
         name = object instanceof Org ?      'org' : name
         name = object instanceof Package ?  'pkg' : name
+        name = object instanceof Vendor ?  'vendor' : name
 
         name
     }
@@ -93,13 +98,14 @@ class ComponentVariantName {
     void setReference(def owner) {
         org  = owner instanceof Org ? owner : org
         pkg  = owner instanceof Package ? owner : pkg
+        vendor  = owner instanceof Vendor ? owner : vendor
     }
 
     Object getReference() {
         int refCount = 0
         def ref
 
-        List<String> fks = ['org', 'pkg']
+        List<String> fks = ['org', 'pkg', 'vendor']
         fks.each { fk ->
             if (this."${fk}") {
                 refCount++

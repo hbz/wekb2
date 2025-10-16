@@ -32,7 +32,14 @@
                     <semui:xEditableManyToOne owner="${d}" field="kbartSource" baseClass="wekb.KbartSource" onylMyComponents="true"/>
                 </g:if>
                 <g:if test="${d.kbartSource}">
-                    <p>(<b>Frequency:</b> <semui:xEditableRefData owner="${d.kbartSource}" field="frequency" config="${RCConstants.SOURCE_FREQUENCY}" overwriteEditable="false"/>, <b>AutomaticUpdates:</b> <semui:xEditableBoolean owner="${d.kbartSource}" field="automaticUpdates" overwriteEditable="false"/>, <b>LastRun:</b> <g:formatDate format="${message(code: 'default.date.format.noZ')}" date="${d.kbartSource.lastRun}"/>)</p>
+                    <p>(<b>Frequency:</b> <semui:xEditableRefData owner="${d.kbartSource}" field="frequency" config="${RCConstants.SOURCE_FREQUENCY}" overwriteEditable="false"/>,
+                        <b>AutomaticUpdates:</b> <semui:xEditableBoolean owner="${d.kbartSource}" field="automaticUpdates" overwriteEditable="false"/>,
+                        <b>LastRun:</b> <g:formatDate format="${message(code: 'default.date.format.noZ')}" date="${d.kbartSource.lastRun}"/>
+                    <g:if test="${d.kbartSource && d.kbartSource.kbartHasWekbFields}">
+                        , <b><g:message code="kbartsource.kbartHasWekbFields"/>:</b> <semui:xEditableBoolean owner="${d.kbartSource}" field="kbartHasWekbFields" overwriteEditable="false"/> <i class="info red big circle icon"></i>
+                    </g:if>
+
+                    )</p>
                 </g:if>
             </dd>
         </dl>
@@ -48,17 +55,6 @@
                 <semui:xEditableRefData owner="${d}" field="status" config="${RCConstants.COMPONENT_STATUS}" overwriteEditable="${controllerName == 'create' ? 'true' : 'false' }"/>
             </dd>
         </dl>
-        <g:if test="${controllerName != 'create' && (d.getCountManualUpdateInfos() > 0 || d.getCountAutoUpdateInfos() > 0)}">
-            <dl>
-                <dt class="control-label"><g:message code="package.lastUpdateComment"/></dt>
-                <dd><semui:xEditable owner="${d}" field="lastUpdateComment" overwriteEditable="false"/>
-                    <br>
-                    <br>
-                    <g:link class="ui mini primary button" id="${d.id}" controller="package"
-                            action="packageChangeHistory">Change History</g:link>
-                </dd>
-            </dl>
-        </g:if>
         <dl>
             <dt class="control-label"><g:message code="package.description"/></dt>
             <dd><g:if test="${!createObject}">

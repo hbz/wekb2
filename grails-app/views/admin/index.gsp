@@ -82,9 +82,20 @@
                 <g:link class="item" controller="admin" action="systemThreads">Show Threads</g:link>
                 <g:link class="item" controller="admin" action="autoUpdatesFails">Automatic update fails</g:link>
                 <g:link class="item" controller="admin" action="findPackagesWithTippDuplicates">Packages with Tipp Duplicates</g:link>
+                <g:link class="item" controller="admin" action="findPackagesWithoutTitle_ID">Packages with Tipp without Title_ID</g:link>
                 <g:link class="item" controller="admin" action="findPackagesAutoUpdatesTippsDiff">Auto Update Packages with Tipp Diff</g:link>
                 <g:link class="item" controller="admin" action="tippIdentifiersWithSameNameSpace">Title Identifiers with same Identifier Namespace</g:link>
                 <g:link class="item" controller="admin" action="checkCuratoryGroups">Check Curatory Groups</g:link>
+            </div>
+        </div>
+
+        <div class="column">
+            <h2 class="ui header">Laser Infos</h2>
+
+            <div class="ui divided large relaxed list">
+                <g:link class="item" controller="admin" action="tippsWekbVsLaser">Title Count Wekb vs Laser</g:link>
+                <g:link class="item" controller="admin" action="linkedPackageInLaser">Show linked Package in Laser</g:link>
+                <g:link class="item" controller="admin" action="notLinkedPackageInLaser">Show not linked Package in Laser</g:link>
             </div>
         </div>
     </div>
@@ -98,6 +109,7 @@
         <thead>
         <tr>
             <th>Name</th>
+            <th>count in LAS:er-DB</th>
             <th>count in DB</th>
             <th>count status deleted in DB</th>
             <th>count status removed in DB</th>
@@ -107,9 +119,10 @@
         <g:each in="${componentsInfos.sort { it.type }}" var="componentsInfo">
             <tr>
                 <td>${componentsInfo.name}</td>
-                <td>${componentsInfo.countDB}</td>
-                <td>${componentsInfo.countDeletedInDB}</td>
-                <td>${componentsInfo.countRemovedInDB}</td>
+                <td><g:formatNumber number="${componentsInfo.countLaser}" type="number"/></td>
+                <td><g:formatNumber number="${componentsInfo.countDB}" type="number"/></td>
+                <td><g:formatNumber number="${componentsInfo.countDeletedInDB}" type="number"/></td>
+                <td><g:formatNumber number="${componentsInfo.countRemovedInDB}" type="number"/></td>
             </tr>
         </g:each>
         </tbody>

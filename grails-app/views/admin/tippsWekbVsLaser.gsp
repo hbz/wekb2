@@ -2,14 +2,14 @@
 <html>
 <head>
     <meta name="layout" content="wekb"/>
-    <title>we:kb : Packages with Tipp Duplicates</title>
+    <title>we:kb : Titles WEKB VS LASER</title>
 </head>
 
 <body>
 
 <wekb:serviceInjection/>
 
-<h1 class="ui header">Packages with Tipp Duplicates (${totalCount})</h1>
+<h1 class="ui header">Titles WEKB VS LASER (${totalPkgs})</h1>
 
 
 <div class="container">
@@ -19,20 +19,17 @@
         <tr>
             <th>#</th>
             <th>Name</th>
+            <th>Status</th>
             <th>Provider</th>
             <th>Platform</th>
             <semui:sortableColumn property="curatoryGroups" title="Curatory Groups"/>
             <th>Auto Update</th>
-            <th>Titles</th>
-            <semui:sortableColumn property="tippDuplicatesByNameCount" title="Tipp Duplicates By Name"/>
-            <semui:sortableColumn property="tippDuplicatesByUrlCount" title="Tipp Duplicates By Url"/>
-            <semui:sortableColumn property="tippDuplicatesByTitleIDCount" title="Tipp Duplicates By Title ID"/>
+            <th>Titles WEKB / Laser</th>
         </tr>
         </thead>
         <tbody>
-        <g:each in="${pkgs}" var="pkgMap" status="i">
-            <g:set var="pkg" value="${pkgMap.pkg}"/>
-            <tr class="${pkgMap.tippDuplicatesByTitleIDCount > 0 ? 'info' : (pkgMap.tippDuplicatesByUrlCount > 0 ? 'success' : '')}">
+        <g:each in="${pkgs}" var="pkg" status="i">
+            <tr>
                 <td>
                     ${(params.offset ? params.offset.toInteger() : 0) + i + 1}
                 </td>
@@ -40,6 +37,9 @@
                     <g:link controller="resource" action="show" id="${pkg.getOID()}">
                         ${pkg.name}
                     </g:link>
+                </td>
+                <td>
+                    ${pkg.status.value}
                 </td>
                 <td>
                     ${pkg.provider}
@@ -58,43 +58,30 @@
                            title="${message(code: 'default.boolean.true')}"></i>
                     </g:if>
                     <g:else>
-                        <<i class="times red circle icon"
+                        <i class="times red circle icon"
                            title="${message(code: 'default.boolean.false')}"></i>
                     </g:else>
                 </td>
                 <td>
-                    <g:set var="allTipps1" value="${pkg.getTippCountWithoutRemoved()}"/>
+                    <g:set var="allTipps1" value="${pkg.tippsInLaserCount()}"/>
                     <g:set var="allTipps2" value="${pkg.getTippCount()}"/>
 
                     <g:if test="${allTipps1 != allTipps2}">
-                    ${allTipps1} / ${allTipps2}
+                        ${allTipps2} / ${allTipps1}
                     </g:if>
                     <g:else>
-                        ${allTipps2}
+                        <i class="check green circle icon"
+                           title="${message(code: 'default.boolean.true')}"></i>
                     </g:else>
-                </td>
-                <td>
-                    <g:link controller="admin" action="findTippDuplicatesByPkg" id="${pkg.uuid}" target="_blank"
-                            params="[papaginateByName: true, max: 100, offset: 0]">
-                        ${pkgMap.tippDuplicatesByNameCount}
-                    </g:link>
-                </td>
-                <td>
-                    <g:link controller="admin" action="findTippDuplicatesByPkg" id="${pkg.uuid}" target="_blank"
-                            params="[papaginateByUrl: true, max: 100, offset: 0]">
-                        ${pkgMap.tippDuplicatesByUrlCount}
-                    </g:link>
-                </td>
-                <td>
-                    <g:link controller="admin" action="findTippDuplicatesByPkg" id="${pkg.uuid}" target="_blank"
-                            params="[papaginateByTitleID: true, max: 100, offset: 0]">
-                        ${pkgMap.tippDuplicatesByTitleIDCount}
-                    </g:link>
                 </td>
             </tr>
         </g:each>
         </tbody>
     </table>
+
+
+    <semui:paginate controller="${controllerName}" action="${actionName}"
+                    max="${params.max}" offset="${params.offset}" total="${totalCount}"/>
 
 </div>
 

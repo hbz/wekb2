@@ -39,6 +39,8 @@
         <div class="ui message">
             <g:link controller="login" action="forgotPassword"><g:message
                     code="forgottenPassword.forgotPassword"/></g:link>
+            <br><g:link controller="login" action="forgottenUsername"><g:message
+                code="forgottenUsername.forgotUsername"/></g:link>
             <br>
             <a href="#" onclick="$('#infoModal').modal('show');">Not yet registered for a we:kb: account?</a>
         </div>
@@ -47,7 +49,7 @@
 
 <semui:modal id="infoModal" title="Info" hideSubmitButton="true">
     Contact us at <a
-        href="mailto:laser@hbz-nrw.de">laser@hbz-nrw.de</a> so that we can set up an account for you and provide you with your initial login information.
+        href="mailto:wekb@hbz-nrw.de">wekb@hbz-nrw.de</a> so that we can set up an account for you and provide you with your initial login information.
 </semui:modal>
 
 </body>

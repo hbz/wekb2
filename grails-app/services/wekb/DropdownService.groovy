@@ -41,6 +41,9 @@ class DropdownService {
             case 'ddc':
                 getAllPossibleDdcs(pkgs, listStatus)
                 break
+            case 'ddcForPackages':
+                getAllPossibleDdcsForPackages()
+                break
             case 'language':
                 getAllPossibleLanguages(pkgs, listStatus)
                 break
@@ -67,7 +70,7 @@ class DropdownService {
             String query
             Map queryMap
             if(baseClass == RefdataValue.class.name){
-                query = "select rv from ${baseClass} as rv where rv.owner.desc = :desc order by rv.order, rv.value, rv.description"
+                query = "select rv from ${baseClass} as rv where rv.owner.desc = :desc order by rv.order, rv.value_en"
                 queryMap = [desc: filter]
                 RefdataValue.executeQuery(query, queryMap).each { t ->
                     values.add([id:"${RefdataValue.class.name}:${t.id}", text:"${t.getI10n('value')}"])
@@ -82,8 +85,6 @@ class DropdownService {
                 }
             }
 
-
-
         } else {
             log.error("selectedDropDown: Unable to locate domain class ${baseClass} or not readable");
             values = []
@@ -93,16 +94,21 @@ class DropdownService {
     }
 
 
-    Set<RefdataValue> getAllPossibleCoverageDepths(List<Package> pkgs, List listStatus) {
-
+    Set<Map> getAllPossibleCoverageDepths(List<Package> pkgs, List listStatus) {
+        Set values = []
         Set<RefdataValue> coverageDepths = []
 
         coverageDepths.addAll(RefdataValue.executeQuery("select rdv from RefdataValue rdv where rdv.value in (select tc.coverageDepth from TIPPCoverage tc join tc.tipp tipp where tc.coverageDepth is not null and tipp.pkg in (:pkgs) and tipp.status in (:status)) ", [pkgs: pkgs, status: listStatus]))
 
-        coverageDepths
+        coverageDepths.each { t ->
+            values.add([id: "${RefdataValue.class.name}:${t.id}", text: "${t.getI10n('value')}"])
+        }
+
+        values
     }
 
-    Set<String> getAllPossibleSeries(List<Package> pkgs = null, List listStatus) {
+    Set<Map> getAllPossibleSeries(List<Package> pkgs = null, List listStatus) {
+        Set values = []
         Set<String> series = []
 
         if(pkgs) {
@@ -112,26 +118,45 @@ class DropdownService {
         }
 
         if(series.size() == 0){
-            series << "No series found!"
+            values << [id: "null", text: "No series found!"]
         }
-        series
+
+        series.each { t ->
+            values.add([id: "${t}", text: "${t}"])
+        }
+
+        values
     }
 
-    Set<RefdataValue> getAllPossibleDdcs(List<Package> pkgs = null, List listStatus) {
-
+    Set<Map> getAllPossibleDdcs(List<Package> pkgs = null, List listStatus) {
+        Set values = []
         Set<RefdataValue> ddcs = []
 
         if(pkgs) {
-            ddcs.addAll(TitleInstancePackagePlatform.executeQuery("select ddc.ddc from DeweyDecimalClassification ddc join ddc.tipp tipp join tipp.pkg pkg where pkg in (:pkgs) and tipp.status in (:status) order by ddc.ddc.value_en", [pkgs: pkgs, status: listStatus]))
+            ddcs.addAll(TitleInstancePackagePlatform.executeQuery("select ddc from TitleInstancePackagePlatform tipp join tipp.ddcs ddc join tipp.pkg pkg where pkg in (:pkgs) and tipp.status in (:status) order by ddc.value_en", [pkgs: pkgs, status: listStatus]))
         }else {
-            ddcs.addAll(TitleInstancePackagePlatform.executeQuery("select ddc.ddc from DeweyDecimalClassification ddc join ddc.tipp tipp join tipp.pkg pkg where tipp.status in (:status) order by ddc.ddc.value_en", [status: listStatus]))
+            ddcs.addAll(TitleInstancePackagePlatform.executeQuery("select ddc from TitleInstancePackagePlatform tipp join tipp.ddcs ddc join tipp.pkg pkg where tipp.status in (:status) order by ddc.value_en", [status: listStatus]))
+        }
+        ddcs.each { t ->
+            values.add([id: "${RefdataValue.class.name}:${t.id}", text: "${t.getI10n('value')}"])
         }
 
-        ddcs
+        values
     }
 
-    Set<RefdataValue> getAllPossibleLanguages(List<Package> pkgs = null, List listStatus) {
+    Set<Map> getAllPossibleDdcsForPackages() {
+        Set values = []
+        Set<RefdataValue> ddcs = Package.executeQuery("select ddc from Package pkg join pkg.ddcs ddc order by ddc.value_en")
 
+        ddcs.each { t ->
+            values.add([id: "${RefdataValue.class.name}:${t.id}", text: "${t.getI10n('value')}"])
+        }
+
+        values
+    }
+
+    Set<Map> getAllPossibleLanguages(List<Package> pkgs = null, List listStatus) {
+        Set values = []
         Set<RefdataValue> languages = []
 
         if(pkgs) {
@@ -140,12 +165,16 @@ class DropdownService {
             languages.addAll(TitleInstancePackagePlatform.executeQuery("select lang.language from Language lang join lang.tipp tipp join tipp.pkg pkg where tipp.status in (:status) order by lang.language.value_en", [status: listStatus]))
         }
 
-        languages
+        languages.each { t ->
+            values.add([id: "${RefdataValue.class.name}:${t.id}", text: "${t.getI10n('value')}"])
+        }
+
+        values
     }
 
 
-    Set<String> getAllPossibleSubjectAreas(List<Package> pkgs = null, List listStatus) {
-
+    Set<Map> getAllPossibleSubjectAreas(List<Package> pkgs = null, List listStatus) {
+        Set values = []
         SortedSet<String> subjects = new TreeSet<String>()
         List<String> rawSubjects
         if(pkgs) {
@@ -155,22 +184,19 @@ class DropdownService {
         }
 
         if(rawSubjects.size() == 0){
-            subjects << "No subject area found!"
-        }
-        else {
-            rawSubjects.each { String rawSubject ->
-                rawSubject.tokenize(',;|').each { String rs ->
-                    subjects.add(rs.trim())
-                }
-            }
+            values <<   [id: "null", text: "No subject area found!"]
         }
 
-        subjects
+        rawSubjects.each { t ->
+            values.add([id: "${t}", text: "${t}"])
+        }
+
+        values
     }
 
 
-    Set<String> getAllPossibleDateFirstOnlineYear(List<Package> pkgs = null, List listStatus) {
-
+    Set<Map> getAllPossibleDateFirstOnlineYear(List<Package> pkgs = null, List listStatus) {
+        Set values = []
         Set<String> dateFirstOnlines = []
         if(pkgs) {
             dateFirstOnlines = TitleInstancePackagePlatform.executeQuery("select distinct(Year(dateFirstOnline)) from TitleInstancePackagePlatform where dateFirstOnline is not null and pkg in (:pkgs) and status in (:status) order by YEAR(dateFirstOnline)", [pkgs: pkgs, status: listStatus])
@@ -181,11 +207,15 @@ class DropdownService {
             dateFirstOnlines << "No date first online found!"
         }
 
-        dateFirstOnlines
+        dateFirstOnlines.each { t ->
+            values.add([id: "${t}", text: "${t}"])
+        }
+
+        values
     }
 
-    Set<String> getAllPossibleAccessStartDateYear(List<Package> pkgs = null, List listStatus) {
-
+    Set<Map> getAllPossibleAccessStartDateYear(List<Package> pkgs = null, List listStatus) {
+        Set values = []
         Set<String> dates = []
         if(pkgs) {
             dates = TitleInstancePackagePlatform.executeQuery("select distinct(Year(accessStartDate)) from TitleInstancePackagePlatform where accessStartDate is not null and pkg in (:pkgs) and status in (:status) order by YEAR(accessStartDate)", [pkgs: pkgs, status: listStatus])
@@ -196,11 +226,14 @@ class DropdownService {
             dates << "No access start date found!"
         }
 
-        dates
+        dates.each { t ->
+            values.add([id: "${t}", text: "${t}"])
+        }
+        values
     }
 
-    Set<String> getAllPossibleAccessEndDateYear(List<Package> pkgs = null, List listStatus) {
-
+    Set<Map> getAllPossibleAccessEndDateYear(List<Package> pkgs = null, List listStatus) {
+        Set values = []
         Set<String> dates = []
         if(pkgs) {
             dates = TitleInstancePackagePlatform.executeQuery("select distinct(Year(accessEndDate)) from TitleInstancePackagePlatform where accessEndDate is not null and pkg in (:pkgs) and status in (:status) order by YEAR(accessEndDate)", [pkgs: pkgs, status: listStatus])
@@ -211,11 +244,16 @@ class DropdownService {
             dates << "No access end date found!"
         }
 
-        dates
+        dates.each { t ->
+            values.add([id: "${t}", text: "${t}"])
+        }
+
+        values
     }
 
 
-    Set<String> getAllPossiblePublisher(List<Package> pkgs = null, List listStatus) {
+    Set<Map> getAllPossiblePublisher(List<Package> pkgs = null, List listStatus) {
+        Set values = []
         Set<String> publishers = []
 
         if(pkgs) {
@@ -223,6 +261,10 @@ class DropdownService {
         }else{
             publishers.addAll(TitleInstancePackagePlatform.executeQuery("select distinct(publisherName) from TitleInstancePackagePlatform where publisherName is not null and status in (:status) order by publisherName", [status: listStatus]))
         }
-        publishers
+        publishers.each { t ->
+            values.add([id: "${t}", text: "${t}"])
+        }
+
+        values
     }
 }

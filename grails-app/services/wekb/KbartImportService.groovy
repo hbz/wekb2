@@ -965,6 +965,8 @@ class KbartImportService {
         RefdataValue tipp_publicationType = null
         if (tipp_fields.type) {
             tipp_publicationType = determinePublicationType(tipp_fields.type)
+        }else{
+            tipp_publicationType = RDStore.TIPP_PUBLIC_TYPE_NOSET
         }
         long start = System.currentTimeMillis()
         TitleInstancePackagePlatform result = new TitleInstancePackagePlatform(
@@ -1013,7 +1015,7 @@ class KbartImportService {
                     return RDStore.TIPP_PUBLIC_TYPE_OTHER
                     break;
                 default:
-                    return null
+                    return RDStore.TIPP_PUBLIC_TYPE_NOSET
                     break;
             }
         }
@@ -1687,10 +1689,13 @@ class KbartImportService {
 
                     } else if (existPrices.size() > 1) {
                         def pricesIDs = existPrices.id.clone()
-                        pricesIDs.each {
-                            TippPrice tippPrice = TippPrice.get(it)
-                            tipp.removeFromPrices(tippPrice)
-                            //TippPrice.executeUpdate("delete from TippPrice id = ${it}")
+                        TippPrice.withNewTransaction {
+                            pricesIDs.each {
+                                TippPrice tippPrice = TippPrice.get(it)
+                                tipp.removeFromPrices(tippPrice)
+                                tippPrice.delete()
+                                //TippPrice.executeUpdate("delete from TippPrice id = ${it}")
+                            }
                         }
                         if (!tipp.save()) {
                             log.error("Tipp save error: ")
@@ -1786,9 +1791,12 @@ class KbartImportService {
                 if (existPrices.size() > 0) {
                     oldValue = existPrices.price.join('; ')
                     def pricesIDs = existPrices.id.clone()
-                    pricesIDs.each {
-                        TippPrice tippPrice = TippPrice.get(it)
-                        tipp.removeFromPrices(tippPrice)
+                    TippPrice.withNewTransaction {
+                        pricesIDs.each {
+                            TippPrice tippPrice = TippPrice.get(it)
+                            tipp.removeFromPrices(tippPrice)
+                            tippPrice.delete()
+                        }
                     }
                     if (!tipp.save()) {
                         log.error("Tipp save error: ")
@@ -2065,8 +2073,11 @@ class KbartImportService {
             ClassUtils.setStringIfDifferent(tipp, 'note', tipp.coverageStatements[0].coverageNote)
             if (tipp.coverageStatements && tipp.coverageStatements.size() > 0) {
                 def cStsIDs = tipp.coverageStatements.id.clone()
-                cStsIDs.each {
-                    tipp.removeFromCoverageStatements(TIPPCoverageStatement.get(it))
+                TIPPCoverageStatement.withNewTransaction {
+                    cStsIDs.each {
+                        tipp.removeFromCoverageStatements(TIPPCoverageStatement.get(it))
+                        TIPPCoverageStatement.get(it).delete()
+                    }
                 }
                 if (!tipp.save()) {
                     log.error("Tipp save error: ")
@@ -2659,6 +2670,40 @@ class KbartImportService {
             int countTipps = 0
 
             List<TitleInstancePackagePlatform> tipps = []
+
+            /*if(tippMap.title_id) {
+
+                tipps = tippsMatchingByTitleIDAutoUpdate(tippMap.title_id, pkg)
+                countTipps = tipps.size()
+
+                switch (countTipps) {
+                    case 0:
+                        log.debug("not found Tipp: [pkg: ${pkg}, platform: ${plt}, title_id: ${tippMap.title_id}]")
+                        break
+                    case 1:
+                        log.debug("found tipp by direct match: Tipp = [pkg: ${pkg}, platform: ${plt}, title_id: ${tippMap.title_id}]")
+                        tipp = tipps[0]
+                        break
+                    default:
+                        tipps = tipps.sort { it.lastUpdated }
+                        *//* tipps.each {
+                             println(it.lastUpdated)
+                         }*//*
+                        tipps.reverse(true)
+                        if (tipps.size() > 1) {
+                            tipps.eachWithIndex { TitleInstancePackagePlatform titleInstancePackagePlatform, int index ->
+                                if (index == 0) {
+                                    tipp = titleInstancePackagePlatform
+                                } else {
+                                    //println("${tippMap.title_id}: "+titleInstancePackagePlatform.id)
+                                    result.tippDuplicates.add(titleInstancePackagePlatform.id)
+                                }
+                            }
+                        }
+                        break
+                }
+
+            }*/
 
             String title = tippMap.publication_title
 

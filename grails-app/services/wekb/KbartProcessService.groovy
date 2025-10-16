@@ -26,6 +26,7 @@ class KbartProcessService {
     KbartImportService kbartImportService
     CleanupService cleanupService
     SessionFactory sessionFactory
+    LaserCleanUpService laserCleanUpService
 
     void kbartImportManual(Package pkg, File tsvFile, Boolean onlyRowsWithLastChanged){
         log.info("Beginn kbartImportManual ${pkg.name}")
@@ -64,7 +65,8 @@ class KbartProcessService {
 
         } catch (Exception exception) {
             log.error("Error by kbartImportManual: ${exception.message}")
-            //exception.printStackTrace()
+
+            exception.printStackTrace()
             UpdatePackageInfo.withTransaction {
                 //UpdatePackageInfo updatePackageFail = new UpdatePackageInfo()
                 updatePackageInfo.description = "An error occurred while processing the KBART file. More information can be seen in the system log."
@@ -225,19 +227,19 @@ class KbartProcessService {
                                             invalidKbartRowsForTipps << kbartRow.rowIndex
 
                                             UpdateTippInfo updateTippInfo = new UpdateTippInfo(
-                                                    description: validation_result.errorMessage,
+                                                    description: validation_result.errorMessage+" (Row: "+kbartRow.rowIndex+")",
                                                     tipp: null,
                                                     startTime: new Date(),
                                                     endTime: new Date(),
                                                     status: RDStore.UPDATE_STATUS_FAILED,
-                                                    type: RDStore.UPDATE_TYPE_FAILED_TITLE,
+                                                    type: RDStore.UPDATE_TYPE_INVAILD_TITLE,
                                                     oldValue: '',
                                                     newValue: '',
                                                     tippProperty: '',
                                                     updatePackageInfo: updatePackageInfo
                                             ).save()
                                         }
-                                        log.debug("TIPP Validation failed on ${kbartRow.publication_title}")
+                                        log.error("TIPP Validation failed on ${kbartRow.publication_title}")
                                         /* def tipp_error = [
                                              message: validation_result.errorMessage,
                                              baddata: kbartRow
@@ -247,41 +249,44 @@ class KbartProcessService {
                                         /*if (validation_result.errors?.size() > 0) {
                                                                 tippErrorMap.putAll(validation_result.errors)
                                                             }*/
+                                        //println('tippDuplicates'+tippDuplicates.size())
                                         Map findTipp = kbartImportService.findTheCorrectTipp(kbartRow, tippDuplicates)
                                         TitleInstancePackagePlatform updateTipp = findTipp.tipp ?: null
                                         try {
-                                            Map autoUpdateResultTipp = kbartImportService.tippImportForUpdate(kbartRow, tippsWithCoverage, tippDuplicates, updatePackageInfo, kbartRowsToCreateTipps)
+                                            if(updateTipp == null || !(updateTipp.id in tippsFound)) {
+                                                Map autoUpdateResultTipp = kbartImportService.tippImportForUpdate(kbartRow, tippsWithCoverage, tippDuplicates, updatePackageInfo, kbartRowsToCreateTipps)
 
-                                            kbartRowsToCreateTipps = autoUpdateResultTipp.kbartRowsToCreateTipps
-                                            tippsWithCoverage = autoUpdateResultTipp.tippsWithCoverage
-                                            tippDuplicates = autoUpdateResultTipp.tippDuplicates
+                                                kbartRowsToCreateTipps = autoUpdateResultTipp.kbartRowsToCreateTipps
+                                                tippsWithCoverage = autoUpdateResultTipp.tippsWithCoverage
+                                                tippDuplicates = autoUpdateResultTipp.tippDuplicates
 
-                                            if (autoUpdateResultTipp.updatePackageInfo) {
-                                                updatePackageInfo = autoUpdateResultTipp.updatePackageInfo
-                                            }
-
-                                            if (!autoUpdateResultTipp.newTipp) {
-                                                updateTipp = autoUpdateResultTipp.tippObject
-
-                                                if (autoUpdateResultTipp.removedTipp) {
-                                                    removedTipps++
+                                                if (autoUpdateResultTipp.updatePackageInfo) {
+                                                    updatePackageInfo = autoUpdateResultTipp.updatePackageInfo
                                                 }
 
-                                                if (autoUpdateResultTipp.changedTipp) {
-                                                    changedTipps++
-                                                }
+                                                if (!autoUpdateResultTipp.newTipp) {
+                                                    updateTipp = autoUpdateResultTipp.tippObject
 
-                                                if (setAllTippsNotInKbartToDeleted && updateTipp && updateTipp.status != RDStore.KBC_STATUS_CURRENT) {
-                                                    updateTipp.status = RDStore.KBC_STATUS_CURRENT
-                                                    setTippsNotToDeleted << updateTipp.id
-                                                }
-                                                if (updateTipp && (autoUpdateResultTipp.removedTipp || autoUpdateResultTipp.changedTipp)) {
-                                                    updateTipp.lastUpdated = new Date()
-                                                }
+                                                    if (autoUpdateResultTipp.removedTipp) {
+                                                        removedTipps++
+                                                    }
 
-                                                if (updateTipp) {
-                                                    updateTipp = updateTipp.save()
-                                                    tippsFound.add(updateTipp.id)
+                                                    if (autoUpdateResultTipp.changedTipp) {
+                                                        changedTipps++
+                                                    }
+
+                                                    if (setAllTippsNotInKbartToDeleted && updateTipp && updateTipp.status != RDStore.KBC_STATUS_CURRENT) {
+                                                        updateTipp.status = RDStore.KBC_STATUS_CURRENT
+                                                        setTippsNotToDeleted << updateTipp.id
+                                                    }
+                                                    if (updateTipp && (autoUpdateResultTipp.removedTipp || autoUpdateResultTipp.changedTipp)) {
+                                                        updateTipp.lastUpdated = new Date()
+                                                    }
+
+                                                    if (updateTipp) {
+                                                        updateTipp = updateTipp.save()
+                                                        tippsFound.add(updateTipp.id)
+                                                    }
                                                 }
                                             }
 
@@ -337,7 +342,7 @@ class KbartProcessService {
                                             }
                                             log.error("Exception attempting to cross reference TIPP: "+ge.message)
                                             processFailed = true
-                                            //ge.printStackTrace()
+                                            ge.printStackTrace()
                                             /*                                      def tipp_error = [
                                                                                       message: messageService.resolveCode('crossRef.package.tipps.error', [kbartRow.publication_title], Locale.ENGLISH),
                                                                                       baddata: kbartRow,
@@ -432,6 +437,24 @@ class KbartProcessService {
                             Transaction tx = session.beginTransaction()
 
                             TitleInstancePackagePlatform tipp = TitleInstancePackagePlatform.get(tippID)
+
+                            /*String title_ID = tipp.getTitleID()
+                            TitleInstancePackagePlatform correctTipp
+                            if (title_ID) {
+                                List tippDublic = kbartImportService.tippsMatchingByTitleIDAutoUpdate(title_ID, pkg)
+                                tippDublic = tippDublic.sort { it.lastUpdated }
+                                tippDublic.each {
+                                    println(it.lastUpdated)
+                                }
+                                tippDublic.reverse(true)
+                                if (tippDublic.size() > 1 && tippDublic[0].id in tippsFound) {
+                                    correctTipp = tippDublic[0]
+                                    println(correctTipp.lastUpdated)
+
+                                    laserCleanUpService.cleanUpLaserTipp(tipp.uuid, correctTipp.uuid)
+                                }
+                            }*/
+
                             UpdateTippInfo updateTippInfo = new UpdateTippInfo(
                                     description: "Remove Title '${tipp.name}' because is a duplicate in wekb!",
                                     tipp: tipp,
@@ -607,7 +630,7 @@ class KbartProcessService {
                 String description = "Package Update: (KbartLines: ${kbartRowsCount}, " +
                         "Processed Titles in this run: ${idx}, Titles in we:kb previously: ${previouslyTipps}, Titles in we:kb now: ${countExistingTippsAfterImport}, Removed Titles: ${removedTipps}, New Titles in we:kb: ${newTipps}, Changed Titles in we:kb: ${changedTipps})"
 
-                UpdatePackageInfo.executeUpdate("update UpdatePackageInfo set countKbartRows = ${kbartRowsCount}, " +
+              /*  UpdatePackageInfo.executeUpdate("update UpdatePackageInfo set countKbartRows = ${kbartRowsCount}, " +
                         "countChangedTipps = ${changedTipps}, " +
                         "countNowTippsInWekb = ${countExistingTippsAfterImport}, " +
                         "countPreviouslyTippsInWekb = ${previouslyTipps}, " +
@@ -618,15 +641,26 @@ class KbartProcessService {
                         "endTime = :currentDate, " +
                         "description = ${description}, " +
                         "lastUpdated = :currentDate " +
-                        "where id = ${updatePackageInfo.id}", [currentDate: new Date()])
+                        "where id = ${updatePackageInfo.id}", [currentDate: new Date()])*/
 
                 UpdatePackageInfo.withTransaction {
 
                     Package aPackage = Package.get(updatePackageInfo.pkg.id)
 
                     aPackage.lastUpdated = new Date()
-                    aPackage.lastUpdateComment = "Updated package with ${kbartRowsCount} Title. (Titles in we:kb previously: ${previouslyTipps}, Titles in we:kb now: ${countExistingTippsAfterImport}, Removed Titles: ${removedTipps}, New Titles in we:kb: ${newTipps})"
                     aPackage.save()
+                    updatePackageInfo.refresh()
+                    updatePackageInfo.endTime = new Date()
+                    updatePackageInfo.description = description
+                    updatePackageInfo.countChangedTipps = changedTipps > 0 ? changedTipps : 0
+                    updatePackageInfo.countInValidTipps = countInvalidKbartRowsForTipps > 0 ? countInvalidKbartRowsForTipps : 0
+                    updatePackageInfo.countKbartRows = kbartRowsCount > 0 ? kbartRowsCount : 0
+                    updatePackageInfo.countNewTipps = newTipps > 0 ? newTipps : 0
+                    updatePackageInfo.countNowTippsInWekb = countExistingTippsAfterImport > 0 ? countExistingTippsAfterImport : 0
+                    updatePackageInfo.countPreviouslyTippsInWekb = previouslyTipps > 0 ? previouslyTipps : 0
+                    updatePackageInfo.countRemovedTipps = removedTipps > 0 ? removedTipps : 0
+                    updatePackageInfo.countProcessedKbartRows = idx > 0 ? idx : 0
+                    updatePackageInfo.save()
 
 
                     if (aPackage.kbartSource && updatePackageInfo.automaticUpdate) {
@@ -645,58 +679,38 @@ class KbartProcessService {
         } catch (Exception e) {
             log.error("Error by kbartImportProcess: "+ e.message)
             processFailed = true
-            //e.printStackTrace()
+            e.printStackTrace()
 
         }
         if(processFailed){
-            UpdatePackageInfo.withNewTransaction {
+            UpdatePackageInfo.withTransaction {
 
                 Package aPackage = Package.get(updatePackageInfo.pkg.id)
-                UpdatePackageInfo newUpdatePackageInfo = new UpdatePackageInfo(pkg: aPackage, startTime: updatePackageInfo.startTime, automaticUpdate: updatePackageInfo.automaticUpdate, kbartHasWekbFields:  updatePackageInfo.kbartHasWekbFields, lastRun:  updatePackageInfo.lastRun)
-                newUpdatePackageInfo.endTime = new Date()
+                //UpdatePackageInfo newUpdatePackageInfo = new UpdatePackageInfo(pkg: aPackage, startTime: updatePackageInfo.startTime, automaticUpdate: updatePackageInfo.automaticUpdate, kbartHasWekbFields:  updatePackageInfo.kbartHasWekbFields, lastRun:  updatePackageInfo.lastRun)
+                updatePackageInfo.endTime = new Date()
                 String description2 = "An error occurred while processing the KBART file. More information can be seen in the system log. "
-                if(lastUpdateURL && newUpdatePackageInfo.automaticUpdate){
+                if(lastUpdateURL && updatePackageInfo.automaticUpdate){
                     description2 = description2+ "File from URL: ${lastUpdateURL}"
                 }
-                newUpdatePackageInfo.description = description2
-                newUpdatePackageInfo.countChangedTipps = changedTipps > 0 ? changedTipps : 0
-                newUpdatePackageInfo.countInValidTipps = countInvalidKbartRowsForTipps > 0 ? countInvalidKbartRowsForTipps : 0
-                newUpdatePackageInfo.countKbartRows = kbartRowsCount > 0 ? kbartRowsCount : 0
-                newUpdatePackageInfo.countNewTipps = newTipps > 0 ? newTipps : 0
-                newUpdatePackageInfo.countNowTippsInWekb = countExistingTippsAfterImport > 0 ? countExistingTippsAfterImport : 0
-                newUpdatePackageInfo.countPreviouslyTippsInWekb = previouslyTipps > 0 ? previouslyTipps : 0
-                newUpdatePackageInfo.countRemovedTipps = removedTipps > 0 ? removedTipps : 0
-                newUpdatePackageInfo.countProcessedKbartRows = idx > 0 ? idx : 0
-                newUpdatePackageInfo.status = RDStore.UPDATE_STATUS_FAILED
-                newUpdatePackageInfo.onlyRowsWithLastChanged = onlyRowsWithLastChanged
-                newUpdatePackageInfo.updateUrl = lastUpdateURL
-                newUpdatePackageInfo.updateFromURL = lastUpdateURL ? true : false
-                newUpdatePackageInfo.updateFromFTP = lastUpdateURL ? false : true
-                newUpdatePackageInfo.updateFromFileUpload = false
-                newUpdatePackageInfo.frequency = aPackage.kbartSource.frequency
-                newUpdatePackageInfo.lastUpdateUrl = aPackage.kbartSource.lastUpdateUrl
-                newUpdatePackageInfo.lastChangedInKbart = lastChangedInKbart
-                newUpdatePackageInfo.save()
-
-                updatePackageInfo.updateTippInfos.each {
-                    UpdateTippInfo updateTippInfo = new UpdateTippInfo(
-                            description: it.description,
-                            tipp: it.tipp,
-                            startTime: it.startTime,
-                            endTime: it.endTime,
-                            status: it.status,
-                            type: it.type,
-                            updatePackageInfo: newUpdatePackageInfo
-                    ).save()
-                }
-
-                List tippUpdateIds = updatePackageInfo.updateTippInfos.id.clone()
-                tippUpdateIds.each {
-                    UpdateTippInfo updateTippInfo = UpdateTippInfo.get(it)
-                    updatePackageInfo.removeFromUpdateTippInfos(updateTippInfo)
-                    updateTippInfo.delete()
-                }
-                updatePackageInfo.delete()
+                updatePackageInfo.description = description2
+                updatePackageInfo.countChangedTipps = changedTipps > 0 ? changedTipps : 0
+                updatePackageInfo.countInValidTipps = countInvalidKbartRowsForTipps > 0 ? countInvalidKbartRowsForTipps : 0
+                updatePackageInfo.countKbartRows = kbartRowsCount > 0 ? kbartRowsCount : 0
+                updatePackageInfo.countNewTipps = newTipps > 0 ? newTipps : 0
+                updatePackageInfo.countNowTippsInWekb = countExistingTippsAfterImport > 0 ? countExistingTippsAfterImport : 0
+                updatePackageInfo.countPreviouslyTippsInWekb = previouslyTipps > 0 ? previouslyTipps : 0
+                updatePackageInfo.countRemovedTipps = removedTipps > 0 ? removedTipps : 0
+                updatePackageInfo.countProcessedKbartRows = idx > 0 ? idx : 0
+                updatePackageInfo.status = RDStore.UPDATE_STATUS_FAILED
+                updatePackageInfo.onlyRowsWithLastChanged = onlyRowsWithLastChanged
+                updatePackageInfo.updateUrl = lastUpdateURL
+                updatePackageInfo.updateFromURL = lastUpdateURL ? true : false
+                updatePackageInfo.updateFromFTP = lastUpdateURL ? false : true
+                updatePackageInfo.updateFromFileUpload = false
+                updatePackageInfo.frequency = aPackage.kbartSource.frequency
+                updatePackageInfo.lastUpdateUrl = aPackage.kbartSource.lastUpdateUrl
+                updatePackageInfo.lastChangedInKbart = lastChangedInKbart
+                updatePackageInfo.save()
             }
         }
 

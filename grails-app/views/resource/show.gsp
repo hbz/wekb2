@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<%@ page import="wekb.TitleInstancePackagePlatform; wekb.helper.RDStore;" %>
+<%@ page import="wekb.Package; wekb.TitleInstancePackagePlatform; wekb.helper.RDStore;" %>
 <html>
 <head>
     <meta name="layout" content="wekb"/>
@@ -33,6 +33,22 @@
                     </div>
                 </div>
             </g:if>
+
+            <sec:ifAnyGranted roles="ROLE_ADMIN">
+                <g:if test="${displayobj instanceof wekb.Package && displayobj.isPackageLinkedInLaser()}">
+                    <div class="ui warning icon huge message">
+                        <i class="info icon"></i>
+
+                        <div class="content">
+                            <div class="header">
+                                Package used in LAS:er
+                            </div>
+
+                            <p>Package is linked in LAS:er. Count:  ${displayobj.packageLinkedInLaserCount()}</p>
+                        </div>
+                    </div>
+                </g:if>
+            </sec:ifAnyGranted>
 
             <g:if test="${editable}">
 

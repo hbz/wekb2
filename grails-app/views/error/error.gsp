@@ -28,7 +28,7 @@
         </sec:ifLoggedIn>
 
         <p>
-            <a href="mailto:laser@hbz-nrw.de?${mailString}">
+            <a href="mailto:wekb@hbz-nrw.de?${mailString}">
                 Send Mail to support
             </a>
         </p>

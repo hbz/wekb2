@@ -854,13 +854,6 @@ class Api2Service {
                                 [
                                         type       : 'lookup',
                                         baseClass  : 'wekb.RefdataValue',
-                                        refdataCategory    : RCConstants.VENDOR_ROLE,
-                                        qparam     : 'roles',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'roles'],
-                                ],
-                                [
-                                        type       : 'lookup',
-                                        baseClass  : 'wekb.RefdataValue',
                                         refdataCategory    : RCConstants.VENDOR_SUPPORTED_LIB_SYSTEM,
                                         qparam     : 'qp_supportedLibrarySystems',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'supportedLibrarySystems'],
@@ -1998,10 +1991,6 @@ class Api2Service {
                 result.prequalificationInfoVOL = object.prequalificationInfo
 
                 result.roles = []
-                object.roles.each { role ->
-                    result.roles.add(role.value)
-                }
-
 
                 if (object.hasProperty('curatoryGroups')) {
                     result.curatoryGroups = []

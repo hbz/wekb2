@@ -170,4 +170,12 @@ main {
     left: -50%;
 }
 
+/****************************************
+        Copy E-Mail and ID numbers
+*****************************************/
+
+.js-copyTrigger:hover {
+    cursor: pointer;
+}
+
 
