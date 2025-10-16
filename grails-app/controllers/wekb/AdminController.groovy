@@ -468,17 +468,37 @@ class AdminController {
   def linkedPackageInLaser() {
     log.debug("linkedPackageInLaser::${params}")
     def result = [:]
-
+      result.pkgs = []
     List pkgs = laserService.packageLinkedInLaser()
 
+      pkgs.each {
+          Package pkg = Package.findByUuid(it.pkg_gokb_id)
+          result.pkgs << [id: pkg.id, name: pkg.name, status: pkg.status, provider: pkg.provider, nominalPlatform: pkg.nominalPlatform, curatoryGroups: pkg.curatoryGroups, kbartSource: pkg.kbartSource, linkedPackageCount: it.linkedPackageCount ]
+      }
+
     if (params.sort == 'curatoryGroups') {
-      pkgs = pkgs.sort { it.pkg.curatoryGroups.curatoryGroup.name[0]}
+        result.pkgs = result.pkgs.sort { it.curatoryGroups.curatoryGroup.name[0]}
+    }else{
+        result.pkgs = result.pkgs.sort { it.name}
     }
 
-    result.totalCount = pkgs.size()
-    result.pkgs = pkgs
+
+    result.totalCount = result.pkgs.size()
     result
   }
+
+    def linkedPackageWithPermanentTitlesInLaser() {
+        log.debug("linkedPackageWithPermanentTitlesInLaser::${params}")
+        def result = [:]
+
+        List pkgs = laserService.packageLinkedInLaser()
+
+        result.status = params.status ?: 'Current'
+        result.totalCount = pkgs.size()
+        result.pkgs = laserService.linkedPackageWithPermanentTitlesInLaser(pkgs.pkg_gokb_id, result.status)
+
+        result
+    }
 
     def linkedSubsInLaser() {
         log.debug("linkedSubsInLaser::${params}")
@@ -510,7 +530,9 @@ class AdminController {
     log.debug("tippsWekbVsLaser::${params}")
     def result = [:]
 
-    List pkgs = laserService.packageLinkedInLaser()
+    List<String> packageUUIDList = laserService.packageLinkedInLaser().pkg_gokb_id
+
+    List pkgs = Package.findAllByUuidInList(packageUUIDList)
 
     if (params.sort == 'curatoryGroups') {
       pkgs = pkgs.sort { it.pkg.curatoryGroups.curatoryGroup.name[0]}

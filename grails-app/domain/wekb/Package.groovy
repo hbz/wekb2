@@ -678,5 +678,24 @@ class Package  extends AbstractBase implements Auditable {
     return tippsInLaserCount
   }
 
+    @Transient
+    public getTippCountWithStatus(String status) {
+        RefdataValue refdata_status = RDStore.KBC_STATUS_CURRENT
+        if(status == 'Retired'){
+            refdata_status = RDStore.KBC_STATUS_RETIRED
+        }else if (status == 'Deleted'){
+            refdata_status = RDStore.KBC_STATUS_DELETED
+        }else if (status == 'Removed'){
+            refdata_status = RDStore.KBC_STATUS_REMOVED
+        }else if (status == 'Expected'){
+            refdata_status = RDStore.KBC_STATUS_EXPECTED
+        }
+
+        int result = TitleInstancePackagePlatform.executeQuery("select count(*) from TitleInstancePackagePlatform as t where t.pkg = :pkg and t.status = :status"
+                , [pkg: this, status: refdata_status])[0]
+
+        result
+    }
+
 
 }

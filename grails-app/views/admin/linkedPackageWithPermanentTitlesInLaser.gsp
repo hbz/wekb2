@@ -2,14 +2,16 @@
 <html>
 <head>
     <meta name="layout" content="wekb"/>
-    <title>we:kb : Packages linked in Laser</title>
+    <title>we:kb : Permanent Titles in Laser [Status: ${status}]</title>
 </head>
 
 <body>
 
 <wekb:serviceInjection/>
 
-<h1 class="ui header">Packages linked in Laser (${totalCount})</h1>
+<g:set var="laserService" bean="${wekb.LaserService}"/>
+
+<h1 class="ui header">Packages linked with Permanent Titles in Laser (${totalCount}) [Status: ${status}]</h1>
 
 
 <div class="container">
@@ -24,7 +26,10 @@
             <th>Platform</th>
             <semui:sortableColumn property="curatoryGroups" title="Curatory Groups"/>
             <th>Auto Update</th>
-            <th>Package linked in Laser</th>
+            <th>Linked Count</th>
+            <th>Wekb Titles</th>
+            <th>Laser Titles</th>
+            <th>Permanent Titles</th>
         </tr>
         </thead>
         <tbody>
@@ -34,26 +39,26 @@
                     ${(params.offset ? params.offset.toInteger() : 0) + i + 1}
                 </td>
                 <td>
-                    <g:link controller="resource" action="show" id="${pkg.id}">
-                        ${pkg.name}
+                    <g:link controller="resource" action="show" id="${pkgWekb.getOID()}">
+                        ${pkgWekb.name}
                     </g:link>
                 </td>
                 <td>
-                    ${pkg.status.value}
+                    ${pkgWekb.status.value}
                 </td>
                 <td>
-                    ${pkg.provider}
+                    ${pkgWekb.provider}
                 </td>
                 <td>
-                    ${pkg.nominalPlatform}
+                    ${pkgWekb.nominalPlatform}
                 </td>
                 <td>
-                    <g:each in="${pkg.curatoryGroups}" var="curatoryGroupPackage">
+                    <g:each in="${pkgWekb.curatoryGroups}" var="curatoryGroupPackage">
                         ${curatoryGroupPackage.curatoryGroup.name}
                     </g:each>
                 </td>
                 <td>
-                    <g:if test="${pkg.kbartSource?.automaticUpdates}">
+                    <g:if test="${pkgWekb.kbartSource?.automaticUpdates}">
                         <i class="check green circle icon"
                            title="${message(code: 'default.boolean.true')}"></i>
                     </g:if>
@@ -63,7 +68,17 @@
                     </g:else>
                 </td>
                 <td>
-                    <g:link controller="admin" action="linkedSubsInLaser" id="${pkg.id}">${pkg.linkedPackageCount}</g:link>
+                    <g:link action="linkedSubsInLaser" controller="admin" id="${pkgWekb.id}">${pkgLaser.packageLinkedInLaserCount}</g:link>
+                </td>
+                <td>
+                    ${pkgWekb.getTippCountWithStatus(status)}
+
+                </td>
+                <td>
+                    ${pkgLaser.tippCount}
+                </td>
+                <td>
+                    ${pkgLaser.ptCount}
                 </td>
             </tr>
         </g:each>

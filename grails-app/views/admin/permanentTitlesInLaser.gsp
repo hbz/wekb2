@@ -13,7 +13,6 @@
 
 <h1 class="ui header">Linked Subs in Laser for Package ${pkg.name} (${totalCount})</h1>
 
-<g:render template="/templates/laserInfosForPkg" model="${[pkg: pkg]}"/>
 
 <div class="container">
 
@@ -28,7 +27,6 @@
             <th>Endate</th>
             <th>Perpetual Access</th>
             <th>Holding Selection</th>
-            <th>Typ</th>
         </tr>
         </thead>
         <tbody>
@@ -57,9 +55,6 @@
                 </td>
                 <td>
                     ${subInfo.holding_selection}
-                </td>
-                <td>
-                    ${subInfo.sub_typ}
                 </td>
             </tr>
         </g:each>

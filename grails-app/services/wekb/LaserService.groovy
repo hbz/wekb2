@@ -221,6 +221,75 @@ class LaserService {
 
     }
 
+    int tippsWithStatusInLaserCount(String wekbUuid, String status) {
+        Sql sql
+        int tippsInLaserCount
+        try {
+            Map config = getConfig()
+
+            if(config.laserDBUrl && config.laserDBUser && config.laserDBPassword) {
+                sql = Sql.newInstance(config.laserDBUrl, config.laserDBUser, config.laserDBPassword, config.laserDBDriver)
+
+                tippsInLaserCount = sql.rows('''select count(*) from title_instance_package_platform 
+                                                    left join package p on p.pkg_id = title_instance_package_platform.tipp_pkg_fk 
+                                                    where pkg_gokb_id = :wekbUuid 
+                                                    and tipp_status_rv_fk = (select rdv_id from refdata_value join refdata_category on rdv_owner = rdc_id where rdv_value = :status and rdc_description = 'tipp.status')''', [wekbUuid: wekbUuid, status: status])[0]['count']
+
+                sql.close()
+            }
+        }catch (Exception ex){
+            log.error("Problem by tippsWithStatusInLaserCount:", ex)
+        }
+        finally {
+            try {
+                if(sql)
+                    sql.close()
+            }
+            catch (Exception e) {
+                log.error("Problem by Close SQL Client:", e)
+            }
+        }
+
+        tippsInLaserCount
+
+    }
+
+    int permanentTitlesWithStatusInLaserCount(String wekbUuid, String status) {
+        Sql sql
+        int tippsInLaserCount
+        try {
+            Map config = getConfig()
+
+            if(config.laserDBUrl && config.laserDBUser && config.laserDBPassword) {
+                sql = Sql.newInstance(config.laserDBUrl, config.laserDBUser, config.laserDBPassword, config.laserDBDriver)
+
+                tippsInLaserCount = sql.rows('''SELECT COUNT(DISTINCT pt_tipp_fk)
+                                                    FROM permanent_title 
+                                                    where pt_tipp_fk in ( 
+                                                    SELECT tipp_id FROM title_instance_package_platform
+                                                    left join package p on p.pkg_id = title_instance_package_platform.tipp_pkg_fk 
+                                                    where pkg_gokb_id = :wekbUuid 
+                                                    and tipp_status_rv_fk = (select rdv_id from refdata_value join refdata_category on rdv_owner = rdc_id where rdv_value = :status and rdc_description = 'tipp.status'))''', [wekbUuid: wekbUuid, status: status])[0]['count']
+
+                sql.close()
+            }
+        }catch (Exception ex){
+            log.error("Problem by permanentTitlesWithStatusInLaserCount:", ex)
+        }
+        finally {
+            try {
+                if(sql)
+                    sql.close()
+            }
+            catch (Exception e) {
+                log.error("Problem by Close SQL Client:", e)
+            }
+        }
+
+        tippsInLaserCount
+
+    }
+
 
 
     void cleanUpLaserTipp(String wekbUuidOldTipp, String wekbUuidNewTipp) {
@@ -266,19 +335,19 @@ class LaserService {
         }
     }
 
-    List<Package> packageLinkedInLaser() {
+    List packageLinkedInLaser() {
         Sql sql
-        List<String> packageUUIDList
-        List<Package> packages
+        List packages
         try {
             Map config = getConfig()
 
             if(config.laserDBUrl && config.laserDBUser && config.laserDBPassword) {
                 sql = Sql.newInstance(config.laserDBUrl, config.laserDBUser, config.laserDBPassword, config.laserDBDriver)
 
-                packageUUIDList = sql.rows("select pkg_gokb_id from subscription_package left join package p on p.pkg_id = subscription_package.sp_pkg_fk where pkg_gokb_id = any(:wekbUuid)", [wekbUuid: sql.getConnection().createArrayOf('varchar', Package.findAll().uuid.toArray())])['pkg_gokb_id']
-                packages = Package.findAllByUuidInList(packageUUIDList, [sort: 'name'])
-
+                packages = sql.rows('''select 
+                                                pkg_gokb_id,
+                                                (select count(*) from subscription_package left join package pkg on pkg.pkg_id = subscription_package.sp_pkg_fk where pkg.pkg_gokb_id = p.pkg_gokb_id) as linkedPackageCount
+                                                from subscription_package left join package p on p.pkg_id = subscription_package.sp_pkg_fk where pkg_gokb_id = any(:wekbUuid) group by pkg_gokb_id''', [wekbUuid: sql.getConnection().createArrayOf('varchar', Package.findAll().uuid.toArray())])
                 sql.close()
             }
         }catch (Exception ex){
@@ -579,6 +648,51 @@ class LaserService {
         }
 
         packageLinkedCount
+
+    }
+
+    def linkedPackageWithPermanentTitlesInLaser(List<String> wekbUuids, String status) {
+        Sql sql
+        List linked
+        try {
+            Map config = getConfig()
+
+            if(config.laserDBUrl && config.laserDBUser && config.laserDBPassword) {
+                sql = Sql.newInstance(config.laserDBUrl, config.laserDBUser, config.laserDBPassword, config.laserDBDriver)
+
+                linked = sql.rows('''select pkg.pkg_gokb_id as uuid,
+                                (select count(*) from subscription_package left join package p on p.pkg_id = subscription_package.sp_pkg_fk where pkg.pkg_gokb_id = p.pkg_gokb_id) as packageLinkedInLaserCount,
+                    
+                                (select count(*) from title_instance_package_platform 
+                                                    left join package p on p.pkg_id = title_instance_package_platform.tipp_pkg_fk 
+                                                    where pkg.pkg_gokb_id = p.pkg_gokb_id
+                                                    and tipp_status_rv_fk = (select rdv_id from refdata_value join refdata_category on rdv_owner = rdc_id where rdv_value = :status and rdc_description = 'tipp.status')) as tippCount,
+                                                    
+                                (SELECT COUNT(DISTINCT pt_tipp_fk)
+                                                    FROM permanent_title 
+                                                    where pt_tipp_fk in ( 
+                                                    SELECT tipp_id FROM title_instance_package_platform
+                                                    left join package p on p.pkg_id = title_instance_package_platform.tipp_pkg_fk 
+                                                    where pkg.pkg_gokb_id = p.pkg_gokb_id
+                                                    and tipp_status_rv_fk = (select rdv_id from refdata_value join refdata_category on rdv_owner = rdc_id where rdv_value = :status and rdc_description = 'tipp.status'))) as ptCount
+                                                    from package pkg where pkg.pkg_gokb_id = any(:wekbUuid) order by pkg.pkg_name''', [wekbUuid: sql.getConnection().createArrayOf('varchar', wekbUuids.toArray()), status: status])
+
+                sql.close()
+            }
+        }catch (Exception ex){
+            log.error("Problem by linkedPackageWithPermanentTitlesInLaser:", ex)
+        }
+        finally {
+            try {
+                if(sql)
+                    sql.close()
+            }
+            catch (Exception e) {
+                log.error("Problem by Close SQL Client:", e)
+            }
+        }
+
+        linked
 
     }
 

@@ -34,23 +34,6 @@
                 </div>
             </g:if>
 
-            <sec:ifAnyGranted roles="ROLE_ADMIN">
-                <g:if test="${displayobj instanceof wekb.Package && displayobj.isPackageLinkedInLaser()}">
-                    <g:set var="laserService" bean="${wekb.LaserService}"/>
-                    <div class="ui warning icon huge message">
-                        <i class="info icon"></i>
-
-                        <div class="content">
-                            <div class="header">
-                                Package used in LAS:er
-                            </div>
-
-                            <p>Package is linked in LAS:er. Count:  <g:link action="linkedSubsInLaser" controller="admin" id="${displayobj.id}">${displayobj.packageLinkedInLaserCount()} -> PerpetualAccess: ${laserService.packageLinkedWithPerpetualAccessInLaserCount(displayobj.uuid)} , ${laserService.packageLinkedWithOutPerpetualAccessInLaserCount(displayobj.uuid)}</g:link></p>
-                        </div>
-                    </div>
-                </g:if>
-            </sec:ifAnyGranted>
-
             <g:if test="${editable}">
 
                 <g:set var="workflowService" bean="workflowService"/>
@@ -123,7 +106,11 @@
 
             <h1 class="ui header"><g:message code="${displayobj.class.simpleName.toLowerCase()}.label" default="${displayobj.getDomainName()}"/>: ${displayobj.getShowName()}</h1>
 
-
+            <sec:ifAnyGranted roles="ROLE_ADMIN">
+                <g:if test="${displayobj instanceof wekb.Package && displayobj.isPackageLinkedInLaser()}">
+                    <g:render template="/templates/laserInfosForPkg" model="${[pkg: displayobj]}"/>
+                </g:if>
+            </sec:ifAnyGranted>
 
             <g:if test="${displaytemplate != null}">
                 <!-- Using display template ${displaytemplate.rendername} -->
