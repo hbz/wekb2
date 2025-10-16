@@ -54,12 +54,10 @@
                 </td>
                 <td>
                     <g:if test="${pkg.kbartSource?.automaticUpdates}">
-                        <i class="check green circle icon"
-                           title="${message(code: 'default.boolean.true')}"></i>
+                        Yes
                     </g:if>
                     <g:else>
-                        <<i class="times red circle icon"
-                            title="${message(code: 'default.boolean.false')}"></i>
+                        No
                     </g:else>
                 </td>
                 <td>

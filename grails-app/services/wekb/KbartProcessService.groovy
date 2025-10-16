@@ -26,7 +26,7 @@ class KbartProcessService {
     KbartImportService kbartImportService
     CleanupService cleanupService
     SessionFactory sessionFactory
-    LaserCleanUpService laserCleanUpService
+    LaserService laserService
 
     void kbartImportManual(Package pkg, File tsvFile, Boolean onlyRowsWithLastChanged){
         log.info("Beginn kbartImportManual ${pkg.name}")
@@ -128,10 +128,11 @@ class KbartProcessService {
 
         LinkedHashMap tippsWithCoverage = [:]
         HashSet<Long> tippDuplicates = new HashSet<Long>()
-        List setTippsNotToDeleted = []
+        HashSet<Long> setTippsNotToDeleted = []
         Map errors = [global: [], tipps: []]
 
         HashSet<Long> tippsFound = new HashSet<Long>()
+        HashSet<Long> newtippIdList = new HashSet<Long>()
         List invalidKbartRowsForTipps = []
         int removedTipps = 0
         int newTipps = 0
@@ -253,18 +254,36 @@ class KbartProcessService {
                                         Map findTipp = kbartImportService.findTheCorrectTipp(kbartRow, tippDuplicates)
                                         TitleInstancePackagePlatform updateTipp = findTipp.tipp ?: null
                                         try {
-                                            if(updateTipp == null || !(updateTipp.id in tippsFound)) {
-                                                Map autoUpdateResultTipp = kbartImportService.tippImportForUpdate(kbartRow, tippsWithCoverage, tippDuplicates, updatePackageInfo, kbartRowsToCreateTipps)
 
-                                                kbartRowsToCreateTipps = autoUpdateResultTipp.kbartRowsToCreateTipps
+                                            if(updateTipp == null){
+                                                    def trimmed_url = kbartRow.title_url ? kbartRow.title_url.trim() : null
+                                                    log.debug("push in map to create new TIPP..")
+                                                    def tmap = [
+                                                            'pkg'         : pkg,
+                                                            'hostPlatform': plt,
+                                                            'url'         : trimmed_url,
+                                                            'status'      : (kbartRow.status ?: 'Current'),
+                                                            'name'        : (kbartRow.publication_title ?: null),
+                                                            'type'        : (kbartRow.publication_type ?: null),
+                                                            'medium'    : (kbartRow.medium ?: null),
+                                                            'kbartRowMap': kbartRow
+                                                    ]
+                                                    kbartRowsToCreateTipps << tmap
+
+
+                                            }else if(updateTipp && !(updateTipp.id in tippsFound)) {
+                                                tippDuplicates = findTipp.tippDuplicates
+
+                                                Map autoUpdateResultTipp = kbartImportService.tippImportForUpdate(updateTipp, kbartRow, tippsWithCoverage, updatePackageInfo)
+
                                                 tippsWithCoverage = autoUpdateResultTipp.tippsWithCoverage
-                                                tippDuplicates = autoUpdateResultTipp.tippDuplicates
+
 
                                                 if (autoUpdateResultTipp.updatePackageInfo) {
                                                     updatePackageInfo = autoUpdateResultTipp.updatePackageInfo
                                                 }
 
-                                                if (!autoUpdateResultTipp.newTipp) {
+
                                                     updateTipp = autoUpdateResultTipp.tippObject
 
                                                     if (autoUpdateResultTipp.removedTipp) {
@@ -287,7 +306,6 @@ class KbartProcessService {
                                                         updateTipp = updateTipp.save()
                                                         tippsFound.add(updateTipp.id)
                                                     }
-                                                }
                                             }
 
                                         }
@@ -384,35 +402,8 @@ class KbartProcessService {
             }
 
             if(kbartRowsToCreateTipps.size() > 0){
-                List newTippList = kbartImportService.createTippBatch(kbartRowsToCreateTipps, updatePackageInfo)
-                newTipps = newTippList.size()
-                log.debug("kbartRowsToCreateTipps: newTippList size -> "+newTippList.size())
-
-                /*  Package pkgTipp = pkg
-                  Platform platformTipp = plt
-
-                  newTippList.eachWithIndex{ Map newTippMap, int i ->
-                      TitleInstancePackagePlatform tipp = TitleInstancePackagePlatform.get(newTippMap.tippID)
-                      if(tipp){
-                          long start = System.currentTimeMillis()
-                          log.info("kbartRowsToCreateTipps: update tipp ${i+1} of ${newTipps}")
-                          try {
-                              LinkedHashMap result = [newTipp: true]
-                              result = kbartImportService.updateTippWithKbart(result, tipp, newTippMap.kbartRowMap, newTippMap.updatePackageInfo, tippsWithCoverage, pkgTipp, platformTipp)
-                              tippsWithCoverage = result.tippsWithCoverage
-                              updatePackageInfo = result.updatePackageInfo
-
-                          }catch (Exception e) {
-                              log.error("kbartRowsToCreateTipps: -> ${newTippMap.kbartRowMap}:" + e.toString())
-                          }
-
-                          log.debug("kbartRowsToCreateTipps processed at: ${System.currentTimeMillis()-start} msecs")
-                          if (i % 100 == 0) {
-                              log.info("Clean up")
-                              cleanupService.cleanUpGorm()
-                          }
-                      }
-                  }*/
+                newtippIdList = kbartImportService.createTippBatch(kbartRowsToCreateTipps, updatePackageInfo)
+                log.debug("kbartRowsToCreateTipps: newTippList size -> "+newtippIdList.size())
 
             }
 
@@ -424,7 +415,7 @@ class KbartProcessService {
                 int tippDuplicatesCount = tippDuplicates.size()
 
                 for (int offset = 0; offset < tippDuplicatesCount; offset += maxDuplicates) {
-                    def tippDuplicatesTippsFromWekbToProcess = tippDuplicates.drop(offset).take(maxDuplicates)
+                    HashSet<Long> tippDuplicatesTippsFromWekbToProcess = tippDuplicates.drop(offset).take(maxDuplicates)
 
                     tippDuplicatesTippsFromWekbToProcess.each { tippID ->
                         if(!(tippID in tippsFound)){
@@ -577,6 +568,10 @@ class KbartProcessService {
 
 
                 HashSet<Long> existingTippsAfterImportHashSet = new HashSet<Long>(existingTippsAfterImport)
+
+                if(newtippIdList){
+                    tippsFound = tippsFound+newtippIdList
+                }
 
                 HashSet<Long> deleteTippsFromWekb = existingTippsAfterImportHashSet - tippsFound
 

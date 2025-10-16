@@ -88,7 +88,11 @@
                 <g:link class="item" controller="admin" action="checkCuratoryGroups">Check Curatory Groups</g:link>
             </div>
         </div>
+    </div>
+</div>
 
+<div class="ui equal width grid">
+    <div class="row">
         <div class="column">
             <h2 class="ui header">Laser Infos</h2>
 
@@ -96,6 +100,18 @@
                 <g:link class="item" controller="admin" action="tippsWekbVsLaser">Title Count Wekb vs Laser</g:link>
                 <g:link class="item" controller="admin" action="linkedPackageInLaser">Show linked Package in Laser</g:link>
                 <g:link class="item" controller="admin" action="notLinkedPackageInLaser">Show not linked Package in Laser</g:link>
+            </div>
+        </div>
+
+        <div class="column">
+            <h2 class="ui header">Laser Permanent Titles Infos</h2>
+
+            <div class="ui divided large relaxed list">
+                <g:link class="item" controller="admin" action="linkedPackageWithPermanentTitlesInLaser" params="[status: 'Current']">Show linked Package with Permanent Titles in Laser (Current)</g:link>
+                <g:link class="item" controller="admin" action="linkedPackageWithPermanentTitlesInLaser" params="[status: 'Retired']">Show linked Package with Permanent Titles in Laser (Retired)</g:link>
+                <g:link class="item" controller="admin" action="linkedPackageWithPermanentTitlesInLaser" params="[status: 'Expected']">Show linked Package with Permanent Titles in Laser (Expected)</g:link>
+                <g:link class="item" controller="admin" action="linkedPackageWithPermanentTitlesInLaser" params="[status: 'Deleted']">Show linked Package with Permanent Titles in Laser (Deleted)</g:link>
+                <g:link class="item" controller="admin" action="linkedPackageWithPermanentTitlesInLaser" params="[status: 'Removed']">Show linked Package with Permanent Titles in Laser (Removed)</g:link>
             </div>
         </div>
     </div>

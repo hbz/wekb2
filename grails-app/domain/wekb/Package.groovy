@@ -657,7 +657,7 @@ class Package  extends AbstractBase implements Auditable {
   @Transient
   public boolean isPackageLinkedInLaser() {
     boolean linked = false
-    int packageLinkedInLLaserCount = BeanStore.getLaserCleanUpService().packageLinkedInLaserCount(uuid)
+    int packageLinkedInLLaserCount = BeanStore.getLaserService().packageLinkedInLaserCount(uuid)
     if (packageLinkedInLLaserCount > 0) {
       linked = true
     }
@@ -666,17 +666,36 @@ class Package  extends AbstractBase implements Auditable {
 
   @Transient
   public int packageLinkedInLaserCount() {
-    int packageLinkedInLLaserCount = BeanStore.getLaserCleanUpService().packageLinkedInLaserCount(uuid)
+    int packageLinkedInLLaserCount = BeanStore.getLaserService().packageLinkedInLaserCount(uuid)
 
     return packageLinkedInLLaserCount
   }
 
   @Transient
   public int tippsInLaserCount() {
-    int tippsInLaserCount = BeanStore.getLaserCleanUpService().tippsInLaserCount(uuid)
+    int tippsInLaserCount = BeanStore.getLaserService().tippsInLaserCount(uuid)
 
     return tippsInLaserCount
   }
+
+    @Transient
+    public getTippCountWithStatus(String status) {
+        RefdataValue refdata_status = RDStore.KBC_STATUS_CURRENT
+        if(status == 'Retired'){
+            refdata_status = RDStore.KBC_STATUS_RETIRED
+        }else if (status == 'Deleted'){
+            refdata_status = RDStore.KBC_STATUS_DELETED
+        }else if (status == 'Removed'){
+            refdata_status = RDStore.KBC_STATUS_REMOVED
+        }else if (status == 'Expected'){
+            refdata_status = RDStore.KBC_STATUS_EXPECTED
+        }
+
+        int result = TitleInstancePackagePlatform.executeQuery("select count(*) from TitleInstancePackagePlatform as t where t.pkg = :pkg and t.status = :status"
+                , [pkg: this, status: refdata_status])[0]
+
+        result
+    }
 
 
 }

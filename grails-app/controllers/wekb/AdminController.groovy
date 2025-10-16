@@ -37,7 +37,7 @@ class AdminController {
   FtpConnectService ftpConnectService
   DeletionService deletionService
   SearchService searchService
-  LaserCleanUpService laserCleanUpService
+  LaserService laserService
 
 
   def systemThreads() {
@@ -454,7 +454,7 @@ class AdminController {
     log.debug("notLinkedPackageInLaser::${params}")
     def result = [:]
 
-    List pkgs = laserCleanUpService.packageNotLinkedInLaser()
+    List pkgs = laserService.packageNotLinkedInLaser()
 
     if (params.sort == 'curatoryGroups') {
       pkgs = pkgs.sort { it.pkg.curatoryGroups.curatoryGroup.name[0]}
@@ -468,32 +468,71 @@ class AdminController {
   def linkedPackageInLaser() {
     log.debug("linkedPackageInLaser::${params}")
     def result = [:]
+      result.pkgs = []
+    List pkgs = laserService.packageLinkedInLaser()
 
-    List pkgs = laserCleanUpService.packageLinkedInLaser()
+      pkgs.each {
+          Package pkg = Package.findByUuid(it.pkg_gokb_id)
+          result.pkgs << [id: pkg.id, name: pkg.name, status: pkg.status, provider: pkg.provider, nominalPlatform: pkg.nominalPlatform, curatoryGroups: pkg.curatoryGroups, kbartSource: pkg.kbartSource, linkedPackageCount: it.linkedPackageCount ]
+      }
 
     if (params.sort == 'curatoryGroups') {
-      pkgs = pkgs.sort { it.pkg.curatoryGroups.curatoryGroup.name[0]}
+        result.pkgs = result.pkgs.sort { it.curatoryGroups.curatoryGroup.name[0]}
+    }else{
+        result.pkgs = result.pkgs.sort { it.name}
     }
 
-    result.totalCount = pkgs.size()
-    result.pkgs = pkgs
+
+    result.totalCount = result.pkgs.size()
     result
   }
+
+    def linkedPackageWithPermanentTitlesInLaser() {
+        log.debug("linkedPackageWithPermanentTitlesInLaser::${params}")
+        def result = [:]
+
+        List pkgs = laserService.packageLinkedInLaser()
+
+        result.status = params.status ?: 'Current'
+        result.totalCount = pkgs.size()
+        result.pkgs = laserService.linkedPackageWithPermanentTitlesInLaser(pkgs.pkg_gokb_id, result.status)
+
+        result
+    }
+
+    def linkedSubsInLaser() {
+        log.debug("linkedSubsInLaser::${params}")
+        def result = [:]
+
+        result.pkg = Package.get(params.id)
+
+        List linkedSubs = []
+
+        linkedSubs = laserService.linkedSubsInLaser(result.pkg.uuid)
+
+        if(params.boolean('perpetualAccess') == true){
+            linkedSubs = laserService.linkedSubsWithPerpetualAccessInLaser(result.pkg.uuid)
+        }
+
+        if(params.boolean('perpetualAccess') == false){
+            linkedSubs = laserService.linkedSubsWithOutPerpetualAccessInLaser(result.pkg.uuid)
+        }
+
+        result.totalCount = linkedSubs.size()
+        result.linkedSubs = linkedSubs
+        result
+        result.totalCount = linkedSubs.size()
+        result.linkedSubs = linkedSubs
+        result
+    }
 
   def tippsWekbVsLaser() {
     log.debug("tippsWekbVsLaser::${params}")
     def result = [:]
 
-  /*  params.max = params.max ?: 500
-    params.offset = params.offset ?: 0
+    List<String> packageUUIDList = laserService.packageLinkedInLaser().pkg_gokb_id
 
-    List pkgs = Package.findAll([sort: 'name', max: params.max, offset: params.offset])
-    result.totalPkgs = Package.count()
-
-    result.totalCount = pkgs.size()
-    result.pkgs = pkgs*/
-
-    List pkgs = laserCleanUpService.packageLinkedInLaser()
+    List pkgs = Package.findAllByUuidInList(packageUUIDList)
 
     if (params.sort == 'curatoryGroups') {
       pkgs = pkgs.sort { it.pkg.curatoryGroups.curatoryGroup.name[0]}
@@ -692,15 +731,15 @@ class AdminController {
       info.countRemovedInDB = FTControl.executeQuery(query+ " where status = :status", [status: RDStore.KBC_STATUS_REMOVED])[0]
 
       if(component == 'Package'){
-          info.countLaser = laserCleanUpService.laserPackagesCount()
+          info.countLaser = laserService.laserPackagesCount()
       }else if(component == 'Org'){
-        info.countLaser = laserCleanUpService.laserProviderCount()
+        info.countLaser = laserService.laserProviderCount()
       }else if(component == 'Platform'){
-        info.countLaser = laserCleanUpService.laserPlaformCount()
+        info.countLaser = laserService.laserPlaformCount()
       }else if(component == 'TitleInstancePackagePlatform'){
-        info.countLaser = laserCleanUpService.laserTippsCount()
+        info.countLaser = laserService.laserTippsCount()
       }else if(component == 'Vendor'){
-        info.countLaser = laserCleanUpService.laserVendorCount()
+        info.countLaser = laserService.laserVendorCount()
       }
 
       result.componentsInfos << info
