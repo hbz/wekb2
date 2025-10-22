@@ -11,7 +11,7 @@
 
 <g:set var="laserService" bean="${wekb.LaserService}"/>
 
-<h1 class="ui header">Linked Subs in Laser for Package ${pkg.name} (${totalCount})</h1>
+<h1 class="ui header">Linked Subs in Laser for Package <g:link controller="resource" action="show" id="${pkg.class.name+':'+pkg.id}">${pkg.name}</g:link> (${totalCount}) <g:if test="${status}">[PT in LASER (${status})]</g:if> </h1>
 
 <g:render template="/templates/laserInfosForPkg" model="${[pkg: pkg]}"/>
 
@@ -29,6 +29,7 @@
             <th>Perpetual Access</th>
             <th>Holding Selection</th>
             <th>Typ</th>
+            <th>[PT in LASER (${status})]</th>
         </tr>
         </thead>
         <tbody>
@@ -41,7 +42,7 @@
                     <a href="${laserService.getLaserOrgURL()+'/'+subInfo.org_id}" target="_blank">${subInfo.org_name}</a>
                 </td>
                 <td>
-                    <a href="${laserService.getLaserSubURL()+'/'+subInfo.sub_id}" target="_blank">${subInfo.sub_name}</a>
+                    <a href="${laserService.getLaserSubPackageURL()+'/'+subInfo.sub_id}" target="_blank">${subInfo.sub_name}</a>
                 </td>
                 <td>
                     ${subInfo.status}
@@ -60,6 +61,12 @@
                 </td>
                 <td>
                     ${subInfo.sub_typ}
+                </td>
+                <td>
+                    <g:link action="linkedPTOverSubInLaser" controller="admin"
+                            id="${pkg.id}" params="[subId: subInfo.sub_id, status: params.status]">
+                            ${subInfo.ptCount}
+                    </g:link>
                 </td>
             </tr>
         </g:each>

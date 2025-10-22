@@ -491,11 +491,9 @@ class AdminController {
         log.debug("linkedPackageWithPermanentTitlesInLaser::${params}")
         def result = [:]
 
-        List pkgs = laserService.packageLinkedInLaser()
-
         result.status = params.status ?: 'Current'
-        result.totalCount = pkgs.size()
-        result.pkgs = laserService.linkedPackageWithPermanentTitlesInLaser(pkgs.pkg_gokb_id, result.status)
+        result.pkgs = laserService.linkedPackageWithPermanentTitlesInLaser(result.status)
+        result.totalCount = result.pkgs.size()
 
         result
     }
@@ -508,21 +506,40 @@ class AdminController {
 
         List linkedSubs = []
 
-        linkedSubs = laserService.linkedSubsInLaser(result.pkg.uuid)
+        result.status = params.status
 
-        if(params.boolean('perpetualAccess') == true){
-            linkedSubs = laserService.linkedSubsWithPerpetualAccessInLaser(result.pkg.uuid)
+        linkedSubs = laserService.linkedSubsInLaser(result.pkg.uuid, result.status)
+
+        if(params.perpetualAccess && params.boolean('perpetualAccess') == true){
+            linkedSubs = laserService.linkedSubsInLaser(result.pkg.uuid, result.status, 'true')
         }
 
-        if(params.boolean('perpetualAccess') == false){
-            linkedSubs = laserService.linkedSubsWithOutPerpetualAccessInLaser(result.pkg.uuid)
+        if(params.perpetualAccess && params.boolean('perpetualAccess') == false){
+            linkedSubs = laserService.linkedSubsInLaser(result.pkg.uuid, result.status, 'false')
         }
 
         result.totalCount = linkedSubs.size()
         result.linkedSubs = linkedSubs
         result
-        result.totalCount = linkedSubs.size()
-        result.linkedSubs = linkedSubs
+    }
+
+    def linkedPTOverSubInLaser() {
+        log.debug("linkedPTOverSubInLaser::${params}")
+        def result = [:]
+
+        result.pkg = Package.get(params.id)
+
+        List linkedPTs = []
+
+        result.status = params.status
+
+        linkedPTs = laserService.linkedPTOverSubInLaser(result.pkg.uuid, result.status, Long.parseLong(params.subId))
+
+        result.subInfo = laserService.subInfosFromLaser(Long.parseLong(params.subId))
+
+        result.totalCount = linkedPTs.size()
+        result.linkedPTs = linkedPTs
+        println(result)
         result
     }
 

@@ -33,7 +33,8 @@
         </tr>
         </thead>
         <tbody>
-        <g:each in="${pkgs}" var="pkg" status="i">
+        <g:each in="${pkgs}" var="pkgLaser" status="i">
+            <g:set var="pkgWekb" value="${wekb.Package.findByUuid(pkgLaser.uuid)}"/>
             <tr>
                 <td>
                     ${(params.offset ? params.offset.toInteger() : 0) + i + 1}
