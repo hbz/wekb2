@@ -69,7 +69,7 @@
                     </g:else>
                 </td>
                 <td>
-                    <g:link action="linkedSubsInLaser" controller="admin" id="${pkgWekb.id}">${pkgLaser.packageLinkedInLaserCount}</g:link>
+                    <g:link action="linkedSubsInLaser" controller="admin" id="${pkgWekb.id}" params="[status: status]">${pkgLaser.packageLinkedInLaserCount}</g:link>
                 </td>
                 <td>
                     ${pkgWekb.getTippCountWithStatus(status)}

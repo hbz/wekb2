@@ -436,6 +436,12 @@ class LaserService {
                                                     where pt_subscription_fk = s.sub_id and pt_tipp_fk in ( 
                                                     SELECT tipp_id FROM title_instance_package_platform
                                                     left join package pkg on pkg.pkg_id = title_instance_package_platform.tipp_pkg_fk 
+                                                    where pkg.pkg_gokb_id = p.pkg_gokb_id)) as tippCount,
+                                                    (SELECT COUNT(pt_id)
+                                                    FROM permanent_title 
+                                                    where pt_subscription_fk = s.sub_id and pt_tipp_fk in ( 
+                                                    SELECT tipp_id FROM title_instance_package_platform
+                                                    left join package pkg on pkg.pkg_id = title_instance_package_platform.tipp_pkg_fk 
                                                     where pkg.pkg_gokb_id = p.pkg_gokb_id)) as ptCount
                                             from subscription_package
                                                      left join package p on p.pkg_id = subscription_package.sp_pkg_fk
@@ -785,6 +791,94 @@ class LaserService {
 
     }
 
+
+    List<Map> platformDiff() {
+        Sql sql
+        List<Map> platforms
+        try {
+            Map config = getConfig()
+
+            if(config.laserDBUrl && config.laserDBUser && config.laserDBPassword) {
+                sql = Sql.newInstance(config.laserDBUrl, config.laserDBUser, config.laserDBPassword, config.laserDBDriver)
+
+                platforms = sql.rows('''select plat_name,
+                                               rv.rdv_value_en as platform_status,
+                                               plat_id,
+                                               plat_gokb_id,
+                                               prov_id,
+                                               prov_name,
+                                               rv2.rdv_value_en as prov_status,
+                                            (select count(*) from title_instance_package_platform where tipp_plat_fk = platform.plat_id) as titles,
+                                            (select count(*) from package where pkg_nominal_platform_fk = platform.plat_id) as packages,
+                                            (select count(*) from subscription_package left join package p on p.pkg_id = subscription_package.sp_pkg_fk where p.pkg_id in (select pkg_id from package where pkg_nominal_platform_fk = platform.plat_id)) as linkedPackages
+                                            from  platform
+                                            left join refdata_value rv on platform.plat_status_rv_fk = rv.rdv_id
+                                            left join provider p on platform.plat_provider_fk = p.prov_id
+                                            left join refdata_value rv2 on prov_status_rv_fk = rv2.rdv_id
+                                            where NOT (plat_gokb_id = any(:wekbUuid))
+                                            order by plat_name, rv.rdv_value_en''', [wekbUuid: sql.getConnection().createArrayOf('varchar', Platform.findAll().uuid.toArray())])
+
+
+                sql.close()
+            }
+        }catch (Exception ex){
+            log.error("Problem by platformDiff:", ex)
+        }
+        finally {
+            try {
+                if(sql)
+                    sql.close()
+            }
+            catch (Exception e) {
+                log.error("Problem by Close SQL Client:", e)
+            }
+        }
+        platforms
+    }
+
+    List<Map> packageDiff() {
+        Sql sql
+        List<Map> pkgs
+        try {
+            Map config = getConfig()
+
+            if(config.laserDBUrl && config.laserDBUser && config.laserDBPassword) {
+                sql = Sql.newInstance(config.laserDBUrl, config.laserDBUser, config.laserDBPassword, config.laserDBDriver)
+
+                pkgs = sql.rows('''select pkg_name,
+                                               rv.rdv_value_en as pkg_status,
+                                               pkg_id,
+                                               pkg_gokb_id,
+                                               prov_id,
+                                               prov_name,
+                                               rv2.rdv_value_en as prov_status,
+                                            (select count(*) from title_instance_package_platform where tipp_pkg_fk = package.pkg_id) as titles,
+                                            (select count(*) from subscription_package left join package p on p.pkg_id = subscription_package.sp_pkg_fk where p.pkg_id = package.pkg_id) as linkedPackages
+                                            from  package
+                                            left join refdata_value rv on package.pkg_status_rv_fk = rv.rdv_id
+                                            left join provider p on package.pkg_provider_fk = p.prov_id
+                                            left join refdata_value rv2 on prov_status_rv_fk = rv2.rdv_id
+                                            where NOT (pkg_gokb_id = any(:wekbUuid))
+                                            order by pkg_name, rv.rdv_value_en''', [wekbUuid: sql.getConnection().createArrayOf('varchar', Package.findAll().uuid.toArray())])
+
+
+                sql.close()
+            }
+        }catch (Exception ex){
+            log.error("Problem by packageDiff:", ex)
+        }
+        finally {
+            try {
+                if(sql)
+                    sql.close()
+            }
+            catch (Exception e) {
+                log.error("Problem by Close SQL Client:", e)
+            }
+        }
+        pkgs
+    }
+
     Map getConfig(){
         Map result = [:]
         result.laserDBUrl = grailsApplication.config.getProperty('laserDBUrl', String)
@@ -810,6 +904,10 @@ class LaserService {
         getLaserURL() + '/org/show'
     }
 
+    String getLaserProviderURL() {
+        getLaserURL() + '/provider/show'
+    }
+
     String getLaserPackageURL() {
         getLaserURL() + '/package/show'
     }
@@ -820,5 +918,9 @@ class LaserService {
 
     String getLaserIeURL() {
         getLaserURL() + '/issueEntitlement/show'
+    }
+
+    String getLaserPlatformURL() {
+        getLaserURL() + '/platform/show'
     }
 }

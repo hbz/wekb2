@@ -1,6 +1,8 @@
 package wekb
 
-
+import grails.util.Holders
+import groovy.sql.GroovyRowResult
+import groovy.sql.Sql
 import wekb.ConcurrencyManagerService.Job
 import wekb.auth.User
 import wekb.helper.RCConstants
@@ -17,6 +19,7 @@ import org.hibernate.SessionFactory
 import org.springframework.security.access.annotation.Secured
 import wekb.system.FTControl
 
+import javax.sql.DataSource
 import java.text.SimpleDateFormat
 import java.util.concurrent.CancellationException
 import java.util.concurrent.ExecutorService
@@ -532,14 +535,41 @@ class AdminController {
         List linkedPTs = []
 
         result.status = params.status
+        result.linkedPTs = []
 
         linkedPTs = laserService.linkedPTOverSubInLaser(result.pkg.uuid, result.status, Long.parseLong(params.subId))
+        Sql sql = new Sql(Holders.grailsApplication.mainContext.getBean('dataSource') as DataSource)
+        try {
+            linkedPTs.each {
+                def principalRows = sql.rows('''select tipp_name, 
+                                                    rv.rdv_value_en as tipp_status,
+                                                    tipp_id
+                                    from  title_instance_package_platform tipp
+                                              left join refdata_value rv on tipp.tipp_status_rv_fk = rv.rdv_id
+                                    where tipp_uuid = :uuid''', [uuid: it.tipp_gokb_id])[0]
+                result.linkedPTs << [id:  principalRows[3], name: principalRows[0], status: principalRows[1], laser_tipp_name: it.tipp_name, laser_tipp_status: it.tipp_status, laser_ie_status: it.ie_status, laser_tipp_id: it.tipp_id, laser_pt_ie_fk: it.pt_ie_fk]
+
+            }
+                sql.close()
+        }catch (Exception ex){
+            log.error("Problem by linkedPTOverSubInLaser:", ex)
+        }
+        finally {
+            try {
+                if(sql)
+                    sql.close()
+            }
+            catch (Exception e) {
+                log.error("Problem by Close SQL Client:", e)
+            }
+        }
+
+
 
         result.subInfo = laserService.subInfosFromLaser(Long.parseLong(params.subId))
 
         result.totalCount = linkedPTs.size()
-        result.linkedPTs = linkedPTs
-        println(result)
+
         result
     }
 
@@ -987,5 +1017,29 @@ class AdminController {
 
     searchResult.result
   }
+
+    def platformDiff() {
+        log.debug("platformDiff::${params}")
+        def result = [:]
+
+        List<Map> platformDiff = laserService.platformDiff()
+
+
+        result.totalCount = platformDiff.size()
+        result.platformDiff = platformDiff
+        result
+    }
+
+    def packageDiff() {
+        log.debug("packageDiff::${params}")
+        def result = [:]
+
+        List<Map> packageDiff = laserService.packageDiff()
+
+
+        result.totalCount = packageDiff.size()
+        result.packageDiff = packageDiff
+        result
+    }
 
 }

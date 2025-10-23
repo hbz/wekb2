@@ -11,6 +11,10 @@
 <wekb:serviceInjection/>
 
 <g:set var="laserService" bean="${wekb.LaserService}"/>
+<g:set var="orgUrl" value="${laserService.getLaserOrgURL()}"/>
+<g:set var="subPackageUrl" value="${laserService.getLaserSubPackageURL()}"/>
+<g:set var="ieUrl" value="${laserService.getLaserIeURL()}"/>
+<g:set var="tippUrl" value="${laserService.getLaserTippURL()}"/>
 
 <h1 class="ui header">Linked Subs in Laser for Package <g:link controller="resource" action="show" id="${pkg.class.name+':'+pkg.id}">${pkg.name}</g:link> (${totalCount}) <g:if test="${status}">[PT in LASER (${status})]</g:if> </h1>
 
@@ -32,10 +36,10 @@
     <tbody>
         <tr>
             <td>
-                <a href="${laserService.getLaserOrgURL()+'/'+subInfo.org_id}" target="_blank">${subInfo.org_name}</a>
+                <a href="${orgUrl+'/'+subInfo.org_id}" target="_blank">${subInfo.org_name}</a>
             </td>
             <td>
-                <a href="${laserService.getLaserSubPackageURL()+'/'+subInfo.sub_id}" target="_blank">${subInfo.sub_name}</a>
+                <a href="${subPackageUrl+'/'+subInfo.sub_id}" target="_blank">${subInfo.sub_name}</a>
             </td>
             <td>
                 ${subInfo.status}
@@ -76,25 +80,24 @@
         </thead>
         <tbody>
         <g:each in="${linkedPTs}" var="ptInfo" status="i">
-            <g:set var="tippWekb" value="${wekb.TitleInstancePackagePlatform.findByUuid(ptInfo.tipp_gokb_id)}"/>
             <tr>
                 <td>
                     ${(params.offset ? params.offset.toInteger() : 0) + i + 1}
                 </td>
                 <td>
-                    <g:link controller="resource" action="show" id="${tippWekb.class.name+':'+tippWekb.id}">${tippWekb.name}</g:link>
+                    <g:link controller="resource" action="show" id="${'wekb.TitleInstancePackagePlatform:'+ptInfo.id}">${ptInfo.name}</g:link>
                 </td>
                 <td>
-                    ${tippWekb.status.value_en}
+                    ${ptInfo.status}
                 </td>
                 <td>
-                    <a href="${laserService.getLaserTippURL()+'/'+ptInfo.tipp_id}" target="_blank">${ptInfo.tipp_name}</a>
+                    <a href="${tippUrl+'/'+ptInfo.laser_tipp_id}" target="_blank">${ptInfo.laser_tipp_name}</a>
                 </td>
                 <td>
-                    ${ptInfo.tipp_status}
+                    ${ptInfo.laser_tipp_status}
                 </td>
                 <td>
-                    <a href="${laserService.getLaserIeURL()+'/'+ptInfo.pt_ie_fk}" target="_blank">${ptInfo.ie_status}</a>
+                    <a href="${ieUrl+'/'+ptInfo.laser_pt_ie_fk}" target="_blank">${ptInfo.laser_ie_status}</a>
                 </td>
             </tr>
         </g:each>

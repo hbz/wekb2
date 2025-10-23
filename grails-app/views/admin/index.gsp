@@ -98,8 +98,10 @@
 
             <div class="ui divided large relaxed list">
                 <g:link class="item" controller="admin" action="tippsWekbVsLaser">Title Count Wekb vs Laser</g:link>
-                <g:link class="item" controller="admin" action="linkedPackageInLaser">Show linked Package in Laser</g:link>
-                <g:link class="item" controller="admin" action="notLinkedPackageInLaser">Show not linked Package in Laser</g:link>
+                <g:link class="item" controller="admin" action="linkedPackageInLaser">Show linked Packages in Laser</g:link>
+                <g:link class="item" controller="admin" action="notLinkedPackageInLaser">Show not linked Packages in Laser</g:link>
+                <g:link class="item" controller="admin" action="platformDiff">Show Platforms in Laser (Not in WEKB)</g:link>
+                <g:link class="item" controller="admin" action="packageDiff">Show Packages in Laser (Not in WEKB)</g:link>
             </div>
         </div>
 
