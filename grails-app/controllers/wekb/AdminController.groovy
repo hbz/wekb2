@@ -547,8 +547,7 @@ class AdminController {
                                     from  title_instance_package_platform tipp
                                               left join refdata_value rv on tipp.tipp_status_rv_fk = rv.rdv_id
                                     where tipp_uuid = :uuid''', [uuid: it.tipp_gokb_id])[0]
-                result.linkedPTs << [id:  principalRows[3], name: principalRows[0], status: principalRows[1], laser_tipp_name: it.tipp_name, laser_tipp_status: it.tipp_status, laser_ie_status: it.ie_status, laser_tipp_id: it.tipp_id, laser_pt_ie_fk: it.pt_ie_fk]
-
+                result.linkedPTs << [id:  principalRows[2], name: principalRows[0], status: principalRows[1], laser_tipp_name: it.tipp_name, laser_tipp_status: it.tipp_status, laser_ie_status: it.ie_status, laser_tipp_id: it.tipp_id, laser_pt_ie_fk: it.pt_ie_fk]
             }
                 sql.close()
         }catch (Exception ex){

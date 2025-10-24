@@ -17,6 +17,7 @@ class WorkflowService {
 
     AccessService accessService
     AutoUpdatePackagesService autoUpdatePackagesService
+    DeletionService deletionService
     ExecutorService executorService
     LinkGenerator grailsLinkGenerator
     SpringSecurityService springSecurityService
@@ -95,7 +96,8 @@ class WorkflowService {
                         [code: 'workFlowSetStatus::Deleted', label: 'Mark the title as deleted', message: '', onlyAdmin: false, group: 1],
                         [code: 'workFlowSetStatus::Removed', label: 'Remove the title', message: '', onlyAdmin: false, group: 2],
                         [code: 'workFlowSetStatus::Expected', label: 'Mark the title as expected', message: '', onlyAdmin: false, group: 1],
-                        [code: 'workFlowSetStatus::Current', label: 'Mark the title as current', message: '', onlyAdmin: false, group: 1]
+                        [code: 'workFlowSetStatus::Current', label: 'Mark the title as current', message: '', onlyAdmin: false, group: 1],
+                        [code: 'workFlowMethod::deletedHardTipp', label: 'Remove hard from system', message: '', onlyAdmin: true, group: 3],
                 ]
                 break
             case User.class.name:
@@ -339,5 +341,20 @@ class WorkflowService {
         result
 
     }
+
+    Map deletedHardTipp(TitleInstancePackagePlatform titleInstancePackagePlatform){
+        Map result = [:]
+
+        if(deletionService.expungeTipp(titleInstancePackagePlatform.id)){
+            result.message = "Hard deletion was successful!"
+        }else
+        {
+            result.error = "Hard deletion was not successful!"
+        }
+
+        result
+
+    }
+
 
 }
