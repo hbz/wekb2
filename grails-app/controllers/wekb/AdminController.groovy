@@ -541,13 +541,22 @@ class AdminController {
         Sql sql = new Sql(Holders.grailsApplication.mainContext.getBean('dataSource') as DataSource)
         try {
             linkedPTs.each {
+                Map infos = [laser_tipp_name: it.tipp_name, laser_tipp_status: it.tipp_status, laser_ie_status: it.ie_status, laser_tipp_id: it.tipp_id, laser_pt_ie_fk: it.pt_ie_fk]
                 def principalRows = sql.rows('''select tipp_name, 
                                                     rv.rdv_value_en as tipp_status,
                                                     tipp_id
                                     from  title_instance_package_platform tipp
                                               left join refdata_value rv on tipp.tipp_status_rv_fk = rv.rdv_id
                                     where tipp_uuid = :uuid''', [uuid: it.tipp_gokb_id])[0]
-                result.linkedPTs << [id:  principalRows[2], name: principalRows[0], status: principalRows[1], laser_tipp_name: it.tipp_name, laser_tipp_status: it.tipp_status, laser_ie_status: it.ie_status, laser_tipp_id: it.tipp_id, laser_pt_ie_fk: it.pt_ie_fk]
+
+                if(principalRows)
+                {
+                    infos.id =  principalRows[2]
+                    infos.name = principalRows[0]
+                    infos.status = principalRows[1]
+                }
+
+                result.linkedPTs << infos
             }
                 sql.close()
         }catch (Exception ex){
