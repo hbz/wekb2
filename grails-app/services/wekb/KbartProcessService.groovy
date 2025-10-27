@@ -94,7 +94,7 @@ class KbartProcessService {
         RefdataValue status_retired = RDStore.KBC_STATUS_RETIRED
         RefdataValue status_expected = RDStore.KBC_STATUS_EXPECTED
 
-        List listStatus = [status_current]
+        List listStatus = [status_current, status_expected, status_deleted, status_retired]
 
         Map headerOfKbart = kbartRows[0]
 
@@ -106,25 +106,23 @@ class KbartProcessService {
         boolean setAllTippsNotInKbartToDeleted = true
 
 
-        if(kbartRows.size() > 0){
+       /* if(kbartRows.size() > 0){
             if (headerOfKbart.containsKey("status")) {
                 log.info("kbart has status field and is wekb standard")
                 setAllTippsNotInKbartToDeleted = false
                 listStatus = [status_current, status_expected, status_deleted, status_retired]
             }
-        }
+        }*/
 
         if(addOnly){
             setAllTippsNotInKbartToDeleted = false
         }
 
-        List<Long> existing_tipp_ids = TitleInstancePackagePlatform.executeQuery(
-                "select tipp.id from TitleInstancePackagePlatform tipp where " +
+        int previouslyTipps = TitleInstancePackagePlatform.executeQuery(
+                "select count(*) from TitleInstancePackagePlatform tipp where " +
                         "tipp.status in :status and " +
                         "tipp.pkg = :package",
-                [package: pkg, status: listStatus])
-
-        int previouslyTipps = existing_tipp_ids.size()
+                [package: pkg, status: listStatus])[0]
 
         LinkedHashMap tippsWithCoverage = [:]
         HashSet<Long> tippDuplicates = new HashSet<Long>()
@@ -557,7 +555,7 @@ class KbartProcessService {
 
             //TODO: countExistingTippsAfterImport > (kbartRowsCount-countInvalidKbartRowsForTipps) ??? nötig noch
             log.info("before deleteTipps from wekb -------------------------------------------------------------------------------------")
-            
+
             if(checkAllTitles && tippsFound.size() > 0 && kbartRowsCount > 0 && countExistingTippsAfterImport > (kbartRowsCount-countInvalidKbartRowsForTipps)){
 
                 List<Long> existingTippsAfterImport = TitleInstancePackagePlatform.executeQuery(
