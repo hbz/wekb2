@@ -272,7 +272,7 @@ class LaserService {
                                                     where pkg_gokb_id = :wekbUuid 
                                                     and tipp_status_rv_fk = (select rdv_id from refdata_value join refdata_category on rdv_owner = rdc_id where rdv_value = :status and rdc_description = 'tipp.status'))''', [wekbUuid: wekbUuid, status: status])[0]['count']
 
-                ptInLaserCount = sql.rows('''SELECT COUNT(pt_tipp_fk)
+                ptInLaserCount = sql.rows('''SELECT COUNT(*)
                                                     FROM permanent_title 
                                                     where pt_tipp_fk in ( 
                                                     SELECT tipp_id FROM title_instance_package_platform
@@ -523,16 +523,12 @@ class LaserService {
                                               left join refdata_value rv on tipp.tipp_status_rv_fk = rv.rdv_id
                                                 left join public.issue_entitlement ie on permanent_title.pt_ie_fk = ie.ie_id
                                               left join refdata_value rv2 on ie.ie_status_rv_fk = rv2.rdv_id
-                                    where pt_subscription_fk in ( select sub_id
-                                                                  from subscription_package
-                                                                           left join package p on p.pkg_id = subscription_package.sp_pkg_fk
-                                                                           left join subscription s on subscription_package.sp_sub_fk = s.sub_id
-                                                                  where pkg_gokb_id = :wekbUuid and sub_id = :subId)'''
+                                    where pt_subscription_fk = :subId'''
                 if(status){
                     query = query + ''' and pt_tipp_fk in ( 
                                                     SELECT tipp_id FROM title_instance_package_platform
                                                     left join package pkg2 on pkg2.pkg_id = title_instance_package_platform.tipp_pkg_fk 
-                                                    where pkg2.pkg_gokb_id = pkg_gokb_id
+                                                    where pkg2.pkg_gokb_id = :wekbUuid
                                                     and tipp_status_rv_fk = (select rdv_id from refdata_value join refdata_category on rdv_owner = rdc_id where rdv_value = :status and rdc_description = 'tipp.status')) '''
                     queryMap.status = status
                 }
@@ -557,6 +553,72 @@ class LaserService {
         }
 
         linkedSubs
+
+    }
+
+    def permanentTitlesInLaser(String status) {
+        Sql sql
+        List permanentTitles
+        try {
+            Map config = getConfig()
+
+            if(config.laserDBUrl && config.laserDBUser && config.laserDBPassword) {
+                sql = Sql.newInstance(config.laserDBUrl, config.laserDBUser, config.laserDBPassword, config.laserDBDriver)
+
+                Map queryMap = [wekbUuid: sql.getConnection().createArrayOf('varchar', Package.findAll().uuid.toArray()), status: status]
+                String orderBy = ' order by pkg_name, tipp_name, rv.rdv_value_en '
+                String query = '''select tipp_name,
+                                   rv.rdv_value_en as tipp_status,
+                                   tipp_id,
+                                   tipp_gokb_id,
+                                   pt_ie_fk,
+                                   pkg_name,
+                                   rv2.rdv_value_en as ie_status,
+                                   sub_name,
+                                   sub_id,
+                                   rv3.rdv_value_en as status,
+                                   sub_start_date,
+                                   sub_end_date,
+                                   sub_has_perpetual_access,
+                                   rv4.rdv_value_en as holding_selection,
+                                   rv5.rdv_value_en as sub_typ
+                       
+                                    from  permanent_title
+                                              left join public.title_instance_package_platform tipp on tipp.tipp_id = permanent_title.pt_tipp_fk
+                                              left join refdata_value rv on tipp.tipp_status_rv_fk = rv.rdv_id
+                                              left join public.issue_entitlement ie on permanent_title.pt_ie_fk = ie.ie_id
+                                              left join refdata_value rv2 on ie.ie_status_rv_fk = rv2.rdv_id
+                                              left join package pkg on pkg.pkg_id = tipp.tipp_pkg_fk
+                                              left join subscription s on pt_subscription_fk = s.sub_id
+                                                left join refdata_value rv3 on s.sub_status_rv_fk = rv3.rdv_id
+                                                left join refdata_value rv4 on s.sub_holding_selection_rv_fk = rv4.rdv_id
+                                                left join refdata_value rv5 on s.sub_type_rv_fk = rv5.rdv_id
+                                    where pt_tipp_fk in ( 
+                                                    SELECT tipp_id FROM title_instance_package_platform
+                                                    left join package pkg2 on pkg2.pkg_id = title_instance_package_platform.tipp_pkg_fk 
+                                                    where pkg2.pkg_gokb_id = any(:wekbUuid)
+                                                    and tipp_status_rv_fk = (select rdv_id from refdata_value join refdata_category on rdv_owner = rdc_id where rdv_value = :status and rdc_description = 'tipp.status'))'''
+
+                query = query + orderBy
+
+                permanentTitles = sql.rows(query, queryMap)
+
+                sql.close()
+            }
+        }catch (Exception ex){
+            log.error("Problem by permanentTitlesInLaser:", ex)
+        }
+        finally {
+            try {
+                if(sql)
+                    sql.close()
+            }
+            catch (Exception e) {
+                log.error("Problem by Close SQL Client:", e)
+            }
+        }
+
+        permanentTitles
 
     }
 

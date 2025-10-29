@@ -1,9 +1,8 @@
-<%@ page import="wekb.TitleInstancePackagePlatform" %>
 <!DOCTYPE html>
 <html>
 <head>
     <meta name="layout" content="wekb"/>
-    <title>we:kb : Linked Subs in Laser</title>
+    <title>we:kb : Permanent Titles in Laser [Status: ${status}]</title>
 </head>
 
 <body>
@@ -11,61 +10,15 @@
 <wekb:serviceInjection/>
 
 <g:set var="laserService" bean="${wekb.LaserService}"/>
-<g:set var="orgUrl" value="${laserService.getLaserOrgURL()}"/>
 <g:set var="subPackageUrl" value="${laserService.getLaserSubPackageURL()}"/>
 <g:set var="ieUrl" value="${laserService.getLaserIeURL()}"/>
 <g:set var="tippUrl" value="${laserService.getLaserTippURL()}"/>
 
-<h1 class="ui header">Linked Subs in Laser for Package <g:link controller="resource" action="show"
-                                                               id="${pkg.class.name + ':' + pkg.id}">${pkg.name}</g:link> (${totalCount}) <g:if
-        test="${status}">[PT in LASER (${status})]</g:if></h1>
+<h1 class="ui header">Permanent Titles in Laser (${totalCount}) [Status: ${status}]</h1>
 
-<g:render template="/templates/laserInfosForPkg" model="${[pkg: pkg]}"/>
-
-<table class="ui selectable striped sortable celled table">
-    <thead>
-    <tr>
-        <th>Org</th>
-        <th>Subscription</th>
-        <th>Status</th>
-        <th>Startdate</th>
-        <th>Endate</th>
-        <th>Perpetual Access</th>
-        <th>Holding Selection</th>
-        <th>Typ</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-        <td>
-            <a href="${orgUrl + '/' + subInfo.org_id}" target="_blank">${subInfo.org_name}</a>
-        </td>
-        <td>
-            <a href="${subPackageUrl + '/' + subInfo.sub_id}" target="_blank">${subInfo.sub_name}</a>
-        </td>
-        <td>
-            ${subInfo.status}
-        </td>
-        <td>
-            ${subInfo.sub_start_date}
-        </td>
-        <td>
-            ${subInfo.sub_end_date}
-        </td>
-        <td>
-            ${subInfo.sub_has_perpetual_access}
-        </td>
-        <td>
-            ${subInfo.holding_selection}
-        </td>
-        <td>
-            ${subInfo.sub_typ}
-        </td>
-    </tr>
-    </tbody>
-</table>
 
 <div class="container">
+
     <g:form action="${actionName}" controller="${controllerName}" params="${params}">
         <div class="ui toggle checkbox">
             <input type="checkbox" name="withWekbTipp" ${params.withWekbTipp ? 'checked' : ''} onchange="this.form.submit()">
@@ -81,9 +34,17 @@
                 <th>Title wekb</th>
                 <th>Tipp Status wekb</th>
             </g:if>
+            <th>Package</th>
             <th>Title in Laser</th>
             <th>Tipp Status</th>
             <th>IE Status</th>
+            <th>Subscription</th>
+            <th>Sub Status</th>
+            <th>Sub Startdate</th>
+            <th>Sub Endate</th>
+            <th>Sub Perpetual Access</th>
+            <th>Sub Holding Selection</th>
+            <th>Sub Typ</th>
         </tr>
         </thead>
         <tbody>
@@ -101,6 +62,9 @@
                     </td>
                 </g:if>
                 <td>
+                    ${ptInfo.pkg_name}
+                </td>
+                <td>
                     <a href="${tippUrl + '/' + ptInfo.laser_tipp_id}" target="_blank">${ptInfo.laser_tipp_name}</a>
                 </td>
                 <td>
@@ -109,14 +73,35 @@
                 <td>
                     <a href="${ieUrl + '/' + ptInfo.laser_pt_ie_fk}" target="_blank">${ptInfo.laser_ie_status}</a>
                 </td>
+                <td>
+                    <a href="${subPackageUrl+'/'+ptInfo.sub_id}" target="_blank">${ptInfo.sub_name}</a>
+                </td>
+                <td>
+                    ${ptInfo.status}
+                </td>
+                <td>
+                    ${ptInfo.sub_start_date}
+                </td>
+                <td>
+                    ${ptInfo.sub_end_date}
+                </td>
+                <td>
+                    ${ptInfo.sub_has_perpetual_access}
+                </td>
+                <td>
+                    ${ptInfo.holding_selection}
+                </td>
+                <td>
+                    ${ptInfo.sub_typ}
+                </td>
             </tr>
         </g:each>
         </tbody>
     </table>
 
+
     <semui:paginateNew controller="${controllerName}" action="${actionName}" id="${params.id}" params="${params}"
                        max="${params.max}" total="${totalCount}"/>
-
 </div>
 
 </body>

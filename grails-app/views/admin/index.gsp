@@ -13,6 +13,7 @@
     <div class="row">
         <div class="column">
             <h2 class="ui header">Admin Search</h2>
+
             <div class="ui divided large relaxed list">
                 <g:link class="item" controller="search" action="componentSearch"
                         params="[qbe: 'g:updatePackageInfos']">Update Package Infos</g:link>
@@ -30,8 +31,10 @@
                         params="[qbe: 'g:refdataValues']">Refdata Values</g:link>
             </div>
         </div>
+
         <div class="column">
             <h2 class="ui header">Admin Create</h2>
+
             <div class="ui divided large relaxed list">
                 <g:link class="item" controller="create" action="index"
                         params="[tmpl: 'wekb.IdentifierNamespace']">Identifier Namespace</g:link>
@@ -49,8 +52,10 @@
                         params="[tmpl: 'wekb.auth.User']">User</g:link>
             </div>
         </div>
+
         <div class="column">
             <h2 class="ui header">Admin Jobs</h2>
+
             <div class="ui divided large relaxed list">
                 <g:link class="item" controller="admin" action="updateTextIndexes"
                         onclick="return confirm('Are you sure?')">Update Free Text Indexes</g:link>
@@ -72,12 +77,13 @@
     </div>
 </div>
 
-<br />
+<br/>
 
 <div class="ui equal width grid">
     <div class="row">
         <div class="column">
             <h2 class="ui header">Admin Infos</h2>
+
             <div class="ui divided large relaxed list">
                 <g:link class="item" controller="admin" action="systemThreads">Show Threads</g:link>
                 <g:link class="item" controller="admin" action="autoUpdatesFails">Automatic update fails</g:link>
@@ -104,22 +110,49 @@
                 <g:link class="item" controller="admin" action="packageDiff">Show Packages in Laser (Not in WEKB)</g:link>
             </div>
         </div>
+    </div>
+</div>
+
+<div class="ui equal width grid">
+    <div class="row">
+        <div class="column">
+            <h2 class="ui header">Laser Permanent Titles with Package Infos</h2>
+
+            <div class="ui divided large relaxed list">
+                <g:link class="item" controller="admin" action="linkedPackageWithPermanentTitlesInLaser"
+                        params="[status: 'Current']">Show linked Package with Permanent Titles in Laser (Current)</g:link>
+                <g:link class="item" controller="admin" action="linkedPackageWithPermanentTitlesInLaser"
+                        params="[status: 'Retired']">Show linked Package with Permanent Titles in Laser (Retired)</g:link>
+                <g:link class="item" controller="admin" action="linkedPackageWithPermanentTitlesInLaser"
+                        params="[status: 'Expected']">Show linked Package with Permanent Titles in Laser (Expected)</g:link>
+                <g:link class="item" controller="admin" action="linkedPackageWithPermanentTitlesInLaser"
+                        params="[status: 'Deleted']">Show linked Package with Permanent Titles in Laser (Deleted)</g:link>
+                <g:link class="item" controller="admin" action="linkedPackageWithPermanentTitlesInLaser"
+                        params="[status: 'Removed']">Show linked Package with Permanent Titles in Laser (Removed)</g:link>
+            </div>
+        </div>
 
         <div class="column">
             <h2 class="ui header">Laser Permanent Titles Infos</h2>
 
             <div class="ui divided large relaxed list">
-                <g:link class="item" controller="admin" action="linkedPackageWithPermanentTitlesInLaser" params="[status: 'Current']">Show linked Package with Permanent Titles in Laser (Current)</g:link>
-                <g:link class="item" controller="admin" action="linkedPackageWithPermanentTitlesInLaser" params="[status: 'Retired']">Show linked Package with Permanent Titles in Laser (Retired)</g:link>
-                <g:link class="item" controller="admin" action="linkedPackageWithPermanentTitlesInLaser" params="[status: 'Expected']">Show linked Package with Permanent Titles in Laser (Expected)</g:link>
-                <g:link class="item" controller="admin" action="linkedPackageWithPermanentTitlesInLaser" params="[status: 'Deleted']">Show linked Package with Permanent Titles in Laser (Deleted)</g:link>
-                <g:link class="item" controller="admin" action="linkedPackageWithPermanentTitlesInLaser" params="[status: 'Removed']">Show linked Package with Permanent Titles in Laser (Removed)</g:link>
+                <g:link class="item" controller="admin" action="permanentTitlesInLaser"
+                        params="[status: 'Current']">Show Permanent Titles in Laser (Current)</g:link>
+                <g:link class="item" controller="admin" action="permanentTitlesInLaser"
+                        params="[status: 'Retired']">Show Permanent Titles in Laser (Retired)</g:link>
+                <g:link class="item" controller="admin" action="permanentTitlesInLaser"
+                        params="[status: 'Expected']">Show Permanent Titles in Laser (Expected)</g:link>
+                <g:link class="item" controller="admin" action="permanentTitlesInLaser"
+                        params="[status: 'Deleted']">Show Permanent Titles in Laser (Deleted)</g:link>
+                <g:link class="item" controller="admin" action="permanentTitlesInLaser"
+                        params="[status: 'Removed']">Show Permanent Titles in Laser (Removed)</g:link>
             </div>
         </div>
     </div>
 </div>
 
 <br>
+
 <div class="ui segment">
     <h2 class="ui header">Components Infos</h2>
 
@@ -150,11 +183,11 @@
 <br>
 
 <div class="ui segment">
-        <h2 class="ui header">
-            Application Info
-        </h2>
+    <h2 class="ui header">
+        Application Info
+    </h2>
     <table class="ui selectable striped sortable celled table">
-        <tr><td>App profile </td><td>${grailsApplication.config.getProperty('grails.profile')}</td></tr>
+        <tr><td>App profile</td><td>${grailsApplication.config.getProperty('grails.profile')}</td></tr>
         <tr><td>Git Branch</td><td><g:meta name="build.git.branch"/></td></tr>
         <tr><td>Git Commit</td><td><g:meta name="build.git.revision"/></td></tr>
         <tr><td>App version</td><td><g:meta name="info.app.version"/></td></tr>
@@ -172,9 +205,9 @@
 
 <div class="ui segment">
     <h2 class="ui header">
-            Database
-        </h2>
-        <table class="ui selectable striped sortable celled table">
+        Database
+    </h2>
+    <table class="ui selectable striped sortable celled table">
         <tbody>
         <tr><td>DBM version</td><td>${dbmVersion[0]} : ${dbmVersion[1]} -------> ${wekb.utils.DateUtils.getSDF_NoZ().format(dbmVersion[2])}</td></tr>
         <tr><td>DBM updateOnStart</td><td>${grailsApplication.config.getProperty('grails.plugin.databasemigration.updateOnStart', Boolean)}</td>
@@ -205,7 +238,7 @@
     <table class="ui selectable striped sortable celled table">
         <tbody>
         <g:each var="plugin" in="${applicationContext.getBean('pluginManager').allPlugins}">
-            <tr><td>${plugin.name} </td><td>${plugin.version}</td></tr>
+            <tr><td>${plugin.name}</td><td>${plugin.version}</td></tr>
         </g:each>
         <tbody>
     </table>

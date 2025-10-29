@@ -530,6 +530,10 @@ class AdminController {
         log.debug("linkedPTOverSubInLaser::${params}")
         def result = [:]
 
+        params.offset = params.offset ?: 0
+        params.max = params.max ?: 250
+
+
         result.pkg = Package.get(params.id)
 
         List linkedPTs = []
@@ -538,22 +542,29 @@ class AdminController {
         result.linkedPTs = []
 
         linkedPTs = laserService.linkedPTOverSubInLaser(result.pkg.uuid, result.status, Long.parseLong(params.subId))
+
+        result.totalCount = linkedPTs.size()
+
+        linkedPTs = linkedPTs.drop(params.offset).take(params.max)
+
         Sql sql = new Sql(Holders.grailsApplication.mainContext.getBean('dataSource') as DataSource)
         try {
             linkedPTs.each {
                 Map infos = [laser_tipp_name: it.tipp_name, laser_tipp_status: it.tipp_status, laser_ie_status: it.ie_status, laser_tipp_id: it.tipp_id, laser_pt_ie_fk: it.pt_ie_fk]
-                def principalRows = sql.rows('''select tipp_name, 
+
+                if(params.withWekbTipp) {
+                    def principalRows = sql.rows('''select tipp_name, 
                                                     rv.rdv_value_en as tipp_status,
                                                     tipp_id
-                                    from  title_instance_package_platform tipp
-                                              left join refdata_value rv on tipp.tipp_status_rv_fk = rv.rdv_id
-                                    where tipp_uuid = :uuid''', [uuid: it.tipp_gokb_id])[0]
+                                                    from  title_instance_package_platform tipp
+                                                    left join refdata_value rv on tipp.tipp_status_rv_fk = rv.rdv_id
+                                                    where tipp_uuid = :uuid''', [uuid: it.tipp_gokb_id])[0]
 
-                if(principalRows)
-                {
-                    infos.id =  principalRows[2]
-                    infos.name = principalRows[0]
-                    infos.status = principalRows[1]
+                    if (principalRows) {
+                        infos.id = principalRows[2]
+                        infos.name = principalRows[0]
+                        infos.status = principalRows[1]
+                    }
                 }
 
                 result.linkedPTs << infos
@@ -572,11 +583,82 @@ class AdminController {
             }
         }
 
-
-
         result.subInfo = laserService.subInfosFromLaser(Long.parseLong(params.subId))
 
+        result
+    }
+
+    def permanentTitlesInLaser() {
+        log.debug("permanentTitlesInLaser::${params}")
+        def result = [:]
+
+        params.offset = params.offset ?: 0
+        params.max = params.max ?: 250
+
+        result.pkg = Package.get(params.id)
+
+        List linkedPTs = []
+
+        result.status = params.status
+        result.linkedPTs = []
+
+        linkedPTs = laserService.permanentTitlesInLaser(result.status)
+
         result.totalCount = linkedPTs.size()
+
+        linkedPTs = linkedPTs.drop(params.offset).take(params.max)
+
+
+        Sql sql = new Sql(Holders.grailsApplication.mainContext.getBean('dataSource') as DataSource)
+
+        try {
+            linkedPTs.each {
+                Map infos = [laser_tipp_name: it.tipp_name,
+                             laser_tipp_status: it.tipp_status,
+                             laser_ie_status: it.ie_status,
+                             laser_tipp_id: it.tipp_id,
+                             laser_pt_ie_fk: it.pt_ie_fk,
+                             pkg_name: it.pkg_name,
+                             sub_id: it.sub_id,
+                             sub_name: it.sub_name,
+                             status: it.status,
+                             sub_start_date: it.sub_start_date,
+                             sub_end_date: it.sub_end_date,
+                             sub_has_perpetual_access: it.sub_has_perpetual_access,
+                             holding_selection: it.holding_selection,
+                             sub_typ: it.sub_typ]
+
+                if(params.withWekbTipp) {
+                    def principalRows = sql.rows('''select tipp_name,
+                                                    rv.rdv_value_en as tipp_status,
+                                                    tipp_id
+                                                    from  title_instance_package_platform tipp
+                                                    left join refdata_value rv on tipp.tipp_status_rv_fk = rv.rdv_id
+                                                    where tipp_uuid = :uuid''', [uuid: it.tipp_gokb_id])[0]
+
+                    if (principalRows) {
+                        infos.id = principalRows[2]
+                        infos.name = principalRows[0]
+                        infos.status = principalRows[1]
+                    }
+                }
+
+                result.linkedPTs << infos
+            }
+            sql.close()
+        }catch (Exception ex){
+            log.error("Problem by permanentTitlesInLaser:", ex)
+        }
+        finally {
+            try {
+                if(sql)
+                    sql.close()
+            }
+            catch (Exception e) {
+                log.error("Problem by Close SQL Client:", e)
+            }
+        }
+        log.debug("x")
 
         result
     }
