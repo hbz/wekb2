@@ -15,9 +15,6 @@ class UrlMappings {
         // for no google indexing
         "/robots.txt"(controller: 'public', action: 'robots')
 
-        //After ygor remove redirect to ygor info view
-        "/ygor"(controller: 'public', action: 'ygor')
-
 
         // Server errors
         "400"(controller: 'error', action: 'badRequest')

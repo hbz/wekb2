@@ -1968,6 +1968,7 @@ class Api2Service {
                 result.dateCreatedDisplay = DateUtils.getSDF_ISO().format(object.dateCreated)
 
                 result.homepage = object.homepage
+                result.description = object.description
 
                 result.webShopOrders = object.webShopOrders ? RDStore.YN_YES.value : RDStore.YN_NO.value
                 result.xmlOrders = object.xmlOrders ? RDStore.YN_YES.value : RDStore.YN_NO.value
@@ -2036,6 +2037,12 @@ class Api2Service {
                 result.electronicDeliveryDelays = []
                 object.electronicDeliveryDelays.each { VendorElectronicDeliveryDelay vendorElectronicDeliveryDelay ->
                     result.electronicDeliveryDelays.add([electronicDeliveryDelay: vendorElectronicDeliveryDelay.electronicDeliveryDelay.value])
+                }
+
+                result.altname = []
+
+                object.variantNames.each { vn ->
+                    result.altname.add(vn.variantName)
                 }
             }
 

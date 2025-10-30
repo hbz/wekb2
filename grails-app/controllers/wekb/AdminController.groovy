@@ -1,6 +1,8 @@
 package wekb
 
-
+import grails.util.Holders
+import groovy.sql.GroovyRowResult
+import groovy.sql.Sql
 import wekb.ConcurrencyManagerService.Job
 import wekb.auth.User
 import wekb.helper.RCConstants
@@ -17,6 +19,7 @@ import org.hibernate.SessionFactory
 import org.springframework.security.access.annotation.Secured
 import wekb.system.FTControl
 
+import javax.sql.DataSource
 import java.text.SimpleDateFormat
 import java.util.concurrent.CancellationException
 import java.util.concurrent.ExecutorService
@@ -37,6 +40,7 @@ class AdminController {
   FtpConnectService ftpConnectService
   DeletionService deletionService
   SearchService searchService
+  LaserService laserService
 
 
   def systemThreads() {
@@ -361,46 +365,332 @@ class AdminController {
     result
   }
 
+  def findPackagesWithoutTitle_ID() {
+    log.debug("findPackagesWithoutTitle_ID::${params}")
+    def result = [:]
+
+    List pkgs = []
+
+    Package.findAllByStatusInList([RDStore.KBC_STATUS_CURRENT, RDStore.KBC_STATUS_RETIRED, RDStore.KBC_STATUS_EXPECTED], [sort: 'name']).eachWithIndex { Package aPackage, int index ->
+      Integer tippsWithoutTitleIDCount = aPackage.getTippsWithoutTitleIDCount()
+
+      if(tippsWithoutTitleIDCount > 0 ){
+        pkgs << [pkg: aPackage, tippsWithoutTitleIDCount: tippsWithoutTitleIDCount]
+      }
+    }
+
+    //result.offset = params.offset ? Integer.parseInt(params.offset) : 0
+    //result.max = params.max ? Integer.parseInt(params.max) : 250
+
+    result.totalCount = pkgs.size()
+
+   if (params.sort == 'tippsWithoutTitleIDCount') {
+      result.pkgs = pkgs.sort {
+        it.tippsWithoutTitleIDCount
+      }
+      result.pkgs = result.pkgs.reverse()
+    }else if (params.sort == 'curatoryGroups') {
+     result.pkgs = pkgs.sort { it.pkg.curatoryGroups.curatoryGroup.name[0]}
+   } else {
+      result.pkgs = pkgs
+    }
+
+    //result.pkgs = result.pkgs.drop((int) result.offset).take((int) result.max)
+    result
+  }
+
+
   def findTippDuplicatesByPkg() {
     log.debug("findTippDuplicates::${params}")
     def result = [:]
 
     Package aPackage = Package.findByUuid(params.id)
 
-    List<TitleInstancePackagePlatform> tippsDuplicatesByName = aPackage.findTippDuplicatesByName()
-    List<TitleInstancePackagePlatform> tippsDuplicatesByUrl = aPackage.findTippDuplicatesByURL()
+    //List<TitleInstancePackagePlatform> tippsDuplicatesByName = aPackage.findTippDuplicatesByName()
+    //List<TitleInstancePackagePlatform> tippsDuplicatesByUrl = aPackage.findTippDuplicatesByURL()
     List<TitleInstancePackagePlatform> tippsDuplicatesByTitleID = aPackage.findTippDuplicatesByTitleID()
 
-    result.offsetByName = params.papaginateByName ? Integer.parseInt(params.offset) : 0
-    result.maxByName = params.papaginateByName ? Integer.parseInt(params.max) : 100
+    //result.offsetByName = params.papaginateByName ? Integer.parseInt(params.offset) : 0
+    //result.maxByName = params.papaginateByName ? Integer.parseInt(params.max) : 100
 
-    result.offsetByUrl = params.papaginateByUrl ? Integer.parseInt(params.offset) : 0
-    result.maxByUrl = params.papaginateByUrl ? Integer.parseInt(params.max) : 100
+    //result.offsetByUrl = params.papaginateByUrl ? Integer.parseInt(params.offset) : 0
+    //result.maxByUrl = params.papaginateByUrl ? Integer.parseInt(params.max) : 100
 
     result.offsetByTitleID = params.papaginateByTitleID ? Integer.parseInt(params.offset) : 0
     result.maxByTitleID = params.papaginateByTitleID ? Integer.parseInt(params.max) : 100
 
-    result.totalCountByName = tippsDuplicatesByName.size()
-    result.totalCountByUrl = tippsDuplicatesByUrl.size()
+    //result.totalCountByName = tippsDuplicatesByName.size()
+    //result.totalCountByUrl = tippsDuplicatesByUrl.size()
     result.totalCountByTitleID = tippsDuplicatesByTitleID.size()
 
-    result.tippsDuplicatesByName = tippsDuplicatesByName.drop((int) result.offsetByName).take((int) result.maxByName)
-    result.tippsDuplicatesByUrl = tippsDuplicatesByUrl.drop((int) result.offsetByUrl).take((int) result.maxByUrl)
+    //result.tippsDuplicatesByName = tippsDuplicatesByName.drop((int) result.offsetByName).take((int) result.maxByName)
+    //result.tippsDuplicatesByUrl = tippsDuplicatesByUrl.drop((int) result.offsetByUrl).take((int) result.maxByUrl)
     result.tippsDuplicatesByTitleID = tippsDuplicatesByTitleID.drop((int) result.offsetByTitleID).take((int) result.maxByTitleID)
+
+    result.pkg = aPackage
 
     result
   }
+
+  def findTippWithoutTitleIDByPkg() {
+    log.debug("findTippWithoutTitleIDByPkg::${params}")
+    def result = [:]
+
+    Package aPackage = Package.findByUuid(params.id)
+
+    List<TitleInstancePackagePlatform> tippsByWithoutTitleID = aPackage.findTippByWithoutTitleID()
+
+
+    result.offsetByWithoutTitleID = params.papaginateByWithoutTitleID ? Integer.parseInt(params.offset) : 0
+    result.maxByWithoutTitleID = params.papaginateByWithoutTitleID ? Integer.parseInt(params.max) : 100
+
+    result.totalCountByWithoutTitleID = tippsByWithoutTitleID.size()
+
+    result.tippsByWithoutTitleID = tippsByWithoutTitleID.drop((int) result.offsetByWithoutTitleID).take((int) result.maxByWithoutTitleID)
+
+    result.pkg = aPackage
+
+    result
+  }
+
+  def notLinkedPackageInLaser() {
+    log.debug("notLinkedPackageInLaser::${params}")
+    def result = [:]
+
+    List pkgs = laserService.packageNotLinkedInLaser()
+
+    if (params.sort == 'curatoryGroups') {
+      pkgs = pkgs.sort { it.pkg.curatoryGroups.curatoryGroup.name[0]}
+    }
+
+    result.totalCount = pkgs.size()
+    result.pkgs = pkgs
+    result
+  }
+
+  def linkedPackageInLaser() {
+    log.debug("linkedPackageInLaser::${params}")
+    def result = [:]
+      result.pkgs = []
+    List pkgs = laserService.packageLinkedInLaser()
+
+      pkgs.each {
+          Package pkg = Package.findByUuid(it.pkg_gokb_id)
+          result.pkgs << [id: pkg.id, name: pkg.name, status: pkg.status, provider: pkg.provider, nominalPlatform: pkg.nominalPlatform, curatoryGroups: pkg.curatoryGroups, kbartSource: pkg.kbartSource, linkedPackageCount: it.linkedPackageCount ]
+      }
+
+    if (params.sort == 'curatoryGroups') {
+        result.pkgs = result.pkgs.sort { it.curatoryGroups.curatoryGroup.name[0]}
+    }else{
+        result.pkgs = result.pkgs.sort { it.name}
+    }
+
+
+    result.totalCount = result.pkgs.size()
+    result
+  }
+
+    def linkedPackageWithPermanentTitlesInLaser() {
+        log.debug("linkedPackageWithPermanentTitlesInLaser::${params}")
+        def result = [:]
+
+        result.status = params.status ?: 'Current'
+        result.pkgs = laserService.linkedPackageWithPermanentTitlesInLaser(result.status)
+        result.totalCount = result.pkgs.size()
+
+        result
+    }
+
+    def linkedSubsInLaser() {
+        log.debug("linkedSubsInLaser::${params}")
+        def result = [:]
+
+        result.pkg = Package.get(params.id)
+
+        List linkedSubs = []
+
+        result.status = params.status
+
+        linkedSubs = laserService.linkedSubsInLaser(result.pkg.uuid, result.status)
+
+        if(params.perpetualAccess && params.boolean('perpetualAccess') == true){
+            linkedSubs = laserService.linkedSubsInLaser(result.pkg.uuid, result.status, 'true')
+        }
+
+        if(params.perpetualAccess && params.boolean('perpetualAccess') == false){
+            linkedSubs = laserService.linkedSubsInLaser(result.pkg.uuid, result.status, 'false')
+        }
+
+        result.totalCount = linkedSubs.size()
+        result.linkedSubs = linkedSubs
+        result
+    }
+
+    def linkedPTOverSubInLaser() {
+        log.debug("linkedPTOverSubInLaser::${params}")
+        def result = [:]
+
+        params.offset = params.offset ?: 0
+        params.max = params.max ?: 250
+
+
+        result.pkg = Package.get(params.id)
+
+        List linkedPTs = []
+
+        result.status = params.status
+        result.linkedPTs = []
+
+        linkedPTs = laserService.linkedPTOverSubInLaser(result.pkg.uuid, result.status, Long.parseLong(params.subId))
+
+        result.totalCount = linkedPTs.size()
+
+        linkedPTs = linkedPTs.drop(params.offset).take(params.max)
+
+        Sql sql = new Sql(Holders.grailsApplication.mainContext.getBean('dataSource') as DataSource)
+        try {
+            linkedPTs.each {
+                Map infos = [laser_tipp_name: it.tipp_name, laser_tipp_status: it.tipp_status, laser_ie_status: it.ie_status, laser_tipp_id: it.tipp_id, laser_pt_ie_fk: it.pt_ie_fk]
+
+                if(params.withWekbTipp) {
+                    def principalRows = sql.rows('''select tipp_name, 
+                                                    rv.rdv_value_en as tipp_status,
+                                                    tipp_id
+                                                    from  title_instance_package_platform tipp
+                                                    left join refdata_value rv on tipp.tipp_status_rv_fk = rv.rdv_id
+                                                    where tipp_uuid = :uuid''', [uuid: it.tipp_gokb_id])[0]
+
+                    if (principalRows) {
+                        infos.id = principalRows[2]
+                        infos.name = principalRows[0]
+                        infos.status = principalRows[1]
+                    }
+                }
+
+                result.linkedPTs << infos
+            }
+                sql.close()
+        }catch (Exception ex){
+            log.error("Problem by linkedPTOverSubInLaser:", ex)
+        }
+        finally {
+            try {
+                if(sql)
+                    sql.close()
+            }
+            catch (Exception e) {
+                log.error("Problem by Close SQL Client:", e)
+            }
+        }
+
+        result.subInfo = laserService.subInfosFromLaser(Long.parseLong(params.subId))
+
+        result
+    }
+
+    def permanentTitlesInLaser() {
+        log.debug("permanentTitlesInLaser::${params}")
+        def result = [:]
+
+        params.offset = params.offset ?: 0
+        params.max = params.max ?: 250
+
+        result.pkg = Package.get(params.id)
+
+        List linkedPTs = []
+
+        result.status = params.status
+        result.linkedPTs = []
+
+        linkedPTs = laserService.permanentTitlesInLaser(result.status)
+
+        result.totalCount = linkedPTs.size()
+
+        linkedPTs = linkedPTs.drop(params.offset).take(params.max)
+
+
+        Sql sql = new Sql(Holders.grailsApplication.mainContext.getBean('dataSource') as DataSource)
+
+        try {
+            linkedPTs.each {
+                Map infos = [laser_tipp_name: it.tipp_name,
+                             laser_tipp_status: it.tipp_status,
+                             laser_ie_status: it.ie_status,
+                             laser_tipp_id: it.tipp_id,
+                             laser_pt_ie_fk: it.pt_ie_fk,
+                             pkg_name: it.pkg_name,
+                             sub_id: it.sub_id,
+                             sub_name: it.sub_name,
+                             status: it.status,
+                             sub_start_date: it.sub_start_date,
+                             sub_end_date: it.sub_end_date,
+                             sub_has_perpetual_access: it.sub_has_perpetual_access,
+                             holding_selection: it.holding_selection,
+                             sub_typ: it.sub_typ]
+
+                if(params.withWekbTipp) {
+                    def principalRows = sql.rows('''select tipp_name,
+                                                    rv.rdv_value_en as tipp_status,
+                                                    tipp_id
+                                                    from  title_instance_package_platform tipp
+                                                    left join refdata_value rv on tipp.tipp_status_rv_fk = rv.rdv_id
+                                                    where tipp_uuid = :uuid''', [uuid: it.tipp_gokb_id])[0]
+
+                    if (principalRows) {
+                        infos.id = principalRows[2]
+                        infos.name = principalRows[0]
+                        infos.status = principalRows[1]
+                    }
+                }
+
+                result.linkedPTs << infos
+            }
+            sql.close()
+        }catch (Exception ex){
+            log.error("Problem by permanentTitlesInLaser:", ex)
+        }
+        finally {
+            try {
+                if(sql)
+                    sql.close()
+            }
+            catch (Exception e) {
+                log.error("Problem by Close SQL Client:", e)
+            }
+        }
+        log.debug("x")
+
+        result
+    }
+
+  def tippsWekbVsLaser() {
+    log.debug("tippsWekbVsLaser::${params}")
+    def result = [:]
+
+    List<String> packageUUIDList = laserService.packageLinkedInLaser().pkg_gokb_id
+
+    List pkgs = Package.findAllByUuidInList(packageUUIDList)
+
+    if (params.sort == 'curatoryGroups') {
+      pkgs = pkgs.sort { it.pkg.curatoryGroups.curatoryGroup.name[0]}
+    }
+
+    result.totalCount = pkgs.size()
+    result.pkgs = pkgs
+    result
+  }
+
+
 
   def findPackagesWithTippDuplicates() {
     log.debug("findPackagesWithTippDuplicates::${params}")
     def result = [:]
 
     List pkgs = []
-    List<KbartSource> sourceList = KbartSource.findAllByAutomaticUpdates(true)
 
     Package.findAllByStatus(RDStore.KBC_STATUS_CURRENT, [sort: 'name']).eachWithIndex { Package aPackage, int index ->
-      Integer tippDuplicatesByNameCount = aPackage.getTippDuplicatesByNameCount()
-      Integer tippDuplicatesByUrlCount = aPackage.getTippDuplicatesByURLCount()
+      Integer tippDuplicatesByNameCount = 0  //aPackage.getTippDuplicatesByNameCount()
+      Integer tippDuplicatesByUrlCount = 0 //aPackage.getTippDuplicatesByURLCount()
       Integer tippDuplicatesByTitleIDCount = aPackage.getTippDuplicatesByTitleIDCount()
       //log.debug("Package ${aPackage.name} : ${index}")
 
@@ -566,10 +856,10 @@ class AdminController {
 
     result.componentsInfos = []
 
-    def components = ["DeletedKBComponent", "CuratoryGroup","KbartSource", "Org", "Package", "Platform", "TitleInstancePackagePlatform"]
+    def components = ["DeletedKBComponent", "CuratoryGroup","KbartSource", "Org", "Package", "Platform", "TitleInstancePackagePlatform", "Vendor"]
     components.each{ def component ->
       Map info = [:]
-      info.name = component
+      info.name = component == 'Org' ? 'Provider' : component
 
 
       String query = "select count(*) from ${component}"
@@ -577,8 +867,22 @@ class AdminController {
       info.countDeletedInDB = FTControl.executeQuery(query+ " where status = :status", [status: RDStore.KBC_STATUS_DELETED])[0]
       info.countRemovedInDB = FTControl.executeQuery(query+ " where status = :status", [status: RDStore.KBC_STATUS_REMOVED])[0]
 
+      if(component == 'Package'){
+          info.countLaser = laserService.laserPackagesCount()
+      }else if(component == 'Org'){
+        info.countLaser = laserService.laserProviderCount()
+      }else if(component == 'Platform'){
+        info.countLaser = laserService.laserPlaformCount()
+      }else if(component == 'TitleInstancePackagePlatform'){
+        info.countLaser = laserService.laserTippsCount()
+      }else if(component == 'Vendor'){
+        info.countLaser = laserService.laserVendorCount()
+      }
+
       result.componentsInfos << info
     }
+
+
 
     result
 
@@ -803,5 +1107,29 @@ class AdminController {
 
     searchResult.result
   }
+
+    def platformDiff() {
+        log.debug("platformDiff::${params}")
+        def result = [:]
+
+        List<Map> platformDiff = laserService.platformDiff()
+
+
+        result.totalCount = platformDiff.size()
+        result.platformDiff = platformDiff
+        result
+    }
+
+    def packageDiff() {
+        log.debug("packageDiff::${params}")
+        def result = [:]
+
+        List<Map> packageDiff = laserService.packageDiff()
+
+
+        result.totalCount = packageDiff.size()
+        result.packageDiff = packageDiff
+        result
+    }
 
 }

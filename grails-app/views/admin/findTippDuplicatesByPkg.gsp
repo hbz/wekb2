@@ -13,25 +13,30 @@
 <semui:flashMessage data="${flash}"/>
 
 
-<h1 class="ui header">Tipp Duplicates</h1>
+<h1 class="ui header">Tipp Duplicates for
+
+<g:link controller="resource" action="show" id="${pkg.getOID()}">
+    ${pkg.name}
+</g:link>
+</h1>
 
 <div class="container">
 
     <ul id="tabs" class="nav nav-tabs">
-        <li role="presentation" class="${!params.papaginateByUrl && !params.papaginateByTitleID ? 'active' : ''}"><a
+        %{--<li role="presentation" class="${!params.papaginateByUrl && !params.papaginateByTitleID ? 'active' : ''}"><a
                 href="#byName" data-toggle="tab">Tipps Duplicates By Name <span
                     class="badge badge-warning">${totalCountByName}</span></a></li>
         <li role="presentation"
             class="${params.papaginateByUrl && !params.papaginateByTitleID && !params.papaginateByName ? 'active' : ''}"><a
                 href="#byUrl" data-toggle="tab">Tipps Duplicates By Url <span
-                    class="badge badge-warning">${totalCountByUrl}</span></a></li>
+                    class="badge badge-warning">${totalCountByUrl}</span></a></li>--}%
         <li role="presentation"
             class="${!params.papaginateByUrl && params.papaginateByTitleID && !params.papaginateByName ? 'active' : ''}"><a
                 href="#byTitleID" data-toggle="tab">Tipps Duplicates By Title ID <span
                     class="badge badge-warning">${totalCountByTitleID}</span></a></li>
     </ul>
 
-    <div class="tab-content">
+   %{-- <div class="tab-content">
 
         <div class="tab-pane ${!params.papaginateByUrl && !params.papaginateByTitleID ? 'active' : ''}" id="byName">
 
@@ -155,7 +160,7 @@
                             params="[id: params.id, papaginateByUrl: true]"
                             max="${maxByUrl}" offset="${offsetByUrl}" total="${totalCountByUrl}"/>
         </div>
-    </div>
+    </div>--}%
 
     <div class="tab-pane ${!params.papaginateByUrl && params.papaginateByTitleID && !params.papaginateByName ? 'active' : ''}"
          id="byTitleID">
@@ -167,6 +172,7 @@
                 <th>#</th>
                 <th>Title</th>
                 <th>Identifiers</th>
+                <th>Status</th>
                 <th>Platform</th>
                 <th>Publication Type</th>
                 <th>Medium</th>
@@ -193,6 +199,9 @@
                                 </li>
                             </g:each>
                         </ul>
+                    </td>
+                    <td>
+                        ${t.status.value}
                     </td>
                     <td>
                         <g:link controller="resource" action="show"

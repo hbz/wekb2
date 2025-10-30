@@ -13,6 +13,7 @@ import wekb.AccessService
 import wekb.CascadingUpdateService
 import wekb.ESWrapperService
 import wekb.GenericOIDService
+import wekb.LaserService
 
 import javax.sql.DataSource
 
@@ -62,5 +63,9 @@ class BeanStore {
     }
     static MailService getMailService() {
         Holders.grailsApplication.mainContext.getBean('mailService') as MailService
+    }
+
+    static LaserService getLaserService() {
+        Holders.grailsApplication.mainContext.getBean('laserService') as LaserService
     }
 }

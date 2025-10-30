@@ -10,5 +10,5 @@ Hochschulbibliothekszentrum des Landes Nordrhein-Westfalen
 Postfach 270451
 50510 Köln
 Tel.: (+49) (0) 221 400 75 113
-laser@hbz-nrw.de
+wekb@hbz-nrw.de
 http://www.hbz-nrw.de

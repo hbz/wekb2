@@ -871,42 +871,15 @@ class KbartImportService {
         result
     }*/
 
-    LinkedHashMap tippImportForUpdate(Map tippMap, LinkedHashMap tippsWithCoverage, HashSet<Long> tippDuplicates = [], UpdatePackageInfo updatePackageInfo, List kbartRowsToCreateTipps) {
+    LinkedHashMap tippImportForUpdate(TitleInstancePackagePlatform tipp, Map tippMap, LinkedHashMap tippsWithCoverage, UpdatePackageInfo updatePackageInfo) {
         LinkedHashMap result = [newTipp: false, removedTipp: false, tippObject: null, updatePackageInfo: updatePackageInfo,
-                                tippsWithCoverage: tippsWithCoverage, kbartRowsToCreateTipps: kbartRowsToCreateTipps, tippDuplicates: tippDuplicates]
+                                tippsWithCoverage: tippsWithCoverage]
         log.info("Begin tippImportForUpdate")
         long start = System.currentTimeMillis()
         Package pkg = tippMap.pkg
         Platform plt = tippMap.nominalPlatform
 
-
-        def trimmed_url = tippMap.title_url ? tippMap.title_url.trim() : null
-
-        //TODO: Moe
-        //def curator = pkg.curatoryGroups?.size() > 0 ? (user.adminStatus || user.curatoryGroups?.id.intersect(pkg.curatoryGroups?.id)) : false
-
         if (pkg && plt) {
-            //and tipp.status != ? ??????
-
-            Map findTipp = findTheCorrectTipp(tippMap, tippDuplicates)
-            TitleInstancePackagePlatform tipp = findTipp.tipp
-            result.tippDuplicates = findTipp.tippDuplicates
-
-            if (!tipp) {
-                log.debug("push in map to create new TIPP..")
-                def tmap = [
-                        'pkg'         : pkg,
-                        'hostPlatform': plt,
-                        'url'         : trimmed_url,
-                        'status'      : (tippMap.status ?: 'Current'),
-                        'name'        : (tippMap.publication_title ?: null),
-                        'type'        : (tippMap.publication_type ?: null),
-                        'medium'    : (tippMap.medium ?: null),
-                        'kbartRowMap': tippMap
-                ]
-                result.kbartRowsToCreateTipps << tmap
-                result.newTipp = true
-            }
 
             if (tipp) {
                 tipp.kbartImportRunning = true
@@ -965,6 +938,8 @@ class KbartImportService {
         RefdataValue tipp_publicationType = null
         if (tipp_fields.type) {
             tipp_publicationType = determinePublicationType(tipp_fields.type)
+        }else{
+            tipp_publicationType = RDStore.TIPP_PUBLIC_TYPE_NOSET
         }
         long start = System.currentTimeMillis()
         TitleInstancePackagePlatform result = new TitleInstancePackagePlatform(
@@ -1013,7 +988,7 @@ class KbartImportService {
                     return RDStore.TIPP_PUBLIC_TYPE_OTHER
                     break;
                 default:
-                    return null
+                    return RDStore.TIPP_PUBLIC_TYPE_NOSET
                     break;
             }
         }
@@ -1671,11 +1646,11 @@ class KbartImportService {
                 if (!f.isNaN()) {
                     List<TippPrice> existPrices = TippPrice.findAllByTippAndPriceTypeAndCurrency(tipp, priceType, currency, [sort: 'lastUpdated', order: 'ASC'])
                     if (existPrices.size() == 1) {
-                        TippPrice existPrice = existPrices[0]
-                        if (existPrice.price != f) {
-                            oldValue = existPrice.price.toString()
-                            existPrice.price = f
-                            existPrice.save()
+                        cp = existPrices[0]
+                        oldValue = cp.price.toString()
+                        if (cp.price != f) {
+                            cp.price = f
+                            cp.save()
                             if (!tipp.save()) {
                                 log.error("Tipp save error: ")
                                 tipp.errors.allErrors.each {
@@ -1687,10 +1662,13 @@ class KbartImportService {
 
                     } else if (existPrices.size() > 1) {
                         def pricesIDs = existPrices.id.clone()
-                        pricesIDs.each {
-                            TippPrice tippPrice = TippPrice.get(it)
-                            tipp.removeFromPrices(tippPrice)
-                            //TippPrice.executeUpdate("delete from TippPrice id = ${it}")
+                        TippPrice.withNewTransaction {
+                            pricesIDs.each {
+                                TippPrice tippPrice = TippPrice.get(it)
+                                tipp.removeFromPrices(tippPrice)
+                                tippPrice.delete()
+                                //TippPrice.executeUpdate("delete from TippPrice id = ${it}")
+                            }
                         }
                         if (!tipp.save()) {
                             log.error("Tipp save error: ")
@@ -1729,6 +1707,8 @@ class KbartImportService {
                         priceChanged = true
                     }
                 } else {
+
+                    List<TippPrice> existPrices = TippPrice.findAllByTippAndPriceTypeAndCurrency(tipp, priceType, currency, [sort: 'lastUpdated', order: 'ASC'])
                     //updatePackageInfo = updatePackageInfo.refresh()
                     UpdateTippInfo updateTippInfo = new UpdateTippInfo(
                             description: "The value '${newValue}' can not parse to a price",
@@ -1740,7 +1720,7 @@ class KbartImportService {
                             updatePackageInfo: updatePackageInfo,
                             kbartProperty: kbartProperty,
                             tippProperty: "prices[${priceType.value}]",
-                            oldValue: oldValue,
+                            oldValue: existPrices.size() > 0 ? existPrices.price.join(';') : '',
                             newValue: newValue
                     ).save()
                 }
@@ -1750,22 +1730,24 @@ class KbartImportService {
                 priceUpdateFail = true
             }
 
-            if (!priceUpdateFail && cp && priceChanged && !result.newTipp) {
-                //updatePackageInfo = updatePackageInfo.refresh()
-                UpdateTippInfo updateTippInfo = new UpdateTippInfo(
-                        description: "Create or update price of title '${tipp.name}'",
-                        tipp: tipp,
-                        startTime: new Date(),
-                        endTime: new Date(),
-                        status: RDStore.UPDATE_STATUS_SUCCESSFUL,
-                        type: RDStore.UPDATE_TYPE_CHANGED_TITLE,
-                        updatePackageInfo: updatePackageInfo,
-                        kbartProperty: kbartProperty,
-                        tippProperty: "prices[${priceType.value}]",
-                        oldValue: oldValue,
-                        newValue: newValue
-                ).save()
-            }else {
+            if(!result.newTipp){
+                if (!priceUpdateFail && cp && priceChanged) {
+                    //updatePackageInfo = updatePackageInfo.refresh()
+                    UpdateTippInfo updateTippInfo = new UpdateTippInfo(
+                            description: "Create or update price of title '${tipp.name}'",
+                            tipp: tipp,
+                            startTime: new Date(),
+                            endTime: new Date(),
+                            status: RDStore.UPDATE_STATUS_SUCCESSFUL,
+                            type: RDStore.UPDATE_TYPE_CHANGED_TITLE,
+                            updatePackageInfo: updatePackageInfo,
+                            kbartProperty: kbartProperty,
+                            tippProperty: "prices[${priceType.value}]",
+                            oldValue: oldValue,
+                            newValue: newValue
+                    ).save()
+                }
+                else if (priceUpdateFail || (cp == null && !priceChanged)) {
                     UpdateTippInfo updateTippInfo = new UpdateTippInfo(
                             description: "Problem by create or update price of title '${tipp.name}'",
                             tipp: tipp,
@@ -1779,16 +1761,21 @@ class KbartImportService {
                             oldValue: oldValue,
                             newValue: newValue
                     ).save()
+                }
             }
+
         }else{
             if(!result.newTipp) {
                 List<TippPrice> existPrices = TippPrice.findAllByTippAndPriceTypeAndCurrency(tipp, priceType, currency, [sort: 'lastUpdated', order: 'ASC'])
                 if (existPrices.size() > 0) {
                     oldValue = existPrices.price.join('; ')
                     def pricesIDs = existPrices.id.clone()
-                    pricesIDs.each {
-                        TippPrice tippPrice = TippPrice.get(it)
-                        tipp.removeFromPrices(tippPrice)
+                    TippPrice.withNewTransaction {
+                        pricesIDs.each {
+                            TippPrice tippPrice = TippPrice.get(it)
+                            tipp.removeFromPrices(tippPrice)
+                            tippPrice.delete()
+                        }
                     }
                     if (!tipp.save()) {
                         log.error("Tipp save error: ")
@@ -2065,8 +2052,11 @@ class KbartImportService {
             ClassUtils.setStringIfDifferent(tipp, 'note', tipp.coverageStatements[0].coverageNote)
             if (tipp.coverageStatements && tipp.coverageStatements.size() > 0) {
                 def cStsIDs = tipp.coverageStatements.id.clone()
-                cStsIDs.each {
-                    tipp.removeFromCoverageStatements(TIPPCoverageStatement.get(it))
+                TIPPCoverageStatement.withNewTransaction {
+                    cStsIDs.each {
+                        tipp.removeFromCoverageStatements(TIPPCoverageStatement.get(it))
+                        TIPPCoverageStatement.get(it).delete()
+                    }
                 }
                 if (!tipp.save()) {
                     log.error("Tipp save error: ")
@@ -2327,10 +2317,10 @@ class KbartImportService {
         return result
     }
 
-    List createTippBatch(List tippMaps, UpdatePackageInfo updatePackageInfo) {
-        List newTippList = []
+    HashSet<Long> createTippBatch(List tippMaps, UpdatePackageInfo updatePackageInfo) {
         HashSet<String> tippUrls = new HashSet<String>()
         int counterNewTippsToProcess = tippMaps.size()
+        HashSet<Long> newtippIdList = new HashSet<Long>()
 
         //def dataSource = Holders.grailsApplication.mainContext.getBean('dataSource')
         //Sql sql = new Sql(dataSource)
@@ -2421,9 +2411,31 @@ class KbartImportService {
                             } else {
                                 log.error("TIPP creation failed!")
                             }
+
                             if (!tipp) {
                                 log.error("TIPP creation failed!")
+                                UpdateTippInfo updateTippInfo = new UpdateTippInfo(
+                                        description: "Creating a new Title '${tippMap.name}' failed",
+                                        tipp: null,
+                                        startTime: new Date(),
+                                        endTime: new Date(),
+                                        status: RDStore.UPDATE_STATUS_FAILED,
+                                        type: RDStore.UPDATE_TYPE_NEW_TITLE,
+                                        updatePackageInfo: updatePackageInfo
+                                ).save()
+
                             } else {
+
+                                // updatePackageInfo = updatePackageInfo.refresh()
+                                UpdateTippInfo updateTippInfo = new UpdateTippInfo(
+                                        description: "New Title '${tippMap.name}'",
+                                        tipp: tipp,
+                                        startTime: new Date(),
+                                        endTime: new Date(),
+                                        status: RDStore.UPDATE_STATUS_SUCCESSFUL,
+                                        type: RDStore.UPDATE_TYPE_NEW_TITLE,
+                                        updatePackageInfo: updatePackageInfo
+                                ).save()
 
                                 Map result = [newTipp: true]
 
@@ -2578,22 +2590,10 @@ class KbartImportService {
                                     result.changedTipp = createOrUpdatePrice(result, tipp, RDStore.PRICE_TYPE_OA_APC, RDStore.CURRENCY_GBP, tippMap.kbartRowMap.oa_apc_gbp, 'oa_apc_gbp', updatePackageInfo)
                                 }
 
-
-                                // updatePackageInfo = updatePackageInfo.refresh()
-                                UpdateTippInfo updateTippInfo = new UpdateTippInfo(
-                                        description: "New Title '${tippMap.name}'",
-                                        tipp: tipp,
-                                        startTime: new Date(),
-                                        endTime: new Date(),
-                                        status: RDStore.UPDATE_STATUS_SUCCESSFUL,
-                                        type: RDStore.UPDATE_TYPE_NEW_TITLE,
-                                        updatePackageInfo: updatePackageInfo
-                                ).save()
-
                                 tipp.lastUpdated = new Date()
                                 tipp = tipp.save()
 
-                                newTippList << [tippID: tipp.id, updatePackageInfo: updatePackageInfo, tippUrl: tipp.url]
+                                newtippIdList << tipp.id
 
                                 if(tipp.url)
                                     tippUrls.add(tipp.url)
@@ -2617,7 +2617,7 @@ class KbartImportService {
             }
         }
 
-        return newTippList
+        return newtippIdList
     }
 
     Date parseDatebyCreateTipp(String value){
@@ -2642,7 +2642,7 @@ class KbartImportService {
         return instant
     }
 
-    Map findTheCorrectTipp(Map tippMap, tippDuplicates){
+    LinkedHashMap findTheCorrectTipp(Map tippMap, tippDuplicates){
         LinkedHashMap result = [tippDuplicates: tippDuplicates]
         TitleInstancePackagePlatform tipp = null
         Package pkg = tippMap.pkg
@@ -2659,6 +2659,40 @@ class KbartImportService {
             int countTipps = 0
 
             List<TitleInstancePackagePlatform> tipps = []
+
+            /*if(tippMap.title_id) {
+
+                tipps = tippsMatchingByTitleIDAutoUpdate(tippMap.title_id, pkg)
+                countTipps = tipps.size()
+
+                switch (countTipps) {
+                    case 0:
+                        log.debug("not found Tipp: [pkg: ${pkg}, platform: ${plt}, title_id: ${tippMap.title_id}]")
+                        break
+                    case 1:
+                        log.debug("found tipp by direct match: Tipp = [pkg: ${pkg}, platform: ${plt}, title_id: ${tippMap.title_id}]")
+                        tipp = tipps[0]
+                        break
+                    default:
+                        tipps = tipps.sort { it.lastUpdated }
+                        *//* tipps.each {
+                             println(it.lastUpdated)
+                         }*//*
+                        tipps.reverse(true)
+                        if (tipps.size() > 1) {
+                            tipps.eachWithIndex { TitleInstancePackagePlatform titleInstancePackagePlatform, int index ->
+                                if (index == 0) {
+                                    tipp = titleInstancePackagePlatform
+                                } else {
+                                    //println("${tippMap.title_id}: "+titleInstancePackagePlatform.id)
+                                    result.tippDuplicates.add(titleInstancePackagePlatform.id)
+                                }
+                            }
+                        }
+                        break
+                }
+
+            }*/
 
             String title = tippMap.publication_title
 

@@ -43,7 +43,7 @@ class SendProviderInfosJob {
 
         try {
             mailService.sendMail {
-                to "laser@hbz-nrw.de", "moetez.djebeniani@hbz-nrw.de"
+                to "wekb@hbz-nrw.de", "moetez.djebeniani@hbz-nrw.de"
                 from "wekb Server <wekb-managePackageUpdateJobs@wekbServer>"
                 subject mailSubject
                 html(view: "/mailTemplate/html/packageUpdateJobsMail", model: [autoUpdates: autoUpdates])

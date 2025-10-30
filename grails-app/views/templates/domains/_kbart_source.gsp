@@ -68,14 +68,14 @@
                 <semui:xEditableBoolean owner="${d}" field="automaticUpdates"/>
             </dd>
         </dl>
-        <dl>
+       %{-- <dl>
             <dt class="control-label">
                 Title ID Namespace
             </dt>
             <dd>
                 ${IdentifierNamespace.findByValueAndTargetType('title_id', RDStore.IDENTIFIER_NAMESPACE_TARGET_TYPE_TIPP).value}
             </dd>
-        </dl>
+        </dl>--}%
         <dl>
             <dt class="control-label">
                 <g:message code="kbartsource.kbartHasWekbFields"/>

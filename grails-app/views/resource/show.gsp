@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<%@ page import="wekb.TitleInstancePackagePlatform; wekb.helper.RDStore;" %>
+<%@ page import="wekb.Package; wekb.TitleInstancePackagePlatform; wekb.helper.RDStore;" %>
 <html>
 <head>
     <meta name="layout" content="wekb"/>
@@ -106,7 +106,34 @@
 
             <h1 class="ui header"><g:message code="${displayobj.class.simpleName.toLowerCase()}.label" default="${displayobj.getDomainName()}"/>: ${displayobj.getShowName()}</h1>
 
+            <sec:ifAnyGranted roles="ROLE_ADMIN">
+                <g:if test="${displayobj instanceof wekb.Package && displayobj.isPackageLinkedInLaser()}">
+                    <g:render template="/templates/laserInfosForPkg" model="${[pkg: displayobj]}"/>
+                </g:if>
 
+                <g:if test="${displayobj instanceof wekb.TitleInstancePackagePlatform && displayobj.getTippDuplicatesByTitleIDCount() > 0}">
+                    <div class="ui warning icon message">
+
+                        <div class="content wekb-inline-lists">
+                            <div class="header">
+                                Tipp Duplicates with Title_ID
+                            </div>
+
+                            <div class="ui bulleted list">
+                                <g:each in="${displayobj.findTippDuplicatesByTitleID()}" var="tipp">
+                                    <g:if test="${tipp.id != displayobj.id}">
+                                        <div class="item">
+                                            <g:link controller="resource" action="show"
+                                                    id="${'wekb.TitleInstancePackagePlatform:' + tipp.id}">${tipp.name} (${tipp.id} )</g:link>
+                                        </div>
+                                    </g:if>
+                                </g:each>
+                            </div>
+                        </div>
+                    </div>
+
+                </g:if>
+            </sec:ifAnyGranted>
 
             <g:if test="${displaytemplate != null}">
                 <!-- Using display template ${displaytemplate.rendername} -->
