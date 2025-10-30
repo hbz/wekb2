@@ -30,7 +30,7 @@ class TIPPCoverageStatement extends AbstractBase {
   static mapping = {
     id column: 'tcs_id'
     version column: 'tcs_version'
-    uuid column: 'tcs_uuid'
+    uuid column: 'tcs_uuid', index: 'tcs_uuid_idx'
     tipp column: 'tcs_tipp_fk', index: 'tcs_tipp_idx'
     startDate column:'tcs_start_date', index: 'tcs_start_date_idx'
     startVolume column:'tcs_start_volume'

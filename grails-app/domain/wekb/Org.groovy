@@ -101,7 +101,7 @@ class Org extends AbstractBase implements Auditable {
     id column: 'org_id'
     version column: 'org_version'
 
-    uuid column: 'org_uuid'
+    uuid column: 'org_uuid', index: 'org_uuid_idx'
     name column: 'org_name'
     abbreviatedName column: 'org_abbreviated_name'
 
