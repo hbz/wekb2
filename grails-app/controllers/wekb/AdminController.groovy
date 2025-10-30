@@ -545,7 +545,7 @@ class AdminController {
 
         result.totalCount = linkedPTs.size()
 
-        linkedPTs = linkedPTs.drop(params.offset).take(params.max)
+        linkedPTs = linkedPTs.drop(params.int('offset')).take(params.int('max'))
 
         Sql sql = new Sql(Holders.grailsApplication.mainContext.getBean('dataSource') as DataSource)
         try {
@@ -606,7 +606,7 @@ class AdminController {
 
         result.totalCount = linkedPTs.size()
 
-        linkedPTs = linkedPTs.drop(params.offset).take(params.max)
+        linkedPTs = linkedPTs.drop(params.int('offset')).take(params.int('max'))
 
 
         Sql sql = new Sql(Holders.grailsApplication.mainContext.getBean('dataSource') as DataSource)
