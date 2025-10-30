@@ -52,7 +52,7 @@ class KbartSource extends AbstractBase implements Auditable {
         id column: 'ks_id'
         version column: 'ks_version'
 
-        uuid column: 'ks_uuid'
+        uuid column: 'ks_uuid', index: 'ks_uuid_idx'
         name column: 'ks_name'
 
         lastUpdated column: 'ks_last_updated'

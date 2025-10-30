@@ -76,7 +76,7 @@ class Package  extends AbstractBase implements Auditable {
     id column: 'pkg_id'
     version column: 'pkg_version'
 
-    uuid column: 'pkg_uuid'
+    uuid column: 'pkg_uuid', index: 'pkg_uuid_idx'
     name column: 'pkg_name'
 
     lastUpdated column: 'pkg_last_updated'
