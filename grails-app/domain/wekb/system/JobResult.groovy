@@ -30,7 +30,7 @@ class JobResult {
 
 
   static mapping = {
-    uuid column: 'jr_uuid'
+    uuid column: 'jr_uuid', index: 'jr_uuid_idx'
     description column: 'jr_description', type: 'text'
     statusText column: 'jr_status_text'
     resultObject column: 'jr_result_json', type: 'text'

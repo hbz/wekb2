@@ -33,7 +33,7 @@ class CuratoryGroup extends AbstractBase implements Auditable {
     id column: 'cg_id'
     version column: 'cg_version'
 
-    uuid column: 'cg_uuid'
+    uuid column: 'cg_uuid', index: 'cg_uuid_idx'
     name column: 'cg_name'
 
     lastUpdated column: 'cg_last_updated'
