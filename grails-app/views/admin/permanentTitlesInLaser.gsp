@@ -16,10 +16,14 @@
 
 <h1 class="ui header">Permanent Titles in Laser (${totalCount}) [Status: ${status}]</h1>
 
+<g:if test="${pkg}">
+    <h3 class="ui header">Permanent Titles for Package <g:link controller="resource" action="show" id="${pkg.class.name+':'+pkg.id}">${pkg.name}</g:link></h3>
+</g:if>
+
 
 <div class="container">
 
-    <g:form action="${actionName}" controller="${controllerName}" params="${params}">
+    <g:form action="${actionName}" controller="${controllerName}" params="[status: params.status]" id="${params.id}">
         <div class="ui toggle checkbox">
             <input type="checkbox" name="withWekbTipp" ${params.withWekbTipp ? 'checked' : ''} onchange="this.form.submit()">
             <label>Show WEKB Tipp (Takes longer)</label>

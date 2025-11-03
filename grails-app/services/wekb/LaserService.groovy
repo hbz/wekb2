@@ -556,7 +556,7 @@ class LaserService {
 
     }
 
-    def permanentTitlesInLaser(String status) {
+    def permanentTitlesInLaser(String status, String wekbUuid = null) {
         Sql sql
         List permanentTitles
         try {
@@ -565,7 +565,15 @@ class LaserService {
             if(config.laserDBUrl && config.laserDBUser && config.laserDBPassword) {
                 sql = Sql.newInstance(config.laserDBUrl, config.laserDBUser, config.laserDBPassword, config.laserDBDriver)
 
-                Map queryMap = [wekbUuid: sql.getConnection().createArrayOf('varchar', Package.findAll().uuid.toArray()), status: status]
+                def wekbUuis
+
+                if(wekbUuid){
+                    wekbUuis = [wekbUuid].toArray()
+                }else {
+                    wekbUuis = Package.findAll().uuid.toArray()
+                }
+
+                Map queryMap = [wekbUuid: sql.getConnection().createArrayOf('varchar', wekbUuis), status: status]
                 String orderBy = ' order by pkg_name, tipp_name, rv.rdv_value_en '
                 String query = '''select tipp_name,
                                    rv.rdv_value_en as tipp_status,

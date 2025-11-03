@@ -17,6 +17,11 @@
 
 <g:render template="/templates/laserInfosForPkg" model="${[pkg: pkg]}"/>
 
+
+<g:link controller="admin" action="permanentTitlesInLaser" params="[status: status]" id="${pkg.id}" class="ui button">Show ${linkedSubs?.count{it.ptCount}} Permanent Titles (${status})</g:link>
+<br>
+<br>
+
 <div class="container">
 
     <table class="ui selectable striped sortable celled table">

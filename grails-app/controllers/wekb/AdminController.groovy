@@ -602,7 +602,9 @@ class AdminController {
         result.status = params.status
         result.linkedPTs = []
 
-        linkedPTs = laserService.permanentTitlesInLaser(result.status)
+        String wekbUuid = result.pkg ? result.pkg.uuid : null
+
+        linkedPTs = laserService.permanentTitlesInLaser(result.status, wekbUuid)
 
         result.totalCount = linkedPTs.size()
 
@@ -658,7 +660,6 @@ class AdminController {
                 log.error("Problem by Close SQL Client:", e)
             }
         }
-        log.debug("x")
 
         result
     }

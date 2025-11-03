@@ -66,7 +66,7 @@
 </table>
 
 <div class="container">
-    <g:form action="${actionName}" controller="${controllerName}" params="${params}">
+    <g:form action="${actionName}" controller="${controllerName}" params="[status: params.status, subId: params.subId]" id="${params.id}">
         <div class="ui toggle checkbox">
             <input type="checkbox" name="withWekbTipp" ${params.withWekbTipp ? 'checked' : ''} onchange="this.form.submit()">
             <label>Show WEKB Tipp (Takes longer)</label>
