@@ -254,4 +254,15 @@ class Api2Controller {
         return result
     }
 
+    def correctTippDuplicate() {
+        log.info("Api2Controller:correctTippDuplicate ${params}")
+        Map<String, Object> result = checkPermisson(params)
+
+        if(result.code == 'success') {
+            result = api2Service.getCorrectTippDuplicate(params, result)
+        }
+
+        render result as JSON
+    }
+
 }

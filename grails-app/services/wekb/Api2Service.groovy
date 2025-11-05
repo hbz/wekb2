@@ -2598,4 +2598,47 @@ class Api2Service {
 
         result
     }
+
+    Map getCorrectTippDuplicate(GrailsParameterMap params, Map result){
+        result.uuid = null
+        if(params.uuid) {
+            TitleInstancePackagePlatform tipp = TitleInstancePackagePlatform.findByUuid(params.uuid)
+            TitleInstancePackagePlatform correctTipp
+            if (tipp.getTippDuplicatesByTitleIDCount() > 0) {
+                List tipps = tipp.findTippDuplicatesByTitleID()
+
+                List currentTipps = tipps.findAll { it.status == RDStore.KBC_STATUS_CURRENT }
+
+                if (currentTipps.size() > 0) {
+                    correctTipp = currentTipps.sort { it.lastUpdated }.reverse()[0]
+                }
+
+                if (!correctTipp) {
+                    List expectedTipps = tipps.findAll { it.status == RDStore.KBC_STATUS_EXPECTED }
+                    if (expectedTipps.size() > 0) {
+                        correctTipp = expectedTipps.sort { it.lastUpdated }.reverse()[0]
+                    }
+                    if (!correctTipp) {
+                        List retiredTipps = tipps.findAll { it.status == RDStore.KBC_STATUS_RETIRED }
+                        if (expectedTipps.size() > 0) {
+                            correctTipp = retiredTipps.sort { it.lastUpdated }.reverse()[0]
+                        }
+
+                        if (!correctTipp) {
+                            List deletedTipps = tipps.findAll { it.status == RDStore.KBC_STATUS_DELETED }
+                            if (expectedTipps.size() > 0) {
+                                correctTipp = deletedTipps.sort { it.lastUpdated }.reverse()[0]
+                            }
+                        }
+                    }
+                }
+
+                result.uuid = correctTipp ? correctTipp.uuid : null
+            }
+        }
+
+        result
+    }
+
+
 }
