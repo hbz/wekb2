@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta name="layout" content="wekb"/>
-    <title>we:kb : Permanent Titles in Laser [Status: ${status}]</title>
+    <title>we:kb : Packages linked with Permanent Titles in Laser [Status: ${status}]</title>
 </head>
 
 <body>
@@ -33,7 +33,8 @@
         </tr>
         </thead>
         <tbody>
-        <g:each in="${pkgs}" var="pkg" status="i">
+        <g:each in="${pkgs}" var="pkgLaser" status="i">
+            <g:set var="pkgWekb" value="${wekb.Package.findByUuid(pkgLaser.uuid)}"/>
             <tr>
                 <td>
                     ${(params.offset ? params.offset.toInteger() : 0) + i + 1}
@@ -68,7 +69,7 @@
                     </g:else>
                 </td>
                 <td>
-                    <g:link action="linkedSubsInLaser" controller="admin" id="${pkgWekb.id}">${pkgLaser.packageLinkedInLaserCount}</g:link>
+                    <g:link action="linkedSubsInLaser" controller="admin" id="${pkgWekb.id}" params="[status: status]">${pkgLaser.packageLinkedInLaserCount}</g:link>
                 </td>
                 <td>
                     ${pkgWekb.getTippCountWithStatus(status)}

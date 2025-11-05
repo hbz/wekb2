@@ -9,8 +9,21 @@
         </div>
 
         <p>
-        (PerpetualAccess: <g:link action="linkedSubsInLaser" controller="admin" id="${pkg.id}" params="[perpetualAccess: true]">${laserService.packageLinkedWithPerpetualAccessInLaserCount(pkg.uuid)}</g:link> /
-        Not PerpetualAccess: <g:link action="linkedSubsInLaser" controller="admin" id="${pkg.id}" params="[perpetualAccess: false]">${laserService.packageLinkedWithOutPerpetualAccessInLaserCount(pkg.uuid)}</g:link>)
+            (PerpetualAccess: <g:link action="linkedSubsInLaser" controller="admin" id="${pkg.id}"
+                                      params="[perpetualAccess: true]">${laserService.packageLinkedWithPerpetualAccessInLaserCount(pkg.uuid)}</g:link> /
+            Not PerpetualAccess: <g:link action="linkedSubsInLaser" controller="admin" id="${pkg.id}"
+                                         params="[perpetualAccess: false]">${laserService.packageLinkedWithOutPerpetualAccessInLaserCount(pkg.uuid)}</g:link>)
+
+            <g:set var="laserPackageID" value="${laserService.getLaserPackageId(pkg.uuid)}"/>
+
+            <g:if test="${laserPackageID}">
+                <br><br>
+                <a class="ui button" href="${laserService.getLaserPackageURL() + '/' + laserPackageID}" target="_blank">Show Package in Laser</a>
+                <br>
+                <br>
+                <a class="ui button" href="${laserService.getLaserURL() + '/yoda/reloadPackage?packageUUID=' + laserPackageID}"
+                   target="_blank">Reload package data in Laser</a>
+            </g:if>
         </p>
     </div>
 
@@ -49,23 +62,38 @@
                 <dl>
                     <dt class="control-label">PT in Laser (Current):</dt>
                     <dd>
-                        ${laserService.permanentTitlesWithStatusInLaserCount(pkg.uuid, 'Current')}
+                        <g:link action="linkedSubsInLaser" controller="admin" id="${pkg.id}"
+                                params="[perpetualAccess: params.perpetualAccess, status: 'Current']">
+                            ${laserService.permanentTitlesWithStatusInLaserCount(pkg.uuid, 'Current')}
+                        </g:link>
                     </dd>
                     <dt class="control-label">PT in Laser (Retired):</dt>
                     <dd>
-                        ${laserService.permanentTitlesWithStatusInLaserCount(pkg.uuid, 'Retired')}
+                        <g:link action="linkedSubsInLaser" controller="admin" id="${pkg.id}"
+                                params="[perpetualAccess: params.perpetualAccess, status: 'Retired']">
+                            ${laserService.permanentTitlesWithStatusInLaserCount(pkg.uuid, 'Retired')}
+                        </g:link>
                     </dd>
                     <dt class="control-label">PT in Laser (Expected):</dt>
                     <dd>
-                        ${laserService.permanentTitlesWithStatusInLaserCount(pkg.uuid, 'Expected')}
+                        <g:link action="linkedSubsInLaser" controller="admin" id="${pkg.id}"
+                                params="[perpetualAccess: params.perpetualAccess, status: 'Expected']">
+                            ${laserService.permanentTitlesWithStatusInLaserCount(pkg.uuid, 'Expected')}
+                        </g:link>
                     </dd>
                     <dt class="control-label">PT in Laser (Deleted):</dt>
                     <dd>
-                        ${laserService.permanentTitlesWithStatusInLaserCount(pkg.uuid, 'Deleted')}
+                        <g:link action="linkedSubsInLaser" controller="admin" id="${pkg.id}"
+                                params="[perpetualAccess: params.perpetualAccess, status: 'Deleted']">
+                            ${laserService.permanentTitlesWithStatusInLaserCount(pkg.uuid, 'Deleted')}
+                        </g:link>
                     </dd>
                     <dt class="control-label">PT in Laser (Removed):</dt>
                     <dd>
-                        ${laserService.permanentTitlesWithStatusInLaserCount(pkg.uuid, 'Removed')}
+                        <g:link action="linkedSubsInLaser" controller="admin" id="${pkg.id}"
+                                params="[perpetualAccess: params.perpetualAccess, status: 'Removed']">
+                            ${laserService.permanentTitlesWithStatusInLaserCount(pkg.uuid, 'Removed')}
+                        </g:link>
                     </dd>
                 </dl>
             </div>

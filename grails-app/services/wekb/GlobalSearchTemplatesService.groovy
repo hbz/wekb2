@@ -2876,7 +2876,7 @@ class GlobalSearchTemplatesService {
                         ],
                         qbeResults: [
                                 [heading: 'Description', property: 'description', link: true, linkInfo: 'Link to Title Update Info'],
-                                [heading: 'Title', property: 'tipp.name', link: true, linkInfo: 'Link to Title'],
+                                [heading: 'Title', property: 'tipp.name', sort: 'tipp.name', link: true, linkInfo: 'Link to Title', ],
                                 [heading: 'Status', property: 'status', sort: 'status.value'],
                                 [heading: 'Type', property: 'type', sort: 'type.value'],
                                 [heading: 'KBART Field', property: 'kbartProperty', sort: 'kbartProperty'],

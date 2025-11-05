@@ -65,7 +65,7 @@ class Vendor extends AbstractBase implements Auditable {
     id column: 'ven_id'
     version column: 'ven_version'
 
-    uuid column: 'ven_uuid'
+    uuid column: 'ven_uuid', index: 'ven_uuid_idx'
     name column: 'ven_name'
     abbreviatedName column: 'ven_abbreviated_name'
 

@@ -165,7 +165,7 @@ class Platform  extends AbstractBase implements Auditable {
     id column: 'plat_id'
     version column: 'plat_version'
 
-    uuid column: 'plat_uuid'
+    uuid column: 'plat_uuid', index: 'plat_uuid_idx'
     name column: 'plat_name'
 
     lastUpdated column: 'plat_last_updated'
@@ -197,7 +197,7 @@ class Platform  extends AbstractBase implements Auditable {
     counterCertified column: 'plat_counter_certified'
     statisticsAdminPortalUrl column: 'plat_statistics_admin_portal_url'
     statisticsUpdate column: 'plat_statistics_update_fk_rv'
-    counterRegistryApiUuid column: 'plat_counter_registry_api_uuid'
+    counterRegistryApiUuid column: 'plat_counter_registry_api_uuid', index: 'plat_counter_registry_api_uuid_idx'
     counterApiAuthenticationMethod column: 'plat_counter_api_authentication_method'
     centralApiKey column: 'plat_central_api_key', type: 'text'
     counterR5CounterPlatform column: 'plat_counter_r5_counter_platform', type: 'text'
