@@ -18,7 +18,9 @@ import org.hibernate.Session
 import org.hibernate.SessionFactory
 import org.springframework.security.access.annotation.Secured
 import wekb.system.FTControl
+import wekb.utils.DateUtils
 
+import javax.servlet.ServletOutputStream
 import javax.sql.DataSource
 import java.text.SimpleDateFormat
 import java.util.concurrent.CancellationException
@@ -29,9 +31,9 @@ class AdminController {
 
   ComponentStatisticService componentStatisticService
   ConcurrencyManagerService concurrencyManagerService
-  CleanupService cleanupService
   AutoUpdatePackagesService autoUpdatePackagesService
   def ESWrapperService
+  ExportService exportService
   SpringSecurityService springSecurityService
   FTUpdateService FTUpdateService
   SessionFactory sessionFactory
@@ -1130,6 +1132,77 @@ class AdminController {
         result.totalCount = packageDiff.size()
         result.packageDiff = packageDiff
         result
+    }
+
+    def createOrgDumpForZammad() {
+        Map<String, String> dumpCols = [
+                name: "concat('we:kb: ', o.name)",
+                shared: "true",
+                domain: "o.homepage",
+                domain_assignment: "false",
+                active: "true",
+                note: "''",
+                kuerzel: "''",
+                url_produktionsdatenbank: "''",
+                url_produktionsdatenbank_discovery: "''",
+                url_alma_premiumsandbox: "''",
+                url_discovery_premiumsandbox: "''",
+                url_homepage: "''",
+                discoverysystem_eigenheiten: "''",
+                opus_url_prouduktionssytem: "''",
+                opus_url_testsytem: "''",
+                ap_1_zammad: "''",
+                ap_2_zammad: "''",
+                ap_2_zammad_e_mail: "''",
+                ap_1_zammad_e_mail: "''",
+                ap_2_zammad_tel: "''",
+                ap_1_zammad_tel: "''",
+                lzv_institutions_code: "''",
+                vip: "false",
+                strasse: "''",
+                plz: "''",
+                stadt: "''",
+                land: "''",
+                produkt: "''",
+                lokalsystem: "''",
+                status: "''",
+                endnutzerfl: "''",
+                tech: "''",
+                besonders: "''",
+                'N8_system_url': "''",
+                'N8_oa_url1': "''",
+                'N8_oa_url2': "''",
+                'N8_oa_url3': "''",
+                'N5_las_nutzertyp': "'we:kb-Anbieter'",
+                'N5_las_url': "concat('https://wekb.hbz-nrw.de/resource/show', o.uuid)",
+                members: "''"
+        ]
+        String filenameDomain = 'wekb_providers'
+        if(params.domain == 'Vendor') {
+            dumpCols.N5_las_nutzertyp = "'we:kb-Library Supplier'"
+            filenameDomain = 'wekb_library_suppliers'
+        }
+        String mapArgs = dumpCols.collect { String header, String column -> "${column} as ${header}" }.join(',')
+        String dumpQuery = "select ${mapArgs} from ${params.domain} o where o.status != :removed order by lower(o.name)"
+        Set currentInstitutions = Org.executeQuery(dumpQuery, [removed: RDStore.KBC_STATUS_REMOVED])
+        Set<String> titleRow = []
+        dumpCols.keySet().each { String key ->
+            titleRow << key.replace('N8', '08').replace('N5', '05')
+        }
+        List<List<String>> columnData = []
+        currentInstitutions.each { row ->
+            columnData.add(row)
+        }
+        response.setHeader( "Content-Disposition", "attachment; filename=${filenameDomain}_${DateUtils.getSDF_forFilename().format(new Date())}.csv")
+        response.contentType = "text/csv"
+
+        ServletOutputStream out = response.outputStream
+        out.withWriter { writer ->
+            writer.write(exportService.generateSeparatorTableString(titleRow, columnData, ','))
+        }
+        out.flush()
+        out.close()
+        return
     }
 
 }
