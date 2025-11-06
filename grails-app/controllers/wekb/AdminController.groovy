@@ -1174,7 +1174,7 @@ class AdminController {
                 'N8_oa_url2': "''",
                 'N8_oa_url3': "''",
                 'N5_las_nutzertyp': "'we:kb-Anbieter'",
-                'N5_las_url': "concat('https://wekb.hbz-nrw.de/resource/show', o.uuid)",
+                'N5_las_url': "concat('https://wekb.hbz-nrw.de/resource/show/', o.uuid)",
                 members: "''"
         ]
         String filenameDomain = 'wekb_providers'
