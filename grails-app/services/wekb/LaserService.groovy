@@ -584,7 +584,7 @@ class LaserService {
                                    rv2.rdv_value_en as ie_status,
                                    sub_name,
                                    sub_id,
-                                   rv3.rdv_value_en as status,
+                                   rv3.rdv_value_en as sub_status,
                                    sub_start_date,
                                    sub_end_date,
                                    sub_has_perpetual_access,

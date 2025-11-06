@@ -81,7 +81,7 @@
                     <a href="${subPackageUrl+'/'+ptInfo.sub_id}" target="_blank">${ptInfo.sub_name}</a>
                 </td>
                 <td>
-                    ${ptInfo.status}
+                    ${ptInfo.sub_status}
                 </td>
                 <td>
                     ${ptInfo.sub_start_date}

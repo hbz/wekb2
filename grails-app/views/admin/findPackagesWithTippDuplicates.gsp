@@ -24,8 +24,8 @@
             <semui:sortableColumn property="curatoryGroups" title="Curatory Groups"/>
             <th>Auto Update</th>
             <th>Titles</th>
-            <semui:sortableColumn property="tippDuplicatesByNameCount" title="Tipp Duplicates By Name"/>
-            <semui:sortableColumn property="tippDuplicatesByUrlCount" title="Tipp Duplicates By Url"/>
+            %{--<semui:sortableColumn property="tippDuplicatesByNameCount" title="Tipp Duplicates By Name"/>
+            <semui:sortableColumn property="tippDuplicatesByUrlCount" title="Tipp Duplicates By Url"/>--}%
             <semui:sortableColumn property="tippDuplicatesByTitleIDCount" title="Tipp Duplicates By Title ID"/>
         </tr>
         </thead>
@@ -73,7 +73,7 @@
                         ${allTipps2}
                     </g:else>
                 </td>
-                <td>
+                %{--<td>
                     <g:link controller="admin" action="findTippDuplicatesByPkg" id="${pkg.uuid}" target="_blank"
                             params="[papaginateByName: true, max: 100, offset: 0]">
                         ${pkgMap.tippDuplicatesByNameCount}
@@ -84,10 +84,10 @@
                             params="[papaginateByUrl: true, max: 100, offset: 0]">
                         ${pkgMap.tippDuplicatesByUrlCount}
                     </g:link>
-                </td>
+                </td>--}%
                 <td>
                     <g:link controller="admin" action="findTippDuplicatesByPkg" id="${pkg.uuid}" target="_blank"
-                            params="[papaginateByTitleID: true, max: 100, offset: 0]">
+                            params="[tippsDuplicatesBy: 'titleID', max: 100, offset: 0]">
                         ${pkgMap.tippDuplicatesByTitleIDCount}
                     </g:link>
                 </td>

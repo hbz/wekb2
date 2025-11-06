@@ -73,7 +73,7 @@
                 </td>
                 <td>
                     <g:link controller="admin" action="findTippDuplicatesByPkg" id="${pkg.uuid}" target="_blank"
-                            params="[papaginateByTitleID: true, max: 100, offset: 0]">
+                            params="[tippsDuplicatesBy: 'titleID', max: 100, offset: 0]">
                         ${pkgMap.tippDuplicatesByTitleIDCount}
                     </g:link>
                 </td>

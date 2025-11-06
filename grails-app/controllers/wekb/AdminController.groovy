@@ -402,37 +402,35 @@ class AdminController {
   }
 
 
-  def findTippDuplicatesByPkg() {
-    log.debug("findTippDuplicates::${params}")
-    def result = [:]
+    def findTippDuplicatesByPkg() {
+        log.debug("findTippDuplicates::${params}")
+        def result = [:]
 
-    Package aPackage = Package.findByUuid(params.id)
+        params.tippsDuplicatesBy = params.tippsDuplicatesBy ?: "titleID"
 
-    //List<TitleInstancePackagePlatform> tippsDuplicatesByName = aPackage.findTippDuplicatesByName()
-    //List<TitleInstancePackagePlatform> tippsDuplicatesByUrl = aPackage.findTippDuplicatesByURL()
-    List<TitleInstancePackagePlatform> tippsDuplicatesByTitleID = aPackage.findTippDuplicatesByTitleID()
+        Package aPackage = Package.findByUuid(params.id)
+        List<TitleInstancePackagePlatform> tippsDuplicates
+        if (params.tippsDuplicatesBy == "titleID") {
+            tippsDuplicates = aPackage.findTippDuplicatesByTitleID()
+        }
+        if (params.tippsDuplicatesBy == "name") {
+            tippsDuplicates = aPackage.findTippDuplicatesByName()
+        }
+        if (params.tippsDuplicatesBy == "url") {
+            tippsDuplicates = aPackage.findTippDuplicatesByURL()
+        }
 
-    //result.offsetByName = params.papaginateByName ? Integer.parseInt(params.offset) : 0
-    //result.maxByName = params.papaginateByName ? Integer.parseInt(params.max) : 100
+        result.offset = params.offset ? Integer.parseInt(params.offset) : 0
+        result.max = params.max ? Integer.parseInt(params.max) : 100
 
-    //result.offsetByUrl = params.papaginateByUrl ? Integer.parseInt(params.offset) : 0
-    //result.maxByUrl = params.papaginateByUrl ? Integer.parseInt(params.max) : 100
+        result.totalCount = tippsDuplicates.size()
 
-    result.offsetByTitleID = params.papaginateByTitleID ? Integer.parseInt(params.offset) : 0
-    result.maxByTitleID = params.papaginateByTitleID ? Integer.parseInt(params.max) : 100
+        result.tippsDuplicates = tippsDuplicates.drop((int) result.offset).take((int) result.max)
 
-    //result.totalCountByName = tippsDuplicatesByName.size()
-    //result.totalCountByUrl = tippsDuplicatesByUrl.size()
-    result.totalCountByTitleID = tippsDuplicatesByTitleID.size()
+        result.pkg = aPackage
 
-    //result.tippsDuplicatesByName = tippsDuplicatesByName.drop((int) result.offsetByName).take((int) result.maxByName)
-    //result.tippsDuplicatesByUrl = tippsDuplicatesByUrl.drop((int) result.offsetByUrl).take((int) result.maxByUrl)
-    result.tippsDuplicatesByTitleID = tippsDuplicatesByTitleID.drop((int) result.offsetByTitleID).take((int) result.maxByTitleID)
-
-    result.pkg = aPackage
-
-    result
-  }
+        result
+    }
 
   def findTippWithoutTitleIDByPkg() {
     log.debug("findTippWithoutTitleIDByPkg::${params}")
@@ -625,7 +623,7 @@ class AdminController {
                              pkg_name: it.pkg_name,
                              sub_id: it.sub_id,
                              sub_name: it.sub_name,
-                             status: it.status,
+                             sub_status: it.sub_status,
                              sub_start_date: it.sub_start_date,
                              sub_end_date: it.sub_end_date,
                              sub_has_perpetual_access: it.sub_has_perpetual_access,
@@ -752,7 +750,7 @@ class AdminController {
 
     flash.message = "Tipps ${countRemoved} set to removed because of tipp duplicates by url"
 
-    redirect(action: 'findTippDuplicatesByPkg', params: [id: params.id, papaginateByUrl: true, max: 100, offset: 0] )
+    redirect(action: 'findTippDuplicatesByPkg', params: [id: params.id, max: 100, offset: 0] )
 
   }
 
