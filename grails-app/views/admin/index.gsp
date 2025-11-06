@@ -72,6 +72,8 @@
                          onclick="return confirm('Are you sure?')">Cleanup Tipp Identifers with same Namespace</g:link>--}%
                 <g:link class="item" controller="admin" action="setTippsWithoutUrlToDeleted"
                         onclick="return confirm('Are you sure?')">Set Tipps without Url to deleted</g:link>
+                <g:link class="item" controller="admin" action="createOrgDumpForZammad" params="[domain: 'Org']">Export providers for Zammad ingest</g:link>
+                <g:link class="item" controller="admin" action="createOrgDumpForZammad" params="[domain: 'Vendor']">Export library suppliers for Zammad ingest</g:link>
             </div>
         </div>
     </div>

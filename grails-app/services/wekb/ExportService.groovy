@@ -801,6 +801,46 @@ class ExportService {
         wb
     }
 
+    String generateSeparatorTableString(Collection titleRow, Collection columnData, String separator, Map<String, Object> headerData = [:]) {
+        List output = []
+        String fillupSeparators = ""
+        if(titleRow && headerData) {
+            for(int i = 2; i < titleRow.size();i++) {
+                fillupSeparators += separator
+            }
+        }
+        headerData.each { String headerEntryTitle, Object headerEntry ->
+            if(headerEntryTitle == 'skipRows') {
+                for(int sr = 0; sr < headerEntry; sr++) {
+                    output.add("") //empty row
+                }
+            }
+            else {
+                if(headerEntry instanceof Map)
+                    output.add("${headerEntryTitle}${separator}${headerEntry.collect { Map.Entry e -> "${e.getKey()}:${e.getValue().join(';')}" }}${fillupSeparators}")
+                else
+                    output.add("${headerEntryTitle}${separator}${headerEntry}${fillupSeparators}")
+            }
+        }
+        if(headerData)
+            output.add("") //empty row
+        if(titleRow)
+            output.add(titleRow.join(separator))
+        columnData.each { row ->
+            if(row instanceof Map || row instanceof GroovyRowResult) {
+                output.add(row.values().join(separator).replaceAll('null', '').replaceAll(' ', ' '))
+            }
+            else {
+                if (row instanceof String && row.trim())
+                    output.add(row)
+                else if(row.size() > 0)
+                    output.add(row.join(separator).replaceAll('null','').replaceAll(' ', ' '))
+                else output.add(" ")
+            }
+        }
+        output.join("\n")
+    }
+
     /**
      * Gets the map of column headers for KBART export with their database query mappings
      * @return a map of column headers and SQL query parts
