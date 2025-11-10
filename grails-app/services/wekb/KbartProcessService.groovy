@@ -556,7 +556,7 @@ class KbartProcessService {
             //TODO: countExistingTippsAfterImport > (kbartRowsCount-countInvalidKbartRowsForTipps) ??? nötig noch
             log.info("before deleteTipps from wekb -------------------------------------------------------------------------------------")
 
-            if(checkAllTitles && tippsFound.size() > 0 && kbartRowsCount > 0 && countExistingTippsAfterImport > (kbartRowsCount-countInvalidKbartRowsForTipps)){
+            if(checkAllTitles && tippsFound.size() > 0 && kbartRowsCount > 0 && countExistingTippsAfterImport > 0){
 
                 List<Long> existingTippsAfterImport = TitleInstancePackagePlatform.executeQuery(
                         "select tipp.id from TitleInstancePackagePlatform tipp where " +
