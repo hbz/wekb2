@@ -6,6 +6,7 @@
         <div class="header">
             Package used in LAS:er: <g:link action="linkedSubsInLaser" controller="admin"
                                            id="${pkg.id}">${pkg.packageLinkedInLaserCount()}</g:link>
+
             <g:if test="${pkg.kbartSource}">
                 <br>
                 <br>
@@ -38,25 +39,17 @@
         <div class="card">
             <div class="content">
                 <dl>
-                    <dt class="control-label">Tipps in Laser (Current):</dt>
+                    <dt class="control-label">Tipp Info in Laser:</dt>
+                    <g:set var="tippUrl" value="${laserService.getLaserTippURL()}"/>
+                    <g:set var="laserTipp" value="${laserService.getLaserTipp(tipp.uuid)}"/>
                     <dd>
-                        ${laserService.tippsWithStatusInLaserCount(pkg.uuid, 'Current')}
+                        Name: <a href="${tippUrl + '/' + laserTipp.id}" target="_blank">${laserTipp.name}</a>
                     </dd>
-                    <dt class="control-label">Tipps in Laser (Retired):</dt>
                     <dd>
-                        ${laserService.tippsWithStatusInLaserCount(pkg.uuid, 'Retired')}
+                        Status: ${laserTipp.status}
                     </dd>
-                    <dt class="control-label">Tipps in Laser (Expected):</dt>
                     <dd>
-                        ${laserService.tippsWithStatusInLaserCount(pkg.uuid, 'Expected')}
-                    </dd>
-                    <dt class="control-label">Tipps in Laser (Deleted):</dt>
-                    <dd>
-                        ${laserService.tippsWithStatusInLaserCount(pkg.uuid, 'Deleted')}
-                    </dd>
-                    <dt class="control-label">Tipps in Laser (Removed):</dt>
-                    <dd>
-                        ${laserService.tippsWithStatusInLaserCount(pkg.uuid, 'Removed')}
+                        URL: ${laserTipp.url}
                     </dd>
                 </dl>
             </div>
@@ -67,37 +60,32 @@
                 <dl>
                     <dt class="control-label">PT in Laser (Current):</dt>
                     <dd>
-                        <g:link action="linkedSubsInLaser" controller="admin" id="${pkg.id}"
-                                params="[perpetualAccess: params.perpetualAccess, status: 'Current']">
-                            ${laserService.permanentTitlesWithStatusInLaserCount(pkg.uuid, 'Current')}
+                        <g:link controller="admin" action="permanentTitlesInLaser" params="[status: 'Current', tippId: tipp.id]" id="${pkg.id}">
+                        ${laserService.permanentTitleInLaserCount(tipp.uuid, 'Current')}
                         </g:link>
                     </dd>
                     <dt class="control-label">PT in Laser (Retired):</dt>
                     <dd>
-                        <g:link action="linkedSubsInLaser" controller="admin" id="${pkg.id}"
-                                params="[perpetualAccess: params.perpetualAccess, status: 'Retired']">
-                            ${laserService.permanentTitlesWithStatusInLaserCount(pkg.uuid, 'Retired')}
+                        <g:link controller="admin" action="permanentTitlesInLaser" params="[status: 'Retired', tippId: tipp.id]" id="${pkg.id}">
+                        ${laserService.permanentTitleInLaserCount(tipp.uuid, 'Retired')}
                         </g:link>
                     </dd>
                     <dt class="control-label">PT in Laser (Expected):</dt>
                     <dd>
-                        <g:link action="linkedSubsInLaser" controller="admin" id="${pkg.id}"
-                                params="[perpetualAccess: params.perpetualAccess, status: 'Expected']">
-                            ${laserService.permanentTitlesWithStatusInLaserCount(pkg.uuid, 'Expected')}
+                        <g:link controller="admin" action="permanentTitlesInLaser" params="[status: 'Expected', tippId: tipp.id]" id="${pkg.id}">
+                        ${laserService.permanentTitleInLaserCount(tipp.uuid, 'Expected')}
                         </g:link>
                     </dd>
                     <dt class="control-label">PT in Laser (Deleted):</dt>
                     <dd>
-                        <g:link action="linkedSubsInLaser" controller="admin" id="${pkg.id}"
-                                params="[perpetualAccess: params.perpetualAccess, status: 'Deleted']">
-                            ${laserService.permanentTitlesWithStatusInLaserCount(pkg.uuid, 'Deleted')}
+                        <g:link controller="admin" action="permanentTitlesInLaser" params="[status: 'Deleted', tippId: tipp.id]" id="${pkg.id}">
+                            ${laserService.permanentTitleInLaserCount(tipp.uuid, 'Deleted')}
                         </g:link>
                     </dd>
                     <dt class="control-label">PT in Laser (Removed):</dt>
                     <dd>
-                        <g:link action="linkedSubsInLaser" controller="admin" id="${pkg.id}"
-                                params="[perpetualAccess: params.perpetualAccess, status: 'Removed']">
-                            ${laserService.permanentTitlesWithStatusInLaserCount(pkg.uuid, 'Removed')}
+                        <g:link controller="admin" action="permanentTitlesInLaser" params="[status: 'Removed', tippId: tipp.id]" id="${pkg.id}">
+                            ${laserService.permanentTitleInLaserCount(tipp.uuid, 'Removed')}
                         </g:link>
                     </dd>
                 </dl>

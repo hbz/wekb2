@@ -20,10 +20,15 @@
     <h3 class="ui header">Permanent Titles for Package <g:link controller="resource" action="show" id="${pkg.class.name+':'+pkg.id}">${pkg.name}</g:link></h3>
 </g:if>
 
+<g:if test="${tipp}">
+    <h3 class="ui header">Permanent Titles for Tipp <g:link controller="resource" action="show" id="${'wekb.TitleInstancePackagePlatform:' + tipp.id}">${tipp.name}</g:link></h3>
+</g:if>
+
+
 
 <div class="container">
 
-    <g:form action="${actionName}" controller="${controllerName}" params="[status: params.status]" id="${params.id}">
+    <g:form action="${actionName}" controller="${controllerName}" params="[status: params.status, tippId: params.tippId]" id="${params.id}">
         <div class="ui toggle checkbox">
             <input type="checkbox" name="withWekbTipp" ${params.withWekbTipp ? 'checked' : ''} onchange="this.form.submit()">
             <label>Show WEKB Tipp (Takes longer)</label>

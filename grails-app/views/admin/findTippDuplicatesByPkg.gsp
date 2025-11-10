@@ -1,3 +1,4 @@
+<%@ page import="wekb.helper.RDStore" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,6 +9,7 @@
 <body>
 
 <wekb:serviceInjection/>
+<g:set var="laserService" bean="${wekb.LaserService}"/>
 
 
 <semui:flashMessage data="${flash}"/>
@@ -35,7 +37,30 @@
 </g:if>
 
 <g:if test="${params.tippsDuplicatesBy == "titleID"}">
-    <h3>Tipps Duplicates By Title ID (${totalCount})</h3>
+    <h3>Tipps Duplicates By Title ID (${totalCount}) <g:if test="${status}">[${status}]</g:if> </h3>
+
+
+    <g:link controller="admin" action="findTippDuplicatesByPkg" id="${params.id}" params="[status: RDStore.KBC_STATUS_CURRENT.id]"
+            class="ui button primary">Tipps Duplicates by Status Current (${pkg.getTippDuplicatesWithStatusByTitleIDCount(wekb.helper.RDStore.KBC_STATUS_CURRENT)})</g:link>
+    <br>
+    <br>
+    <g:link controller="admin" action="findTippDuplicatesByPkg" id="${params.id}" params="[status: RDStore.KBC_STATUS_RETIRED.id]"
+            class="ui button primary">Tipps Duplicates by Status Retired (${pkg.getTippDuplicatesWithStatusByTitleIDCount(wekb.helper.RDStore.KBC_STATUS_RETIRED)})</g:link>
+
+    <br>
+    <br>
+    <g:link controller="admin" action="findTippDuplicatesByPkg" id="${params.id}" params="[status: RDStore.KBC_STATUS_EXPECTED.id]"
+            class="ui button primary">Tipps Duplicates by Status Expected (${pkg.getTippDuplicatesWithStatusByTitleIDCount(wekb.helper.RDStore.KBC_STATUS_EXPECTED)})</g:link>
+
+    <br>
+    <br>
+    <g:link controller="admin" action="findTippDuplicatesByPkg" id="${params.id}" params="[status: RDStore.KBC_STATUS_DELETED.id]"
+            class="ui button primary">Tipps Duplicates by Status Deleted (${pkg.getTippDuplicatesWithStatusByTitleIDCount(wekb.helper.RDStore.KBC_STATUS_DELETED)})</g:link>
+
+    <br>
+    <br>
+    <g:link controller="admin" action="findTippDuplicatesByPkg" id="${params.id}" params="[status: RDStore.KBC_STATUS_REMOVED.id]"
+            class="ui button primary">Tipps Duplicates by Status Removed (${pkg.getTippDuplicatesWithStatusByTitleIDCount(wekb.helper.RDStore.KBC_STATUS_REMOVED)})</g:link>
 </g:if>
 
 <table class="ui selectable striped sortable celled table">
@@ -48,6 +73,7 @@
         <th>Publication Type</th>
         <th>Medium</th>
         <th>Url</th>
+        <th>PT in LASER</th>
     </tr>
     </thead>
     <tbody>
@@ -81,6 +107,11 @@
             <td>${t.medium?.value}</td>
             <td>
                 ${t.url}
+            </td>
+            <td>
+                <g:link controller="admin" action="permanentTitlesInLaser" params="[tippId: t.id]" id="${t.pkg.id}">
+                    ${laserService.permanentTitleInLaserCount(t.uuid)}
+                </g:link>
             </td>
         </tr>
     </g:each>

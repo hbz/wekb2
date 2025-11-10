@@ -411,7 +411,14 @@ class AdminController {
         Package aPackage = Package.findByUuid(params.id)
         List<TitleInstancePackagePlatform> tippsDuplicates
         if (params.tippsDuplicatesBy == "titleID") {
-            tippsDuplicates = aPackage.findTippDuplicatesByTitleID()
+            if(params.status){
+                RefdataValue status = RefdataValue.get(params.status)
+                result.status = status.value_en
+                tippsDuplicates = aPackage.findTippDuplicatesWithStatusByTitleID(status)
+            }else{
+                tippsDuplicates = aPackage.findTippDuplicatesByTitleID()
+            }
+
         }
         if (params.tippsDuplicatesBy == "name") {
             tippsDuplicates = aPackage.findTippDuplicatesByName()
@@ -596,6 +603,9 @@ class AdminController {
         params.max = params.max ?: 250
 
         result.pkg = Package.get(params.id)
+        result.provider = Org.findByUuid(params.providerUuid)
+
+        String wekbProviderUuid = result.provider ? result.provider.uuid : null
 
         List linkedPTs = []
 
@@ -604,7 +614,13 @@ class AdminController {
 
         String wekbUuid = result.pkg ? result.pkg.uuid : null
 
-        linkedPTs = laserService.permanentTitlesInLaser(result.status, wekbUuid)
+        result.tipp = TitleInstancePackagePlatform.get(params.tippId)
+
+        String wekbTippUuid = result.tipp ? result.tipp.uuid : null
+
+        params.withWekbTipp = result.tipp ? true : params.withWekbTipp
+
+        linkedPTs = laserService.permanentTitlesInLaser(result.status, wekbUuid, wekbTippUuid, wekbProviderUuid)
 
         result.totalCount = linkedPTs.size()
 
@@ -631,17 +647,23 @@ class AdminController {
                              sub_typ: it.sub_typ]
 
                 if(params.withWekbTipp) {
-                    def principalRows = sql.rows('''select tipp_name,
+                    if (result.tipp) {
+                        infos.id = result.tipp.id
+                        infos.name = result.tipp.name
+                        infos.status =result.tipp.status.value_en
+                    } else {
+                        def principalRows = sql.rows('''select tipp_name,
                                                     rv.rdv_value_en as tipp_status,
                                                     tipp_id
                                                     from  title_instance_package_platform tipp
                                                     left join refdata_value rv on tipp.tipp_status_rv_fk = rv.rdv_id
                                                     where tipp_uuid = :uuid''', [uuid: it.tipp_gokb_id])[0]
 
-                    if (principalRows) {
-                        infos.id = principalRows[2]
-                        infos.name = principalRows[0]
-                        infos.status = principalRows[1]
+                        if (principalRows) {
+                            infos.id = principalRows[2]
+                            infos.name = principalRows[0]
+                            infos.status = principalRows[1]
+                        }
                     }
                 }
 
@@ -660,6 +682,20 @@ class AdminController {
                 log.error("Problem by Close SQL Client:", e)
             }
         }
+
+        result
+    }
+
+    def permanentTitlesInLaserByProviders() {
+        log.debug("permanentTitlesInLaserByProviders::${params}")
+        def result = [:]
+
+        List permanentTitlesInLaserByProviders = laserService.permanentTitlesInLaserByProviders()
+
+        result.totalCount = permanentTitlesInLaserByProviders.size()
+
+        result.permanentTitlesInLaserByProviders = permanentTitlesInLaserByProviders
+
 
         result
     }

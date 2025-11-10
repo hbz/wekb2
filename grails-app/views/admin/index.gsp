@@ -118,36 +118,44 @@
 <div class="ui equal width grid">
     <div class="row">
         <div class="column">
-            <h2 class="ui header">Laser Permanent Titles with Package Infos</h2>
+            <h2 class="ui header">Laser PTs with Package Infos</h2>
 
             <div class="ui divided large relaxed list">
                 <g:link class="item" controller="admin" action="linkedPackageWithPermanentTitlesInLaser"
-                        params="[status: 'Current']">Show linked Package with Permanent Titles in Laser (Current)</g:link>
+                        params="[status: 'Current']">Show linked Package with PTs in Laser (Current)</g:link>
                 <g:link class="item" controller="admin" action="linkedPackageWithPermanentTitlesInLaser"
-                        params="[status: 'Retired']">Show linked Package with Permanent Titles in Laser (Retired)</g:link>
+                        params="[status: 'Retired']">Show linked Package with PTs in Laser (Retired)</g:link>
                 <g:link class="item" controller="admin" action="linkedPackageWithPermanentTitlesInLaser"
-                        params="[status: 'Expected']">Show linked Package with Permanent Titles in Laser (Expected)</g:link>
+                        params="[status: 'Expected']">Show linked Package with PTs in Laser (Expected)</g:link>
                 <g:link class="item" controller="admin" action="linkedPackageWithPermanentTitlesInLaser"
-                        params="[status: 'Deleted']">Show linked Package with Permanent Titles in Laser (Deleted)</g:link>
+                        params="[status: 'Deleted']">Show linked Package with PTs in Laser (Deleted)</g:link>
                 <g:link class="item" controller="admin" action="linkedPackageWithPermanentTitlesInLaser"
-                        params="[status: 'Removed']">Show linked Package with Permanent Titles in Laser (Removed)</g:link>
+                        params="[status: 'Removed']">Show linked Package with PTs in Laser (Removed)</g:link>
             </div>
         </div>
 
         <div class="column">
-            <h2 class="ui header">Laser Permanent Titles Infos</h2>
+            <h2 class="ui header">Laser PTs Infos</h2>
+
+            <div class="ui divided large relaxed list">
+                <g:link class="item" controller="admin" action="permanentTitlesInLaserByProviders">PTs by Providers in Laser</g:link>
+            </div>
+        </div>
+
+        <div class="column">
+            <h2 class="ui header">Laser PTs Infos by Status</h2>
 
             <div class="ui divided large relaxed list">
                 <g:link class="item" controller="admin" action="permanentTitlesInLaser"
-                        params="[status: 'Current']">Show Permanent Titles in Laser (Current)</g:link>
+                        params="[status: 'Current']">Show PTs in Laser (Current)</g:link>
                 <g:link class="item" controller="admin" action="permanentTitlesInLaser"
-                        params="[status: 'Retired']">Show Permanent Titles in Laser (Retired)</g:link>
+                        params="[status: 'Retired']">Show PTs in Laser (Retired)</g:link>
                 <g:link class="item" controller="admin" action="permanentTitlesInLaser"
-                        params="[status: 'Expected']">Show Permanent Titles in Laser (Expected)</g:link>
+                        params="[status: 'Expected']">Show PTs in Laser (Expected)</g:link>
                 <g:link class="item" controller="admin" action="permanentTitlesInLaser"
-                        params="[status: 'Deleted']">Show Permanent Titles in Laser (Deleted)</g:link>
+                        params="[status: 'Deleted']">Show PTs in Laser (Deleted)</g:link>
                 <g:link class="item" controller="admin" action="permanentTitlesInLaser"
-                        params="[status: 'Removed']">Show Permanent Titles in Laser (Removed)</g:link>
+                        params="[status: 'Removed']">Show PTs in Laser (Removed)</g:link>
             </div>
         </div>
     </div>
