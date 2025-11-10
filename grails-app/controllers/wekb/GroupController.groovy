@@ -290,7 +290,7 @@ class GroupController {
             managementService.processPackageManagement(params)
         }
 
-        params.qbe = 'g:packages'
+        params.qbe = 'g:myPackageManagement'
         params.qp_curgroups = searchResult.groups.id
         params.hide = ['qp_curgroup', 'qp_curgroups']
 
