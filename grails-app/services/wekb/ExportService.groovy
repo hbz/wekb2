@@ -33,6 +33,7 @@ import java.text.SimpleDateFormat
 class ExportService {
 
     DateFormatService dateFormatService
+    FtpConnectService ftpConnectService
 
     public void exportOriginalKBART(def outputStream, Package pkg) {
 
@@ -47,7 +48,12 @@ class ExportService {
                 outputStream << file.bytes
             }
             outputStream.close()
-        }else if(pkg.getLastSuccessfulManualUpdateInfo()){
+        }else if (pkg.kbartSource.ftpServerUrl) {
+            File file = ftpConnectService.ftpConnectAndGetFile(pkg.kbartSource)
+            if(file)
+                outputStream << file.bytes
+            outputStream.close()
+        } else if(pkg.getLastSuccessfulManualUpdateInfo()){
             def output
 
             try {
