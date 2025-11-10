@@ -805,7 +805,15 @@ class LaserService {
                                                                                where provider.prov_id = p.prov_id))) as permanent_Removed
                             
                             from provider as p
-                            where p.prov_gokb_id = any(:wekbUuid)'''
+                            where p.prov_gokb_id = any(:wekbUuid) 
+                            and (SELECT COUNT(pt_tipp_fk)
+                                    FROM permanent_title
+                                    where pt_tipp_fk in (SELECT tipp_id
+                                                         FROM title_instance_package_platform
+                                                         where tipp_pkg_fk in (SELECT pkg_id
+                                                                               FROM package
+                                                                                        join provider on package.pkg_provider_fk = provider.prov_id
+                                                                               where provider.prov_id = p.prov_id))) > 0'''
 
                 query = query + orderBy
 
