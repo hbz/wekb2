@@ -56,7 +56,7 @@ class SearchService {
         result.offset = params.offset ? Integer.parseInt(params.offset) : 0;
 
         if( params.inline && !params.max) {
-            result.max = 25
+            result.max = 10
         }
 
         if ( params.jumpOffset ) {
