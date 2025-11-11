@@ -754,7 +754,7 @@ class LaserService {
                                                                                         join provider on package.pkg_provider_fk = provider.prov_id
                                                                                where provider.prov_id = p.prov_id))) as permanent_Tipp_Removed,
                                                                                
-                                    (SELECT COUNT(pt_tipp_fk)
+                                    (SELECT COUNT(*)
                                     FROM permanent_title
                                     where pt_tipp_fk in (SELECT tipp_id
                                                          FROM title_instance_package_platform
@@ -764,7 +764,7 @@ class LaserService {
                                                                                         join provider on package.pkg_provider_fk = provider.prov_id
                                                                                where provider.prov_id = p.prov_id))) as permanent_Current,
                         
-                                   (SELECT COUNT(pt_tipp_fk)
+                                   (SELECT COUNT(*)
                                     FROM permanent_title
                                     where pt_tipp_fk in (SELECT tipp_id
                                                          FROM title_instance_package_platform
@@ -774,7 +774,7 @@ class LaserService {
                                                                                         join provider on package.pkg_provider_fk = provider.prov_id
                                                                                where provider.prov_id = p.prov_id))) as permanent_Retired,
                                  
-                                   (SELECT COUNT(pt_tipp_fk)
+                                   (SELECT COUNT(*)
                                     FROM permanent_title
                                     where pt_tipp_fk in (SELECT tipp_id
                                                          FROM title_instance_package_platform
@@ -784,7 +784,7 @@ class LaserService {
                                                                                         join provider on package.pkg_provider_fk = provider.prov_id
                                                                                where provider.prov_id = p.prov_id))) as permanent_Expected,
                             
-                                   (SELECT COUNT(pt_tipp_fk)
+                                   (SELECT COUNT(*)
                                     FROM permanent_title
                                     where pt_tipp_fk in (SELECT tipp_id
                                                          FROM title_instance_package_platform
@@ -794,7 +794,7 @@ class LaserService {
                                                                                         join provider on package.pkg_provider_fk = provider.prov_id
                                                                                where provider.prov_id = p.prov_id))) as permanent_Deleted,
                             
-                                   (SELECT COUNT(pt_tipp_fk)
+                                   (SELECT COUNT(*)
                                     FROM permanent_title
                                     where pt_tipp_fk in (SELECT tipp_id
                                                          FROM title_instance_package_platform
@@ -806,7 +806,7 @@ class LaserService {
                             
                             from provider as p
                             where p.prov_gokb_id = any(:wekbUuid) 
-                            and (SELECT COUNT(pt_tipp_fk)
+                            and (SELECT COUNT(*)
                                     FROM permanent_title
                                     where pt_tipp_fk in (SELECT tipp_id
                                                          FROM title_instance_package_platform
