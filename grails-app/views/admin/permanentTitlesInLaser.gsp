@@ -24,11 +24,17 @@
     <h3 class="ui header">Permanent Titles for Tipp <g:link controller="resource" action="show" id="${'wekb.TitleInstancePackagePlatform:' + tipp.id}">${tipp.name}</g:link></h3>
 </g:if>
 
+<g:if test="${provider}">
+    <h2>Packages linked with Permanent Titles in Laser by Provider: ${provider.name}</h2>
+        <g:link controller="admin" action="linkedPackageWithPermanentTitlesInLaser" params="${[providerUuid: provider.uuid, status: status]}" class="ui button">Packages with PT Status ${status} (${laserService.packagesWithPermanentTitlesInLaserByProviderCount(status, provider.uuid)})</g:link>
+        <br><br>
+</g:if>
+
 
 
 <div class="container">
 
-    <g:form action="${actionName}" controller="${controllerName}" params="[status: params.status, tippId: params.tippId]" id="${params.id}">
+    <g:form action="${actionName}" controller="${controllerName}" params="[status: params.status, tippId: params.tippId, providerUuid: params.providerUuid]" id="${params.id}">
         <div class="ui toggle checkbox">
             <input type="checkbox" name="withWekbTipp" ${params.withWekbTipp ? 'checked' : ''} onchange="this.form.submit()">
             <label>Show WEKB Tipp (Takes longer)</label>

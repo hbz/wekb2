@@ -502,7 +502,12 @@ class AdminController {
         def result = [:]
 
         result.status = params.status ?: 'Current'
-        result.pkgs = laserService.linkedPackageWithPermanentTitlesInLaser(result.status)
+
+        result.provider = Org.findByUuid(params.providerUuid)
+
+        String wekbProviderUuid = result.provider ? result.provider.uuid : null
+
+        result.pkgs = laserService.linkedPackageWithPermanentTitlesInLaser(result.status, wekbProviderUuid)
         result.totalCount = result.pkgs.size()
 
         result

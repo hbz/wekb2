@@ -114,7 +114,7 @@
             <div class="content">
 
                 <g:link class="display-inline" controller="search" action="inlineSearch"
-                        params="[s_controllerName: controllerName, s_actionName: actionName, objectUUID: params.id, max: params.max, offset: params.activeTab == 'autoUpdatePackageInfos' ? params.offset : '', sort: params.activeTab == 'retiredTipps' ? params.sort : '', order: params.activeTab == 'retiredTipps' ? params.order : '', qbe: 'g:updatePackageInfos', qp_pkg_id: d.id, inline: true, refOID: d.getOID(), hide: ['qp_pkg_id', 'qp_pkg'], activeTab: 'autoUpdatePackageInfos', qp_automaticUpdate: RDStore.YN_YES.class.name+':'+RDStore.YN_YES.id, jumpOffset: params.activeTab == 'autoUpdatePackageInfos' ? params.jumpOffset : '']"
+                        params="[s_controllerName: controllerName, s_actionName: actionName, objectUUID: params.id, max: params.max, offset: params.activeTab == 'autoUpdatePackageInfos' ? params.offset : '', sort: params.activeTab == 'autoUpdatePackageInfos' ? params.sort : '', order: params.activeTab == 'autoUpdatePackageInfos' ? params.order : '', qbe: 'g:updatePackageInfos', qp_pkg_id: d.id, inline: true, refOID: d.getOID(), hide: ['qp_pkg_id', 'qp_pkg'], activeTab: 'autoUpdatePackageInfos', qp_automaticUpdate: RDStore.YN_YES.class.name+':'+RDStore.YN_YES.id, jumpOffset: params.activeTab == 'autoUpdatePackageInfos' ? params.jumpOffset : '']"
                         id="">Update Package Info on this Source</g:link>
 
             </div>
@@ -128,7 +128,7 @@
             <div class="content">
 
                 <g:link class="display-inline" controller="search" action="inlineSearch"
-                        params="[s_controllerName: controllerName, s_actionName: actionName, objectUUID: params.id, max: params.max, offset: params.activeTab == 'autoUpdatePackageInfos' ? params.offset : '', sort: params.activeTab == 'retiredTipps' ? params.sort : '', order: params.activeTab == 'retiredTipps' ? params.order : '', qbe: 'g:updatePackageInfos', qp_pkg_id: d.id, inline: true, refOID: d.getOID(), hide: ['qp_pkg_id', 'qp_pkg'], activeTab: 'manualUpdatePackageInfos', qp_automaticUpdate: RDStore.YN_NO.class.name+':'+RDStore.YN_NO.id]"
+                        params="[s_controllerName: controllerName, s_actionName: actionName, objectUUID: params.id, max: params.max, offset: params.activeTab == 'manualUpdatePackageInfos' ? params.offset : '', sort: params.activeTab == 'manualUpdatePackageInfos' ? params.sort : '', order: params.activeTab == 'manualUpdatePackageInfos' ? params.order : '', qbe: 'g:updatePackageInfos', qp_pkg_id: d.id, inline: true, refOID: d.getOID(), hide: ['qp_pkg_id', 'qp_pkg'], activeTab: 'manualUpdatePackageInfos', qp_automaticUpdate: RDStore.YN_NO.class.name+':'+RDStore.YN_NO.id]"
                         id="">Update Package Info on this Source</g:link>
 
             </div>
