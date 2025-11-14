@@ -183,12 +183,17 @@
 
                     <g:render template="/templates/laserInfosForTipp" model="${[pkg: displayobj.pkg, tipp: displayobj]}"/>
 
-                    <g:if test="${displayobj.getTippDuplicatesByTitleIDCount() > 0}">
+
+                    <g:set var="tippDuplicatesByTitleIDCount" value="${displayobj.getTippDuplicatesByTitleIDCount()}"/>
+                    <g:set var="tippDuplicatesByURLCount" value="${displayobj.getTippDuplicatesByURLCount()}"/>
+                    <g:set var="tippDuplicatesByNameCount" value="${displayobj.getTippDuplicatesByNameCount()}"/>
+
+                    <g:if test="${tippDuplicatesByTitleIDCount > 0}">
                         <div class="ui warning icon message">
 
                             <div class="content wekb-inline-lists">
                                 <div class="header">
-                                    Tipp Duplicates with Title_ID
+                                    Tipp Duplicates with Title_ID (${tippDuplicatesByTitleIDCount})
                                 </div>
 
                                 <div class="ui bulleted list">
@@ -206,12 +211,12 @@
 
                     </g:if>
 
-                    <g:if test="${displayobj.getTippDuplicatesByNameCount() > 0}">
+                    <g:if test="${tippDuplicatesByNameCount > 0}">
                         <div class="ui warning icon message">
 
                             <div class="content wekb-inline-lists">
                                 <div class="header">
-                                    Tipp Duplicates with Name
+                                    Tipp Duplicates with Name (${tippDuplicatesByNameCount})
                                 </div>
 
                                 <div class="ui bulleted list">
@@ -229,12 +234,12 @@
 
                     </g:if>
 
-                    <g:if test="${displayobj.getTippDuplicatesByURLCount() > 0}">
+                    <g:if test="${tippDuplicatesByURLCount > 0}">
                         <div class="ui warning icon message">
 
                             <div class="content wekb-inline-lists">
                                 <div class="header">
-                                    Tipp Duplicates with URL
+                                    Tipp Duplicates with URL (${tippDuplicatesByURLCount})
                                 </div>
 
                                 <div class="ui bulleted list">

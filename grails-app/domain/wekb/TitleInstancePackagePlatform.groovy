@@ -381,11 +381,8 @@ class TitleInstancePackagePlatform  extends AbstractBase implements Auditable {
         String value = getTitleID()
 
         if(identifierNamespace && value) {
-            List<TitleInstancePackagePlatform> tippsDuplicates = TitleInstancePackagePlatform.executeQuery("select tipp from TitleInstancePackagePlatform as tipp join tipp.ids as ident" +
-                    " where tipp.pkg = :pkg and tipp.status != :removed " +
-                    " and ident.value = :value and ident.value in (select ident2.value FROM Identifier AS ident2, TitleInstancePackagePlatform as tipp2 WHERE ident2.namespace = :namespace and ident2.tipp = tipp2 and tipp2.pkg = :pkg and tipp2.status != :removed" +
-                    " group by ident2.value having count(ident2.value) > 1) order by ident.value",
-                    [pkg: pkg, namespace: identifierNamespace, removed: RDStore.KBC_STATUS_REMOVED, value: value]) ?: []
+            List<TitleInstancePackagePlatform> tippsDuplicates = TitleInstancePackagePlatform.executeQuery("select ident.tipp FROM Identifier AS ident left join ident.tipp as tipp WHERE tipp.pkg = :pkg and ident.namespace = :namespace and ident.value = :value and tipp.id != :tippId",
+                    [pkg: pkg, namespace: identifierNamespace, value: value, tippId: id]) ?: []
         }else {
             return []
         }
@@ -397,12 +394,9 @@ class TitleInstancePackagePlatform  extends AbstractBase implements Auditable {
         String value = getTitleID()
 
         if(identifierNamespace && value) {
-            int result = TitleInstancePackagePlatform.executeQuery("select count(*) from TitleInstancePackagePlatform as tipp join tipp.ids as ident" +
-                    " where tipp.pkg = :pkg and tipp.status != :removed " +
-                    " and ident.value = :value and ident.value in (select ident2.value FROM Identifier AS ident2, TitleInstancePackagePlatform as tipp2 WHERE ident2.namespace = :namespace and ident2.tipp = tipp2 and tipp2.pkg = :pkg and tipp2.status != :removed" +
-                    " group by ident2.value having count(ident2.value) > 1)",
-                    [pkg: pkg, namespace: identifierNamespace, removed: RDStore.KBC_STATUS_REMOVED, value: value])[0]
-            return result
+            int result = TitleInstancePackagePlatform.executeQuery("select count(ident.value) FROM Identifier AS ident left join ident.tipp as tipp WHERE tipp.pkg = :pkg and ident.namespace = :namespace and ident.value = :value and tipp.id != :tippId",
+                    [pkg: pkg, namespace: identifierNamespace, value: value, tippId: id])[0]
+            return result > 0 ? result : 0
         }else {
             return 0
         }
