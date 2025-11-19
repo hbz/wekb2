@@ -85,7 +85,6 @@ class KbartProcessService {
 
     UpdatePackageInfo kbartImportProcess(List kbartRows, Package pkg, String lastUpdateURL, UpdatePackageInfo updatePackageInfo, Boolean onlyRowsWithLastChanged) {
         log.info("Begin kbartImportProcess Package ($pkg.name)")
-        boolean addOnly = false //Thing about it where to set or to change
 
         boolean processFailed = false
 
@@ -104,18 +103,16 @@ class KbartProcessService {
 
         //Needed if kbart not wekb standard
         boolean setAllTippsNotInKbartToDeleted = true
+        boolean kbartHasWekbFields = false
 
 
-       /* if(kbartRows.size() > 0){
+       if(kbartRows.size() > 0){
             if (headerOfKbart.containsKey("status")) {
                 log.info("kbart has status field and is wekb standard")
                 setAllTippsNotInKbartToDeleted = false
-                listStatus = [status_current, status_expected, status_deleted, status_retired]
+                kbartHasWekbFields = true
+                //listStatus = [status_current, status_expected, status_deleted, status_retired]
             }
-        }*/
-
-        if(addOnly){
-            setAllTippsNotInKbartToDeleted = false
         }
 
         int previouslyTipps = TitleInstancePackagePlatform.executeQuery(
@@ -191,9 +188,7 @@ class KbartProcessService {
             }
 
             UpdatePackageInfo.withTransaction {
-                if(!setAllTippsNotInKbartToDeleted){
-                    updatePackageInfo.kbartHasWekbFields = true
-                }
+                updatePackageInfo.kbartHasWekbFields = kbartHasWekbFields
 
                 if(lastChangedInKbart){
                     updatePackageInfo.lastChangedInKbart = lastChangedInKbart
@@ -292,7 +287,7 @@ class KbartProcessService {
                                                         changedTipps++
                                                     }
 
-                                                    if (setAllTippsNotInKbartToDeleted && updateTipp && updateTipp.status != RDStore.KBC_STATUS_CURRENT) {
+                                                    if (!kbartHasWekbFields && updateTipp && updateTipp.status != RDStore.KBC_STATUS_CURRENT) {
                                                         updateTipp.status = RDStore.KBC_STATUS_CURRENT
                                                         setTippsNotToDeleted << updateTipp.id
                                                     }
@@ -658,7 +653,7 @@ class KbartProcessService {
 
                     if (aPackage.kbartSource && updatePackageInfo.automaticUpdate) {
                         KbartSource src = KbartSource.get(aPackage.kbartSource.id)
-                        src.kbartHasWekbFields = !setAllTippsNotInKbartToDeleted
+                        src.kbartHasWekbFields = kbartHasWekbFields
                         src.lastRun = new Date()
                         src.lastUpdateUrl = (src.defaultSupplyMethod == RDStore.KS_DSMETHOD_HTTP_URL ? lastUpdateURL : "")
                         src.lastChangedInKbart = lastChangedInKbart
@@ -703,6 +698,7 @@ class KbartProcessService {
                 updatePackageInfo.frequency = aPackage.kbartSource.frequency
                 updatePackageInfo.lastUpdateUrl = aPackage.kbartSource.lastUpdateUrl
                 updatePackageInfo.lastChangedInKbart = lastChangedInKbart
+                updatePackageInfo.kbartHasWekbFields = kbartHasWekbFields
                 updatePackageInfo.save()
             }
         }
