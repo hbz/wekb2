@@ -503,7 +503,7 @@ class Package  extends AbstractBase implements Auditable {
         if(identifierNamespace) {
             List<TitleInstancePackagePlatform> tippsDuplicates = TitleInstancePackagePlatform.executeQuery("select tipp from TitleInstancePackagePlatform as tipp join tipp.ids as ident" +
                     " where tipp.pkg = :pkg and tipp.status = :status " +
-                    " and ident.namespace = :namespace and ident.value in (select ident2.value FROM Identifier AS ident2, TitleInstancePackagePlatform as tipp2 WHERE ident2.namespace = :namespace and ident2.tipp = tipp2 and tipp2.pkg = :pkg and tipp2.status != :status " +
+                    " and ident.namespace = :namespace and ident.value in (select ident2.value FROM Identifier AS ident2, TitleInstancePackagePlatform as tipp2 WHERE ident2.namespace = :namespace and ident2.tipp = tipp2 and tipp2.pkg = :pkg " +
                     " group by ident2.value having count(ident2.value) > 1) order by ident.value",
                     [pkg: this, namespace: identifierNamespace, status: status]) ?: []
         }else {
@@ -520,7 +520,7 @@ class Package  extends AbstractBase implements Auditable {
       List<TitleInstancePackagePlatform> tippsDuplicates = TitleInstancePackagePlatform.executeQuery("select tipp from TitleInstancePackagePlatform as tipp join tipp.ids as ident" +
               " where tipp.pkg = :pkg and tipp.status != :removed " +
               " and not exists(select id from Identifier id where id.tipp = tipp and id.namespace = :namespace)",
-              [pkg: this, namespace: identifierNamespace]) ?: []
+              [pkg: this, namespace: identifierNamespace, removed: RDStore.KBC_STATUS_REMOVED]) ?: []
     }else {
       return []
     }
@@ -585,7 +585,7 @@ class Package  extends AbstractBase implements Auditable {
 
     if(identifierNamespace) {
       int result = TitleInstancePackagePlatform.executeQuery("select count(*) from TitleInstancePackagePlatform as tipp join tipp.ids as ident" +
-              " where tipp.pkg = :pkg and tipp.status != :removed " +
+              " where tipp.pkg = :pkg " +
               " and exists(select id from Identifier id where id.tipp = tipp and id.namespace = :namespace)",
               [pkg: this, namespace: identifierNamespace])[0]
       return result
@@ -602,7 +602,7 @@ class Package  extends AbstractBase implements Auditable {
       int result = TitleInstancePackagePlatform.executeQuery("select count(*) from TitleInstancePackagePlatform as tipp" +
               " where tipp.pkg = :pkg and tipp.status != :removed " +
               " and not exists(select id from Identifier id where id.tipp = tipp and id.namespace = :namespace)",
-              [pkg: this, namespace: identifierNamespace])[0]
+              [pkg: this, namespace: identifierNamespace, removed: RDStore.KBC_STATUS_REMOVED])[0]
       return result
     }else {
       return 0

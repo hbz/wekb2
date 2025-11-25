@@ -96,6 +96,12 @@
         </tbody>
     </table>
 
+    <br>
+    <br>
+    <br>
+
+    ${pkgs.pkg.uuid.join(', ')}
+
 </div>
 
 </body>
