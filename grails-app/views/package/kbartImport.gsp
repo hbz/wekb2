@@ -82,7 +82,7 @@
 
         <div class="content">
             <g:uploadForm class="ui form" action="processKbartImport" method="post" id="${pkg.id}">
-                <div class="field">
+                %{--<div class="field">
                     <div class="ui checkbox">
                         <input type="checkbox" name="onlyRowsWithLastChanged">
                         <label>Only update titles with the latest last_changed time stamp in your we:kb/KBART file. Last registered date is:
@@ -94,7 +94,7 @@
                         </g:else>
                         </label>
                     </div>
-                </div>
+                </div>--}%
 
                 <div class="ui fluid action input labeled">
                     <div class="ui label">
