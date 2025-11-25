@@ -20,7 +20,7 @@
 
 <g:render template="/templates/laserInfosForPkg" model="${[pkg: pkg]}"/>
 
-<g:set var="refDataValueStatus" value="${RefdataCategory.lookup(RCConstants.COMPONENT_STATUS, status)}"/>
+<g:set var="refDataValueStatus" value="${status ? RefdataCategory.lookup(RCConstants.COMPONENT_STATUS, status) : null}"/>
 
 <g:if test="${refDataValueStatus}">
     <g:link controller="admin" action="findTippDuplicatesByPkg" id="${pkg.uuid}" params="[status: refDataValueStatus.id]"
