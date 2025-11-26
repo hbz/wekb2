@@ -109,12 +109,12 @@ class ExportService {
     }
 
     private File kbartFromUrl(String urlString, UpdatePackageInfo updatePackageInfo = null) throws Exception{
+        File file
         URL url = new URL(urlString)
         File folder = new File("/tmp/wekb/kbartExport")
         log.debug("kbartFromUrl: "+urlString)
         String fileName = folder.absolutePath.concat(File.separator).concat(urlStringToFileString(url.toExternalForm()))
         fileName = fileName.split("\\?")[0]
-        File file = new File(fileName)
         HttpURLConnection connection
         try {
             connection = (HttpURLConnection) url.openConnection()
@@ -155,6 +155,7 @@ class ExportService {
         log.debug("connection.getResponseCode(): "+connection.getResponseCode())
         try {
             if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                file = new File(fileName)
                 byte[] content = getByteContent(connection.getInputStream())
                 //InputStream inputStream = new ByteArrayInputStream(content)
                 FileUtils.copyInputStreamToFile(new ByteArrayInputStream(content), file)
