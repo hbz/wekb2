@@ -56,7 +56,7 @@ class SearchService {
         result.offset = params.offset ? Integer.parseInt(params.offset) : 0;
 
         if( params.inline && !params.max) {
-            result.max = 25
+            result.max = 10
         }
 
         if ( params.jumpOffset ) {
@@ -105,6 +105,7 @@ class SearchService {
                 params.sort = params.sort ?: result.qbetemplate.defaultSort
                 params.order = params.order ?: result.qbetemplate.defaultOrder
                 if(result.qbetemplate.defaultStatus) {
+                    params.status = cleaned_params.qp_status ?: result.qbetemplate.defaultStatus
                     cleaned_params.qp_status = cleaned_params.qp_status ?: result.qbetemplate.defaultStatus
                 }
 

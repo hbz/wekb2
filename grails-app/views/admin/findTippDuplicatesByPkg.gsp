@@ -1,3 +1,4 @@
+<%@ page import="wekb.helper.RDStore" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,6 +9,7 @@
 <body>
 
 <wekb:serviceInjection/>
+<g:set var="laserService" bean="${wekb.LaserService}"/>
 
 
 <semui:flashMessage data="${flash}"/>
@@ -20,211 +22,105 @@
 </g:link>
 </h1>
 
-<div class="container">
+<g:if test="${params.tippsDuplicatesBy == "name"}">
+    <h3>Tipps Duplicates By Name (${totalCount})</h3>
+</g:if>
 
-    <ul id="tabs" class="nav nav-tabs">
-        %{--<li role="presentation" class="${!params.papaginateByUrl && !params.papaginateByTitleID ? 'active' : ''}"><a
-                href="#byName" data-toggle="tab">Tipps Duplicates By Name <span
-                    class="badge badge-warning">${totalCountByName}</span></a></li>
-        <li role="presentation"
-            class="${params.papaginateByUrl && !params.papaginateByTitleID && !params.papaginateByName ? 'active' : ''}"><a
-                href="#byUrl" data-toggle="tab">Tipps Duplicates By Url <span
-                    class="badge badge-warning">${totalCountByUrl}</span></a></li>--}%
-        <li role="presentation"
-            class="${!params.papaginateByUrl && params.papaginateByTitleID && !params.papaginateByName ? 'active' : ''}"><a
-                href="#byTitleID" data-toggle="tab">Tipps Duplicates By Title ID <span
-                    class="badge badge-warning">${totalCountByTitleID}</span></a></li>
-    </ul>
+<g:if test="${params.tippsDuplicatesBy == "url"}">
+    <h3>Tipps Duplicates By Url (${totalCount})</h3>
 
-   %{-- <div class="tab-content">
-
-        <div class="tab-pane ${!params.papaginateByUrl && !params.papaginateByTitleID ? 'active' : ''}" id="byName">
-
-            <h3>Tipps Duplicates By Name (${totalCountByName})</h3>
-
-            <table class="ui selectable striped sortable celled table">
-                <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Title</th>
-                    <th>Identifiers</th>
-                    <th>Platform</th>
-                    <th>Publication Type</th>
-                    <th>Medium</th>
-                    <th>Url</th>
-                </tr>
-                </thead>
-                <tbody>
-                <g:each in="${tippsDuplicatesByName}" var="t" status="i">
-                    <tr>
-                        <td>
-                            ${(params.offset ? params.offset.toInteger() : 0) + i + 1}
-                        </td>
-                        <td>
-                            <g:link controller="resource" action="show" id="${t.getOID()}">
-                                ${t.name} <strong>(${t.status.value})</strong>
-                            </g:link>
-                        </td>
-                        <td>
-                            <ul>
-                                <g:each in="${t.ids.sort { it.namespace.value }}" var="id">
-                                    <li><strong>${id.namespace.value}</strong>:<g:link controller="resource"
-                                                                                       action="show"
-                                                                                       id="${id.getOID()}">${id.value}</g:link>
-                                    </li>
-                                </g:each>
-                            </ul>
-                        </td>
-                        <td>
-                            <g:link controller="resource" action="show"
-                                    id="${t.hostPlatform.getOID()}">
-                                ${t.hostPlatform?.name}
-                            </g:link>
-                        </td>
-                        <td>${t.publicationType?.value}</td>
-                        <td>${t.medium?.value}</td>
-                        <td>
-                            ${t.url}
-                        </td>
-                    </tr>
-                </g:each>
-                </tbody>
-            </table>
-
-            <semui:paginate controller="${controllerName}" action="${actionName}"
-                            params="[id: params.id, papaginateByName: true]"
-                            max="${maxByName}" offset="${offsetByName}" total="${totalCountByName}"/>
-
-        </div>
-
-        <div class="tab-pane ${params.papaginateByUrl && !params.papaginateByTitleID && !params.papaginateByName ? 'active' : ''}"
-             id="byUrl">
-            <h3>Tipps Duplicates By Url (${totalCountByUrl})</h3>
-
-            <div class="ui right floated buttons">
-                <g:link controller="admin" action="removeTippDuplicatesByUrl" id="${params.id}"
-                        class="ui button primary">Remove Tipps Duplicates By Url</g:link>
-            </div>
-
-            <table class="ui selectable striped sortable celled table">
-                <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Title</th>
-                    <th>Identifiers</th>
-                    <th>Platform</th>
-                    <th>Publication Type</th>
-                    <th>Medium</th>
-                    <th>Url</th>
-                </tr>
-                </thead>
-                <tbody>
-                <g:each in="${tippsDuplicatesByUrl}" var="t" status="i">
-                    <tr>
-                        <td>
-                            ${(params.offset ? params.offset.toInteger() : 0) + i + 1}
-                        </td>
-                        <td>
-                            <g:link controller="resource" action="show" id="${t.getOID()}">
-                                ${t.name}
-                            </g:link> <strong>(${t.status.value})</strong>
-                        </td>
-                        <td>
-                            <ul>
-                                <g:each in="${t.ids.sort { it.namespace.value }}" var="id">
-                                    <li><strong>${id.namespace.value}</strong>:<g:link controller="resource"
-                                                                                       action="show"
-                                                                                       id="${id.getOID()}">${id.value}</g:link>
-                                    </li>
-                                </g:each>
-                            </ul>
-                        </td>
-                        <td>
-                            <g:link controller="resource" action="show"
-                                    id="${t.hostPlatform.getOID()}">
-                                ${t.hostPlatform?.name}
-                            </g:link>
-                        </td>
-                        <td>${t.publicationType?.value}</td>
-                        <td>${t.medium?.value}</td>
-                        <td>
-                            ${t.url}
-                        </td>
-                    </tr>
-                </g:each>
-                </tbody>
-            </table>
-
-
-            <semui:paginate controller="${controllerName}" action="${actionName}"
-                            params="[id: params.id, papaginateByUrl: true]"
-                            max="${maxByUrl}" offset="${offsetByUrl}" total="${totalCountByUrl}"/>
-        </div>
-    </div>--}%
-
-    <div class="tab-pane ${!params.papaginateByUrl && params.papaginateByTitleID && !params.papaginateByName ? 'active' : ''}"
-         id="byTitleID">
-
-        <h3>Tipps Duplicates By Title ID (${totalCountByTitleID})</h3>
-        <table class="ui selectable striped sortable celled table">
-            <thead>
-            <tr>
-                <th>#</th>
-                <th>Title</th>
-                <th>Identifiers</th>
-                <th>Status</th>
-                <th>Platform</th>
-                <th>Publication Type</th>
-                <th>Medium</th>
-                <th>Url</th>
-            </tr>
-            </thead>
-            <tbody>
-            <g:each in="${tippsDuplicatesByTitleID}" var="t" status="i">
-                <tr>
-                    <td>
-                        ${(params.offset ? params.offset.toInteger() : 0) + i + 1}
-                    </td>
-                    <td>
-                        <g:link controller="resource" action="show" id="${t.getOID()}">
-                            ${t.name} <strong>(${t.status.value})</strong>
-                        </g:link>
-                    </td>
-                    <td>
-                        <ul>
-                            <g:each in="${t.ids.sort { it.namespace.value }}" var="id">
-                                <li><strong>${id.namespace.value}</strong>:<g:link controller="resource"
-                                                                                   action="show"
-                                                                                   id="${id.getOID()}">${id.value}</g:link>
-                                </li>
-                            </g:each>
-                        </ul>
-                    </td>
-                    <td>
-                        ${t.status.value}
-                    </td>
-                    <td>
-                        <g:link controller="resource" action="show"
-                                id="${t.hostPlatform.getOID()}">
-                            ${t.hostPlatform?.name}
-                        </g:link>
-                    </td>
-                    <td>${t.publicationType?.value}</td>
-                    <td>${t.medium?.value}</td>
-                    <td>
-                        ${t.url}
-                    </td>
-                </tr>
-            </g:each>
-            </tbody>
-        </table>
-
-        <semui:paginate controller="${controllerName}" action="${actionName}"
-                        params="[id: params.id, papaginateByTitleID: true]"
-                        max="${maxByTitleID}" offset="${offsetByTitleID}" total="${totalCountByTitleID}"/>
-
+    <div class="ui right floated buttons">
+        <g:link controller="admin" action="removeTippDuplicatesByUrl" id="${params.id}"
+                class="ui button primary">Remove Tipps Duplicates By Url</g:link>
     </div>
-</div>
+    <br>
+</g:if>
+
+<g:if test="${params.tippsDuplicatesBy == "titleID"}">
+    <h3>Tipps Duplicates By Title ID (${totalCount}) <g:if test="${status}">[${status}]</g:if> </h3>
+
+
+    <g:link controller="admin" action="findTippDuplicatesByPkg" id="${params.id}" params="[status: RDStore.KBC_STATUS_CURRENT.id]"
+            class="ui button primary">Tipps Duplicates by Status Current (${pkg.getTippDuplicatesWithStatusByTitleIDCount(wekb.helper.RDStore.KBC_STATUS_CURRENT)})</g:link>
+    <br>
+    <br>
+    <g:link controller="admin" action="findTippDuplicatesByPkg" id="${params.id}" params="[status: RDStore.KBC_STATUS_RETIRED.id]"
+            class="ui button primary">Tipps Duplicates by Status Retired (${pkg.getTippDuplicatesWithStatusByTitleIDCount(wekb.helper.RDStore.KBC_STATUS_RETIRED)})</g:link>
+
+    <br>
+    <br>
+    <g:link controller="admin" action="findTippDuplicatesByPkg" id="${params.id}" params="[status: RDStore.KBC_STATUS_EXPECTED.id]"
+            class="ui button primary">Tipps Duplicates by Status Expected (${pkg.getTippDuplicatesWithStatusByTitleIDCount(wekb.helper.RDStore.KBC_STATUS_EXPECTED)})</g:link>
+
+    <br>
+    <br>
+    <g:link controller="admin" action="findTippDuplicatesByPkg" id="${params.id}" params="[status: RDStore.KBC_STATUS_DELETED.id]"
+            class="ui button primary">Tipps Duplicates by Status Deleted (${pkg.getTippDuplicatesWithStatusByTitleIDCount(wekb.helper.RDStore.KBC_STATUS_DELETED)})</g:link>
+
+    <br>
+    <br>
+    <g:link controller="admin" action="findTippDuplicatesByPkg" id="${params.id}" params="[status: RDStore.KBC_STATUS_REMOVED.id]"
+            class="ui button primary">Tipps Duplicates by Status Removed (${pkg.getTippDuplicatesWithStatusByTitleIDCount(wekb.helper.RDStore.KBC_STATUS_REMOVED)})</g:link>
+</g:if>
+
+<table class="ui selectable striped sortable celled table">
+    <thead>
+    <tr>
+        <th>#</th>
+        <th>Title</th>
+        <th>Identifiers</th>
+        <th>Platform</th>
+        <th>Publication Type</th>
+        <th>Medium</th>
+        <th>Url</th>
+        <th>PT in LASER</th>
+    </tr>
+    </thead>
+    <tbody>
+    <g:each in="${tippsDuplicates}" var="t" status="i">
+        <tr>
+            <td>
+                ${(params.offset ? params.offset.toInteger() : 0) + i + 1}
+            </td>
+            <td>
+                <g:link controller="resource" action="show" id="${t.getOID()}">
+                    ${t.name} <strong>(${t.status.value})</strong>
+                </g:link>
+            </td>
+            <td>
+                <ul>
+                    <g:each in="${t.ids.sort { it.namespace.value }}" var="id">
+                        <li><strong>${id.namespace.value}</strong>:<g:link controller="resource"
+                                                                           action="show"
+                                                                           id="${id.getOID()}">${id.value}</g:link>
+                        </li>
+                    </g:each>
+                </ul>
+            </td>
+            <td>
+                <g:link controller="resource" action="show"
+                        id="${t.hostPlatform.getOID()}">
+                    ${t.hostPlatform?.name}
+                </g:link>
+            </td>
+            <td>${t.publicationType?.value}</td>
+            <td>${t.medium?.value}</td>
+            <td>
+                ${t.url}
+            </td>
+            <td>
+                <g:link controller="admin" action="permanentTitlesInLaser" params="[tippId: t.id]" id="${t.pkg.id}">
+                    ${laserService.permanentTitleInLaserCount(t.uuid)}
+                </g:link>
+            </td>
+        </tr>
+    </g:each>
+    </tbody>
+</table>
+
+<semui:paginate controller="${controllerName}" action="${actionName}"
+                params="[id: params.id, papaginateByName: true]"
+                max="${max}" offset="${offset}" total="${totalCount}"/>
 
 </body>
 </html>

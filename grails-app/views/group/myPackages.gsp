@@ -8,7 +8,7 @@
 <body>
 <h1 class="ui header">My Packages of Curatory Groups (${groups.name.join(',')})</h1>
 
-   %{-- <g:link controller="group" action="processPackageUpdate"
+    %{--<g:link controller="group" action="processPackageUpdate"
             class="ui left floated primary button">Trigger KBART Update (Changed Titles) for all my Packages</g:link>--}%
 
     <g:link controller="group" action="exportMyPackages"

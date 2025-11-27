@@ -18,7 +18,9 @@ import org.hibernate.Session
 import org.hibernate.SessionFactory
 import org.springframework.security.access.annotation.Secured
 import wekb.system.FTControl
+import wekb.utils.DateUtils
 
+import javax.servlet.ServletOutputStream
 import javax.sql.DataSource
 import java.text.SimpleDateFormat
 import java.util.concurrent.CancellationException
@@ -29,9 +31,9 @@ class AdminController {
 
   ComponentStatisticService componentStatisticService
   ConcurrencyManagerService concurrencyManagerService
-  CleanupService cleanupService
   AutoUpdatePackagesService autoUpdatePackagesService
   def ESWrapperService
+  ExportService exportService
   SpringSecurityService springSecurityService
   FTUpdateService FTUpdateService
   SessionFactory sessionFactory
@@ -400,37 +402,42 @@ class AdminController {
   }
 
 
-  def findTippDuplicatesByPkg() {
-    log.debug("findTippDuplicates::${params}")
-    def result = [:]
+    def findTippDuplicatesByPkg() {
+        log.debug("findTippDuplicates::${params}")
+        def result = [:]
 
-    Package aPackage = Package.findByUuid(params.id)
+        params.tippsDuplicatesBy = params.tippsDuplicatesBy ?: "titleID"
 
-    //List<TitleInstancePackagePlatform> tippsDuplicatesByName = aPackage.findTippDuplicatesByName()
-    //List<TitleInstancePackagePlatform> tippsDuplicatesByUrl = aPackage.findTippDuplicatesByURL()
-    List<TitleInstancePackagePlatform> tippsDuplicatesByTitleID = aPackage.findTippDuplicatesByTitleID()
+        Package aPackage = Package.findByUuid(params.id)
+        List<TitleInstancePackagePlatform> tippsDuplicates
+        if (params.tippsDuplicatesBy == "titleID") {
+            if(params.status){
+                RefdataValue status = RefdataValue.get(params.status)
+                result.status = status.value_en
+                tippsDuplicates = aPackage.findTippDuplicatesWithStatusByTitleID(status)
+            }else{
+                tippsDuplicates = aPackage.findTippDuplicatesByTitleID()
+            }
 
-    //result.offsetByName = params.papaginateByName ? Integer.parseInt(params.offset) : 0
-    //result.maxByName = params.papaginateByName ? Integer.parseInt(params.max) : 100
+        }
+        if (params.tippsDuplicatesBy == "name") {
+            tippsDuplicates = aPackage.findTippDuplicatesByName()
+        }
+        if (params.tippsDuplicatesBy == "url") {
+            tippsDuplicates = aPackage.findTippDuplicatesByURL()
+        }
 
-    //result.offsetByUrl = params.papaginateByUrl ? Integer.parseInt(params.offset) : 0
-    //result.maxByUrl = params.papaginateByUrl ? Integer.parseInt(params.max) : 100
+        result.offset = params.offset ? Integer.parseInt(params.offset) : 0
+        result.max = params.max ? Integer.parseInt(params.max) : 100
 
-    result.offsetByTitleID = params.papaginateByTitleID ? Integer.parseInt(params.offset) : 0
-    result.maxByTitleID = params.papaginateByTitleID ? Integer.parseInt(params.max) : 100
+        result.totalCount = tippsDuplicates.size()
 
-    //result.totalCountByName = tippsDuplicatesByName.size()
-    //result.totalCountByUrl = tippsDuplicatesByUrl.size()
-    result.totalCountByTitleID = tippsDuplicatesByTitleID.size()
+        result.tippsDuplicates = tippsDuplicates.drop((int) result.offset).take((int) result.max)
 
-    //result.tippsDuplicatesByName = tippsDuplicatesByName.drop((int) result.offsetByName).take((int) result.maxByName)
-    //result.tippsDuplicatesByUrl = tippsDuplicatesByUrl.drop((int) result.offsetByUrl).take((int) result.maxByUrl)
-    result.tippsDuplicatesByTitleID = tippsDuplicatesByTitleID.drop((int) result.offsetByTitleID).take((int) result.maxByTitleID)
+        result.pkg = aPackage
 
-    result.pkg = aPackage
-
-    result
-  }
+        result
+    }
 
   def findTippWithoutTitleIDByPkg() {
     log.debug("findTippWithoutTitleIDByPkg::${params}")
@@ -495,7 +502,12 @@ class AdminController {
         def result = [:]
 
         result.status = params.status ?: 'Current'
-        result.pkgs = laserService.linkedPackageWithPermanentTitlesInLaser(result.status)
+
+        result.provider = Org.findByUuid(params.providerUuid)
+
+        String wekbProviderUuid = result.provider ? result.provider.uuid : null
+
+        result.pkgs = laserService.linkedPackageWithPermanentTitlesInLaser(result.status, wekbProviderUuid)
         result.totalCount = result.pkgs.size()
 
         result
@@ -596,6 +608,9 @@ class AdminController {
         params.max = params.max ?: 250
 
         result.pkg = Package.get(params.id)
+        result.provider = Org.findByUuid(params.providerUuid)
+
+        String wekbProviderUuid = result.provider ? result.provider.uuid : null
 
         List linkedPTs = []
 
@@ -604,7 +619,13 @@ class AdminController {
 
         String wekbUuid = result.pkg ? result.pkg.uuid : null
 
-        linkedPTs = laserService.permanentTitlesInLaser(result.status, wekbUuid)
+        result.tipp = TitleInstancePackagePlatform.get(params.tippId)
+
+        String wekbTippUuid = result.tipp ? result.tipp.uuid : null
+
+        params.withWekbTipp = result.tipp ? true : params.withWekbTipp
+
+        linkedPTs = laserService.permanentTitlesInLaser(result.status, wekbUuid, wekbTippUuid, wekbProviderUuid)
 
         result.totalCount = linkedPTs.size()
 
@@ -623,7 +644,7 @@ class AdminController {
                              pkg_name: it.pkg_name,
                              sub_id: it.sub_id,
                              sub_name: it.sub_name,
-                             status: it.status,
+                             sub_status: it.sub_status,
                              sub_start_date: it.sub_start_date,
                              sub_end_date: it.sub_end_date,
                              sub_has_perpetual_access: it.sub_has_perpetual_access,
@@ -631,17 +652,23 @@ class AdminController {
                              sub_typ: it.sub_typ]
 
                 if(params.withWekbTipp) {
-                    def principalRows = sql.rows('''select tipp_name,
+                    if (result.tipp) {
+                        infos.id = result.tipp.id
+                        infos.name = result.tipp.name
+                        infos.status =result.tipp.status.value_en
+                    } else {
+                        def principalRows = sql.rows('''select tipp_name,
                                                     rv.rdv_value_en as tipp_status,
                                                     tipp_id
                                                     from  title_instance_package_platform tipp
                                                     left join refdata_value rv on tipp.tipp_status_rv_fk = rv.rdv_id
                                                     where tipp_uuid = :uuid''', [uuid: it.tipp_gokb_id])[0]
 
-                    if (principalRows) {
-                        infos.id = principalRows[2]
-                        infos.name = principalRows[0]
-                        infos.status = principalRows[1]
+                        if (principalRows) {
+                            infos.id = principalRows[2]
+                            infos.name = principalRows[0]
+                            infos.status = principalRows[1]
+                        }
                     }
                 }
 
@@ -660,6 +687,20 @@ class AdminController {
                 log.error("Problem by Close SQL Client:", e)
             }
         }
+
+        result
+    }
+
+    def permanentTitlesInLaserByProviders() {
+        log.debug("permanentTitlesInLaserByProviders::${params}")
+        def result = [:]
+
+        List permanentTitlesInLaserByProviders = laserService.permanentTitlesInLaserByProviders()
+
+        result.totalCount = permanentTitlesInLaserByProviders.size()
+
+        result.permanentTitlesInLaserByProviders = permanentTitlesInLaserByProviders
+
 
         result
     }
@@ -750,7 +791,7 @@ class AdminController {
 
     flash.message = "Tipps ${countRemoved} set to removed because of tipp duplicates by url"
 
-    redirect(action: 'findTippDuplicatesByPkg', params: [id: params.id, papaginateByUrl: true, max: 100, offset: 0] )
+    redirect(action: 'findTippDuplicatesByPkg', params: [id: params.id, max: 100, offset: 0] )
 
   }
 
@@ -1131,6 +1172,77 @@ class AdminController {
         result.totalCount = packageDiff.size()
         result.packageDiff = packageDiff
         result
+    }
+
+    def createOrgDumpForZammad() {
+        Map<String, String> dumpCols = [
+                name: "concat('we:kb: ', o.name)",
+                shared: "true",
+                domain: "o.homepage",
+                domain_assignment: "false",
+                active: "true",
+                note: "''",
+                kuerzel: "''",
+                url_produktionsdatenbank: "''",
+                url_produktionsdatenbank_discovery: "''",
+                url_alma_premiumsandbox: "''",
+                url_discovery_premiumsandbox: "''",
+                url_homepage: "''",
+                discoverysystem_eigenheiten: "''",
+                opus_url_prouduktionssytem: "''",
+                opus_url_testsytem: "''",
+                ap_1_zammad: "''",
+                ap_2_zammad: "''",
+                ap_2_zammad_e_mail: "''",
+                ap_1_zammad_e_mail: "''",
+                ap_2_zammad_tel: "''",
+                ap_1_zammad_tel: "''",
+                lzv_institutions_code: "''",
+                vip: "false",
+                strasse: "''",
+                plz: "''",
+                stadt: "''",
+                land: "''",
+                produkt: "''",
+                lokalsystem: "''",
+                status: "''",
+                endnutzerfl: "''",
+                tech: "''",
+                besonders: "''",
+                'N8_system_url': "''",
+                'N8_oa_url1': "''",
+                'N8_oa_url2': "''",
+                'N8_oa_url3': "''",
+                'N5_las_nutzertyp': "'we:kb-Anbieter'",
+                'N5_las_url': "concat('https://wekb.hbz-nrw.de/resource/show/', o.uuid)",
+                members: "''"
+        ]
+        String filenameDomain = 'wekb_providers'
+        if(params.domain == 'Vendor') {
+            dumpCols.N5_las_nutzertyp = "'we:kb-Library Supplier'"
+            filenameDomain = 'wekb_library_suppliers'
+        }
+        String mapArgs = dumpCols.collect { String header, String column -> "${column} as ${header}" }.join(',')
+        String dumpQuery = "select ${mapArgs} from ${params.domain} o where o.status != :removed order by lower(o.name)"
+        Set currentInstitutions = Org.executeQuery(dumpQuery, [removed: RDStore.KBC_STATUS_REMOVED])
+        Set<String> titleRow = []
+        dumpCols.keySet().each { String key ->
+            titleRow << key.replace('N8', '08').replace('N5', '05')
+        }
+        List<List<String>> columnData = []
+        currentInstitutions.each { row ->
+            columnData.add(row)
+        }
+        response.setHeader( "Content-Disposition", "attachment; filename=${filenameDomain}_${DateUtils.getSDF_forFilename().format(new Date())}.csv")
+        response.contentType = "text/csv"
+
+        ServletOutputStream out = response.outputStream
+        out.withWriter { writer ->
+            writer.write(exportService.generateSeparatorTableString(titleRow, columnData, ','))
+        }
+        out.flush()
+        out.close()
+        return
     }
 
 }

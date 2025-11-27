@@ -16,6 +16,17 @@
 
 <div class="container">
 
+    <g:if test="${provider}">
+        <h2>Packages linked with Permanent Titles in Laser by Provider: ${provider.name}</h2>
+        <g:each in="${['Current', 'Expected', 'Retired', 'Deleted', 'Removed']}" var="stat">
+            <g:link controller="admin" action="linkedPackageWithPermanentTitlesInLaser" params="${[providerUuid: provider.uuid, status: stat]}" class="ui button">Packages with PT Status ${stat} (${laserService.packagesWithPermanentTitlesInLaserByProviderCount(stat, provider.uuid)})</g:link>
+            <br><br>
+        </g:each>
+    </g:if>
+
+
+    <g:set var="sumPtCount" value="${0}"/>
+
     <table class="ui selectable striped sortable celled table">
         <thead>
         <tr>
@@ -79,11 +90,19 @@
                     ${pkgLaser.tippCount}
                 </td>
                 <td>
-                    ${pkgLaser.ptCount}
+                    <g:link controller="admin" action="permanentTitlesInLaser" params="[status: status]" id="${pkgWekb.id}">${pkgLaser.ptCount}</g:link>
+
+                    <g:set var="sumPtCount" value="${sumPtCount + pkgLaser.ptCount}"/>
                 </td>
             </tr>
         </g:each>
         </tbody>
+    <tfoot>
+    <tr>
+        <td colspan="10"></td>
+        <td>Total: ${sumPtCount}</td>
+    </tr>
+    </tfoot>
     </table>
 
 </div>

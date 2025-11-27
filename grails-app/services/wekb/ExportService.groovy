@@ -33,6 +33,7 @@ import java.text.SimpleDateFormat
 class ExportService {
 
     DateFormatService dateFormatService
+    FtpConnectService ftpConnectService
 
     public void exportOriginalKBART(def outputStream, Package pkg) {
 
@@ -47,7 +48,12 @@ class ExportService {
                 outputStream << file.bytes
             }
             outputStream.close()
-        }else if(pkg.getLastSuccessfulManualUpdateInfo()){
+        }else if (pkg.kbartSource.ftpServerUrl) {
+            File file = ftpConnectService.ftpConnectAndGetFile(pkg.kbartSource)
+            if(file)
+                outputStream << file.bytes
+            outputStream.close()
+        } else if(pkg.getLastSuccessfulManualUpdateInfo()){
             def output
 
             try {
@@ -103,12 +109,12 @@ class ExportService {
     }
 
     private File kbartFromUrl(String urlString, UpdatePackageInfo updatePackageInfo = null) throws Exception{
+        File file
         URL url = new URL(urlString)
         File folder = new File("/tmp/wekb/kbartExport")
         log.debug("kbartFromUrl: "+urlString)
         String fileName = folder.absolutePath.concat(File.separator).concat(urlStringToFileString(url.toExternalForm()))
         fileName = fileName.split("\\?")[0]
-        File file = new File(fileName)
         HttpURLConnection connection
         try {
             connection = (HttpURLConnection) url.openConnection()
@@ -149,6 +155,7 @@ class ExportService {
         log.debug("connection.getResponseCode(): "+connection.getResponseCode())
         try {
             if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                file = new File(fileName)
                 byte[] content = getByteContent(connection.getInputStream())
                 //InputStream inputStream = new ByteArrayInputStream(content)
                 FileUtils.copyInputStreamToFile(new ByteArrayInputStream(content), file)
@@ -799,6 +806,46 @@ class ExportService {
             log.error("Data delivered in inappropriate structure!")
         }
         wb
+    }
+
+    String generateSeparatorTableString(Collection titleRow, Collection columnData, String separator, Map<String, Object> headerData = [:]) {
+        List output = []
+        String fillupSeparators = ""
+        if(titleRow && headerData) {
+            for(int i = 2; i < titleRow.size();i++) {
+                fillupSeparators += separator
+            }
+        }
+        headerData.each { String headerEntryTitle, Object headerEntry ->
+            if(headerEntryTitle == 'skipRows') {
+                for(int sr = 0; sr < headerEntry; sr++) {
+                    output.add("") //empty row
+                }
+            }
+            else {
+                if(headerEntry instanceof Map)
+                    output.add("${headerEntryTitle}${separator}${headerEntry.collect { Map.Entry e -> "${e.getKey()}:${e.getValue().join(';')}" }}${fillupSeparators}")
+                else
+                    output.add("${headerEntryTitle}${separator}${headerEntry}${fillupSeparators}")
+            }
+        }
+        if(headerData)
+            output.add("") //empty row
+        if(titleRow)
+            output.add(titleRow.join(separator))
+        columnData.each { row ->
+            if(row instanceof Map || row instanceof GroovyRowResult) {
+                output.add(row.values().join(separator).replaceAll('null', '').replaceAll(' ', ' '))
+            }
+            else {
+                if (row instanceof String && row.trim())
+                    output.add(row)
+                else if(row.size() > 0)
+                    output.add(row.join(separator).replaceAll('null','').replaceAll(' ', ' '))
+                else output.add(" ")
+            }
+        }
+        output.join("\n")
     }
 
     /**

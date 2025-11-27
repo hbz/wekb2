@@ -39,7 +39,7 @@ class SendAdminInfosJob {
 
     private sendPackageUpdateInfos() {
         log.info("sendPackageUpdateInfos: Begin")
-        List<UpdatePackageInfo> autoUpdates = UpdatePackageInfo.executeQuery("from UpdatePackageInfo where automaticUpdate = true and status = :status and dateCreated > (CURRENT_DATE-1) and pkg.status != :pkgStatus order by dateCreated desc", [pkgStatus: RDStore.KBC_STATUS_DELETED, status: RDStore.UPDATE_STATUS_FAILED])
+        List<UpdatePackageInfo> autoUpdates = UpdatePackageInfo.executeQuery("from UpdatePackageInfo where automaticUpdate = true and status = :status and dateCreated > (CURRENT_DATE-1) and pkg.status = :pkgStatus order by dateCreated desc", [pkgStatus: RDStore.KBC_STATUS_CURRENT, status: RDStore.UPDATE_STATUS_FAILED])
 
         List<UpdatePackageInfo> filteredAutoUpdates = []
         LocalDateTime today = LocalDateTime.now()

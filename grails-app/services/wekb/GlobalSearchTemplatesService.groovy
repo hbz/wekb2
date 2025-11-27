@@ -14,6 +14,7 @@ class GlobalSearchTemplatesService {
         globalSearchTemplates.put('curatoryGroups', curatoryGroups())
         globalSearchTemplates.put('identifiers', identifiers())
         globalSearchTemplates.put('jobResults', jobResults())
+        globalSearchTemplates.put('myPackageManagement', myPackageManagement())
         globalSearchTemplates.put('namespaces', namespaces())
         globalSearchTemplates.put('orgs', orgs())
         globalSearchTemplates.put('packages', packages())
@@ -693,6 +694,272 @@ class GlobalSearchTemplatesService {
                                         placeholder: 'Source Automatic Updates',
                                         propType   : 'Boolean',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'kbartSource.automaticUpdates'],
+                                ],
+
+                                //Package Filter
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.PACKAGE_BREAKABLE,
+                                        prompt     : 'Breakable Type',
+                                        msgCode     : 'package.breakable',
+                                        qparam     : 'qp_breakable',
+                                        placeholder: 'Breakable Type',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'breakable'],
+                                        advancedSearch: [title: "More filter options ...", category: 'Package']
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.PACKAGE_CONSISTENT,
+                                        prompt     : 'Consistent Type',
+                                        msgCode     : 'package.consistent',
+                                        qparam     : 'qp_consistent',
+                                        placeholder: 'Consistent Type',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'consistent'],
+                                        advancedSearch: [title: "More filter options ...", category: 'Package']
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.PACKAGE_PAYMENT_TYPE,
+                                        prompt     : 'Paid',
+                                        msgCode     : 'package.paymentType',
+                                        qparam     : 'qp_paymentType',
+                                        placeholder: 'Paid',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'paymentType'],
+                                        advancedSearch: [title: "More filter options ...", category: 'Package']
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.PACKAGE_FILE,
+                                        prompt     : 'File',
+                                        msgCode     : 'package.file',
+                                        qparam     : 'qp_file',
+                                        placeholder: 'File',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'file'],
+                                        advancedSearch: [title: "More filter options ...", category: 'Package']
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.YN,
+                                        prompt     : 'Free Trial',
+                                        msgCode     : 'package.freeTrial',
+                                        qparam     : 'qp_freeTrial',
+                                        placeholder: 'Free Trial',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'freeTrial'],
+                                        advancedSearch: [title: "More filter options ...", category: 'Package']
+                                ],
+
+
+                                //FOR My Components Area
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.CuratoryGroup',
+                                        qparam     : 'qp_curgroups',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'placeHolderForCuratoryGroups'],
+                                        hide       : true
+                                ],
+                        ],
+                        qbeResults: [
+                                [heading: 'Name', property: 'name', sort: 'name', link: true, linkInfo: 'Link to Package'],
+                                [heading: 'Provider', property: 'provider.name', sort: 'provider.name', link: true, linkInfo: 'Link to Provider'],
+                                [heading: 'Nominal Platform', property: 'nominalPlatform.name', sort: 'nominalPlatform.name', link: true, linkInfo: 'Link to Nominal Platform'],
+                                [heading: 'Content Type', property: 'contentType.value', sort: 'contentType'],
+                                [heading: 'Scope', property: 'scope', sort: 'scope'],
+                                [heading: 'Last Updated', property: 'lastUpdated', sort: 'lastUpdated'],
+                                [heading: 'Status', property: 'status.value', sort: 'status'],
+                                [heading: 'Current Titles', property: 'currentTippCount', sort: 'currentTippCount'],
+                                [heading: 'Retired Titles', property: 'retiredTippCount', sort: 'retiredTippCount'],
+                                [heading: 'Expected Titles', property: 'expectedTippCount', sort: 'expectedTippCount'],
+                                [heading: 'Deleted Titles', property: 'deletedTippCount', sort: 'deletedTippCount'],
+                                [heading: 'Product IDs', property: 'anbieterProduktIDs'],
+                                [heading: 'Source', property: 'kbartSource.name', link: true, sort: 'kbartSource.name', linkInfo: 'Link to Source'],
+                                [heading: 'Automatic Updates', property: 'kbartSource.automaticUpdates']
+                        ],
+                        actions   : [
+                        ]
+                ]
+        ]
+
+        result
+    }
+
+    Map myPackageManagement() {
+        Map result = [
+                baseclass   : 'wekb.Package',
+                msgCode    : 'package.plural',
+                title       : 'Packages',
+                defaultSort : 'lastUpdated',
+                defaultOrder: 'desc',
+                qbeConfig   : [
+                        qbeForm   : [
+
+                                //HIDE FIELDS
+                                [
+                                        qparam     : 'qp_provider_id',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'provider.id', 'type': 'java.lang.Long'],
+                                        hide       : true
+                                ],
+                                [
+                                        qparam     : 'qp_platform_id',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'nominalPlatform.id', 'type': 'java.lang.Long'],
+                                        hide       : true
+                                ],
+                                [
+                                        qparam     : 'qp_source_id',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'kbartSource.id', 'type': 'java.lang.Long'],
+                                        hide       : true
+                                ],
+                                [
+                                        qparam     : 'qp_vendor_id',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'vendors.vendor.id', 'type': 'java.lang.Long'],
+                                        hide       : true
+                                ],
+                                [
+                                        qparam     : 'changedSince',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'greater', 'prop': 'lastUpdated', 'type': 'java.util.Date'],
+                                        hide       : true
+                                ],
+                                [
+                                        qparam     : 'createdSince',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'greater', 'prop': 'dateCreated', 'type': 'java.util.Date'],
+                                        hide       : true
+                                ],
+                                [
+                                        qparam     : 'qp_status_value',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'status.value'],
+                                        hide       : true
+                                ],
+                                //General Fields
+                                [
+                                        prompt     : 'Name of Package',
+                                        msgCode     : 'default.name',
+                                        qparam     : 'qp_name',
+                                        placeholder: 'Package Name',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'name', 'wildcard': 'B', normalise: false]
+                                ],
+                                [
+                                        prompt     : 'Identifier',
+                                        msgCode     : 'identifier.value',
+                                        qparam     : 'qp_identifier',
+                                        placeholder: 'Identifier Value',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'ids.value'],
+
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.Org',
+                                        prompt     : 'Provider',
+                                        msgCode     : 'org.label',
+                                        qparam     : 'qp_provider',
+                                        placeholder: 'Provider',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'provider'],
+
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.CuratoryGroup',
+                                        prompt     : 'Curatory Group',
+                                        msgCode     : 'curatorygroup.label',
+                                        qparam     : 'qp_curgroup',
+                                        placeholder: 'Curatory Group',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'curatoryGroups.curatoryGroup'],
+
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.Platform',
+                                        prompt     : 'Platform',
+                                        msgCode     : 'platform.label',
+                                        qparam     : 'qp_platform',
+                                        placeholder: 'Platform',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'nominalPlatform'],
+
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.COMPONENT_STATUS,
+                                        prompt     : 'Status',
+                                        msgCode    : 'default.status',
+                                        qparam     : 'qp_status',
+                                        placeholder: 'Component Status',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'status']
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.PACKAGE_SCOPE,
+                                        prompt     : 'Scope',
+                                        msgCode     : 'package.scope',
+                                        qparam     : 'qp_scope',
+                                        placeholder: 'Scope',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'scope'],
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.PACKAGE_CONTENT_TYPE,
+                                        prompt     : 'Content Type',
+                                        msgCode     : 'package.contentType',
+                                        qparam     : 'qp_content',
+                                        placeholder: 'Content Type',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'contentType'],
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.PACKAGE_OPEN_ACCESS,
+                                        prompt     : 'Open Access',
+                                        msgCode     : 'package.openAccess',
+                                        qparam     : 'qp_oa',
+                                        placeholder: 'Open Access',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'openAccess'],
+                                ],
+                                [
+                                        type     : 'dropDownGroup',
+                                        dropDownType  : 'ddcForPackages',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        prompt     : 'DDC',
+                                        msgCode     : 'package.ddcs',
+                                        qparam     : 'qp_ddc',
+                                        placeholder: 'DDC',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'ddcs'],
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.PAA_ARCHIVING_AGENCY,
+                                        prompt     : 'Package Archiving Agency',
+                                        msgCode     : 'package.archivingAgency',
+                                        qparam     : 'qp_archivingAgency',
+                                        placeholder: 'Package Archiving Agency',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'paas.archivingAgency']
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.YN,
+                                        prompt     : 'Source Automatic Updates',
+                                        msgCode     : 'kbartSource.automaticUpdates',
+                                        qparam     : 'qp_source_automaticUpdates',
+                                        placeholder: 'Source Automatic Updates',
+                                        propType   : 'Boolean',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'kbartSource.automaticUpdates'],
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.SOURCE_FREQUENCY,
+                                        prompt     : 'Source Frequency',
+                                        msgCode     : 'kbartSource.frequency',
+                                        qparam     : 'qp_source_frequency',
+                                        placeholder: 'Source Frequency',
+                                        propType   : 'Boolean',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'kbartSource.frequency'],
                                 ],
 
                                 //Package Filter

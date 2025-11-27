@@ -117,7 +117,7 @@
         <div class="extra content center aligned">
             <div class="ui buttons">
 
-                <g:if test="${(d.kbartSource && (d.kbartSource.lastUpdateUrl || d.kbartSource.url)) || d.getLastSuccessfulManualUpdateInfo()}">
+                <g:if test="${(d.kbartSource && (d.kbartSource.lastUpdateUrl || d.kbartSource.url || d.kbartSource.ftpServerUrl)) || d.getLastSuccessfulManualUpdateInfo()}">
                     <g:link controller="public" action="kbart" class="ui primary button"
                             id="${params.id}">KBART File</g:link> &nbsp;
                     <div class="or"></div>
