@@ -134,14 +134,14 @@
                 </g:link>
             </dd>
         </dl>
-        <dl>
+        %{--<dl>
             <dt class="control-label">
                 Only KBART rows which last changed after last update run
             </dt>
             <dd>
                 <semui:xEditable owner="${d}" field="onlyRowsWithLastChanged" overwriteEditable="false"/>
             </dd>
-        </dl>
+        </dl>--}%
 
         <dl>
             <dt class="control-label">
