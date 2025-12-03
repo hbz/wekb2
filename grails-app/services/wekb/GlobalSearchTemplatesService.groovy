@@ -70,14 +70,14 @@ class GlobalSearchTemplatesService {
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'type'],
                                 ],
                                 [
-                                        type       : 'dropDown',
+                                        type       : 'dropDownMultiple',
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.COMPONENT_STATUS,
                                         prompt     : 'Status',
                                         msgCode    : 'default.status',
                                         qparam     : 'qp_status',
-                                        placeholder: 'Component Status',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'status'],
+                                        placeholder: 'Status',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'status']
                                 ],
                         ],
                         qbeResults: [
@@ -271,14 +271,14 @@ class GlobalSearchTemplatesService {
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'curatoryGroups.curatoryGroup']
                                 ],
                                 [
-                                        type       : 'dropDown',
+                                        type       : 'dropDownMultiple',
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.COMPONENT_STATUS,
                                         prompt     : 'Status',
                                         msgCode    : 'default.status',
                                         qparam     : 'qp_status',
-                                        placeholder: 'Component Status',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'status']
+                                        placeholder: 'Status',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'status']
                                 ],
                                 [
                                         type       : 'dropDown',
@@ -625,14 +625,14 @@ class GlobalSearchTemplatesService {
 
                                 ],
                                 [
-                                        type       : 'dropDown',
+                                        type       : 'dropDownMultiple',
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.COMPONENT_STATUS,
                                         prompt     : 'Status',
                                         msgCode    : 'default.status',
                                         qparam     : 'qp_status',
-                                        placeholder: 'Component Status',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'status']
+                                        placeholder: 'Status',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'status']
                                 ],
                                 [
                                         type       : 'dropDown',
@@ -880,14 +880,14 @@ class GlobalSearchTemplatesService {
 
                                 ],
                                 [
-                                        type       : 'dropDown',
+                                        type       : 'dropDownMultiple',
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.COMPONENT_STATUS,
                                         prompt     : 'Status',
                                         msgCode    : 'default.status',
                                         qparam     : 'qp_status',
-                                        placeholder: 'Component Status',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'status']
+                                        placeholder: 'Status',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'status']
                                 ],
                                 [
                                         type       : 'dropDown',
@@ -1146,15 +1146,14 @@ class GlobalSearchTemplatesService {
                                         advancedSearch: [title: "Other fields", category: 'Package']
                                 ],
                                 [
-                                        type       : 'dropDown',
+                                        type       : 'dropDownMultiple',
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.COMPONENT_STATUS,
                                         prompt     : 'Status',
                                         msgCode    : 'default.status',
                                         qparam     : 'qp_status',
-                                        placeholder: 'Component Status',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'status'],
-                                        advancedSearch: [title: "Other fields", category: 'Package']
+                                        placeholder: 'Status',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'status']
                                 ],
                                 [
                                         type     : 'dropDownGroup',
@@ -1219,15 +1218,14 @@ class GlobalSearchTemplatesService {
                                         advancedSearch: [title: "Search Titles by ...", category: 'Title']
                                 ],
                                 [
-                                        type       : 'dropDown',
+                                        type       : 'dropDownMultiple',
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.COMPONENT_STATUS,
                                         prompt     : 'Status',
                                         msgCode    : 'default.status',
-                                        qparam     : 'qp_status_tipp',
+                                        qparam     : 'qp_status',
                                         placeholder: 'Status',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'tipps.status'],
-                                        advancedSearch: [title: "Search Titles by ...", category: 'Title']
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'status']
                                 ],
                                 [
                                         type       : 'dropDown',
@@ -1589,14 +1587,14 @@ class GlobalSearchTemplatesService {
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'provider'],
                                 ],
                                 [
-                                        type       : 'dropDown',
+                                        type       : 'dropDownMultiple',
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.COMPONENT_STATUS,
                                         prompt     : 'Status',
                                         msgCode    : 'default.status',
                                         qparam     : 'qp_status',
-                                        placeholder: 'Component Status',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'status']
+                                        placeholder: 'Status',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'status']
                                 ],
                                 [
                                         prompt     : 'Platform URL',
@@ -2066,14 +2064,14 @@ class GlobalSearchTemplatesService {
 
                                 ],
                                 [
-                                        type       : 'dropDown',
+                                        type       : 'dropDownMultiple',
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.COMPONENT_STATUS,
                                         prompt     : 'Status',
                                         msgCode    : 'default.status',
                                         qparam     : 'qp_status',
                                         placeholder: 'Status',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'status']
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'status']
                                 ],
                                 [
                                         type       : 'dropDown',
@@ -2224,14 +2222,14 @@ class GlobalSearchTemplatesService {
 
                                 ],
                                 [
-                                        type       : 'dropDown',
+                                        type       : 'dropDownMultiple',
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.COMPONENT_STATUS,
                                         prompt     : 'Status',
                                         msgCode    : 'default.status',
                                         qparam     : 'qp_status',
                                         placeholder: 'Status',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'status']
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'status']
                                 ],
 
 
@@ -2541,14 +2539,14 @@ class GlobalSearchTemplatesService {
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'languages.language'],
                                 ],
                                 [
-                                        type       : 'dropDown',
+                                        type       : 'dropDownMultiple',
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.COMPONENT_STATUS,
                                         prompt     : 'Status',
                                         msgCode    : 'default.status',
                                         qparam     : 'qp_status',
                                         placeholder: 'Status',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'status']
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'status']
                                 ],
                                 //FOR My Components Area
                                 [
@@ -2621,14 +2619,14 @@ class GlobalSearchTemplatesService {
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'curatoryGroups.curatoryGroup']
                                 ],
                                 [
-                                        type       : 'dropDown',
+                                        type       : 'dropDownMultiple',
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.COMPONENT_STATUS,
                                         prompt     : 'Status',
                                         msgCode    : 'default.status',
                                         qparam     : 'qp_status',
-                                        placeholder: 'Component Status',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'status']
+                                        placeholder: 'Status',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'status']
                                 ],
                                 //---------------------------------------------------------------------------------------------------
                                 [

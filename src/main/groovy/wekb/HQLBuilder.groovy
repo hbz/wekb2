@@ -319,6 +319,21 @@ public class HQLBuilder {
             parsedValues << value
           }
           hql_builder_context.bindvars[crit.defn.qparam] = parsedValues
+        }else if (crit.defn.type=='dropDownMultiple'){
+            List values = [], parsedValues = []
+            if(crit.value instanceof String)
+                values = crit.value.split(',')
+            else
+                values.addAll(crit.value)
+
+            values.each { String rawVal ->
+                println(rawVal)
+                def value = hql_builder_context.genericOIDService.resolveOID(rawVal)
+                value = (crit.defn.propType == 'Boolean') ? (value == RDStore.YN_YES ? true : false) : value
+                parsedValues << value
+            }
+
+            hql_builder_context.bindvars[crit.defn.qparam] = parsedValues
         }
         else {
           hql_builder_context.bindvars[crit.defn.qparam] = crit.value
