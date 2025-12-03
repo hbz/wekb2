@@ -34,8 +34,8 @@
                                   params="${params}"/>
             <semui:sortableColumn property="enTime" title="End Time"
                                   params="${params}"/>
-            <semui:sortableColumn property="onlyRowsWithLastChanged" title="Only Last Changed Update"
-                                  params="${params}"/>
+          %{--  <semui:sortableColumn property="onlyRowsWithLastChanged" title="Only Last Changed Update"
+                                  params="${params}"/>--}%
             <semui:sortableColumn property="countPreviouslyTippsInWekb" title="Titles in we:kb before update"
                                   params="${params}"/>
             <semui:sortableColumn property="countNowTippsInWekb" title="Titles in we:kb after update"
@@ -86,7 +86,7 @@
                         <g:formatDate format="${message(code: 'default.date.format.noZWihoutSS')}"
                                       date="${row_obj.endTime}"/>
                     </g:if></td>
-                    <td>
+                   %{-- <td>
                         <g:if test="${row_obj.onlyRowsWithLastChanged}">
                             <i class="check green circle icon"
                                title="${message(code: 'default.boolean.true')}"></i>
@@ -95,7 +95,7 @@
                             <i class="times red circle icon"
                                title="${message(code: 'default.boolean.false')}"></i>
                         </g:else>
-                    </td>
+                    </td>--}%
                     <td>
                         <g:formatNumber number="${row_obj.countPreviouslyTippsInWekb}" type="number"/>
                     </td>
