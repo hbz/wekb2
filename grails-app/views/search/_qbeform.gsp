@@ -82,7 +82,7 @@
                                     value="${params[fld.qparam]}"/>
                         </div>
                     </g:if>
-                    <g:elseif test="${fld.type == 'dropDown'}">
+                    <g:elseif test="${fld.type == 'dropDown' || fld.type=='dropDownMultiple'}">
                         <div class="ui field">
                             <label>
                                 <g:if test="${fld.msgCode}">
@@ -92,7 +92,7 @@
                                     ${fld.prompt}
                                 </g:else>
                             </label>
-                            <div class="ui fluid search selection clearable dropdown">
+                            <div class="ui fluid search selection clearable dropdown ${fld.type=='dropDownMultiple' ? 'multiple' : ''}">
                                 <input type="hidden" name="${fld.qparam}" value="${params[fld.qparam]}">
                                 <i class="dropdown icon"></i>
 
@@ -224,7 +224,7 @@
                                         value="${params[field.qparam]}"/>
                             </div>
                         </g:if>
-                        <g:elseif test="${field.type == 'dropDown'}">
+                        <g:elseif test="${field.type == 'dropDown' || field.type=='dropDownMultiple'}">
                             <div class="ui field">
                                 <label>
                                     <g:if test="${field.msgCode}">
@@ -234,7 +234,7 @@
                                         ${field.prompt}
                                     </g:else>
                                 </label>
-                                <div class="ui fluid search selection clearable dropdown">
+                                <div class="ui fluid search selection clearable dropdown ${field.type=='dropDownMultiple' ? 'multiple' : ''}">
                                     <input type="hidden" name="${field.qparam}" value="${params[field.qparam]}">
                                     <i class="dropdown icon"></i>
 

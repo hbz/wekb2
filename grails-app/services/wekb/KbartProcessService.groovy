@@ -576,35 +576,39 @@ class KbartProcessService {
                     int idxDeleted = 0
                     int deletedCount = deleteTippsFromWekb.size()
 
+                    Date currentDate = new Date()
+
                     for (int offset = 0; offset < deletedCount; offset += maxDeleted) {
                         def deleteTippsFromWekbToProcess = deleteTippsFromWekb.drop(offset).take(maxDeleted)
-                        TitleInstancePackagePlatform.executeUpdate("update TitleInstancePackagePlatform set status = :deleted, lastUpdated = :currentDate where id in (:tippIDs) and status != :deleted", [deleted: RDStore.KBC_STATUS_DELETED, tippIDs: deleteTippsFromWekbToProcess, currentDate: new Date()])
+                        TitleInstancePackagePlatform.executeUpdate("update TitleInstancePackagePlatform set status = :deleted, lastUpdated = :currentDate where id in (:tippIDs) and status != :deleted", [deleted: RDStore.KBC_STATUS_DELETED, tippIDs: deleteTippsFromWekbToProcess, currentDate: currentDate])
                     }
 
                     StatelessSession session = sessionFactory.openStatelessSession()
                     Transaction tx = session.beginTransaction()
                     deleteTippsFromWekb.each {tippID ->
-                        idxDeleted++
-                        log.info("deleteTippsFromWekb (#$idxDeleted of $deletedCount): tippID ${tippID}")
                         TitleInstancePackagePlatform tipp = TitleInstancePackagePlatform.get(tippID)
-                        UpdateTippInfo updateTippInfo = new UpdateTippInfo(
-                                description: "Delete Title '${tipp.name}' because is not in KBART!",
-                                tipp: tipp,
-                                startTime: new Date(),
-                                endTime: new Date(),
-                                status: RDStore.UPDATE_STATUS_SUCCESSFUL,
-                                type: RDStore.UPDATE_TYPE_CHANGED_TITLE,
-                                oldValue: tipp.status.value,
-                                newValue: 'Deleted',
-                                tippProperty: 'status',
-                                kbartProperty: 'status',
-                                updatePackageInfo: updatePackageInfo,
-                                lastUpdated: new Date(),
-                                dateCreated: new Date(),
-                                uuid: UUID.randomUUID().toString()
-                        )
-                        changedTipps++
-                        session.insert(updateTippInfo)
+                        if(currentDate == tipp.lastUpdated) {
+                            idxDeleted++
+                            log.info("deleteTippsFromWekb (#$idxDeleted of $deletedCount): tippID ${tippID}")
+                            UpdateTippInfo updateTippInfo = new UpdateTippInfo(
+                                    description: "Delete Title '${tipp.name}' because is not in KBART!",
+                                    tipp: tipp,
+                                    startTime: currentDate,
+                                    endTime: currentDate,
+                                    status: RDStore.UPDATE_STATUS_SUCCESSFUL,
+                                    type: RDStore.UPDATE_TYPE_CHANGED_TITLE,
+                                    oldValue: tipp.status.value,
+                                    newValue: 'Deleted',
+                                    tippProperty: 'status',
+                                    kbartProperty: 'status',
+                                    updatePackageInfo: updatePackageInfo,
+                                    lastUpdated: currentDate,
+                                    dateCreated: currentDate,
+                                    uuid: UUID.randomUUID().toString()
+                            )
+                            changedTipps++
+                            session.insert(updateTippInfo)
+                        }
                     }
                     tx.commit()
                     session.close()

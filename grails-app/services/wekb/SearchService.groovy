@@ -105,8 +105,14 @@ class SearchService {
                 params.sort = params.sort ?: result.qbetemplate.defaultSort
                 params.order = params.order ?: result.qbetemplate.defaultOrder
                 if(result.qbetemplate.defaultStatus) {
-                    params.status = cleaned_params.qp_status ?: result.qbetemplate.defaultStatus
-                    cleaned_params.qp_status = cleaned_params.qp_status ?: result.qbetemplate.defaultStatus
+                    if(params.searchAction == 'Search'){
+                        params.status = cleaned_params.qp_status ?: null
+                        cleaned_params.qp_status = cleaned_params.qp_status ?: null
+                    }else {
+                        params.status = cleaned_params.qp_status ?: result.qbetemplate.defaultStatus
+                        cleaned_params.qp_status = cleaned_params.qp_status ?: result.qbetemplate.defaultStatus
+                    }
+
                 }
 
                 Class target_class = Class.forName(result.qbetemplate.baseclass);
