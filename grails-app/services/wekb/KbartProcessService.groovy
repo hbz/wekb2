@@ -586,10 +586,10 @@ class KbartProcessService {
                     StatelessSession session = sessionFactory.openStatelessSession()
                     Transaction tx = session.beginTransaction()
                     deleteTippsFromWekb.each {tippID ->
-                        idxDeleted++
-                        log.info("deleteTippsFromWekb (#$idxDeleted of $deletedCount): tippID ${tippID}")
                         TitleInstancePackagePlatform tipp = TitleInstancePackagePlatform.get(tippID)
                         if(currentDate == tipp.lastUpdated) {
+                            idxDeleted++
+                            log.info("deleteTippsFromWekb (#$idxDeleted of $deletedCount): tippID ${tippID}")
                             UpdateTippInfo updateTippInfo = new UpdateTippInfo(
                                     description: "Delete Title '${tipp.name}' because is not in KBART!",
                                     tipp: tipp,
