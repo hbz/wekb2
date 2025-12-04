@@ -120,12 +120,10 @@ class AutoUpdatePackagesService {
                                         updatePackageInfo = kbartProcessService.kbartImportProcess(kbartRows, pkg, "", updatePackageInfo, onlyRowsWithLastChanged)
 
                                         if(updatePackageInfo.status != RDStore.UPDATE_STATUS_FAILED) {
-                                           String newHash = fileCheckService.computeHash(file)
-                                            KbartSource.withTransaction {
-                                                KbartSource src = KbartSource.get(pkg.kbartSource.id)
-                                                src.kbartFileHash = newHash
-                                                src.save()
-                                            }
+                                            String newHash = fileCheckService.computeHash(file)
+                                            KbartSource src = KbartSource.get(pkg.kbartSource.id)
+                                            src.kbartFileHash = newHash
+                                            src.save()
                                         }
                                     } else {
                                         if(updatePackageInfo.status != RDStore.UPDATE_STATUS_FAILED) {
@@ -254,11 +252,11 @@ class AutoUpdatePackagesService {
 
                                                 if(updatePackageInfo.status != RDStore.UPDATE_STATUS_FAILED) {
                                                     String newHash = fileCheckService.computeHash(file)
-                                                    KbartSource.withTransaction {
-                                                        KbartSource src = KbartSource.get(pkg.kbartSource.id)
-                                                        src.kbartFileHash = newHash
-                                                        src.save()
-                                                    }
+
+                                                    KbartSource src = KbartSource.get(pkg.kbartSource.id)
+                                                    src.kbartFileHash = newHash
+                                                    src.save()
+
                                                 }
 
                                             } else {
