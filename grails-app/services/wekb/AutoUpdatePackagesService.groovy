@@ -24,6 +24,7 @@ class AutoUpdatePackagesService {
     ExecutorService executorService
     Future activeFuture
     FtpConnectService ftpConnectService
+    FileCheckService fileCheckService
 
     KbartProcessService kbartProcessService
 
@@ -112,7 +113,43 @@ class AutoUpdatePackagesService {
 
 
                             if (file) {
-                                kbartRows = kbartProcessService.kbartProcess(file, "", updatePackageInfo)
+                                if(fileCheckService.hasFileChanged(pkg.kbartSource, file)){
+                                    kbartRows = kbartProcessService.kbartProcess(file, "", updatePackageInfo)
+
+                                    if (kbartRows.size() > 0) {
+                                        updatePackageInfo = kbartProcessService.kbartImportProcess(kbartRows, pkg, "", updatePackageInfo, onlyRowsWithLastChanged)
+
+                                        if(updatePackageInfo.status != RDStore.UPDATE_STATUS_FAILED) {
+                                           String newHash = fileCheckService.computeHash(file)
+                                            KbartSource.withTransaction {
+                                                KbartSource src = KbartSource.get(pkg.kbartSource.id)
+                                                src.kbartFileHash = newHash
+                                                src.save()
+                                            }
+                                        }
+                                    } else {
+                                        if(updatePackageInfo.status != RDStore.UPDATE_STATUS_FAILED) {
+                                            UpdatePackageInfo.withTransaction {
+                                                updatePackageInfo.description = "The KBART File is empty!"
+                                                updatePackageInfo.status = RDStore.UPDATE_STATUS_FAILED
+                                                updatePackageInfo.endTime = new Date()
+                                                updatePackageInfo.updateUrl = lastUpdateURL
+                                                updatePackageInfo.save()
+                                            }
+                                        }
+                                    }
+
+                                }else {
+                                    if(updatePackageInfo.status != RDStore.UPDATE_STATUS_FAILED) {
+                                        UpdatePackageInfo.withTransaction {
+                                            updatePackageInfo.description = "No changes in File. Is same File from last update!"
+                                            updatePackageInfo.status = RDStore.UPDATE_STATUS_WARNING
+                                            updatePackageInfo.endTime = new Date()
+                                            updatePackageInfo.save()
+                                        }
+                                    }
+                                }
+
                             } else {
                                 if(updatePackageInfo.status != RDStore.UPDATE_STATUS_FAILED) {
                                     UpdatePackageInfo.withTransaction {
@@ -122,10 +159,6 @@ class AutoUpdatePackagesService {
                                         updatePackageInfo.save()
                                     }
                                 }
-                            }
-
-                            if (kbartRows.size() > 0) {
-                                updatePackageInfo = kbartProcessService.kbartImportProcess(kbartRows, pkg, "", updatePackageInfo, onlyRowsWithLastChanged)
                             }
 
                         } else {
@@ -213,21 +246,45 @@ class AutoUpdatePackagesService {
                                     }
 
                                     if (file) {
-                                        kbartRows = kbartProcessService.kbartProcess(file, lastUpdateURL, updatePackageInfo)
+                                        if(fileCheckService.hasFileChanged(pkg.kbartSource, file)){
+                                            kbartRows = kbartProcessService.kbartProcess(file, lastUpdateURL, updatePackageInfo)
 
-                                        if (kbartRows.size() > 0) {
-                                            updatePackageInfo = kbartProcessService.kbartImportProcess(kbartRows, pkg, lastUpdateURL, updatePackageInfo, onlyRowsWithLastChanged)
-                                        } else {
+                                            if (kbartRows.size() > 0) {
+                                                updatePackageInfo = kbartProcessService.kbartImportProcess(kbartRows, pkg, lastUpdateURL, updatePackageInfo, onlyRowsWithLastChanged)
+
+                                                if(updatePackageInfo.status != RDStore.UPDATE_STATUS_FAILED) {
+                                                    String newHash = fileCheckService.computeHash(file)
+                                                    KbartSource.withTransaction {
+                                                        KbartSource src = KbartSource.get(pkg.kbartSource.id)
+                                                        src.kbartFileHash = newHash
+                                                        src.save()
+                                                    }
+                                                }
+
+                                            } else {
+                                                if(updatePackageInfo.status != RDStore.UPDATE_STATUS_FAILED) {
+                                                    UpdatePackageInfo.withTransaction {
+                                                        updatePackageInfo.description = "The KBART File is empty!"
+                                                        updatePackageInfo.status = RDStore.UPDATE_STATUS_FAILED
+                                                        updatePackageInfo.endTime = new Date()
+                                                        updatePackageInfo.updateUrl = lastUpdateURL
+                                                        updatePackageInfo.save()
+                                                    }
+                                                }
+                                            }
+                                        }else {
                                             if(updatePackageInfo.status != RDStore.UPDATE_STATUS_FAILED) {
                                                 UpdatePackageInfo.withTransaction {
-                                                    updatePackageInfo.description = "The KBART File is empty!"
-                                                    updatePackageInfo.status = RDStore.UPDATE_STATUS_FAILED
+                                                    updatePackageInfo.description = "No changes in File. Is same File from last update!"
+                                                    updatePackageInfo.status = RDStore.UPDATE_STATUS_WARNING
                                                     updatePackageInfo.endTime = new Date()
-                                                    updatePackageInfo.updateUrl = lastUpdateURL
                                                     updatePackageInfo.save()
                                                 }
                                             }
                                         }
+
+
+
                                     } else {
                                         if(updatePackageInfo.status != RDStore.UPDATE_STATUS_FAILED) {
                                             UpdatePackageInfo.withTransaction {
@@ -280,7 +337,7 @@ class AutoUpdatePackagesService {
 
             } catch (Exception exception) {
                 log.error("Error by startAutoPackageUapdate: ${exception.message}")
-                //exception.printStackTrace()
+                exception.printStackTrace()
                 UpdatePackageInfo.withTransaction {
                     //UpdatePackageInfo updatePackageFail = new UpdatePackageInfo()
                     updatePackageInfo.description = "An error occurred while processing the KBART file. More information can be seen in the system log. File from URL: ${lastUpdateURL}"

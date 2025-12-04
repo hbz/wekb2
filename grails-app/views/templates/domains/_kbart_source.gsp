@@ -121,6 +121,18 @@
 
             </dd>
         </dl>
+        <sec:ifAnyGranted roles="ROLE_SUPERUSER">
+            <dl>
+                <dt class="control-label">
+                    Kbart File Hash
+                </dt>
+                <dd>
+                    <g:if test="${!createObject}">
+                        <semui:xEditable owner="${d}" field="kbartFileHash"/>
+                    </g:if>
+                </dd>
+            </dl>
+        </sec:ifAnyGranted>
 
         <g:if test="${controllerName != 'create' && d.automaticUpdates}">
             <dl>
