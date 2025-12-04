@@ -2,12 +2,56 @@ package wekb
 
 import grails.gorm.transactions.Transactional
 import grails.plugin.springsecurity.SpringSecurityService
+import wekb.helper.RDStore
+import wekb.tools.UrlToolkit
 
 @Transactional
 class AdminService {
 
     def sessionRegistry
     SpringSecurityService springSecurityService
+    FtpConnectService ftpConnectService
+    ExportService exportService
+    FileCheckService fileCheckService
+
+    int setKbartFileHashs(Date lastRun) {
+        int kbartFileHashs = 0
+        KbartSource.findAllByAutomaticUpdates(true).each { KbartSource kbartSource ->
+            if(kbartSource.lastRun > lastRun) {
+                if (kbartSource && (kbartSource.lastUpdateUrl || kbartSource.url)) {
+                    if ((UrlToolkit.containsDateStamp(kbartSource.url) || UrlToolkit.containsDateStampPlaceholder(kbartSource.url)) && kbartSource.lastUpdateUrl) {
+                        File file = exportService.kbartFromUrl(kbartSource.lastUpdateUrl)
+                        if (file) {
+                            String newHash = fileCheckService.computeHash(file)
+                            kbartSource.kbartFileHash = newHash
+                            kbartSource.save()
+                            kbartFileHashs++
+                        }
+                    } else {
+                        File file = exportService.kbartFromUrl(kbartSource.url)
+                        if (file) {
+                            String newHash = fileCheckService.computeHash(file)
+                            kbartSource.kbartFileHash = newHash
+                            kbartSource.save()
+                            kbartFileHashs++
+                        }
+                    }
+
+                } else if (kbartSource.ftpServerUrl) {
+                    File file = ftpConnectService.ftpConnectAndGetFile(kbartSource)
+                    if (file) {
+                        String newHash = fileCheckService.computeHash(file)
+                        kbartSource.kbartFileHash = newHash
+                        kbartSource.save()
+                        kbartFileHashs++
+                    }
+                }
+            }
+        }
+        return kbartFileHashs
+
+    }
+
 
     int getNumberOfActiveUsers() {
         getActiveUsers( (1000 * 60 * 10) ).size() // 10 minutes

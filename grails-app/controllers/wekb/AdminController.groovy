@@ -32,6 +32,7 @@ class AdminController {
   ComponentStatisticService componentStatisticService
   ConcurrencyManagerService concurrencyManagerService
   AutoUpdatePackagesService autoUpdatePackagesService
+    AdminService adminService
   def ESWrapperService
   ExportService exportService
   SpringSecurityService springSecurityService
@@ -1243,6 +1244,24 @@ class AdminController {
         out.flush()
         out.close()
         return
+    }
+
+    def setKbartFileHashs(){
+        int kbartFileHashsCount = 0
+
+        if(params.date){
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
+            String dateInString = params.date
+            Date lastRun = formatter.parse(dateInString)
+            kbartFileHashsCount = adminService.setKbartFileHashs(lastRun)
+
+            flash.message = "KbartSource ${kbartFileHashsCount} set kbart file hash! LastRun -> ${lastRun}"
+        }else {
+            flash.error = "Send last run date!"
+        }
+
+        redirect(action: 'index')
+
     }
 
 }
