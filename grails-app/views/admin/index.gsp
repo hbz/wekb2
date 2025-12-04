@@ -9,6 +9,8 @@
 <body>
 <h1 class="ui header"><i class="tools icon"></i> Admin Dashboard</h1>
 
+<semui:flashMessage data="${flash}"/>
+
 <div class="ui equal width grid">
     <div class="row">
         <div class="column">

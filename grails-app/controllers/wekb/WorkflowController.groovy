@@ -81,7 +81,7 @@ class WorkflowController{
             log.debug("Execute query")
             // doQuery(result.qbetemplate, params, result)
             def target_class = grailsApplication.getArtefact("Domain", qresult.qbetemplate.baseclass)
-            HQLBuilder.build(grailsApplication, qresult.qbetemplate, params, qresult, target_class, genericOIDService)
+            HQLBuilder.build(grailsApplication, qresult.qbetemplate, params, qresult, target_class)
 
             qresult.recset.each {
               def oid_to_action = "${it.class.name}:${it.id}"

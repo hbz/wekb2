@@ -29,7 +29,7 @@ class SearchService {
 
     def doQuery (qbetemplate, params, result) {
         def target_class = grailsApplication.getArtefact("Domain",qbetemplate.baseclass);
-        HQLBuilder.build(grailsApplication, qbetemplate, params, result, target_class, genericOIDService)
+        HQLBuilder.build(grailsApplication, qbetemplate, params, result, target_class)
     }
 
     Map search(User user = null, Map result, GrailsParameterMap params){

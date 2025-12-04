@@ -26,7 +26,7 @@
                 <a class="ui button" href="${laserService.getLaserPackageURL() + '/' + laserPackageID}" target="_blank">Show Package in Laser</a>
                 <br>
                 <br>
-                <a class="ui button" href="${laserService.getLaserURL() + '/yoda/reloadPackage?packageUUID=' + laserPackageID}"
+                <a class="ui button" href="${laserService.getLaserURL() + '/yoda/reloadPackage?packageUUID=' + pkg.uuid}"
                    target="_blank">Reload package data in Laser</a>
             </g:if>
         </p>
