@@ -2178,8 +2178,6 @@ class Api2Service {
             Map<String, Map> langMap = sql.rows(languageQuery, tippIdParams).collectEntries { GroovyRowResult row -> [row['cl_tipp_fk'], slurper.parseText(row['lang'].toString())] }
             Map<String, Map> curatoryGroupMap = sql.rows(curatoryGroupQuery, tippPkgParams).collectEntries { GroovyRowResult row -> [row['cgp_pkg_fk'], slurper.parseText(row['cg'].toString())] }
 
-            sql.close()
-
             principalRows.eachWithIndex { GroovyRowResult row, int i ->
                 //long startInner = System.currentTimeMillis()
                 row['sortname'] = generateSortName(row['name'])
@@ -2220,6 +2218,7 @@ class Api2Service {
 
             result.searchTime = searchTime + ' ms'
             log.debug("Search completed after ${searchTime}")
+            sql.close()
         }
         else if (globalSearchComponentType) {
             def searchResult = [:]
