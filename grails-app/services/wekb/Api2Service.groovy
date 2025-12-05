@@ -2218,7 +2218,7 @@ class Api2Service {
 
             result.searchTime = searchTime + ' ms'
             log.debug("Search completed after ${searchTime}")
-            sql.close()
+
         }
         else if (globalSearchComponentType) {
             def searchResult = [:]
