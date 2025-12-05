@@ -2275,7 +2275,7 @@ class Api2Service {
 
                 target_class = grailsApplication.getArtefact("Domain", apiSearchTemplate.baseclass)
                 //HQLBuilder.build(grailsApplication, apiSearchTemplate, cleaned_params, searchResult, target_class, genericOIDService, "rows")
-                HQLBuilder.build(grailsApplication, apiSearchTemplate, cleaned_params, searchResult, target_class, genericOIDService)
+                HQLBuilder.build(grailsApplication, apiSearchTemplate, cleaned_params, searchResult, target_class)
 
                 log.debug("Query complete");
 
