@@ -145,6 +145,10 @@ class AutoUpdatePackagesService {
                                             updatePackageInfo.endTime = new Date()
                                             updatePackageInfo.save()
                                         }
+
+                                        KbartSource src = KbartSource.get(pkg.kbartSource.id)
+                                        src.lastRun = new Date()
+                                        src.save()
                                     }
                                 }
 
@@ -278,6 +282,10 @@ class AutoUpdatePackagesService {
                                                     updatePackageInfo.endTime = new Date()
                                                     updatePackageInfo.save()
                                                 }
+
+                                                KbartSource src = KbartSource.get(pkg.kbartSource.id)
+                                                src.lastRun = new Date()
+                                                src.save()
                                             }
                                         }
 
