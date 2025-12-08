@@ -724,7 +724,12 @@ class KbartProcessService {
             encodingPass = true
         }
         else {
-            encoding = UniversalDetector.detectCharset(tsvFile)
+            InputStream is = new FileInputStream(tsvFile)
+            try {
+                encoding = UniversalDetector.detectCharset(is)
+            } finally {
+                is.close()
+            }
 
   /*          if(encoding == null){
                 CharsetMatch[] charsetMatches= new CharsetDetector().setText(tsvFile.newInputStream()).detectAll()

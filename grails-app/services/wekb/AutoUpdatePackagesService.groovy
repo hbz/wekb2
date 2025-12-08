@@ -360,8 +360,9 @@ class AutoUpdatePackagesService {
         zf.entries().findAll { !it.directory }.each {
             log.debug("storeZipContentToFile: fileName -> "+it.name)
             if(it.name.contains('.txt')){
-                String fileName = folder.absolutePath.concat(File.separator).concat(it.name+'.txt')
-                file = new File(fileName)
+                String fileName = folder.absolutePath.concat(File.separator).concat(it.name)
+                String safeFileName = fileName.replaceAll("[\\\\/:*?\"<>|]", "_")
+                file = new File(safeFileName)
                 byte[] content = exportService.getByteContent(zf.getInputStream(it))
                 FileUtils.copyInputStreamToFile(new ByteArrayInputStream(content), file)
             }
