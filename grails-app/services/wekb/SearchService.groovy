@@ -2,6 +2,7 @@ package wekb
 
 import grails.converters.JSON
 import grails.gorm.transactions.Transactional
+import grails.plugin.springsecurity.SpringSecurityUtils
 import grails.web.mvc.FlashScope
 import grails.web.servlet.mvc.GrailsParameterMap
 import org.grails.web.servlet.mvc.GrailsWebRequest
@@ -117,6 +118,14 @@ class SearchService {
 
                 Class target_class = Class.forName(result.qbetemplate.baseclass);
                 def read_perm = accessService.checkReadable(result.qbetemplate.baseclass)
+
+                if(params.qbe == 'g:updateTippInfos'){
+                    if(!params.qp_aup_id){
+                        if(!SpringSecurityUtils.ifAnyGranted('ROLE_SUPERUSER')){
+                            read_perm = false
+                        }
+                    }
+                }
 
                 result.classSimpleName = target_class.simpleName
 
