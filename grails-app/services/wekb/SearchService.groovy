@@ -20,6 +20,7 @@ class SearchService {
     DisplayTemplateService displayTemplateService
     ClassExaminationService classExaminationService
     AccessService accessService
+    TenantSwitchService tenantSwitchService
 
     FlashScope getCurrentFlashScope() {
         GrailsWebRequest grailsWebRequest = WebUtils.retrieveGrailsWebRequest()
@@ -30,11 +31,51 @@ class SearchService {
 
     def doQuery (qbetemplate, params, result) {
         def target_class = grailsApplication.getArtefact("Domain",qbetemplate.baseclass);
-        HQLBuilder.build(grailsApplication, qbetemplate, params, result, target_class)
+        Map hql_Map = HQLBuilder.build(grailsApplication, qbetemplate, params, target_class)
+
+        def baseclass = target_class.getClazz()
+
+        result.sort = hql_Map.sort
+        result.order = hql_Map.order
+
+        log.info("Attempt count qry: ${hql_Map.count_hql}")
+        log.info("Attempt qry: ${hql_Map.fetch_hql}")
+        log.info("Bindvars: ${hql_Map.params_hql}")
+        def count_start_time = System.currentTimeMillis()
+        int reccount
+        tenantSwitchService.withTenantRole {
+            reccount = baseclass.executeQuery(hql_Map.count_hql, hql_Map.params_hql,[readOnly:true])[0]
+        }
+        result.reccount = reccount
+
+        log.info("Count completed (${result.reccount}) after ${System.currentTimeMillis() - count_start_time} ms")
+
+        def query_params = [:]
+        if ( result.max )
+            query_params.max = result.max
+        if ( result.offset )
+            query_params.offset = result.offset
+
+        query_params.readOnly = true
+
+        def query_start_time = System.currentTimeMillis()
+        // log.debug("Get data rows..")
+        def recset
+         tenantSwitchService.withTenantRole {
+             recset = baseclass.executeQuery(hql_Map.fetch_hql, hql_Map.params_hql, query_params)
+        }
+
+        result.recset = recset
+        // log.debug("Returning..")
+        log.info("Fetch completed after ${System.currentTimeMillis() - query_start_time} ms")
+
+        result
+
     }
 
     Map search(User user = null, Map result, GrailsParameterMap params){
         FlashScope flash = getCurrentFlashScope()
+        def start_time = System.currentTimeMillis();
 
         if ( params.init ) {
             result.init = true
@@ -281,6 +322,7 @@ class SearchService {
 
         result.new_recset = recSet
         log.debug("Finished new recset!")
+        log.debug("Search completed after ${System.currentTimeMillis() - start_time} ms")
 
 
         [result: result]

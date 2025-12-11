@@ -290,7 +290,6 @@ class SearchController {
 
     def componentSearch() {
         User user = springSecurityService.currentUser
-        def start_time = System.currentTimeMillis();
 
         log.debug("SearchController:componentSearch ${params}")
 
@@ -298,8 +297,6 @@ class SearchController {
 
         if ((params.qbe in accessService.allowedComponentSearch) || (springSecurityService.isLoggedIn() && SpringSecurityUtils.ifAnyGranted("ROLE_ADMIN"))) {
             searchResult = searchService.search(user, searchResult, params)
-
-            log.debug("Search completed after ${System.currentTimeMillis() - start_time}");
 
         } else {
             searchResult.result = [:]
@@ -310,7 +307,6 @@ class SearchController {
 
     def inlineSearch() {
         User user = springSecurityService.currentUser
-        def start_time = System.currentTimeMillis();
 
         log.debug("inlineSearch:componentSearch ${params}")
 
@@ -319,7 +315,6 @@ class SearchController {
         if ((params.qbe in accessService.allowedInlineSearch) || (springSecurityService.isLoggedIn() && SpringSecurityUtils.ifAnyGranted("ROLE_ADMIN"))) {
             searchResult = searchService.search(user, searchResult, params)
 
-            log.debug("Search completed after ${System.currentTimeMillis() - start_time}");
             if(searchResult.result) {
                 searchResult.result.s_action = params.s_actionName
                 searchResult.result.s_controller = params.s_controllerName
