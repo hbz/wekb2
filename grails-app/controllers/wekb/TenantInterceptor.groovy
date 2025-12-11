@@ -11,6 +11,9 @@ class TenantInterceptor {
 
     TenantInterceptor() {
         match(controller: 'search')
+        match(controller: 'public', action: 'index')
+        match(controller: 'package', action: 'packageChangeHistory')
+        match(controller: 'group')
     }
 
 
