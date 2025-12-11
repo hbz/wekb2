@@ -2275,15 +2275,39 @@ class Api2Service {
 
                 target_class = grailsApplication.getArtefact("Domain", apiSearchTemplate.baseclass)
                 //HQLBuilder.build(grailsApplication, apiSearchTemplate, cleaned_params, searchResult, target_class, genericOIDService, "rows")
-                HQLBuilder.build(grailsApplication, apiSearchTemplate, cleaned_params, searchResult, target_class)
+                Map hql_Map = HQLBuilder.build(grailsApplication, apiSearchTemplate, cleaned_params, target_class)
 
-                log.debug("Query complete");
+                def baseclass = target_class.getClazz()
+
+                log.info("Attempt count qry: ${hql_Map.count_hql}")
+                log.info("Attempt qry: ${hql_Map.fetch_hql}")
+                log.info("Bindvars: ${hql_Map.params_hql}")
+                def count_start_time = System.currentTimeMillis()
+                searchResult.reccount = baseclass.executeQuery(hql_Map.count_hql, hql_Map.params_hql,[readOnly:true])[0]
+
+                log.info("Count completed (${searchResult.reccount}) after ${System.currentTimeMillis() - count_start_time} ms")
+
+                def query_params = [:]
+                if ( searchResult.max )
+                    query_params.max = searchResult.max
+                if ( searchResult.offset )
+                    query_params.offset = searchResult.offset
+
+                query_params.readOnly = true
+
+
+                def query_start_time = System.currentTimeMillis()
+                // log.debug("Get data rows..")
+                searchResult.recset = baseclass.executeQuery(hql_Map.fetch_hql, hql_Map.params_hql, query_params)
+
+                log.info("Fetch completed after ${System.currentTimeMillis() - query_start_time} ms")
+
 
                 //Add information to result
                 result.result_count_total = searchResult.reccount
                 result.result_count = searchResult.recset.size()
-                result.sort = searchResult.sort
-                result.order = searchResult.order
+                result.sort = hql_Map.sort
+                result.order = hql_Map.order
                 result.offset = searchResult.offset
                 result.max = searchResult.max
                 result.page_current = (searchResult.offset / searchResult.max) + 1

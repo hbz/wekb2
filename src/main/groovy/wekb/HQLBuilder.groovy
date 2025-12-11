@@ -52,7 +52,6 @@ public class HQLBuilder {
   public static def build(grailsApplication, 
                           qbetemplate, 
                           params,
-                          result, 
                           target_class,
                           returnObjectsOrRows='objects') {
     // select o from Clazz as o where 
@@ -107,14 +106,14 @@ public class HQLBuilder {
     }else {
       hql_builder_context.sort = ( qbetemplate.containsKey('defaultSort') ? qbetemplate.defaultSort : null )
     }
-    result.sort = hql_builder_context.sort
+    String sort = hql_builder_context.sort
 
     if(params.order && params.order in ['desc', 'asc']){
       hql_builder_context.order = params.order
     }else {
       hql_builder_context.order = ( qbetemplate.containsKey('defaultOrder') ? qbetemplate.defaultOrder : null )
     }
-    result.order = hql_builder_context.order
+    String order = hql_builder_context.order
 
 
     def baseclass = target_class.getClazz()
@@ -198,28 +197,7 @@ public class HQLBuilder {
       }
     }
 
-
-    log.info("Attempt count qry ${count_hql}");
-    log.info("Attempt qry ${fetch_hql}");
-    log.info("Bindvars ${hql_builder_context.bindvars}");
-    def count_start_time = System.currentTimeMillis();
-    result.reccount = baseclass.executeQuery(count_hql, hql_builder_context.bindvars,[readOnly:true])[0]
-
-    log.info("Count completed (${result.reccount}) after ${System.currentTimeMillis() - count_start_time} ms");
-
-    def query_params = [:]
-    if ( result.max )
-      query_params.max = result.max;
-    if ( result.offset )
-      query_params.offset = result.offset
-
-    query_params.readOnly = true;
-
-    def query_start_time = System.currentTimeMillis();
-    // log.debug("Get data rows..");
-    result.recset = baseclass.executeQuery(fetch_hql, hql_builder_context.bindvars,query_params);
-    // log.debug("Returning..");
-    log.info("Fetch completed after ${System.currentTimeMillis() - query_start_time} ms");
+      return [count_hql: count_hql, fetch_hql: fetch_hql, params_hql: hql_builder_context.bindvars, sort: sort, order: order]
   }
 
   static def processProperty(hql_builder_context,crit,baseclass, grailsApplication) {
