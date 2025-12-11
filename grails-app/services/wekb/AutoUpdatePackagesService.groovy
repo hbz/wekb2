@@ -120,12 +120,10 @@ class AutoUpdatePackagesService {
                                         updatePackageInfo = kbartProcessService.kbartImportProcess(kbartRows, pkg, "", updatePackageInfo, onlyRowsWithLastChanged)
 
                                         if(updatePackageInfo.status != RDStore.UPDATE_STATUS_FAILED) {
-                                           String newHash = fileCheckService.computeHash(file)
-                                            KbartSource.withTransaction {
-                                                KbartSource src = KbartSource.get(pkg.kbartSource.id)
-                                                src.kbartFileHash = newHash
-                                                src.save()
-                                            }
+                                            String newHash = fileCheckService.computeHash(file)
+                                            KbartSource src = KbartSource.get(pkg.kbartSource.id)
+                                            src.kbartFileHash = newHash
+                                            src.save()
                                         }
                                     } else {
                                         if(updatePackageInfo.status != RDStore.UPDATE_STATUS_FAILED) {
@@ -147,6 +145,10 @@ class AutoUpdatePackagesService {
                                             updatePackageInfo.endTime = new Date()
                                             updatePackageInfo.save()
                                         }
+
+                                        KbartSource src = KbartSource.get(pkg.kbartSource.id)
+                                        src.lastRun = new Date()
+                                        src.save()
                                     }
                                 }
 
@@ -254,11 +256,11 @@ class AutoUpdatePackagesService {
 
                                                 if(updatePackageInfo.status != RDStore.UPDATE_STATUS_FAILED) {
                                                     String newHash = fileCheckService.computeHash(file)
-                                                    KbartSource.withTransaction {
-                                                        KbartSource src = KbartSource.get(pkg.kbartSource.id)
-                                                        src.kbartFileHash = newHash
-                                                        src.save()
-                                                    }
+
+                                                    KbartSource src = KbartSource.get(pkg.kbartSource.id)
+                                                    src.kbartFileHash = newHash
+                                                    src.save()
+
                                                 }
 
                                             } else {
@@ -280,6 +282,10 @@ class AutoUpdatePackagesService {
                                                     updatePackageInfo.endTime = new Date()
                                                     updatePackageInfo.save()
                                                 }
+
+                                                KbartSource src = KbartSource.get(pkg.kbartSource.id)
+                                                src.lastRun = new Date()
+                                                src.save()
                                             }
                                         }
 
@@ -362,8 +368,9 @@ class AutoUpdatePackagesService {
         zf.entries().findAll { !it.directory }.each {
             log.debug("storeZipContentToFile: fileName -> "+it.name)
             if(it.name.contains('.txt')){
-                String fileName = folder.absolutePath.concat(File.separator).concat(it.name+'.txt')
-                file = new File(fileName)
+                String fileName = folder.absolutePath.concat(File.separator).concat(it.name)
+                String safeFileName = fileName.replaceAll("[\\\\/:*?\"<>|]", "_")
+                file = new File(safeFileName)
                 byte[] content = exportService.getByteContent(zf.getInputStream(it))
                 FileUtils.copyInputStreamToFile(new ByteArrayInputStream(content), file)
             }
