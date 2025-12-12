@@ -1,3 +1,4 @@
+<%@ page import="wekb.helper.RDStore" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,7 +10,7 @@
 
 <wekb:serviceInjection/>
 
-<h1 class="ui header">Packages with Tipp without Title_ID (${totalCount})</h1>
+<h1 class="ui header">Packages with Tipp without Title_ID (${totalCount}) Status  -> ${[wekb.helper.RDStore.KBC_STATUS_CURRENT.value_en, RDStore.KBC_STATUS_RETIRED.value_en, RDStore.KBC_STATUS_EXPECTED.value_en]}</h1>
 
 <g:set var="allCount" value="${0}"/>
 
@@ -23,7 +24,7 @@
             <th>Provider</th>
             <th>Platform</th>
             <semui:sortableColumn property="curatoryGroups" title="Curatory Groups"/>
-            <th>Auto Update</th>
+            <semui:sortableColumn property="autoUpdate" title="Auto Update"/>
             <th>Titles</th>
             <semui:sortableColumn property="tippsWithoutTitleIDCount" title="Tipp without Title ID"/>
         </tr>

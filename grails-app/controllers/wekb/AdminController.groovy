@@ -394,7 +394,9 @@ class AdminController {
       result.pkgs = result.pkgs.reverse()
     }else if (params.sort == 'curatoryGroups') {
      result.pkgs = pkgs.sort { it.pkg.curatoryGroups.curatoryGroup.name[0]}
-   } else {
+   } else if (params.sort == 'autoUpdate') {
+       result.pkgs = pkgs.sort { it.pkg.kbartSource?.automaticUpdates}
+   }else {
       result.pkgs = pkgs
     }
 
@@ -417,7 +419,7 @@ class AdminController {
                 result.status = status.value_en
                 tippsDuplicates = aPackage.findTippDuplicatesWithStatusByTitleID(status)
             }else{
-                tippsDuplicates = aPackage.findTippDuplicatesByTitleID()
+                tippsDuplicates = aPackage.findTippDuplicatesByTitleIDWithOutRemoved()
             }
 
         }
@@ -723,6 +725,67 @@ class AdminController {
     result
   }
 
+    def findPackagesWithTippDuplicatesByUrl() {
+        log.debug("findPackagesWithTippDuplicatesByUrl::${params}")
+        def result = [:]
+
+        List pkgs = []
+
+        Package.findAllByStatus(RDStore.KBC_STATUS_CURRENT, [sort: 'name']).eachWithIndex { Package aPackage, int index ->
+            Integer tippDuplicatesByUrlCount = aPackage.getTippDuplicatesByURLCount()
+            if(tippDuplicatesByUrlCount){
+                pkgs << [pkg: aPackage, tippDuplicatesByUrlCount: tippDuplicatesByUrlCount]
+            }
+        }
+
+        //result.offset = params.offset ? Integer.parseInt(params.offset) : 0
+        //result.max = params.max ? Integer.parseInt(params.max) : 250
+
+        result.totalCount = pkgs.size()
+        if (params.sort == 'tippDuplicatesByUrlCount') {
+            result.pkgs = pkgs.sort {
+                it.tippDuplicatesByUrlCount
+            }
+            result.pkgs = result.pkgs.reverse()
+        }else {
+            result.pkgs = pkgs
+        }
+
+        //result.pkgs = result.pkgs.drop((int) result.offset).take((int) result.max)
+        result
+    }
+
+    def findPackagesWithRemovedTippDuplicates() {
+        log.debug("findPackagesWithRemovedTippDuplicates::${params}")
+        def result = [:]
+
+        List pkgs = []
+
+        Package.findAllByStatus(RDStore.KBC_STATUS_CURRENT, [sort: 'name']).eachWithIndex { Package aPackage, int index ->
+            Integer tippDuplicatesByTitleIDCount = aPackage.getTippDuplicatesByTitleIDCount()
+            if(tippDuplicatesByTitleIDCount > 0){
+                pkgs << [pkg: aPackage, tippDuplicatesByTitleIDCount: tippDuplicatesByTitleIDCount]
+            }
+        }
+
+        //result.offset = params.offset ? Integer.parseInt(params.offset) : 0
+        //result.max = params.max ? Integer.parseInt(params.max) : 250
+
+        result.totalCount = pkgs.size()
+
+        if (params.sort == 'tippDuplicatesByTitleIDCount') {
+            result.pkgs = pkgs.sort {
+                it.tippDuplicatesByTitleIDCount
+            }
+            result.pkgs = result.pkgs.reverse()
+        } else {
+            result.pkgs = pkgs
+        }
+
+        //result.pkgs = result.pkgs.drop((int) result.offset).take((int) result.max)
+        result
+    }
+
 
 
   def findPackagesWithTippDuplicates() {
@@ -734,7 +797,7 @@ class AdminController {
     Package.findAllByStatus(RDStore.KBC_STATUS_CURRENT, [sort: 'name']).eachWithIndex { Package aPackage, int index ->
       Integer tippDuplicatesByNameCount = 0  //aPackage.getTippDuplicatesByNameCount()
       Integer tippDuplicatesByUrlCount = 0 //aPackage.getTippDuplicatesByURLCount()
-      Integer tippDuplicatesByTitleIDCount = aPackage.getTippDuplicatesByTitleIDCount()
+      Integer tippDuplicatesByTitleIDCount = aPackage.getTippDuplicatesByTitleIDWithOutRemovedCount()
       //log.debug("Package ${aPackage.name} : ${index}")
 
       if(tippDuplicatesByNameCount > 0 || tippDuplicatesByUrlCount > 0 || tippDuplicatesByTitleIDCount > 0){
@@ -770,31 +833,43 @@ class AdminController {
     result
   }
 
-  def removeTippDuplicatesByUrl(){
+  def removeTippDuplicatesByUrlOfPkg(){
     Package aPackage = Package.findByUuid(params.id)
 
-    List<TitleInstancePackagePlatform> tippsDuplicatesByUrl = aPackage.findTippDuplicatesByURL()
-
-    int countRemoved = 0
-    tippsDuplicatesByUrl.groupBy {it.url}.each {String key, List<TitleInstancePackagePlatform> tipps ->
-      //println(key)
-      //println(tipps.sort {it.lastUpdated}.reverse().lastUpdated)
-      List list = tipps.sort {it.lastUpdated}.reverse()
-      list.eachWithIndex { TitleInstancePackagePlatform titleInstancePackagePlatform, int index ->
-        if(index != 0){
-          titleInstancePackagePlatform.status = RDStore.KBC_STATUS_REMOVED
-          titleInstancePackagePlatform.save()
-          countRemoved++
-        }
-      }
-
-    }
+      int countRemoved = adminService.removeTippDuplicatesByUrlOfPkg(aPackage)
 
     flash.message = "Tipps ${countRemoved} set to removed because of tipp duplicates by url"
 
     redirect(action: 'findTippDuplicatesByPkg', params: [id: params.id, max: 100, offset: 0] )
 
   }
+
+    def removeTippDuplicatesByTitleID(){
+        int countRemoved = 0
+
+        Package.findAllByStatus(RDStore.KBC_STATUS_CURRENT, [sort: 'name']).eachWithIndex { Package aPackage, int index ->
+            Integer tippDuplicatesByTitleIDCount = aPackage.getTippDuplicatesByTitleIDWithOutRemovedCount()
+            if(tippDuplicatesByTitleIDCount > 0){
+                countRemoved = countRemoved + adminService.removeTippDuplicatesByTitleIDOfPkg(aPackage)
+            }
+        }
+
+        flash.message = "Tipps ${countRemoved} set to removed because of tipp duplicates by title_id"
+
+        redirect(action: 'index')
+
+    }
+
+    def removeTippDuplicatesByTitleIDOfPkg(){
+        Package aPackage = Package.findByUuid(params.id)
+
+        int countRemoved = adminService.removeTippDuplicatesByTitleIDOfPkg(aPackage)
+
+        flash.message = "Tipps ${countRemoved} set to removed because of tipp duplicates by title_id"
+
+        redirect(action: 'findTippDuplicatesByPkg', params: [id: params.id, max: 100, offset: 0] )
+
+    }
 
   def cleanupTippIdentifersWithSameNamespace() {
     /*Job j = concurrencyManagerService.createJob { Job j ->

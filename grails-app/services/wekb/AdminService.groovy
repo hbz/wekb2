@@ -75,4 +75,69 @@ class AdminService {
         }
         result
     }
+
+
+    int removeTippDuplicatesByTitleIDOfPkg(Package aPackage){
+        List<TitleInstancePackagePlatform> tippsDuplicatesByTitleID = aPackage.findTippDuplicatesByTitleIDWithOutRemoved()
+
+        int countRemoved = 0
+        tippsDuplicatesByTitleID.eachWithIndex{ TitleInstancePackagePlatform sourceTipp, int i ->
+            if(sourceTipp.status == RDStore.KBC_STATUS_CURRENT) {
+                List tipps
+                if (sourceTipp.getTippDuplicatesByTitleIDWithoutRemovedCount() > 0) {
+                    tipps = sourceTipp.findTippDuplicatesByTitleIDWithoutRemoved()
+                }
+
+                tipps.each { TitleInstancePackagePlatform targetTipp ->
+                    if (targetTipp.status != RDStore.KBC_STATUS_CURRENT && targetTipp.status != RDStore.KBC_STATUS_REMOVED) {
+                        targetTipp.status = RDStore.KBC_STATUS_REMOVED
+                        targetTipp.save()
+                        countRemoved++
+                    }
+                }
+
+            }
+        }
+
+        if(countRemoved > 0){
+            aPackage.lastUpdated = new Date()
+            aPackage.save()
+        }
+
+        return countRemoved
+
+    }
+
+    int removeTippDuplicatesByUrlOfPkg(Package aPackage){
+
+        List<TitleInstancePackagePlatform> tippsDuplicatesByUrl = aPackage.findTippDuplicatesByURL()
+
+        int countRemoved = 0
+        tippsDuplicatesByUrl.each {TitleInstancePackagePlatform sourceTipp, int i ->
+            if(sourceTipp.status == RDStore.KBC_STATUS_CURRENT) {
+                List tipps
+                if (sourceTipp.getTippDuplicatesByURLCount() > 0) {
+                    tipps = sourceTipp.findTippDuplicatesByURL()
+                }
+
+                tipps.each { TitleInstancePackagePlatform targetTipp ->
+                    if (targetTipp.status != RDStore.KBC_STATUS_CURRENT && targetTipp.status != RDStore.KBC_STATUS_REMOVED) {
+                        targetTipp.status = RDStore.KBC_STATUS_REMOVED
+                        targetTipp.save()
+                        countRemoved++
+                    }
+                }
+
+            }
+
+        }
+
+        if(countRemoved > 0){
+            aPackage.lastUpdated = new Date()
+            aPackage.save()
+        }
+
+        return countRemoved
+
+    }
 }

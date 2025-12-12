@@ -2,20 +2,14 @@
 <html>
 <head>
     <meta name="layout" content="wekb"/>
-    <title>we:kb : Current Packages with Tipp Duplicates</title>
+    <title>we:kb : Current Packages with Tipp Duplicates with Remove</title>
 </head>
 
 <body>
 
 <wekb:serviceInjection/>
 
-<h1 class="ui header">Current Packages with Tipp Duplicates (${totalCount})</h1>
-
-<div class="ui right floated buttons">
-    <g:link controller="admin" action="removeTippDuplicatesByTitleID"
-            class="ui button primary">Remove Tipps Duplicates By Title_ID of all Packages</g:link>
-    <br>
-</div>
+<h1 class="ui header">Current Packages with Tipp Duplicates with Removed (${totalCount})</h1>
 
 
 <div class="container">
@@ -30,8 +24,6 @@
             <semui:sortableColumn property="curatoryGroups" title="Curatory Groups"/>
             <th>Auto Update</th>
             <th>Titles</th>
-            %{--<semui:sortableColumn property="tippDuplicatesByNameCount" title="Tipp Duplicates By Name"/>
-            <semui:sortableColumn property="tippDuplicatesByUrlCount" title="Tipp Duplicates By Url"/>--}%
             <semui:sortableColumn property="tippDuplicatesByTitleIDCount" title="Tipp Duplicates By Title ID"/>
         </tr>
         </thead>
@@ -79,18 +71,6 @@
                         ${allTipps2}
                     </g:else>
                 </td>
-                %{--<td>
-                    <g:link controller="admin" action="findTippDuplicatesByPkg" id="${pkg.uuid}" target="_blank"
-                            params="[papaginateByName: true, max: 100, offset: 0]">
-                        ${pkgMap.tippDuplicatesByNameCount}
-                    </g:link>
-                </td>
-                <td>
-                    <g:link controller="admin" action="findTippDuplicatesByPkg" id="${pkg.uuid}" target="_blank"
-                            params="[papaginateByUrl: true, max: 100, offset: 0]">
-                        ${pkgMap.tippDuplicatesByUrlCount}
-                    </g:link>
-                </td>--}%
                 <td>
                     <g:set var="countTipps" value="${countTipps+pkgMap.tippDuplicatesByTitleIDCount}"/>
 

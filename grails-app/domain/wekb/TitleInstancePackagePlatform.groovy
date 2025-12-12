@@ -389,6 +389,20 @@ class TitleInstancePackagePlatform  extends AbstractBase implements Auditable {
     }
 
     @Transient
+    List<TitleInstancePackagePlatform> findTippDuplicatesByTitleIDWithoutRemoved() {
+
+        IdentifierNamespace identifierNamespace = IdentifierNamespace.findByValueAndTargetType('title_id', RDStore.IDENTIFIER_NAMESPACE_TARGET_TYPE_TIPP)
+        String value = getTitleID()
+
+        if(identifierNamespace && value) {
+            List<TitleInstancePackagePlatform> tippsDuplicates = TitleInstancePackagePlatform.executeQuery("select ident.tipp FROM Identifier AS ident left join ident.tipp as tipp WHERE tipp.pkg = :pkg and ident.namespace = :namespace and ident.value = :value and tipp.id != :tippId and tipp.status != :status",
+                    [pkg: pkg, namespace: identifierNamespace, value: value, tippId: id, status: RDStore.KBC_STATUS_REMOVED]) ?: []
+        }else {
+            return []
+        }
+    }
+
+    @Transient
     Integer getTippDuplicatesByTitleIDCount() {
         IdentifierNamespace identifierNamespace = IdentifierNamespace.findByValueAndTargetType('title_id', RDStore.IDENTIFIER_NAMESPACE_TARGET_TYPE_TIPP)
         String value = getTitleID()
@@ -396,6 +410,20 @@ class TitleInstancePackagePlatform  extends AbstractBase implements Auditable {
         if(identifierNamespace && value) {
             int result = TitleInstancePackagePlatform.executeQuery("select count(ident.value) FROM Identifier AS ident left join ident.tipp as tipp WHERE tipp.pkg = :pkg and ident.namespace = :namespace and ident.value = :value and tipp.id != :tippId",
                     [pkg: pkg, namespace: identifierNamespace, value: value, tippId: id])[0]
+            return result > 0 ? result : 0
+        }else {
+            return 0
+        }
+    }
+
+    @Transient
+    Integer getTippDuplicatesByTitleIDWithoutRemovedCount() {
+        IdentifierNamespace identifierNamespace = IdentifierNamespace.findByValueAndTargetType('title_id', RDStore.IDENTIFIER_NAMESPACE_TARGET_TYPE_TIPP)
+        String value = getTitleID()
+
+        if(identifierNamespace && value) {
+            int result = TitleInstancePackagePlatform.executeQuery("select count(ident.value) FROM Identifier AS ident left join ident.tipp as tipp WHERE tipp.pkg = :pkg and ident.namespace = :namespace and ident.value = :value and tipp.id != :tippId and tipp.status != :status",
+                    [pkg: pkg, namespace: identifierNamespace, value: value, tippId: id, status: RDStore.KBC_STATUS_REMOVED])[0]
             return result > 0 ? result : 0
         }else {
             return 0
