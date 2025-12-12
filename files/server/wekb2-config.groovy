@@ -3,6 +3,7 @@ println("------- Using local config from ~/.grails/wekb2-config.groovy ------- "
 
 grails.mail.host = 'localhost'
 grails.mail.port = 25
+grails.mail.disabled = true
 
 deployBackupLocation = ''
 pgDumpPath = ''
@@ -21,13 +22,17 @@ logSql = true
 formatSql = true
 
 wekb.anonymizeUsers = false
+wekb.auditCleanUpJob.enabled = false
 wekb.es.cluster = 'wekb_es'
 wekb.es.host = 'localhost'
 wekb.ftupdate_enabled = false
-wekb.languagesUrl = 'localhost/languages'
 wekb.packageUpdate.enabled = false
 wekb.enable_statsrewrite = false
 wekb.sendJobInfosJob = false
 wekb.kbartImportStorageLocation = '/tmp/kbartImport'
+wekb.tenantWithLogin = 'tenantWithLogin'
+wekb.tenantWithOutLogin = 'wekb.tenantWithOutLogin'
+
+
 
 
