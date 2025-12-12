@@ -74,7 +74,7 @@ class SendAdminInfosJob {
         log.info("sendTitleDublicatesInfos: Begin")
         List<Package> pkgs = []
         Package.findAll([sort: 'name']).eachWithIndex { Package aPackage, int index ->
-            Integer tippDuplicatesByTitleIDCount = aPackage.getTippDuplicatesByTitleIDCount()
+            Integer tippDuplicatesByTitleIDCount = aPackage.getTippDuplicatesByTitleIDWithOutRemovedCount()
 
             if(tippDuplicatesByTitleIDCount > 0){
                 pkgs << [pkg: aPackage, tippDuplicatesByTitleIDCount: tippDuplicatesByTitleIDCount]
