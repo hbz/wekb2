@@ -1,8 +1,8 @@
 -- Default for user not logged in
-CREATE ROLE wekb_without_login NOINHERIT LOGIN PASSWORD 'wekb_without_login';
+CREATE ROLE wekb_without_login NOINHERIT NOLOGIN;
 
 -- Tenant for user logged in
-CREATE ROLE wekb_with_login NOINHERIT LOGIN PASSWORD 'wekb_with_login';
+CREATE ROLE wekb_with_login NOINHERIT NOLOGIN;
 
 -- Granting roles so db_user can SET ROLE
 GRANT wekb_without_login TO db_user;
