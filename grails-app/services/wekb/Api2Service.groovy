@@ -2630,8 +2630,8 @@ class Api2Service {
         if(params.uuid) {
             TitleInstancePackagePlatform tipp = TitleInstancePackagePlatform.findByUuid(params.uuid)
             TitleInstancePackagePlatform correctTipp
-            if (tipp && tipp.getTippDuplicatesByTitleIDCount() > 0) {
-                List tipps = tipp.findTippDuplicatesByTitleID()
+            if (tipp && tipp.getTippDuplicatesByTitleIDWithoutRemovedCount() > 0) {
+                List tipps = tipp.findTippDuplicatesByTitleIDWithoutRemoved()
 
                 List currentTipps = tipps.findAll { it.status == RDStore.KBC_STATUS_CURRENT }
 
