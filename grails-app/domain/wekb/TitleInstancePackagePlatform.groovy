@@ -119,7 +119,7 @@ class TitleInstancePackagePlatform  extends AbstractBase implements Auditable {
   ]
 
   def getPersistentId() {
-    "${uuid ?: 'wekb:TIPP:' + this.id + ':' + pkg?.id + ':' + hostPlatform?.id}"
+    "${uuid ?: 'wekb:TIPP:' + this.id + ':' + pkg?.id + ':' + pkg.nominalPlatform?.id}"
   }
 
   static mapping = {

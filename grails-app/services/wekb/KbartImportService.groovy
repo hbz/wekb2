@@ -950,7 +950,7 @@ class KbartImportService {
                 publicationType: tipp_publicationType,
                 url: tipp_fields.url,
                 pkg: tipp_fields.pkg,
-                hostPlatform: tipp_fields.hostPlatform)
+                hostPlatform: tipp_fields.pkg.nominalPlatform)
 
         result.save()
 
@@ -2398,7 +2398,7 @@ class KbartImportService {
                                     volumeNumber: tippMap.kbartRowMap.monograph_volume,
                                     fromKbartImport: true,
                                     pkg: tippMap.pkg,
-                                    hostPlatform: tippMap.hostPlatform
+                                    hostPlatform: tippMap.pkg.nominalPlatform
                             )
                             if (tipp) {
                                 tipp.kbartImportRunning = true

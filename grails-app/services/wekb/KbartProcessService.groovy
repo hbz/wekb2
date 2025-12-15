@@ -253,7 +253,7 @@ class KbartProcessService {
                                                     log.debug("push in map to create new TIPP..")
                                                     def tmap = [
                                                             'pkg'         : pkg,
-                                                            'hostPlatform': plt,
+                                                            'hostPlatform': pkg.nominalPlatform,
                                                             'url'         : trimmed_url,
                                                             'status'      : (kbartRow.status ?: 'Current'),
                                                             'name'        : (kbartRow.publication_title ?: null),

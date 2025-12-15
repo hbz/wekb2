@@ -2145,7 +2145,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         qparam     : 'qp_platform_id',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'hostPlatform.id', 'type': 'java.lang.Long'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'pkg.nominalPlatform.id', 'type': 'java.lang.Long'],
                                         hide       : true
                                 ],
                                 [
@@ -2352,7 +2352,7 @@ class GlobalSearchTemplatesService {
                                 [heading: 'Medium', property: 'medium.value', sort: 'medium.value'],
                                 [heading: 'First Author', property: 'firstAuthor', sort: 'firstAuthor'],
                                 [heading: 'Package', qpEquiv: 'qp_pkg_id', property: 'pkg.name', sort: 'pkg.name', link: true, linkInfo: 'Link to Package'],
-                                [heading: 'Platform', qpEquiv: 'qp_platform_id', property: 'hostPlatform.name', sort: 'hostPlatform.name', link: true, linkInfo: 'Link to Platform'],
+                                [heading: 'Platform', qpEquiv: 'qp_platform_id', property: 'pkg.nominalPlatform.name', sort: 'pkg.nominalPlatform.name', link: true, linkInfo: 'Link to Platform'],
                                 [heading: 'Provider', qpEquiv: 'qp_provider_id', property: 'pkg.provider.name', sort: 'pkg.provider.name', link: true, linkInfo: 'Link to Provider'],
                                 [heading: 'Last Updated', property: 'lastUpdated', sort: 'lastUpdated'],
                                 [heading: 'Status', property: 'status.value', sort: 'status.value'],
@@ -2394,7 +2394,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         qparam     : 'qp_platform_id',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'hostPlatform.id', 'type': 'java.lang.Long'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'pkg.nominalPlatform.id', 'type': 'java.lang.Long'],
                                         hide       : true
                                 ],
                                 [
@@ -2563,7 +2563,7 @@ class GlobalSearchTemplatesService {
                                 [heading: 'Type', property: 'publicationType.value', sort: 'publicationType.value'],
                                 [heading: 'Medium', property: 'medium.value', sort: 'medium.value'],
                                 [heading: 'First Author', property: 'firstAuthor', sort: 'firstAuthor'],
-                                [heading: 'Platform', qpEquiv: 'qp_platform_id', property: 'hostPlatform.name', sort: 'hostPlatform.name',  link: true, linkInfo: 'Link to Platform'],
+                                [heading: 'Platform', qpEquiv: 'qp_platform_id', property: 'pkg.nominalPlatform.name', sort: 'pkg.nominalPlatform.name',  link: true, linkInfo: 'Link to Platform'],
                                 [heading: 'Last Updated', property: 'lastUpdated', sort: 'lastUpdated'],
                                 [heading: 'Status', property: 'status.value', sort: 'status.value'],
                                 [heading: 'URL', property: 'url', sort: 'url', outGoingLink: true, linkInfo: 'Link to Title URL']
