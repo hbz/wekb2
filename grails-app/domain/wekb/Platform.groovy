@@ -342,7 +342,7 @@ class Platform  extends AbstractBase implements Auditable {
   @Transient
   public getCurrentTippCount() {
     def refdata_current = RDStore.KBC_STATUS_CURRENT
-    int result = TitleInstancePackagePlatform.executeQuery("select count(*) from TitleInstancePackagePlatform as t where t.hostPlatform = :plt and t.status = :status"
+    int result = TitleInstancePackagePlatform.executeQuery("select count(*) from TitleInstancePackagePlatform as t where t.pkg.nominalPlatform = :plt and t.status = :status"
             , [plt: this, status: refdata_current])[0]
 
     result
