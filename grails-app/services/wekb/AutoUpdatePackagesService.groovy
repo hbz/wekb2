@@ -7,67 +7,62 @@ import grails.gorm.transactions.Transactional
 import org.apache.commons.lang.StringUtils
 import wekb.system.JobResult
 
-import java.time.LocalTime
 import java.time.ZoneId
 import java.util.concurrent.ExecutorService
 
-import groovyx.gpars.GParsPool
-import java.util.concurrent.Future
+import java.util.concurrent.Executors
 
 @Transactional
 class AutoUpdatePackagesService {
 
-    static final THREAD_POOL_SIZE = 2
-    public static boolean running = false;
-    Map result = [result: JobResult.STATUS_SUCCESS]
-    ExportService exportService
-    ExecutorService executorService
-    Future activeFuture
     FtpConnectService ftpConnectService
     FileCheckService fileCheckService
-
     KbartProcessService kbartProcessService
 
+    static final THREAD_POOL_SIZE = 4
+    private final ExecutorService executorService = Executors.newFixedThreadPool(THREAD_POOL_SIZE)
+    private static boolean started = false
+
     void findPackageToUpdateAndUpdate(boolean onlyRowsWithLastChanged = false) {
-        List packageNeedsUpdate = []
-        def updPacks = Package.executeQuery(
-                "from Package p " +
-                        "where p.kbartSource is not null and " +
-                        "p.kbartSource.automaticUpdates = true " +
-                        "and (p.kbartSource.lastRun is null or p.kbartSource.lastRun < current_date) and p.kbartSource.status not in (:status) order by p.kbartSource.lastRun", [status:  [RDStore.KBC_STATUS_REMOVED, RDStore.KBC_STATUS_DELETED]])
-        updPacks.each { Package p ->
-            if (p.kbartSource.needsUpdate()) {
-                packageNeedsUpdate << p
-            }else if (!p.kbartSource.frequency){
-                if (!(p.status in [RDStore.KBC_STATUS_REMOVED, RDStore.KBC_STATUS_DELETED])) {
-                    UpdatePackageInfo updatePackageInfo = new UpdatePackageInfo(pkg: p, startTime: new Date(), endTime: new Date(), status: RDStore.UPDATE_STATUS_FAILED, description: "Source frequency is not set. Update for this package is not starting.", onlyRowsWithLastChanged: onlyRowsWithLastChanged, automaticUpdate: true, kbartHasWekbFields: false, lastRun: p.kbartSource.lastRun, lastUpdateUrl: p.kbartSource.lastUpdateUrl)
-                    updatePackageInfo.save()
-                }
-            }
-        }
-        log.info("findPackageToUpdateAndUpdate: Package with KbartSource and lastRun < currentDate (${packageNeedsUpdate.size()})")
-        if (packageNeedsUpdate.size() > 0) {
-            /*  packageNeedsUpdate.eachWithIndex { Package aPackage, int idx ->
-                  while(!(activeFuture) || activeFuture.isDone() || idx == 0) {
-                      activeFuture = executorService.submit({
-                          Package pkg = Package.get(aPackage.id)
-                          Thread.currentThread().setName('startAutoPackageUpdate' + aPackage.id)
-                          startAutoPackageUpdate(pkg, onlyRowsWithLastChanged)
-                      })
-                      println("Wait")
-                  }
-                  println("Test:"+aPackage.name)
-              }*/
-            GParsPool.withPool(THREAD_POOL_SIZE) { pool ->
-                packageNeedsUpdate.anyParallel { aPackage ->
-                    try {
-                        startAutoPackageUpdate(aPackage, onlyRowsWithLastChanged)
-                    }catch (Exception exception) {
-                        log.error("Error by findPackageToUpdateAndUpdate (${aPackage.id} -> ${aPackage.name}): ${exception.message}")
-                        //exception.printStackTrace()
+        Thread.currentThread().name = "AutoUpdate-All"
+        if (!started) {
+            started = true
+            List packageNeedsUpdate = []
+            def updPacks = Package.executeQuery(
+                    "from Package p " +
+                            "where p.kbartSource is not null and " +
+                            "p.kbartSource.automaticUpdates = true " +
+                            "and (p.kbartSource.lastRun is null or p.kbartSource.lastRun < current_date) and p.kbartSource.status not in (:status) order by p.kbartSource.lastRun", [status:  [RDStore.KBC_STATUS_REMOVED, RDStore.KBC_STATUS_DELETED]])
+            updPacks.each { Package p ->
+                if (p.kbartSource.needsUpdate()) {
+                    packageNeedsUpdate << p
+                }else if (!p.kbartSource.frequency){
+                    if (!(p.status in [RDStore.KBC_STATUS_REMOVED, RDStore.KBC_STATUS_DELETED])) {
+                        UpdatePackageInfo updatePackageInfo = new UpdatePackageInfo(pkg: p, startTime: new Date(), endTime: new Date(), status: RDStore.UPDATE_STATUS_FAILED, description: "Source frequency is not set. Update for this package is not starting.", onlyRowsWithLastChanged: onlyRowsWithLastChanged, automaticUpdate: true, kbartHasWekbFields: false, lastRun: p.kbartSource.lastRun, lastUpdateUrl: p.kbartSource.lastUpdateUrl)
+                        updatePackageInfo.save()
                     }
                 }
             }
+            log.info("findPackageToUpdateAndUpdate: Package with KbartSource and lastRun < currentDate (${packageNeedsUpdate.size()})")
+            if (packageNeedsUpdate.size() > 0) {
+                packageNeedsUpdate.eachWithIndex { aPackage, i ->
+                    executorService.submit {
+                        Thread.currentThread().name = "AutoUpdate-${i}"
+
+                        try {
+                            startAutoPackageUpdate(aPackage, onlyRowsWithLastChanged)
+                        }catch (Exception exception) {
+                            log.error("Error by findPackageToUpdateAndUpdate (${aPackage.id} -> ${aPackage.name}): ${exception.message}")
+                            //exception.printStackTrace()
+
+                        }
+                    }
+                }
+            }
+            started = false
+            executorService.shutdown()
+        } else {
+            log.info("AutoUpdate running!")
         }
 
     }
