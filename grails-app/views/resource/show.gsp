@@ -111,7 +111,7 @@
                     <g:if test="${displayobj.isPackageLinkedInLaser()}">
                         <g:render template="/templates/laserInfosForPkg" model="${[pkg: displayobj]}"/>
                     </g:if>
-                    <g:set var="tippDuplicatesByTitleIDCount" value="${displayobj.getTippDuplicatesByTitleIDCount()}"/>
+                    <g:set var="tippDuplicatesByTitleIDCount" value="${displayobj.getTippDuplicatesByTitleIDWithOutRemovedCount()}"/>
                     <g:set var="tippDuplicatesByURLCount" value="${displayobj.getTippDuplicatesByURLCount()}"/>
                     <g:set var="tippDuplicatesByNameCount" value="${displayobj.getTippDuplicatesByNameCount()}"/>
 
@@ -184,7 +184,7 @@
                     <g:render template="/templates/laserInfosForTipp" model="${[pkg: displayobj.pkg, tipp: displayobj]}"/>
 
 
-                    <g:set var="tippDuplicatesByTitleIDCount" value="${displayobj.getTippDuplicatesByTitleIDCount()}"/>
+                    <g:set var="tippDuplicatesByTitleIDCount" value="${displayobj.getTippDuplicatesByTitleIDWithOutRemovedCount()}"/>
                     <g:set var="tippDuplicatesByURLCount" value="${displayobj.getTippDuplicatesByURLCount()}"/>
                     <g:set var="tippDuplicatesByNameCount" value="${displayobj.getTippDuplicatesByNameCount()}"/>
 
@@ -197,7 +197,7 @@
                                 </div>
 
                                 <div class="ui bulleted list">
-                                    <g:each in="${displayobj.findTippDuplicatesByTitleID()}" var="tipp">
+                                    <g:each in="${displayobj.findTippDuplicatesByTitleIDWithoutRemoved()}" var="tipp">
                                         <g:if test="${tipp.id != displayobj.id}">
                                             <div class="item">
                                                 <g:link controller="resource" action="show"

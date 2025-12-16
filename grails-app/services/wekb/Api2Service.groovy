@@ -632,7 +632,7 @@ class Api2Service {
                                 ],
                                 [
                                         qparam     : 'platformUuid',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'hostPlatform.uuid']
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'pkg.nominalPlatform.uuid']
                                 ],
 
                         ],
@@ -644,7 +644,7 @@ class Api2Service {
                                 [sort: 'dateCreated'],
                                 [sort: 'curatoryGroups.curatoryGroup.name'],
                                 [sort: 'pkg.name'],
-                                [sort: 'hostPlatform.name'],
+                                [sort: 'pkg.nominalPlatform.name'],
                                 [sort: 'publicationType.value'],
                                 [sort: 'medium.value'],
                                 [sort: 'firstAuthor'],
@@ -1825,9 +1825,9 @@ class Api2Service {
                     result.tippPackageUuid = object.pkg.uuid
                 }
 
-                if (object.hostPlatform) {
+                if (object.pkg.nominalPlatform) {
                     // !!!!! observe closely! Danger of session mismatches and performance bottlenecks!!!!!
-                    Platform hostPlatform = (Platform) GrailsHibernateUtil.unwrapIfProxy(object.hostPlatform)
+                    Platform hostPlatform = (Platform) GrailsHibernateUtil.unwrapIfProxy(object.pkg.nominalPlatform)
                     result.hostPlatform = hostPlatform.getOID()
                     result.hostPlatformName = hostPlatform.name
                     result.hostPlatformUuid = hostPlatform.uuid
@@ -2630,8 +2630,8 @@ class Api2Service {
         if(params.uuid) {
             TitleInstancePackagePlatform tipp = TitleInstancePackagePlatform.findByUuid(params.uuid)
             TitleInstancePackagePlatform correctTipp
-            if (tipp && tipp.getTippDuplicatesByTitleIDCount() > 0) {
-                List tipps = tipp.findTippDuplicatesByTitleID()
+            if (tipp && tipp.getTippDuplicatesByTitleIDWithoutRemovedCount() > 0) {
+                List tipps = tipp.findTippDuplicatesByTitleIDWithoutRemoved()
 
                 List currentTipps = tipps.findAll { it.status == RDStore.KBC_STATUS_CURRENT }
 

@@ -127,11 +127,6 @@ class AjaxHtmlController {
                             errors.add(g.message(code: 'tipp.title.nullable', default: 'Please provide a title for the TIPP'))
                         }
 
-                        if (!params.hostPlatform || params.hostPlatform.size() == 0) {
-                            log.debug("missing platform for TIPP creation")
-                            errors.add(g.message(code: 'tipp.hostPlatform.nullable', default: 'Please provide a platform for the TIPP'))
-                        }
-
                         if (!params.url || params.url.size() == 0) {
                             log.debug("missing url for TIPP creation")
                             errors.add(g.message(code: 'tipp.url.nullable', default: 'Please provide an url for the TIPP'))

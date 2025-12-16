@@ -950,7 +950,7 @@ class KbartImportService {
                 publicationType: tipp_publicationType,
                 url: tipp_fields.url,
                 pkg: tipp_fields.pkg,
-                hostPlatform: tipp_fields.hostPlatform)
+                hostPlatform: tipp_fields.pkg.nominalPlatform)
 
         result.save()
 
@@ -2398,7 +2398,7 @@ class KbartImportService {
                                     volumeNumber: tippMap.kbartRowMap.monograph_volume,
                                     fromKbartImport: true,
                                     pkg: tippMap.pkg,
-                                    hostPlatform: tippMap.hostPlatform
+                                    hostPlatform: tippMap.pkg.nominalPlatform
                             )
                             if (tipp) {
                                 tipp.kbartImportRunning = true
@@ -2696,7 +2696,7 @@ class KbartImportService {
 
             String title = tippMap.publication_title
 
-            countTipps = TitleInstancePackagePlatform.executeQuery('select count(*) from TitleInstancePackagePlatform as tipp ' +
+            /*countTipps = TitleInstancePackagePlatform.executeQuery('select count(*) from TitleInstancePackagePlatform as tipp ' +
                     'where tipp.pkg = :pkg and tipp.status != :removed and tipp.name = :tiDtoName ',
                     [pkg: pkg, tiDtoName: title, removed: RDStore.KBC_STATUS_REMOVED])[0]
 
@@ -2705,7 +2705,7 @@ class KbartImportService {
                         'where tipp.pkg = :pkg and tipp.status != :removed and tipp.name = :tiDtoName ' +
                         ' order by tipp.lastUpdated DESC',
                         [pkg: pkg, tiDtoName: title, removed: RDStore.KBC_STATUS_REMOVED])
-            }
+            }*/
 
 
 

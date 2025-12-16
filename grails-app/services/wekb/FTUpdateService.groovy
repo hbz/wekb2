@@ -420,10 +420,10 @@ class FTUpdateService {
           result.tippPackageUuid = kbc.pkg.uuid
         }
 
-        if (kbc.hostPlatform) {
-          result.hostPlatform = kbc.hostPlatform.getOID()
-          result.hostPlatformName = kbc.hostPlatform.name
-          result.hostPlatformUuid = kbc.hostPlatform.uuid
+        if (kbc.pkg.nominalPlatform) {
+          result.hostPlatform = kbc.pkg.nominalPlatform.getOID()
+          result.hostPlatformName = kbc.pkg.nominalPlatform.name
+          result.hostPlatformUuid = kbc.pkg.nominalPlatform.uuid
         }
 
         // title history

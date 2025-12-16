@@ -91,11 +91,20 @@
             <div class="ui divided large relaxed list">
                 <g:link class="item" controller="admin" action="systemThreads">Show Threads</g:link>
                 <g:link class="item" controller="admin" action="autoUpdatesFails">Automatic update fails</g:link>
-                <g:link class="item" controller="admin" action="findPackagesWithTippDuplicates">Packages with Tipp Duplicates</g:link>
                 <g:link class="item" controller="admin" action="findPackagesWithoutTitle_ID">Packages with Tipp without Title_ID</g:link>
                 <g:link class="item" controller="admin" action="findPackagesAutoUpdatesTippsDiff">Auto Update Packages with Tipp Diff</g:link>
                 <g:link class="item" controller="admin" action="tippIdentifiersWithSameNameSpace">Title Identifiers with same Identifier Namespace</g:link>
                 <g:link class="item" controller="admin" action="checkCuratoryGroups">Check Curatory Groups</g:link>
+            </div>
+        </div>
+
+        <div class="column">
+            <h2 class="ui header">Packages with Tipp Duplicates</h2>
+
+            <div class="ui divided large relaxed list">
+                <g:link class="item" controller="admin" action="findPackagesWithTippDuplicates">Packages with Tipp Duplicates by Title_ID</g:link>
+                <g:link class="item" controller="admin" action="findPackagesWithTippDuplicatesByUrl">Packages with Tipp Duplicates by URL</g:link>
+                <g:link class="item" controller="admin" action="findPackagesWithRemovedTippDuplicates">Packages with Tipp Duplicates by Title_ID with Removed</g:link>
             </div>
         </div>
     </div>

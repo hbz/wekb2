@@ -131,8 +131,8 @@ class CreateComponentService {
                        result.newobj.postCreateClosure.call([user:user])
                      }*/
 
-                    if (result.newobj instanceof TitleInstancePackagePlatform && (params.pkg == null || params.hostPlatform == null || params.url == null || params.name == null)) {
-                        result.errors=["Please fill Package, Platform and Host Platform URL to create the component."]
+                    if (result.newobj instanceof TitleInstancePackagePlatform && (params.pkg == null || params.url == null || params.name == null)) {
+                        result.errors=["Please fill Package and Host Platform URL to create the component."]
                     }
                     else if (!propertyWasSet) {
                         // Add an error message here if no property was set via data sent through from the form.
