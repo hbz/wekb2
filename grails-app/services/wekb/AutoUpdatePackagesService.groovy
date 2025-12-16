@@ -1,11 +1,14 @@
 package wekb
 
+import grails.core.GrailsApplication
+import grails.plugins.mail.MailService
 import org.apache.commons.io.FileUtils
 import wekb.tools.UrlToolkit
 import wekb.helper.RDStore
 import grails.gorm.transactions.Transactional
 import org.apache.commons.lang.StringUtils
 import wekb.system.JobResult
+import wekb.utils.ServerUtils
 
 import java.time.ZoneId
 import java.util.concurrent.ExecutorService
@@ -18,12 +21,14 @@ class AutoUpdatePackagesService {
     FtpConnectService ftpConnectService
     FileCheckService fileCheckService
     KbartProcessService kbartProcessService
+    GrailsApplication grailsApplication
+    MailService mailService
 
     static final THREAD_POOL_SIZE = 4
     private final ExecutorService executorService = Executors.newFixedThreadPool(THREAD_POOL_SIZE)
     private static boolean started = false
 
-    void findPackageToUpdateAndUpdate(boolean onlyRowsWithLastChanged = false) {
+    void findPackageToUpdateOnAutoUpdate(boolean onlyRowsWithLastChanged = false) {
         Thread.currentThread().name = "AutoUpdate-All"
         if (!started) {
             started = true
@@ -43,7 +48,7 @@ class AutoUpdatePackagesService {
                     }
                 }
             }
-            log.info("findPackageToUpdateAndUpdate: Package with KbartSource and lastRun < currentDate (${packageNeedsUpdate.size()})")
+            log.info("findPackageToUpdateOnAutoUpdate: Package with KbartSource and lastRun < currentDate (${packageNeedsUpdate.size()})")
             if (packageNeedsUpdate.size() > 0) {
                 packageNeedsUpdate.eachWithIndex { aPackage, i ->
                     executorService.submit {
@@ -52,8 +57,32 @@ class AutoUpdatePackagesService {
                         try {
                             startAutoPackageUpdate(aPackage, onlyRowsWithLastChanged)
                         }catch (Exception exception) {
-                            log.error("Error by findPackageToUpdateAndUpdate (${aPackage.id} -> ${aPackage.name}): ${exception.message}")
+                            log.error("Error by findPackageToUpdateOnAutoUpdate (${aPackage.id} -> ${aPackage.name}): ${exception.message}")
                             //exception.printStackTrace()
+
+                            if (grailsApplication.config.getProperty('grails.mail.disabled', Boolean)) {
+                                log.warn 'findPackageToUpdateOnAutoUpdate mail failed due grails.mail.disabled = true'
+
+                            }else {
+
+                                String currentServer = ServerUtils.getCurrentServer()
+                                String subjectSystemPraefix = (currentServer == ServerUtils.SERVER_PROD) ? "" : (ServerUtils.getCurrentServerSystemId() + " - ")
+                                String mailSubject = subjectSystemPraefix + "we:kb Manage Title Dublicates Job"
+                                String currentSystemId = ServerUtils.getCurrentServerSystemId()
+
+
+                                try {
+                                    mailService.sendMail {
+                                        to "wekb@hbz-nrw.de", "moetez.djebeniani@hbz-nrw.de"
+                                        from "wekb Server <wekb-autoUpdatePackagesJob@wekbServer>"
+                                        subject mailSubject
+                                        text "Error by Package to Update on Auto Update (${aPackage.id} -> ${aPackage.name})"
+                                    }
+                                } catch (Exception e) {
+                                    String eMsg = e.message
+                                    log.error("autoUpdatePackagesJob - findPackageToUpdateOnAutoUpdate :: Unable to perform email due to exception ${eMsg}")
+                                }
+                            }
 
                         }
                     }
