@@ -28,50 +28,54 @@ class CleanUpRemovedObjectsJob {
     }
 
     private cleanUpRemovedObjects() {
+        if (grailsApplication.config.getProperty('grails.mail.disabled', Boolean)) {
+            log.warn 'cleanUpRemovedObjects failed due grails.mail.disabled = true'
 
-        List removedDomainClassObjects = ['CuratoryGroup',
-                                          'KbartSource',
-                                          'Org',
-                                          'Package',
-                                          'Platform',
-                                          'TitleInstancePackagePlatform'
-        ]
+        }else {
+            List removedDomainClassObjects = ['CuratoryGroup',
+                                              'KbartSource',
+                                              'Org',
+                                              'Package',
+                                              'Platform',
+                                              'TitleInstancePackagePlatform'
+            ]
 
-        Map result = [:]
-        result.dbEntries = [:]
+            Map result = [:]
+            result.dbEntries = [:]
 
-        removedDomainClassObjects.each{ String domainClassName ->
-            result.dbEntries[domainClassName] = [:]
+            removedDomainClassObjects.each { String domainClassName ->
+                result.dbEntries[domainClassName] = [:]
 
-            String query = "select count(*) from ${domainClassName}"
-            result.dbEntries[domainClassName].countBeforeRemovedInDB = FTControl.executeQuery(query+ " where status = :status", [status: RDStore.KBC_STATUS_REMOVED])[0]
+                String query = "select count(*) from ${domainClassName}"
+                result.dbEntries[domainClassName].countBeforeRemovedInDB = FTControl.executeQuery(query + " where status = :status", [status: RDStore.KBC_STATUS_REMOVED])[0]
 
-        }
-
-
-        deletionService.expungeRemovedComponents()
-
-        removedDomainClassObjects.each{ String domainClassName ->
-            String query = "select count(*) from ${domainClassName}"
-            result.dbEntries[domainClassName].countAfterRemovedInDB = FTControl.executeQuery(query+ " where status = :status", [status: RDStore.KBC_STATUS_REMOVED])[0]
-
-        }
-
-        String currentServer = ServerUtils.getCurrentServer()
-        String subjectSystemPraefix = (currentServer == ServerUtils.SERVER_PROD) ? "" : (ServerUtils.getCurrentServerSystemId() + " - ")
-        String mailSubject = subjectSystemPraefix + "we:kb cleanUp Removed Objects Job"
-        String currentSystemId = ServerUtils.getCurrentServerSystemId()
-
-        try {
-            mailService.sendMail {
-                to "moetez.djebeniani@hbz-nrw.de"
-                from "wekb Server <wekb-cleanUpRemovedObjectsJob@wekbServer>"
-                subject mailSubject
-                html(view: "/mailTemplate/html/removedObjectsJobMail", model: [dbEntries: result.dbEntries])
             }
-        } catch (Exception e) {
-            String eMsg = e.message
-            log.error("cleanUpRemovedObjectsJob - cleanUpRemovedObjects() :: Unable to perform email due to exception ${eMsg}")
+
+
+            deletionService.expungeRemovedComponents()
+
+            removedDomainClassObjects.each { String domainClassName ->
+                String query = "select count(*) from ${domainClassName}"
+                result.dbEntries[domainClassName].countAfterRemovedInDB = FTControl.executeQuery(query + " where status = :status", [status: RDStore.KBC_STATUS_REMOVED])[0]
+
+            }
+
+            String currentServer = ServerUtils.getCurrentServer()
+            String subjectSystemPraefix = (currentServer == ServerUtils.SERVER_PROD) ? "" : (ServerUtils.getCurrentServerSystemId() + " - ")
+            String mailSubject = subjectSystemPraefix + "we:kb cleanUp Removed Objects Job"
+            String currentSystemId = ServerUtils.getCurrentServerSystemId()
+
+            try {
+                mailService.sendMail {
+                    to "moetez.djebeniani@hbz-nrw.de"
+                    from "wekb Server <wekb-cleanUpRemovedObjectsJob@wekbServer>"
+                    subject mailSubject
+                    html(view: "/mailTemplate/html/removedObjectsJobMail", model: [dbEntries: result.dbEntries])
+                }
+            } catch (Exception e) {
+                String eMsg = e.message
+                log.error("cleanUpRemovedObjectsJob - cleanUpRemovedObjects() :: Unable to perform email due to exception ${eMsg}")
+            }
         }
     }
 }
