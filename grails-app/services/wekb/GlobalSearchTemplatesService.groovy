@@ -958,7 +958,6 @@ class GlobalSearchTemplatesService {
                                         msgCode     : 'kbartSource.frequency',
                                         qparam     : 'qp_source_frequency',
                                         placeholder: 'Source Frequency',
-                                        propType   : 'Boolean',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'kbartSource.frequency'],
                                 ],
 
