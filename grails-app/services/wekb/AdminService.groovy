@@ -84,7 +84,7 @@ class AdminService {
         tippsDuplicatesByTitleID.eachWithIndex{ TitleInstancePackagePlatform sourceTipp, int i ->
             if(sourceTipp.status == RDStore.KBC_STATUS_CURRENT) {
                 List tipps
-                if (sourceTipp.getTippDuplicatesByTitleIDWithoutRemovedCount() > 0) {
+                if (sourceTipp.getTippDuplicatesByTitleIDWithOutRemovedCount() > 0) {
                     tipps = sourceTipp.findTippDuplicatesByTitleIDWithoutRemoved()
                 }
 

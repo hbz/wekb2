@@ -417,7 +417,7 @@ class TitleInstancePackagePlatform  extends AbstractBase implements Auditable {
     }
 
     @Transient
-    Integer getTippDuplicatesByTitleIDWithoutRemovedCount() {
+    Integer getTippDuplicatesByTitleIDWithOutRemovedCount() {
         IdentifierNamespace identifierNamespace = IdentifierNamespace.findByValueAndTargetType('title_id', RDStore.IDENTIFIER_NAMESPACE_TARGET_TYPE_TIPP)
         String value = getTitleID()
 
