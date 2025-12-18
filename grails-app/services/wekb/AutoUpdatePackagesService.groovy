@@ -23,6 +23,7 @@ class AutoUpdatePackagesService {
     KbartProcessService kbartProcessService
     GrailsApplication grailsApplication
     MailService mailService
+    ExportService exportService
 
     static final THREAD_POOL_SIZE = 4
     private final ExecutorService executorService = Executors.newFixedThreadPool(THREAD_POOL_SIZE)
