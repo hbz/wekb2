@@ -158,7 +158,7 @@ class AdminController {
       log.debug("autoUpdatePackages: Beginning scheduled auto update packages job.")
     executorService.execute({
       Thread.currentThread().setName('autoUpdatePackages_OnlyLastChanged')
-      autoUpdatePackagesService.findPackageToUpdateAndUpdate(true)
+      autoUpdatePackagesService.findPackageToUpdateOnAutoUpdate(true)
     })
 
     log.info("autoUpdatePackages: auto update packages job completed.")
@@ -171,7 +171,7 @@ class AdminController {
     log.debug("autoUpdatePackagesAllTitles: Beginning scheduled auto update packages job.")
     executorService.execute({
       Thread.currentThread().setName('autoUpdatePackages_AllTitles')
-      autoUpdatePackagesService.findPackageToUpdateAndUpdate(false)
+      autoUpdatePackagesService.findPackageToUpdateOnAutoUpdate(false)
     })
 
     log.info("autoUpdatePackagesAllTitles: auto update packages job completed.")
