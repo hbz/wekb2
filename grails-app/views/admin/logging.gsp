@@ -30,13 +30,19 @@
         <td>${log.source}</td>
         <td><g:formatDate date="${log.expiresAt}" format="yyyy-MM-dd HH:mm:ss"/></td>
         <td>${log.changedBy}</td>
-        <td>${log.previousLevel}</td>
         <td>
-            <g:if test="${log.previousLevel}">
-                <g:link class="ui button" action="logging" params="[setLogging: log.previousLevel, logger: log.logger]">SET ${log.previousLevel}</g:link>
+            ${log.previousLevel}
+            <g:if test="${log.previousLevel && log.previousLevel != log.effective}">
+                <g:link class="ui button red" action="logging" params="[setLogging: log.previousLevel, logger: log.logger]">SET ${log.previousLevel}</g:link>
+            </g:if>
+        </td>
+        <td>
+
+            <g:if test="${log.effective != 'DEBUG'}">
+                <g:link class="ui button yellow" action="logging" params="[setLogging: 'DEBUG', logger: log.logger]">SET DEBUG</g:link>
             </g:if>
             <g:else>
-                <g:link class="ui button" action="logging" params="[setLogging: 'DEBUG', logger: log.logger]">SET DEBUG</g:link>
+                <g:link class="ui button green" action="logging" params="[setLogging: 'INFO', logger: log.logger]">SET INFO</g:link>
             </g:else>
 
             %{--<g:link  class="ui button" action="logging" params="[resetLogging: 'RESET', logger: log.logger]">RESET</g:link>--}%
