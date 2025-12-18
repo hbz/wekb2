@@ -378,9 +378,10 @@ class AdminController {
 
     Package.findAllByStatusInList([RDStore.KBC_STATUS_CURRENT, RDStore.KBC_STATUS_RETIRED, RDStore.KBC_STATUS_EXPECTED], [sort: 'name']).eachWithIndex { Package aPackage, int index ->
       Integer tippsWithoutTitleIDCount = aPackage.getTippsWithoutTitleIDCount()
+        Integer currentTippsWithoutTitleIDCount = aPackage.getCurrentTippsWithoutTitleIDCount()
 
-      if(tippsWithoutTitleIDCount > 0 ){
-        pkgs << [pkg: aPackage, tippsWithoutTitleIDCount: tippsWithoutTitleIDCount]
+      if(currentTippsWithoutTitleIDCount > 0 || tippsWithoutTitleIDCount > 0 ){
+        pkgs << [pkg: aPackage, tippsWithoutTitleIDCount: tippsWithoutTitleIDCount, currentTippsWithoutTitleIDCount: currentTippsWithoutTitleIDCount]
       }
     }
 
@@ -396,6 +397,11 @@ class AdminController {
       result.pkgs = result.pkgs.reverse()
     }else if (params.sort == 'curatoryGroups') {
      result.pkgs = pkgs.sort { it.pkg.curatoryGroups.curatoryGroup.name[0]}
+   } else if (params.sort == 'currentTippsWithoutTitleIDCount') {
+       result.pkgs = pkgs.sort {
+           it.currentTippsWithoutTitleIDCount
+       }
+       result.pkgs = result.pkgs.reverse()
    } else if (params.sort == 'autoUpdate') {
        result.pkgs = pkgs.sort { it.pkg.kbartSource?.automaticUpdates}
    }else {

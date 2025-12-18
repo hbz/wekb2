@@ -28,7 +28,7 @@
             <th>Source</th>
             <semui:sortableColumn property="autoUpdate" title="Auto Update"/>
             <th>Titles</th>
-            <th>Current Titles without Title ID</th>
+            <semui:sortableColumn property="currentTippsWithoutTitleIDCount" title="Current Titles without Title ID"/>
             <semui:sortableColumn property="tippsWithoutTitleIDCount" title="Titles without Title ID"/>
         </tr>
         </thead>
@@ -89,7 +89,7 @@
                     </g:else>
                 </td>
                 <td>
-                    <g:set var="tippCurrentCount" value="${pkgMap.getCurrentTippsWithoutTitleIDCount()}"/>
+                    <g:set var="tippCurrentCount" value="${pkgMap.currentTippsWithoutTitleIDCount}"/>
                     <g:link controller="admin" action="findTippWithoutTitleIDByPkg" id="${pkg.uuid}" target="_blank"
                             params="[max: 100, offset: 0, status: 'Current']">
                         ${tippCurrentCount}
@@ -98,7 +98,7 @@
                     <g:set var="allCurrentCount" value="${allCurrentCount+tippCurrentCount}"/>
                 </td>
                 <td>
-                    <g:set var="tippCount" value="${pkgMap.getTippsWithoutTitleIDCount()}"/>
+                    <g:set var="tippCount" value="${pkgMap.tippsWithoutTitleIDCount}"/>
                     <g:link controller="admin" action="findTippWithoutTitleIDByPkg" id="${pkg.uuid}" target="_blank"
                             params="[max: 100, offset: 0]">
                         ${tippCount}
