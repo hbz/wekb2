@@ -119,6 +119,10 @@ class ExportService {
         try {
             connection = (HttpURLConnection) url.openConnection()
             connection.addRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:123.0) Gecko/20100101 Firefox/123.0")
+            // Setzen von Timeouts zur Vermeidung von hängenden Threads
+            connection.setConnectTimeout(30000) // 30 Sekunden Verbindungstimeout
+            connection.setReadTimeout(120000) // 120 Sekunden Lesetimeout
+
         }
         catch (IOException e) {
             log.error("URL Connection was not established." + ${e.message})
