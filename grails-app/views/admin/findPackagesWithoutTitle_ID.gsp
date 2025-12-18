@@ -89,7 +89,7 @@
                     </g:else>
                 </td>
                 <td>
-                    <g:set var="tippCurrentCount" value="${pkgMap.getCurrentTippsWithoutTitleIDCount}"/>
+                    <g:set var="tippCurrentCount" value="${pkgMap.getCurrentTippsWithoutTitleIDCount()}"/>
                     <g:link controller="admin" action="findTippWithoutTitleIDByPkg" id="${pkg.uuid}" target="_blank"
                             params="[max: 100, offset: 0, status: 'Current']">
                         ${tippCurrentCount}
@@ -98,7 +98,7 @@
                     <g:set var="allCurrentCount" value="${allCurrentCount+tippCurrentCount}"/>
                 </td>
                 <td>
-                    <g:set var="tippCount" value="${pkgMap.tippsWithoutTitleIDCount}"/>
+                    <g:set var="tippCount" value="${pkgMap.getTippsWithoutTitleIDCount()}"/>
                     <g:link controller="admin" action="findTippWithoutTitleIDByPkg" id="${pkg.uuid}" target="_blank"
                             params="[max: 100, offset: 0]">
                         ${tippCount}
