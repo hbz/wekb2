@@ -19,6 +19,7 @@ import org.hibernate.SessionFactory
 import org.springframework.security.access.annotation.Secured
 import wekb.system.FTControl
 import wekb.utils.DateUtils
+import wekb.utils.LoggingService
 
 import javax.servlet.ServletOutputStream
 import javax.sql.DataSource
@@ -44,6 +45,7 @@ class AdminController {
   DeletionService deletionService
   SearchService searchService
   LaserService laserService
+    LoggingService loggingService
 
 
   def systemThreads() {
@@ -1336,6 +1338,29 @@ class AdminController {
         }
 
         redirect(action: 'index')
+
+    }
+
+    def logging() {
+        log.info("logging")
+
+        def result = [:]
+
+
+        if(params.setLogging && params.logger){
+            loggingService.setLevelTemporarily(params.logger, params.setLogging, params.loggingTime ? Integer.parseInt(params.loggingTime) : 3600 , 'Admin')
+        }
+
+        if(params.resetLogging && params.logger){
+            loggingService.resetLevel(params.logger)
+        }
+
+        List<Map> listLoggers = loggingService.listLoggers()
+
+
+        result.totalCount = listLoggers.size()
+        result.listLoggers = listLoggers
+        result
 
     }
 

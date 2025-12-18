@@ -90,6 +90,7 @@
 
             <div class="ui divided large relaxed list">
                 <g:link class="item" controller="admin" action="systemThreads">Show Threads</g:link>
+                <g:link class="item" controller="admin" action="logging">Show Logging</g:link>
                 <g:link class="item" controller="admin" action="autoUpdatesFails">Automatic update fails</g:link>
                 <g:link class="item" controller="admin" action="findPackagesWithoutTitle_ID">Packages with Tipp without Title_ID</g:link>
                 <g:link class="item" controller="admin" action="findPackagesAutoUpdatesTippsDiff">Auto Update Packages with Tipp Diff</g:link>
