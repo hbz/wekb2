@@ -655,16 +655,17 @@ class Package  extends AbstractBase implements Auditable {
     }
   }
 
+    @Transient
     Integer getCurrentTippsWithoutTitleIDCount() {
         IdentifierNamespace identifierNamespace = IdentifierNamespace.findByValueAndTargetType('title_id', RDStore.IDENTIFIER_NAMESPACE_TARGET_TYPE_TIPP)
 
-        if(identifierNamespace) {
+        if (identifierNamespace) {
             int result = TitleInstancePackagePlatform.executeQuery("select count(*) from TitleInstancePackagePlatform as tipp" +
                     " where tipp.pkg = :pkg and tipp.status = :current " +
                     " and not exists(select id from Identifier id where id.tipp = tipp and id.namespace = :namespace)",
                     [pkg: this, namespace: identifierNamespace, current: RDStore.KBC_STATUS_CURRENT])[0]
             return result
-        }else {
+        } else {
             return 0
         }
     }
