@@ -444,26 +444,31 @@ class AdminController {
         result
     }
 
-  def findTippWithoutTitleIDByPkg() {
-    log.debug("findTippWithoutTitleIDByPkg::${params}")
-    def result = [:]
+    def findTippWithoutTitleIDByPkg() {
+        log.debug("findTippWithoutTitleIDByPkg::${params}")
+        def result = [:]
 
-    Package aPackage = Package.findByUuid(params.id)
+        Package aPackage = Package.findByUuid(params.id)
 
-    List<TitleInstancePackagePlatform> tippsByWithoutTitleID = aPackage.findTippByWithoutTitleID()
+        List<TitleInstancePackagePlatform> tippsByWithoutTitleID
+        if (params.status == 'Current') {
+            tippsByWithoutTitleID = aPackage.findCurrentTippByWithoutTitleID()
+        } else {
+            tippsByWithoutTitleID = aPackage.findTippByWithoutTitleID()
+        }
 
 
-    result.offsetByWithoutTitleID = params.papaginateByWithoutTitleID ? Integer.parseInt(params.offset) : 0
-    result.maxByWithoutTitleID = params.papaginateByWithoutTitleID ? Integer.parseInt(params.max) : 100
+        result.offsetByWithoutTitleID = params.papaginateByWithoutTitleID ? Integer.parseInt(params.offset) : 0
+        result.maxByWithoutTitleID = params.papaginateByWithoutTitleID ? Integer.parseInt(params.max) : 100
 
-    result.totalCountByWithoutTitleID = tippsByWithoutTitleID.size()
+        result.totalCountByWithoutTitleID = tippsByWithoutTitleID.size()
 
-    result.tippsByWithoutTitleID = tippsByWithoutTitleID.drop((int) result.offsetByWithoutTitleID).take((int) result.maxByWithoutTitleID)
+        result.tippsByWithoutTitleID = tippsByWithoutTitleID.drop((int) result.offsetByWithoutTitleID).take((int) result.maxByWithoutTitleID)
 
-    result.pkg = aPackage
+        result.pkg = aPackage
 
-    result
-  }
+        result
+    }
 
   def notLinkedPackageInLaser() {
     log.debug("notLinkedPackageInLaser::${params}")

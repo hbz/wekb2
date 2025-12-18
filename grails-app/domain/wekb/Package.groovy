@@ -541,6 +541,21 @@ class Package  extends AbstractBase implements Auditable {
     }
   }
 
+    @Transient
+    List<TitleInstancePackagePlatform> findCurrentTippByWithoutTitleID() {
+
+        IdentifierNamespace identifierNamespace = IdentifierNamespace.findByValueAndTargetType('title_id', RDStore.IDENTIFIER_NAMESPACE_TARGET_TYPE_TIPP)
+
+        if(identifierNamespace) {
+            List<TitleInstancePackagePlatform> tippsDuplicates = TitleInstancePackagePlatform.executeQuery("select DISTINCT(tipp) from TitleInstancePackagePlatform as tipp" +
+                    " where tipp.pkg = :pkg and tipp.status = :current " +
+                    " and not exists(select id from Identifier id where id.tipp = tipp and id.namespace = :namespace)",
+                    [pkg: this, namespace: identifierNamespace, current: RDStore.KBC_STATUS_CURRENT]) ?: []
+        }else {
+            return []
+        }
+    }
+
   @Transient
   Integer getTippDuplicatesByNameCount() {
 
@@ -639,6 +654,20 @@ class Package  extends AbstractBase implements Auditable {
       return 0
     }
   }
+
+    Integer getCurrentTippsWithoutTitleIDCount() {
+        IdentifierNamespace identifierNamespace = IdentifierNamespace.findByValueAndTargetType('title_id', RDStore.IDENTIFIER_NAMESPACE_TARGET_TYPE_TIPP)
+
+        if(identifierNamespace) {
+            int result = TitleInstancePackagePlatform.executeQuery("select count(*) from TitleInstancePackagePlatform as tipp" +
+                    " where tipp.pkg = :pkg and tipp.status = :current " +
+                    " and not exists(select id from Identifier id where id.tipp = tipp and id.namespace = :namespace)",
+                    [pkg: this, namespace: identifierNamespace, current: RDStore.KBC_STATUS_CURRENT])[0]
+            return result
+        }else {
+            return 0
+        }
+    }
 
   @Transient
   public String getDomainName() {
