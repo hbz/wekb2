@@ -27,7 +27,7 @@ class SendAdminInfosJob {
 
     def execute() {
         if (grailsApplication.config.getProperty('wekb.sendJobInfosJob', Boolean)) {
-            log.debug("Beginning scheduled send job infos job.")
+            log.info("Beginning scheduled send job infos job.")
             sendPackageUpdateInfos()
             sendTitleDublicatesInfos()
             //sendEsIndexCheck()

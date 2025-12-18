@@ -51,7 +51,7 @@ class AdminController {
   }
 
   def updateTextIndexes() {
-    log.debug("Call to update indexe");
+    log.info("Call to update indexe");
 
     FTUpdateService.updateFTIndexes();
 
@@ -59,7 +59,7 @@ class AdminController {
   }
 
   def resetTextIndexes() {
-    log.debug("Call to update indexe")
+    log.info("Call to update indexe")
 
     FTUpdateService.clearDownAndInitES()
 
@@ -145,7 +145,7 @@ class AdminController {
       componentStatisticService.updateCompStats(12, 0, true)
     }.startOrQueue()
 
-    log.debug "Triggering statistics rewrite, job #${j.uuid}"
+    log.info "Triggering statistics rewrite, job #${j.uuid}"
     j.description = "Recalculate Statistics"
     j.type = RefdataCategory.lookupOrCreate(RCConstants.JOB_TYPE, 'RecalculateStatistics')
     j.startTime = new Date()
@@ -155,7 +155,7 @@ class AdminController {
 
   @Secured(['ROLE_SUPERUSER'])
   def autoUpdatePackages() {
-      log.debug("autoUpdatePackages: Beginning scheduled auto update packages job.")
+      log.info("autoUpdatePackages: Beginning scheduled auto update packages job.")
     executorService.execute({
       Thread.currentThread().setName('autoUpdatePackages_OnlyLastChanged')
       autoUpdatePackagesService.findPackageToUpdateOnAutoUpdate(true)
@@ -168,7 +168,7 @@ class AdminController {
 
   @Secured(['ROLE_SUPERUSER'])
   def autoUpdatePackagesAllTitles() {
-    log.debug("autoUpdatePackagesAllTitles: Beginning scheduled auto update packages job.")
+    log.info("autoUpdatePackagesAllTitles: Beginning scheduled auto update packages job.")
     executorService.execute({
       Thread.currentThread().setName('autoUpdatePackages_AllTitles')
       autoUpdatePackagesService.findPackageToUpdateOnAutoUpdate(false)
@@ -182,7 +182,7 @@ class AdminController {
   @Secured(['ROLE_SUPERUSER'])
   def manageFTControl() {
     Map<String, Object> result = [:]
-    log.debug("manageFTControl ...")
+    log.info("manageFTControl ...")
     result.ftControls = FTControl.list()
     result.editable = true
 

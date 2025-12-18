@@ -112,7 +112,7 @@ class ExportService {
         File file
         URL url = new URL(urlString)
         File folder = new File("/tmp/wekb/kbartExport")
-        log.debug("kbartFromUrl: "+urlString)
+        log.info("kbartFromUrl: "+urlString)
         String fileName = folder.absolutePath.concat(File.separator).concat(urlStringToFileString(url.toExternalForm()))
         fileName = fileName.split("\\?")[0]
         HttpURLConnection connection

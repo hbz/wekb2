@@ -17,7 +17,7 @@ class WorkflowController{
 
   @Secured(['ROLE_EDITOR', 'IS_AUTHENTICATED_FULLY'])
   def action(){
-    log.debug("WorkflowController::action(${params})")
+    log.info("WorkflowController::action(${params})")
     def result = [:]
     result.ref = request.getHeader('referer')
 

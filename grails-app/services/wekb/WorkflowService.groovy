@@ -143,7 +143,7 @@ class WorkflowService {
     }
 
     def processAction(result, params) {
-        log.debug("processAction -> result: ${result}, params:" + params)
+        log.info("processAction -> result: ${result}, params:" + params)
         result.objects_to_action.each {
             boolean editable = accessService.checkEditableObject(it, params)
             List availableActions = availableActions(it.class.name)
@@ -219,7 +219,7 @@ class WorkflowService {
     }
 
     private Map updatePackageFromKbartSource(Package pkg, boolean allTitles = false) {
-        log.debug("updatePackageFromKbartSource for Package ${pkg}..")
+        log.info("updatePackageFromKbartSource for Package ${pkg}..")
         Map result = [:]
 
         if (pkg && pkg.nominalPlatform && pkg.kbartSource && (pkg.kbartSource.url || pkg.kbartSource.ftpServerUrl)) {

@@ -37,7 +37,7 @@ class AjaxHtmlController {
      */
     @Transactional
     def addToCollection() {
-        log.debug("AjaxController::addToCollection ${params}")
+        log.info("AjaxController::addToCollection ${params}")
         User user = springSecurityService.currentUser
         def contextObj = genericOIDService.resolveOID3(params.__context)
         def new_obj = null

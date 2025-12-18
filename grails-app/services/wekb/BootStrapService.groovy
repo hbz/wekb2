@@ -48,7 +48,7 @@ class BootStrapService {
 
         setRefDatas()
 
-        log.debug("reorderRefdata ..")
+        log.info("reorderRefdata ..")
         refdataReorderService.reorderRefdata()
 
         log.info("Ensure default Identifier namespaces")
@@ -212,7 +212,7 @@ class BootStrapService {
             log.info("anonymizeUsers")
             User.findAll().each { User user ->
 
-                log.debug("anonymizeUsers ${user.displayName} ${user.username}")
+                log.info("anonymizeUsers ${user.displayName} ${user.username}")
                 if(user.curatoryGroupUsers && user.curatoryGroupUsers.curatoryGroup.find{CuratoryGroup curatoryGroup -> curatoryGroup.name == "hbz" || curatoryGroup.name == "LAS:eR"}){
                     user.email = 'local@localhost.local'
                 }else {
