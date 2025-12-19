@@ -28,7 +28,7 @@ class PackageController {
     def recentActivity() {
         User user = springSecurityService.currentUser
 
-        log.debug("PackageController::recentActivity ${params}");
+        log.info("PackageController::recentActivity ${params}");
         def result = ['params':params]
         def oid = params.id
         Package pkg = null
@@ -81,7 +81,7 @@ class PackageController {
     }
 
     def packageChangeHistory() {
-        log.debug("packageChangeHistory:: ${params}")
+        log.info("packageChangeHistory:: ${params}")
         def searchResult = [:]
         params.qp_pkg_id = params.id
         Package pkg = Package.get(params.id)
@@ -99,7 +99,7 @@ class PackageController {
 
     @Secured(['ROLE_EDITOR', 'IS_AUTHENTICATED_FULLY'])
     def kbartImport() {
-        log.debug("PackageController::kbartImport ${params}");
+        log.info("PackageController::kbartImport ${params}");
         def result = ['params':params]
         def oid = params.id
         Package pkg = null
@@ -147,7 +147,7 @@ class PackageController {
 
     @Secured(['ROLE_EDITOR', 'IS_AUTHENTICATED_FULLY'])
     def processKbartImport() {
-        log.debug("PackageController::processKbartImport ${params}");
+        log.info("PackageController::processKbartImport ${params}");
         def result = ['params': params]
 
         Package pkg = Package.get(params.int('id'))

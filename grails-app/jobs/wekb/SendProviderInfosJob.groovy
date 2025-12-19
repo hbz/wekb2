@@ -24,7 +24,7 @@ class SendProviderInfosJob {
 
     def execute() {
         if (grailsApplication.config.getProperty('wekb.sendProviderInfosJob', Boolean)) {
-            log.debug("Beginning scheduled send job infos job.")
+            log.info("Beginning scheduled send job infos job.")
             sendPackageUpdateInfosOfProvider()
             log.info("send job infos job completed.")
         } else {

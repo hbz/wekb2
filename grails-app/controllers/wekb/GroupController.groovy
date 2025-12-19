@@ -250,7 +250,7 @@ class GroupController {
     }
 
     def myPackagesNeedsAutoUpdates() {
-        log.debug("myPackagesNeedsAutoUpdates::${params}")
+        log.info("myPackagesNeedsAutoUpdates::${params}")
         def result =  getResultGenerics()
 
         List pkgs = []

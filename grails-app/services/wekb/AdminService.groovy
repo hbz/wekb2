@@ -84,7 +84,7 @@ class AdminService {
         tippsDuplicatesByTitleID.eachWithIndex{ TitleInstancePackagePlatform sourceTipp, int i ->
             if(sourceTipp.status == RDStore.KBC_STATUS_CURRENT) {
                 List tipps
-                if (sourceTipp.getTippDuplicatesByTitleIDWithoutRemovedCount() > 0) {
+                if (sourceTipp.getTippDuplicatesByTitleIDWithOutRemovedCount() > 0) {
                     tipps = sourceTipp.findTippDuplicatesByTitleIDWithoutRemoved()
                 }
 
@@ -139,5 +139,20 @@ class AdminService {
 
         return countRemoved
 
+    }
+
+    int deleteTippsWithoutTitleIDByPkg(Package aPackage){
+
+        List<TitleInstancePackagePlatform> tippsByWithoutTitleID = aPackage.findTippByWithoutTitleID()
+
+        int count = 0
+
+        tippsByWithoutTitleID.eachWithIndex { TitleInstancePackagePlatform titleInstancePackagePlatform, int i ->
+            titleInstancePackagePlatform.status = RDStore.KBC_STATUS_REMOVED
+            titleInstancePackagePlatform.save()
+            count++
+        }
+
+        return count
     }
 }

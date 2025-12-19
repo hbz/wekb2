@@ -27,7 +27,7 @@ class SendAdminInfosJob {
 
     def execute() {
         if (grailsApplication.config.getProperty('wekb.sendJobInfosJob', Boolean)) {
-            log.debug("Beginning scheduled send job infos job.")
+            log.info("Beginning scheduled send job infos job.")
             sendPackageUpdateInfos()
             sendTitleDublicatesInfos()
             //sendEsIndexCheck()
@@ -40,7 +40,7 @@ class SendAdminInfosJob {
     private sendPackageUpdateInfos() {
         log.info("sendPackageUpdateInfos: Begin")
 
-        if (ConfigMapper.getConfig('grails.mail.disabled', Boolean) == true) {
+        if (grailsApplication.config.getProperty('grails.mail.disabled', Boolean)) {
             log.warn 'surveyService.emailToSurveyParticipationByFinish() failed due grails.mail.disabled = true'
 
         }else {

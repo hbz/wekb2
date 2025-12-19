@@ -27,7 +27,7 @@ class SearchController {
     SpringSecurityService springSecurityService
 
     def index() {
-        log.debug("SearchController::index ${params}")
+        log.info("SearchController::index ${params}")
         def result = [:]
 
         def esclient = ESWrapperService.getClient()
@@ -155,7 +155,7 @@ class SearchController {
     }
 
     def spotlightSearch() {
-        log.debug("SearchController::spotlightSearch ${params}")
+        log.info("SearchController::spotlightSearch ${params}")
         Map result = [:]
         result.offset = 0
         result.max = 10000
@@ -291,7 +291,7 @@ class SearchController {
     def componentSearch() {
         User user = springSecurityService.currentUser
 
-        log.debug("SearchController:componentSearch ${params}")
+        log.info("SearchController:componentSearch ${params}")
 
         def searchResult = [:]
 
@@ -308,7 +308,7 @@ class SearchController {
     def inlineSearch() {
         User user = springSecurityService.currentUser
 
-        log.debug("inlineSearch:componentSearch ${params}")
+        log.info("inlineSearch:componentSearch ${params}")
 
         def searchResult = [:]
 

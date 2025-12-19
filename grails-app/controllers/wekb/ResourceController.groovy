@@ -16,7 +16,7 @@ class ResourceController {
   }
 
   def show() {
-    log.debug("ResourceController::show ${params}")
+    log.info("ResourceController::show ${params}")
     User user = springSecurityService.currentUser
 
     def result = ['params':params]

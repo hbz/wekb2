@@ -21,7 +21,7 @@ class CreateController {
 
 
   def index() {
-    log.debug("CreateControler::index... ${params}");
+    log.info("CreateControler::index... ${params}");
     def result=[:]
     User user = springSecurityService.currentUser
 
@@ -76,7 +76,7 @@ class CreateController {
   }
 
   def process() {
-    log.debug("CreateController::process... ${params}");
+    log.info("CreateController::process... ${params}");
 
     def result=[:]
 
@@ -120,7 +120,7 @@ class CreateController {
   }
 
   def packageBatch() {
-    log.debug("CreateControler::packageBatch... ${params}");
+    log.info("CreateControler::packageBatch... ${params}");
     def result=[:]
     User user = springSecurityService.currentUser
 
@@ -131,7 +131,7 @@ class CreateController {
   }
 
   def processPackageBatch() {
-    log.debug("CreateControler::processPackageBatch... ${params}");
+    log.info("CreateControler::processPackageBatch... ${params}");
         User user = springSecurityService.currentUser
         MultipartFile tsvFile = request.getFile("tsvFile")
         if(tsvFile && tsvFile.size > 0) {

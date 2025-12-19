@@ -20,7 +20,7 @@ class AuditCleanUpJob {
 
     def execute() {
         if (grailsApplication.config.getProperty('wekb.auditCleanUpJob.enabled', Boolean)) {
-            log.debug("Beginning scheduled Audit CleanUp Job.")
+            log.info("Beginning scheduled Audit CleanUp Job.")
 
             Sql sql = new Sql(Holders.grailsApplication.mainContext.getBean('dataSource') as DataSource)
             sql.execute('''DELETE FROM audit_log WHERE date_created <= now() - INTERVAL '30 DAYS' ''')

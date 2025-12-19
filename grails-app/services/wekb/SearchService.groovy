@@ -87,7 +87,7 @@ class SearchService {
 
         def cleaned_params = params.findAll { it.value && it.value != "" }
 
-        log.debug("Cleaned: ${cleaned_params}");
+        log.info("Cleaned: ${cleaned_params}");
 
         if ( params.refOID && !params.refOID.endsWith('null')) {
             result.refOID = params.refOID

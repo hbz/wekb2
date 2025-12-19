@@ -1,6 +1,7 @@
 rdc;token;value_de;value_en
 Update.Status;Successful;Successful;Successful
 Update.Status;Failed;Failed;Failed
+Update.Status;Info;Info;Info
 Update.Status;Warning;Warning;Warning
 Update.Type;New Title;New Title;New Title
 Update.Type;Changed Title;Changed Title;Changed Title

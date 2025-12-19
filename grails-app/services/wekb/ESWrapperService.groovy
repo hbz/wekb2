@@ -55,17 +55,17 @@ class ESWrapperService {
 
   @javax.annotation.PostConstruct
   def init() {
-    log.debug("ESWrapperService::init")
+    log.info("ESWrapperService::init")
 
     es_indices = grailsApplication.config.getProperty('wekb.es.indices', Map)
     es_cluster_name = grailsApplication.config.getProperty('wekb.es.cluster', String) ?: ESWrapperService.ES_CLUSTER
     es_host         = grailsApplication.config.getProperty('wekb.es.host', String) ?: ESWrapperService.ES_HOST
 
-    log.debug("es_cluster = ${es_cluster_name}")
-    log.debug("es_indices = ${es_indices}")
-    log.debug("es_host = ${es_host}")
+    log.info("es_cluster = ${es_cluster_name}")
+    log.info("es_indices = ${es_indices}")
+    log.info("es_host = ${es_host}")
 
-    log.debug("ES Init completed")
+    log.info("ES Init completed")
   }
 
   RestHighLevelClient getClient() {
@@ -204,13 +204,13 @@ class ESWrapperService {
     GetIndexRequest request = new GetIndexRequest(indexName)
 
     if (!esclient.indices().exists(request, RequestOptions.DEFAULT)) {
-      log.debug("ES index ${indexName} did not exist, creating..")
+      log.info("ES index ${indexName} did not exist, creating..")
 
       CreateIndexRequest createRequest = new CreateIndexRequest(indexName)
 
-      log.debug("Adding index settings..")
+      log.info("Adding index settings..")
       createRequest.settings(JsonOutput.toJson(this.getSettings().get("settings")), XContentType.JSON)
-      log.debug("Adding index mappings..")
+      log.info("Adding index mappings..")
       createRequest.mapping(JsonOutput.toJson(this.getMapping()), XContentType.JSON)
 
       CreateIndexResponse createIndexResponse = esclient.indices().create(createRequest, RequestOptions.DEFAULT)
@@ -219,12 +219,12 @@ class ESWrapperService {
 
 
       if (acknowledged) {
-        log.debug("Index ${indexName} successfully created!")
+        log.info("Index ${indexName} successfully created!")
         esclient.close()
         return true
 
       } else {
-        log.debug("Index creation failed: ${createIndexResponse}")
+        log.info("Index creation failed: ${createIndexResponse}")
         esclient.close()
         return false
       }

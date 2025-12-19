@@ -23,6 +23,7 @@ class AutoUpdatePackagesService {
     KbartProcessService kbartProcessService
     GrailsApplication grailsApplication
     MailService mailService
+    ExportService exportService
 
     static final THREAD_POOL_SIZE = 4
     private final ExecutorService executorService = Executors.newFixedThreadPool(THREAD_POOL_SIZE)
@@ -67,7 +68,7 @@ class AutoUpdatePackagesService {
 
                                 String currentServer = ServerUtils.getCurrentServer()
                                 String subjectSystemPraefix = (currentServer == ServerUtils.SERVER_PROD) ? "" : (ServerUtils.getCurrentServerSystemId() + " - ")
-                                String mailSubject = subjectSystemPraefix + "we:kb Manage Title Dublicates Job"
+                                String mailSubject = subjectSystemPraefix + "we:kb Auto Update Packages Job"
                                 String currentSystemId = ServerUtils.getCurrentServerSystemId()
 
 
@@ -165,7 +166,7 @@ class AutoUpdatePackagesService {
                                     if(updatePackageInfo.status != RDStore.UPDATE_STATUS_FAILED) {
                                         UpdatePackageInfo.withTransaction {
                                             updatePackageInfo.description = "No changes in File. Is same File from last update!"
-                                            updatePackageInfo.status = RDStore.UPDATE_STATUS_WARNING
+                                            updatePackageInfo.status = RDStore.UPDATE_STATUS_INFO
                                             updatePackageInfo.endTime = new Date()
                                             updatePackageInfo.save()
                                         }
@@ -302,7 +303,7 @@ class AutoUpdatePackagesService {
                                             if(updatePackageInfo.status != RDStore.UPDATE_STATUS_FAILED) {
                                                 UpdatePackageInfo.withTransaction {
                                                     updatePackageInfo.description = "No changes in File. Is same File from last update!"
-                                                    updatePackageInfo.status = RDStore.UPDATE_STATUS_WARNING
+                                                    updatePackageInfo.status = RDStore.UPDATE_STATUS_INFO
                                                     updatePackageInfo.endTime = new Date()
                                                     updatePackageInfo.save()
                                                 }

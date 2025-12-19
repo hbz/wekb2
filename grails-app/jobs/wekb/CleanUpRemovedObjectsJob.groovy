@@ -19,7 +19,7 @@ class CleanUpRemovedObjectsJob {
 
     def execute() {
         if (grailsApplication.config.getProperty('wekb.cleanUpRemovedObjects', Boolean)) {
-            log.debug("Beginning scheduled cleanUp removed objects job.")
+            log.info("Beginning scheduled cleanUp removed objects job.")
             cleanUpRemovedObjects()
             log.info("cleanUp removed objects job completed.")
         } else {

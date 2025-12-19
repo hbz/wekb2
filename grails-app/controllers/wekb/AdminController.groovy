@@ -19,6 +19,7 @@ import org.hibernate.SessionFactory
 import org.springframework.security.access.annotation.Secured
 import wekb.system.FTControl
 import wekb.utils.DateUtils
+import wekb.utils.LoggingService
 
 import javax.servlet.ServletOutputStream
 import javax.sql.DataSource
@@ -44,6 +45,7 @@ class AdminController {
   DeletionService deletionService
   SearchService searchService
   LaserService laserService
+    LoggingService loggingService
 
 
   def systemThreads() {
@@ -51,7 +53,7 @@ class AdminController {
   }
 
   def updateTextIndexes() {
-    log.debug("Call to update indexe");
+    log.info("Call to update indexe");
 
     FTUpdateService.updateFTIndexes();
 
@@ -59,7 +61,7 @@ class AdminController {
   }
 
   def resetTextIndexes() {
-    log.debug("Call to update indexe")
+    log.info("Call to update indexe")
 
     FTUpdateService.clearDownAndInitES()
 
@@ -145,7 +147,7 @@ class AdminController {
       componentStatisticService.updateCompStats(12, 0, true)
     }.startOrQueue()
 
-    log.debug "Triggering statistics rewrite, job #${j.uuid}"
+    log.info "Triggering statistics rewrite, job #${j.uuid}"
     j.description = "Recalculate Statistics"
     j.type = RefdataCategory.lookupOrCreate(RCConstants.JOB_TYPE, 'RecalculateStatistics')
     j.startTime = new Date()
@@ -155,10 +157,10 @@ class AdminController {
 
   @Secured(['ROLE_SUPERUSER'])
   def autoUpdatePackages() {
-      log.debug("autoUpdatePackages: Beginning scheduled auto update packages job.")
+      log.info("autoUpdatePackages: Beginning scheduled auto update packages job.")
     executorService.execute({
       Thread.currentThread().setName('autoUpdatePackages_OnlyLastChanged')
-      autoUpdatePackagesService.findPackageToUpdateAndUpdate(true)
+      autoUpdatePackagesService.findPackageToUpdateOnAutoUpdate(true)
     })
 
     log.info("autoUpdatePackages: auto update packages job completed.")
@@ -168,10 +170,10 @@ class AdminController {
 
   @Secured(['ROLE_SUPERUSER'])
   def autoUpdatePackagesAllTitles() {
-    log.debug("autoUpdatePackagesAllTitles: Beginning scheduled auto update packages job.")
+    log.info("autoUpdatePackagesAllTitles: Beginning scheduled auto update packages job.")
     executorService.execute({
       Thread.currentThread().setName('autoUpdatePackages_AllTitles')
-      autoUpdatePackagesService.findPackageToUpdateAndUpdate(false)
+      autoUpdatePackagesService.findPackageToUpdateOnAutoUpdate(false)
     })
 
     log.info("autoUpdatePackagesAllTitles: auto update packages job completed.")
@@ -182,7 +184,7 @@ class AdminController {
   @Secured(['ROLE_SUPERUSER'])
   def manageFTControl() {
     Map<String, Object> result = [:]
-    log.debug("manageFTControl ...")
+    log.info("manageFTControl ...")
     result.ftControls = FTControl.list()
     result.editable = true
 
@@ -376,9 +378,10 @@ class AdminController {
 
     Package.findAllByStatusInList([RDStore.KBC_STATUS_CURRENT, RDStore.KBC_STATUS_RETIRED, RDStore.KBC_STATUS_EXPECTED], [sort: 'name']).eachWithIndex { Package aPackage, int index ->
       Integer tippsWithoutTitleIDCount = aPackage.getTippsWithoutTitleIDCount()
+        Integer currentTippsWithoutTitleIDCount = aPackage.getCurrentTippsWithoutTitleIDCount()
 
-      if(tippsWithoutTitleIDCount > 0 ){
-        pkgs << [pkg: aPackage, tippsWithoutTitleIDCount: tippsWithoutTitleIDCount]
+      if(currentTippsWithoutTitleIDCount > 0 || tippsWithoutTitleIDCount > 0 ){
+        pkgs << [pkg: aPackage, tippsWithoutTitleIDCount: tippsWithoutTitleIDCount, currentTippsWithoutTitleIDCount: currentTippsWithoutTitleIDCount]
       }
     }
 
@@ -394,6 +397,11 @@ class AdminController {
       result.pkgs = result.pkgs.reverse()
     }else if (params.sort == 'curatoryGroups') {
      result.pkgs = pkgs.sort { it.pkg.curatoryGroups.curatoryGroup.name[0]}
+   } else if (params.sort == 'currentTippsWithoutTitleIDCount') {
+       result.pkgs = pkgs.sort {
+           it.currentTippsWithoutTitleIDCount
+       }
+       result.pkgs = result.pkgs.reverse()
    } else if (params.sort == 'autoUpdate') {
        result.pkgs = pkgs.sort { it.pkg.kbartSource?.automaticUpdates}
    }else {
@@ -442,26 +450,43 @@ class AdminController {
         result
     }
 
-  def findTippWithoutTitleIDByPkg() {
-    log.debug("findTippWithoutTitleIDByPkg::${params}")
-    def result = [:]
+    def findTippWithoutTitleIDByPkg() {
+        log.debug("findTippWithoutTitleIDByPkg::${params}")
+        def result = [:]
 
-    Package aPackage = Package.findByUuid(params.id)
+        Package aPackage = Package.findByUuid(params.id)
 
-    List<TitleInstancePackagePlatform> tippsByWithoutTitleID = aPackage.findTippByWithoutTitleID()
+        List<TitleInstancePackagePlatform> tippsByWithoutTitleID
+        if (params.status == 'Current') {
+            tippsByWithoutTitleID = aPackage.findCurrentTippByWithoutTitleID()
+        } else {
+            tippsByWithoutTitleID = aPackage.findTippByWithoutTitleID()
+        }
 
 
-    result.offsetByWithoutTitleID = params.papaginateByWithoutTitleID ? Integer.parseInt(params.offset) : 0
-    result.maxByWithoutTitleID = params.papaginateByWithoutTitleID ? Integer.parseInt(params.max) : 100
+        result.offsetByWithoutTitleID = params.papaginateByWithoutTitleID ? Integer.parseInt(params.offset) : 0
+        result.maxByWithoutTitleID = params.papaginateByWithoutTitleID ? Integer.parseInt(params.max) : 100
 
-    result.totalCountByWithoutTitleID = tippsByWithoutTitleID.size()
+        result.totalCountByWithoutTitleID = tippsByWithoutTitleID.size()
 
-    result.tippsByWithoutTitleID = tippsByWithoutTitleID.drop((int) result.offsetByWithoutTitleID).take((int) result.maxByWithoutTitleID)
+        result.tippsByWithoutTitleID = tippsByWithoutTitleID.drop((int) result.offsetByWithoutTitleID).take((int) result.maxByWithoutTitleID)
 
-    result.pkg = aPackage
+        result.pkg = aPackage
 
-    result
-  }
+        result
+    }
+
+    def deleteTippsWithoutTitleIDByPkg() {
+        log.debug("deleteTippsWithoutTitleIDByPkg::${params}")
+
+        Package aPackage = Package.findByUuid(params.id)
+
+        int count = adminService.deleteTippsWithoutTitleIDByPkg(aPackage)
+
+        flash.message = "${count} title without title_id set to removed in package --------> ${aPackage.name}!"
+
+        redirect(url: request.getHeader('referer'))
+    }
 
   def notLinkedPackageInLaser() {
     log.debug("notLinkedPackageInLaser::${params}")
@@ -1336,6 +1361,29 @@ class AdminController {
         }
 
         redirect(action: 'index')
+
+    }
+
+    def logging() {
+        log.info("logging")
+
+        def result = [:]
+
+
+        if(params.setLogging && params.logger){
+            loggingService.setLevelTemporarily(params.logger, params.setLogging, params.loggingTime ? Integer.parseInt(params.loggingTime) : 3600 , 'Admin')
+        }
+
+        if(params.resetLogging && params.logger){
+            loggingService.resetLevel(params.logger)
+        }
+
+        List<Map> listLoggers = loggingService.listLoggers()
+
+
+        result.totalCount = listLoggers.size()
+        result.listLoggers = listLoggers
+        result
 
     }
 
