@@ -166,7 +166,7 @@ class AutoUpdatePackagesService {
                                     if(updatePackageInfo.status != RDStore.UPDATE_STATUS_FAILED) {
                                         UpdatePackageInfo.withTransaction {
                                             updatePackageInfo.description = "No changes in File. Is same File from last update!"
-                                            updatePackageInfo.status = RDStore.UPDATE_STATUS_WARNING
+                                            updatePackageInfo.status = RDStore.UPDATE_STATUS_INFO
                                             updatePackageInfo.endTime = new Date()
                                             updatePackageInfo.save()
                                         }
@@ -303,7 +303,7 @@ class AutoUpdatePackagesService {
                                             if(updatePackageInfo.status != RDStore.UPDATE_STATUS_FAILED) {
                                                 UpdatePackageInfo.withTransaction {
                                                     updatePackageInfo.description = "No changes in File. Is same File from last update!"
-                                                    updatePackageInfo.status = RDStore.UPDATE_STATUS_WARNING
+                                                    updatePackageInfo.status = RDStore.UPDATE_STATUS_INFO
                                                     updatePackageInfo.endTime = new Date()
                                                     updatePackageInfo.save()
                                                 }
