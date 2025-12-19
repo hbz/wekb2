@@ -585,7 +585,6 @@ public class HQLBuilder {
             log.debug("getValueFromBaseClass -> Unable to locate domain class ${baseClass} or not readable");
             value = null
         }
-        println(value)
         return value
     }
 
