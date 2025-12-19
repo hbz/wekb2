@@ -68,7 +68,7 @@ class AutoUpdatePackagesService {
 
                                 String currentServer = ServerUtils.getCurrentServer()
                                 String subjectSystemPraefix = (currentServer == ServerUtils.SERVER_PROD) ? "" : (ServerUtils.getCurrentServerSystemId() + " - ")
-                                String mailSubject = subjectSystemPraefix + "we:kb Manage Title Dublicates Job"
+                                String mailSubject = subjectSystemPraefix + "we:kb Auto Update Packages Job"
                                 String currentSystemId = ServerUtils.getCurrentServerSystemId()
 
 

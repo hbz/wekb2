@@ -40,7 +40,7 @@ class SendAdminInfosJob {
     private sendPackageUpdateInfos() {
         log.info("sendPackageUpdateInfos: Begin")
 
-        if (ConfigMapper.getConfig('grails.mail.disabled', Boolean) == true) {
+        if (grailsApplication.config.getProperty('grails.mail.disabled', Boolean)) {
             log.warn 'surveyService.emailToSurveyParticipationByFinish() failed due grails.mail.disabled = true'
 
         }else {
