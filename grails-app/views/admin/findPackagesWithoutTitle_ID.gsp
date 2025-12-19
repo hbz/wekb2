@@ -15,6 +15,9 @@
 <g:set var="allCount" value="${0}"/>
 <g:set var="allCurrentCount" value="${0}"/>
 
+
+<semui:flashMessage data="${flash}"/>
+
 <div class="container">
 
     <table class="ui selectable striped sortable celled table">
@@ -30,6 +33,7 @@
             <th>Titles</th>
             <semui:sortableColumn property="currentTippsWithoutTitleIDCount" title="Current Titles without Title ID"/>
             <semui:sortableColumn property="tippsWithoutTitleIDCount" title="Titles without Title ID"/>
+            <th>Action</th>
         </tr>
         </thead>
         <tbody>
@@ -106,6 +110,11 @@
 
                     <g:set var="allCount" value="${allCount+tippCount}"/>
                 </td>
+                <td>
+                    <g:link class="ui button" controller="admin" action="deleteTippsWithoutTitleIDByPkg" id="${pkg.uuid}">
+                        Delete
+                    </g:link>
+                </td>
             </tr>
         </g:each>
         </tbody>
@@ -121,6 +130,7 @@
             <td></td>
             <td>${allCurrentCount}</td>
             <td>${allCount}</td>
+            <td></td>
         </tr>
         </tfoot>
     </table>

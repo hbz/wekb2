@@ -140,4 +140,19 @@ class AdminService {
         return countRemoved
 
     }
+
+    int deleteTippsWithoutTitleIDByPkg(Package aPackage){
+
+        List<TitleInstancePackagePlatform> tippsByWithoutTitleID = aPackage.findTippByWithoutTitleID()
+
+        int count = 0
+
+        tippsByWithoutTitleID.eachWithIndex { TitleInstancePackagePlatform titleInstancePackagePlatform, int i ->
+            titleInstancePackagePlatform.status = RDStore.KBC_STATUS_REMOVED
+            titleInstancePackagePlatform.save()
+            count++
+        }
+
+        return count
+    }
 }

@@ -20,6 +20,13 @@
 </g:link>
 </h1>
 
+
+<g:link class="ui button" controller="admin" action="deleteTippsWithoutTitleIDByPkg" id="${pkg.uuid}">
+    Delete all
+</g:link>
+<br>
+<br>
+
 <div class="container">
 
         <h3>Tipps without Title ID (${totalCountByWithoutTitleID})</h3>

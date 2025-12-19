@@ -476,6 +476,18 @@ class AdminController {
         result
     }
 
+    def deleteTippsWithoutTitleIDByPkg() {
+        log.debug("deleteTippsWithoutTitleIDByPkg::${params}")
+
+        Package aPackage = Package.findByUuid(params.id)
+
+        int count = adminService.deleteTippsWithoutTitleIDByPkg(aPackage)
+
+        flash.message = "${count} title without title_id set to removed in package --------> ${aPackage.name}!"
+
+        redirect(url: request.getHeader('referer'))
+    }
+
   def notLinkedPackageInLaser() {
     log.debug("notLinkedPackageInLaser::${params}")
     def result = [:]
