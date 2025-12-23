@@ -32,7 +32,7 @@ class AutoUpdatePackagesService {
     void findPackageToUpdateOnAutoUpdate(boolean onlyRowsWithLastChanged = false) {
         Thread.currentThread().name = "AutoUpdate-All"
         if (!started) {
-            started = true
+            //started = true
             List packageNeedsUpdate = []
             def updPacks = Package.executeQuery(
                     "from Package p " +
