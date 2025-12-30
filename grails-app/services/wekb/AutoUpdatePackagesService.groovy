@@ -7,17 +7,19 @@ import wekb.tools.UrlToolkit
 import wekb.helper.RDStore
 import grails.gorm.transactions.Transactional
 import org.apache.commons.lang.StringUtils
-import wekb.system.JobResult
 import wekb.utils.ServerUtils
 
 import java.time.ZoneId
 import java.util.concurrent.ExecutorService
+
+import groovyx.gpars.GParsPool
 
 import java.util.concurrent.Executors
 
 @Transactional
 class AutoUpdatePackagesService {
 
+    ExecutorService executorService
     FtpConnectService ftpConnectService
     FileCheckService fileCheckService
     KbartProcessService kbartProcessService
@@ -26,13 +28,13 @@ class AutoUpdatePackagesService {
     ExportService exportService
 
     static final THREAD_POOL_SIZE = 4
-    private final ExecutorService executorService = Executors.newFixedThreadPool(THREAD_POOL_SIZE)
+    //private final ExecutorService executorService = Executors.newFixedThreadPool(THREAD_POOL_SIZE)
     private static boolean started = false
 
     void findPackageToUpdateOnAutoUpdate(boolean onlyRowsWithLastChanged = false) {
-        Thread.currentThread().name = "AutoUpdate-All"
+        //Thread.currentThread().name = "AutoUpdate-All"
         if (!started) {
-            started = true
+            //started = true
             List packageNeedsUpdate = []
             def updPacks = Package.executeQuery(
                     "from Package p " +
@@ -51,7 +53,45 @@ class AutoUpdatePackagesService {
             }
             log.info("findPackageToUpdateOnAutoUpdate: Package with KbartSource and lastRun < currentDate (${packageNeedsUpdate.size()})")
             if (packageNeedsUpdate.size() > 0) {
-                packageNeedsUpdate.eachWithIndex { aPackage, i ->
+                GParsPool.withPool(THREAD_POOL_SIZE) { pool ->
+                    packageNeedsUpdate.anyParallel { aPackage ->
+                        try {
+                            Thread.currentThread().name = "AutoUpdate-${aPackage.id}"
+                            startAutoPackageUpdate(aPackage, onlyRowsWithLastChanged)
+                        }catch (Exception exception) {
+                            log.error("Error by findPackageToUpdateAndUpdate (${aPackage.id} -> ${aPackage.name}): ${exception.message}")
+                            //exception.printStackTrace()
+
+                            if (grailsApplication.config.getProperty('grails.mail.disabled', Boolean)) {
+                                log.warn 'findPackageToUpdateOnAutoUpdate mail failed due grails.mail.disabled = true'
+
+                            }else {
+
+                                String currentServer = ServerUtils.getCurrentServer()
+                                String subjectSystemPraefix = (currentServer == ServerUtils.SERVER_PROD) ? "" : (ServerUtils.getCurrentServerSystemId() + " - ")
+                                String mailSubject = subjectSystemPraefix + "we:kb Auto Update Packages Job"
+                                String currentSystemId = ServerUtils.getCurrentServerSystemId()
+
+
+                                try {
+                                    mailService.sendMail {
+                                        to "wekb@hbz-nrw.de", "moetez.djebeniani@hbz-nrw.de"
+                                        from "wekb Server <wekb-autoUpdatePackagesJob@wekbServer>"
+                                        subject mailSubject
+                                        text "Error by Package to Update on Auto Update (${aPackage.id} -> ${aPackage.name}: ${exception.message})"
+                                    }
+                                } catch (Exception e) {
+                                    String eMsg = e.message
+                                    log.error("autoUpdatePackagesJob - findPackageToUpdateOnAutoUpdate :: Unable to perform email due to exception ${eMsg}")
+                                }
+                            }
+                        }
+                    }
+                }
+
+
+
+                /*packageNeedsUpdate.eachWithIndex { aPackage, i ->
                     executorService.submit {
                         Thread.currentThread().name = "AutoUpdate-${i}"
 
@@ -87,10 +127,10 @@ class AutoUpdatePackagesService {
 
                         }
                     }
-                }
+                }*/
             }
-            started = false
-            executorService.shutdown()
+            //started = false
+            //executorService.shutdown()
         } else {
             log.info("AutoUpdate running!")
         }
