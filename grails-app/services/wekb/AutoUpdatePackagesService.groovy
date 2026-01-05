@@ -3,18 +3,23 @@ package wekb
 import grails.core.GrailsApplication
 import grails.plugins.mail.MailService
 import org.apache.commons.io.FileUtils
+import org.apache.commons.validator.routines.UrlValidator
 import wekb.tools.UrlToolkit
 import wekb.helper.RDStore
 import grails.gorm.transactions.Transactional
 import org.apache.commons.lang.StringUtils
 import wekb.utils.ServerUtils
 
+import java.time.LocalDate
 import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 import java.util.concurrent.ExecutorService
 
 import groovyx.gpars.GParsPool
 
 import java.util.concurrent.Executors
+import java.util.regex.Matcher
+import java.util.regex.Pattern
 
 @Transactional
 class AutoUpdatePackagesService {
@@ -249,7 +254,28 @@ class AutoUpdatePackagesService {
                             List<URL> updateUrls
                             if (pkg.getTippCount() <= 0 || pkg.kbartSource.lastRun == null) {
                                 updateUrls = new ArrayList<>()
-                                updateUrls.add(new URL(pkg.kbartSource.url.replace(' ', '%20')))
+                                if(UrlToolkit.containsDateStamp(pkg.kbartSource.url)){
+                                    Matcher urlMatcher = Pattern.compile("(.*[\\W_])([\\d]{4}-[\\d]{2}-[\\d]{2})([\\W_].*)").matcher(pkg.kbartSource.url)
+                                    if (!urlMatcher.matches()){
+                                        urlMatcher = Pattern.compile("(.*[\\W_])([\\d]{4}_[\\d]{2}_[\\d]{2})([\\W_].*)").matcher(pkg.kbartSource.url)
+                                    }
+                                    if (urlMatcher.matches()) {
+                                        String dateString = urlMatcher.group(2)
+
+                                        if (dateString) {
+                                            LocalDate localDate = LocalDate.parse(dateString, DateTimeFormatter.ISO_LOCAL_DATE)
+                                            Date dateFromUrl = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant())
+                                            updateUrls = getUpdateUrls(pkg.kbartSource.url, dateFromUrl, pkg.dateCreated)
+                                        } else {
+                                            updateUrls.add(new URL(pkg.kbartSource.url.replace(' ', '%20')))
+                                        }
+                                    }else{
+                                        updateUrls.add(new URL(pkg.kbartSource.url.replace(' ', '%20')))
+                                    }
+
+                                } else {
+                                    updateUrls.add(new URL(pkg.kbartSource.url.replace(' ', '%20')))
+                                }
                             } else {
                                 // this package had already been filled with data
                                 if ((UrlToolkit.containsDateStamp(pkg.kbartSource.url) || UrlToolkit.containsDateStampPlaceholder(pkg.kbartSource.url)) && pkg.kbartSource.lastUpdateUrl) {
@@ -263,6 +289,10 @@ class AutoUpdatePackagesService {
                             File file
                             if (updateUrls.size() > 0) {
                                 updateUrls = updateUrls.reverse()
+                                updateUrls.each {
+                                    println(it)
+                                }
+
                                 for(URL url in updateUrls){
                                     lastUpdateURL = url.toString()
                                     try {
