@@ -42,15 +42,17 @@
                     <dt class="control-label">Tipp Info in Laser:</dt>
                     <g:set var="tippUrl" value="${laserService.getLaserTippURL()}"/>
                     <g:set var="laserTipp" value="${laserService.getLaserTipp(tipp.uuid)}"/>
-                    <dd>
-                        Name: <a href="${tippUrl + '/' + laserTipp.id}" target="_blank">${laserTipp.name}</a>
-                    </dd>
-                    <dd>
-                        Status: ${laserTipp.status}
-                    </dd>
-                    <dd>
-                        URL: ${laserTipp.url}
-                    </dd>
+                    <g:if test="${laserTipp}">
+                        <dd>
+                            Name: <a href="${tippUrl + '/' + laserTipp.id}" target="_blank">${laserTipp.name}</a>
+                        </dd>
+                        <dd>
+                            Status: ${laserTipp.status}
+                        </dd>
+                        <dd>
+                            URL: ${laserTipp.url}
+                        </dd>
+                    </g:if>
                 </dl>
             </div>
         </div>
