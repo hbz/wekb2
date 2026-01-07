@@ -1044,6 +1044,21 @@ class GlobalSearchTemplatesService {
                                 [heading: 'Source', property: 'kbartSource.name', link: true, sort: 'kbartSource.name', linkInfo: 'Link to Source'],
                                 [heading: 'Automatic Updates', property: 'kbartSource.automaticUpdates']
                         ],
+                        qbeSortFields: [
+                                        [sort: 'kbartSource.name'],
+                                        [sort: 'kbartSource.status.value'],
+                                        [sort: 'kbartSource.url'],
+                                        [sort: 'kbartSource.ftpServerUrl'],
+                                        [sort: 'kbartSource.ftpDirectory'],
+                                        [sort: 'kbartSource.ftpFileName'],
+                                        [sort: 'kbartSource.ftpUsername'],
+                                        [sort: 'kbartSource.ftpPassword'],
+                                        [sort: 'kbartSource.frequency.value'],
+                                        [sort: 'kbartSource.defaultSupplyMethod.value'],
+                                        [sort: 'kbartSource.defaultDataFormat.value'],
+                                        [sort: 'kbartSource.automaticUpdates']
+                        ],
+
                         actions   : [
                         ]
                 ]

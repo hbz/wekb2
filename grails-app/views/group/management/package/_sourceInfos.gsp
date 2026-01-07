@@ -30,11 +30,11 @@
                                       params="${params}"/>
                 <semui:sortableColumn property="kbartSource.ftpPassword" title="FTP Password"
                                       params="${params}"/>
-                <semui:sortableColumn property="kbartSource.frequency" title="Frequency"
+                <semui:sortableColumn property="kbartSource.frequency.value" title="Frequency"
                                       params="${params}"/>
-                <semui:sortableColumn property="kbartSource.defaultSupplyMethod" title="Default Supply Method"
+                <semui:sortableColumn property="kbartSource.defaultSupplyMethod.value" title="Default Supply Method"
                                       params="${params}"/>
-                <semui:sortableColumn property="kbartSource.defaultDataFormat" title="Default Data Format"
+                <semui:sortableColumn property="kbartSource.defaultDataFormat.value" title="Default Data Format"
                                       params="${params}"/>
                 <semui:sortableColumn property="kbartSource.automaticUpdates" title="Automatic Updates"
                                       params="${params}"/>
@@ -56,7 +56,9 @@
                         </td>
                         <td>${++counter}</td>
                         <td>
-                            ${row_obj.name}
+                            <g:link controller="resource" action="show" id="${row_obj.getOID()}">
+                                ${row_obj.name}
+                            </g:link>
                         </td>
                         <g:if test="${row_obj.kbartSource}">
                             <td>
