@@ -1509,7 +1509,6 @@ class GlobalSearchTemplatesService {
                                 [heading: 'Name', property: 'name', sort: 'name', link: true, linkInfo: 'Link to Package'],
                                 [heading: 'Provider', property: 'provider.name', sort: 'provider.name', link: true, linkInfo: 'Link to Provider'],
                                 [heading: 'Nominal Platform', property: 'nominalPlatform.name', sort: 'nominalPlatform.name', link: true, linkInfo: 'Link to Nominal Platform'],
-                                [heading: 'Curatory Groups', property: 'curatoryGroupsCuratoryGroup', link: true, linkInfo: 'Link to Curatory Group'],
                                 [heading: 'Content Type', property: 'contentType.value', sort: 'contentType'],
                                 [heading: 'Product IDs', property: 'anbieterProduktIDs'],
                                 [heading: 'Current Titles', property: 'currentTippCount', sort: 'currentTippCount'],
@@ -1517,6 +1516,7 @@ class GlobalSearchTemplatesService {
                                 [heading: 'Expected Titles', property: 'expectedTippCount', sort: 'expectedTippCount'],
                                 [heading: 'Deleted Titles', property: 'deletedTippCount', sort: 'deletedTippCount'],
                                 [heading: 'Last Updated', property: 'lastUpdated', sort: 'lastUpdated'],
+                                [heading: 'Last Run', property: 'kbartSource.lastRun', sort: 'kbartSource.lastRun'],
                                 [heading: 'Automatic Updates', property: 'kbartSource.automaticUpdates']
                         ],
                         actions   : [
