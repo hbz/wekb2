@@ -1046,16 +1046,16 @@ class GlobalSearchTemplatesService {
                         ],
                         qbeSortFields: [
                                         [sort: 'kbartSource.name'],
-                                        [sort: 'kbartSource.status.value'],
+                                        [sort: 'kbartSource.status'],
                                         [sort: 'kbartSource.url'],
                                         [sort: 'kbartSource.ftpServerUrl'],
                                         [sort: 'kbartSource.ftpDirectory'],
                                         [sort: 'kbartSource.ftpFileName'],
                                         [sort: 'kbartSource.ftpUsername'],
                                         [sort: 'kbartSource.ftpPassword'],
-                                        [sort: 'kbartSource.frequency.value'],
-                                        [sort: 'kbartSource.defaultSupplyMethod.value'],
-                                        [sort: 'kbartSource.defaultDataFormat.value'],
+                                        [sort: 'kbartSource.frequency'],
+                                        [sort: 'kbartSource.defaultSupplyMethod'],
+                                        [sort: 'kbartSource.defaultDataFormat'],
                                         [sort: 'kbartSource.automaticUpdates']
                         ],
 
