@@ -696,7 +696,7 @@ class Package  extends AbstractBase implements Auditable {
   }
 
   @Transient
-  public getLastSuccessfulAutoUpdateInfo() {
+  UpdatePackageInfo getLastSuccessfulAutoUpdateInfo() {
     UpdatePackageInfo updatePackageInfo = UpdatePackageInfo.executeQuery("from UpdatePackageInfo where pkg = :pkg and status = :status and automaticUpdate = true" +
             " order by lastUpdated desc", [pkg: this, status: RDStore.UPDATE_STATUS_SUCCESSFUL], [max: 1, offset: 0])[0]
     updatePackageInfo
@@ -712,26 +712,26 @@ class Package  extends AbstractBase implements Auditable {
   }
 
   @Transient
-  public getCountAutoUpdateInfos() {
+  int getCountAutoUpdateInfos() {
     int result = UpdatePackageInfo.executeQuery("select count(*) from UpdatePackageInfo where pkg = :pkg and automaticUpdate = true", [pkg: this])[0]
     result
   }
 
   @Transient
-  public getCountManualUpdateInfos() {
+  int getCountManualUpdateInfos() {
     int result = UpdatePackageInfo.executeQuery("select count(*) from UpdatePackageInfo where pkg = :pkg and automaticUpdate = false", [pkg: this])[0]
     result
   }
 
     @Transient
-    public getLastSuccessfulManualUpdateInfo() {
+    UpdatePackageInfo getLastSuccessfulManualUpdateInfo() {
         UpdatePackageInfo updatePackageInfo = UpdatePackageInfo.executeQuery("from UpdatePackageInfo where pkg = :pkg and status = :status and automaticUpdate = false" +
                 " order by lastUpdated desc", [pkg: this, status: RDStore.UPDATE_STATUS_SUCCESSFUL], [max: 1, offset: 0])[0]
         updatePackageInfo
     }
 
   @Transient
-  public getLastSuccessfulUpdateInfo() {
+  UpdatePackageInfo getLastSuccessfulUpdateInfo() {
     UpdatePackageInfo updatePackageInfo = UpdatePackageInfo.executeQuery("from UpdatePackageInfo where pkg = :pkg and status = :status" +
             " order by lastUpdated desc", [pkg: this, status: RDStore.UPDATE_STATUS_SUCCESSFUL], [max: 1, offset: 0])[0]
     updatePackageInfo
@@ -771,7 +771,7 @@ class Package  extends AbstractBase implements Auditable {
   }
 
     @Transient
-    public getTippCountWithStatus(String status) {
+    int getTippCountWithStatus(String status) {
         RefdataValue refdata_status = RDStore.KBC_STATUS_CURRENT
         if(status == 'Retired'){
             refdata_status = RDStore.KBC_STATUS_RETIRED
@@ -787,6 +787,18 @@ class Package  extends AbstractBase implements Auditable {
                 , [pkg: this, status: refdata_status])[0]
 
         result
+    }
+
+
+    @Transient
+    Date getLastTryDate() {
+        Date lastTry
+        UpdatePackageInfo updatePackageInfo = getLastSuccessfulUpdateInfo()
+        if(updatePackageInfo)
+            lastTry = updatePackageInfo.endTime
+
+        lastTry
+
     }
 
 

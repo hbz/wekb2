@@ -1532,6 +1532,7 @@ class GlobalSearchTemplatesService {
                                 [heading: 'Deleted Titles', property: 'deletedTippCount', sort: 'deletedTippCount'],
                                 [heading: 'Last Updated', property: 'lastUpdated', sort: 'lastUpdated'],
                                 [heading: 'Last Run', property: 'kbartSource.lastRun', sort: 'kbartSource.lastRun'],
+                                [heading: 'Last Try', property: 'lastTryDate', sort: 'lastTryDate'],
                                 [heading: 'Automatic Updates', property: 'kbartSource.automaticUpdates']
                         ],
                         actions   : [
