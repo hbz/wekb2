@@ -1688,6 +1688,10 @@ class Api2Service {
                                                  vendorUuid: providerInvoicingVendor.vendor.uuid,
                                                  vendorHomepage: providerInvoicingVendor.vendor.homepage])
                 }
+
+                result.licenseBasedEBInterlibrarySupported = object.licenseBasedEBInterlibrarySupported?.value
+                result.range = object.range?.value
+                result.agreementModel = object.agreementModel?.value
             }
 
             result

@@ -10,6 +10,9 @@
         <semui:tabsItemWithoutLink  tab="usageRights" activeTab="${params.activeTab}">
             Usage Rights
         </semui:tabsItemWithoutLink>
+        <semui:tabsItemWithoutLink  tab="interlibraryLoan" activeTab="${params.activeTab}">
+            Interlibrary Loan
+        </semui:tabsItemWithoutLink>
         <semui:tabsItemWithoutLink tab="metdaServices" activeTab="${params.activeTab}">
             Metadata Services
        </semui:tabsItemWithoutLink>
@@ -390,6 +393,38 @@
                 <dd>
                     <semui:xEditableRefData owner="${d}" field="quotesByCopyPaste"
                                             config="${RCConstants.YN}"/>
+                </dd>
+            </dl>
+        </div>
+    </semui:tabsItemContent>
+
+    <semui:tabsItemContent tab="interlibraryLoan"" activeTab="${params.activeTab}">
+        <div class="content wekb-inline-lists">
+            <dl>
+                <dt class="control-label">
+                    License-based e-book interlibrary loan supported
+                </dt>
+                <dd>
+                    <semui:xEditableRefData owner="${d}" field="licenseBasedEBInterlibrarySupported"
+                                            config="${RCConstants.YN}"/>
+                </dd>
+            </dl>
+            <dl>
+                <dt class="control-label">
+                    Range
+                </dt>
+                <dd>
+                    <semui:xEditableRefData owner="${d}" field="range"
+                                            config="${RCConstants.PROVIDER_RANGE}"/>
+                </dd>
+            </dl>
+            <dl>
+                <dt class="control-label">
+                    Agreement model
+                </dt>
+                <dd>
+                    <semui:xEditableRefData owner="${d}" field="agreementModel"
+                                            config="${RCConstants.PROVIDER_AGREEMENT_MODEL}"/>
                 </dd>
             </dl>
         </div>

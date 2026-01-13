@@ -529,6 +529,12 @@ Price.type;open access apc;open access apc;open access apc
 Price.type;perpetual;perpetual;perpetual
 Price.type;subscription;subscription;subscription
 Price.type;topup;topup;topup
+Provider.Range;Regional;Regional;Regional
+Provider.Range;National;National;National
+Provider.Agreement.Model;Nationwide license agreement;Nationwide license agreement;Nationwide license agreement
+Provider.Agreement.Model;License agreement with list of participants;License agreement with list of participants;License agreement with list of participants
+Provider.Agreement.Model;Clause in consortial license agreement;Clause in consortial license agreement;Clause in consortial license agreement
+Provider.Agreement.Model;Clause in local license agreements;Clause in local license agreements;Clause in local license agreements
 Source.DataFormat;KBART;KBART;KBART
 Source.DataFormat;Proprietary;Proprietary;Proprietary
 Source.DataSupplyMethod;eMail;eMail;eMail

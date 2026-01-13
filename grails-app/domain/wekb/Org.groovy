@@ -80,6 +80,15 @@ class Org extends AbstractBase implements Auditable {
 
   String urlToTrainingMaterials
 
+    @RefdataAnnotation(cat = RCConstants.YN)
+    RefdataValue licenseBasedEBInterlibrarySupported
+
+    @RefdataAnnotation(cat = RCConstants.PROVIDER_RANGE)
+    RefdataValue range
+
+    @RefdataAnnotation(cat = RCConstants.PROVIDER_AGREEMENT_MODEL)
+    RefdataValue agreementModel
+
 
   Set variantNames = []
 
@@ -155,6 +164,11 @@ class Org extends AbstractBase implements Auditable {
 
     urlTitleLists column: 'org_url_title_lists'
     urlToTrainingMaterials column: 'org_url_to_training_materials'
+
+
+    licenseBasedEBInterlibrarySupported column: 'org_license_based_eb_interlibrary_supported'
+    range column: 'org_range'
+    agreementModel column: 'org_agreement_model'
   }
 
   static constraints = {
@@ -195,6 +209,10 @@ class Org extends AbstractBase implements Auditable {
     urlPristLists(nullable: true, blank: true)
     urlTitleLists(nullable: true, blank: true)
     urlToTrainingMaterials(nullable: true, blank: true)
+
+      licenseBasedEBInterlibrarySupported (nullable: true, blank: true)
+      range(nullable: true, blank: true)
+      agreementModel(nullable: true, blank: true)
   }
 
   @Override
