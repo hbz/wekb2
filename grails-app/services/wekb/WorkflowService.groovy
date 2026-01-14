@@ -7,6 +7,7 @@ import groovyx.gpars.GParsPool
 import wekb.auth.User
 import wekb.auth.UserRole
 import wekb.helper.RCConstants
+import wekb.helper.RDStore
 import wekb.system.SavedSearch
 import wekb.utils.ServerUtils
 
@@ -74,6 +75,8 @@ class WorkflowService {
                         [code: 'objectMethod::removeOnlyTipps', modalID: 'removeOnlyTipps', label: 'Remove all Titles', message: '', onlyAdmin: false, group: 5],
                         [code: 'objectMethod::removeOnlyDeletedTipps', modalID: 'removeOnlyDeletedTipps', label: 'Remove only deleted Titles', message: '', onlyAdmin: false, group: 4],
                         [code: 'objectMethod::removeWithTipps', modalID: 'removeWithTipps', label: 'Remove the package (with all Titles)', message: '', onlyAdmin: false, group: 6],
+
+                        [code: 'workFlowMethod::expungeRemovedTipps', modalID: 'expungeRemovedTipps', label: 'Remove all removed Titles hard from system', message: '', onlyAdmin: true, group: 7],
 
                         [code: 'workFlowMethod::manualKbartImport', label: 'Manual KBART Import', message: '', onlyAdmin: false, group: 1],
                        /* [code: 'workFlowMethod::updatePackageFromKbartSource', label: 'Trigger KBART Update (Changed Titles)', message: '', onlyAdmin: false, group: 1],*/
@@ -350,6 +353,33 @@ class WorkflowService {
         }else
         {
             result.error = "Hard deletion was not successful!"
+        }
+
+        result
+
+    }
+
+    Map expungeRemovedTipps(Package aPackage){
+        Map result = [:]
+
+        List<TitleInstancePackagePlatform> tipps = TitleInstancePackagePlatform.findAllByPkgAndStatus(aPackage, RDStore.KBC_STATUS_REMOVED)
+
+        int countSuccess = 0
+        int countFail = 0
+
+        tipps.each {
+            if(deletionService.expungeTipp(it.id)){
+                countSuccess++
+            }else
+            {
+                countFail++
+            }
+        }
+
+        if(countSuccess > 0 && tipps.size() > 0 && countFail == 0 ){
+            result.message = "Hard deletion of Removed Title was successful! ${countSuccess}/${tipps.size()}"
+        }else if(countFail > 0 ){
+            result.error = "Hard deletion of Removed Title was not successful! Success: ${countSuccess}/${tipps.size()} -> Fail: ${countFail}/${tipps.size()}"
         }
 
         result
