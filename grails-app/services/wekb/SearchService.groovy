@@ -161,9 +161,13 @@ class SearchService {
                 Class target_class = Class.forName(result.qbetemplate.baseclass);
                 def read_perm = accessService.checkReadable(result.qbetemplate.baseclass)
 
-                if(params.qbe == 'g:updateTippInfos'){
-                    if(!params.qp_aup_id){
-                        if(!SpringSecurityUtils.ifAnyGranted('ROLE_SUPERUSER')){
+                if(params.qbe == 'g:updateTippInfos') {
+                    if (!params.qp_aup_id) {
+                        if (!SpringSecurityUtils.ifAnyGranted('ROLE_SUPERUSER')) {
+                            read_perm = false
+                        }
+                    } else if (!params.qp_tipp_id) {
+                        if (!SpringSecurityUtils.ifAnyGranted('ROLE_SUPERUSER')) {
                             read_perm = false
                         }
                     }
