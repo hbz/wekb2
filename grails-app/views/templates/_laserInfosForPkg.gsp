@@ -28,80 +28,102 @@
                 <br>
                 <a class="ui button" href="${laserService.getLaserURL() + '/yoda/reloadPackage?packageUUID=' + pkg.uuid}"
                    target="_blank">Reload package data in Laser</a>
+
+                <br>
+                <br>
+                <g:if test="${params.showLaserInfos == 'true'}">
+                    <g:link class="ui button positive"
+                            controller="${params.controller}"
+                            action="${params.action}"
+                            id="${displayobj.getOID()}"
+                            params="${(request.param ?: [:])}">
+                        Disable Laser Infos
+                    </g:link>
+                </g:if>
+                <g:else>
+                    <g:link class="ui button negative"
+                            controller="${params.controller}"
+                            action="${params.action}"
+                            id="${displayobj.getOID()}"
+                            params="${(request.param ?: [:]) + ["showLaserInfos": true]}">
+                        Enable Laser Infos
+                    </g:link>
+                </g:else>
             </g:if>
         </p>
     </div>
 
     <br>
+    <g:if test="${params.showLaserInfos == 'true'}">
+        <div class="ui two cards">
+            <div class="card">
+                <div class="content">
+                    <dl>
+                        <dt class="control-label">Tipps in Laser (Current):</dt>
+                        <dd>
+                            ${laserService.tippsWithStatusInLaserCount(pkg.uuid, 'Current')}
+                        </dd>
+                        <dt class="control-label">Tipps in Laser (Retired):</dt>
+                        <dd>
+                            ${laserService.tippsWithStatusInLaserCount(pkg.uuid, 'Retired')}
+                        </dd>
+                        <dt class="control-label">Tipps in Laser (Expected):</dt>
+                        <dd>
+                            ${laserService.tippsWithStatusInLaserCount(pkg.uuid, 'Expected')}
+                        </dd>
+                        <dt class="control-label">Tipps in Laser (Deleted):</dt>
+                        <dd>
+                            ${laserService.tippsWithStatusInLaserCount(pkg.uuid, 'Deleted')}
+                        </dd>
+                        <dt class="control-label">Tipps in Laser (Removed):</dt>
+                        <dd>
+                            ${laserService.tippsWithStatusInLaserCount(pkg.uuid, 'Removed')}
+                        </dd>
+                    </dl>
+                </div>
+            </div>
 
-    <div class="ui two cards">
-        <div class="card">
-            <div class="content">
-                <dl>
-                    <dt class="control-label">Tipps in Laser (Current):</dt>
-                    <dd>
-                        ${laserService.tippsWithStatusInLaserCount(pkg.uuid, 'Current')}
-                    </dd>
-                    <dt class="control-label">Tipps in Laser (Retired):</dt>
-                    <dd>
-                        ${laserService.tippsWithStatusInLaserCount(pkg.uuid, 'Retired')}
-                    </dd>
-                    <dt class="control-label">Tipps in Laser (Expected):</dt>
-                    <dd>
-                        ${laserService.tippsWithStatusInLaserCount(pkg.uuid, 'Expected')}
-                    </dd>
-                    <dt class="control-label">Tipps in Laser (Deleted):</dt>
-                    <dd>
-                        ${laserService.tippsWithStatusInLaserCount(pkg.uuid, 'Deleted')}
-                    </dd>
-                    <dt class="control-label">Tipps in Laser (Removed):</dt>
-                    <dd>
-                        ${laserService.tippsWithStatusInLaserCount(pkg.uuid, 'Removed')}
-                    </dd>
-                </dl>
+            <div class="card">
+                <div class="content">
+                    <dl>
+                        <dt class="control-label">Tipp (PT) in Laser (Current):</dt>
+                        <dd>
+                            <g:link action="linkedSubsInLaser" controller="admin" id="${pkg.id}"
+                                    params="[perpetualAccess: params.perpetualAccess, status: 'Current']">
+                                ${laserService.permanentTitlesWithStatusInLaserCount(pkg.uuid, 'Current')}
+                            </g:link>
+                        </dd>
+                        <dt class="control-label">Tipp (PT) in Laser (Retired):</dt>
+                        <dd>
+                            <g:link action="linkedSubsInLaser" controller="admin" id="${pkg.id}"
+                                    params="[perpetualAccess: params.perpetualAccess, status: 'Retired']">
+                                ${laserService.permanentTitlesWithStatusInLaserCount(pkg.uuid, 'Retired')}
+                            </g:link>
+                        </dd>
+                        <dt class="control-label">Tipp (PT) in Laser (Expected):</dt>
+                        <dd>
+                            <g:link action="linkedSubsInLaser" controller="admin" id="${pkg.id}"
+                                    params="[perpetualAccess: params.perpetualAccess, status: 'Expected']">
+                                ${laserService.permanentTitlesWithStatusInLaserCount(pkg.uuid, 'Expected')}
+                            </g:link>
+                        </dd>
+                        <dt class="control-label">Tipp (PT) in Laser (Deleted):</dt>
+                        <dd>
+                            <g:link action="linkedSubsInLaser" controller="admin" id="${pkg.id}"
+                                    params="[perpetualAccess: params.perpetualAccess, status: 'Deleted']">
+                                ${laserService.permanentTitlesWithStatusInLaserCount(pkg.uuid, 'Deleted')}
+                            </g:link>
+                        </dd>
+                        <dt class="control-label">Tipp (PT) in Laser (Removed):</dt>
+                        <dd>
+                            <g:link action="linkedSubsInLaser" controller="admin" id="${pkg.id}"
+                                    params="[perpetualAccess: params.perpetualAccess, status: 'Removed']">
+                                ${laserService.permanentTitlesWithStatusInLaserCount(pkg.uuid, 'Removed')}
+                            </g:link>
+                        </dd>
+                    </dl>
+                </div>
             </div>
         </div>
-
-        <div class="card">
-            <div class="content">
-                <dl>
-                    <dt class="control-label">Tipp (PT) in Laser (Current):</dt>
-                    <dd>
-                        <g:link action="linkedSubsInLaser" controller="admin" id="${pkg.id}"
-                                params="[perpetualAccess: params.perpetualAccess, status: 'Current']">
-                            ${laserService.permanentTitlesWithStatusInLaserCount(pkg.uuid, 'Current')}
-                        </g:link>
-                    </dd>
-                    <dt class="control-label">Tipp (PT) in Laser (Retired):</dt>
-                    <dd>
-                        <g:link action="linkedSubsInLaser" controller="admin" id="${pkg.id}"
-                                params="[perpetualAccess: params.perpetualAccess, status: 'Retired']">
-                            ${laserService.permanentTitlesWithStatusInLaserCount(pkg.uuid, 'Retired')}
-                        </g:link>
-                    </dd>
-                    <dt class="control-label">Tipp (PT) in Laser (Expected):</dt>
-                    <dd>
-                        <g:link action="linkedSubsInLaser" controller="admin" id="${pkg.id}"
-                                params="[perpetualAccess: params.perpetualAccess, status: 'Expected']">
-                            ${laserService.permanentTitlesWithStatusInLaserCount(pkg.uuid, 'Expected')}
-                        </g:link>
-                    </dd>
-                    <dt class="control-label">Tipp (PT) in Laser (Deleted):</dt>
-                    <dd>
-                        <g:link action="linkedSubsInLaser" controller="admin" id="${pkg.id}"
-                                params="[perpetualAccess: params.perpetualAccess, status: 'Deleted']">
-                            ${laserService.permanentTitlesWithStatusInLaserCount(pkg.uuid, 'Deleted')}
-                        </g:link>
-                    </dd>
-                    <dt class="control-label">Tipp (PT) in Laser (Removed):</dt>
-                    <dd>
-                        <g:link action="linkedSubsInLaser" controller="admin" id="${pkg.id}"
-                                params="[perpetualAccess: params.perpetualAccess, status: 'Removed']">
-                            ${laserService.permanentTitlesWithStatusInLaserCount(pkg.uuid, 'Removed')}
-                        </g:link>
-                    </dd>
-                </dl>
-            </div>
-        </div>
-    </div>
+    </g:if>
 </div>
