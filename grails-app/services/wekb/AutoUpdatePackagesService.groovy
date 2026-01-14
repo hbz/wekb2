@@ -58,6 +58,7 @@ class AutoUpdatePackagesService {
             }
             log.info("findPackageToUpdateOnAutoUpdate: Package with KbartSource and lastRun < currentDate (${packageNeedsUpdate.size()})")
             if (packageNeedsUpdate.size() > 0) {
+                log.info("findPackageToUpdateOnAutoUpdate: IDs -> (${packageNeedsUpdate.id.join(', ')})")
                 GParsPool.withPool(THREAD_POOL_SIZE) { pool ->
                     packageNeedsUpdate.anyParallel { aPackage ->
                         try {
@@ -159,7 +160,7 @@ class AutoUpdatePackagesService {
     }
 
     void startAutoPackageUpdate(Package pkg, boolean onlyRowsWithLastChanged = false) {
-        log.info("Begin startAutoPackageUpdate Package ($pkg.name)")
+        log.info("Begin startAutoPackageUpdate Package ($pkg.name) -> $pkg.id")
         List kbartRows = []
         String lastUpdateURL = pkg.kbartSource.lastUpdateUrl ?: pkg.kbartSource.url
         Date startTime = new Date()
@@ -530,7 +531,7 @@ class AutoUpdatePackagesService {
                 }
             }
         }
-        log.info("End startAutoPackageUpdate Package ($pkg.name)")
+        log.info("End startAutoPackageUpdate Package ($pkg.name) -> $pkg.id")
     }
 
     File storeZipContentToFile(File zipFIle) {
