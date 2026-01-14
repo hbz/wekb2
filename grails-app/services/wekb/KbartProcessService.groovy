@@ -67,6 +67,13 @@ class KbartProcessService {
             log.error("Error by kbartImportManual: ${exception.message}")
 
             exception.printStackTrace()
+
+            int previouslyTipps = TitleInstancePackagePlatform.executeQuery(
+                    "select count(*) from TitleInstancePackagePlatform tipp where " +
+                            "tipp.status in :status and " +
+                            "tipp.pkg = :package",
+                    [package: updatePackageInfo.pkg, status: [RDStore.KBC_STATUS_CURRENT, RDStore.KBC_STATUS_DELETED, RDStore.KBC_STATUS_RETIRED, RDStore.KBC_STATUS_EXPECTED]])[0]
+
             UpdatePackageInfo.withTransaction {
                 //UpdatePackageInfo updatePackageFail = new UpdatePackageInfo()
                 updatePackageInfo.description = "An error occurred while processing the KBART file. More information can be seen in the system log."
@@ -77,6 +84,7 @@ class KbartProcessService {
                 updatePackageInfo.onlyRowsWithLastChanged = onlyRowsWithLastChanged
                 updatePackageInfo.automaticUpdate = false
                 updatePackageInfo.updateFromFileUpload = true
+                updatePackageInfo.countPreviouslyTippsInWekb = previouslyTipps
                 updatePackageInfo.save()
             }
         }
@@ -745,6 +753,13 @@ class KbartProcessService {
         }
         if(!encodingPass) {
             log.warn("Encoding of file is wrong. File encoding is: ${encoding}")
+
+            int previouslyTipps = TitleInstancePackagePlatform.executeQuery(
+                    "select count(*) from TitleInstancePackagePlatform tipp where " +
+                            "tipp.status in :status and " +
+                            "tipp.pkg = :package",
+                    [package: updatePackageInfo.pkg, status: [RDStore.KBC_STATUS_CURRENT, RDStore.KBC_STATUS_DELETED, RDStore.KBC_STATUS_RETIRED, RDStore.KBC_STATUS_EXPECTED]])[0]
+
             UpdatePackageInfo.withTransaction {
                 String description = "Encoding of KBART file is wrong. File encoding was: ${encoding}. "
                 if(lastUpdateURL && updatePackageInfo.automaticUpdate){
@@ -754,6 +769,7 @@ class KbartProcessService {
                 updatePackageInfo.status = RDStore.UPDATE_STATUS_FAILED
                 updatePackageInfo.endTime = new Date()
                 updatePackageInfo.updateUrl = lastUpdateURL
+                updatePackageInfo.countPreviouslyTippsInWekb = previouslyTipps
                 updatePackageInfo.save()
             }
         }
@@ -906,6 +922,13 @@ class KbartProcessService {
 
                         if (minimumKbartStandard.size() != countMinimumKbartStandard) {
                             log.warn("KBART file does not have one or any of the headers: ${minimumKbartStandard}")
+
+                            int previouslyTipps = TitleInstancePackagePlatform.executeQuery(
+                                    "select count(*) from TitleInstancePackagePlatform tipp where " +
+                                            "tipp.status in :status and " +
+                                            "tipp.pkg = :package",
+                                    [package: updatePackageInfo.pkg, status: [RDStore.KBC_STATUS_CURRENT, RDStore.KBC_STATUS_DELETED, RDStore.KBC_STATUS_RETIRED, RDStore.KBC_STATUS_EXPECTED]])[0]
+
                             UpdatePackageInfo.withTransaction {
                                 String description = "KBART file does not have one or any of the headers: ${minimumKbartStandard.join(', ')}. "
                                 if(lastUpdateURL && updatePackageInfo.automaticUpdate){
@@ -915,6 +938,7 @@ class KbartProcessService {
                                 updatePackageInfo.status = RDStore.UPDATE_STATUS_FAILED
                                 updatePackageInfo.endTime = new Date()
                                 updatePackageInfo.updateUrl = lastUpdateURL
+                                updatePackageInfo.countPreviouslyTippsInWekb = previouslyTipps
                                 updatePackageInfo.save()
                             }
 
@@ -947,6 +971,13 @@ class KbartProcessService {
                         }
                     }else {
                         log.warn("no delimiter $delimiter: ${lastUpdateURL}")
+
+                        int previouslyTipps = TitleInstancePackagePlatform.executeQuery(
+                                "select count(*) from TitleInstancePackagePlatform tipp where " +
+                                        "tipp.status in :status and " +
+                                        "tipp.pkg = :package",
+                                [package: updatePackageInfo.pkg, status: [RDStore.KBC_STATUS_CURRENT, RDStore.KBC_STATUS_DELETED, RDStore.KBC_STATUS_RETIRED, RDStore.KBC_STATUS_EXPECTED]])[0]
+
                         UpdatePackageInfo.withTransaction {
                             String description = "Separator for the KBART was not recognized. The following separators are recognized: Tab, comma, semicolons. "
                             if(lastUpdateURL && updatePackageInfo.automaticUpdate){
@@ -956,11 +987,18 @@ class KbartProcessService {
                             updatePackageInfo.status = RDStore.UPDATE_STATUS_FAILED
                             updatePackageInfo.endTime = new Date()
                             updatePackageInfo.updateUrl = lastUpdateURL
+                            updatePackageInfo.countPreviouslyTippsInWekb = previouslyTipps
                             updatePackageInfo.save()
                         }
                     }
                 }else {
                     log.warn("KBART file is empty:  ${lastUpdateURL}")
+                    int previouslyTipps = TitleInstancePackagePlatform.executeQuery(
+                            "select count(*) from TitleInstancePackagePlatform tipp where " +
+                                    "tipp.status in :status and " +
+                                    "tipp.pkg = :package",
+                            [package: updatePackageInfo.pkg, status: [RDStore.KBC_STATUS_CURRENT, RDStore.KBC_STATUS_DELETED, RDStore.KBC_STATUS_RETIRED, RDStore.KBC_STATUS_EXPECTED]])[0]
+
                     UpdatePackageInfo.withTransaction {
                         String description = "KBART file is empty. "
                         if(lastUpdateURL && updatePackageInfo.automaticUpdate){
@@ -970,11 +1008,17 @@ class KbartProcessService {
                         updatePackageInfo.status = RDStore.UPDATE_STATUS_FAILED
                         updatePackageInfo.endTime = new Date()
                         updatePackageInfo.updateUrl = lastUpdateURL
+                        updatePackageInfo.countPreviouslyTippsInWekb = previouslyTipps
                         updatePackageInfo.save()
                     }
                 }
             } catch (Exception e) {
                 log.error("Error by KbartProcess: ${e.message}")
+                int previouslyTipps = TitleInstancePackagePlatform.executeQuery(
+                        "select count(*) from TitleInstancePackagePlatform tipp where " +
+                                "tipp.status in :status and " +
+                                "tipp.pkg = :package",
+                        [package: updatePackageInfo.pkg, status: [RDStore.KBC_STATUS_CURRENT, RDStore.KBC_STATUS_DELETED, RDStore.KBC_STATUS_RETIRED, RDStore.KBC_STATUS_EXPECTED]])[0]
                 //e.printStackTrace()
                 UpdatePackageInfo.withTransaction {
                     updatePackageInfo.refresh()
@@ -986,6 +1030,7 @@ class KbartProcessService {
                     updatePackageInfo.status = RDStore.UPDATE_STATUS_FAILED
                     updatePackageInfo.endTime = new Date()
                     updatePackageInfo.updateUrl = lastUpdateURL
+                    updatePackageInfo.countPreviouslyTippsInWekb = previouslyTipps
                     updatePackageInfo.save()
                 }
 
