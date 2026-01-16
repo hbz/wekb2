@@ -37,7 +37,9 @@ class AutoUpdatePackagesService {
     private static boolean started = false
 
     void findPackageToUpdateOnAutoUpdate(boolean onlyRowsWithLastChanged = false) {
-        //Thread.currentThread().name = "AutoUpdate-All"
+        Thread.currentThread().name = "AutoUpdate-MainThread"
+        def start_time = System.currentTimeMillis()
+        log.info("findPackageToUpdateOnAutoUpdate: Start at $start_time ms")
         if (!started) {
             //started = true
             List packageNeedsUpdate = []
@@ -140,6 +142,8 @@ class AutoUpdatePackagesService {
         } else {
             log.info("AutoUpdate running!")
         }
+
+        log.info("findPackageToUpdateOnAutoUpdate: Completed after ${System.currentTimeMillis() - start_time} ms")
 
     }
 
