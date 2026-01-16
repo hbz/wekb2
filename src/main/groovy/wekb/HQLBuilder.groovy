@@ -193,7 +193,7 @@ public class HQLBuilder {
               fetch_hql += " order by expectedTippCount ${hql_builder_context.order}"
               break
           case 'lastTryDate':
-              fetch_hql = fetch_hql.replaceFirst(" o ", " o, (select max(upi.endTime) from wekb.UpdatePackageInfo as upi where upi.endTime is not null and upi.pkg = o.id and upi.status = ${RDStore.UPDATE_STATUS_SUCCESSFUL.id}) as updateSuccessDate ")
+              fetch_hql = fetch_hql.replaceFirst(" o ", " o, (select max(upi.endTime) from wekb.UpdatePackageInfo as upi where upi.endTime is not null and upi.pkg = o.id) as updateSuccessDate ")
               fetch_hql += " order by updateSuccessDate ${hql_builder_context.order}"
               break
         default: fetch_hql += " order by o.${hql_builder_context.sort} ${hql_builder_context.order}"

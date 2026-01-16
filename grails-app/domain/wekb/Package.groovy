@@ -793,7 +793,8 @@ class Package  extends AbstractBase implements Auditable {
     @Transient
     Date getLastTryDate() {
         Date lastTry
-        UpdatePackageInfo updatePackageInfo = getLastSuccessfulUpdateInfo()
+        UpdatePackageInfo updatePackageInfo = UpdatePackageInfo.executeQuery("from UpdatePackageInfo where pkg = :pkg" +
+                " order by lastUpdated desc", [pkg: this], [max: 1, offset: 0])[0]
         if(updatePackageInfo)
             lastTry = updatePackageInfo.endTime
 
