@@ -993,7 +993,7 @@ class KbartImportService {
             }
         }
         else {
-            return null
+            return RDStore.TIPP_PUBLIC_TYPE_NOSET
         }
     }
 
