@@ -85,6 +85,8 @@ class KbartProcessService {
                 updatePackageInfo.automaticUpdate = false
                 updatePackageInfo.updateFromFileUpload = true
                 updatePackageInfo.countPreviouslyTippsInWekb = previouslyTipps
+                updatePackageInfo.countCurrentTipps = updatePackageInfo.pkg.getCurrentTippCount()
+                updatePackageInfo.countDeletedTipps = updatePackageInfo.pkg.getDeletedTippCount()
                 updatePackageInfo.save()
             }
         }
@@ -628,7 +630,7 @@ class KbartProcessService {
             
             if(!processFailed) {
                 String description = "Package Update: (KbartLines: ${kbartRowsCount}, " +
-                        "Processed Titles in this run: ${idx}, Titles in we:kb previously: ${previouslyTipps}, Titles in we:kb now: ${countExistingTippsAfterImport}, Removed Titles: ${removedTipps}, New Titles in we:kb: ${newTipps}, Changed Titles in we:kb: ${changedTipps})"
+                        "Processed Titles in this run: ${idx}, All Titles previously: ${previouslyTipps}, All Titles now: ${countExistingTippsAfterImport}, Removed Titles: ${removedTipps}, New All Titles: ${newTipps}, Changed All Titles: ${changedTipps})"
 
               /*  UpdatePackageInfo.executeUpdate("update UpdatePackageInfo set countKbartRows = ${kbartRowsCount}, " +
                         "countChangedTipps = ${changedTipps}, " +
@@ -660,6 +662,8 @@ class KbartProcessService {
                     updatePackageInfo.countPreviouslyTippsInWekb = previouslyTipps > 0 ? previouslyTipps : 0
                     updatePackageInfo.countRemovedTipps = removedTipps > 0 ? removedTipps : 0
                     updatePackageInfo.countProcessedKbartRows = idx > 0 ? idx : 0
+                    updatePackageInfo.countCurrentTipps = updatePackageInfo.pkg.getCurrentTippCount()
+                    updatePackageInfo.countDeletedTipps = updatePackageInfo.pkg.getDeletedTippCount()
                     updatePackageInfo.save()
 
 
@@ -711,6 +715,8 @@ class KbartProcessService {
                 updatePackageInfo.lastUpdateUrl = aPackage.kbartSource.lastUpdateUrl
                 updatePackageInfo.lastChangedInKbart = lastChangedInKbart
                 updatePackageInfo.kbartHasWekbFields = kbartHasWekbFields
+                updatePackageInfo.countCurrentTipps = updatePackageInfo.pkg.getCurrentTippCount()
+                updatePackageInfo.countDeletedTipps = updatePackageInfo.pkg.getDeletedTippCount()
                 updatePackageInfo.save()
             }
         }
@@ -770,6 +776,8 @@ class KbartProcessService {
                 updatePackageInfo.endTime = new Date()
                 updatePackageInfo.updateUrl = lastUpdateURL
                 updatePackageInfo.countPreviouslyTippsInWekb = previouslyTipps
+                updatePackageInfo.countCurrentTipps = updatePackageInfo.pkg.getCurrentTippCount()
+                updatePackageInfo.countDeletedTipps = updatePackageInfo.pkg.getDeletedTippCount()
                 updatePackageInfo.save()
             }
         }
@@ -939,6 +947,8 @@ class KbartProcessService {
                                 updatePackageInfo.endTime = new Date()
                                 updatePackageInfo.updateUrl = lastUpdateURL
                                 updatePackageInfo.countPreviouslyTippsInWekb = previouslyTipps
+                                updatePackageInfo.countCurrentTipps = updatePackageInfo.pkg.getCurrentTippCount()
+                                updatePackageInfo.countDeletedTipps = updatePackageInfo.pkg.getDeletedTippCount()
                                 updatePackageInfo.save()
                             }
 
@@ -988,6 +998,8 @@ class KbartProcessService {
                             updatePackageInfo.endTime = new Date()
                             updatePackageInfo.updateUrl = lastUpdateURL
                             updatePackageInfo.countPreviouslyTippsInWekb = previouslyTipps
+                            updatePackageInfo.countCurrentTipps = updatePackageInfo.pkg.getCurrentTippCount()
+                            updatePackageInfo.countDeletedTipps = updatePackageInfo.pkg.getDeletedTippCount()
                             updatePackageInfo.save()
                         }
                     }
@@ -1009,6 +1021,8 @@ class KbartProcessService {
                         updatePackageInfo.endTime = new Date()
                         updatePackageInfo.updateUrl = lastUpdateURL
                         updatePackageInfo.countPreviouslyTippsInWekb = previouslyTipps
+                        updatePackageInfo.countCurrentTipps = updatePackageInfo.pkg.getCurrentTippCount()
+                        updatePackageInfo.countDeletedTipps = updatePackageInfo.pkg.getDeletedTippCount()
                         updatePackageInfo.save()
                     }
                 }
@@ -1031,6 +1045,8 @@ class KbartProcessService {
                     updatePackageInfo.endTime = new Date()
                     updatePackageInfo.updateUrl = lastUpdateURL
                     updatePackageInfo.countPreviouslyTippsInWekb = previouslyTipps
+                    updatePackageInfo.countCurrentTipps = updatePackageInfo.pkg.getCurrentTippCount()
+                    updatePackageInfo.countDeletedTipps = updatePackageInfo.pkg.getDeletedTippCount()
                     updatePackageInfo.save()
                 }
 

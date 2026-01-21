@@ -214,6 +214,8 @@ class AutoUpdatePackagesService {
                                                 updatePackageInfo.endTime = new Date()
                                                 updatePackageInfo.updateUrl = lastUpdateURL
                                                 updatePackageInfo.countPreviouslyTippsInWekb = previouslyTipps
+                                                updatePackageInfo.countCurrentTipps = updatePackageInfo.pkg.getCurrentTippCount()
+                                                updatePackageInfo.countDeletedTipps = updatePackageInfo.pkg.getDeletedTippCount()
                                                 updatePackageInfo.save()
                                             }
                                         }
@@ -232,6 +234,8 @@ class AutoUpdatePackagesService {
                                             updatePackageInfo.status = RDStore.UPDATE_STATUS_INFO
                                             updatePackageInfo.endTime = new Date()
                                             updatePackageInfo.countPreviouslyTippsInWekb = previouslyTipps
+                                            updatePackageInfo.countCurrentTipps = updatePackageInfo.pkg.getCurrentTippCount()
+                                            updatePackageInfo.countDeletedTipps = updatePackageInfo.pkg.getDeletedTippCount()
                                             updatePackageInfo.save()
                                         }
 
@@ -254,6 +258,8 @@ class AutoUpdatePackagesService {
                                         updatePackageInfo.status = RDStore.UPDATE_STATUS_FAILED
                                         updatePackageInfo.endTime = new Date()
                                         updatePackageInfo.countPreviouslyTippsInWekb = previouslyTipps
+                                        updatePackageInfo.countCurrentTipps = updatePackageInfo.pkg.getCurrentTippCount()
+                                        updatePackageInfo.countDeletedTipps = updatePackageInfo.pkg.getDeletedTippCount()
                                         updatePackageInfo.save()
                                     }
                                 }
@@ -276,6 +282,8 @@ class AutoUpdatePackagesService {
                                 updatePackageInfo.onlyRowsWithLastChanged = onlyRowsWithLastChanged
                                 updatePackageInfo.automaticUpdate = true
                                 updatePackageInfo.countPreviouslyTippsInWekb = previouslyTipps
+                                updatePackageInfo.countCurrentTipps = updatePackageInfo.pkg.getCurrentTippCount()
+                                updatePackageInfo.countDeletedTipps = updatePackageInfo.pkg.getDeletedTippCount()
                                 updatePackageInfo.save()
                             }
                         }
@@ -405,6 +413,8 @@ class AutoUpdatePackagesService {
                                                         updatePackageInfo.endTime = new Date()
                                                         updatePackageInfo.updateUrl = lastUpdateURL
                                                         updatePackageInfo.countPreviouslyTippsInWekb = previouslyTipps
+                                                        updatePackageInfo.countCurrentTipps = updatePackageInfo.pkg.getCurrentTippCount()
+                                                        updatePackageInfo.countDeletedTipps = updatePackageInfo.pkg.getDeletedTippCount()
                                                         updatePackageInfo.save()
                                                     }
                                                 }
@@ -422,6 +432,8 @@ class AutoUpdatePackagesService {
                                                     updatePackageInfo.status = RDStore.UPDATE_STATUS_INFO
                                                     updatePackageInfo.endTime = new Date()
                                                     updatePackageInfo.countPreviouslyTippsInWekb = previouslyTipps
+                                                    updatePackageInfo.countCurrentTipps = updatePackageInfo.pkg.getCurrentTippCount()
+                                                    updatePackageInfo.countDeletedTipps = updatePackageInfo.pkg.getDeletedTippCount()
                                                     updatePackageInfo.save()
                                                 }
 
@@ -447,6 +459,8 @@ class AutoUpdatePackagesService {
                                                 updatePackageInfo.endTime = new Date()
                                                 updatePackageInfo.updateUrl = lastUpdateURL
                                                 updatePackageInfo.countPreviouslyTippsInWekb = previouslyTipps
+                                                updatePackageInfo.countCurrentTipps = updatePackageInfo.pkg.getCurrentTippCount()
+                                                updatePackageInfo.countDeletedTipps = updatePackageInfo.pkg.getDeletedTippCount()
                                                 updatePackageInfo.save()
                                             }
                                         }
@@ -465,6 +479,8 @@ class AutoUpdatePackagesService {
                                     updatePackageInfo.endTime = new Date()
                                     updatePackageInfo.updateUrl = lastUpdateURL
                                     updatePackageInfo.countPreviouslyTippsInWekb = previouslyTipps
+                                    updatePackageInfo.countCurrentTipps = updatePackageInfo.pkg.getCurrentTippCount()
+                                    updatePackageInfo.countDeletedTipps = updatePackageInfo.pkg.getDeletedTippCount()
                                     updatePackageInfo.save()
                                 }
                             }
@@ -486,6 +502,8 @@ class AutoUpdatePackagesService {
                                 updatePackageInfo.onlyRowsWithLastChanged = onlyRowsWithLastChanged
                                 updatePackageInfo.automaticUpdate = true
                                 updatePackageInfo.countPreviouslyTippsInWekb = previouslyTipps
+                                updatePackageInfo.countCurrentTipps = updatePackageInfo.pkg.getCurrentTippCount()
+                                updatePackageInfo.countDeletedTipps = updatePackageInfo.pkg.getDeletedTippCount()
                                 updatePackageInfo.save()
                             }
                         }
@@ -505,6 +523,8 @@ class AutoUpdatePackagesService {
                             updatePackageInfo.onlyRowsWithLastChanged = onlyRowsWithLastChanged
                             updatePackageInfo.automaticUpdate = true
                             updatePackageInfo.countPreviouslyTippsInWekb = previouslyTipps
+                            updatePackageInfo.countCurrentTipps = updatePackageInfo.pkg.getCurrentTippCount()
+                            updatePackageInfo.countDeletedTipps = updatePackageInfo.pkg.getDeletedTippCount()
                             updatePackageInfo.save()
                         }
                     }
@@ -531,6 +551,8 @@ class AutoUpdatePackagesService {
                     updatePackageInfo.automaticUpdate = true
                     updatePackageInfo.updateUrl = lastUpdateURL
                     updatePackageInfo.countPreviouslyTippsInWekb = previouslyTipps
+                    updatePackageInfo.countCurrentTipps = updatePackageInfo.pkg.getCurrentTippCount()
+                    updatePackageInfo.countDeletedTipps = updatePackageInfo.pkg.getDeletedTippCount()
                     updatePackageInfo.save()
                 }
             }

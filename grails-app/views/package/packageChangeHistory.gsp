@@ -36,9 +36,9 @@
                                   params="${params}"/>
           %{--  <semui:sortableColumn property="onlyRowsWithLastChanged" title="Only Last Changed Update"
                                   params="${params}"/>--}%
-            <semui:sortableColumn property="countPreviouslyTippsInWekb" title="Titles in we:kb before update"
+            <semui:sortableColumn property="countPreviouslyTippsInWekb" title="All Titles before update"
                                   params="${params}"/>
-            <semui:sortableColumn property="countNowTippsInWekb" title="Titles in we:kb after update"
+            <semui:sortableColumn property="countNowTippsInWekb" title="All Titles after update"
                                   params="${params}"/>
             <semui:sortableColumn property="countKbartRows" title="Rows in KBART-File"
                                   params="${params}"/>
