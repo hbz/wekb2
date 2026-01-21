@@ -35,7 +35,7 @@
                     <g:link class="ui button positive"
                             controller="${params.controller}"
                             action="${params.action}"
-                            id="${displayobj.getOID()}"
+                            id="${pkg.getOID()}"
                             params="${(request.param ?: [:])}">
                         Disable Laser Infos
                     </g:link>
@@ -44,7 +44,7 @@
                     <g:link class="ui button negative"
                             controller="${params.controller}"
                             action="${params.action}"
-                            id="${displayobj.getOID()}"
+                            id="${pkg.getOID()}"
                             params="${(request.param ?: [:]) + ["showLaserInfos": true]}">
                         Enable Laser Infos
                     </g:link>
