@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta name="layout" content="wekb"/>
-    <title>we:kb : Welcome</title>
+    <title>we:kb | wekb -  Welcome</title>
 </head>
 
 <body>

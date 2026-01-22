@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta name="layout" content="wekb"/>
-    <title>we:kb : Packages Changes</title>
+    <title>we:kb | wekb -  Packages Changes</title>
 </head>
 
 <body>

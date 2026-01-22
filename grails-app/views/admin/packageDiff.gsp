@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta name="layout" content="wekb"/>
-    <title>we:kb : Packages Diff</title>
+    <title>we:kb | wekb -  Packages Diff</title>
 </head>
 
 <body>

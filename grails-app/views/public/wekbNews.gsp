@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta name="layout" content="wekb"/>
-    <title>we:kb News</title>
+    <title>we:kb | wekb News</title>
 </head>
 
 <body>

@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta name="layout" content="wekb"/>
-    <title>we:kb : Plain English</title>
+    <title>we:kb | wekb -  Plain English</title>
 </head>
 
 <body>

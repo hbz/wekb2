@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta name="layout" content="wekb"/>
-    <title>we:kb : Forbidden</title>
+    <title>we:kb | wekb -  Forbidden</title>
 </head>
 
 <body>

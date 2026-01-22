@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta name="layout" content="wekb"/>
-    <title>we:kb : Packages with Tipp without Title_ID</title>
+    <title>we:kb | wekb -  Packages with Tipp without Title_ID</title>
 </head>
 
 <body>

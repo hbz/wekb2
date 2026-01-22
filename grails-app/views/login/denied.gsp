@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <head>
     <meta name="layout" content="wekb"/>
-    <title>we:kb : <g:message code="springSecurity.denied.title"/></title>
+    <title>we:kb | wekb -  <g:message code="springSecurity.denied.title"/></title>
 </head>
 
 <body>

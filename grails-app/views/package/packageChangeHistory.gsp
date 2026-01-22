@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta name="layout" content="wekb"/>
-    <title>we:kb : Change History for Package: ${pkg.name}</title>
+    <title>we:kb | wekb -  Change History for Package: ${pkg.name}</title>
 </head>
 
 <body>

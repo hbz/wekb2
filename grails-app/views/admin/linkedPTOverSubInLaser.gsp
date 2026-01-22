@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta name="layout" content="wekb"/>
-    <title>we:kb : Linked Subs in Laser</title>
+    <title>we:kb | wekb -  Linked Subs in Laser</title>
 </head>
 
 <body>

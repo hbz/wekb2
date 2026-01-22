@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta name="layout" content="wekb"/>
-        <title>we:kb : Privacy Notice</title>
+        <title>we:kb | wekb -  Privacy Notice</title>
     </head>
 
     <body>

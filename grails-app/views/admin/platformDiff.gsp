@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta name="layout" content="wekb"/>
-    <title>we:kb : Plaforms Diff</title>
+    <title>we:kb | wekb -  Plaforms Diff</title>
 </head>
 
 <body>

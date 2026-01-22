@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta name="layout" content="wekb"/>
-    <title>we:kb : System Threads</title>
+    <title>we:kb | wekb -  System Threads</title>
 </head>
 
 <body>
