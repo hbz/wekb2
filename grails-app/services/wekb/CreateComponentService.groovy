@@ -317,6 +317,14 @@ class CreateComponentService {
                     break
                 case "source_default_supply_method": colMap.source_default_supply_method = c
                     break
+                case "publication_title": colMap.publication_title = c
+                    break
+                case "publication_type": colMap.publication_type = c
+                    break
+                case "title_id": colMap.title_id = c
+                    break
+                case "title_url": colMap.title_url = c
+                    break
             }
         }
 
@@ -331,8 +339,9 @@ class CreateComponentService {
             boolean newCreated = false
             Package pkg
             boolean editAllowed = true
+            String package_uuid
             if (colMap.package_uuid != null) {
-                String package_uuid = cols[colMap.package_uuid].trim()
+                package_uuid = cols[colMap.package_uuid].trim()
                 pkg = package_uuid ? Package.findByUuid(package_uuid) : null
 
                 if (pkg != null && !accessService.checkEditableObject(pkg, null)){
@@ -655,6 +664,39 @@ class CreateComponentService {
                                     }
 
                                     sources << sourceMap
+                                }
+                            }
+
+
+                            if(!package_uuid){
+                                if ((pkg && pkg.nominalPlatform ) && colMap.publication_title != null && cols[colMap.publication_title] && colMap.publication_type != null && cols[colMap.publication_type] && colMap.title_url != null && cols[colMap.title_url] && (pkg.getAnbieterProduktIDs() || colMap.title_id != null && cols[colMap.title_id])) {
+
+                                    String value = cols[colMap.publication_type].trim()
+                                    RefdataValue publicationType
+                                    if (value) {
+                                        publicationType = RefdataCategory.lookup(RCConstants.TIPP_PUBLICATION_TYPE, value)
+                                    }
+
+                                    TitleInstancePackagePlatform titleInstancePackagePlatform = new TitleInstancePackagePlatform(pkg: pkg, platform: pkg.nominalPlatform, name: cols[colMap.publication_title].trim(), url: cols[colMap.title_url].trim(), publicationType: publicationType ?: RDStore.TIPP_PUBLIC_TYPE_NOSET, status: RDStore.KBC_STATUS_CURRENT, uuid: UUID.randomUUID().toString())
+
+                                    titleInstancePackagePlatform.save()
+
+                                    String title_id
+
+                                    if (colMap.provider_product_id != null) {
+                                        title_id = cols[colMap.provider_product_id].trim()
+                                    }
+
+                                    if (colMap.title_id != null && cols[colMap.title_id]) {
+                                        title_id = cols[colMap.title_id].trim()
+                                    }
+
+
+                                    if(title_id && titleInstancePackagePlatform){
+                                        IdentifierNamespace ns = IdentifierNamespace.findByValueAndTargetType('title_id', RDStore.IDENTIFIER_NAMESPACE_TARGET_TYPE_TIPP)
+                                        Identifier identifier = new Identifier(namespace: ns, value: title_id, tipp: titleInstancePackagePlatform)
+                                        identifier.save(flush: true)
+                                    }
                                 }
                             }
                         }
