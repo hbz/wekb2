@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta name="layout" content="wekb"/>
-    <title>we:kb | wekb -  <g:message code="public.search"/><g:if test="${qbetemplate}"> <g:message code="${qbetemplate.msgCode}" default="${qbetemplate.title}"/></g:if><g:if
+    <title>22222we:kb | wekb -  <g:message code="public.search"/><g:if test="${qbetemplate}"> <g:message code="${qbetemplate.msgCode}" default="${qbetemplate.title}"/></g:if><g:if
             test="${refObject}">${refObject.getDomainName()}</g:if></title>
 </head>
 
