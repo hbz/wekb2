@@ -36,7 +36,7 @@ class Api2Service {
 
     }
 
-    static List complexSortFields = ['titleCount', 'currentTippCount', 'deletedTippCount', 'retiredTippCount', 'expectedTippCount']
+    static List complexSortFields = ['titleCount', 'currentTippCount', 'deletedTippCount', 'retiredTippCount', 'expectedTippCount', 'lastTryDate']
 
     public Map getApiTemplate(String type) {
         return ApiTemplates.get(type);
@@ -1688,6 +1688,10 @@ class Api2Service {
                                                  vendorUuid: providerInvoicingVendor.vendor.uuid,
                                                  vendorHomepage: providerInvoicingVendor.vendor.homepage])
                 }
+
+                result.licenseBasedEBInterlibrarySupported = object.licenseBasedEBInterlibrarySupported?.value
+                result.range = object.range?.value
+                result.agreementModel = object.agreementModel?.value
             }
 
             result

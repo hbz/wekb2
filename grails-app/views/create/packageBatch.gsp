@@ -51,6 +51,7 @@
             <tr>
                 <th>ColumnName</th>
                 <th>Description of Column</th>
+                <th>Mandatory</th>
                 <th>Necessary Format</th>
             </tr>
             </thead>
@@ -100,6 +101,7 @@
                 <tr>
                     <td>${message(code: "packageBatch.columnName.${mpg}", args: args ?: '')}</td>
                     <td>${message(code: "packageBatch.description.${mpg}") ?: ''}</td>
+                    <td>${message(code: "packageBatch.mandatory.${mpg}") ?: ''}</td>
                     <td>${message(code: "packageBatch.format.${mpg}", args: [raw("<ul><li>${args.join('</li><li>')}</li></ul>")]) ?: ''}</td>
                 </tr>
             </g:each>

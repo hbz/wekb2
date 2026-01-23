@@ -72,6 +72,10 @@ class RCConstants {
 
     public static final String PRICE_TYPE = "Price.type"
 
+    public static final String PROVIDER_RANGE = "Provider.Range"
+    public static final String PROVIDER_AGREEMENT_MODEL = "Provider.Agreement.Model"
+    public static final String PROVIDER_PRINT_DOWNLOAD = "Provider.Print.Download.Chapter"
+
     public static final String SOURCE_DATA_SUPPLY_METHOD = "Source.DataSupplyMethod"
     public static final String SOURCE_DATA_FORMAT = "Source.DataFormat"
     public static final String SOURCE_FREQUENCY = "Source.Frequency"
@@ -85,8 +89,6 @@ class RCConstants {
     public static final String TIPPCOVERAGESTATEMENT_COVERAGE_DEPTH = "TIPPCoverageStatement.CoverageDepth"
 
     public static final String TITLEINSTANCE_MEDIUM = "TitleInstance.Medium"
-
-    public static final String PROVIDER_PRINT_DOWNLOAD = "Provider.Print.Download.Chapter"
 
     public static final String VENDOR_SUPPORTED_LIB_SYSTEM = "Vendor.SupportedLibrarySystem"
     public static final String VENDOR_ELECTRONIC_BILLING = "Vendor.ElectronicBilling"

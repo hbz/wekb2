@@ -1044,6 +1044,21 @@ class GlobalSearchTemplatesService {
                                 [heading: 'Source', property: 'kbartSource.name', link: true, sort: 'kbartSource.name', linkInfo: 'Link to Source'],
                                 [heading: 'Automatic Updates', property: 'kbartSource.automaticUpdates']
                         ],
+                        qbeSortFields: [
+                                        [sort: 'kbartSource.name'],
+                                        [sort: 'kbartSource.status'],
+                                        [sort: 'kbartSource.url'],
+                                        [sort: 'kbartSource.ftpServerUrl'],
+                                        [sort: 'kbartSource.ftpDirectory'],
+                                        [sort: 'kbartSource.ftpFileName'],
+                                        [sort: 'kbartSource.ftpUsername'],
+                                        [sort: 'kbartSource.ftpPassword'],
+                                        [sort: 'kbartSource.frequency'],
+                                        [sort: 'kbartSource.defaultSupplyMethod'],
+                                        [sort: 'kbartSource.defaultDataFormat'],
+                                        [sort: 'kbartSource.automaticUpdates']
+                        ],
+
                         actions   : [
                         ]
                 ]
@@ -1509,7 +1524,6 @@ class GlobalSearchTemplatesService {
                                 [heading: 'Name', property: 'name', sort: 'name', link: true, linkInfo: 'Link to Package'],
                                 [heading: 'Provider', property: 'provider.name', sort: 'provider.name', link: true, linkInfo: 'Link to Provider'],
                                 [heading: 'Nominal Platform', property: 'nominalPlatform.name', sort: 'nominalPlatform.name', link: true, linkInfo: 'Link to Nominal Platform'],
-                                [heading: 'Curatory Groups', property: 'curatoryGroupsCuratoryGroup', link: true, linkInfo: 'Link to Curatory Group'],
                                 [heading: 'Content Type', property: 'contentType.value', sort: 'contentType'],
                                 [heading: 'Product IDs', property: 'anbieterProduktIDs'],
                                 [heading: 'Current Titles', property: 'currentTippCount', sort: 'currentTippCount'],
@@ -1517,6 +1531,8 @@ class GlobalSearchTemplatesService {
                                 [heading: 'Expected Titles', property: 'expectedTippCount', sort: 'expectedTippCount'],
                                 [heading: 'Deleted Titles', property: 'deletedTippCount', sort: 'deletedTippCount'],
                                 [heading: 'Last Updated', property: 'lastUpdated', sort: 'lastUpdated'],
+                                [heading: 'Last Run', property: 'kbartSource.lastRun', sort: 'kbartSource.lastRun'],
+                                [heading: 'Last Try', property: 'lastTryDate', sort: 'lastTryDate'],
                                 [heading: 'Automatic Updates', property: 'kbartSource.automaticUpdates']
                         ],
                         actions   : [
@@ -3041,10 +3057,12 @@ class GlobalSearchTemplatesService {
                                 [heading: 'Automatic Update', property: 'automaticUpdate', sort: 'automaticUpdate'],
                                 [heading: 'Start Time', property: 'startTime', sort: 'startTime'],
                                 [heading: 'End Time', property: 'endTime', sort: 'endTime'],
-                                [heading: 'Titles in we:kb before update', property: 'countPreviouslyTippsInWekb', sort: 'countPreviouslyTippsInWekb'],
-                                [heading: 'Titles in we:kb after update', property: 'countNowTippsInWekb', sort: 'countNowTippsInWekb'],
+                                [heading: 'All Titles before update', property: 'countPreviouslyTippsInWekb', sort: 'countPreviouslyTippsInWekb'],
+                                [heading: 'All Titles after update', property: 'countNowTippsInWekb', sort: 'countNowTippsInWekb'],
                                 [heading: 'Rows in KBART-File', property: 'countKbartRows', sort: 'countKbartRows'],
                                 [heading: 'Processed KBART Rows', property: 'countProcessedKbartRows', sort: 'countProcessedKbartRows'],
+                                [heading: 'Current Titles', property: 'countCurrentTipps', sort: 'countCurrentTipps'],
+                                [heading: 'Deleted Titles', property: 'countDeletedTipps', sort: 'countDeletedTipps'],
                                 [heading: 'Changed Titles / Changes in Titles ', property: 'countInfosAboutChangedTitles', sort: 'countChangedTipps', jumpToLink: '/search/componentSearch/wekb.UpdatePackageInfo:objectID?qbe=g:updateTippInfos&qp_aup_id=objectID&&qp_type='+RefdataValue.class.name + ':' + RDStore.UPDATE_TYPE_CHANGED_TITLE.id, linkInfo: 'Link to Changed Titles'],
                                 [heading: 'Removed Titles ', property: 'countRemovedTipps', sort: 'countRemovedTipps', jumpToLink: '/search/componentSearch/wekb.UpdatePackageInfo:objectID?qbe=g:updateTippInfos&qp_aup_id=objectID&&qp_type='+RefdataValue.class.name + ':' + RDStore.UPDATE_TYPE_REMOVED_TITLE.id, linkInfo: 'Link to Removed Titles'],
                                 [heading: 'New Titles', property: 'countNewTipps', sort: 'countNewTipps', jumpToLink: '/search/componentSearch/wekb.UpdatePackageInfo:objectID?qbe=g:updateTippInfos&qp_aup_id=objectID&&qp_type='+RefdataValue.class.name + ':' + RDStore.UPDATE_TYPE_NEW_TITLE.id, linkInfo: 'Link to New Titles'],

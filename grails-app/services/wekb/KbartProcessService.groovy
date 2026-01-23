@@ -67,6 +67,13 @@ class KbartProcessService {
             log.error("Error by kbartImportManual: ${exception.message}")
 
             exception.printStackTrace()
+
+            int previouslyTipps = TitleInstancePackagePlatform.executeQuery(
+                    "select count(*) from TitleInstancePackagePlatform tipp where " +
+                            "tipp.status in :status and " +
+                            "tipp.pkg = :package",
+                    [package: updatePackageInfo.pkg, status: [RDStore.KBC_STATUS_CURRENT, RDStore.KBC_STATUS_DELETED, RDStore.KBC_STATUS_RETIRED, RDStore.KBC_STATUS_EXPECTED]])[0]
+
             UpdatePackageInfo.withTransaction {
                 //UpdatePackageInfo updatePackageFail = new UpdatePackageInfo()
                 updatePackageInfo.description = "An error occurred while processing the KBART file. More information can be seen in the system log."
@@ -77,6 +84,9 @@ class KbartProcessService {
                 updatePackageInfo.onlyRowsWithLastChanged = onlyRowsWithLastChanged
                 updatePackageInfo.automaticUpdate = false
                 updatePackageInfo.updateFromFileUpload = true
+                updatePackageInfo.countPreviouslyTippsInWekb = previouslyTipps
+                updatePackageInfo.countCurrentTipps = updatePackageInfo.pkg.getCurrentTippCount()
+                updatePackageInfo.countDeletedTipps = updatePackageInfo.pkg.getDeletedTippCount()
                 updatePackageInfo.save()
             }
         }
@@ -620,7 +630,7 @@ class KbartProcessService {
             
             if(!processFailed) {
                 String description = "Package Update: (KbartLines: ${kbartRowsCount}, " +
-                        "Processed Titles in this run: ${idx}, Titles in we:kb previously: ${previouslyTipps}, Titles in we:kb now: ${countExistingTippsAfterImport}, Removed Titles: ${removedTipps}, New Titles in we:kb: ${newTipps}, Changed Titles in we:kb: ${changedTipps})"
+                        "Processed Titles in this run: ${idx}, All Titles previously: ${previouslyTipps}, All Titles now: ${countExistingTippsAfterImport}, Removed Titles: ${removedTipps}, New All Titles: ${newTipps}, Changed All Titles: ${changedTipps})"
 
               /*  UpdatePackageInfo.executeUpdate("update UpdatePackageInfo set countKbartRows = ${kbartRowsCount}, " +
                         "countChangedTipps = ${changedTipps}, " +
@@ -652,6 +662,8 @@ class KbartProcessService {
                     updatePackageInfo.countPreviouslyTippsInWekb = previouslyTipps > 0 ? previouslyTipps : 0
                     updatePackageInfo.countRemovedTipps = removedTipps > 0 ? removedTipps : 0
                     updatePackageInfo.countProcessedKbartRows = idx > 0 ? idx : 0
+                    updatePackageInfo.countCurrentTipps = updatePackageInfo.pkg.getCurrentTippCount()
+                    updatePackageInfo.countDeletedTipps = updatePackageInfo.pkg.getDeletedTippCount()
                     updatePackageInfo.save()
 
 
@@ -703,6 +715,8 @@ class KbartProcessService {
                 updatePackageInfo.lastUpdateUrl = aPackage.kbartSource.lastUpdateUrl
                 updatePackageInfo.lastChangedInKbart = lastChangedInKbart
                 updatePackageInfo.kbartHasWekbFields = kbartHasWekbFields
+                updatePackageInfo.countCurrentTipps = updatePackageInfo.pkg.getCurrentTippCount()
+                updatePackageInfo.countDeletedTipps = updatePackageInfo.pkg.getDeletedTippCount()
                 updatePackageInfo.save()
             }
         }
@@ -745,6 +759,13 @@ class KbartProcessService {
         }
         if(!encodingPass) {
             log.warn("Encoding of file is wrong. File encoding is: ${encoding}")
+
+            int previouslyTipps = TitleInstancePackagePlatform.executeQuery(
+                    "select count(*) from TitleInstancePackagePlatform tipp where " +
+                            "tipp.status in :status and " +
+                            "tipp.pkg = :package",
+                    [package: updatePackageInfo.pkg, status: [RDStore.KBC_STATUS_CURRENT, RDStore.KBC_STATUS_DELETED, RDStore.KBC_STATUS_RETIRED, RDStore.KBC_STATUS_EXPECTED]])[0]
+
             UpdatePackageInfo.withTransaction {
                 String description = "Encoding of KBART file is wrong. File encoding was: ${encoding}. "
                 if(lastUpdateURL && updatePackageInfo.automaticUpdate){
@@ -754,6 +775,9 @@ class KbartProcessService {
                 updatePackageInfo.status = RDStore.UPDATE_STATUS_FAILED
                 updatePackageInfo.endTime = new Date()
                 updatePackageInfo.updateUrl = lastUpdateURL
+                updatePackageInfo.countPreviouslyTippsInWekb = previouslyTipps
+                updatePackageInfo.countCurrentTipps = updatePackageInfo.pkg.getCurrentTippCount()
+                updatePackageInfo.countDeletedTipps = updatePackageInfo.pkg.getDeletedTippCount()
                 updatePackageInfo.save()
             }
         }
@@ -906,6 +930,13 @@ class KbartProcessService {
 
                         if (minimumKbartStandard.size() != countMinimumKbartStandard) {
                             log.warn("KBART file does not have one or any of the headers: ${minimumKbartStandard}")
+
+                            int previouslyTipps = TitleInstancePackagePlatform.executeQuery(
+                                    "select count(*) from TitleInstancePackagePlatform tipp where " +
+                                            "tipp.status in :status and " +
+                                            "tipp.pkg = :package",
+                                    [package: updatePackageInfo.pkg, status: [RDStore.KBC_STATUS_CURRENT, RDStore.KBC_STATUS_DELETED, RDStore.KBC_STATUS_RETIRED, RDStore.KBC_STATUS_EXPECTED]])[0]
+
                             UpdatePackageInfo.withTransaction {
                                 String description = "KBART file does not have one or any of the headers: ${minimumKbartStandard.join(', ')}. "
                                 if(lastUpdateURL && updatePackageInfo.automaticUpdate){
@@ -915,6 +946,9 @@ class KbartProcessService {
                                 updatePackageInfo.status = RDStore.UPDATE_STATUS_FAILED
                                 updatePackageInfo.endTime = new Date()
                                 updatePackageInfo.updateUrl = lastUpdateURL
+                                updatePackageInfo.countPreviouslyTippsInWekb = previouslyTipps
+                                updatePackageInfo.countCurrentTipps = updatePackageInfo.pkg.getCurrentTippCount()
+                                updatePackageInfo.countDeletedTipps = updatePackageInfo.pkg.getDeletedTippCount()
                                 updatePackageInfo.save()
                             }
 
@@ -947,6 +981,13 @@ class KbartProcessService {
                         }
                     }else {
                         log.warn("no delimiter $delimiter: ${lastUpdateURL}")
+
+                        int previouslyTipps = TitleInstancePackagePlatform.executeQuery(
+                                "select count(*) from TitleInstancePackagePlatform tipp where " +
+                                        "tipp.status in :status and " +
+                                        "tipp.pkg = :package",
+                                [package: updatePackageInfo.pkg, status: [RDStore.KBC_STATUS_CURRENT, RDStore.KBC_STATUS_DELETED, RDStore.KBC_STATUS_RETIRED, RDStore.KBC_STATUS_EXPECTED]])[0]
+
                         UpdatePackageInfo.withTransaction {
                             String description = "Separator for the KBART was not recognized. The following separators are recognized: Tab, comma, semicolons. "
                             if(lastUpdateURL && updatePackageInfo.automaticUpdate){
@@ -956,11 +997,20 @@ class KbartProcessService {
                             updatePackageInfo.status = RDStore.UPDATE_STATUS_FAILED
                             updatePackageInfo.endTime = new Date()
                             updatePackageInfo.updateUrl = lastUpdateURL
+                            updatePackageInfo.countPreviouslyTippsInWekb = previouslyTipps
+                            updatePackageInfo.countCurrentTipps = updatePackageInfo.pkg.getCurrentTippCount()
+                            updatePackageInfo.countDeletedTipps = updatePackageInfo.pkg.getDeletedTippCount()
                             updatePackageInfo.save()
                         }
                     }
                 }else {
                     log.warn("KBART file is empty:  ${lastUpdateURL}")
+                    int previouslyTipps = TitleInstancePackagePlatform.executeQuery(
+                            "select count(*) from TitleInstancePackagePlatform tipp where " +
+                                    "tipp.status in :status and " +
+                                    "tipp.pkg = :package",
+                            [package: updatePackageInfo.pkg, status: [RDStore.KBC_STATUS_CURRENT, RDStore.KBC_STATUS_DELETED, RDStore.KBC_STATUS_RETIRED, RDStore.KBC_STATUS_EXPECTED]])[0]
+
                     UpdatePackageInfo.withTransaction {
                         String description = "KBART file is empty. "
                         if(lastUpdateURL && updatePackageInfo.automaticUpdate){
@@ -970,11 +1020,19 @@ class KbartProcessService {
                         updatePackageInfo.status = RDStore.UPDATE_STATUS_FAILED
                         updatePackageInfo.endTime = new Date()
                         updatePackageInfo.updateUrl = lastUpdateURL
+                        updatePackageInfo.countPreviouslyTippsInWekb = previouslyTipps
+                        updatePackageInfo.countCurrentTipps = updatePackageInfo.pkg.getCurrentTippCount()
+                        updatePackageInfo.countDeletedTipps = updatePackageInfo.pkg.getDeletedTippCount()
                         updatePackageInfo.save()
                     }
                 }
             } catch (Exception e) {
                 log.error("Error by KbartProcess: ${e.message}")
+                int previouslyTipps = TitleInstancePackagePlatform.executeQuery(
+                        "select count(*) from TitleInstancePackagePlatform tipp where " +
+                                "tipp.status in :status and " +
+                                "tipp.pkg = :package",
+                        [package: updatePackageInfo.pkg, status: [RDStore.KBC_STATUS_CURRENT, RDStore.KBC_STATUS_DELETED, RDStore.KBC_STATUS_RETIRED, RDStore.KBC_STATUS_EXPECTED]])[0]
                 //e.printStackTrace()
                 UpdatePackageInfo.withTransaction {
                     updatePackageInfo.refresh()
@@ -986,6 +1044,9 @@ class KbartProcessService {
                     updatePackageInfo.status = RDStore.UPDATE_STATUS_FAILED
                     updatePackageInfo.endTime = new Date()
                     updatePackageInfo.updateUrl = lastUpdateURL
+                    updatePackageInfo.countPreviouslyTippsInWekb = previouslyTipps
+                    updatePackageInfo.countCurrentTipps = updatePackageInfo.pkg.getCurrentTippCount()
+                    updatePackageInfo.countDeletedTipps = updatePackageInfo.pkg.getDeletedTippCount()
                     updatePackageInfo.save()
                 }
 

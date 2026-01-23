@@ -993,7 +993,7 @@ class KbartImportService {
             }
         }
         else {
-            return null
+            return RDStore.TIPP_PUBLIC_TYPE_NOSET
         }
     }
 
@@ -2538,6 +2538,7 @@ class KbartImportService {
                                 // KBART -> language -> language -> languages
                                 if (tippMap.kbartRowMap.language) {
                                     List languages = tippMap.kbartRowMap.language.split(',')
+                                    List<Long> langsInTipp = []
                                     languages.each { String lan ->
                                         RefdataValue refdataValue
                                         if (lan.size() == 2) {
@@ -2546,9 +2547,10 @@ class KbartImportService {
                                             refdataValue = RefdataCategory.lookup(RCConstants.COMPONENT_LANGUAGE, lan)
                                         }
                                         if (refdataValue) {
-                                            if (!ComponentLanguage.findByTippAndLanguage(tipp, refdataValue)) {
+                                            if (!(refdataValue.id in langsInTipp)) {
                                                 ComponentLanguage componentLanguage = new ComponentLanguage(tipp: tipp, language: refdataValue)
                                                 componentLanguage.save()
+                                                langsInTipp << refdataValue.id
                                             }
                                         }
                                     }

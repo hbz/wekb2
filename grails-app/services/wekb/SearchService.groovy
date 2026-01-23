@@ -38,9 +38,6 @@ class SearchService {
         result.sort = hql_Map.sort
         result.order = hql_Map.order
 
-        log.info("Attempt count qry: ${hql_Map.count_hql}")
-        log.info("Attempt qry: ${hql_Map.fetch_hql}")
-        log.info("Bindvars: ${hql_Map.params_hql}")
         def count_start_time = System.currentTimeMillis()
         int reccount
         tenantSwitchService.withTenantRole {
@@ -49,6 +46,8 @@ class SearchService {
         result.reccount = reccount
 
         log.info("Count completed (${result.reccount}) after ${System.currentTimeMillis() - count_start_time} ms")
+        log.info("Attempt count qry: ${hql_Map.count_hql}")
+        log.info("Bindvars: ${hql_Map.params_hql}")
 
         def query_params = [:]
         if ( result.max )
@@ -68,6 +67,8 @@ class SearchService {
         result.recset = recset
         // log.debug("Returning..")
         log.info("Fetch completed after ${System.currentTimeMillis() - query_start_time} ms")
+        log.info("Attempt fetch qry: ${hql_Map.fetch_hql}")
+        log.info("Bindvars: ${hql_Map.params_hql}")
 
         result
 
@@ -160,9 +161,9 @@ class SearchService {
                 Class target_class = Class.forName(result.qbetemplate.baseclass);
                 def read_perm = accessService.checkReadable(result.qbetemplate.baseclass)
 
-                if(params.qbe == 'g:updateTippInfos'){
-                    if(!params.qp_aup_id){
-                        if(!SpringSecurityUtils.ifAnyGranted('ROLE_SUPERUSER')){
+                if(params.qbe == 'g:updateTippInfos') {
+                    if (!params.qp_aup_id && !params.qp_tipp_id) {
+                        if (!SpringSecurityUtils.ifAnyGranted('ROLE_SUPERUSER')) {
                             read_perm = false
                         }
                     }

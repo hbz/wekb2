@@ -60,7 +60,7 @@
         </dl>
         <dl>
             <dt class="control-label">
-                Titles in we:kb before update
+                All Titles before update
             </dt>
             <dd>
                 <g:formatNumber number="${d.countPreviouslyTippsInWekb}" type="number"/>
@@ -68,7 +68,7 @@
         </dl>
         <dl>
             <dt class="control-label">
-                Titles in we:kb after update
+                All Titles after update
             </dt>
             <dd>
                 <g:formatNumber number="${d.countNowTippsInWekb}" type="number"/>
@@ -88,6 +88,22 @@
             </dt>
             <dd>
                 <g:formatNumber number="${d.countProcessedKbartRows}" type="number"/>
+            </dd>
+        </dl>
+        <dl>
+            <dt class="control-label">
+                Current Titles
+            </dt>
+            <dd>
+                <g:formatNumber number="${d.countCurrentTipps}" type="number"/>
+            </dd>
+        </dl>
+        <dl>
+            <dt class="control-label">
+                Deleted Titles
+            </dt>
+            <dd>
+                <g:formatNumber number="${d.countDeletedTipps}" type="number"/>
             </dd>
         </dl>
         <dl>

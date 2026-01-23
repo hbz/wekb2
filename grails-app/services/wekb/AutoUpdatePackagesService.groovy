@@ -3,21 +3,28 @@ package wekb
 import grails.core.GrailsApplication
 import grails.plugins.mail.MailService
 import org.apache.commons.io.FileUtils
+import org.apache.commons.validator.routines.UrlValidator
 import wekb.tools.UrlToolkit
 import wekb.helper.RDStore
 import grails.gorm.transactions.Transactional
 import org.apache.commons.lang.StringUtils
-import wekb.system.JobResult
 import wekb.utils.ServerUtils
 
+import java.time.LocalDate
 import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 import java.util.concurrent.ExecutorService
 
+import groovyx.gpars.GParsPool
+
 import java.util.concurrent.Executors
+import java.util.regex.Matcher
+import java.util.regex.Pattern
 
 @Transactional
 class AutoUpdatePackagesService {
 
+    ExecutorService executorService
     FtpConnectService ftpConnectService
     FileCheckService fileCheckService
     KbartProcessService kbartProcessService
@@ -26,11 +33,13 @@ class AutoUpdatePackagesService {
     ExportService exportService
 
     static final THREAD_POOL_SIZE = 4
-    private final ExecutorService executorService = Executors.newFixedThreadPool(THREAD_POOL_SIZE)
+    //private final ExecutorService executorService = Executors.newFixedThreadPool(THREAD_POOL_SIZE)
     private static boolean started = false
 
     void findPackageToUpdateOnAutoUpdate(boolean onlyRowsWithLastChanged = false) {
-        Thread.currentThread().name = "AutoUpdate-All"
+        Thread.currentThread().name = "AutoUpdate-MainThread"
+        def start_time = System.currentTimeMillis()
+        log.info("findPackageToUpdateOnAutoUpdate: Start at $start_time ms")
         if (!started) {
             //started = true
             List packageNeedsUpdate = []
@@ -51,7 +60,46 @@ class AutoUpdatePackagesService {
             }
             log.info("findPackageToUpdateOnAutoUpdate: Package with KbartSource and lastRun < currentDate (${packageNeedsUpdate.size()})")
             if (packageNeedsUpdate.size() > 0) {
-                packageNeedsUpdate.eachWithIndex { aPackage, i ->
+                log.info("findPackageToUpdateOnAutoUpdate: IDs -> (${packageNeedsUpdate.id.join(', ')})")
+                GParsPool.withPool(THREAD_POOL_SIZE) { pool ->
+                    packageNeedsUpdate.anyParallel { aPackage ->
+                        try {
+                            Thread.currentThread().name = "AutoUpdate-${aPackage.id}"
+                            startAutoPackageUpdate(aPackage, onlyRowsWithLastChanged)
+                        }catch (Exception exception) {
+                            log.error("Error by findPackageToUpdateAndUpdate (${aPackage.id} -> ${aPackage.name}): ${exception.message}")
+                            //exception.printStackTrace()
+
+                            if (grailsApplication.config.getProperty('grails.mail.disabled', Boolean)) {
+                                log.warn 'findPackageToUpdateOnAutoUpdate mail failed due grails.mail.disabled = true'
+
+                            }else {
+
+                                String currentServer = ServerUtils.getCurrentServer()
+                                String subjectSystemPraefix = (currentServer == ServerUtils.SERVER_PROD) ? "" : (ServerUtils.getCurrentServerSystemId() + " - ")
+                                String mailSubject = subjectSystemPraefix + "we:kb Auto Update Packages Job"
+                                String currentSystemId = ServerUtils.getCurrentServerSystemId()
+
+
+                                try {
+                                    mailService.sendMail {
+                                        to "wekb@hbz-nrw.de", "moetez.djebeniani@hbz-nrw.de"
+                                        from "wekb Server <wekb-autoUpdatePackagesJob@wekbServer>"
+                                        subject mailSubject
+                                        text "Error by Package to Update on Auto Update (${aPackage.id} -> ${aPackage.name}: ${exception.message})"
+                                    }
+                                } catch (Exception e) {
+                                    String eMsg = e.message
+                                    log.error("autoUpdatePackagesJob - findPackageToUpdateOnAutoUpdate :: Unable to perform email due to exception ${eMsg}")
+                                }
+                            }
+                        }
+                    }
+                }
+
+
+
+                /*packageNeedsUpdate.eachWithIndex { aPackage, i ->
                     executorService.submit {
                         Thread.currentThread().name = "AutoUpdate-${i}"
 
@@ -87,13 +135,15 @@ class AutoUpdatePackagesService {
 
                         }
                     }
-                }
+                }*/
             }
-            started = false
-            executorService.shutdown()
+            //started = false
+            //executorService.shutdown()
         } else {
             log.info("AutoUpdate running!")
         }
+
+        log.info("findPackageToUpdateOnAutoUpdate: Completed after ${System.currentTimeMillis() - start_time} ms")
 
     }
 
@@ -114,7 +164,7 @@ class AutoUpdatePackagesService {
     }
 
     void startAutoPackageUpdate(Package pkg, boolean onlyRowsWithLastChanged = false) {
-        log.info("Begin startAutoPackageUpdate Package ($pkg.name)")
+        log.info("Begin startAutoPackageUpdate Package ($pkg.name) -> $pkg.id")
         List kbartRows = []
         String lastUpdateURL = pkg.kbartSource.lastUpdateUrl ?: pkg.kbartSource.url
         Date startTime = new Date()
@@ -152,11 +202,20 @@ class AutoUpdatePackagesService {
                                         }
                                     } else {
                                         if(updatePackageInfo.status != RDStore.UPDATE_STATUS_FAILED) {
+                                            int previouslyTipps = TitleInstancePackagePlatform.executeQuery(
+                                                    "select count(*) from TitleInstancePackagePlatform tipp where " +
+                                                            "tipp.status in :status and " +
+                                                            "tipp.pkg = :package",
+                                                    [package: updatePackageInfo.pkg, status: [RDStore.KBC_STATUS_CURRENT, RDStore.KBC_STATUS_DELETED, RDStore.KBC_STATUS_RETIRED, RDStore.KBC_STATUS_EXPECTED]])[0]
+
                                             UpdatePackageInfo.withTransaction {
                                                 updatePackageInfo.description = "The KBART File is empty!"
                                                 updatePackageInfo.status = RDStore.UPDATE_STATUS_FAILED
                                                 updatePackageInfo.endTime = new Date()
                                                 updatePackageInfo.updateUrl = lastUpdateURL
+                                                updatePackageInfo.countPreviouslyTippsInWekb = previouslyTipps
+                                                updatePackageInfo.countCurrentTipps = updatePackageInfo.pkg.getCurrentTippCount()
+                                                updatePackageInfo.countDeletedTipps = updatePackageInfo.pkg.getDeletedTippCount()
                                                 updatePackageInfo.save()
                                             }
                                         }
@@ -164,10 +223,19 @@ class AutoUpdatePackagesService {
 
                                 }else {
                                     if(updatePackageInfo.status != RDStore.UPDATE_STATUS_FAILED) {
+                                        int previouslyTipps = TitleInstancePackagePlatform.executeQuery(
+                                                "select count(*) from TitleInstancePackagePlatform tipp where " +
+                                                        "tipp.status in :status and " +
+                                                        "tipp.pkg = :package",
+                                                [package: updatePackageInfo.pkg, status: [RDStore.KBC_STATUS_CURRENT, RDStore.KBC_STATUS_DELETED, RDStore.KBC_STATUS_RETIRED, RDStore.KBC_STATUS_EXPECTED]])[0]
+
                                         UpdatePackageInfo.withTransaction {
                                             updatePackageInfo.description = "No changes in File. Is same File from last update!"
                                             updatePackageInfo.status = RDStore.UPDATE_STATUS_INFO
                                             updatePackageInfo.endTime = new Date()
+                                            updatePackageInfo.countPreviouslyTippsInWekb = previouslyTipps
+                                            updatePackageInfo.countCurrentTipps = updatePackageInfo.pkg.getCurrentTippCount()
+                                            updatePackageInfo.countDeletedTipps = updatePackageInfo.pkg.getDeletedTippCount()
                                             updatePackageInfo.save()
                                         }
 
@@ -179,10 +247,19 @@ class AutoUpdatePackagesService {
 
                             } else {
                                 if(updatePackageInfo.status != RDStore.UPDATE_STATUS_FAILED) {
+                                    int previouslyTipps = TitleInstancePackagePlatform.executeQuery(
+                                            "select count(*) from TitleInstancePackagePlatform tipp where " +
+                                                    "tipp.status in :status and " +
+                                                    "tipp.pkg = :package",
+                                            [package: updatePackageInfo.pkg, status: [RDStore.KBC_STATUS_CURRENT, RDStore.KBC_STATUS_DELETED, RDStore.KBC_STATUS_RETIRED, RDStore.KBC_STATUS_EXPECTED]])[0]
+
                                     UpdatePackageInfo.withTransaction {
                                         updatePackageInfo.description = "No KBART File found by FTP Server!"
                                         updatePackageInfo.status = RDStore.UPDATE_STATUS_FAILED
                                         updatePackageInfo.endTime = new Date()
+                                        updatePackageInfo.countPreviouslyTippsInWekb = previouslyTipps
+                                        updatePackageInfo.countCurrentTipps = updatePackageInfo.pkg.getCurrentTippCount()
+                                        updatePackageInfo.countDeletedTipps = updatePackageInfo.pkg.getDeletedTippCount()
                                         updatePackageInfo.save()
                                     }
                                 }
@@ -190,6 +267,12 @@ class AutoUpdatePackagesService {
 
                         } else {
                             UpdatePackageInfo.withTransaction {
+                                int previouslyTipps = TitleInstancePackagePlatform.executeQuery(
+                                        "select count(*) from TitleInstancePackagePlatform tipp where " +
+                                                "tipp.status in :status and " +
+                                                "tipp.pkg = :package",
+                                        [package: updatePackageInfo.pkg, status: [RDStore.KBC_STATUS_CURRENT, RDStore.KBC_STATUS_DELETED, RDStore.KBC_STATUS_RETIRED, RDStore.KBC_STATUS_EXPECTED]])[0]
+
                                 //UpdatePackageInfo updatePackageFail = new UpdatePackageInfo()
                                 updatePackageInfo.description = "No FTP server url define in the source of the package."
                                 updatePackageInfo.status = RDStore.UPDATE_STATUS_FAILED
@@ -198,6 +281,9 @@ class AutoUpdatePackagesService {
                                 updatePackageInfo.pkg = pkg
                                 updatePackageInfo.onlyRowsWithLastChanged = onlyRowsWithLastChanged
                                 updatePackageInfo.automaticUpdate = true
+                                updatePackageInfo.countPreviouslyTippsInWekb = previouslyTipps
+                                updatePackageInfo.countCurrentTipps = updatePackageInfo.pkg.getCurrentTippCount()
+                                updatePackageInfo.countDeletedTipps = updatePackageInfo.pkg.getDeletedTippCount()
                                 updatePackageInfo.save()
                             }
                         }
@@ -209,7 +295,28 @@ class AutoUpdatePackagesService {
                             List<URL> updateUrls
                             if (pkg.getTippCount() <= 0 || pkg.kbartSource.lastRun == null) {
                                 updateUrls = new ArrayList<>()
-                                updateUrls.add(new URL(pkg.kbartSource.url.replace(' ', '%20')))
+                                if(UrlToolkit.containsDateStamp(pkg.kbartSource.url)){
+                                    Matcher urlMatcher = Pattern.compile("(.*[\\W_])([\\d]{4}-[\\d]{2}-[\\d]{2})([\\W_].*)").matcher(pkg.kbartSource.url)
+                                    if (!urlMatcher.matches()){
+                                        urlMatcher = Pattern.compile("(.*[\\W_])([\\d]{4}_[\\d]{2}_[\\d]{2})([\\W_].*)").matcher(pkg.kbartSource.url)
+                                    }
+                                    if (urlMatcher.matches()) {
+                                        String dateString = urlMatcher.group(2)
+
+                                        if (dateString) {
+                                            LocalDate localDate = LocalDate.parse(dateString, DateTimeFormatter.ISO_LOCAL_DATE)
+                                            Date dateFromUrl = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant())
+                                            updateUrls = getUpdateUrls(pkg.kbartSource.url, dateFromUrl, pkg.dateCreated)
+                                        } else {
+                                            updateUrls.add(new URL(pkg.kbartSource.url.replace(' ', '%20')))
+                                        }
+                                    }else{
+                                        updateUrls.add(new URL(pkg.kbartSource.url.replace(' ', '%20')))
+                                    }
+
+                                } else {
+                                    updateUrls.add(new URL(pkg.kbartSource.url.replace(' ', '%20')))
+                                }
                             } else {
                                 // this package had already been filled with data
                                 if ((UrlToolkit.containsDateStamp(pkg.kbartSource.url) || UrlToolkit.containsDateStampPlaceholder(pkg.kbartSource.url)) && pkg.kbartSource.lastUpdateUrl) {
@@ -223,6 +330,10 @@ class AutoUpdatePackagesService {
                             File file
                             if (updateUrls.size() > 0) {
                                 updateUrls = updateUrls.reverse()
+                                updateUrls.each {
+                                    println(it)
+                                }
+
                                 for(URL url in updateUrls){
                                     lastUpdateURL = url.toString()
                                     try {
@@ -290,21 +401,39 @@ class AutoUpdatePackagesService {
 
                                             } else {
                                                 if(updatePackageInfo.status != RDStore.UPDATE_STATUS_FAILED) {
+                                                    int previouslyTipps = TitleInstancePackagePlatform.executeQuery(
+                                                            "select count(*) from TitleInstancePackagePlatform tipp where " +
+                                                                    "tipp.status in :status and " +
+                                                                    "tipp.pkg = :package",
+                                                            [package: updatePackageInfo.pkg, status: [RDStore.KBC_STATUS_CURRENT, RDStore.KBC_STATUS_DELETED, RDStore.KBC_STATUS_RETIRED, RDStore.KBC_STATUS_EXPECTED]])[0]
+
                                                     UpdatePackageInfo.withTransaction {
                                                         updatePackageInfo.description = "The KBART File is empty!"
                                                         updatePackageInfo.status = RDStore.UPDATE_STATUS_FAILED
                                                         updatePackageInfo.endTime = new Date()
                                                         updatePackageInfo.updateUrl = lastUpdateURL
+                                                        updatePackageInfo.countPreviouslyTippsInWekb = previouslyTipps
+                                                        updatePackageInfo.countCurrentTipps = updatePackageInfo.pkg.getCurrentTippCount()
+                                                        updatePackageInfo.countDeletedTipps = updatePackageInfo.pkg.getDeletedTippCount()
                                                         updatePackageInfo.save()
                                                     }
                                                 }
                                             }
                                         }else {
                                             if(updatePackageInfo.status != RDStore.UPDATE_STATUS_FAILED) {
+                                                int previouslyTipps = TitleInstancePackagePlatform.executeQuery(
+                                                        "select count(*) from TitleInstancePackagePlatform tipp where " +
+                                                                "tipp.status in :status and " +
+                                                                "tipp.pkg = :package",
+                                                        [package: updatePackageInfo.pkg, status: [RDStore.KBC_STATUS_CURRENT, RDStore.KBC_STATUS_DELETED, RDStore.KBC_STATUS_RETIRED, RDStore.KBC_STATUS_EXPECTED]])[0]
+
                                                 UpdatePackageInfo.withTransaction {
                                                     updatePackageInfo.description = "No changes in File. Is same File from last update!"
                                                     updatePackageInfo.status = RDStore.UPDATE_STATUS_INFO
                                                     updatePackageInfo.endTime = new Date()
+                                                    updatePackageInfo.countPreviouslyTippsInWekb = previouslyTipps
+                                                    updatePackageInfo.countCurrentTipps = updatePackageInfo.pkg.getCurrentTippCount()
+                                                    updatePackageInfo.countDeletedTipps = updatePackageInfo.pkg.getDeletedTippCount()
                                                     updatePackageInfo.save()
                                                 }
 
@@ -318,27 +447,51 @@ class AutoUpdatePackagesService {
 
                                     } else {
                                         if(updatePackageInfo.status != RDStore.UPDATE_STATUS_FAILED) {
+                                            int previouslyTipps = TitleInstancePackagePlatform.executeQuery(
+                                                    "select count(*) from TitleInstancePackagePlatform tipp where " +
+                                                            "tipp.status in :status and " +
+                                                            "tipp.pkg = :package",
+                                                    [package: updatePackageInfo.pkg, status: [RDStore.KBC_STATUS_CURRENT, RDStore.KBC_STATUS_DELETED, RDStore.KBC_STATUS_RETIRED, RDStore.KBC_STATUS_EXPECTED]])[0]
+
                                             UpdatePackageInfo.withTransaction {
                                                 updatePackageInfo.description = isZipFile ? "No txt-File found in Zip-File!" : "No KBART File found by URL: ${lastUpdateURL}!"
                                                 updatePackageInfo.status = RDStore.UPDATE_STATUS_FAILED
                                                 updatePackageInfo.endTime = new Date()
                                                 updatePackageInfo.updateUrl = lastUpdateURL
+                                                updatePackageInfo.countPreviouslyTippsInWekb = previouslyTipps
+                                                updatePackageInfo.countCurrentTipps = updatePackageInfo.pkg.getCurrentTippCount()
+                                                updatePackageInfo.countDeletedTipps = updatePackageInfo.pkg.getDeletedTippCount()
                                                 updatePackageInfo.save()
                                             }
                                         }
                                     }
                                 }
                             }else {
+                                int previouslyTipps = TitleInstancePackagePlatform.executeQuery(
+                                        "select count(*) from TitleInstancePackagePlatform tipp where " +
+                                                "tipp.status in :status and " +
+                                                "tipp.pkg = :package",
+                                        [package: updatePackageInfo.pkg, status: [RDStore.KBC_STATUS_CURRENT, RDStore.KBC_STATUS_DELETED, RDStore.KBC_STATUS_RETIRED, RDStore.KBC_STATUS_EXPECTED]])[0]
+
                                 UpdatePackageInfo.withTransaction {
                                     updatePackageInfo.description = "No KBART File found by URL"
                                     updatePackageInfo.status = RDStore.UPDATE_STATUS_FAILED
                                     updatePackageInfo.endTime = new Date()
                                     updatePackageInfo.updateUrl = lastUpdateURL
+                                    updatePackageInfo.countPreviouslyTippsInWekb = previouslyTipps
+                                    updatePackageInfo.countCurrentTipps = updatePackageInfo.pkg.getCurrentTippCount()
+                                    updatePackageInfo.countDeletedTipps = updatePackageInfo.pkg.getDeletedTippCount()
                                     updatePackageInfo.save()
                                 }
                             }
 
                         } else {
+                            int previouslyTipps = TitleInstancePackagePlatform.executeQuery(
+                                    "select count(*) from TitleInstancePackagePlatform tipp where " +
+                                            "tipp.status in :status and " +
+                                            "tipp.pkg = :package",
+                                    [package: updatePackageInfo.pkg, status: [RDStore.KBC_STATUS_CURRENT, RDStore.KBC_STATUS_DELETED, RDStore.KBC_STATUS_RETIRED, RDStore.KBC_STATUS_EXPECTED]])[0]
+
                             UpdatePackageInfo.withTransaction {
                                 //UpdatePackageInfo updatePackageFail = new UpdatePackageInfo()
                                 updatePackageInfo.description = "No url define in the source of the package."
@@ -348,10 +501,18 @@ class AutoUpdatePackagesService {
                                 updatePackageInfo.pkg = pkg
                                 updatePackageInfo.onlyRowsWithLastChanged = onlyRowsWithLastChanged
                                 updatePackageInfo.automaticUpdate = true
+                                updatePackageInfo.countPreviouslyTippsInWekb = previouslyTipps
+                                updatePackageInfo.countCurrentTipps = updatePackageInfo.pkg.getCurrentTippCount()
+                                updatePackageInfo.countDeletedTipps = updatePackageInfo.pkg.getDeletedTippCount()
                                 updatePackageInfo.save()
                             }
                         }
                     }else {
+                        int previouslyTipps = TitleInstancePackagePlatform.executeQuery(
+                                "select count(*) from TitleInstancePackagePlatform tipp where " +
+                                        "tipp.status in :status and " +
+                                        "tipp.pkg = :package",
+                                [package: updatePackageInfo.pkg, status: [RDStore.KBC_STATUS_CURRENT, RDStore.KBC_STATUS_DELETED, RDStore.KBC_STATUS_RETIRED, RDStore.KBC_STATUS_EXPECTED]])[0]
                         UpdatePackageInfo.withTransaction {
                             //UpdatePackageInfo updatePackageFail = new UpdatePackageInfo()
                             updatePackageInfo.description = "Default Supply Method not set in source! Please set Default Supply Method!"
@@ -361,6 +522,9 @@ class AutoUpdatePackagesService {
                             updatePackageInfo.pkg = pkg
                             updatePackageInfo.onlyRowsWithLastChanged = onlyRowsWithLastChanged
                             updatePackageInfo.automaticUpdate = true
+                            updatePackageInfo.countPreviouslyTippsInWekb = previouslyTipps
+                            updatePackageInfo.countCurrentTipps = updatePackageInfo.pkg.getCurrentTippCount()
+                            updatePackageInfo.countDeletedTipps = updatePackageInfo.pkg.getDeletedTippCount()
                             updatePackageInfo.save()
                         }
                     }
@@ -369,6 +533,13 @@ class AutoUpdatePackagesService {
             } catch (Exception exception) {
                 log.error("Error by startAutoPackageUapdate: ${exception.message}")
                 exception.printStackTrace()
+
+                int previouslyTipps = TitleInstancePackagePlatform.executeQuery(
+                        "select count(*) from TitleInstancePackagePlatform tipp where " +
+                                "tipp.status in :status and " +
+                                "tipp.pkg = :package",
+                        [package: updatePackageInfo.pkg, status: [RDStore.KBC_STATUS_CURRENT, RDStore.KBC_STATUS_DELETED, RDStore.KBC_STATUS_RETIRED, RDStore.KBC_STATUS_EXPECTED]])[0]
+
                 UpdatePackageInfo.withTransaction {
                     //UpdatePackageInfo updatePackageFail = new UpdatePackageInfo()
                     updatePackageInfo.description = "An error occurred while processing the KBART file. More information can be seen in the system log. File from URL: ${lastUpdateURL}"
@@ -379,11 +550,14 @@ class AutoUpdatePackagesService {
                     updatePackageInfo.onlyRowsWithLastChanged = onlyRowsWithLastChanged
                     updatePackageInfo.automaticUpdate = true
                     updatePackageInfo.updateUrl = lastUpdateURL
+                    updatePackageInfo.countPreviouslyTippsInWekb = previouslyTipps
+                    updatePackageInfo.countCurrentTipps = updatePackageInfo.pkg.getCurrentTippCount()
+                    updatePackageInfo.countDeletedTipps = updatePackageInfo.pkg.getDeletedTippCount()
                     updatePackageInfo.save()
                 }
             }
         }
-        log.info("End startAutoPackageUpdate Package ($pkg.name)")
+        log.info("End startAutoPackageUpdate Package ($pkg.name) -> $pkg.id")
     }
 
     File storeZipContentToFile(File zipFIle) {
@@ -393,9 +567,9 @@ class AutoUpdatePackagesService {
         zf.entries().findAll { !it.directory }.each {
             log.debug("storeZipContentToFile: fileName -> "+it.name)
             if(it.name.contains('.txt')){
-                String fileName = folder.absolutePath.concat(File.separator).concat(it.name)
-                String safeFileName = fileName.replaceAll("[\\\\/:*?\"<>|]", "_")
-                file = new File(safeFileName)
+                String fileName = folder.absolutePath.concat(File.separator)
+                String safeFileName = it.name.replaceAll("[\\\\/:*?\"<>|]", "_")
+                file = new File(fileName.concat(safeFileName))
                 byte[] content = exportService.getByteContent(zf.getInputStream(it))
                 FileUtils.copyInputStreamToFile(new ByteArrayInputStream(content), file)
             }

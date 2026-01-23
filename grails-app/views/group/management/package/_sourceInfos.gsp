@@ -39,7 +39,6 @@
                 <semui:sortableColumn property="kbartSource.automaticUpdates" title="Automatic Updates"
                                       params="${params}"/>
                 <th>Source</th>
-                <th>Action</th>
             </tr>
             </thead>
             <tbody>
@@ -56,7 +55,9 @@
                         </td>
                         <td>${++counter}</td>
                         <td>
-                            ${row_obj.name}
+                            <g:link controller="resource" action="show" id="${row_obj.getOID()}">
+                                ${row_obj.name}
+                            </g:link>
                         </td>
                         <g:if test="${row_obj.kbartSource}">
                             <td>
@@ -123,11 +124,6 @@
                             <td></td>
                             <td></td>
                         </g:else>
-                        <td>
-                            <g:link class="ui icon button" controller="resource" action="show" id="${row_obj.getOID()}">
-                                <i class="edit icon"></i>
-                            </g:link>
-                        </td>
                     </tr>
                 </g:if>
                 <g:else>

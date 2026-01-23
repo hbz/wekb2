@@ -56,11 +56,11 @@
                                               required="true"/>
                 </g:if>
                 <g:else>
-                    <g:if test="${d.pkg.nominalPlatform}">
+                    <g:if test="${d.pkg && d.pkg.nominalPlatform}">
                         <g:link controller="resource" action="show"
                                 id="${d.pkg.nominalPlatform.getOID()}">${d.pkg.nominalPlatform.name}</g:link>
                     </g:if>
-                    <g:else>Empty</g:else>
+                    <g:else>Automatic from Nominal Platform of Package</g:else>
                 </g:else>
             </dd>
         </dl>

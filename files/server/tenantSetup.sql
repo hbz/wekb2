@@ -9,8 +9,10 @@ GRANT wekb_without_login TO db_user;
 GRANT wekb_with_login TO db_user;
 
 -- Grants for tenant users
-GRANT ALL ON ALL TABLES IN SCHEMA "public" TO wekb_with_login;
+GRANT ALL ON ALL TABLES IN SCHEMA public TO wekb_with_login;
 GRANT ALL ON ALL SEQUENCES IN SCHEMA public TO wekb_with_login;
+GRANT CONNECT ON DATABASE wekb TO wekb_with_login;
+GRANT USAGE ON SCHEMA public TO wekb_with_login;
 ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON TABLES TO wekb_with_login;
 ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON SEQUENCES TO wekb_with_login;
 
