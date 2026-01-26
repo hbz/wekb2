@@ -30,6 +30,7 @@ class PublicController {
         text += "Disallow: /login/ \n"
         text += "Disallow: /public/api2/ \n"
         text += "Disallow: /public/wcagFeedbackForm/ \n"
+        text += "Disallow: /public/aboutWekb/ \n"
         text += "Disallow: /public/sendFeedbackForm/ \n"
         text += "Disallow: /public/wcagPlainEnglish/ \n"
         text += "Disallow: /public/packageContent/ \n"
@@ -84,6 +85,13 @@ class PublicController {
 
   def wcagFeedbackForm() {
     log.info("wcagFeedbackForm::${params}")
+    def result = [:]
+    //println(params)
+    result
+  }
+
+  def aboutWekb() {
+    log.info("aboutWekb::${params}")
     def result = [:]
     //println(params)
     result
