@@ -67,16 +67,12 @@ class Org extends AbstractBase implements Auditable {
   RefdataValue quotesByCopyPaste
 
   @RefdataAnnotation(cat = RCConstants.YN)
-  RefdataValue forwardingUsageStatistcs
+  RefdataValue forwardingUsageStatistics
 
   @RefdataAnnotation(cat = RCConstants.YN)
   RefdataValue alertNewEbookPackages
 
-  @RefdataAnnotation(cat = RCConstants.YN)
-  RefdataValue alertExchangeEbookPackages
-
-  String urlPristLists
-  String urlTitleLists
+  String urlPriceLists
 
   String urlToTrainingMaterials
 
@@ -154,15 +150,12 @@ class Org extends AbstractBase implements Auditable {
 
     quotesByCopyPaste column: 'org_quotes_by_copy_paste'
 
-    forwardingUsageStatistcs column: 'org_forwarding_usage_statistcs'
+    forwardingUsageStatistics column: 'org_forwarding_usage_statistics'
 
     alertNewEbookPackages column: 'org_alert_new_ebook_packages'
 
-    alertExchangeEbookPackages column: 'org_alert_exchange_ebook_packages'
+    urlPriceLists column: 'org_url_price_lists'
 
-    urlPristLists column: 'org_url_prist_lists'
-
-    urlTitleLists column: 'org_url_title_lists'
     urlToTrainingMaterials column: 'org_url_to_training_materials'
 
 
@@ -202,12 +195,11 @@ class Org extends AbstractBase implements Auditable {
     remoteAccess(nullable: true, blank: false)
     printDownloadChapter(nullable: true, blank: false)
     quotesByCopyPaste(nullable: true, blank: false)
-    forwardingUsageStatistcs(nullable: true, blank: false)
+    forwardingUsageStatistics(nullable: true, blank: false)
     alertNewEbookPackages(nullable: true, blank: false)
-    alertExchangeEbookPackages(nullable: true, blank: false)
 
-    urlPristLists(nullable: true, blank: true)
-    urlTitleLists(nullable: true, blank: true)
+    urlPriceLists(nullable: true, blank: true)
+
     urlToTrainingMaterials(nullable: true, blank: true)
 
       licenseBasedEBInterlibrarySupported (nullable: true, blank: true)

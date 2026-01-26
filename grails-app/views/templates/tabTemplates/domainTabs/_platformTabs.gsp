@@ -271,7 +271,7 @@
                     Forwarding Usage Statistcs
                 </dt>
                 <dd>
-                    <semui:xEditableRefData owner="${d}" field="forwardingUsageStatistcs"
+                    <semui:xEditableRefData owner="${d}" field="forwardingUsageStatistics"
                                             config="${RCConstants.YN}"/>
                 </dd>
             </dl>

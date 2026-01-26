@@ -493,10 +493,10 @@ class GlobalSearchTemplatesService {
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Forwarding Usage Statistcs',
-                                        msgCode     : 'org.forwardingUsageStatistcs',
-                                        qparam     : 'forwardingUsageStatistcs',
+                                        msgCode     : 'org.forwardingUsageStatistics',
+                                        qparam     : 'forwardingUsageStatistics',
                                         placeholder: 'Forwarding Usage Statistcs',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'forwardingUsageStatistcs'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'forwardingUsageStatistics'],
                                         advancedSearch: [title: "General Services", category: 'generalServices']
                                 ],
                                 [
