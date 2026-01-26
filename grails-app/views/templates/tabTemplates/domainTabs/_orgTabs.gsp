@@ -398,7 +398,7 @@
         </div>
     </semui:tabsItemContent>
 
-    <semui:tabsItemContent tab="interlibraryLoan"" activeTab="${params.activeTab}">
+    <semui:tabsItemContent tab="interlibraryLoan" activeTab="${params.activeTab}">
         <div class="content wekb-inline-lists">
             <dl>
                 <dt class="control-label">
@@ -453,7 +453,7 @@
                     URL price lists
                 </dt>
                 <dd>
-                    <semui:xEditable owner="${d}" field="urlPristLists"/>
+                    <semui:xEditable owner="${d}" field="urlPriceLists"/>
                 </dd>
             </dl>
             <dl>
@@ -465,15 +465,6 @@
                                             config="${RCConstants.YN}"/>
                 </dd>
             </dl>
-           %{-- <dl>
-                <dt class="control-label">
-                    Alerts about exchange of individual titles within e-book packages
-                </dt>
-                <dd>
-                    <semui:xEditableRefData owner="${d}" field="alertExchangeEbookPackages"
-                                            config="${RCConstants.YN}"/>
-                </dd>
-            </dl>--}%
         </div>
     </semui:tabsItemContent>
 
