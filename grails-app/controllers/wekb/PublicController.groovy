@@ -31,7 +31,6 @@ class PublicController {
         text += "Disallow: /public/api2/ \n"
         text += "Disallow: /public/wcagFeedbackForm/ \n"
         text += "Disallow: /public/sendFeedbackForm/ \n"
-        text += "Disallow: /public/wcagPlainEnglish/ \n"
         text += "Disallow: /public/packageContent/ \n"
         text += "Disallow: /public/packageContent/ \n"
         text += "Disallow: /public/tippContent/ \n"
