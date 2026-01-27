@@ -30,9 +30,7 @@ class PublicController {
         text += "Disallow: /login/ \n"
         text += "Disallow: /public/api2/ \n"
         text += "Disallow: /public/wcagFeedbackForm/ \n"
-        text += "Disallow: /public/aboutWekb/ \n"
         text += "Disallow: /public/sendFeedbackForm/ \n"
-        text += "Disallow: /public/packageContent/ \n"
         text += "Disallow: /public/packageContent/ \n"
         text += "Disallow: /public/tippContent/ \n"
         text += "Disallow: /public/identifierContent/ \n"
@@ -41,7 +39,6 @@ class PublicController {
         text += "Disallow: /public/kbart/ \n"
         text += "Disallow: /public/packageTSVExport/ \n"
 
-        text += "Disallow: /public/index? \n"
         text += "Disallow: /search/index? \n"
         text += "Disallow: /?qbe= \n"
         text += "Disallow: /metadata/ \n"
