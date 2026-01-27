@@ -552,8 +552,8 @@ class Api2Service {
                                         type       : 'lookup',
                                         baseClass  : 'wekb.RefdataValue',
                                         refdataCategory    : RCConstants.YN,
-                                        qparam     : 'forwardingUsageStatistcs',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'forwardingUsageStatistcs'],
+                                        qparam     : 'forwardingUsageStatistics',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'forwardingUsageStatistics'],
                                 ],
                         ],
                         qbeSortFields: [
@@ -1628,12 +1628,11 @@ class Api2Service {
                 result.remoteAccess = object.remoteAccess?.value
                 result.printDownloadChapter = object.printDownloadChapter?.value
                 result.quotesByCopyPaste = object.quotesByCopyPaste?.value
-                //result.forwardingUsageStatistcs = object.forwardingUsageStatistcs?.value
+                result.forwardingUsageStatistics = object.forwardingUsageStatistics?.value
                 result.alertNewEbookPackages = object.alertNewEbookPackages?.value
-                //result.alertExchangeEbookPackages = object.alertExchangeEbookPackages?.value
 
-                result.urlPristLists = object.urlPristLists
-                //result.urlTitleLists = object.urlTitleLists
+                result.urlPriceLists = object.urlPriceLists
+
 
                 result.roles = []
                 object.roles.each { role ->
@@ -1774,7 +1773,7 @@ class Api2Service {
                 result.rssUrl = object.rssUrl
                 result.individualDesignLogo = object.individualDesignLogo?.value
                 result.fullTextSearch = object.fullTextSearch?.value
-                result.forwardingUsageStatistcs = object.forwardingUsageStatistcs?.value
+                result.forwardingUsageStatistics = object.forwardingUsageStatistics?.value
 
                 if (object.hasProperty('curatoryGroups')) {
                     result.curatoryGroups = []

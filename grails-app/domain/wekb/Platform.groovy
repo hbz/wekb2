@@ -151,7 +151,7 @@ class Platform  extends AbstractBase implements Auditable {
   RefdataValue fullTextSearch
 
   @RefdataAnnotation(cat = RCConstants.YN)
-  RefdataValue forwardingUsageStatistcs
+  RefdataValue forwardingUsageStatistics
 
   static hasMany = [
           roles: RefdataValue,
@@ -227,7 +227,7 @@ class Platform  extends AbstractBase implements Auditable {
     individualDesignLogo column: 'plat_individual_design_logo_fk_rv'
     fullTextSearch column: 'plat_full_text_search_fk_rv'
 
-    forwardingUsageStatistcs column: 'plat_forwarding_usage_statistcs_fk_rv'
+    forwardingUsageStatistics column: 'plat_forwarding_usage_statistics_fk_rv'
 
   }
 
@@ -297,7 +297,7 @@ class Platform  extends AbstractBase implements Auditable {
     rssUrl (nullable: true, blank: true)
     individualDesignLogo (nullable: true, blank: false)
     fullTextSearch (nullable: true, blank: false)
-    forwardingUsageStatistcs(nullable: true, blank: false)
+    forwardingUsageStatistics(nullable: true, blank: false)
   }
 
   @Override
