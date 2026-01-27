@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta name="layout" content="wekb"/>
-    <title>we:kb : Login</title>
+    <title>we:kb | wekb -  Login</title>
 </head>
 
 <body>

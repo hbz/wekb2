@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta name="layout" content="wekb"/>
-    <title>we:kb :
+    <title>we:kb | wekb -
     <g:if test="${displayobj}">
         <g:message code="${displayobj.class.simpleName.toLowerCase()}.label" default="${displayobj.getDomainName()}"/> : ${displayobj.getShowName()}
     </g:if><g:else>

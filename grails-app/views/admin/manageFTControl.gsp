@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta name="layout" content="wekb">
-    <title>we:kb : Manage FTControl</title>
+    <title>we:kb | wekb -  Manage FTControl</title>
 </head>
 
 <body>

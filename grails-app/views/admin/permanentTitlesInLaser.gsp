@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta name="layout" content="wekb"/>
-    <title>we:kb : Permanent Titles in Laser [Status: ${status}]</title>
+    <title>we:kb | wekb -  Permanent Titles in Laser [Status: ${status}]</title>
 </head>
 
 <body>

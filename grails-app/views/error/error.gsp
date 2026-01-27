@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta name="layout" content="wekb"/>
-    <title>we:kb : Error</title>
+    <title>we:kb | wekb -  Error</title>
 </head>
 
 <body>

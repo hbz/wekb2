@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta name="layout" content="wekb"/>
-    <title>we:kb : Permanent Titles by Providers in Laser</title>
+    <title>we:kb | wekb -  Permanent Titles by Providers in Laser</title>
 </head>
 
 <body>

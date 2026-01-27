@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta name="layout" content="wekb"/>
-    <title>we:kb : My Packages of Curatory Groups (${groups.name.join(',')})</title>
+    <title>we:kb | wekb -  My Packages of Curatory Groups (${groups.name.join(',')})</title>
 </head>
 
 <body>

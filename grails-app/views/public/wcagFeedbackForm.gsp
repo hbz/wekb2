@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta name="layout" content="wekb"/>
-    <title>we:kb : Accessibility Feedback Form</title>
+    <title>we:kb | wekb -  Accessibility Feedback Form</title>
 </head>
 
 <body>

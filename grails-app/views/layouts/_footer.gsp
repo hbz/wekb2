@@ -21,8 +21,7 @@
 
                 <div class="ui  link list">
                     <div class="item">
-                        <a target="_blank" class="content"
-                           href="https://service-wiki.hbz-nrw.de/display/WEKB/About+we%3Akb"><g:message code="footer.about"/></a>
+                        <g:link class="content" controller="public" action="aboutWekb"><g:message code="footer.about"/></g:link>
                     </div>
 
                     <div class="item">
