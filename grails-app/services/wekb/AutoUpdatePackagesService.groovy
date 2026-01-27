@@ -47,16 +47,38 @@ class AutoUpdatePackagesService {
                     "from Package p " +
                             "where p.kbartSource is not null and " +
                             "p.kbartSource.automaticUpdates = true " +
-                            "and (p.kbartSource.lastRun is null or p.kbartSource.lastRun < current_date) and p.kbartSource.status not in (:status) order by p.kbartSource.lastRun", [status:  [RDStore.KBC_STATUS_REMOVED, RDStore.KBC_STATUS_DELETED]])
+                            "and (p.kbartSource.lastRun is null or p.kbartSource.lastRun < current_date) order by p.kbartSource.lastRun", )
             updPacks.each { Package p ->
+                if (!(p.kbartSource.status in [RDStore.KBC_STATUS_REMOVED, RDStore.KBC_STATUS_DELETED])) {
                 if (p.kbartSource.needsUpdate()) {
                     packageNeedsUpdate << p
                 }else if (!p.kbartSource.frequency){
                     if (!(p.status in [RDStore.KBC_STATUS_REMOVED, RDStore.KBC_STATUS_DELETED])) {
                         UpdatePackageInfo updatePackageInfo = new UpdatePackageInfo(pkg: p, startTime: new Date(), endTime: new Date(), status: RDStore.UPDATE_STATUS_FAILED, description: "Source frequency is not set. Update for this package is not starting.", onlyRowsWithLastChanged: onlyRowsWithLastChanged, automaticUpdate: true, kbartHasWekbFields: false, lastRun: p.kbartSource.lastRun, lastUpdateUrl: p.kbartSource.lastUpdateUrl)
-                        updatePackageInfo.save()
+                        int previouslyTipps = TitleInstancePackagePlatform.executeQuery(
+                                "select count(*) from TitleInstancePackagePlatform tipp where " +
+                                        "tipp.status in :status and " +
+                                        "tipp.pkg = :package",
+                                [package: updatePackageInfo.pkg, status: [RDStore.KBC_STATUS_CURRENT, RDStore.KBC_STATUS_DELETED, RDStore.KBC_STATUS_RETIRED, RDStore.KBC_STATUS_EXPECTED]])[0]
+                            updatePackageInfo.countPreviouslyTippsInWekb = previouslyTipps
+                            updatePackageInfo.countCurrentTipps = updatePackageInfo.pkg.getCurrentTippCount()
+                            updatePackageInfo.countDeletedTipps = updatePackageInfo.pkg.getDeletedTippCount()
+                            updatePackageInfo.save()
                     }
                 }
+                }else{
+                    UpdatePackageInfo updatePackageInfo = new UpdatePackageInfo(pkg: p, startTime: new Date(), endTime: new Date(), status: RDStore.UPDATE_STATUS_FAILED, description: "Source status is deleted or removed. Update for this package is not starting.", onlyRowsWithLastChanged: onlyRowsWithLastChanged, automaticUpdate: true, kbartHasWekbFields: false, lastRun: p.kbartSource.lastRun, lastUpdateUrl: p.kbartSource.lastUpdateUrl)
+                    int previouslyTipps = TitleInstancePackagePlatform.executeQuery(
+                            "select count(*) from TitleInstancePackagePlatform tipp where " +
+                                    "tipp.status in :status and " +
+                                    "tipp.pkg = :package",
+                            [package: updatePackageInfo.pkg, status: [RDStore.KBC_STATUS_CURRENT, RDStore.KBC_STATUS_DELETED, RDStore.KBC_STATUS_RETIRED, RDStore.KBC_STATUS_EXPECTED]])[0]
+                    updatePackageInfo.countPreviouslyTippsInWekb = previouslyTipps
+                    updatePackageInfo.countCurrentTipps = updatePackageInfo.pkg.getCurrentTippCount()
+                    updatePackageInfo.countDeletedTipps = updatePackageInfo.pkg.getDeletedTippCount()
+                    updatePackageInfo.save()
+                }
+
             }
             log.info("findPackageToUpdateOnAutoUpdate: Package with KbartSource and lastRun < currentDate (${packageNeedsUpdate.size()})")
             if (packageNeedsUpdate.size() > 0) {
