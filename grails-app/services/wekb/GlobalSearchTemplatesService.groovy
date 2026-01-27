@@ -511,6 +511,39 @@ class GlobalSearchTemplatesService {
                                         advancedSearch: [title: "General Services", category: 'generalServices']
                                 ],
                               */
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.YN,
+                                        prompt     : 'License-based e-book interlibrary loan supported',
+                                        msgCode     : 'org.licenseBasedEBInterlibrarySupported',
+                                        qparam     : 'licenseBasedEBInterlibrarySupported',
+                                        selectPlaceHolder: 'value',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'licenseBasedEBInterlibrarySupported'],
+                                        advancedSearch: [title: "Interlibrary Loan", category: 'interlibraryLoan']
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.PROVIDER_RANGE,
+                                        prompt     : 'Range',
+                                        msgCode     : 'org.range',
+                                        qparam     : 'range',
+                                        selectPlaceHolder: 'value',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'range'],
+                                        advancedSearch: [title: "Interlibrary Loan", category: 'interlibraryLoan']
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.PROVIDER_AGREEMENT_MODEL,
+                                        prompt     : 'Agreement model',
+                                        msgCode     : 'org.agreementModel',
+                                        qparam     : 'agreementModel',
+                                        selectPlaceHolder: 'value',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'agreementModel'],
+                                        advancedSearch: [title: "Interlibrary Loan", category: 'interlibraryLoan']
+                                ],
 
 
 
