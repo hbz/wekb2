@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta name="layout" content="wekb"/>
-    <title>we:kb : Upload Packages</title>
+    <title>we:kb | wekb -  Upload Packages</title>
 </head>
 
 <body>
@@ -95,6 +95,8 @@
                         case 'post_cancellation_access_of_archiving_agency': args.addAll(RefdataCategory.lookup(RCConstants.PAA_POST_CANCELLATION_ACCESS).sort { it.value }.collect { it -> it.value })
                             break
                         case 'source_default_supply_method': args.addAll([RDStore.KS_DSMETHOD_HTTP_URL.value, RDStore.KS_DSMETHOD_FTP.value])
+                            break
+                        case 'publication_type': datas = RefdataCategory.lookup(RCConstants.TIPP_PUBLICATION_TYPE).sort{it.value}.collect { it -> it.value }
                             break
                     }
                 %>

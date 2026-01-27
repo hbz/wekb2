@@ -511,6 +511,39 @@ class GlobalSearchTemplatesService {
                                         advancedSearch: [title: "General Services", category: 'generalServices']
                                 ],
                               */
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.YN,
+                                        prompt     : 'License-based e-book interlibrary loan supported',
+                                        msgCode     : 'org.licenseBasedEBInterlibrarySupported',
+                                        qparam     : 'licenseBasedEBInterlibrarySupported',
+                                        selectPlaceHolder: 'value',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'licenseBasedEBInterlibrarySupported'],
+                                        advancedSearch: [title: "Interlibrary Loan", category: 'interlibraryLoan']
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.PROVIDER_RANGE,
+                                        prompt     : 'Range',
+                                        msgCode     : 'org.range',
+                                        qparam     : 'range',
+                                        selectPlaceHolder: 'value',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'range'],
+                                        advancedSearch: [title: "Interlibrary Loan", category: 'interlibraryLoan']
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.PROVIDER_AGREEMENT_MODEL,
+                                        prompt     : 'Agreement model',
+                                        msgCode     : 'org.agreementModel',
+                                        qparam     : 'agreementModel',
+                                        selectPlaceHolder: 'value',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'agreementModel'],
+                                        advancedSearch: [title: "Interlibrary Loan", category: 'interlibraryLoan']
+                                ],
 
 
 
@@ -3062,7 +3095,7 @@ class GlobalSearchTemplatesService {
                                 [heading: 'Rows in KBART-File', property: 'countKbartRows', sort: 'countKbartRows'],
                                 [heading: 'Processed KBART Rows', property: 'countProcessedKbartRows', sort: 'countProcessedKbartRows'],
                                 [heading: 'Current Titles', property: 'countCurrentTipps', sort: 'countCurrentTipps'],
-                                [heading: 'Deleted Titles', property: 'countDeletedTipps', sort: 'countDeletedTipps'],
+                                [heading: 'All Deleted Titles', property: 'countDeletedTipps', sort: 'countDeletedTipps'],
                                 [heading: 'Changed Titles / Changes in Titles ', property: 'countInfosAboutChangedTitles', sort: 'countChangedTipps', jumpToLink: '/search/componentSearch/wekb.UpdatePackageInfo:objectID?qbe=g:updateTippInfos&qp_aup_id=objectID&&qp_type='+RefdataValue.class.name + ':' + RDStore.UPDATE_TYPE_CHANGED_TITLE.id, linkInfo: 'Link to Changed Titles'],
                                 [heading: 'Removed Titles ', property: 'countRemovedTipps', sort: 'countRemovedTipps', jumpToLink: '/search/componentSearch/wekb.UpdatePackageInfo:objectID?qbe=g:updateTippInfos&qp_aup_id=objectID&&qp_type='+RefdataValue.class.name + ':' + RDStore.UPDATE_TYPE_REMOVED_TITLE.id, linkInfo: 'Link to Removed Titles'],
                                 [heading: 'New Titles', property: 'countNewTipps', sort: 'countNewTipps', jumpToLink: '/search/componentSearch/wekb.UpdatePackageInfo:objectID?qbe=g:updateTippInfos&qp_aup_id=objectID&&qp_type='+RefdataValue.class.name + ':' + RDStore.UPDATE_TYPE_NEW_TITLE.id, linkInfo: 'Link to New Titles'],

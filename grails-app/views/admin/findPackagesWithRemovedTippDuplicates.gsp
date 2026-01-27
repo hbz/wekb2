@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta name="layout" content="wekb"/>
-    <title>we:kb : Current Packages with Tipp Duplicates with Remove</title>
+    <title>we:kb | wekb -  Current Packages with Tipp Duplicates with Remove</title>
 </head>
 
 <body>

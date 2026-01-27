@@ -133,6 +133,10 @@ class ExportService {
                     updatePackageInfo.status = RDStore.UPDATE_STATUS_FAILED
                     updatePackageInfo.endTime = new Date()
                     updatePackageInfo.updateUrl = connection.getURL()
+                    updatePackageInfo.countPreviouslyTippsInWekb = updatePackageInfo.pkg.getTippCountWithoutRemoved()
+                    updatePackageInfo.countNowTippsInWekb = updatePackageInfo.pkg.getTippCountWithoutRemoved()
+                    updatePackageInfo.countCurrentTipps = updatePackageInfo.pkg.getCurrentTippCount()
+                    updatePackageInfo.countDeletedTipps = updatePackageInfo.pkg.getDeletedTippCount()
                     updatePackageInfo.save()
                 }
             }
@@ -149,6 +153,10 @@ class ExportService {
                     updatePackageInfo.status = RDStore.UPDATE_STATUS_FAILED
                     updatePackageInfo.endTime = new Date()
                     updatePackageInfo.updateUrl = connection.getURL()
+                    updatePackageInfo.countPreviouslyTippsInWekb = updatePackageInfo.pkg.getTippCountWithoutRemoved()
+                    updatePackageInfo.countNowTippsInWekb = updatePackageInfo.pkg.getTippCountWithoutRemoved()
+                    updatePackageInfo.countCurrentTipps = updatePackageInfo.pkg.getCurrentTippCount()
+                    updatePackageInfo.countDeletedTipps = updatePackageInfo.pkg.getDeletedTippCount()
                     updatePackageInfo.save()
                 }
             }
@@ -172,6 +180,10 @@ class ExportService {
                         updatePackageInfo.status = RDStore.UPDATE_STATUS_FAILED
                         updatePackageInfo.endTime = new Date()
                         updatePackageInfo.updateUrl = connection.getURL()
+                        updatePackageInfo.countPreviouslyTippsInWekb = updatePackageInfo.pkg.getTippCountWithoutRemoved()
+                        updatePackageInfo.countNowTippsInWekb = updatePackageInfo.pkg.getTippCountWithoutRemoved()
+                        updatePackageInfo.countCurrentTipps = updatePackageInfo.pkg.getCurrentTippCount()
+                        updatePackageInfo.countDeletedTipps = updatePackageInfo.pkg.getDeletedTippCount()
                         updatePackageInfo.save()
                     }
                 }
@@ -185,6 +197,10 @@ class ExportService {
                     updatePackageInfo.status = RDStore.UPDATE_STATUS_FAILED
                     updatePackageInfo.endTime = new Date()
                     updatePackageInfo.updateUrl = connection.getURL()
+                    updatePackageInfo.countPreviouslyTippsInWekb = updatePackageInfo.pkg.getTippCountWithoutRemoved()
+                    updatePackageInfo.countNowTippsInWekb = updatePackageInfo.pkg.getTippCountWithoutRemoved()
+                    updatePackageInfo.countCurrentTipps = updatePackageInfo.pkg.getCurrentTippCount()
+                    updatePackageInfo.countDeletedTipps = updatePackageInfo.pkg.getDeletedTippCount()
                     updatePackageInfo.save()
                 }
             }

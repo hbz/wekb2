@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta name="layout" content="wekb"/>
-    <title>we:kb : Logging</title>
+    <title>we:kb | wekb -  Logging</title>
 </head>
 
 <body>

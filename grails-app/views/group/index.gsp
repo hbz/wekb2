@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta name="layout" content="wekb" />
-<title>we:kb : Group</title>
+<title>we:kb | wekb -  Group</title>
 </head>
 <body>
 <h1 class="ui header">My Compoents (${groups.name.join(',')})</h1>

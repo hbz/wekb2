@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta name="layout" content="wekb"/>
-    <title>we:kb : KBART Import</title>
+    <title>we:kb | wekb -  KBART Import</title>
 </head>
 
 <body>

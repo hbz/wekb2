@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta name="layout" content="wekb"/>
-    <title>we:kb : WCAG Feedback Form</title>
+    <title>we:kb | wekb -  WCAG Feedback Form</title>
 </head>
 
 <body>

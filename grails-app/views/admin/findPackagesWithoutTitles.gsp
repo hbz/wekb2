@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta name="layout" content="wekb"/>
-    <title>we:kb : Packages due to automatic update</title>
+    <title>we:kb | wekb -  Packages due to automatic update</title>
 </head>
 
 <body>

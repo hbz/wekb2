@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta name="layout" content="wekb"/>
-    <title>we:kb : My Profile & Preferences</title>
+    <title>we:kb | wekb -  My Profile & Preferences</title>
 </head>
 
 <body>

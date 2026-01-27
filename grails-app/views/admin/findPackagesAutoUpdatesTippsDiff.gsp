@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta name="layout" content="wekb"/>
-    <title>we:kb : Automatic update packages with title difference</title>
+    <title>we:kb | wekb -  Automatic update packages with title difference</title>
 </head>
 
 <body>

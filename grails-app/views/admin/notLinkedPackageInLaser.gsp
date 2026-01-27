@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta name="layout" content="wekb"/>
-    <title>we:kb : Packages not linked in Laser</title>
+    <title>we:kb | wekb -  Packages not linked in Laser</title>
 </head>
 
 <body>

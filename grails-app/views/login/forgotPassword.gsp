@@ -1,7 +1,7 @@
 <html>
 <head>
     <meta name="layout" content="wekb"/>
-    <title>we:kb : <g:message
+    <title>we:kb | wekb -  <g:message
             code='forgottenPassword.title'/></title>
 </head>
 

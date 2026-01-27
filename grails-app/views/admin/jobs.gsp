@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta name="layout" content="wekb"/>
-    <title>we:kb : Jobs</title>
+    <title>we:kb | wekb -  Jobs</title>
 </head>
 
 <body>

@@ -4,7 +4,7 @@
 <html>
 <head>
     <meta name="layout" content="wekb"/>
-    <title>we:kb : My User Dashboard</title>
+    <title>we:kb | wekb -  My User Dashboard</title>
 </head>
 
 <body>

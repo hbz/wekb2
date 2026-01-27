@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta name="layout" content="wekb"/>
-    <title>we:kb : Search in All Components</title>
+    <title>we:kb | wekb -  Search in All Components</title>
 </head>
 
 <body>

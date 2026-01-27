@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta name="layout" content="wekb"/>
-    <title>we:kb : Packages due to automatic update of Curatory Groups (${groups.sort{it.name}.name.join(',')})</title>
+    <title>we:kb | wekb -  Packages due to automatic update of Curatory Groups (${groups.sort{it.name}.name.join(',')})</title>
 </head>
 
 <body>

@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta name="layout" content="wekb"/>
-    <title>we:kb : Curatory Groups Check Infos</title>
+    <title>we:kb | wekb -  Curatory Groups Check Infos</title>
 </head>
 
 <body>

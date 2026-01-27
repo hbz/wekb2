@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta name="layout" content="wekb"/>
-    <title>we:kb : Automatic Update Fails</title>
+    <title>we:kb | wekb -  Automatic Update Fails</title>
 </head>
 
 <body>

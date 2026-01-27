@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta name="layout" content="wekb"/>
-    <title>we:kb : Page Not Found</title>
+    <title>we:kb | wekb -  Page Not Found</title>
 </head>
 
 <body>

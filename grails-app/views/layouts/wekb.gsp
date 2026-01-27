@@ -7,7 +7,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title><g:layoutTitle default="we:kb"/></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
+    <meta name="description" content="In the we:kb (pronounced wekb), the providers manage their current electronic sales units and meta-information themselves.">
+    <meta name="google-site-verification" content="Fj609YsnLVTvHX9lLH9QF4-M-_8Bmgqmp3ZXmauEoCQ" />
     <link rel="shortcut icon" href="${resource(dir: 'images', file: 'favicon.ico')}" type="image/x-icon">
 
     <g:javascript> var spotlightSearchUrl="${g.createLink(controller: 'search', action: 'spotlightSearch')}";</g:javascript>
