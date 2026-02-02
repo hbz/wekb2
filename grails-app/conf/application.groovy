@@ -29,8 +29,8 @@ grails.plugin.databasemigration.updateOnStart = true
 
 // spring Security Core plugin
 grails.plugin.springsecurity.successHandler.useReferer = true
-grails.plugin.springsecurity.successHandler.alwaysUseDefault= false
-//grails.plugin.springsecurity.successHandler.defaultTargetUrl = '/'
+grails.plugin.springsecurity.successHandler.alwaysUseDefault= true
+grails.plugin.springsecurity.successHandler.defaultTargetUrl = '/public/index'
 grails.plugin.springsecurity.successHandler.logout.afterLogoutUrl = '/'
 
 grails.plugin.springsecurity.logout.postOnly = false
