@@ -142,6 +142,10 @@ class CreateComponentService {
 
                         log.debug("Saving..")
 
+                        if(result.newobj instanceof User && (user.isAdmin() || user.getSuperUserStatus())){
+                            result.newobj.enabled = true
+                        }
+
                         if(result.newobj.hasProperty('uuid')){
                             result.newobj.uuid = UUID.randomUUID().toString()
                         }
