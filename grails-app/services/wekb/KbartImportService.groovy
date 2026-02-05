@@ -2162,7 +2162,7 @@ class KbartImportService {
                 result.changedTipp = true
             }
             if (tippMap.ddc) {
-                List ddcs = tippMap.ddc.split(',')
+                Set ddcs = tippMap.ddc.split(',')
 
                 ddcs.each { String ddc ->
                     RefdataValue refdataValue = RefdataCategory.lookup(RCConstants.DDC, ddc)
@@ -2212,7 +2212,7 @@ class KbartImportService {
                 result.changedTipp = true
             }
             if(tippMap.language) {
-                List languages = tippMap.language.split(',')
+                Set languages = tippMap.language.split(',')
                 languages.each { String lan ->
                     RefdataValue refdataValue
                     if (lan.size() == 2) {
@@ -2525,7 +2525,7 @@ class KbartImportService {
 
                                 // KBART -> ddc -> ddcs
                                 if (tippMap.kbartRowMap.ddc) {
-                                    List ddcs = tippMap.kbartRowMap.ddc.split(',')
+                                    Set ddcs = tippMap.kbartRowMap.ddc.split(',')
 
                                     ddcs.each { String ddc ->
                                         RefdataValue refdataValue = RefdataCategory.lookup(RCConstants.DDC, ddc)
@@ -2537,7 +2537,7 @@ class KbartImportService {
 
                                 // KBART -> language -> language -> languages
                                 if (tippMap.kbartRowMap.language) {
-                                    List languages = tippMap.kbartRowMap.language.split(',')
+                                    Set languages = tippMap.kbartRowMap.language.split(',')
                                     List<Long> langsInTipp = []
                                     languages.each { String lan ->
                                         RefdataValue refdataValue
