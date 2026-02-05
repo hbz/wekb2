@@ -2857,33 +2857,11 @@ class GlobalSearchTemplatesService {
                                         type       : 'dropDown',
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.YN,
-                                        prompt     : 'Research platform for e-books',
-                                        msgCode     : 'vendor.researchPlatformForEbooks',
-                                        qparam     : 'researchPlatformForEbooks',
-                                        placeholder: 'Research platform for e-booksr',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'researchPlatformForEbooks'],
-                                        advancedSearch: [title: "General Services", category: 'generalServices']
-                                ],
-                                [
-                                        type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
-                                        filter1    : RCConstants.YN,
                                         prompt     : 'Prequalification',
                                         msgCode     : 'vendor.prequalification',
                                         qparam     : 'prequalification',
-                                        placeholder: 'Prequalificationt',
+                                        placeholder: 'Prequalification',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'prequalification'],
-                                        advancedSearch: [title: "Supplier information", category: 'supplierInformation']
-                                ],
-                                [
-                                        type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
-                                        filter1    : RCConstants.YN,
-                                        prompt     : 'Info to Prequalification',
-                                        msgCode     : 'vendor.prequalificationInfo',
-                                        qparam     : 'prequalificationInfo',
-                                        placeholder: 'Info to Prequalification',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'prequalificationInfo'],
                                         advancedSearch: [title: "Supplier information", category: 'supplierInformation']
                                 ],
 
