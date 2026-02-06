@@ -30,42 +30,45 @@
                         </dd>
                     </dl>
                 </g:if>
-                <dl>
-                    <dt class="control-label">Enabled</dt>
-                    <dd>
-                        <semui:xEditableBoolean owner="${d}" field="enabled"/>
-                    </dd>
-                </dl>
-                <dl>
-                    <dt class="control-label">Account Expired</dt>
-                    <dd>
-                        <semui:xEditableBoolean owner="${d}" field="accountExpired"/>
-                    </dd>
-                </dl>
-                <dl>
-                    <dt class="control-label">Account Locked</dt>
-                    <dd>
-                        <semui:xEditableBoolean owner="${d}" field="accountLocked"/>
-                    </dd>
-                </dl>
-                <dl>
-                    <dt class="control-label">Password Expired</dt>
-                    <dd>
-                        <semui:xEditableBoolean owner="${d}" field="passwordExpired"/>
-                    </dd>
-                </dl>
-                <dl>
-                    <dt class="control-label">Last Login</dt>
-                    <dd>
-                        <semui:xEditable owner="${d}" field="lastLogin" type="date" overwriteEditable="false"/>
-                    </dd>
-                </dl>
-                <dl>
-                    <dt class="control-label">Invalid Login Attempts</dt>
-                    <dd>
-                        <semui:xEditable owner="${d}" field="invalidLoginAttempts" type="password"/>
-                    </dd>
-                </dl>
+                <g:if test="${controllerName != 'create'}">
+                    <dl>
+                        <dt class="control-label">Enabled</dt>
+                        <dd>
+                            <semui:xEditableBoolean owner="${d}" field="enabled"/>
+                        </dd>
+                    </dl>
+
+                    <dl>
+                        <dt class="control-label">Account Expired</dt>
+                        <dd>
+                            <semui:xEditableBoolean owner="${d}" field="accountExpired"/>
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt class="control-label">Account Locked</dt>
+                        <dd>
+                            <semui:xEditableBoolean owner="${d}" field="accountLocked"/>
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt class="control-label">Password Expired</dt>
+                        <dd>
+                            <semui:xEditableBoolean owner="${d}" field="passwordExpired"/>
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt class="control-label">Last Login</dt>
+                        <dd>
+                            <semui:xEditable owner="${d}" field="lastLogin" type="date" overwriteEditable="false"/>
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt class="control-label">Invalid Login Attempts</dt>
+                        <dd>
+                            <semui:xEditable owner="${d}" field="invalidLoginAttempts" type="password"/>
+                        </dd>
+                    </dl>
+                </g:if>
             </g:if>
 
             <g:if test="${d.id != null}">

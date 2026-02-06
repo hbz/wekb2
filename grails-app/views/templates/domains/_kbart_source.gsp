@@ -1,4 +1,4 @@
-<%@ page import="wekb.helper.RCConstants; wekb.IdentifierNamespace; wekb.helper.RDStore;" %>
+<%@ page import="java.time.LocalDateTime; wekb.helper.RCConstants; wekb.IdentifierNamespace; wekb.helper.RDStore;" %>
 <div class="ui segment">
     <div class="content wekb-inline-lists">
         <dl>
@@ -151,11 +151,16 @@
                 </dt>
                 <dd>
                     <div class="ui bulleted list">
-                        <g:each in="${d.getAllNextUpdateTimestamp()}" var="updateDate">
-                            <div class="item">
-                                <g:formatDate format="${message(code: 'default.date.format.noZ')}"
-                                              date="${updateDate}"/>
-                            </div>
+                        <g:set var="now" value="${LocalDateTime.now()}"/>
+                        <g:set var="count" value="${0}"/>
+                        <g:each in="${d.getAllNextUpdateTimestamp()}" var="updateDate" status="i">
+                            <g:if test="${updateDate >= now && count <= 5}">
+                                <div class="item">
+                                    <g:formatDate format="${message(code: 'default.date.format.noZ')}"
+                                                  date="${updateDate}"/>
+                                </div>
+                                <g:set var="count" value="${count + 1}"/>
+                            </g:if>
                         </g:each>
                     </div>
                 </dd>

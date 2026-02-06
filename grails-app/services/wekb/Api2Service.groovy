@@ -1633,6 +1633,10 @@ class Api2Service {
 
                 result.urlPriceLists = object.urlPriceLists
 
+                result.licenseBasedEBInterlibrarySupported = object.licenseBasedEBInterlibrarySupported?.value
+                result.range = object.range?.value
+                result.agreementModel = object.agreementModel?.value
+
 
                 result.roles = []
                 object.roles.each { role ->
@@ -1664,10 +1668,18 @@ class Api2Service {
 
                 result.contacts = []
                 object.contacts.each { Contact contact ->
+                    List languages = []
+                    contact.languages.each { language ->
+                        languages.add([value     : language.value,
+                                       value_de  : language.value_de,
+                                       value_en  : language.value_en])
+                    }
+
                     result.contacts.add([content    : contact.content,
                                          contentType: contact.contentType?.value,
                                          type       : contact.type?.value,
-                                         language   : contact.language?.value])
+                                         language   : contact.languages ?  contact.languages[0].value : '',
+                                         languages: languages])
                 }
 
 
@@ -1687,10 +1699,6 @@ class Api2Service {
                                                  vendorUuid: providerInvoicingVendor.vendor.uuid,
                                                  vendorHomepage: providerInvoicingVendor.vendor.homepage])
                 }
-
-                result.licenseBasedEBInterlibrarySupported = object.licenseBasedEBInterlibrarySupported?.value
-                result.range = object.range?.value
-                result.agreementModel = object.agreementModel?.value
             }
 
             result
@@ -1976,6 +1984,7 @@ class Api2Service {
                 result.webShopOrders = object.webShopOrders ? RDStore.YN_YES.value : RDStore.YN_NO.value
                 result.xmlOrders = object.xmlOrders ? RDStore.YN_YES.value : RDStore.YN_NO.value
                 result.ediOrders = object.ediOrders ? RDStore.YN_YES.value : RDStore.YN_NO.value
+                result.emailOrders = object.emailOrders ? RDStore.YN_YES.value : RDStore.YN_NO.value
 
                 result.paperInvoice = object.paperInvoice ? RDStore.YN_YES.value : RDStore.YN_NO.value
                 result.managementOfCredits = object.managementOfCredits ? RDStore.YN_YES.value : RDStore.YN_NO.value
@@ -2008,10 +2017,18 @@ class Api2Service {
 
                 result.contacts = []
                 object.contacts.each { Contact contact ->
+                    List languages = []
+                    contact.languages.each { language ->
+                        languages.add([value     : language.value,
+                                              value_de  : language.value_de,
+                                              value_en  : language.value_en])
+                    }
+
                     result.contacts.add([content    : contact.content,
                                          contentType: contact.contentType?.value,
                                          type       : contact.type?.value,
-                                         language   : contact.language?.value])
+                                         language   : contact.languages ?  contact.languages[0].value : '',
+                                         languages: languages])
                 }
 
 
