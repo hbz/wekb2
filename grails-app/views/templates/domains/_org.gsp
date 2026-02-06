@@ -68,7 +68,7 @@
                                 <g:if test="${editable}">
                                     <g:link class='ui mini button negative' controller='ajaxHtml'
                                             action='unlinkManyToMany'
-                                            params="${["__context": "${d.getOID()}", "__property": "roles", "__itemToRemove": "${t.getOID()}"]}">Delete</g:link>
+                                            params="${["__context": "${d.getOID()}", "__property": "roles", "__itemToRemove": "${t.getOID()}", curationOverride: params.curationOverride]}">Delete</g:link>
                                 </g:if>
                             </div>
                         </g:each>
@@ -94,7 +94,7 @@
                         <tr>
                             <th>#</th>
                             <th>Contact Type</th>
-                            <th>Main Language</th>
+                            <th>Languages</th>
                             <th>Content Type</th>
                             <th>Value</th>
                             <g:if test="${editable}">
@@ -103,15 +103,26 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <g:each in="${d.contacts?.sort { it.content }}" var="contact" status="i">
+                        <g:each in="${d.contacts?.sort { it.type }}" var="contact" status="i">
                             <tr>
                                 <td>${i + 1}</td>
                                 <td><semui:xEditableRefData owner="${contact}" field="type"
                                                             config="${RCConstants.CONTACT_TYPE}" required="true"/>
                                 </td>
                                 <td>
-                                    <semui:xEditableRefData owner="${contact}" field="language"
-                                                            config="${RCConstants.COMPONENT_LANGUAGE}" required="true"/>
+
+                                    <div class="ui bulleted list">
+                                        <g:each in="${contact.languages?.sort { it.getI10n('value') }}" var="t">
+                                            <div class="item">
+                                                ${t.getI10n('value')}
+                                                <g:if test="${editable}">
+                                                    <g:link class='' controller='ajaxHtml'
+                                                            action='unlinkManyToMany'
+                                                            params="${["__context": "${contact.getOID()}", "__property": "languages", "__itemToRemove": "${t.getOID()}", curationOverride: params.curationOverride]}">(Delete)</g:link>
+                                                </g:if>
+                                            </div>
+                                        </g:each>
+                                    </div>
                                 </td>
                                 <td>
                                     <semui:xEditableRefData owner="${contact}" field="contentType"
@@ -134,10 +145,29 @@
                                 </td>
                                 <g:if test="${editable}">
                                     <td>
+                                        <a class="ui mini primary button" href="#"
+                                           onclick="$('#languagesModal'+${contact.id}).modal('show');">Add Language</a>
 
-                                        <g:link controller='ajaxHtml'
+                                        <br>
+                                        <br>
+                                        <g:link controller='ajaxHtml' class="ui mini button negative"
                                                 action='delete'
                                                 params="${["__context": "${contact.getOID()}", curationOverride: params.curationOverride]}">Delete</g:link>
+
+                                        <semui:modal id="languagesModal${contact.id}" title="Add Language for ${contact.content}">
+
+                                            <g:form controller="ajaxHtml" action="addToStdCollection" class="ui form">
+                                                <input type="hidden" name="__context" value="${contact.getOID()}"/>
+                                                <input type="hidden" name="__property" value="languages"/>
+                                                <input type="hidden" name="curationOverride" value="${params.curationOverride}"/>
+
+                                                <div class="field">
+                                                    <label>Language:</label> <semui:simpleReferenceDropdown name="__relatedObject"
+                                                                                                            baseClass="wekb.RefdataValue"
+                                                                                                            filter1="${RCConstants.COMPONENT_LANGUAGE}"/>
+                                                </div>
+                                            </g:form>
+                                        </semui:modal>
                                     </td>
                                 </g:if>
                             </tr>
@@ -174,7 +204,7 @@
                     </div>
 
                     <div class="required field">
-                        <label>Main Language</label>
+                        <label>Language</label>
                         <semui:simpleReferenceDropdown name="language"
                                                        baseClass="wekb.RefdataValue"
                                                        filter1="${RCConstants.COMPONENT_LANGUAGE}" />

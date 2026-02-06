@@ -1668,10 +1668,18 @@ class Api2Service {
 
                 result.contacts = []
                 object.contacts.each { Contact contact ->
+                    List languages = []
+                    contact.languages.each { language ->
+                        languages.add([value     : language.value,
+                                       value_de  : language.value_de,
+                                       value_en  : language.value_en])
+                    }
+
                     result.contacts.add([content    : contact.content,
                                          contentType: contact.contentType?.value,
                                          type       : contact.type?.value,
-                                         language   : contact.language?.value])
+                                         language   : contact.languages ?  contact.languages[0].value : '',
+                                         languages: languages])
                 }
 
 
@@ -2009,10 +2017,18 @@ class Api2Service {
 
                 result.contacts = []
                 object.contacts.each { Contact contact ->
+                    List languages = []
+                    contact.languages.each { language ->
+                        languages.add([value     : language.value,
+                                              value_de  : language.value_de,
+                                              value_en  : language.value_en])
+                    }
+
                     result.contacts.add([content    : contact.content,
                                          contentType: contact.contentType?.value,
                                          type       : contact.type?.value,
-                                         language   : contact.language?.value])
+                                         language   : contact.languages ?  contact.languages[0].value : '',
+                                         languages: languages])
                 }
 
 
