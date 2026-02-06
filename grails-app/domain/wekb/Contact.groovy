@@ -23,8 +23,13 @@ class Contact{
     RefdataValue type
 
     @RefdataAnnotation(cat = RCConstants.COMPONENT_LANGUAGE)
-    RefdataValue language
-    
+    Set languages
+
+    static hasMany = [
+            languages: RefdataValue
+
+    ]
+
     static mapping = {
         id          column:'ct_id'
         version     column:'ct_version'
@@ -33,10 +38,15 @@ class Contact{
         type        column:'ct_type_rv_fk'
         org         column:'ct_org_fk', index: 'ct_org_idx'
         vendor         column:'ct_vendor_fk', index: 'ct_vendor_idx'
-        language    column:'ct_language_rv_fk'
 
         dateCreated column: 'ct_date_created'
         lastUpdated column: 'ct_last_updated'
+
+        languages             joinTable: [
+                name:   'contact_language',
+                key:    'ct_fk',
+                column: 'language_rv_fk', type:   'BIGINT'
+        ], lazy: false
     }
     
     static constraints = {
@@ -44,7 +54,8 @@ class Contact{
         contentType (nullable:true)
         org         (nullable:true)
         vendor      (nullable:true)
-        language    (nullable:true)
+
+        languages(nullable: true)
     }
     
     @Override
@@ -52,7 +63,7 @@ class Contact{
         contentType?.value + ', ' + content + ' (' + id + '); ' + type?.value
     }
 
-    static Contact lookup(String content, RefdataValue contentType, RefdataValue type, Org organisation, RefdataValue language) {
+    /*static Contact lookup(String content, RefdataValue contentType, RefdataValue type, Org organisation, RefdataValue language) {
 
         Contact contact
         List<Contact>  check = Contact.findAllWhere(
@@ -160,7 +171,7 @@ class Contact{
             LogFactory.getLog(this).debug(info)
             result
         }
-    }
+    }*/
 
     def afterInsert (){
         log.debug("afterSave for ${this}")

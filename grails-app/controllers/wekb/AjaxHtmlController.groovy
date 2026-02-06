@@ -325,6 +325,10 @@ class AjaxHtmlController {
             flash.error = g.message(code: 'component.listItem.notFound.label')
         }
 
+        if(contextObj instanceof Contact){
+            contextObj = contextObj.org ?: contextObj.vendor
+        }
+
         redirect(controller: 'resource', action: 'show', id: contextObj.class.name + ':' + contextObj.id, params: [activeTab: params.activeTab])
     }
 
@@ -389,6 +393,10 @@ class AjaxHtmlController {
         } else {
             flash.error = g.message(code: 'component.context.notFound.label')
             log.debug("Unable to locate instance of context class with oid ${params.__context}")
+        }
+
+        if(contextObj instanceof Contact){
+            contextObj = contextObj.org ?: contextObj.vendor
         }
 
         redirect(controller: 'resource', action: 'show', id: contextObj.class.name + ':' + contextObj.id, params: [activeTab: params.activeTab])
@@ -875,15 +883,25 @@ class AjaxHtmlController {
             if (editable) {
                 if (contentType == RDStore.CONTACT_CONTENT_TYPE_EMAIL) {
                     if (content ==~ /[_A-Za-z0-9-]+(.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(.[A-Za-z0-9]+)*(.[A-Za-z]{2,})/) {
-                        contact = new Contact(content: content, contentType: contentType, language: language, type: type)
+                        contact = new Contact(content: content, contentType: contentType, type: type)
                         contact[objectType] = owner
+
+                        if(language){
+                            contact.addToLanguages(language)
+                        }
+
                         contact.save()
                     } else {
                         flash.error = g.message(code: 'contact.email.validation.fail')
                     }
                 } else {
-                    contact = new Contact(content: content, contentType: contentType, language: language, type: type)
+                    contact = new Contact(content: content, contentType: contentType, type: type)
                     contact[objectType] = owner
+
+                    if(language){
+                        contact.addToLanguages(language)
+                    }
+
                     contact.save()
                 }
             } else {
