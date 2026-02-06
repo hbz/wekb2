@@ -510,23 +510,28 @@ class AutoUpdatePackagesService {
                 }
 
             } catch (Exception exception) {
-                log.error("Error by startAutoPackageUapdate: ${exception.message}")
-                exception.printStackTrace()
-                UpdatePackageInfo.withTransaction {
-                    //UpdatePackageInfo updatePackageFail = new UpdatePackageInfo()
-                    updatePackageInfo.description = "An error occurred while processing the KBART file. More information can be seen in the system log. File from URL: ${lastUpdateURL}"
-                    updatePackageInfo.status = RDStore.UPDATE_STATUS_FAILED
-                    updatePackageInfo.startTime = startTime
-                    updatePackageInfo.endTime = new Date()
-                    updatePackageInfo.pkg = pkg
-                    updatePackageInfo.onlyRowsWithLastChanged = onlyRowsWithLastChanged
-                    updatePackageInfo.automaticUpdate = true
-                    updatePackageInfo.updateUrl = lastUpdateURL
-                    updatePackageInfo.countPreviouslyTippsInWekb = updatePackageInfo.pkg.getTippCountWithoutRemoved()
-                    updatePackageInfo.countNowTippsInWekb = updatePackageInfo.pkg.getTippCountWithoutRemoved()
-                    updatePackageInfo.countCurrentTipps = updatePackageInfo.pkg.getCurrentTippCount()
-                    updatePackageInfo.countDeletedTipps = updatePackageInfo.pkg.getDeletedTippCount()
-                    updatePackageInfo.save()
+                log.error("Error by startAutoPackageUpdate: ${exception.message}", exception)
+                UpdatePackageInfo.withNewTransaction { status ->
+
+                    def freshPkg = pkg?.id ? Package.get(pkg.id) : null
+                    def failed = RefdataValue.get(RDStore.UPDATE_STATUS_FAILED.id)
+
+                    if (freshPkg) {
+                        updatePackageInfo.description = "An error occurred while processing the KBART file. " +
+                                "More information can be seen in the system log. File from URL: ${lastUpdateURL}"
+                        updatePackageInfo.status = failed
+                        updatePackageInfo.startTime = startTime
+                        updatePackageInfo.endTime = new Date()
+                        updatePackageInfo.pkg = freshPkg
+                        updatePackageInfo.onlyRowsWithLastChanged = onlyRowsWithLastChanged
+                        updatePackageInfo.automaticUpdate = true
+                        updatePackageInfo.updateUrl = lastUpdateURL
+                        updatePackageInfo.countPreviouslyTippsInWekb = freshPkg.getTippCountWithoutRemoved()
+                        updatePackageInfo.countNowTippsInWekb        = freshPkg.getTippCountWithoutRemoved()
+                        updatePackageInfo.countCurrentTipps          = freshPkg.getCurrentTippCount()
+                        updatePackageInfo.countDeletedTipps          = freshPkg.getDeletedTippCount()
+                        updatePackageInfo.save(flush: true, failOnError: true)
+                    }
                 }
             }
         }
