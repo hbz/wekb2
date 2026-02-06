@@ -14,6 +14,8 @@
 
         <g:form class="ui form" controller="login" action="authenticate" method="post" name="loginForm"
                 elementId="loginForm" autocomplete="off">
+            <g:hiddenField name="spring-security-redirect" value="${params.'spring-security-redirect'}" />
+
             <div class="ui stacked segment">
                 <div class="field">
                     <div class="ui left icon input">

@@ -199,9 +199,12 @@
 
         <div class="right menu">
             <g:if test="${!isUserLoggedIn}">
+                <g:set var="backUrl" value="${request.forwardURI ?: request.requestURI}${request.queryString ? '?' + request.queryString : ''}" />
+
+
                 <div class="item">
-                    <g:link class="ui inverted button" controller="home" action="index"><i
-                            class="sign in alternate icon icon"></i>Login</g:link>
+                    <g:link class="ui inverted button" controller="login" action="auth" params="[( 'spring-security-redirect' ): backUrl]">
+                    <i class="sign in alternate icon icon"></i>Login</g:link>
                 </div>
 
             </g:if>
