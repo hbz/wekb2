@@ -779,8 +779,7 @@ class KbartProcessService {
         else {
             List minimumKbartStandard = ['publication_title',
                                          'title_url',
-                                         'title_id',
-                                         'publication_type']
+                                         'title_id']
             int countMinimumKbartStandard = 0
 
             try {
@@ -834,7 +833,6 @@ class KbartProcessService {
                                 case "publisher_name": colMap.publisher_name = c
                                     break
                                 case "publication_type": colMap.publication_type = c
-                                    countMinimumKbartStandard++
                                     break
                                 case "date_monograph_published_print": colMap.date_monograph_published_print = c
                                     break
