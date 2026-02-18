@@ -1,4 +1,4 @@
-<%@ page import="wekb.utils.ServerUtils; wekb.Platform; wekb.Org" %>
+<%@ page import=" wekb.Platform; wekb.Org" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -31,10 +31,6 @@
 }
 </script>
     <title>we:kb | wekb</title>
-
-    <g:if test="${ServerUtils.getCurrentServer() == ServerUtils.SERVER_PROD}">
-        <meta name="google-site-verification" content="-kK1UKmjJAt_9QnZg6YL-96yI65sls58pHyheOOrS0M" />
-    </g:if>
 </head>
 
 <body>
