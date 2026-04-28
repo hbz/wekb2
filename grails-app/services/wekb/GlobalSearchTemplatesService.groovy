@@ -2285,6 +2285,7 @@ class GlobalSearchTemplatesService {
                                 //Other Filter
                                 [
                                         type       : 'dropDown',
+                                        load       : 'ajax',
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.TIPP_ACCESS_TYPE,
                                         prompt     : 'Access Type',
@@ -2296,6 +2297,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
+                                        load       : 'ajax',
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.TIPP_OPEN_ACCESS,
                                         prompt     : 'Open Access',
@@ -2307,6 +2309,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
+                                        load       : 'ajax',
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.TIPP_PUBLICATION_TYPE,
                                         prompt     : 'Publication Type',
@@ -2318,6 +2321,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
+                                        load       : 'ajax',
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.TIPP_MEDIUM,
                                         prompt     : 'Medium',
@@ -2329,6 +2333,8 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type     : 'dropDownGroup',
+                                        load     : 'ajax',
+                                        baseClass  : 'wekb.TitleInstancePackagePlatform',
                                         dropDownType  : 'accessStartDate',
                                         prompt     : 'Access Start Date Year',
                                         msgCode    : 'titleinstancepackageplatform.accessStartDate',
@@ -2339,6 +2345,8 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type     : 'dropDownGroup',
+                                        load     : 'ajax',
+                                        baseClass  : 'wekb.TitleInstancePackagePlatform',
                                         dropDownType  : 'accessEndDate',
                                         prompt     : 'Access End Date Year',
                                         msgCode    : 'titleinstancepackageplatform.accessEndDate',
@@ -2349,6 +2357,8 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type     : 'dropDownGroup',
+                                        load     : 'ajax',
+                                        baseClass  : 'wekb.TitleInstancePackagePlatform',
                                         dropDownType  : 'dateFirstOnlineYear',
                                         prompt     : 'Date First Online Year',
                                         msgCode    : 'titleinstancepackageplatform.dateFirstOnline',
@@ -2359,6 +2369,8 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type     : 'dropDownGroup',
+                                        load     : 'ajax',
+                                        baseClass  : 'wekb.TitleInstancePackagePlatform',
                                         dropDownType  : 'subjectArea',
                                         prompt     : 'Subject Area',
                                         msgCode    : 'titleinstancepackageplatform.subjectArea',
@@ -2371,6 +2383,7 @@ class GlobalSearchTemplatesService {
 
                                 [
                                         type       : 'dropDown',
+                                        load       : 'ajax',
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.DDC,
                                         prompt     : 'DDC',
@@ -2383,6 +2396,7 @@ class GlobalSearchTemplatesService {
 
                                 [
                                         type       : 'dropDown',
+                                        load       : 'ajax',
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.COMPONENT_LANGUAGE,
                                         prompt     : 'Language',
@@ -2454,6 +2468,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type     : 'dropDownGroup',
+                                        load     : 'ajax',
                                         dropDownType  : 'publisher',
                                         prompt     : 'Publisher',
                                         msgCode    : 'titleinstancepackageplatform.publisherName',
@@ -2478,6 +2493,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
+                                        load     : 'ajax',
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.TIPP_PUBLICATION_TYPE,
                                         prompt     : 'Publication Type',
@@ -2488,6 +2504,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
+                                        load     : 'ajax',
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.TIPP_MEDIUM,
                                         prompt     : 'Medium',
@@ -2512,6 +2529,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
+                                        load     : 'ajax',
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.TIPP_ACCESS_TYPE,
                                         prompt     : 'Access Type',
@@ -2522,6 +2540,8 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type     : 'dropDownGroup',
+                                        load     : 'ajax',
+                                        baseClass  : 'wekb.TitleInstancePackagePlatform',
                                         dropDownType  : 'subjectArea',
                                         prompt     : 'Subject Area',
                                         msgCode    : 'titleinstancepackageplatform.subjectArea',
@@ -2531,6 +2551,8 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type     : 'dropDownGroup',
+                                        load     : 'ajax',
+                                        baseClass  : 'wekb.TitleInstancePackagePlatform',
                                         dropDownType  : 'dateFirstOnlineYear',
                                         prompt     : 'Date First Online Year',
                                         msgCode    : 'titleinstancepackageplatform.dateFirstOnline',
@@ -2540,6 +2562,8 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type     : 'dropDownGroup',
+                                        load     : 'ajax',
+                                        baseClass  : 'wekb.TitleInstancePackagePlatform',
                                         dropDownType  : 'accessStartDate',
                                         prompt     : 'Access Start Date Year',
                                         msgCode    : 'titleinstancepackageplatform.accessStartDate',
@@ -2549,6 +2573,8 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type     : 'dropDownGroup',
+                                        load     : 'ajax',
+                                        baseClass  : 'wekb.TitleInstancePackagePlatform',
                                         dropDownType  : 'accessEndDate',
                                         prompt     : 'Access End Date Year',
                                         msgCode    : 'titleinstancepackageplatform.accessEndDate',
@@ -2558,6 +2584,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type     : 'dropDownGroup',
+                                        load     : 'ajax',
                                         dropDownType  : 'ddc',
                                         baseClass  : 'wekb.RefdataValue',
                                         prompt     : 'DDC',
@@ -2568,6 +2595,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
+                                        load       : 'ajax',
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.TIPP_OPEN_ACCESS,
                                         prompt     : 'Open Access',
@@ -2578,6 +2606,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
+                                        load       : 'ajax',
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.COMPONENT_LANGUAGE,
                                         prompt     : 'Language',

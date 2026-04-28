@@ -15,7 +15,8 @@
 
     <g:javascript> var spotlightSearchUrl="${g.createLink(controller: 'search', action: 'spotlightSearch')}";</g:javascript>
     <g:javascript> var ajaxLookUp="${g.createLink(controller: 'ajaxJson', action: 'lookup')}";</g:javascript>
-    <g:javascript> var componentsDropDown="${g.createLink(controller: 'ajaxJson', action: 'lookup')}";</g:javascript>
+    <g:javascript> var componentsDropDown="${g.createLink(controller: 'ajaxJson', action: 'componentsDropDown')}";</g:javascript>
+    <g:javascript> var selectedDropDown="${g.createLink(controller: 'ajaxJson', action: 'componentsDropDown', params: [dropDownGroup: true])}";</g:javascript>
 
     <asset:javascript src="wekb.js"/>
     <asset:stylesheet src="wekb.css"/>
