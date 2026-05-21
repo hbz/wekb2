@@ -1,4 +1,4 @@
-<%@ page import="grails.converters.JSON" %>
+<%@ page import="wekb.TitleInstancePackagePlatform; wekb.UpdateTippInfo; grails.converters.JSON" %>
 
 <wekb:serviceInjection/>
 
@@ -60,12 +60,17 @@
                             </div>
                         </g:if>
                         <g:elseif test="${c.link != null && c.value && c.value != '-Empty-'}">
-                            <g:link
-                                    controller="resource"
-                                    action="show"
-                                    id="${c.link}">
-                                <g:render template="/search/qbevalue" model="[c: c]"/>
-                            </g:link>
+                            <g:if test="${c.link == refOID || (refObject instanceof TitleInstancePackagePlatform && r.obj instanceof UpdateTippInfo)}">
+                                ${c.value}
+                            </g:if>
+                            <g:else>
+                                <g:link
+                                        controller="resource"
+                                        action="show"
+                                        id="${c.link}">
+                                    <g:render template="/search/qbevalue" model="[c: c]"/>
+                                </g:link>
+                            </g:else>
                         </g:elseif>
                         <g:elseif test="${c.outGoingLink != null}">
                             <g:render template="/search/qbevalue" model="[c: c]"/>
