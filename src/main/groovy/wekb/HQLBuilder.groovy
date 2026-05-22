@@ -133,7 +133,7 @@ public class HQLBuilder {
     }
 
     String hql = outputHqlWithoutSort(hql_builder_context, qbetemplate)
-    // log.debug("HQL: ${hql}");
+    log.debug("HQL: ${hql}");
     log.debug("BindVars: ${hql_builder_context.bindvars}");
 
 
@@ -220,7 +220,12 @@ public class HQLBuilder {
   }
 
   static def processQryContextType(hql_builder_context,crit, baseclass, grailsApplication) {
-    List l =  crit.defn.contextTree.prop.split("\\.")
+    List l = []
+    //no extra join when just the foreign key is being requested
+    if(crit.defn.contextTree.prop.contains('.id'))
+      l << crit.defn.contextTree.prop
+    else
+      l.addAll(crit.defn.contextTree.prop.split("\\."))
     processQryContextType(hql_builder_context, crit, l, 'o', baseclass, baseclass, grailsApplication)
   }
 
