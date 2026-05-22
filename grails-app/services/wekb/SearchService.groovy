@@ -308,9 +308,23 @@ class SearchService {
                             jumpToLink = rh.jumpToLink.replace("objectID", "${r.id}")
                         }
 
+                        String link = null
+                        boolean createLink = false
+                        if(rh.link == 'isNotTippInTipp') {
+                            createLink = !(result.refObject instanceof TitleInstancePackagePlatform && r instanceof UpdateTippInfo)
+                        }
+                        if(rh.link == 'isNotPackageInPackage') {
+                            createLink = !(result.refObject instanceof Package && r instanceof UpdatePackageInfo)
+                        }
+                        else if(rh.link instanceof Boolean)
+                            createLink = rh.link
+                        if(createLink) {
+                            link = final_oid ?: response_record.oid
+                        }
+
                         response_record.cols.add([
                                 linkInfo: rh.linkInfo ?: null,
-                                link: (rh.link ? (final_oid ?: response_record.oid ) : null),
+                                link: link,
                                 value: (cobj != null ? (cobj) : '-Empty-'),
                                 outGoingLink: rh.outGoingLink ?: null,
                                 jumpToLink: jumpToLink ?: null,

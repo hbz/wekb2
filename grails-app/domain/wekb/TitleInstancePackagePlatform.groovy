@@ -127,12 +127,12 @@ class TitleInstancePackagePlatform  extends AbstractBase implements Auditable {
     version column: 'tipp_version'
 
     uuid column: 'tipp_uuid', index: 'tipp_uuid_idx'
-    name column: 'tipp_name', type: 'text', index: 'tipp_name_idx'
+    name column: 'tipp_name', type: 'text', index: 'tipp_name_idx, tipp_name_status_idx'
 
-    lastUpdated column: 'tipp_last_updated', index: 'tipp_last_updated_idx'
+    lastUpdated column: 'tipp_last_updated', index: 'tipp_last_updated_idx, tipp_last_updated_status_idx'
     dateCreated column: 'tipp_date_created', index: 'tipp_date_created_idx'
 
-    status column: 'tipp_status_rv_fk', index: 'tipp_status_idx'
+    status column: 'tipp_status_rv_fk', index: 'tipp_status_idx, tipp_name_status_idx, tipp_last_updated_status_idx'
 
     note column: 'tipp_note', type: 'text'
     accessType column: 'tipp_access_type_rv_fk'

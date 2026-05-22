@@ -3091,8 +3091,8 @@ class GlobalSearchTemplatesService {
                                 ],
                         ],
                         qbeResults: [
-                                [heading: 'Description', property: 'description', link: true, linkInfo: 'Link to Package Update Info'],
-                                [heading: 'Package', property: 'pkg.name', link: true, linkInfo: 'Link to Package'],
+                                [heading: 'Description', property: 'description'/*, link: true, linkInfo: 'Link to Package Update Info'*/],
+                                [heading: 'Package', property: 'pkg.name', link: 'isNotPackageInPackage', linkInfo: 'Link to Package'],
                                 [heading: 'Status', property: 'status', sort: 'status.value'],
                                 [heading: 'Automatic Update', property: 'automaticUpdate', sort: 'automaticUpdate'],
                                 [heading: 'Start Time', property: 'startTime', sort: 'startTime'],
@@ -3197,8 +3197,8 @@ class GlobalSearchTemplatesService {
                                 ]
                         ],
                         qbeResults: [
-                                [heading: 'Description', property: 'description', link: true, linkInfo: 'Link to Title Update Info'],
-                                [heading: 'Title', property: 'tipp.name', sort: 'tipp.name', link: true, linkInfo: 'Link to Title', ],
+                                [heading: 'Description', property: 'description'/*, link: true, linkInfo: 'Link to Title Update Info'*/],
+                                [heading: 'Title', property: 'tipp.name', sort: 'tipp.name', link: 'isNotTippInTipp', linkInfo: 'Link to Title', ],
                                 [heading: 'Status', property: 'status', sort: 'status.value'],
                                 [heading: 'Type', property: 'type', sort: 'type.value'],
                                 [heading: 'KBART Field', property: 'kbartProperty', sort: 'kbartProperty'],
