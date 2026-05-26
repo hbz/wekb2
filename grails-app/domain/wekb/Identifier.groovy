@@ -2,6 +2,8 @@ package wekb
 
 
 import groovy.util.logging.Slf4j
+import wekb.annotations.TrigramIndex
+import wekb.annotations.TrigramLowerIndex
 import wekb.helper.BeanStore
 
 import javax.persistence.Transient
@@ -10,6 +12,8 @@ import javax.persistence.Transient
 class Identifier {
 
   IdentifierNamespace namespace
+  @TrigramIndex()
+  @TrigramLowerIndex()
   String value
   String uuid
 
