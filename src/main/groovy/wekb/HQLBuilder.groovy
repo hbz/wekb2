@@ -157,51 +157,56 @@ public class HQLBuilder {
       count_hql = "select count (*) ${hql}".toString()
     }
 
-    def fetch_hql = null
+    String fetch_hql, count_clause = null
     if ( returnObjectsOrRows=='objects' ) {
-      fetch_hql = "select ${qbetemplate.useDistinct == true ? 'distinct' : ''} o ${hql}".toString()
+      fetch_hql = "select ${qbetemplate.useDistinct == true ? 'distinct' : ''} o.id ${hql}".toString()
     }
     else {
       fetch_hql = "select ${buildFieldList(qbetemplate.qbeConfig.qbeResults)} ${hql}".toString()
     }
 
     // Many SQL variants freak out if you order by on a count(*) query, so only order by for the actual fetch
+    String order_clause = " order by o.${hql_builder_context.sort} ${hql_builder_context.order}"
     if ( hql_builder_context.containsKey('sort' ) && 
          ( hql_builder_context.get('sort') != null ) && 
          ( hql_builder_context.get('sort').length() > 0 ) ) {
       log.debug("Setting sort order to ${hql_builder_context.sort}")
-
       switch(hql_builder_context.sort) {
         case 'titleCount':
-              fetch_hql = fetch_hql.replaceFirst(" o ", " o, (select count(*) from  wekb.TitleInstancePackagePlatform as t where t.pkg = o.id) as titleCount ")
-              fetch_hql += " order by titleCount ${hql_builder_context.order}"
+              fetch_hql = fetch_hql.replaceFirst(" o.id ", " o.id, (select count(*) from  wekb.TitleInstancePackagePlatform as t where t.pkg = o.id) as titleCount ")
+              count_clause = "(select count(*) from  wekb.TitleInstancePackagePlatform as t where t.pkg = o.id) as titleCount"
+              order_clause = " order by titleCount ${hql_builder_context.order}"
               break
         case 'currentTippCount':
-              fetch_hql = fetch_hql.replaceFirst(" o ", " o, (select count(*) from  wekb.TitleInstancePackagePlatform as t where t.pkg = o.id and t.status = ${RDStore.KBC_STATUS_CURRENT.id}) as currentTippCount ")
-              fetch_hql += " order by currentTippCount ${hql_builder_context.order}"
+              fetch_hql = fetch_hql.replaceFirst(" o.id ", " o.id, (select count(*) from  wekb.TitleInstancePackagePlatform as t where t.pkg = o.id and t.status = ${RDStore.KBC_STATUS_CURRENT.id}) as currentTippCount ")
+              count_clause = "(select count(*) from  wekb.TitleInstancePackagePlatform as t where t.pkg = o.id and t.status = ${RDStore.KBC_STATUS_CURRENT.id}) as currentTippCount"
+              order_clause = " order by currentTippCount ${hql_builder_context.order}"
               break
         case 'deletedTippCount':
-              fetch_hql = fetch_hql.replaceFirst(" o ", " o, (select count(*) from  wekb.TitleInstancePackagePlatform as t where t.pkg = o.id and t.status = ${RDStore.KBC_STATUS_DELETED.id}) as deletedTippCount ")
-              fetch_hql += " order by deletedTippCount ${hql_builder_context.order}"
+              fetch_hql = fetch_hql.replaceFirst(" o.id ", " o.id, (select count(*) from  wekb.TitleInstancePackagePlatform as t where t.pkg = o.id and t.status = ${RDStore.KBC_STATUS_DELETED.id}) as deletedTippCount ")
+              count_clause = "(select count(*) from  wekb.TitleInstancePackagePlatform as t where t.pkg = o.id and t.status = ${RDStore.KBC_STATUS_DELETED.id}) as deletedTippCount"
+              order_clause = " order by deletedTippCount ${hql_builder_context.order}"
               break
         case 'retiredTippCount':
-              fetch_hql = fetch_hql.replaceFirst(" o ", " o, (select count(*) from  wekb.TitleInstancePackagePlatform as t where t.pkg = o.id and t.status = ${RDStore.KBC_STATUS_RETIRED.id}) as retiredTippCount ")
-              fetch_hql += " order by retiredTippCount ${hql_builder_context.order}"
+              fetch_hql = fetch_hql.replaceFirst(" o.id ", " o.id, (select count(*) from  wekb.TitleInstancePackagePlatform as t where t.pkg = o.id and t.status = ${RDStore.KBC_STATUS_RETIRED.id}) as retiredTippCount ")
+              count_clause = "(select count(*) from  wekb.TitleInstancePackagePlatform as t where t.pkg = o.id and t.status = ${RDStore.KBC_STATUS_RETIRED.id}) as retiredTippCount"
+              order_clause = " order by retiredTippCount ${hql_builder_context.order}"
               break
         case 'expectedTippCount':
-              fetch_hql = fetch_hql.replaceFirst(" o ", " o, (select count(*) from  wekb.TitleInstancePackagePlatform as t where t.pkg = o.id and t.status = ${RDStore.KBC_STATUS_EXPECTED.id}) as expectedTippCount ")
-              fetch_hql += " order by expectedTippCount ${hql_builder_context.order}"
+              fetch_hql = fetch_hql.replaceFirst(" o.id ", " o.id, (select count(*) from  wekb.TitleInstancePackagePlatform as t where t.pkg = o.id and t.status = ${RDStore.KBC_STATUS_EXPECTED.id}) as expectedTippCount ")
+              count_clause = "(select count(*) from  wekb.TitleInstancePackagePlatform as t where t.pkg = o.id and t.status = ${RDStore.KBC_STATUS_EXPECTED.id}) as expectedTippCount"
+              order_clause = " order by expectedTippCount ${hql_builder_context.order}"
               break
           case 'lastTryDate':
-              fetch_hql = fetch_hql.replaceFirst(" o ", " o, (select max(upi.endTime) from wekb.UpdatePackageInfo as upi where upi.endTime is not null and upi.pkg = o.id) as updateSuccessDate ")
-              fetch_hql += " order by updateSuccessDate ${hql_builder_context.order}"
-              break
-        default: fetch_hql += " order by o.${hql_builder_context.sort} ${hql_builder_context.order}"
+              fetch_hql = fetch_hql.replaceFirst(" o.id ", " o.id, (select max(upi.endTime) from wekb.UpdatePackageInfo as upi where upi.endTime is not null and upi.pkg = o.id) as updateSuccessDate ")
+              count_clause = "(select max(upi.endTime) from wekb.UpdatePackageInfo as upi where upi.endTime is not null and upi.pkg = o.id) as updateSuccessDate"
+              order_clause = " order by updateSuccessDate ${hql_builder_context.order}"
               break
       }
+      fetch_hql += order_clause
     }
 
-      return [count_hql: count_hql, fetch_hql: fetch_hql, params_hql: hql_builder_context.bindvars, sort: sort, order: order]
+      return [count_hql: count_hql, fetch_hql: fetch_hql, count_clause: count_clause, params_hql: hql_builder_context.bindvars, sort: sort, order: order, order_clause: order_clause]
   }
 
   static def processProperty(hql_builder_context,crit,baseclass, grailsApplication) {
