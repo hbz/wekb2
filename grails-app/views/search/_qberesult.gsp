@@ -1,4 +1,4 @@
-<%@ page import="grails.converters.JSON" %>
+<%@ page import="wekb.TitleInstancePackagePlatform; wekb.UpdateTippInfo; grails.converters.JSON" %>
 
 <wekb:serviceInjection/>
 

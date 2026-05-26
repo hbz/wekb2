@@ -330,7 +330,43 @@ $(function () {
                 remoteValues: 'values', // grouping for api results
                 values: 'values', // grouping for all dropdown values
                 name: 'text',   // displayed dropdown text
-                value: 'id'   //
+                value: 'value'   //
+            },
+            onShow: function () {
+                current = $(this).val();
+                $(this).dropdown('set selected', current);
+                $(this).dropdown('set active', current);
+            }
+        });
+        $(this).find('.search').removeAttr('autocomplete');
+    });
+
+    $(".selectedDropDown").each(function() {
+        var selectedDropDownDropdownURL = selectedDropDown + "&dropDownType="+$(this).children('input')[0].getAttribute('data-domain')+"&refObject="+$(this).children('input')[0].getAttribute('data-refObject')+"&qp_status_id="+$(this).children('input')[0].getAttribute('data-qpStatusId')+"&q={query}"
+
+        $(this).dropdown({
+            clearable: true,
+            forceSelection: false,
+            preserveHTML : false,
+            error : {
+                source      : 'Cannot perform search. No source specified, and Semantic API module not included.',
+                noResults   : 'No results found for your search.',
+                logging     : 'Error encountered during debug logging; operation aborted.',
+                noTemplate  : 'No valid template name specified.',
+                serverError : 'An issue occurred while querying the server.',
+                maxResults  : 'The maxResults setting requires an array of results.',
+                method      : 'The specified method is not defined.'
+            },
+            apiSettings: {
+                // this url parses query server side and returns filtered results
+                url: selectedDropDownDropdownURL,
+                cache: false
+            },
+            fields: {
+                remoteValues: 'values', // grouping for api results
+                values: 'values', // grouping for all dropdown values
+                name: 'text',   // displayed dropdown text
+                value: 'value'   //
             },
             onShow: function () {
                 current = $(this).val();

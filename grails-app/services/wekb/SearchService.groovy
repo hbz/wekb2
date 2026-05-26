@@ -2,6 +2,7 @@ package wekb
 
 import grails.converters.JSON
 import grails.gorm.transactions.Transactional
+import grails.plugin.springsecurity.SpringSecurityService
 import grails.plugin.springsecurity.SpringSecurityUtils
 import grails.web.mvc.FlashScope
 import grails.web.servlet.mvc.GrailsParameterMap
@@ -18,7 +19,7 @@ class SearchService {
     GenericOIDService genericOIDService
     GlobalSearchTemplatesService globalSearchTemplatesService
     DisplayTemplateService displayTemplateService
-    ClassExaminationService classExaminationService
+    SpringSecurityService springSecurityService
     AccessService accessService
     TenantSwitchService tenantSwitchService
 
@@ -59,9 +60,17 @@ class SearchService {
 
         def query_start_time = System.currentTimeMillis()
         // log.debug("Get data rows..")
-        def recset
+        List idset, rowset, recset
          tenantSwitchService.withTenantRole {
-             recset = baseclass.executeQuery(hql_Map.fetch_hql, hql_Map.params_hql, query_params)
+             rowset = baseclass.executeQuery(hql_Map.fetch_hql, hql_Map.params_hql)
+             if(hql_Map.count_clause) {
+                 idset = rowset.collect { row -> row[0] }
+                 recset = baseclass.executeQuery('select o, '+hql_Map.count_clause+' from '+baseclass.name+' o where o.id in (:idSet) '+hql_Map.order_clause, [idSet: idset.drop(result.offset).take(result.max)])
+             }
+             else {
+                 idset = rowset
+                 recset = baseclass.executeQuery('select o from '+baseclass.name+' o where o.id in (:idSet) '+hql_Map.order_clause, [idSet: idset.drop(result.offset).take(result.max)])
+             }
         }
 
         result.recset = recset
@@ -308,12 +317,26 @@ class SearchService {
                             jumpToLink = rh.jumpToLink.replace("objectID", "${r.id}")
                         }
 
+                        String link = null
+                        boolean createLink = false
+                        if(rh.link == 'isNotTippInTipp') {
+                            createLink = !(result.refObject instanceof TitleInstancePackagePlatform && r instanceof UpdateTippInfo)
+                        }
+                        if(rh.link == 'isNotPackageInPackage') {
+                            createLink = !(result.refObject instanceof Package && r instanceof UpdatePackageInfo)
+                        }
+                        else if(rh.link instanceof Boolean)
+                            createLink = rh.link
+                        if(createLink) {
+                            link = final_oid ?: response_record.oid
+                        }
+
                         response_record.cols.add([
                                 linkInfo: rh.linkInfo ?: null,
-                                link: (rh.link ? (final_oid ?: response_record.oid ) : null),
+                                link: link,
                                 value: (cobj != null ? (cobj) : '-Empty-'),
                                 outGoingLink: rh.outGoingLink ?: null,
-                                jumpToLink: jumpToLink ?: null,
+                                jumpToLink: jumpToLink && springSecurityService.isLoggedIn() ? jumpToLink : null, //TMP ERMS-7301
                                 globalSearchTemplateProperty: rh.property])
                 }
             }

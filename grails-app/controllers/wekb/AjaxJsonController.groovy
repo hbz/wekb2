@@ -13,6 +13,7 @@ class AjaxJsonController {
 
     SpringSecurityService springSecurityService
     DropdownService dropdownService
+    GenericOIDService genericOIDService
 
     /**
      *  lookup : Calls the refdataFind function of a specific class and returns a simple result list.
@@ -139,16 +140,16 @@ class AjaxJsonController {
         def result = [:]
         result.values = []
         if (params.baseClass) {
-            if(params.dropDownGroup == 'true'){
-                dropdownService.selectedDropDown(params.dropDownType, refObject, params.qp_status_id).each {
-                    result.values << [value: it.id, text: "${it.text}"]
-                }
-            }else {
-                dropdownService.componentsDropDown(params.baseClass, params.filter1 ?: '').each {
-                    result.values << [value: it.id, text: "${it.text}"]
-                }
+            dropdownService.componentsDropDown(params.baseClass, params.filter1 ?: '', params.q).each {
+                result.values << [value: it.id, text: "${it.text}"]
             }
-
+        }
+        else if(params.dropDownGroup == 'true'){
+            def refObject = genericOIDService.resolveOID(params.refObject)
+            String qp_status_id = params.qp_status_id && params.qp_status_id != 'null' ? params.qp_status_id : null
+            dropdownService.selectedDropDown(params.dropDownType, refObject, qp_status_id, params.q).each {
+                result.values << [value: it.id, text: "${it.text}"]
+            }
         }
         else {
             log.debug("Unable to locate domain class ${params.baseClass} or not readable");
