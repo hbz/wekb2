@@ -13,6 +13,7 @@ class AjaxJsonController {
 
     SpringSecurityService springSecurityService
     DropdownService dropdownService
+    GenericOIDService genericOIDService
 
     /**
      *  lookup : Calls the refdataFind function of a specific class and returns a simple result list.
@@ -21,7 +22,7 @@ class AjaxJsonController {
      * @param filter1 : A status value string which should be filtered out after the query has been executed
      */
     def lookup() {
-        log.debug("AjaxJsonController::lookup ${params}");
+        log.info("AjaxJsonController::lookup ${params}");
         def result = [:]
         def domain_class = grailsApplication.getArtefact('Domain',params.baseClass)
         if (domain_class) {
@@ -40,7 +41,7 @@ class AjaxJsonController {
     }
 
     def lookupMyComponents() {
-        log.debug("AjaxJsonController::lookupMyComponents ${params}")
+        log.info("AjaxJsonController::lookupMyComponents ${params}")
 
         List result = []
         User user = springSecurityService.currentUser
@@ -101,7 +102,7 @@ class AjaxJsonController {
      */
     @Secured(['ROLE_USER', 'ROLE_EDITOR', 'ROLE_VENDOR_EDITOR', 'IS_AUTHENTICATED_FULLY'])
     def getRefdata() {
-        log.debug("AjaxController::getRefdata ${params}")
+        log.info("AjaxController::getRefdata ${params}")
         def result = []
 
         if (params.id == 'boolean') {
@@ -135,20 +136,20 @@ class AjaxJsonController {
     }
 
     def componentsDropDown() {
-        log.debug("AjaxJsonController::componentsDropDown ${params}")
+        log.info("AjaxJsonController::componentsDropDown ${params}")
         def result = [:]
         result.values = []
         if (params.baseClass) {
-            if(params.dropDownGroup == 'true'){
-                dropdownService.selectedDropDown(params.dropDownType, refObject, params.qp_status_id).each {
-                    result.values << [value: it.id, text: "${it.text}"]
-                }
-            }else {
-                dropdownService.componentsDropDown(params.baseClass, params.filter1 ?: '').each {
-                    result.values << [value: it.id, text: "${it.text}"]
-                }
+            dropdownService.componentsDropDown(params.baseClass, params.filter1 ?: '', params.q).each {
+                result.values << [value: it.id, text: "${it.text}"]
             }
-
+        }
+        else if(params.dropDownGroup == 'true'){
+            def refObject = genericOIDService.resolveOID(params.refObject)
+            String qp_status_id = params.qp_status_id && params.qp_status_id != 'null' ? params.qp_status_id : null
+            dropdownService.selectedDropDown(params.dropDownType, refObject, qp_status_id, params.q).each {
+                result.values << [value: it.id, text: "${it.text}"]
+            }
         }
         else {
             log.debug("Unable to locate domain class ${params.baseClass} or not readable");

@@ -21,7 +21,7 @@ class CreateController {
 
 
   def index() {
-    log.debug("CreateControler::index... ${params}");
+    log.info("CreateControler::index... ${params}");
     def result=[:]
     User user = springSecurityService.currentUser
 
@@ -76,7 +76,7 @@ class CreateController {
   }
 
   def process() {
-    log.debug("CreateController::process... ${params}");
+    log.info("CreateController::process... ${params}");
 
     def result=[:]
 
@@ -120,18 +120,18 @@ class CreateController {
   }
 
   def packageBatch() {
-    log.debug("CreateControler::packageBatch... ${params}");
+    log.info("CreateControler::packageBatch... ${params}");
     def result=[:]
     User user = springSecurityService.currentUser
 
     result.mappingCols = ["package_uuid", "package_name", "provider_uuid", "nominal_platform_uuid", "description", "description_url", "breakable", "content_type",
-            "file", "open_access", "payment_type", "scope", "national_range", "regional_range", "provider_product_id", "ddc", "source_default_supply_method", "source_url", "source_ftp_server_url", "source_ftp_directory", "source_ftp_file_name", "source_ftp_username", "source_ftp_password", "frequency", "automated_updates", "archiving_agency", "open_access_of_archiving_agency", "post_cancellation_access_of_archiving_agency"]
+            "file", "open_access", "payment_type", "scope", "national_range", "regional_range", "provider_product_id", "ddc", "source_default_supply_method", "source_url", "source_ftp_server_url", "source_ftp_directory", "source_ftp_file_name", "source_ftp_username", "source_ftp_password", "frequency", "automated_updates", "archiving_agency", "open_access_of_archiving_agency", "post_cancellation_access_of_archiving_agency", "publication_title", "publication_type", "title_id", "title_url"]
 
     result
   }
 
   def processPackageBatch() {
-    log.debug("CreateControler::processPackageBatch... ${params}");
+    log.info("CreateControler::processPackageBatch... ${params}");
         User user = springSecurityService.currentUser
         MultipartFile tsvFile = request.getFile("tsvFile")
         if(tsvFile && tsvFile.size > 0) {

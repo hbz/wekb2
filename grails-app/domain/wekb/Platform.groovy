@@ -151,7 +151,7 @@ class Platform  extends AbstractBase implements Auditable {
   RefdataValue fullTextSearch
 
   @RefdataAnnotation(cat = RCConstants.YN)
-  RefdataValue forwardingUsageStatistcs
+  RefdataValue forwardingUsageStatistics
 
   static hasMany = [
           roles: RefdataValue,
@@ -165,7 +165,7 @@ class Platform  extends AbstractBase implements Auditable {
     id column: 'plat_id'
     version column: 'plat_version'
 
-    uuid column: 'plat_uuid'
+    uuid column: 'plat_uuid', index: 'plat_uuid_idx'
     name column: 'plat_name'
 
     lastUpdated column: 'plat_last_updated'
@@ -197,7 +197,7 @@ class Platform  extends AbstractBase implements Auditable {
     counterCertified column: 'plat_counter_certified'
     statisticsAdminPortalUrl column: 'plat_statistics_admin_portal_url'
     statisticsUpdate column: 'plat_statistics_update_fk_rv'
-    counterRegistryApiUuid column: 'plat_counter_registry_api_uuid'
+    counterRegistryApiUuid column: 'plat_counter_registry_api_uuid', index: 'plat_counter_registry_api_uuid_idx'
     counterApiAuthenticationMethod column: 'plat_counter_api_authentication_method'
     centralApiKey column: 'plat_central_api_key', type: 'text'
     counterR5CounterPlatform column: 'plat_counter_r5_counter_platform', type: 'text'
@@ -227,7 +227,7 @@ class Platform  extends AbstractBase implements Auditable {
     individualDesignLogo column: 'plat_individual_design_logo_fk_rv'
     fullTextSearch column: 'plat_full_text_search_fk_rv'
 
-    forwardingUsageStatistcs column: 'plat_forwarding_usage_statistcs_fk_rv'
+    forwardingUsageStatistics column: 'plat_forwarding_usage_statistics_fk_rv'
 
   }
 
@@ -297,7 +297,7 @@ class Platform  extends AbstractBase implements Auditable {
     rssUrl (nullable: true, blank: true)
     individualDesignLogo (nullable: true, blank: false)
     fullTextSearch (nullable: true, blank: false)
-    forwardingUsageStatistcs(nullable: true, blank: false)
+    forwardingUsageStatistics(nullable: true, blank: false)
   }
 
   @Override
@@ -342,7 +342,7 @@ class Platform  extends AbstractBase implements Auditable {
   @Transient
   public getCurrentTippCount() {
     def refdata_current = RDStore.KBC_STATUS_CURRENT
-    int result = TitleInstancePackagePlatform.executeQuery("select count(*) from TitleInstancePackagePlatform as t where t.hostPlatform = :plt and t.status = :status"
+    int result = TitleInstancePackagePlatform.executeQuery("select count(*) from TitleInstancePackagePlatform as t where t.pkg.nominalPlatform = :plt and t.status = :status"
             , [plt: this, status: refdata_current])[0]
 
     result

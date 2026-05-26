@@ -1,6 +1,8 @@
 package wekb
 
-
+import grails.util.Holders
+import groovy.sql.GroovyRowResult
+import groovy.sql.Sql
 import wekb.ConcurrencyManagerService.Job
 import wekb.auth.User
 import wekb.helper.RCConstants
@@ -16,7 +18,11 @@ import org.hibernate.Session
 import org.hibernate.SessionFactory
 import org.springframework.security.access.annotation.Secured
 import wekb.system.FTControl
+import wekb.utils.DateUtils
+import wekb.utils.LoggingService
 
+import javax.servlet.ServletOutputStream
+import javax.sql.DataSource
 import java.text.SimpleDateFormat
 import java.util.concurrent.CancellationException
 import java.util.concurrent.ExecutorService
@@ -26,9 +32,10 @@ class AdminController {
 
   ComponentStatisticService componentStatisticService
   ConcurrencyManagerService concurrencyManagerService
-  CleanupService cleanupService
   AutoUpdatePackagesService autoUpdatePackagesService
+    AdminService adminService
   def ESWrapperService
+  ExportService exportService
   SpringSecurityService springSecurityService
   FTUpdateService FTUpdateService
   SessionFactory sessionFactory
@@ -38,6 +45,7 @@ class AdminController {
   DeletionService deletionService
   SearchService searchService
   LaserService laserService
+    LoggingService loggingService
 
 
   def systemThreads() {
@@ -45,7 +53,7 @@ class AdminController {
   }
 
   def updateTextIndexes() {
-    log.debug("Call to update indexe");
+    log.info("Call to update indexe");
 
     FTUpdateService.updateFTIndexes();
 
@@ -53,7 +61,7 @@ class AdminController {
   }
 
   def resetTextIndexes() {
-    log.debug("Call to update indexe")
+    log.info("Call to update indexe")
 
     FTUpdateService.clearDownAndInitES()
 
@@ -139,7 +147,7 @@ class AdminController {
       componentStatisticService.updateCompStats(12, 0, true)
     }.startOrQueue()
 
-    log.debug "Triggering statistics rewrite, job #${j.uuid}"
+    log.info "Triggering statistics rewrite, job #${j.uuid}"
     j.description = "Recalculate Statistics"
     j.type = RefdataCategory.lookupOrCreate(RCConstants.JOB_TYPE, 'RecalculateStatistics')
     j.startTime = new Date()
@@ -149,10 +157,10 @@ class AdminController {
 
   @Secured(['ROLE_SUPERUSER'])
   def autoUpdatePackages() {
-      log.debug("autoUpdatePackages: Beginning scheduled auto update packages job.")
+      log.info("autoUpdatePackages: Beginning scheduled auto update packages job.")
     executorService.execute({
       Thread.currentThread().setName('autoUpdatePackages_OnlyLastChanged')
-      autoUpdatePackagesService.findPackageToUpdateAndUpdate(true)
+      autoUpdatePackagesService.findPackageToUpdateOnAutoUpdate(true)
     })
 
     log.info("autoUpdatePackages: auto update packages job completed.")
@@ -162,10 +170,10 @@ class AdminController {
 
   @Secured(['ROLE_SUPERUSER'])
   def autoUpdatePackagesAllTitles() {
-    log.debug("autoUpdatePackagesAllTitles: Beginning scheduled auto update packages job.")
+    log.info("autoUpdatePackagesAllTitles: Beginning scheduled auto update packages job.")
     executorService.execute({
       Thread.currentThread().setName('autoUpdatePackages_AllTitles')
-      autoUpdatePackagesService.findPackageToUpdateAndUpdate(false)
+      autoUpdatePackagesService.findPackageToUpdateOnAutoUpdate(false)
     })
 
     log.info("autoUpdatePackagesAllTitles: auto update packages job completed.")
@@ -176,7 +184,7 @@ class AdminController {
   @Secured(['ROLE_SUPERUSER'])
   def manageFTControl() {
     Map<String, Object> result = [:]
-    log.debug("manageFTControl ...")
+    log.info("manageFTControl ...")
     result.ftControls = FTControl.list()
     result.editable = true
 
@@ -370,9 +378,10 @@ class AdminController {
 
     Package.findAllByStatusInList([RDStore.KBC_STATUS_CURRENT, RDStore.KBC_STATUS_RETIRED, RDStore.KBC_STATUS_EXPECTED], [sort: 'name']).eachWithIndex { Package aPackage, int index ->
       Integer tippsWithoutTitleIDCount = aPackage.getTippsWithoutTitleIDCount()
+        Integer currentTippsWithoutTitleIDCount = aPackage.getCurrentTippsWithoutTitleIDCount()
 
-      if(tippsWithoutTitleIDCount > 0 ){
-        pkgs << [pkg: aPackage, tippsWithoutTitleIDCount: tippsWithoutTitleIDCount]
+      if(currentTippsWithoutTitleIDCount > 0 || tippsWithoutTitleIDCount > 0 ){
+        pkgs << [pkg: aPackage, tippsWithoutTitleIDCount: tippsWithoutTitleIDCount, currentTippsWithoutTitleIDCount: currentTippsWithoutTitleIDCount]
       }
     }
 
@@ -388,7 +397,14 @@ class AdminController {
       result.pkgs = result.pkgs.reverse()
     }else if (params.sort == 'curatoryGroups') {
      result.pkgs = pkgs.sort { it.pkg.curatoryGroups.curatoryGroup.name[0]}
-   } else {
+   } else if (params.sort == 'currentTippsWithoutTitleIDCount') {
+       result.pkgs = pkgs.sort {
+           it.currentTippsWithoutTitleIDCount
+       }
+       result.pkgs = result.pkgs.reverse()
+   } else if (params.sort == 'autoUpdate') {
+       result.pkgs = pkgs.sort { it.pkg.kbartSource?.automaticUpdates}
+   }else {
       result.pkgs = pkgs
     }
 
@@ -397,58 +413,80 @@ class AdminController {
   }
 
 
-  def findTippDuplicatesByPkg() {
-    log.debug("findTippDuplicates::${params}")
-    def result = [:]
+    def findTippDuplicatesByPkg() {
+        log.debug("findTippDuplicates::${params}")
+        def result = [:]
 
-    Package aPackage = Package.findByUuid(params.id)
+        params.tippsDuplicatesBy = params.tippsDuplicatesBy ?: "titleID"
 
-    //List<TitleInstancePackagePlatform> tippsDuplicatesByName = aPackage.findTippDuplicatesByName()
-    //List<TitleInstancePackagePlatform> tippsDuplicatesByUrl = aPackage.findTippDuplicatesByURL()
-    List<TitleInstancePackagePlatform> tippsDuplicatesByTitleID = aPackage.findTippDuplicatesByTitleID()
+        Package aPackage = Package.findByUuid(params.id)
+        List<TitleInstancePackagePlatform> tippsDuplicates
+        if (params.tippsDuplicatesBy == "titleID") {
+            if(params.status){
+                RefdataValue status = RefdataValue.get(params.status)
+                result.status = status.value_en
+                tippsDuplicates = aPackage.findTippDuplicatesWithStatusByTitleID(status)
+            }else{
+                tippsDuplicates = aPackage.findTippDuplicatesByTitleIDWithOutRemoved()
+            }
 
-    //result.offsetByName = params.papaginateByName ? Integer.parseInt(params.offset) : 0
-    //result.maxByName = params.papaginateByName ? Integer.parseInt(params.max) : 100
+        }
+        if (params.tippsDuplicatesBy == "name") {
+            tippsDuplicates = aPackage.findTippDuplicatesByName()
+        }
+        if (params.tippsDuplicatesBy == "url") {
+            tippsDuplicates = aPackage.findTippDuplicatesByURL()
+        }
 
-    //result.offsetByUrl = params.papaginateByUrl ? Integer.parseInt(params.offset) : 0
-    //result.maxByUrl = params.papaginateByUrl ? Integer.parseInt(params.max) : 100
+        result.offset = params.offset ? Integer.parseInt(params.offset) : 0
+        result.max = params.max ? Integer.parseInt(params.max) : 100
 
-    result.offsetByTitleID = params.papaginateByTitleID ? Integer.parseInt(params.offset) : 0
-    result.maxByTitleID = params.papaginateByTitleID ? Integer.parseInt(params.max) : 100
+        result.totalCount = tippsDuplicates.size()
 
-    //result.totalCountByName = tippsDuplicatesByName.size()
-    //result.totalCountByUrl = tippsDuplicatesByUrl.size()
-    result.totalCountByTitleID = tippsDuplicatesByTitleID.size()
+        result.tippsDuplicates = tippsDuplicates.drop((int) result.offset).take((int) result.max)
 
-    //result.tippsDuplicatesByName = tippsDuplicatesByName.drop((int) result.offsetByName).take((int) result.maxByName)
-    //result.tippsDuplicatesByUrl = tippsDuplicatesByUrl.drop((int) result.offsetByUrl).take((int) result.maxByUrl)
-    result.tippsDuplicatesByTitleID = tippsDuplicatesByTitleID.drop((int) result.offsetByTitleID).take((int) result.maxByTitleID)
+        result.pkg = aPackage
 
-    result.pkg = aPackage
+        result
+    }
 
-    result
-  }
+    def findTippWithoutTitleIDByPkg() {
+        log.debug("findTippWithoutTitleIDByPkg::${params}")
+        def result = [:]
 
-  def findTippWithoutTitleIDByPkg() {
-    log.debug("findTippWithoutTitleIDByPkg::${params}")
-    def result = [:]
+        Package aPackage = Package.findByUuid(params.id)
 
-    Package aPackage = Package.findByUuid(params.id)
-
-    List<TitleInstancePackagePlatform> tippsByWithoutTitleID = aPackage.findTippByWithoutTitleID()
+        List<TitleInstancePackagePlatform> tippsByWithoutTitleID
+        if (params.status == 'Current') {
+            tippsByWithoutTitleID = aPackage.findCurrentTippByWithoutTitleID()
+        } else {
+            tippsByWithoutTitleID = aPackage.findTippByWithoutTitleID()
+        }
 
 
-    result.offsetByWithoutTitleID = params.papaginateByWithoutTitleID ? Integer.parseInt(params.offset) : 0
-    result.maxByWithoutTitleID = params.papaginateByWithoutTitleID ? Integer.parseInt(params.max) : 100
+        result.offsetByWithoutTitleID = params.papaginateByWithoutTitleID ? Integer.parseInt(params.offset) : 0
+        result.maxByWithoutTitleID = params.papaginateByWithoutTitleID ? Integer.parseInt(params.max) : 100
 
-    result.totalCountByWithoutTitleID = tippsByWithoutTitleID.size()
+        result.totalCountByWithoutTitleID = tippsByWithoutTitleID.size()
 
-    result.tippsByWithoutTitleID = tippsByWithoutTitleID.drop((int) result.offsetByWithoutTitleID).take((int) result.maxByWithoutTitleID)
+        result.tippsByWithoutTitleID = tippsByWithoutTitleID.drop((int) result.offsetByWithoutTitleID).take((int) result.maxByWithoutTitleID)
 
-    result.pkg = aPackage
+        result.pkg = aPackage
 
-    result
-  }
+        result
+    }
+
+    def deleteTippsWithoutTitleIDByPkg() {
+        log.debug("deleteTippsWithoutTitleIDByPkg::${params}")
+
+        Package aPackage = Package.findByUuid(params.id)
+
+        int count = adminService.deleteTippsWithoutTitleIDByPkg(aPackage)
+
+        flash.message = "${count} title without title_id set to removed in package --------> ${aPackage.name}!"
+
+        redirect(url: request.getHeader('referer'))
+    }
 
   def notLinkedPackageInLaser() {
     log.debug("notLinkedPackageInLaser::${params}")
@@ -491,11 +529,14 @@ class AdminController {
         log.debug("linkedPackageWithPermanentTitlesInLaser::${params}")
         def result = [:]
 
-        List pkgs = laserService.packageLinkedInLaser()
-
         result.status = params.status ?: 'Current'
-        result.totalCount = pkgs.size()
-        result.pkgs = laserService.linkedPackageWithPermanentTitlesInLaser(pkgs.pkg_gokb_id, result.status)
+
+        result.provider = Org.findByUuid(params.providerUuid)
+
+        String wekbProviderUuid = result.provider ? result.provider.uuid : null
+
+        result.pkgs = laserService.linkedPackageWithPermanentTitlesInLaser(result.status, wekbProviderUuid)
+        result.totalCount = result.pkgs.size()
 
         result
     }
@@ -508,21 +549,187 @@ class AdminController {
 
         List linkedSubs = []
 
-        linkedSubs = laserService.linkedSubsInLaser(result.pkg.uuid)
+        result.status = params.status
 
-        if(params.boolean('perpetualAccess') == true){
-            linkedSubs = laserService.linkedSubsWithPerpetualAccessInLaser(result.pkg.uuid)
+        linkedSubs = laserService.linkedSubsInLaser(result.pkg.uuid, result.status)
+
+        if(params.perpetualAccess && params.boolean('perpetualAccess') == true){
+            linkedSubs = laserService.linkedSubsInLaser(result.pkg.uuid, result.status, 'true')
         }
 
-        if(params.boolean('perpetualAccess') == false){
-            linkedSubs = laserService.linkedSubsWithOutPerpetualAccessInLaser(result.pkg.uuid)
+        if(params.perpetualAccess && params.boolean('perpetualAccess') == false){
+            linkedSubs = laserService.linkedSubsInLaser(result.pkg.uuid, result.status, 'false')
         }
 
         result.totalCount = linkedSubs.size()
         result.linkedSubs = linkedSubs
         result
-        result.totalCount = linkedSubs.size()
-        result.linkedSubs = linkedSubs
+    }
+
+    def linkedPTOverSubInLaser() {
+        log.debug("linkedPTOverSubInLaser::${params}")
+        def result = [:]
+
+        params.offset = params.offset ?: 0
+        params.max = params.max ?: 250
+
+
+        result.pkg = Package.get(params.id)
+
+        List linkedPTs = []
+
+        result.status = params.status
+        result.linkedPTs = []
+
+        linkedPTs = laserService.linkedPTOverSubInLaser(result.pkg.uuid, result.status, Long.parseLong(params.subId))
+
+        result.totalCount = linkedPTs.size()
+
+        linkedPTs = linkedPTs.drop(params.int('offset')).take(params.int('max'))
+
+        Sql sql = new Sql(Holders.grailsApplication.mainContext.getBean('dataSource') as DataSource)
+        try {
+            linkedPTs.each {
+                Map infos = [laser_tipp_name: it.tipp_name, laser_tipp_status: it.tipp_status, laser_ie_status: it.ie_status, laser_tipp_id: it.tipp_id, laser_pt_ie_fk: it.pt_ie_fk]
+
+                if(params.withWekbTipp) {
+                    def principalRows = sql.rows('''select tipp_name, 
+                                                    rv.rdv_value_en as tipp_status,
+                                                    tipp_id
+                                                    from  title_instance_package_platform tipp
+                                                    left join refdata_value rv on tipp.tipp_status_rv_fk = rv.rdv_id
+                                                    where tipp_uuid = :uuid''', [uuid: it.tipp_gokb_id])[0]
+
+                    if (principalRows) {
+                        infos.id = principalRows[2]
+                        infos.name = principalRows[0]
+                        infos.status = principalRows[1]
+                    }
+                }
+
+                result.linkedPTs << infos
+            }
+                sql.close()
+        }catch (Exception ex){
+            log.error("Problem by linkedPTOverSubInLaser:", ex)
+        }
+        finally {
+            try {
+                if(sql)
+                    sql.close()
+            }
+            catch (Exception e) {
+                log.error("Problem by Close SQL Client:", e)
+            }
+        }
+
+        result.subInfo = laserService.subInfosFromLaser(Long.parseLong(params.subId))
+
+        result
+    }
+
+    def permanentTitlesInLaser() {
+        log.debug("permanentTitlesInLaser::${params}")
+        def result = [:]
+
+        params.offset = params.offset ?: 0
+        params.max = params.max ?: 250
+
+        result.pkg = Package.get(params.id)
+        result.provider = Org.findByUuid(params.providerUuid)
+
+        String wekbProviderUuid = result.provider ? result.provider.uuid : null
+
+        List linkedPTs = []
+
+        result.status = params.status
+        result.linkedPTs = []
+
+        String wekbUuid = result.pkg ? result.pkg.uuid : null
+
+        result.tipp = TitleInstancePackagePlatform.get(params.tippId)
+
+        String wekbTippUuid = result.tipp ? result.tipp.uuid : null
+
+        params.withWekbTipp = result.tipp ? true : params.withWekbTipp
+
+        linkedPTs = laserService.permanentTitlesInLaser(result.status, wekbUuid, wekbTippUuid, wekbProviderUuid)
+
+        result.totalCount = linkedPTs.size()
+
+        linkedPTs = linkedPTs.drop(params.int('offset')).take(params.int('max'))
+
+
+        Sql sql = new Sql(Holders.grailsApplication.mainContext.getBean('dataSource') as DataSource)
+
+        try {
+            linkedPTs.each {
+                Map infos = [laser_tipp_name: it.tipp_name,
+                             laser_tipp_status: it.tipp_status,
+                             laser_ie_status: it.ie_status,
+                             laser_tipp_id: it.tipp_id,
+                             laser_pt_ie_fk: it.pt_ie_fk,
+                             pkg_name: it.pkg_name,
+                             sub_id: it.sub_id,
+                             sub_name: it.sub_name,
+                             sub_status: it.sub_status,
+                             sub_start_date: it.sub_start_date,
+                             sub_end_date: it.sub_end_date,
+                             sub_has_perpetual_access: it.sub_has_perpetual_access,
+                             holding_selection: it.holding_selection,
+                             sub_typ: it.sub_typ]
+
+                if(params.withWekbTipp) {
+                    if (result.tipp) {
+                        infos.id = result.tipp.id
+                        infos.name = result.tipp.name
+                        infos.status =result.tipp.status.value_en
+                    } else {
+                        def principalRows = sql.rows('''select tipp_name,
+                                                    rv.rdv_value_en as tipp_status,
+                                                    tipp_id
+                                                    from  title_instance_package_platform tipp
+                                                    left join refdata_value rv on tipp.tipp_status_rv_fk = rv.rdv_id
+                                                    where tipp_uuid = :uuid''', [uuid: it.tipp_gokb_id])[0]
+
+                        if (principalRows) {
+                            infos.id = principalRows[2]
+                            infos.name = principalRows[0]
+                            infos.status = principalRows[1]
+                        }
+                    }
+                }
+
+                result.linkedPTs << infos
+            }
+            sql.close()
+        }catch (Exception ex){
+            log.error("Problem by permanentTitlesInLaser:", ex)
+        }
+        finally {
+            try {
+                if(sql)
+                    sql.close()
+            }
+            catch (Exception e) {
+                log.error("Problem by Close SQL Client:", e)
+            }
+        }
+
+        result
+    }
+
+    def permanentTitlesInLaserByProviders() {
+        log.debug("permanentTitlesInLaserByProviders::${params}")
+        def result = [:]
+
+        List permanentTitlesInLaserByProviders = laserService.permanentTitlesInLaserByProviders()
+
+        result.totalCount = permanentTitlesInLaserByProviders.size()
+
+        result.permanentTitlesInLaserByProviders = permanentTitlesInLaserByProviders
+
+
         result
     }
 
@@ -543,6 +750,67 @@ class AdminController {
     result
   }
 
+    def findPackagesWithTippDuplicatesByUrl() {
+        log.debug("findPackagesWithTippDuplicatesByUrl::${params}")
+        def result = [:]
+
+        List pkgs = []
+
+        Package.findAllByStatus(RDStore.KBC_STATUS_CURRENT, [sort: 'name']).eachWithIndex { Package aPackage, int index ->
+            Integer tippDuplicatesByUrlCount = aPackage.getTippDuplicatesByURLCount()
+            if(tippDuplicatesByUrlCount){
+                pkgs << [pkg: aPackage, tippDuplicatesByUrlCount: tippDuplicatesByUrlCount]
+            }
+        }
+
+        //result.offset = params.offset ? Integer.parseInt(params.offset) : 0
+        //result.max = params.max ? Integer.parseInt(params.max) : 250
+
+        result.totalCount = pkgs.size()
+        if (params.sort == 'tippDuplicatesByUrlCount') {
+            result.pkgs = pkgs.sort {
+                it.tippDuplicatesByUrlCount
+            }
+            result.pkgs = result.pkgs.reverse()
+        }else {
+            result.pkgs = pkgs
+        }
+
+        //result.pkgs = result.pkgs.drop((int) result.offset).take((int) result.max)
+        result
+    }
+
+    def findPackagesWithRemovedTippDuplicates() {
+        log.debug("findPackagesWithRemovedTippDuplicates::${params}")
+        def result = [:]
+
+        List pkgs = []
+
+        Package.findAllByStatus(RDStore.KBC_STATUS_CURRENT, [sort: 'name']).eachWithIndex { Package aPackage, int index ->
+            Integer tippDuplicatesByTitleIDCount = aPackage.getTippDuplicatesByTitleIDCount()
+            if(tippDuplicatesByTitleIDCount > 0){
+                pkgs << [pkg: aPackage, tippDuplicatesByTitleIDCount: tippDuplicatesByTitleIDCount]
+            }
+        }
+
+        //result.offset = params.offset ? Integer.parseInt(params.offset) : 0
+        //result.max = params.max ? Integer.parseInt(params.max) : 250
+
+        result.totalCount = pkgs.size()
+
+        if (params.sort == 'tippDuplicatesByTitleIDCount') {
+            result.pkgs = pkgs.sort {
+                it.tippDuplicatesByTitleIDCount
+            }
+            result.pkgs = result.pkgs.reverse()
+        } else {
+            result.pkgs = pkgs
+        }
+
+        //result.pkgs = result.pkgs.drop((int) result.offset).take((int) result.max)
+        result
+    }
+
 
 
   def findPackagesWithTippDuplicates() {
@@ -554,7 +822,7 @@ class AdminController {
     Package.findAllByStatus(RDStore.KBC_STATUS_CURRENT, [sort: 'name']).eachWithIndex { Package aPackage, int index ->
       Integer tippDuplicatesByNameCount = 0  //aPackage.getTippDuplicatesByNameCount()
       Integer tippDuplicatesByUrlCount = 0 //aPackage.getTippDuplicatesByURLCount()
-      Integer tippDuplicatesByTitleIDCount = aPackage.getTippDuplicatesByTitleIDCount()
+      Integer tippDuplicatesByTitleIDCount = aPackage.getTippDuplicatesByTitleIDWithOutRemovedCount()
       //log.debug("Package ${aPackage.name} : ${index}")
 
       if(tippDuplicatesByNameCount > 0 || tippDuplicatesByUrlCount > 0 || tippDuplicatesByTitleIDCount > 0){
@@ -590,31 +858,43 @@ class AdminController {
     result
   }
 
-  def removeTippDuplicatesByUrl(){
+  def removeTippDuplicatesByUrlOfPkg(){
     Package aPackage = Package.findByUuid(params.id)
 
-    List<TitleInstancePackagePlatform> tippsDuplicatesByUrl = aPackage.findTippDuplicatesByURL()
-
-    int countRemoved = 0
-    tippsDuplicatesByUrl.groupBy {it.url}.each {String key, List<TitleInstancePackagePlatform> tipps ->
-      //println(key)
-      //println(tipps.sort {it.lastUpdated}.reverse().lastUpdated)
-      List list = tipps.sort {it.lastUpdated}.reverse()
-      list.eachWithIndex { TitleInstancePackagePlatform titleInstancePackagePlatform, int index ->
-        if(index != 0){
-          titleInstancePackagePlatform.status = RDStore.KBC_STATUS_REMOVED
-          titleInstancePackagePlatform.save()
-          countRemoved++
-        }
-      }
-
-    }
+      int countRemoved = adminService.removeTippDuplicatesByUrlOfPkg(aPackage)
 
     flash.message = "Tipps ${countRemoved} set to removed because of tipp duplicates by url"
 
-    redirect(action: 'findTippDuplicatesByPkg', params: [id: params.id, papaginateByUrl: true, max: 100, offset: 0] )
+    redirect(action: 'findTippDuplicatesByPkg', params: [id: params.id, max: 100, offset: 0] )
 
   }
+
+    def removeTippDuplicatesByTitleID(){
+        int countRemoved = 0
+
+        Package.findAllByStatus(RDStore.KBC_STATUS_CURRENT, [sort: 'name']).eachWithIndex { Package aPackage, int index ->
+            Integer tippDuplicatesByTitleIDCount = aPackage.getTippDuplicatesByTitleIDWithOutRemovedCount()
+            if(tippDuplicatesByTitleIDCount > 0){
+                countRemoved = countRemoved + adminService.removeTippDuplicatesByTitleIDOfPkg(aPackage)
+            }
+        }
+
+        flash.message = "Tipps ${countRemoved} set to removed because of tipp duplicates by title_id"
+
+        redirect(action: 'index')
+
+    }
+
+    def removeTippDuplicatesByTitleIDOfPkg(){
+        Package aPackage = Package.findByUuid(params.id)
+
+        int countRemoved = adminService.removeTippDuplicatesByTitleIDOfPkg(aPackage)
+
+        flash.message = "Tipps ${countRemoved} set to removed because of tipp duplicates by title_id"
+
+        redirect(action: 'findTippDuplicatesByPkg', params: [id: params.id, max: 100, offset: 0] )
+
+    }
 
   def cleanupTippIdentifersWithSameNamespace() {
     /*Job j = concurrencyManagerService.createJob { Job j ->
@@ -970,5 +1250,141 @@ class AdminController {
 
     searchResult.result
   }
+
+    def platformDiff() {
+        log.debug("platformDiff::${params}")
+        def result = [:]
+
+        List<Map> platformDiff = laserService.platformDiff()
+
+
+        result.totalCount = platformDiff.size()
+        result.platformDiff = platformDiff
+        result
+    }
+
+    def packageDiff() {
+        log.debug("packageDiff::${params}")
+        def result = [:]
+
+        List<Map> packageDiff = laserService.packageDiff()
+
+
+        result.totalCount = packageDiff.size()
+        result.packageDiff = packageDiff
+        result
+    }
+
+    def createOrgDumpForZammad() {
+        Map<String, String> dumpCols = [
+                name: "concat('we:kb: ', o.name)",
+                shared: "true",
+                domain: "o.homepage",
+                domain_assignment: "false",
+                active: "true",
+                note: "''",
+                kuerzel: "''",
+                url_produktionsdatenbank: "''",
+                url_produktionsdatenbank_discovery: "''",
+                url_alma_premiumsandbox: "''",
+                url_discovery_premiumsandbox: "''",
+                url_homepage: "''",
+                discoverysystem_eigenheiten: "''",
+                opus_url_prouduktionssytem: "''",
+                opus_url_testsytem: "''",
+                ap_1_zammad: "''",
+                ap_2_zammad: "''",
+                ap_2_zammad_e_mail: "''",
+                ap_1_zammad_e_mail: "''",
+                ap_2_zammad_tel: "''",
+                ap_1_zammad_tel: "''",
+                lzv_institutions_code: "''",
+                vip: "false",
+                strasse: "''",
+                plz: "''",
+                stadt: "''",
+                land: "''",
+                produkt: "''",
+                lokalsystem: "''",
+                status: "''",
+                endnutzerfl: "''",
+                tech: "''",
+                besonders: "''",
+                'N8_system_url': "''",
+                'N8_oa_url1': "''",
+                'N8_oa_url2': "''",
+                'N8_oa_url3': "''",
+                'N5_las_nutzertyp': "'we:kb-Anbieter'",
+                'N5_las_url': "concat('https://wekb.hbz-nrw.de/resource/show/', o.uuid)",
+                members: "''"
+        ]
+        String filenameDomain = 'wekb_providers'
+        if(params.domain == 'Vendor') {
+            dumpCols.N5_las_nutzertyp = "'we:kb-Library Supplier'"
+            filenameDomain = 'wekb_library_suppliers'
+        }
+        String mapArgs = dumpCols.collect { String header, String column -> "${column} as ${header}" }.join(',')
+        String dumpQuery = "select ${mapArgs} from ${params.domain} o where o.status != :removed order by lower(o.name)"
+        Set currentInstitutions = Org.executeQuery(dumpQuery, [removed: RDStore.KBC_STATUS_REMOVED])
+        Set<String> titleRow = []
+        dumpCols.keySet().each { String key ->
+            titleRow << key.replace('N8', '08').replace('N5', '05')
+        }
+        List<List<String>> columnData = []
+        currentInstitutions.each { row ->
+            columnData.add(row)
+        }
+        response.setHeader( "Content-Disposition", "attachment; filename=${filenameDomain}_${DateUtils.getSDF_forFilename().format(new Date())}.csv")
+        response.contentType = "text/csv"
+
+        ServletOutputStream out = response.outputStream
+        out.withWriter { writer ->
+            writer.write(exportService.generateSeparatorTableString(titleRow, columnData, ','))
+        }
+        out.flush()
+        out.close()
+        return
+    }
+
+    def setKbartFileHashs(){
+        int kbartFileHashsCount = 0
+
+        if(params.date){
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
+            String dateInString = params.date
+            Date lastRun = formatter.parse(dateInString)
+            kbartFileHashsCount = adminService.setKbartFileHashs(lastRun)
+
+            flash.message = "KbartSource ${kbartFileHashsCount} set kbart file hash! LastRun -> ${lastRun}"
+        }else {
+            flash.error = "Send last run date!"
+        }
+
+        redirect(action: 'index')
+
+    }
+
+    def logging() {
+        log.info("logging")
+
+        def result = [:]
+
+
+        if(params.setLogging && params.logger){
+            loggingService.setLevelTemporarily(params.logger, params.setLogging, params.loggingTime ? Integer.parseInt(params.loggingTime) : 3600 , 'Admin')
+        }
+
+        if(params.resetLogging && params.logger){
+            loggingService.resetLevel(params.logger)
+        }
+
+        List<Map> listLoggers = loggingService.listLoggers()
+
+
+        result.totalCount = listLoggers.size()
+        result.listLoggers = listLoggers
+        result
+
+    }
 
 }

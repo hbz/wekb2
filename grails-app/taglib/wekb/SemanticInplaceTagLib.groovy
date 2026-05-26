@@ -437,9 +437,12 @@ class SemanticInplaceTagLib {
 
         if ((attrs.value != null) && (attrs.value instanceof String && attrs.value.length() > 0)) {
             def o = genericOIDService.resolveOID(attrs.value)
-            out << "data-displayValue=\"${o.toString()}\" "
+            if(o)
+                out << "data-displayValue=\"${o.toString()}\" "
+            else
+                out << "data-displayValue=\"${attrs.value}\" "
         }
-
+        String placeholder = attrs.placeholder ?: 'Search for ...'
 
         if (attrs.filter1) {
             out << "data-filter1=\"${attrs.filter1}\" "
@@ -447,7 +450,44 @@ class SemanticInplaceTagLib {
         out << "/>"
         out << '<i class="remove icon"></i>'
         out << '<i class="dropdown icon"></i>'
-        out << '<div class="default text">Search for...</div>'
+        out << '<div class="default text">'+placeholder+'</div>'
+        out << '<div class="menu"></div>'
+        out << '</div>'
+
+    }
+
+    def selectedDropDown = { attrs, body ->
+
+        out << '<div class="ui fluid search selection clearable dropdown selectedDropDown '
+
+        out << '"'
+
+
+        if (attrs.id) {
+            out << " id=\"${attrs.id}\" "
+        }
+        out << ">"
+
+        out << "<input type=\"hidden\" value=\"${attrs.value ?: ''}\" name=\"${attrs.name}\" data-domain=\"${attrs.dropDownType}\" "
+
+        if ((attrs.value != null) && (attrs.value instanceof String && attrs.value.length() > 0)) {
+            def o = genericOIDService.resolveOID(attrs.value)
+            if(o)
+                out << "data-displayValue=\"${o.toString()}\" "
+            else out << "data-displayValue=\"${attrs.value}\" "
+        }
+        String placeholder = attrs.placeholder ?: 'Search for ...'
+
+        if (attrs.refObject) {
+            out << "data-refObject=\"${attrs.refObject}\" "
+        }
+        if (attrs.qpStatusId) {
+            out << "data-qpStatusId=\"${attrs.qpStatusId}\" "
+        }
+        out << "/>"
+        out << '<i class="remove icon"></i>'
+        out << '<i class="dropdown icon"></i>'
+        out << '<div class="default text">'+placeholder+'</div>'
         out << '<div class="menu"></div>'
         out << '</div>'
 

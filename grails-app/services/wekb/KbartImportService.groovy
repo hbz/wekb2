@@ -950,7 +950,7 @@ class KbartImportService {
                 publicationType: tipp_publicationType,
                 url: tipp_fields.url,
                 pkg: tipp_fields.pkg,
-                hostPlatform: tipp_fields.hostPlatform)
+                hostPlatform: tipp_fields.pkg.nominalPlatform)
 
         result.save()
 
@@ -993,7 +993,7 @@ class KbartImportService {
             }
         }
         else {
-            return null
+            return RDStore.TIPP_PUBLIC_TYPE_NOSET
         }
     }
 
@@ -2162,7 +2162,7 @@ class KbartImportService {
                 result.changedTipp = true
             }
             if (tippMap.ddc) {
-                List ddcs = tippMap.ddc.split(',')
+                Set ddcs = tippMap.ddc.split(',')
 
                 ddcs.each { String ddc ->
                     RefdataValue refdataValue = RefdataCategory.lookup(RCConstants.DDC, ddc)
@@ -2212,7 +2212,7 @@ class KbartImportService {
                 result.changedTipp = true
             }
             if(tippMap.language) {
-                List languages = tippMap.language.split(',')
+                Set languages = tippMap.language.split(',')
                 languages.each { String lan ->
                     RefdataValue refdataValue
                     if (lan.size() == 2) {
@@ -2398,7 +2398,7 @@ class KbartImportService {
                                     volumeNumber: tippMap.kbartRowMap.monograph_volume,
                                     fromKbartImport: true,
                                     pkg: tippMap.pkg,
-                                    hostPlatform: tippMap.hostPlatform
+                                    hostPlatform: tippMap.pkg.nominalPlatform
                             )
                             if (tipp) {
                                 tipp.kbartImportRunning = true
@@ -2525,7 +2525,7 @@ class KbartImportService {
 
                                 // KBART -> ddc -> ddcs
                                 if (tippMap.kbartRowMap.ddc) {
-                                    List ddcs = tippMap.kbartRowMap.ddc.split(',')
+                                    Set ddcs = tippMap.kbartRowMap.ddc.split(',')
 
                                     ddcs.each { String ddc ->
                                         RefdataValue refdataValue = RefdataCategory.lookup(RCConstants.DDC, ddc)
@@ -2537,7 +2537,8 @@ class KbartImportService {
 
                                 // KBART -> language -> language -> languages
                                 if (tippMap.kbartRowMap.language) {
-                                    List languages = tippMap.kbartRowMap.language.split(',')
+                                    Set languages = tippMap.kbartRowMap.language.split(',')
+                                    List<Long> langsInTipp = []
                                     languages.each { String lan ->
                                         RefdataValue refdataValue
                                         if (lan.size() == 2) {
@@ -2546,9 +2547,10 @@ class KbartImportService {
                                             refdataValue = RefdataCategory.lookup(RCConstants.COMPONENT_LANGUAGE, lan)
                                         }
                                         if (refdataValue) {
-                                            if (!ComponentLanguage.findByTippAndLanguage(tipp, refdataValue)) {
+                                            if (!(refdataValue.id in langsInTipp)) {
                                                 ComponentLanguage componentLanguage = new ComponentLanguage(tipp: tipp, language: refdataValue)
                                                 componentLanguage.save()
+                                                langsInTipp << refdataValue.id
                                             }
                                         }
                                     }
@@ -2696,7 +2698,7 @@ class KbartImportService {
 
             String title = tippMap.publication_title
 
-            countTipps = TitleInstancePackagePlatform.executeQuery('select count(*) from TitleInstancePackagePlatform as tipp ' +
+            /*countTipps = TitleInstancePackagePlatform.executeQuery('select count(*) from TitleInstancePackagePlatform as tipp ' +
                     'where tipp.pkg = :pkg and tipp.status != :removed and tipp.name = :tiDtoName ',
                     [pkg: pkg, tiDtoName: title, removed: RDStore.KBC_STATUS_REMOVED])[0]
 
@@ -2705,7 +2707,7 @@ class KbartImportService {
                         'where tipp.pkg = :pkg and tipp.status != :removed and tipp.name = :tiDtoName ' +
                         ' order by tipp.lastUpdated DESC',
                         [pkg: pkg, tiDtoName: title, removed: RDStore.KBC_STATUS_REMOVED])
-            }
+            }*/
 
 
 

@@ -12,7 +12,7 @@ class FwkController {
 
   //TODO: REMOVE COMBO
  /* def history() {
-    log.debug("FwkController::history...");
+    log.info("FwkController::history...");
     def result = [:]
 
     def obj = resolveOID(params.id)

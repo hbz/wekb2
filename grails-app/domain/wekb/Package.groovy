@@ -77,7 +77,7 @@ class Package  extends AbstractBase implements Auditable {
     id column: 'pkg_id'
     version column: 'pkg_version'
 
-    uuid column: 'pkg_uuid'
+    uuid column: 'pkg_uuid', index: 'pkg_uuid_idx'
     name column: 'pkg_name'
 
     lastUpdated column: 'pkg_last_updated'
@@ -463,21 +463,21 @@ class Package  extends AbstractBase implements Auditable {
   @Transient
   List<TitleInstancePackagePlatform> findTippDuplicatesByName() {
 
-    List<TitleInstancePackagePlatform> tippsDuplicates = TitleInstancePackagePlatform.executeQuery("select tipp from TitleInstancePackagePlatform as tipp " +
-            " where tipp.pkg = :pkg and tipp.status != :removed and" +
-            " tipp.name in (select tipp2.name from TitleInstancePackagePlatform tipp2 where tipp2.pkg = :pkg and tipp2.status != :removed group by tipp2.name having count(tipp2.name) > 1)" +
+    List<TitleInstancePackagePlatform> tippsDuplicates = TitleInstancePackagePlatform.executeQuery("select DISTINCT(tipp) from TitleInstancePackagePlatform as tipp " +
+            " where tipp.pkg = :pkg and " +
+            " tipp.name in (select tipp2.name from TitleInstancePackagePlatform tipp2 where tipp2.pkg = :pkg group by tipp2.name having count(tipp2.name) > 1)" +
             " order by tipp.name",
-            [pkg: this, removed: RDStore.KBC_STATUS_REMOVED]) ?: []
+            [pkg: this]) ?: []
   }
 
   @Transient
   List<TitleInstancePackagePlatform> findTippDuplicatesByURL() {
 
-    List<TitleInstancePackagePlatform> tippsDuplicates = TitleInstancePackagePlatform.executeQuery("select tipp from TitleInstancePackagePlatform as tipp" +
-            " where tipp.pkg = :pkg and tipp.status != :removed and" +
-            " tipp.url in (select tipp2.url from TitleInstancePackagePlatform tipp2 where tipp2.pkg = :pkg and tipp2.status != :removed group by tipp2.url having count(tipp2.url) > 1)" +
+    List<TitleInstancePackagePlatform> tippsDuplicates = TitleInstancePackagePlatform.executeQuery("select DISTINCT(tipp) from TitleInstancePackagePlatform as tipp" +
+            " where tipp.pkg = :pkg and " +
+            " tipp.url in (select tipp2.url from TitleInstancePackagePlatform tipp2 where tipp2.pkg = :pkg group by tipp2.url having count(tipp2.url) > 1)" +
             " order by tipp.url",
-            [pkg: this, removed: RDStore.KBC_STATUS_REMOVED]) ?: []
+            [pkg: this]) ?: []
   }
 
   @Transient
@@ -487,14 +487,44 @@ class Package  extends AbstractBase implements Auditable {
 
     if(identifierNamespace) {
       List<TitleInstancePackagePlatform> tippsDuplicates = TitleInstancePackagePlatform.executeQuery("select tipp from TitleInstancePackagePlatform as tipp join tipp.ids as ident" +
-              " where tipp.pkg = :pkg and tipp.status != :removed " +
-              " and ident.value in (select ident2.value FROM Identifier AS ident2, TitleInstancePackagePlatform as tipp2 WHERE ident2.namespace = :namespace and ident2.tipp = tipp2 and tipp2.pkg = :pkg and tipp2.status != :removed" +
+              " where tipp.pkg = :pkg " +
+              " and ident.namespace = :namespace and ident.value in (select ident2.value FROM Identifier AS ident2, TitleInstancePackagePlatform as tipp2 WHERE ident2.namespace = :namespace and ident2.tipp = tipp2 and tipp2.pkg = :pkg " +
               " group by ident2.value having count(ident2.value) > 1) order by ident.value",
-              [pkg: this, namespace: identifierNamespace, removed: RDStore.KBC_STATUS_REMOVED]) ?: []
+              [pkg: this, namespace: identifierNamespace]) ?: []
     }else {
       return []
     }
   }
+
+    List<TitleInstancePackagePlatform> findTippDuplicatesByTitleIDWithOutRemoved() {
+
+        IdentifierNamespace identifierNamespace = IdentifierNamespace.findByValueAndTargetType('title_id', RDStore.IDENTIFIER_NAMESPACE_TARGET_TYPE_TIPP)
+
+        if(identifierNamespace) {
+            List<TitleInstancePackagePlatform> tippsDuplicates = TitleInstancePackagePlatform.executeQuery("select tipp from TitleInstancePackagePlatform as tipp join tipp.ids as ident" +
+                    " where tipp.pkg = :pkg and tipp.status != :status" +
+                    " and ident.namespace = :namespace and ident.value in (select ident2.value FROM Identifier AS ident2, TitleInstancePackagePlatform as tipp2 WHERE ident2.namespace = :namespace and ident2.tipp = tipp2 and tipp2.pkg = :pkg and tipp2.status != :status" +
+                    " group by ident2.value having count(ident2.value) > 1) order by ident.value",
+                    [pkg: this, namespace: identifierNamespace, status: RDStore.KBC_STATUS_REMOVED]) ?: []
+        }else {
+            return []
+        }
+    }
+
+    List<TitleInstancePackagePlatform> findTippDuplicatesWithStatusByTitleID(RefdataValue status) {
+
+        IdentifierNamespace identifierNamespace = IdentifierNamespace.findByValueAndTargetType('title_id', RDStore.IDENTIFIER_NAMESPACE_TARGET_TYPE_TIPP)
+
+        if(identifierNamespace) {
+            List<TitleInstancePackagePlatform> tippsDuplicates = TitleInstancePackagePlatform.executeQuery("select tipp from TitleInstancePackagePlatform as tipp join tipp.ids as ident" +
+                    " where tipp.pkg = :pkg and tipp.status = :status " +
+                    " and ident.namespace = :namespace and ident.value in (select ident2.value FROM Identifier AS ident2, TitleInstancePackagePlatform as tipp2 WHERE ident2.namespace = :namespace and ident2.tipp = tipp2 and tipp2.pkg = :pkg " +
+                    " group by ident2.value having count(ident2.value) > 1) order by ident.value",
+                    [pkg: this, namespace: identifierNamespace, status: status]) ?: []
+        }else {
+            return []
+        }
+    }
 
   @Transient
   List<TitleInstancePackagePlatform> findTippByWithoutTitleID() {
@@ -502,7 +532,7 @@ class Package  extends AbstractBase implements Auditable {
     IdentifierNamespace identifierNamespace = IdentifierNamespace.findByValueAndTargetType('title_id', RDStore.IDENTIFIER_NAMESPACE_TARGET_TYPE_TIPP)
 
     if(identifierNamespace) {
-      List<TitleInstancePackagePlatform> tippsDuplicates = TitleInstancePackagePlatform.executeQuery("select tipp from TitleInstancePackagePlatform as tipp join tipp.ids as ident" +
+      List<TitleInstancePackagePlatform> tippsDuplicates = TitleInstancePackagePlatform.executeQuery("select DISTINCT(tipp) from TitleInstancePackagePlatform as tipp" +
               " where tipp.pkg = :pkg and tipp.status != :removed " +
               " and not exists(select id from Identifier id where id.tipp = tipp and id.namespace = :namespace)",
               [pkg: this, namespace: identifierNamespace, removed: RDStore.KBC_STATUS_REMOVED]) ?: []
@@ -511,23 +541,38 @@ class Package  extends AbstractBase implements Auditable {
     }
   }
 
+    @Transient
+    List<TitleInstancePackagePlatform> findCurrentTippByWithoutTitleID() {
+
+        IdentifierNamespace identifierNamespace = IdentifierNamespace.findByValueAndTargetType('title_id', RDStore.IDENTIFIER_NAMESPACE_TARGET_TYPE_TIPP)
+
+        if(identifierNamespace) {
+            List<TitleInstancePackagePlatform> tippsDuplicates = TitleInstancePackagePlatform.executeQuery("select DISTINCT(tipp) from TitleInstancePackagePlatform as tipp" +
+                    " where tipp.pkg = :pkg and tipp.status = :current " +
+                    " and not exists(select id from Identifier id where id.tipp = tipp and id.namespace = :namespace)",
+                    [pkg: this, namespace: identifierNamespace, current: RDStore.KBC_STATUS_CURRENT]) ?: []
+        }else {
+            return []
+        }
+    }
+
   @Transient
   Integer getTippDuplicatesByNameCount() {
 
-    int result = TitleInstancePackagePlatform.executeQuery("select count(*) from TitleInstancePackagePlatform as tipp" +
-            " where tipp.pkg = :pkg and tipp.status != :removed and" +
-            " tipp.name in (select tipp2.name from TitleInstancePackagePlatform tipp2 where tipp2.pkg = :pkg and tipp2.status != :removed group by tipp2.name having count(tipp2.name) > 1)",
-            [pkg: this, removed: RDStore.KBC_STATUS_REMOVED])[0]
+    int result = TitleInstancePackagePlatform.executeQuery("select count(DISTINCT(tipp)) from TitleInstancePackagePlatform as tipp" +
+            " where tipp.pkg = :pkg and " +
+            " tipp.name in (select tipp2.name from TitleInstancePackagePlatform tipp2 where tipp2.pkg = :pkg group by tipp2.name having count(tipp2.name) > 1)",
+            [pkg: this])[0]
     return result
   }
 
   @Transient
   Integer getTippDuplicatesByURLCount() {
 
-    int result = TitleInstancePackagePlatform.executeQuery("select count(*) from TitleInstancePackagePlatform as tipp" +
-            " where tipp.pkg = :pkg and tipp.status != :removed and " +
-            " tipp.url in (select tipp2.url from TitleInstancePackagePlatform tipp2 where tipp2.pkg = :pkg and tipp2.status != :removed group by tipp2.url having count(tipp2.url) > 1)",
-            [pkg: this, removed: RDStore.KBC_STATUS_REMOVED])[0]
+    int result = TitleInstancePackagePlatform.executeQuery("select count(DISTINCT(tipp)) from TitleInstancePackagePlatform as tipp" +
+            " where tipp.pkg = :pkg and " +
+            " tipp.url in (select tipp2.url from TitleInstancePackagePlatform tipp2 where tipp2.pkg = :pkg group by tipp2.url having count(tipp2.url) > 1)",
+            [pkg: this])[0]
 
     return result
   }
@@ -537,26 +582,58 @@ class Package  extends AbstractBase implements Auditable {
     IdentifierNamespace identifierNamespace = IdentifierNamespace.findByValueAndTargetType('title_id', RDStore.IDENTIFIER_NAMESPACE_TARGET_TYPE_TIPP)
 
     if(identifierNamespace) {
-      int result = TitleInstancePackagePlatform.executeQuery("select count(*) from TitleInstancePackagePlatform as tipp join tipp.ids as ident" +
-              " where tipp.pkg = :pkg and tipp.status != :removed " +
-              " and ident.value in (select ident2.value FROM Identifier AS ident2, TitleInstancePackagePlatform as tipp2 WHERE ident2.namespace = :namespace and ident2.tipp = tipp2 and tipp2.pkg = :pkg and tipp2.status != :removed" +
+      int result = TitleInstancePackagePlatform.executeQuery("select count(DISTINCT(tipp)) from TitleInstancePackagePlatform as tipp join tipp.ids as ident" +
+              " where tipp.pkg = :pkg " +
+              " and ident.namespace = :namespace and ident.value in (select ident2.value FROM Identifier AS ident2, TitleInstancePackagePlatform as tipp2 WHERE ident2.namespace = :namespace and ident2.tipp = tipp2 and tipp2.pkg = :pkg" +
               " group by ident2.value having count(ident2.value) > 1)",
-              [pkg: this, namespace: identifierNamespace, removed: RDStore.KBC_STATUS_REMOVED])[0]
+              [pkg: this, namespace: identifierNamespace])[0]
       return result
     }else {
       return 0
     }
   }
 
+    @Transient
+    Integer getTippDuplicatesByTitleIDWithOutRemovedCount() {
+        IdentifierNamespace identifierNamespace = IdentifierNamespace.findByValueAndTargetType('title_id', RDStore.IDENTIFIER_NAMESPACE_TARGET_TYPE_TIPP)
+
+        if(identifierNamespace) {
+            int result = TitleInstancePackagePlatform.executeQuery("select count(DISTINCT(tipp)) from TitleInstancePackagePlatform as tipp join tipp.ids as ident" +
+                    " where tipp.pkg = :pkg and tipp.status != :status" +
+                    " and ident.namespace = :namespace and ident.value in (select ident2.value FROM Identifier AS ident2, TitleInstancePackagePlatform as tipp2 WHERE ident2.namespace = :namespace and ident2.tipp = tipp2 and tipp2.pkg = :pkg and tipp2.status != :status" +
+                    " group by ident2.value having count(ident2.value) > 1)",
+                    [pkg: this, namespace: identifierNamespace, status: RDStore.KBC_STATUS_REMOVED])[0]
+            return result
+        }else {
+            return 0
+        }
+    }
+
+    @Transient
+    Integer getTippDuplicatesWithStatusByTitleIDCount(RefdataValue status) {
+        IdentifierNamespace identifierNamespace = IdentifierNamespace.findByValueAndTargetType('title_id', RDStore.IDENTIFIER_NAMESPACE_TARGET_TYPE_TIPP)
+
+        if(identifierNamespace) {
+            int result = TitleInstancePackagePlatform.executeQuery("select count(DISTINCT(tipp)) from TitleInstancePackagePlatform as tipp join tipp.ids as ident" +
+                    " where tipp.pkg = :pkg and tipp.status = :status " +
+                    " and ident.namespace = :namespace and ident.value in (select ident2.value FROM Identifier AS ident2, TitleInstancePackagePlatform as tipp2 WHERE ident2.namespace = :namespace and ident2.tipp = tipp2 and tipp2.pkg = :pkg" +
+                    " group by ident2.value having count(ident2.value) > 1)",
+                    [pkg: this, namespace: identifierNamespace, status: status])[0]
+            return result
+        }else {
+            return 0
+        }
+    }
+
   @Transient
   Integer getTippsByTitleIDCount() {
     IdentifierNamespace identifierNamespace = IdentifierNamespace.findByValueAndTargetType('title_id', RDStore.IDENTIFIER_NAMESPACE_TARGET_TYPE_TIPP)
 
     if(identifierNamespace) {
-      int result = TitleInstancePackagePlatform.executeQuery("select count(*) from TitleInstancePackagePlatform as tipp join tipp.ids as ident" +
-              " where tipp.pkg = :pkg and tipp.status != :removed " +
+      int result = TitleInstancePackagePlatform.executeQuery("select count(*) from TitleInstancePackagePlatform as tipp" +
+              " where tipp.pkg = :pkg " +
               " and exists(select id from Identifier id where id.tipp = tipp and id.namespace = :namespace)",
-              [pkg: this, namespace: identifierNamespace, removed: RDStore.KBC_STATUS_REMOVED])[0]
+              [pkg: this, namespace: identifierNamespace])[0]
       return result
     }else {
       return 0
@@ -577,6 +654,21 @@ class Package  extends AbstractBase implements Auditable {
       return 0
     }
   }
+
+    @Transient
+    Integer getCurrentTippsWithoutTitleIDCount() {
+        IdentifierNamespace identifierNamespace = IdentifierNamespace.findByValueAndTargetType('title_id', RDStore.IDENTIFIER_NAMESPACE_TARGET_TYPE_TIPP)
+
+        if (identifierNamespace) {
+            int result = TitleInstancePackagePlatform.executeQuery("select count(*) from TitleInstancePackagePlatform as tipp" +
+                    " where tipp.pkg = :pkg and tipp.status = :current " +
+                    " and not exists(select id from Identifier id where id.tipp = tipp and id.namespace = :namespace)",
+                    [pkg: this, namespace: identifierNamespace, current: RDStore.KBC_STATUS_CURRENT])[0]
+            return result
+        } else {
+            return 0
+        }
+    }
 
   @Transient
   public String getDomainName() {
@@ -604,7 +696,7 @@ class Package  extends AbstractBase implements Auditable {
   }
 
   @Transient
-  public getLastSuccessfulAutoUpdateInfo() {
+  UpdatePackageInfo getLastSuccessfulAutoUpdateInfo() {
     UpdatePackageInfo updatePackageInfo = UpdatePackageInfo.executeQuery("from UpdatePackageInfo where pkg = :pkg and status = :status and automaticUpdate = true" +
             " order by lastUpdated desc", [pkg: this, status: RDStore.UPDATE_STATUS_SUCCESSFUL], [max: 1, offset: 0])[0]
     updatePackageInfo
@@ -620,26 +712,26 @@ class Package  extends AbstractBase implements Auditable {
   }
 
   @Transient
-  public getCountAutoUpdateInfos() {
+  int getCountAutoUpdateInfos() {
     int result = UpdatePackageInfo.executeQuery("select count(*) from UpdatePackageInfo where pkg = :pkg and automaticUpdate = true", [pkg: this])[0]
     result
   }
 
   @Transient
-  public getCountManualUpdateInfos() {
+  int getCountManualUpdateInfos() {
     int result = UpdatePackageInfo.executeQuery("select count(*) from UpdatePackageInfo where pkg = :pkg and automaticUpdate = false", [pkg: this])[0]
     result
   }
 
     @Transient
-    public getLastSuccessfulManualUpdateInfo() {
+    UpdatePackageInfo getLastSuccessfulManualUpdateInfo() {
         UpdatePackageInfo updatePackageInfo = UpdatePackageInfo.executeQuery("from UpdatePackageInfo where pkg = :pkg and status = :status and automaticUpdate = false" +
                 " order by lastUpdated desc", [pkg: this, status: RDStore.UPDATE_STATUS_SUCCESSFUL], [max: 1, offset: 0])[0]
         updatePackageInfo
     }
 
   @Transient
-  public getLastSuccessfulUpdateInfo() {
+  UpdatePackageInfo getLastSuccessfulUpdateInfo() {
     UpdatePackageInfo updatePackageInfo = UpdatePackageInfo.executeQuery("from UpdatePackageInfo where pkg = :pkg and status = :status" +
             " order by lastUpdated desc", [pkg: this, status: RDStore.UPDATE_STATUS_SUCCESSFUL], [max: 1, offset: 0])[0]
     updatePackageInfo
@@ -679,7 +771,7 @@ class Package  extends AbstractBase implements Auditable {
   }
 
     @Transient
-    public getTippCountWithStatus(String status) {
+    int getTippCountWithStatus(String status) {
         RefdataValue refdata_status = RDStore.KBC_STATUS_CURRENT
         if(status == 'Retired'){
             refdata_status = RDStore.KBC_STATUS_RETIRED
@@ -695,6 +787,19 @@ class Package  extends AbstractBase implements Auditable {
                 , [pkg: this, status: refdata_status])[0]
 
         result
+    }
+
+
+    @Transient
+    Date getLastTryDate() {
+        Date lastTry
+        UpdatePackageInfo updatePackageInfo = UpdatePackageInfo.executeQuery("from UpdatePackageInfo where pkg = :pkg" +
+                " order by lastUpdated desc", [pkg: this], [max: 1, offset: 0])[0]
+        if(updatePackageInfo)
+            lastTry = updatePackageInfo.endTime
+
+        lastTry
+
     }
 
 

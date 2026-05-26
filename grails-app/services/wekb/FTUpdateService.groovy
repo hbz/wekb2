@@ -420,10 +420,10 @@ class FTUpdateService {
           result.tippPackageUuid = kbc.pkg.uuid
         }
 
-        if (kbc.hostPlatform) {
-          result.hostPlatform = kbc.hostPlatform.getOID()
-          result.hostPlatformName = kbc.hostPlatform.name
-          result.hostPlatformUuid = kbc.hostPlatform.uuid
+        if (kbc.pkg.nominalPlatform) {
+          result.hostPlatform = kbc.pkg.nominalPlatform.getOID()
+          result.hostPlatformName = kbc.pkg.nominalPlatform.name
+          result.hostPlatformUuid = kbc.pkg.nominalPlatform.uuid
         }
 
         // title history
@@ -567,7 +567,7 @@ class FTUpdateService {
       def highest_id = 0
 
       latest_ft_record = FTControl.findByDomainClassNameAndActivity(domain.name, 'ESIndex')
-      log.debug("result of findByDomain: ${domain} ${latest_ft_record}")
+      log.info("result of findByDomain: ${domain} ${latest_ft_record}")
       if (!latest_ft_record) {
         FTControl.withTransaction {
           latest_ft_record =
@@ -607,13 +607,13 @@ class FTUpdateService {
         bulks.eachWithIndex { List bulk, int i ->
           for (domain_id_lastUpdated in bulk) {
             if (Thread.currentThread().isInterrupted()) {
-              log.debug("Job cancelling ..")
+              log.info("Job cancelling ..")
               running = false
               break
             }
             Object r = domain.get(domain_id_lastUpdated[0])
             if (ESWrapperService.indicesPerType.get(r.class.simpleName)) {
-              log.debug("${count}: ${r.id} ${domain.name} -- (rects) ${domain_id_lastUpdated[1]} > (from) ${from}")
+              log.info("${count}: ${r.id} ${domain.name} -- (rects) ${domain_id_lastUpdated[1]} > (from) ${from}")
               def idx_record = recgen_closure(r)
               def es_index = ESWrapperService.indicesPerType.get(r.class.simpleName)
 

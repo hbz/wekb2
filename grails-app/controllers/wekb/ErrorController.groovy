@@ -58,7 +58,7 @@ class ErrorController {
     }
 
     def wrongMethod() {
-        log.debug("wrongMethod -> ${request.forwardURI} -> params: " + params)
+        log.info("wrongMethod -> ${request.forwardURI} -> params: " + params)
         def resp = [code: 405, message: 'Method not allowed']
 
         withFormat {
@@ -73,7 +73,7 @@ class ErrorController {
     }
 
     def notFound() {
-        log.debug("notFound -> ${request.forwardURI} -> params: " + params)
+        log.info("notFound -> ${request.forwardURI} -> params: " + params)
         def resp = [code: 404, message: 'Not Found']
 
         withFormat {
@@ -88,7 +88,7 @@ class ErrorController {
     }
 
     def forbidden() {
-        log.debug("forbidden -> ${request.forwardURI} -> params: " + params)
+        log.info("forbidden -> ${request.forwardURI} -> params: " + params)
         def resp = [code: 403, message: 'Forbidden']
 
         withFormat {
@@ -103,7 +103,7 @@ class ErrorController {
     }
 
     def unauthorized() {
-        log.debug("unauthorized -> ${request.forwardURI} -> params: " + params)
+        log.info("unauthorized -> ${request.forwardURI} -> params: " + params)
         def resp = [code: 401, message: 'Unauthorized']
 
         withFormat {
@@ -118,7 +118,7 @@ class ErrorController {
     }
 
     def badRequest() {
-        log.debug("badRequest -> ${request.forwardURI} -> params: " + params)
+        log.info("badRequest -> ${request.forwardURI} -> params: " + params)
         def resp = [code: 400, message: 'Bad Request']
 
         def exception = request.getAttribute('exception') ?: request.getAttribute('javax.servlet.error.exception')

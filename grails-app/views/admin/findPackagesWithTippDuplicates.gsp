@@ -2,18 +2,24 @@
 <html>
 <head>
     <meta name="layout" content="wekb"/>
-    <title>we:kb : Packages with Tipp Duplicates</title>
+    <title>we:kb | wekb -  Current Packages with Tipp Duplicates</title>
 </head>
 
 <body>
 
 <wekb:serviceInjection/>
 
-<h1 class="ui header">Packages with Tipp Duplicates (${totalCount})</h1>
+<h1 class="ui header">Current Packages with Tipp Duplicates (${totalCount})</h1>
+
+<div class="ui right floated buttons">
+    <g:link controller="admin" action="removeTippDuplicatesByTitleID"
+            class="ui button primary">Remove Tipps Duplicates By Title_ID of all Packages</g:link>
+    <br>
+</div>
 
 
 <div class="container">
-
+    <g:set var="countTipps" value="${0}"/>
     <table class="ui selectable striped sortable celled table">
         <thead>
         <tr>
@@ -24,8 +30,8 @@
             <semui:sortableColumn property="curatoryGroups" title="Curatory Groups"/>
             <th>Auto Update</th>
             <th>Titles</th>
-            <semui:sortableColumn property="tippDuplicatesByNameCount" title="Tipp Duplicates By Name"/>
-            <semui:sortableColumn property="tippDuplicatesByUrlCount" title="Tipp Duplicates By Url"/>
+            %{--<semui:sortableColumn property="tippDuplicatesByNameCount" title="Tipp Duplicates By Name"/>
+            <semui:sortableColumn property="tippDuplicatesByUrlCount" title="Tipp Duplicates By Url"/>--}%
             <semui:sortableColumn property="tippDuplicatesByTitleIDCount" title="Tipp Duplicates By Title ID"/>
         </tr>
         </thead>
@@ -58,7 +64,7 @@
                            title="${message(code: 'default.boolean.true')}"></i>
                     </g:if>
                     <g:else>
-                        <<i class="times red circle icon"
+                        <i class="times red circle icon"
                            title="${message(code: 'default.boolean.false')}"></i>
                     </g:else>
                 </td>
@@ -73,7 +79,7 @@
                         ${allTipps2}
                     </g:else>
                 </td>
-                <td>
+                %{--<td>
                     <g:link controller="admin" action="findTippDuplicatesByPkg" id="${pkg.uuid}" target="_blank"
                             params="[papaginateByName: true, max: 100, offset: 0]">
                         ${pkgMap.tippDuplicatesByNameCount}
@@ -84,16 +90,25 @@
                             params="[papaginateByUrl: true, max: 100, offset: 0]">
                         ${pkgMap.tippDuplicatesByUrlCount}
                     </g:link>
-                </td>
+                </td>--}%
                 <td>
+                    <g:set var="countTipps" value="${countTipps+pkgMap.tippDuplicatesByTitleIDCount}"/>
+
                     <g:link controller="admin" action="findTippDuplicatesByPkg" id="${pkg.uuid}" target="_blank"
-                            params="[papaginateByTitleID: true, max: 100, offset: 0]">
+                            params="[tippsDuplicatesBy: 'titleID', max: 100, offset: 0]">
                         ${pkgMap.tippDuplicatesByTitleIDCount}
                     </g:link>
                 </td>
             </tr>
         </g:each>
         </tbody>
+        <tfoot>
+        <tr>
+            <th colspan="8">
+                ${pagination}
+            </th>
+        </tr>
+        </tfoot>
     </table>
 
 </div>

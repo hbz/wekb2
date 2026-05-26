@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta name="layout" content="wekb"/>
-    <title>we:kb : Create New ${displayobj?.getDomainName() ?: 'Component'}</title>
+    <title>we:kb | wekb -  Create New ${displayobj?.getDomainName() ?: 'Component'}</title>
 </head>
 
 <body>

@@ -2,6 +2,8 @@ package wekb
 
 import grails.converters.JSON
 import grails.gorm.transactions.Transactional
+import grails.plugin.springsecurity.SpringSecurityService
+import grails.plugin.springsecurity.SpringSecurityUtils
 import grails.web.mvc.FlashScope
 import grails.web.servlet.mvc.GrailsParameterMap
 import org.grails.web.servlet.mvc.GrailsWebRequest
@@ -17,8 +19,9 @@ class SearchService {
     GenericOIDService genericOIDService
     GlobalSearchTemplatesService globalSearchTemplatesService
     DisplayTemplateService displayTemplateService
-    ClassExaminationService classExaminationService
+    SpringSecurityService springSecurityService
     AccessService accessService
+    TenantSwitchService tenantSwitchService
 
     FlashScope getCurrentFlashScope() {
         GrailsWebRequest grailsWebRequest = WebUtils.retrieveGrailsWebRequest()
@@ -29,11 +32,60 @@ class SearchService {
 
     def doQuery (qbetemplate, params, result) {
         def target_class = grailsApplication.getArtefact("Domain",qbetemplate.baseclass);
-        HQLBuilder.build(grailsApplication, qbetemplate, params, result, target_class, genericOIDService)
+        Map hql_Map = HQLBuilder.build(grailsApplication, qbetemplate, params, target_class)
+
+        def baseclass = target_class.getClazz()
+
+        result.sort = hql_Map.sort
+        result.order = hql_Map.order
+
+        def count_start_time = System.currentTimeMillis()
+        int reccount
+        tenantSwitchService.withTenantRole {
+            reccount = baseclass.executeQuery(hql_Map.count_hql, hql_Map.params_hql,[readOnly:true])[0]
+        }
+        result.reccount = reccount
+
+        log.info("Count completed (${result.reccount}) after ${System.currentTimeMillis() - count_start_time} ms")
+        log.info("Attempt count qry: ${hql_Map.count_hql}")
+        log.info("Bindvars: ${hql_Map.params_hql}")
+
+        def query_params = [:]
+        if ( result.max )
+            query_params.max = result.max
+        if ( result.offset )
+            query_params.offset = result.offset
+
+        query_params.readOnly = true
+
+        def query_start_time = System.currentTimeMillis()
+        // log.debug("Get data rows..")
+        List idset, rowset, recset
+         tenantSwitchService.withTenantRole {
+             rowset = baseclass.executeQuery(hql_Map.fetch_hql, hql_Map.params_hql)
+             if(hql_Map.count_clause) {
+                 idset = rowset.collect { row -> row[0] }
+                 recset = baseclass.executeQuery('select o, '+hql_Map.count_clause+' from '+baseclass.name+' o where o.id in (:idSet) '+hql_Map.order_clause, [idSet: idset.drop(result.offset).take(result.max)])
+             }
+             else {
+                 idset = rowset
+                 recset = baseclass.executeQuery('select o from '+baseclass.name+' o where o.id in (:idSet) '+hql_Map.order_clause, [idSet: idset.drop(result.offset).take(result.max)])
+             }
+        }
+
+        result.recset = recset
+        // log.debug("Returning..")
+        log.info("Fetch completed after ${System.currentTimeMillis() - query_start_time} ms")
+        log.info("Attempt fetch qry: ${hql_Map.fetch_hql}")
+        log.info("Bindvars: ${hql_Map.params_hql}")
+
+        result
+
     }
 
     Map search(User user = null, Map result, GrailsParameterMap params){
         FlashScope flash = getCurrentFlashScope()
+        def start_time = System.currentTimeMillis();
 
         if ( params.init ) {
             result.init = true
@@ -45,7 +97,7 @@ class SearchService {
 
         def cleaned_params = params.findAll { it.value && it.value != "" }
 
-        log.debug("Cleaned: ${cleaned_params}");
+        log.info("Cleaned: ${cleaned_params}");
 
         if ( params.refOID && !params.refOID.endsWith('null')) {
             result.refOID = params.refOID
@@ -56,7 +108,7 @@ class SearchService {
         result.offset = params.offset ? Integer.parseInt(params.offset) : 0;
 
         if( params.inline && !params.max) {
-            result.max = 25
+            result.max = 10
         }
 
         if ( params.jumpOffset ) {
@@ -105,11 +157,26 @@ class SearchService {
                 params.sort = params.sort ?: result.qbetemplate.defaultSort
                 params.order = params.order ?: result.qbetemplate.defaultOrder
                 if(result.qbetemplate.defaultStatus) {
-                    cleaned_params.qp_status = cleaned_params.qp_status ?: result.qbetemplate.defaultStatus
+                    if(params.searchAction == 'Search'){
+                        params.status = cleaned_params.qp_status ?: null
+                        cleaned_params.qp_status = cleaned_params.qp_status ?: null
+                    }else {
+                        params.status = cleaned_params.qp_status ?: result.qbetemplate.defaultStatus
+                        cleaned_params.qp_status = cleaned_params.qp_status ?: result.qbetemplate.defaultStatus
+                    }
+
                 }
 
                 Class target_class = Class.forName(result.qbetemplate.baseclass);
                 def read_perm = accessService.checkReadable(result.qbetemplate.baseclass)
+
+                if(params.qbe == 'g:updateTippInfos') {
+                    if (!params.qp_aup_id && !params.qp_tipp_id) {
+                        if (!SpringSecurityUtils.ifAnyGranted('ROLE_SUPERUSER')) {
+                            read_perm = false
+                        }
+                    }
+                }
 
                 result.classSimpleName = target_class.simpleName
 
@@ -250,12 +317,26 @@ class SearchService {
                             jumpToLink = rh.jumpToLink.replace("objectID", "${r.id}")
                         }
 
+                        String link = null
+                        boolean createLink = false
+                        if(rh.link == 'isNotTippInTipp') {
+                            createLink = !(result.refObject instanceof TitleInstancePackagePlatform && r instanceof UpdateTippInfo)
+                        }
+                        if(rh.link == 'isNotPackageInPackage') {
+                            createLink = !(result.refObject instanceof Package && r instanceof UpdatePackageInfo)
+                        }
+                        else if(rh.link instanceof Boolean)
+                            createLink = rh.link
+                        if(createLink) {
+                            link = final_oid ?: response_record.oid
+                        }
+
                         response_record.cols.add([
                                 linkInfo: rh.linkInfo ?: null,
-                                link: (rh.link ? (final_oid ?: response_record.oid ) : null),
+                                link: link,
                                 value: (cobj != null ? (cobj) : '-Empty-'),
                                 outGoingLink: rh.outGoingLink ?: null,
-                                jumpToLink: jumpToLink ?: null,
+                                jumpToLink: jumpToLink && springSecurityService.isLoggedIn() ? jumpToLink : null, //TMP ERMS-7301
                                 globalSearchTemplateProperty: rh.property])
                 }
             }
@@ -265,6 +346,7 @@ class SearchService {
 
         result.new_recset = recSet
         log.debug("Finished new recset!")
+        log.debug("Search completed after ${System.currentTimeMillis() - start_time} ms")
 
 
         [result: result]

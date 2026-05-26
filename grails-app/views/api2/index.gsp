@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta name="layout" content="wekb"/>
-    <title>we:kb : API 2</title>
+    <title>we:kb | wekb -  API 2</title>
 </head>
 
 <body>

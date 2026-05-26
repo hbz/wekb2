@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta name="layout" content="wekb"/>
-    <title>we:kb : Tipp Duplicates</title>
+    <title>we:kb | wekb -  Tipp Duplicates</title>
 </head>
 
 <body>
@@ -19,6 +19,13 @@
     ${pkg.name}
 </g:link>
 </h1>
+
+
+<g:link class="ui button" controller="admin" action="deleteTippsWithoutTitleIDByPkg" id="${pkg.uuid}">
+    Delete all
+</g:link>
+<br>
+<br>
 
 <div class="container">
 
@@ -62,8 +69,8 @@
                     </td>
                     <td>
                         <g:link controller="resource" action="show"
-                                id="${t.hostPlatform.getOID()}">
-                            ${t.hostPlatform?.name}
+                                id="${t.pkg.nominalPlatform.getOID()}">
+                            ${t.pkg.nominalPlatform?.name}
                         </g:link>
                     </td>
                     <td>${t.publicationType?.value}</td>

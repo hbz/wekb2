@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta name="layout" content="wekb"/>
-    <title>we:kb : Titles WEKB VS LASER</title>
+    <title>we:kb | wekb -  Titles WEKB VS LASER</title>
 </head>
 
 <body>

@@ -33,6 +33,7 @@ import java.text.SimpleDateFormat
 class ExportService {
 
     DateFormatService dateFormatService
+    FtpConnectService ftpConnectService
 
     public void exportOriginalKBART(def outputStream, Package pkg) {
 
@@ -47,7 +48,12 @@ class ExportService {
                 outputStream << file.bytes
             }
             outputStream.close()
-        }else if(pkg.getLastSuccessfulManualUpdateInfo()){
+        }else if (pkg.kbartSource.ftpServerUrl) {
+            File file = ftpConnectService.ftpConnectAndGetFile(pkg.kbartSource)
+            if(file)
+                outputStream << file.bytes
+            outputStream.close()
+        } else if(pkg.getLastSuccessfulManualUpdateInfo()){
             def output
 
             try {
@@ -103,16 +109,20 @@ class ExportService {
     }
 
     private File kbartFromUrl(String urlString, UpdatePackageInfo updatePackageInfo = null) throws Exception{
+        File file
         URL url = new URL(urlString)
         File folder = new File("/tmp/wekb/kbartExport")
-        log.debug("kbartFromUrl: "+urlString)
+        log.info("kbartFromUrl: "+urlString)
         String fileName = folder.absolutePath.concat(File.separator).concat(urlStringToFileString(url.toExternalForm()))
         fileName = fileName.split("\\?")[0]
-        File file = new File(fileName)
         HttpURLConnection connection
         try {
             connection = (HttpURLConnection) url.openConnection()
             connection.addRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:123.0) Gecko/20100101 Firefox/123.0")
+            // Setzen von Timeouts zur Vermeidung von hängenden Threads
+            connection.setConnectTimeout(30000) // 30 Sekunden Verbindungstimeout
+            connection.setReadTimeout(120000) // 120 Sekunden Lesetimeout
+
         }
         catch (IOException e) {
             log.error("URL Connection was not established." + ${e.message})
@@ -123,6 +133,10 @@ class ExportService {
                     updatePackageInfo.status = RDStore.UPDATE_STATUS_FAILED
                     updatePackageInfo.endTime = new Date()
                     updatePackageInfo.updateUrl = connection.getURL()
+                    updatePackageInfo.countPreviouslyTippsInWekb = updatePackageInfo.pkg.getTippCountWithoutRemoved()
+                    updatePackageInfo.countNowTippsInWekb = updatePackageInfo.pkg.getTippCountWithoutRemoved()
+                    updatePackageInfo.countCurrentTipps = updatePackageInfo.pkg.getCurrentTippCount()
+                    updatePackageInfo.countDeletedTipps = updatePackageInfo.pkg.getDeletedTippCount()
                     updatePackageInfo.save()
                 }
             }
@@ -139,6 +153,10 @@ class ExportService {
                     updatePackageInfo.status = RDStore.UPDATE_STATUS_FAILED
                     updatePackageInfo.endTime = new Date()
                     updatePackageInfo.updateUrl = connection.getURL()
+                    updatePackageInfo.countPreviouslyTippsInWekb = updatePackageInfo.pkg.getTippCountWithoutRemoved()
+                    updatePackageInfo.countNowTippsInWekb = updatePackageInfo.pkg.getTippCountWithoutRemoved()
+                    updatePackageInfo.countCurrentTipps = updatePackageInfo.pkg.getCurrentTippCount()
+                    updatePackageInfo.countDeletedTipps = updatePackageInfo.pkg.getDeletedTippCount()
                     updatePackageInfo.save()
                 }
             }
@@ -149,6 +167,7 @@ class ExportService {
         log.debug("connection.getResponseCode(): "+connection.getResponseCode())
         try {
             if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                file = new File(fileName)
                 byte[] content = getByteContent(connection.getInputStream())
                 //InputStream inputStream = new ByteArrayInputStream(content)
                 FileUtils.copyInputStreamToFile(new ByteArrayInputStream(content), file)
@@ -161,6 +180,10 @@ class ExportService {
                         updatePackageInfo.status = RDStore.UPDATE_STATUS_FAILED
                         updatePackageInfo.endTime = new Date()
                         updatePackageInfo.updateUrl = connection.getURL()
+                        updatePackageInfo.countPreviouslyTippsInWekb = updatePackageInfo.pkg.getTippCountWithoutRemoved()
+                        updatePackageInfo.countNowTippsInWekb = updatePackageInfo.pkg.getTippCountWithoutRemoved()
+                        updatePackageInfo.countCurrentTipps = updatePackageInfo.pkg.getCurrentTippCount()
+                        updatePackageInfo.countDeletedTipps = updatePackageInfo.pkg.getDeletedTippCount()
                         updatePackageInfo.save()
                     }
                 }
@@ -174,6 +197,10 @@ class ExportService {
                     updatePackageInfo.status = RDStore.UPDATE_STATUS_FAILED
                     updatePackageInfo.endTime = new Date()
                     updatePackageInfo.updateUrl = connection.getURL()
+                    updatePackageInfo.countPreviouslyTippsInWekb = updatePackageInfo.pkg.getTippCountWithoutRemoved()
+                    updatePackageInfo.countNowTippsInWekb = updatePackageInfo.pkg.getTippCountWithoutRemoved()
+                    updatePackageInfo.countCurrentTipps = updatePackageInfo.pkg.getCurrentTippCount()
+                    updatePackageInfo.countDeletedTipps = updatePackageInfo.pkg.getDeletedTippCount()
                     updatePackageInfo.save()
                 }
             }
@@ -201,7 +228,7 @@ class ExportService {
     def exportPackageBatchImportTemplate(def outputStream) {
 
         List titles = ["package_uuid", "package_name", "provider_uuid", "nominal_platform_uuid", "description", "description_url", "breakable", "content_type",
-                              "file", "open_access", "payment_type", "scope", "national_range", "regional_range", "provider_product_id", "ddc", "source_default_supply_method", "source_url", "source_ftp_server_url", "source_ftp_directory", "source_ftp_file_name", "source_ftp_username", "source_ftp_password", "frequency", "automated_updates", "archiving_agency", "open_access_of_archiving_agency", "post_cancellation_access_of_archiving_agency"]
+                              "file", "open_access", "payment_type", "scope", "national_range", "regional_range", "provider_product_id", "ddc", "source_default_supply_method", "source_url", "source_ftp_server_url", "source_ftp_directory", "source_ftp_file_name", "source_ftp_username", "source_ftp_password", "frequency", "automated_updates", "archiving_agency", "open_access_of_archiving_agency", "post_cancellation_access_of_archiving_agency", "publication_title", "publication_type", "title_id", "title_url"]
 
 
         XSSFWorkbook workbook = new XSSFWorkbook()
@@ -253,6 +280,8 @@ class ExportService {
                 case 'post_cancellation_access_of_archiving_agency': datas = RefdataCategory.lookup(RCConstants.PAA_POST_CANCELLATION_ACCESS).sort{it.value}.collect { it -> it.value }
                     break
                 case 'source_default_supply_method': datas = [RDStore.KS_DSMETHOD_HTTP_URL.value, RDStore.KS_DSMETHOD_FTP.value]
+                    break
+                case 'publication_type': datas = RefdataCategory.lookup(RCConstants.TIPP_PUBLICATION_TYPE).sort{it.value}.collect { it -> it.value }
                     break
             }
 
@@ -626,7 +655,7 @@ class ExportService {
 
         def export_date = dateFormatService.formatDate(new Date())
         List<String> titleHeaders = ["package_uuid", "package_name", "provider_name", "provider_uuid", "nominal_platform_name",
-                                     "nominal_platform_uuid", "description", "url", "breakable", "content_type",
+                                     "nominal_platform_uuid", "description", "description_url", "breakable", "content_type",
                                      "file", "open_access", "payment_type", "scope", "national_range", "regional_range", "provider_product_id", "ddc",
                                      "source_default_supply_method", "source_url", "source_ftp_server_url", "source_ftp_directory", "source_ftp_file_name", "source_ftp_username", "source_ftp_password",
                                      "frequency", "automated_updates",
@@ -799,6 +828,46 @@ class ExportService {
             log.error("Data delivered in inappropriate structure!")
         }
         wb
+    }
+
+    String generateSeparatorTableString(Collection titleRow, Collection columnData, String separator, Map<String, Object> headerData = [:]) {
+        List output = []
+        String fillupSeparators = ""
+        if(titleRow && headerData) {
+            for(int i = 2; i < titleRow.size();i++) {
+                fillupSeparators += separator
+            }
+        }
+        headerData.each { String headerEntryTitle, Object headerEntry ->
+            if(headerEntryTitle == 'skipRows') {
+                for(int sr = 0; sr < headerEntry; sr++) {
+                    output.add("") //empty row
+                }
+            }
+            else {
+                if(headerEntry instanceof Map)
+                    output.add("${headerEntryTitle}${separator}${headerEntry.collect { Map.Entry e -> "${e.getKey()}:${e.getValue().join(';')}" }}${fillupSeparators}")
+                else
+                    output.add("${headerEntryTitle}${separator}${headerEntry}${fillupSeparators}")
+            }
+        }
+        if(headerData)
+            output.add("") //empty row
+        if(titleRow)
+            output.add(titleRow.join(separator))
+        columnData.each { row ->
+            if(row instanceof Map || row instanceof GroovyRowResult) {
+                output.add(row.values().join(separator).replaceAll('null', '').replaceAll(' ', ' '))
+            }
+            else {
+                if (row instanceof String && row.trim())
+                    output.add(row)
+                else if(row.size() > 0)
+                    output.add(row.join(separator).replaceAll('null','').replaceAll(' ', ' '))
+                else output.add(" ")
+            }
+        }
+        output.join("\n")
     }
 
     /**

@@ -14,6 +14,7 @@ class GlobalSearchTemplatesService {
         globalSearchTemplates.put('curatoryGroups', curatoryGroups())
         globalSearchTemplates.put('identifiers', identifiers())
         globalSearchTemplates.put('jobResults', jobResults())
+        globalSearchTemplates.put('myPackageManagement', myPackageManagement())
         globalSearchTemplates.put('namespaces', namespaces())
         globalSearchTemplates.put('orgs', orgs())
         globalSearchTemplates.put('packages', packages())
@@ -69,14 +70,14 @@ class GlobalSearchTemplatesService {
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'type'],
                                 ],
                                 [
-                                        type       : 'dropDown',
+                                        type       : 'dropDownMultiple',
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.COMPONENT_STATUS,
                                         prompt     : 'Status',
                                         msgCode    : 'default.status',
                                         qparam     : 'qp_status',
-                                        placeholder: 'Component Status',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'status'],
+                                        placeholder: 'Status',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'status']
                                 ],
                         ],
                         qbeResults: [
@@ -270,14 +271,14 @@ class GlobalSearchTemplatesService {
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'curatoryGroups.curatoryGroup']
                                 ],
                                 [
-                                        type       : 'dropDown',
+                                        type       : 'dropDownMultiple',
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.COMPONENT_STATUS,
                                         prompt     : 'Status',
                                         msgCode    : 'default.status',
                                         qparam     : 'qp_status',
-                                        placeholder: 'Component Status',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'status']
+                                        placeholder: 'Status',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'status']
                                 ],
                                 [
                                         type       : 'dropDown',
@@ -492,10 +493,10 @@ class GlobalSearchTemplatesService {
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Forwarding Usage Statistcs',
-                                        msgCode     : 'org.forwardingUsageStatistcs',
-                                        qparam     : 'forwardingUsageStatistcs',
+                                        msgCode     : 'org.forwardingUsageStatistics',
+                                        qparam     : 'forwardingUsageStatistics',
                                         placeholder: 'Forwarding Usage Statistcs',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'forwardingUsageStatistcs'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'forwardingUsageStatistics'],
                                         advancedSearch: [title: "General Services", category: 'generalServices']
                                 ],
                                 [
@@ -510,6 +511,39 @@ class GlobalSearchTemplatesService {
                                         advancedSearch: [title: "General Services", category: 'generalServices']
                                 ],
                               */
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.YN,
+                                        prompt     : 'License-based e-book interlibrary loan supported',
+                                        msgCode     : 'org.licenseBasedEBInterlibrarySupported',
+                                        qparam     : 'licenseBasedEBInterlibrarySupported',
+                                        selectPlaceHolder: 'value',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'licenseBasedEBInterlibrarySupported'],
+                                        advancedSearch: [title: "Interlibrary Loan", category: 'interlibraryLoan']
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.PROVIDER_RANGE,
+                                        prompt     : 'Range',
+                                        msgCode     : 'org.range',
+                                        qparam     : 'range',
+                                        selectPlaceHolder: 'value',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'range'],
+                                        advancedSearch: [title: "Interlibrary Loan", category: 'interlibraryLoan']
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.PROVIDER_AGREEMENT_MODEL,
+                                        prompt     : 'Agreement model',
+                                        msgCode     : 'org.agreementModel',
+                                        qparam     : 'agreementModel',
+                                        selectPlaceHolder: 'value',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'agreementModel'],
+                                        advancedSearch: [title: "Interlibrary Loan", category: 'interlibraryLoan']
+                                ],
 
 
 
@@ -624,14 +658,14 @@ class GlobalSearchTemplatesService {
 
                                 ],
                                 [
-                                        type       : 'dropDown',
+                                        type       : 'dropDownMultiple',
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.COMPONENT_STATUS,
                                         prompt     : 'Status',
                                         msgCode    : 'default.status',
                                         qparam     : 'qp_status',
-                                        placeholder: 'Component Status',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'status']
+                                        placeholder: 'Status',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'status']
                                 ],
                                 [
                                         type       : 'dropDown',
@@ -786,6 +820,286 @@ class GlobalSearchTemplatesService {
         result
     }
 
+    Map myPackageManagement() {
+        Map result = [
+                baseclass   : 'wekb.Package',
+                msgCode    : 'package.plural',
+                title       : 'Packages',
+                defaultSort : 'lastUpdated',
+                defaultOrder: 'desc',
+                qbeConfig   : [
+                        qbeForm   : [
+
+                                //HIDE FIELDS
+                                [
+                                        qparam     : 'qp_provider_id',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'provider.id', 'type': 'java.lang.Long'],
+                                        hide       : true
+                                ],
+                                [
+                                        qparam     : 'qp_platform_id',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'nominalPlatform.id', 'type': 'java.lang.Long'],
+                                        hide       : true
+                                ],
+                                [
+                                        qparam     : 'qp_source_id',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'kbartSource.id', 'type': 'java.lang.Long'],
+                                        hide       : true
+                                ],
+                                [
+                                        qparam     : 'qp_vendor_id',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'vendors.vendor.id', 'type': 'java.lang.Long'],
+                                        hide       : true
+                                ],
+                                [
+                                        qparam     : 'changedSince',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'greater', 'prop': 'lastUpdated', 'type': 'java.util.Date'],
+                                        hide       : true
+                                ],
+                                [
+                                        qparam     : 'createdSince',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'greater', 'prop': 'dateCreated', 'type': 'java.util.Date'],
+                                        hide       : true
+                                ],
+                                [
+                                        qparam     : 'qp_status_value',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'status.value'],
+                                        hide       : true
+                                ],
+                                //General Fields
+                                [
+                                        prompt     : 'Name of Package',
+                                        msgCode     : 'default.name',
+                                        qparam     : 'qp_name',
+                                        placeholder: 'Package Name',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'name', 'wildcard': 'B', normalise: false]
+                                ],
+                                [
+                                        prompt     : 'Identifier',
+                                        msgCode     : 'identifier.value',
+                                        qparam     : 'qp_identifier',
+                                        placeholder: 'Identifier Value',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'ids.value'],
+
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.Org',
+                                        prompt     : 'Provider',
+                                        msgCode     : 'org.label',
+                                        qparam     : 'qp_provider',
+                                        placeholder: 'Provider',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'provider'],
+
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.CuratoryGroup',
+                                        prompt     : 'Curatory Group',
+                                        msgCode     : 'curatorygroup.label',
+                                        qparam     : 'qp_curgroup',
+                                        placeholder: 'Curatory Group',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'curatoryGroups.curatoryGroup'],
+
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.Platform',
+                                        prompt     : 'Platform',
+                                        msgCode     : 'platform.label',
+                                        qparam     : 'qp_platform',
+                                        placeholder: 'Platform',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'nominalPlatform'],
+
+                                ],
+                                [
+                                        type       : 'dropDownMultiple',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.COMPONENT_STATUS,
+                                        prompt     : 'Status',
+                                        msgCode    : 'default.status',
+                                        qparam     : 'qp_status',
+                                        placeholder: 'Status',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'status']
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.PACKAGE_SCOPE,
+                                        prompt     : 'Scope',
+                                        msgCode     : 'package.scope',
+                                        qparam     : 'qp_scope',
+                                        placeholder: 'Scope',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'scope'],
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.PACKAGE_CONTENT_TYPE,
+                                        prompt     : 'Content Type',
+                                        msgCode     : 'package.contentType',
+                                        qparam     : 'qp_content',
+                                        placeholder: 'Content Type',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'contentType'],
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.PACKAGE_OPEN_ACCESS,
+                                        prompt     : 'Open Access',
+                                        msgCode     : 'package.openAccess',
+                                        qparam     : 'qp_oa',
+                                        placeholder: 'Open Access',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'openAccess'],
+                                ],
+                                [
+                                        type     : 'dropDownGroup',
+                                        dropDownType  : 'ddcForPackages',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        prompt     : 'DDC',
+                                        msgCode     : 'package.ddcs',
+                                        qparam     : 'qp_ddc',
+                                        placeholder: 'DDC',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'ddcs'],
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.PAA_ARCHIVING_AGENCY,
+                                        prompt     : 'Package Archiving Agency',
+                                        msgCode     : 'package.archivingAgency',
+                                        qparam     : 'qp_archivingAgency',
+                                        placeholder: 'Package Archiving Agency',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'paas.archivingAgency']
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.YN,
+                                        prompt     : 'Source Automatic Updates',
+                                        msgCode     : 'kbartSource.automaticUpdates',
+                                        qparam     : 'qp_source_automaticUpdates',
+                                        placeholder: 'Source Automatic Updates',
+                                        propType   : 'Boolean',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'kbartSource.automaticUpdates'],
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.SOURCE_FREQUENCY,
+                                        prompt     : 'Source Frequency',
+                                        msgCode     : 'kbartSource.frequency',
+                                        qparam     : 'qp_source_frequency',
+                                        placeholder: 'Source Frequency',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'kbartSource.frequency'],
+                                ],
+
+                                //Package Filter
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.PACKAGE_BREAKABLE,
+                                        prompt     : 'Breakable Type',
+                                        msgCode     : 'package.breakable',
+                                        qparam     : 'qp_breakable',
+                                        placeholder: 'Breakable Type',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'breakable'],
+                                        advancedSearch: [title: "More filter options ...", category: 'Package']
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.PACKAGE_CONSISTENT,
+                                        prompt     : 'Consistent Type',
+                                        msgCode     : 'package.consistent',
+                                        qparam     : 'qp_consistent',
+                                        placeholder: 'Consistent Type',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'consistent'],
+                                        advancedSearch: [title: "More filter options ...", category: 'Package']
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.PACKAGE_PAYMENT_TYPE,
+                                        prompt     : 'Paid',
+                                        msgCode     : 'package.paymentType',
+                                        qparam     : 'qp_paymentType',
+                                        placeholder: 'Paid',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'paymentType'],
+                                        advancedSearch: [title: "More filter options ...", category: 'Package']
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.PACKAGE_FILE,
+                                        prompt     : 'File',
+                                        msgCode     : 'package.file',
+                                        qparam     : 'qp_file',
+                                        placeholder: 'File',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'file'],
+                                        advancedSearch: [title: "More filter options ...", category: 'Package']
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.YN,
+                                        prompt     : 'Free Trial',
+                                        msgCode     : 'package.freeTrial',
+                                        qparam     : 'qp_freeTrial',
+                                        placeholder: 'Free Trial',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'freeTrial'],
+                                        advancedSearch: [title: "More filter options ...", category: 'Package']
+                                ],
+
+
+                                //FOR My Components Area
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.CuratoryGroup',
+                                        qparam     : 'qp_curgroups',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'placeHolderForCuratoryGroups'],
+                                        hide       : true
+                                ],
+                        ],
+                        qbeResults: [
+                                [heading: 'Name', property: 'name', sort: 'name', link: true, linkInfo: 'Link to Package'],
+                                [heading: 'Provider', property: 'provider.name', sort: 'provider.name', link: true, linkInfo: 'Link to Provider'],
+                                [heading: 'Nominal Platform', property: 'nominalPlatform.name', sort: 'nominalPlatform.name', link: true, linkInfo: 'Link to Nominal Platform'],
+                                [heading: 'Content Type', property: 'contentType.value', sort: 'contentType'],
+                                [heading: 'Scope', property: 'scope', sort: 'scope'],
+                                [heading: 'Last Updated', property: 'lastUpdated', sort: 'lastUpdated'],
+                                [heading: 'Status', property: 'status.value', sort: 'status'],
+                                [heading: 'Current Titles', property: 'currentTippCount', sort: 'currentTippCount'],
+                                [heading: 'Retired Titles', property: 'retiredTippCount', sort: 'retiredTippCount'],
+                                [heading: 'Expected Titles', property: 'expectedTippCount', sort: 'expectedTippCount'],
+                                [heading: 'Deleted Titles', property: 'deletedTippCount', sort: 'deletedTippCount'],
+                                [heading: 'Product IDs', property: 'anbieterProduktIDs'],
+                                [heading: 'Source', property: 'kbartSource.name', link: true, sort: 'kbartSource.name', linkInfo: 'Link to Source'],
+                                [heading: 'Automatic Updates', property: 'kbartSource.automaticUpdates']
+                        ],
+                        qbeSortFields: [
+                                        [sort: 'kbartSource.name'],
+                                        [sort: 'kbartSource.status'],
+                                        [sort: 'kbartSource.url'],
+                                        [sort: 'kbartSource.ftpServerUrl'],
+                                        [sort: 'kbartSource.ftpDirectory'],
+                                        [sort: 'kbartSource.ftpFileName'],
+                                        [sort: 'kbartSource.ftpUsername'],
+                                        [sort: 'kbartSource.ftpPassword'],
+                                        [sort: 'kbartSource.frequency'],
+                                        [sort: 'kbartSource.defaultSupplyMethod'],
+                                        [sort: 'kbartSource.defaultDataFormat'],
+                                        [sort: 'kbartSource.automaticUpdates']
+                        ],
+
+                        actions   : [
+                        ]
+                ]
+        ]
+
+        result
+    }
+
     Map publicPackages() {
         Map result = [
                 baseclass   : 'wekb.Package',
@@ -879,15 +1193,14 @@ class GlobalSearchTemplatesService {
                                         advancedSearch: [title: "Other fields", category: 'Package']
                                 ],
                                 [
-                                        type       : 'dropDown',
+                                        type       : 'dropDownMultiple',
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.COMPONENT_STATUS,
                                         prompt     : 'Status',
                                         msgCode    : 'default.status',
                                         qparam     : 'qp_status',
-                                        placeholder: 'Component Status',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'status'],
-                                        advancedSearch: [title: "Other fields", category: 'Package']
+                                        placeholder: 'Status',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'status']
                                 ],
                                 [
                                         type     : 'dropDownGroup',
@@ -952,15 +1265,14 @@ class GlobalSearchTemplatesService {
                                         advancedSearch: [title: "Search Titles by ...", category: 'Title']
                                 ],
                                 [
-                                        type       : 'dropDown',
+                                        type       : 'dropDownMultiple',
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.COMPONENT_STATUS,
                                         prompt     : 'Status',
                                         msgCode    : 'default.status',
-                                        qparam     : 'qp_status_tipp',
+                                        qparam     : 'qp_status',
                                         placeholder: 'Status',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'tipps.status'],
-                                        advancedSearch: [title: "Search Titles by ...", category: 'Title']
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'status']
                                 ],
                                 [
                                         type       : 'dropDown',
@@ -1245,7 +1557,6 @@ class GlobalSearchTemplatesService {
                                 [heading: 'Name', property: 'name', sort: 'name', link: true, linkInfo: 'Link to Package'],
                                 [heading: 'Provider', property: 'provider.name', sort: 'provider.name', link: true, linkInfo: 'Link to Provider'],
                                 [heading: 'Nominal Platform', property: 'nominalPlatform.name', sort: 'nominalPlatform.name', link: true, linkInfo: 'Link to Nominal Platform'],
-                                [heading: 'Curatory Groups', property: 'curatoryGroupsCuratoryGroup', link: true, linkInfo: 'Link to Curatory Group'],
                                 [heading: 'Content Type', property: 'contentType.value', sort: 'contentType'],
                                 [heading: 'Product IDs', property: 'anbieterProduktIDs'],
                                 [heading: 'Current Titles', property: 'currentTippCount', sort: 'currentTippCount'],
@@ -1253,6 +1564,8 @@ class GlobalSearchTemplatesService {
                                 [heading: 'Expected Titles', property: 'expectedTippCount', sort: 'expectedTippCount'],
                                 [heading: 'Deleted Titles', property: 'deletedTippCount', sort: 'deletedTippCount'],
                                 [heading: 'Last Updated', property: 'lastUpdated', sort: 'lastUpdated'],
+                                [heading: 'Last Run', property: 'kbartSource.lastRun', sort: 'kbartSource.lastRun'],
+                                [heading: 'Last Try', property: 'lastTryDate', sort: 'lastTryDate'],
                                 [heading: 'Automatic Updates', property: 'kbartSource.automaticUpdates']
                         ],
                         actions   : [
@@ -1322,14 +1635,14 @@ class GlobalSearchTemplatesService {
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'provider'],
                                 ],
                                 [
-                                        type       : 'dropDown',
+                                        type       : 'dropDownMultiple',
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.COMPONENT_STATUS,
                                         prompt     : 'Status',
                                         msgCode    : 'default.status',
                                         qparam     : 'qp_status',
-                                        placeholder: 'Component Status',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'status']
+                                        placeholder: 'Status',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'status']
                                 ],
                                 [
                                         prompt     : 'Platform URL',
@@ -1799,14 +2112,14 @@ class GlobalSearchTemplatesService {
 
                                 ],
                                 [
-                                        type       : 'dropDown',
+                                        type       : 'dropDownMultiple',
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.COMPONENT_STATUS,
                                         prompt     : 'Status',
                                         msgCode    : 'default.status',
                                         qparam     : 'qp_status',
                                         placeholder: 'Status',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'status']
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'status']
                                 ],
                                 [
                                         type       : 'dropDown',
@@ -1880,7 +2193,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         qparam     : 'qp_platform_id',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'hostPlatform.id', 'type': 'java.lang.Long'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'pkg.nominalPlatform.id', 'type': 'java.lang.Long'],
                                         hide       : true
                                 ],
                                 [
@@ -1957,14 +2270,14 @@ class GlobalSearchTemplatesService {
 
                                 ],
                                 [
-                                        type       : 'dropDown',
+                                        type       : 'dropDownMultiple',
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.COMPONENT_STATUS,
                                         prompt     : 'Status',
                                         msgCode    : 'default.status',
                                         qparam     : 'qp_status',
                                         placeholder: 'Status',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'status']
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'status']
                                 ],
 
 
@@ -1972,6 +2285,7 @@ class GlobalSearchTemplatesService {
                                 //Other Filter
                                 [
                                         type       : 'dropDown',
+                                        load       : 'ajax',
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.TIPP_ACCESS_TYPE,
                                         prompt     : 'Access Type',
@@ -1983,6 +2297,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
+                                        load       : 'ajax',
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.TIPP_OPEN_ACCESS,
                                         prompt     : 'Open Access',
@@ -1994,6 +2309,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
+                                        load       : 'ajax',
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.TIPP_PUBLICATION_TYPE,
                                         prompt     : 'Publication Type',
@@ -2005,6 +2321,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
+                                        load       : 'ajax',
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.TIPP_MEDIUM,
                                         prompt     : 'Medium',
@@ -2016,6 +2333,8 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type     : 'dropDownGroup',
+                                        load     : 'ajax',
+                                        baseClass  : 'wekb.TitleInstancePackagePlatform',
                                         dropDownType  : 'accessStartDate',
                                         prompt     : 'Access Start Date Year',
                                         msgCode    : 'titleinstancepackageplatform.accessStartDate',
@@ -2026,6 +2345,8 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type     : 'dropDownGroup',
+                                        load     : 'ajax',
+                                        baseClass  : 'wekb.TitleInstancePackagePlatform',
                                         dropDownType  : 'accessEndDate',
                                         prompt     : 'Access End Date Year',
                                         msgCode    : 'titleinstancepackageplatform.accessEndDate',
@@ -2036,6 +2357,8 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type     : 'dropDownGroup',
+                                        load     : 'ajax',
+                                        baseClass  : 'wekb.TitleInstancePackagePlatform',
                                         dropDownType  : 'dateFirstOnlineYear',
                                         prompt     : 'Date First Online Year',
                                         msgCode    : 'titleinstancepackageplatform.dateFirstOnline',
@@ -2046,6 +2369,8 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type     : 'dropDownGroup',
+                                        load     : 'ajax',
+                                        baseClass  : 'wekb.TitleInstancePackagePlatform',
                                         dropDownType  : 'subjectArea',
                                         prompt     : 'Subject Area',
                                         msgCode    : 'titleinstancepackageplatform.subjectArea',
@@ -2058,6 +2383,7 @@ class GlobalSearchTemplatesService {
 
                                 [
                                         type       : 'dropDown',
+                                        load       : 'ajax',
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.DDC,
                                         prompt     : 'DDC',
@@ -2070,6 +2396,7 @@ class GlobalSearchTemplatesService {
 
                                 [
                                         type       : 'dropDown',
+                                        load       : 'ajax',
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.COMPONENT_LANGUAGE,
                                         prompt     : 'Language',
@@ -2087,7 +2414,7 @@ class GlobalSearchTemplatesService {
                                 [heading: 'Medium', property: 'medium.value', sort: 'medium.value'],
                                 [heading: 'First Author', property: 'firstAuthor', sort: 'firstAuthor'],
                                 [heading: 'Package', qpEquiv: 'qp_pkg_id', property: 'pkg.name', sort: 'pkg.name', link: true, linkInfo: 'Link to Package'],
-                                [heading: 'Platform', qpEquiv: 'qp_platform_id', property: 'hostPlatform.name', sort: 'hostPlatform.name', link: true, linkInfo: 'Link to Platform'],
+                                [heading: 'Platform', qpEquiv: 'qp_platform_id', property: 'pkg.nominalPlatform.name', sort: 'pkg.nominalPlatform.name', link: true, linkInfo: 'Link to Platform'],
                                 [heading: 'Provider', qpEquiv: 'qp_provider_id', property: 'pkg.provider.name', sort: 'pkg.provider.name', link: true, linkInfo: 'Link to Provider'],
                                 [heading: 'Last Updated', property: 'lastUpdated', sort: 'lastUpdated'],
                                 [heading: 'Status', property: 'status.value', sort: 'status.value'],
@@ -2129,7 +2456,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         qparam     : 'qp_platform_id',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'hostPlatform.id', 'type': 'java.lang.Long'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'pkg.nominalPlatform.id', 'type': 'java.lang.Long'],
                                         hide       : true
                                 ],
                                 [
@@ -2141,6 +2468,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type     : 'dropDownGroup',
+                                        load     : 'ajax',
                                         dropDownType  : 'publisher',
                                         prompt     : 'Publisher',
                                         msgCode    : 'titleinstancepackageplatform.publisherName',
@@ -2165,6 +2493,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
+                                        load     : 'ajax',
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.TIPP_PUBLICATION_TYPE,
                                         prompt     : 'Publication Type',
@@ -2175,6 +2504,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
+                                        load     : 'ajax',
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.TIPP_MEDIUM,
                                         prompt     : 'Medium',
@@ -2199,6 +2529,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
+                                        load     : 'ajax',
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.TIPP_ACCESS_TYPE,
                                         prompt     : 'Access Type',
@@ -2209,6 +2540,8 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type     : 'dropDownGroup',
+                                        load     : 'ajax',
+                                        baseClass  : 'wekb.TitleInstancePackagePlatform',
                                         dropDownType  : 'subjectArea',
                                         prompt     : 'Subject Area',
                                         msgCode    : 'titleinstancepackageplatform.subjectArea',
@@ -2218,6 +2551,8 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type     : 'dropDownGroup',
+                                        load     : 'ajax',
+                                        baseClass  : 'wekb.TitleInstancePackagePlatform',
                                         dropDownType  : 'dateFirstOnlineYear',
                                         prompt     : 'Date First Online Year',
                                         msgCode    : 'titleinstancepackageplatform.dateFirstOnline',
@@ -2227,6 +2562,8 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type     : 'dropDownGroup',
+                                        load     : 'ajax',
+                                        baseClass  : 'wekb.TitleInstancePackagePlatform',
                                         dropDownType  : 'accessStartDate',
                                         prompt     : 'Access Start Date Year',
                                         msgCode    : 'titleinstancepackageplatform.accessStartDate',
@@ -2236,6 +2573,8 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type     : 'dropDownGroup',
+                                        load     : 'ajax',
+                                        baseClass  : 'wekb.TitleInstancePackagePlatform',
                                         dropDownType  : 'accessEndDate',
                                         prompt     : 'Access End Date Year',
                                         msgCode    : 'titleinstancepackageplatform.accessEndDate',
@@ -2245,6 +2584,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type     : 'dropDownGroup',
+                                        load     : 'ajax',
                                         dropDownType  : 'ddc',
                                         baseClass  : 'wekb.RefdataValue',
                                         prompt     : 'DDC',
@@ -2255,6 +2595,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
+                                        load       : 'ajax',
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.TIPP_OPEN_ACCESS,
                                         prompt     : 'Open Access',
@@ -2265,6 +2606,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
+                                        load       : 'ajax',
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.COMPONENT_LANGUAGE,
                                         prompt     : 'Language',
@@ -2274,14 +2616,14 @@ class GlobalSearchTemplatesService {
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'languages.language'],
                                 ],
                                 [
-                                        type       : 'dropDown',
+                                        type       : 'dropDownMultiple',
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.COMPONENT_STATUS,
                                         prompt     : 'Status',
                                         msgCode    : 'default.status',
                                         qparam     : 'qp_status',
                                         placeholder: 'Status',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'status']
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'status']
                                 ],
                                 //FOR My Components Area
                                 [
@@ -2298,7 +2640,7 @@ class GlobalSearchTemplatesService {
                                 [heading: 'Type', property: 'publicationType.value', sort: 'publicationType.value'],
                                 [heading: 'Medium', property: 'medium.value', sort: 'medium.value'],
                                 [heading: 'First Author', property: 'firstAuthor', sort: 'firstAuthor'],
-                                [heading: 'Platform', qpEquiv: 'qp_platform_id', property: 'hostPlatform.name', sort: 'hostPlatform.name',  link: true, linkInfo: 'Link to Platform'],
+                                [heading: 'Platform', qpEquiv: 'qp_platform_id', property: 'pkg.nominalPlatform.name', sort: 'pkg.nominalPlatform.name',  link: true, linkInfo: 'Link to Platform'],
                                 [heading: 'Last Updated', property: 'lastUpdated', sort: 'lastUpdated'],
                                 [heading: 'Status', property: 'status.value', sort: 'status.value'],
                                 [heading: 'URL', property: 'url', sort: 'url', outGoingLink: true, linkInfo: 'Link to Title URL']
@@ -2354,14 +2696,14 @@ class GlobalSearchTemplatesService {
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'curatoryGroups.curatoryGroup']
                                 ],
                                 [
-                                        type       : 'dropDown',
+                                        type       : 'dropDownMultiple',
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.COMPONENT_STATUS,
                                         prompt     : 'Status',
                                         msgCode    : 'default.status',
                                         qparam     : 'qp_status',
-                                        placeholder: 'Component Status',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'status']
+                                        placeholder: 'Status',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'status']
                                 ],
                                 //---------------------------------------------------------------------------------------------------
                                 [
@@ -2544,33 +2886,11 @@ class GlobalSearchTemplatesService {
                                         type       : 'dropDown',
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.YN,
-                                        prompt     : 'Research platform for e-books',
-                                        msgCode     : 'vendor.researchPlatformForEbooks',
-                                        qparam     : 'researchPlatformForEbooks',
-                                        placeholder: 'Research platform for e-booksr',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'researchPlatformForEbooks'],
-                                        advancedSearch: [title: "General Services", category: 'generalServices']
-                                ],
-                                [
-                                        type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
-                                        filter1    : RCConstants.YN,
                                         prompt     : 'Prequalification',
                                         msgCode     : 'vendor.prequalification',
                                         qparam     : 'prequalification',
-                                        placeholder: 'Prequalificationt',
+                                        placeholder: 'Prequalification',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'prequalification'],
-                                        advancedSearch: [title: "Supplier information", category: 'supplierInformation']
-                                ],
-                                [
-                                        type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
-                                        filter1    : RCConstants.YN,
-                                        prompt     : 'Info to Prequalification',
-                                        msgCode     : 'vendor.prequalificationInfo',
-                                        qparam     : 'prequalificationInfo',
-                                        placeholder: 'Info to Prequalification',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'prequalificationInfo'],
                                         advancedSearch: [title: "Supplier information", category: 'supplierInformation']
                                 ],
 
@@ -2771,17 +3091,18 @@ class GlobalSearchTemplatesService {
                                 ],
                         ],
                         qbeResults: [
-                                [heading: 'Description', property: 'description', link: true, linkInfo: 'Link to Package Update Info'],
-                                [heading: 'Package', property: 'pkg.name', link: true, linkInfo: 'Link to Package'],
+                                [heading: 'Description', property: 'description'/*, link: true, linkInfo: 'Link to Package Update Info'*/],
+                                [heading: 'Package', property: 'pkg.name', link: 'isNotPackageInPackage', linkInfo: 'Link to Package'],
                                 [heading: 'Status', property: 'status', sort: 'status.value'],
                                 [heading: 'Automatic Update', property: 'automaticUpdate', sort: 'automaticUpdate'],
                                 [heading: 'Start Time', property: 'startTime', sort: 'startTime'],
                                 [heading: 'End Time', property: 'endTime', sort: 'endTime'],
-                                [heading: 'Only Last Changed Update', property: 'onlyRowsWithLastChanged', sort: 'onlyRowsWithLastChanged'],
-                                [heading: 'Titles in we:kb before update', property: 'countPreviouslyTippsInWekb', sort: 'countPreviouslyTippsInWekb'],
-                                [heading: 'Titles in we:kb after update', property: 'countNowTippsInWekb', sort: 'countNowTippsInWekb'],
+                                [heading: 'All Titles before update', property: 'countPreviouslyTippsInWekb', sort: 'countPreviouslyTippsInWekb'],
+                                [heading: 'All Titles after update', property: 'countNowTippsInWekb', sort: 'countNowTippsInWekb'],
                                 [heading: 'Rows in KBART-File', property: 'countKbartRows', sort: 'countKbartRows'],
                                 [heading: 'Processed KBART Rows', property: 'countProcessedKbartRows', sort: 'countProcessedKbartRows'],
+                                [heading: 'Current Titles', property: 'countCurrentTipps', sort: 'countCurrentTipps'],
+                                [heading: 'All Deleted Titles', property: 'countDeletedTipps', sort: 'countDeletedTipps'],
                                 [heading: 'Changed Titles / Changes in Titles ', property: 'countInfosAboutChangedTitles', sort: 'countChangedTipps', jumpToLink: '/search/componentSearch/wekb.UpdatePackageInfo:objectID?qbe=g:updateTippInfos&qp_aup_id=objectID&&qp_type='+RefdataValue.class.name + ':' + RDStore.UPDATE_TYPE_CHANGED_TITLE.id, linkInfo: 'Link to Changed Titles'],
                                 [heading: 'Removed Titles ', property: 'countRemovedTipps', sort: 'countRemovedTipps', jumpToLink: '/search/componentSearch/wekb.UpdatePackageInfo:objectID?qbe=g:updateTippInfos&qp_aup_id=objectID&&qp_type='+RefdataValue.class.name + ':' + RDStore.UPDATE_TYPE_REMOVED_TITLE.id, linkInfo: 'Link to Removed Titles'],
                                 [heading: 'New Titles', property: 'countNewTipps', sort: 'countNewTipps', jumpToLink: '/search/componentSearch/wekb.UpdatePackageInfo:objectID?qbe=g:updateTippInfos&qp_aup_id=objectID&&qp_type='+RefdataValue.class.name + ':' + RDStore.UPDATE_TYPE_NEW_TITLE.id, linkInfo: 'Link to New Titles'],
@@ -2876,8 +3197,8 @@ class GlobalSearchTemplatesService {
                                 ]
                         ],
                         qbeResults: [
-                                [heading: 'Description', property: 'description', link: true, linkInfo: 'Link to Title Update Info'],
-                                [heading: 'Title', property: 'tipp.name', link: true, linkInfo: 'Link to Title'],
+                                [heading: 'Description', property: 'description'/*, link: true, linkInfo: 'Link to Title Update Info'*/],
+                                [heading: 'Title', property: 'tipp.name', sort: 'tipp.name', link: 'isNotTippInTipp', linkInfo: 'Link to Title', ],
                                 [heading: 'Status', property: 'status', sort: 'status.value'],
                                 [heading: 'Type', property: 'type', sort: 'type.value'],
                                 [heading: 'KBART Field', property: 'kbartProperty', sort: 'kbartProperty'],

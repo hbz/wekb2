@@ -15,10 +15,11 @@ class TextUtils {
     "the",
     "from"
   ];
-  public static final DateTimeFormatter dateformatter = DateTimeFormatter.ofPattern("uuuu-MM-dd").withResolverStyle(ResolverStyle.STRICT)
-  //public static final DateTimeFormatter datetimeformatter = DateTimeFormatter.ofPattern("" + "[uuuu-MM-dd' 'HH:mm:ss.SSS]" + "[uuuu-MM-dd' 'HH:mm:ss.S]" + "[uuuu-MM-dd'T'HH:mm:ss'Z']")
-  public static final DateTimeFormatter dateformatter2 = DateTimeFormatter.ofPattern("dd/MM/uuuu").withResolverStyle(ResolverStyle.STRICT)
-  public static final DateTimeFormatter datetimeformatter = DateTimeFormatter.ofPattern("" + "[uuuu-MM-dd' 'HH:mm:ss.SSS]" + "[uuuu-MM-dd'T'HH:mm:ss'Z']").withResolverStyle(ResolverStyle.STRICT)
+    public static final DateTimeFormatter dateformatter = DateTimeFormatter.ofPattern("uuuu-MM-dd").withResolverStyle(ResolverStyle.STRICT)
+    //public static final DateTimeFormatter datetimeformatter = DateTimeFormatter.ofPattern("" + "[uuuu-MM-dd' 'HH:mm:ss.SSS]" + "[uuuu-MM-dd' 'HH:mm:ss.S]" + "[uuuu-MM-dd'T'HH:mm:ss'Z']")
+    public static final DateTimeFormatter dateformatter2 = DateTimeFormatter.ofPattern("dd/MM/uuuu").withResolverStyle(ResolverStyle.STRICT)
+    public static final DateTimeFormatter dateformatter3 = DateTimeFormatter.ofPattern("dd.MM.uuuu").withResolverStyle(ResolverStyle.STRICT)
+    public static final DateTimeFormatter datetimeformatter = DateTimeFormatter.ofPattern("" + "[uuuu-MM-dd' 'HH:mm:ss.SSS]" + "[uuuu-MM-dd'T'HH:mm:ss'Z']").withResolverStyle(ResolverStyle.STRICT)
 
 
   public static int levenshteinDistance(String str1, String str2) {
@@ -208,42 +209,50 @@ class TextUtils {
     dotProduct(m1, m2) / Math.sqrt(dotProduct(m1, m1) * dotProduct(m2, m2))
   }
 
-  public static LocalDateTime completeDateString(String datepart, boolean start = true) {
-    def result = null
+    public static LocalDateTime completeDateString(String datepart, boolean start = true) {
+        def result = null
 
-    if ( datepart?.trim() ) {
-      try {
-        if ( datepart.length() == 4 ) {
-          if (start) {
-            result = LocalDate.parse(datepart + "-01-01", dateformatter).atStartOfDay()
-          }
-          else {
-            result = LocalDate.parse(datepart + "-12-31", dateformatter).atStartOfDay()
-          }
+        if ( datepart?.trim() ) {
+            try {
+                if ( datepart.length() == 4 ) {
+                    if (start) {
+                        result = LocalDate.parse(datepart + "-01-01", dateformatter).atStartOfDay()
+                    }
+                    else {
+                        result = LocalDate.parse(datepart + "-12-31", dateformatter).atStartOfDay()
+                    }
+                }
+                else if ( datepart.length() == 7 ) {
+                    if(start) {
+                        result = LocalDate.parse(datepart + "-01", dateformatter).atStartOfDay()
+                    }
+                    else {
+                        result = LocalDate.parse(datepart + "-31", dateformatter).atStartOfDay()
+                    }
+                }
+                else if ( datepart.length() == 10 ) {
+                    // Versuche verschiedene Formate für vollständige Datumsangaben
+                    if (datepart.contains('.')) {
+                        // Deutsches Format: TT.MM.JJJJ
+                        result = LocalDate.parse(datepart, dateformatter3).atStartOfDay()
+                    }
+                    else if (datepart.contains('/')) {
+                        // Format mit Schrägstrichen: TT/MM/JJJJ
+                        result = LocalDate.parse(datepart, dateformatter2).atStartOfDay()
+                    }
+                    else {
+                        // ISO-Format: JJJJ-MM-TT
+                        result = LocalDate.parse(datepart, dateformatter).atStartOfDay()
+                    }
+                }
+                else {
+                    result = LocalDateTime.parse(datepart, datetimeformatter)
+                }
+            }
+            catch (Exception pe) {
+                pe.printStackTrace()
+            }
         }
-        else if ( datepart.length() == 7 ) {
-          if(start) {
-            result = LocalDate.parse(datepart + "-01", dateformatter).atStartOfDay()
-          }
-          else {
-            result = LocalDate.parse(datepart + "-31", dateformatter).atStartOfDay()
-          }
-        }
-        else if ( datepart.length() == 10 ) {
-          result = LocalDate.parse(datepart, dateformatter).atStartOfDay()
-        }
-        else if (datepart.length() == 10 && datepart.contains('/')) {
-          result = LocalDate.parse(datepart, dateformatter2).atStartOfDay()
-        }
-        else {
-          result = LocalDateTime.parse(datepart, datetimeformatter)
-        }
-      }
-      catch (Exception pe) {
-        pe.printStackTrace()
-      }
+        result
     }
-    result
-
-  }
 }

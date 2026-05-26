@@ -1,5 +1,6 @@
 package wekb
 
+import grails.core.GrailsApplication
 import wekb.helper.BeanStore
 import wekb.helper.RCConstants
 import wekb.helper.RDStore
@@ -51,9 +52,7 @@ public class HQLBuilder {
   public static def build(grailsApplication, 
                           qbetemplate, 
                           params,
-                          result, 
-                          target_class, 
-                          genericOIDService,
+                          target_class,
                           returnObjectsOrRows='objects') {
     // select o from Clazz as o where 
 
@@ -101,27 +100,26 @@ public class HQLBuilder {
     hql_builder_context.query_clausesWithAnd = []
     hql_builder_context.query_clausesWithOr = []
     hql_builder_context.bindvars = new java.util.HashMap();
-    hql_builder_context.genericOIDService = genericOIDService;
 
     if(params.sort && params.sort in availableSortFields){
       hql_builder_context.sort = params.sort
     }else {
       hql_builder_context.sort = ( qbetemplate.containsKey('defaultSort') ? qbetemplate.defaultSort : null )
     }
-    result.sort = hql_builder_context.sort
+    String sort = hql_builder_context.sort
 
     if(params.order && params.order in ['desc', 'asc']){
       hql_builder_context.order = params.order
     }else {
       hql_builder_context.order = ( qbetemplate.containsKey('defaultOrder') ? qbetemplate.defaultOrder : null )
     }
-    result.order = hql_builder_context.order
+    String order = hql_builder_context.order
 
 
     def baseclass = target_class.getClazz()
     criteria.each { crit ->
       log.debug("Processing crit: ${crit}");
-      processProperty(hql_builder_context,crit,baseclass)
+      processProperty(hql_builder_context,crit,baseclass, grailsApplication)
       // List props = crit.def..split("\\.")
     }
 
@@ -135,7 +133,7 @@ public class HQLBuilder {
     }
 
     String hql = outputHqlWithoutSort(hql_builder_context, qbetemplate)
-    // log.debug("HQL: ${hql}");
+    log.debug("HQL: ${hql}");
     log.debug("BindVars: ${hql_builder_context.bindvars}");
 
 
@@ -159,78 +157,66 @@ public class HQLBuilder {
       count_hql = "select count (*) ${hql}".toString()
     }
 
-    def fetch_hql = null
+    String fetch_hql, count_clause = null
     if ( returnObjectsOrRows=='objects' ) {
-      fetch_hql = "select ${qbetemplate.useDistinct == true ? 'distinct' : ''} o ${hql}".toString()
+      fetch_hql = "select ${qbetemplate.useDistinct == true ? 'distinct' : ''} o.id ${hql}".toString()
     }
     else {
       fetch_hql = "select ${buildFieldList(qbetemplate.qbeConfig.qbeResults)} ${hql}".toString()
     }
 
     // Many SQL variants freak out if you order by on a count(*) query, so only order by for the actual fetch
+    String order_clause = " order by o.${hql_builder_context.sort} ${hql_builder_context.order}"
     if ( hql_builder_context.containsKey('sort' ) && 
          ( hql_builder_context.get('sort') != null ) && 
          ( hql_builder_context.get('sort').length() > 0 ) ) {
       log.debug("Setting sort order to ${hql_builder_context.sort}")
-
       switch(hql_builder_context.sort) {
         case 'titleCount':
-              fetch_hql = fetch_hql.replaceFirst(" o ", " o, (select count(*) from  wekb.TitleInstancePackagePlatform as t where t.pkg = o.id) as titleCount ")
-              fetch_hql += " order by titleCount ${hql_builder_context.order}"
+              fetch_hql = fetch_hql.replaceFirst(" o.id ", " o.id, (select count(*) from  wekb.TitleInstancePackagePlatform as t where t.pkg = o.id) as titleCount ")
+              count_clause = "(select count(*) from  wekb.TitleInstancePackagePlatform as t where t.pkg = o.id) as titleCount"
+              order_clause = " order by titleCount ${hql_builder_context.order}"
               break
         case 'currentTippCount':
-              fetch_hql = fetch_hql.replaceFirst(" o ", " o, (select count(*) from  wekb.TitleInstancePackagePlatform as t where t.pkg = o.id and t.status = ${RDStore.KBC_STATUS_CURRENT.id}) as currentTippCount ")
-              fetch_hql += " order by currentTippCount ${hql_builder_context.order}"
+              fetch_hql = fetch_hql.replaceFirst(" o.id ", " o.id, (select count(*) from  wekb.TitleInstancePackagePlatform as t where t.pkg = o.id and t.status = ${RDStore.KBC_STATUS_CURRENT.id}) as currentTippCount ")
+              count_clause = "(select count(*) from  wekb.TitleInstancePackagePlatform as t where t.pkg = o.id and t.status = ${RDStore.KBC_STATUS_CURRENT.id}) as currentTippCount"
+              order_clause = " order by currentTippCount ${hql_builder_context.order}"
               break
         case 'deletedTippCount':
-              fetch_hql = fetch_hql.replaceFirst(" o ", " o, (select count(*) from  wekb.TitleInstancePackagePlatform as t where t.pkg = o.id and t.status = ${RDStore.KBC_STATUS_DELETED.id}) as deletedTippCount ")
-              fetch_hql += " order by deletedTippCount ${hql_builder_context.order}"
+              fetch_hql = fetch_hql.replaceFirst(" o.id ", " o.id, (select count(*) from  wekb.TitleInstancePackagePlatform as t where t.pkg = o.id and t.status = ${RDStore.KBC_STATUS_DELETED.id}) as deletedTippCount ")
+              count_clause = "(select count(*) from  wekb.TitleInstancePackagePlatform as t where t.pkg = o.id and t.status = ${RDStore.KBC_STATUS_DELETED.id}) as deletedTippCount"
+              order_clause = " order by deletedTippCount ${hql_builder_context.order}"
               break
         case 'retiredTippCount':
-              fetch_hql = fetch_hql.replaceFirst(" o ", " o, (select count(*) from  wekb.TitleInstancePackagePlatform as t where t.pkg = o.id and t.status = ${RDStore.KBC_STATUS_RETIRED.id}) as retiredTippCount ")
-              fetch_hql += " order by retiredTippCount ${hql_builder_context.order}"
+              fetch_hql = fetch_hql.replaceFirst(" o.id ", " o.id, (select count(*) from  wekb.TitleInstancePackagePlatform as t where t.pkg = o.id and t.status = ${RDStore.KBC_STATUS_RETIRED.id}) as retiredTippCount ")
+              count_clause = "(select count(*) from  wekb.TitleInstancePackagePlatform as t where t.pkg = o.id and t.status = ${RDStore.KBC_STATUS_RETIRED.id}) as retiredTippCount"
+              order_clause = " order by retiredTippCount ${hql_builder_context.order}"
               break
         case 'expectedTippCount':
-              fetch_hql = fetch_hql.replaceFirst(" o ", " o, (select count(*) from  wekb.TitleInstancePackagePlatform as t where t.pkg = o.id and t.status = ${RDStore.KBC_STATUS_EXPECTED.id}) as expectedTippCount ")
-              fetch_hql += " order by expectedTippCount ${hql_builder_context.order}"
+              fetch_hql = fetch_hql.replaceFirst(" o.id ", " o.id, (select count(*) from  wekb.TitleInstancePackagePlatform as t where t.pkg = o.id and t.status = ${RDStore.KBC_STATUS_EXPECTED.id}) as expectedTippCount ")
+              count_clause = "(select count(*) from  wekb.TitleInstancePackagePlatform as t where t.pkg = o.id and t.status = ${RDStore.KBC_STATUS_EXPECTED.id}) as expectedTippCount"
+              order_clause = " order by expectedTippCount ${hql_builder_context.order}"
               break
-        default: fetch_hql += " order by o.${hql_builder_context.sort} ${hql_builder_context.order}"
+          case 'lastTryDate':
+              fetch_hql = fetch_hql.replaceFirst(" o.id ", " o.id, (select max(upi.endTime) from wekb.UpdatePackageInfo as upi where upi.endTime is not null and upi.pkg = o.id) as updateSuccessDate ")
+              count_clause = "(select max(upi.endTime) from wekb.UpdatePackageInfo as upi where upi.endTime is not null and upi.pkg = o.id) as updateSuccessDate"
+              order_clause = " order by updateSuccessDate ${hql_builder_context.order}"
               break
       }
+      fetch_hql += order_clause
     }
 
-
-    log.info("Attempt count qry ${count_hql}");
-    log.info("Attempt qry ${fetch_hql}");
-    log.info("Bindvars ${hql_builder_context.bindvars}");
-    def count_start_time = System.currentTimeMillis();
-    result.reccount = baseclass.executeQuery(count_hql, hql_builder_context.bindvars,[readOnly:true])[0]
-
-    log.info("Count completed (${result.reccount}) after ${System.currentTimeMillis() - count_start_time} ms");
-
-    def query_params = [:]
-    if ( result.max )
-      query_params.max = result.max;
-    if ( result.offset )
-      query_params.offset = result.offset
-
-    query_params.readOnly = true;
-
-    def query_start_time = System.currentTimeMillis();
-    // log.debug("Get data rows..");
-    result.recset = baseclass.executeQuery(fetch_hql, hql_builder_context.bindvars,query_params);
-    // log.debug("Returning..");
-    log.info("Fetch completed after ${System.currentTimeMillis() - query_start_time} ms");
+      return [count_hql: count_hql, fetch_hql: fetch_hql, count_clause: count_clause, params_hql: hql_builder_context.bindvars, sort: sort, order: order, order_clause: order_clause]
   }
 
-  static def processProperty(hql_builder_context,crit,baseclass) {
+  static def processProperty(hql_builder_context,crit,baseclass, grailsApplication) {
     // log.debug("processProperty ${hql_builder_context}, ${crit}");
     switch ( crit.defn.contextTree.ctxtp ) {
       case 'qry':
-        processQryContextType(hql_builder_context,crit,baseclass)
+        processQryContextType(hql_builder_context,crit,baseclass, grailsApplication)
         break;
       case 'filter':
-        processQryContextType(hql_builder_context,crit,baseclass)
+        processQryContextType(hql_builder_context,crit,baseclass, grailsApplication)
         break;
       default:
         log.error("Unhandled property context type ${crit}");
@@ -238,12 +224,17 @@ public class HQLBuilder {
     }
   }
 
-  static def processQryContextType(hql_builder_context,crit, baseclass) {
-    List l =  crit.defn.contextTree.prop.split("\\.")
-    processQryContextType(hql_builder_context, crit, l, 'o', baseclass, baseclass)
+  static def processQryContextType(hql_builder_context,crit, baseclass, grailsApplication) {
+    List l = []
+    //no extra join when just the foreign key is being requested
+    if(crit.defn.contextTree.prop.contains('.id'))
+      l << crit.defn.contextTree.prop
+    else
+      l.addAll(crit.defn.contextTree.prop.split("\\."))
+    processQryContextType(hql_builder_context, crit, l, 'o', baseclass, baseclass, grailsApplication)
   }
 
-  static def processQryContextType(hql_builder_context,crit, proppath, parent_scope, the_class, baseclass) {
+  static def processQryContextType(hql_builder_context,crit, proppath, parent_scope, the_class, baseclass, grailsApplication) {
 
     // log.debug("processQryContextType.... ${proppath}");
 
@@ -263,7 +254,7 @@ public class HQLBuilder {
           
           // Standard association, just make a bind variable..
           establishScope(hql_builder_context, parent_scope, head, newscope)
-          processQryContextType(hql_builder_context,crit, proppath, newscope, target_class, baseclass)
+          processQryContextType(hql_builder_context,crit, proppath, newscope, target_class, baseclass, grailsApplication)
       }
     }
     else {
@@ -271,7 +262,7 @@ public class HQLBuilder {
       // If this is an ordinary property, add the operation. If it's a special, the make the extra joins
       log.debug("Standard property ${proppath}...");
       // The property is a standard property
-      addQueryClauseFor(crit,hql_builder_context,parent_scope+'.'+proppath[0], baseclass)
+      addQueryClauseFor(crit,hql_builder_context,parent_scope+'.'+proppath[0], baseclass, grailsApplication)
     }
   }
 
@@ -280,7 +271,7 @@ public class HQLBuilder {
     hql_builder_context.declared_scopes[newscope_name] = "${parent_scope}.${property_to_join} as ${newscope_name}" 
   }
 
-  static def addQueryClauseFor(crit, hql_builder_context, scoped_property, baseclass) {
+  static def addQueryClauseFor(crit, hql_builder_context, scoped_property, baseclass, grailsApplication) {
     String addToQuery = (crit.disjunction ? 'query_clausesWithOr' : 'query_clausesWithAnd')
 
 
@@ -288,7 +279,7 @@ public class HQLBuilder {
       case 'eq':
         hql_builder_context."${addToQuery}".add("${crit.defn.contextTree.negate?'not ':''}${scoped_property} = :${crit.defn.qparam}");
         if ( crit.defn.type=='lookup' || crit.defn.type=='dropDown' || crit.defn.type=='dropDownGroup' ) {
-          def value = hql_builder_context.genericOIDService.resolveOID(crit.value)
+          def value =  getValueFromBaseClass(grailsApplication, crit.defn.baseClass, crit.value)
           value = (crit.defn.propType == 'Boolean') ? (value == RDStore.YN_YES ? true : false) : value
           hql_builder_context.bindvars[crit.defn.qparam] = value
         }
@@ -314,11 +305,25 @@ public class HQLBuilder {
             values << crit.value
           else values.addAll(crit.value)
           values.each { String rawVal ->
-            def value = hql_builder_context.genericOIDService.resolveOID(rawVal)
+            def value = getValueFromBaseClass(grailsApplication, crit.defn.baseClass, rawVal)
             value = (crit.defn.propType == 'Boolean') ? (value == RDStore.YN_YES ? true : false) : value
             parsedValues << value
           }
           hql_builder_context.bindvars[crit.defn.qparam] = parsedValues
+        }else if (crit.defn.type=='dropDownMultiple'){
+            List values = [], parsedValues = []
+            if(crit.value instanceof String)
+                values = crit.value.split(',')
+            else
+                values.addAll(crit.value)
+
+            values.each { String rawVal ->
+                def value = getValueFromBaseClass(grailsApplication, crit.defn.baseClass, rawVal)
+                value = (crit.defn.propType == 'Boolean') ? (value == RDStore.YN_YES ? true : false) : value
+                parsedValues << value
+            }
+
+            hql_builder_context.bindvars[crit.defn.qparam] = parsedValues
         }
         else {
           hql_builder_context.bindvars[crit.defn.qparam] = crit.value
@@ -351,7 +356,7 @@ public class HQLBuilder {
         if ( crit.defn.type=='lookup' || crit.defn.type=='dropDown' || crit.defn.type=='dropDownGroup' ) {
 
           if(crit.defn.baseClass == 'wekb.RefdataValue') {
-            def value = hql_builder_context.genericOIDService.resolveOID(crit.value)
+            def value = getValueFromBaseClass(grailsApplication, crit.defn.baseClass, crit.value)
             if(value && value.class.getSimpleName() == 'RefdataValue') {
               hql_builder_context."${addToQuery}".add("${crit.defn.contextTree.negate ? 'not ' : ''} exists (select ${crit.defn.qparam} from ${scoped_property} as ${crit.defn.qparam} where ${crit.defn.qparam} = :${crit.defn.qparam} ) ");
               hql_builder_context.bindvars[crit.defn.qparam] = value
@@ -574,5 +579,27 @@ public class HQLBuilder {
     }
     return null
   }
+
+    static def getValueFromBaseClass(GrailsApplication grailsApplication, String baseClass, String oid){
+        def value
+        def domain_class = grailsApplication.getArtefact('Domain', baseClass)
+        if (domain_class) {
+            Long objectID
+            if(oid.contains(':')){
+                List oid_components = oid.split(':')
+                objectID = Long.parseLong(oid_components[1])
+            }
+            else {
+                objectID = Long.parseLong(oid)
+            }
+
+            value = domain_class.getClazz().get(objectID)
+        }
+        else {
+            log.debug("getValueFromBaseClass -> Unable to locate domain class ${baseClass} or not readable");
+            value = null
+        }
+        return value
+    }
 
 }

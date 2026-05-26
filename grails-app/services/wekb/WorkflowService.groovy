@@ -7,6 +7,7 @@ import groovyx.gpars.GParsPool
 import wekb.auth.User
 import wekb.auth.UserRole
 import wekb.helper.RCConstants
+import wekb.helper.RDStore
 import wekb.system.SavedSearch
 import wekb.utils.ServerUtils
 
@@ -17,6 +18,7 @@ class WorkflowService {
 
     AccessService accessService
     AutoUpdatePackagesService autoUpdatePackagesService
+    DeletionService deletionService
     ExecutorService executorService
     LinkGenerator grailsLinkGenerator
     SpringSecurityService springSecurityService
@@ -74,8 +76,10 @@ class WorkflowService {
                         [code: 'objectMethod::removeOnlyDeletedTipps', modalID: 'removeOnlyDeletedTipps', label: 'Remove only deleted Titles', message: '', onlyAdmin: false, group: 4],
                         [code: 'objectMethod::removeWithTipps', modalID: 'removeWithTipps', label: 'Remove the package (with all Titles)', message: '', onlyAdmin: false, group: 6],
 
+                        [code: 'workFlowMethod::expungeRemovedTipps', modalID: 'expungeRemovedTipps', label: 'Remove all removed Titles hard from system', message: '', onlyAdmin: true, group: 7],
+
                         [code: 'workFlowMethod::manualKbartImport', label: 'Manual KBART Import', message: '', onlyAdmin: false, group: 1],
-                        [code: 'workFlowMethod::updatePackageFromKbartSource', label: 'Trigger KBART Update (Changed Titles)', message: '', onlyAdmin: false, group: 1],
+                       /* [code: 'workFlowMethod::updatePackageFromKbartSource', label: 'Trigger KBART Update (Changed Titles)', message: '', onlyAdmin: false, group: 1],*/
                         [code: 'workFlowMethod::updatePackageAllTitlesFromKbartSource', label: 'Trigger KBART Update (all Titles)', message: '', onlyAdmin: false, group: 1]
                 ]
                 break
@@ -95,7 +99,8 @@ class WorkflowService {
                         [code: 'workFlowSetStatus::Deleted', label: 'Mark the title as deleted', message: '', onlyAdmin: false, group: 1],
                         [code: 'workFlowSetStatus::Removed', label: 'Remove the title', message: '', onlyAdmin: false, group: 2],
                         [code: 'workFlowSetStatus::Expected', label: 'Mark the title as expected', message: '', onlyAdmin: false, group: 1],
-                        [code: 'workFlowSetStatus::Current', label: 'Mark the title as current', message: '', onlyAdmin: false, group: 1]
+                        [code: 'workFlowSetStatus::Current', label: 'Mark the title as current', message: '', onlyAdmin: false, group: 1],
+                        [code: 'workFlowMethod::deletedHardTipp', label: 'Remove hard from system', message: '', onlyAdmin: true, group: 3],
                 ]
                 break
             case User.class.name:
@@ -141,7 +146,7 @@ class WorkflowService {
     }
 
     def processAction(result, params) {
-        log.debug("processAction -> result: ${result}, params:" + params)
+        log.info("processAction -> result: ${result}, params:" + params)
         result.objects_to_action.each {
             boolean editable = accessService.checkEditableObject(it, params)
             List availableActions = availableActions(it.class.name)
@@ -217,7 +222,7 @@ class WorkflowService {
     }
 
     private Map updatePackageFromKbartSource(Package pkg, boolean allTitles = false) {
-        log.debug("updatePackageFromKbartSource for Package ${pkg}..")
+        log.info("updatePackageFromKbartSource for Package ${pkg}..")
         Map result = [:]
 
         if (pkg && pkg.nominalPlatform && pkg.kbartSource && (pkg.kbartSource.url || pkg.kbartSource.ftpServerUrl)) {
@@ -339,5 +344,47 @@ class WorkflowService {
         result
 
     }
+
+    Map deletedHardTipp(TitleInstancePackagePlatform titleInstancePackagePlatform){
+        Map result = [:]
+
+        if(deletionService.expungeTipp(titleInstancePackagePlatform.id)){
+            result.message = "Hard deletion was successful!"
+        }else
+        {
+            result.error = "Hard deletion was not successful!"
+        }
+
+        result
+
+    }
+
+    Map expungeRemovedTipps(Package aPackage){
+        Map result = [:]
+
+        List<TitleInstancePackagePlatform> tipps = TitleInstancePackagePlatform.findAllByPkgAndStatus(aPackage, RDStore.KBC_STATUS_REMOVED)
+
+        int countSuccess = 0
+        int countFail = 0
+
+        tipps.each {
+            if(deletionService.expungeTipp(it.id)){
+                countSuccess++
+            }else
+            {
+                countFail++
+            }
+        }
+
+        if(countSuccess > 0 && tipps.size() > 0 && countFail == 0 ){
+            result.message = "Hard deletion of Removed Title was successful! ${countSuccess}/${tipps.size()}"
+        }else if(countFail > 0 ){
+            result.error = "Hard deletion of Removed Title was not successful! Success: ${countSuccess}/${tipps.size()} -> Fail: ${countFail}/${tipps.size()}"
+        }
+
+        result
+
+    }
+
 
 }

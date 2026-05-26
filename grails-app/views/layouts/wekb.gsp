@@ -7,12 +7,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title><g:layoutTitle default="we:kb"/></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
+    <meta name="description" content="In the we:kb (pronounced wekb), the providers manage their current electronic sales units and meta-information themselves.">
+    <g:if test="${ServerUtils.getCurrentServer() == ServerUtils.SERVER_PROD}">
+        <meta name="google-site-verification" content="-kK1UKmjJAt_9QnZg6YL-96yI65sls58pHyheOOrS0M">
+    </g:if>
     <link rel="shortcut icon" href="${resource(dir: 'images', file: 'favicon.ico')}" type="image/x-icon">
 
     <g:javascript> var spotlightSearchUrl="${g.createLink(controller: 'search', action: 'spotlightSearch')}";</g:javascript>
     <g:javascript> var ajaxLookUp="${g.createLink(controller: 'ajaxJson', action: 'lookup')}";</g:javascript>
-    <g:javascript> var componentsDropDown="${g.createLink(controller: 'ajaxJson', action: 'lookup')}";</g:javascript>
+    <g:javascript> var componentsDropDown="${g.createLink(controller: 'ajaxJson', action: 'componentsDropDown')}";</g:javascript>
+    <g:javascript> var selectedDropDown="${g.createLink(controller: 'ajaxJson', action: 'componentsDropDown', params: [dropDownGroup: true])}";</g:javascript>
 
     <asset:javascript src="wekb.js"/>
     <asset:stylesheet src="wekb.css"/>
@@ -198,9 +202,12 @@
 
         <div class="right menu">
             <g:if test="${!isUserLoggedIn}">
+                <g:set var="backUrl" value="${request.forwardURI ?: request.requestURI}${request.queryString ? '?' + request.queryString : ''}" />
+
+
                 <div class="item">
-                    <g:link class="ui inverted button" controller="home" action="index"><i
-                            class="sign in alternate icon icon"></i>Login</g:link>
+                    <g:link class="ui inverted button" controller="login" action="auth" params="[( 'spring-security-redirect' ): backUrl]">
+                    <i class="sign in alternate icon icon"></i>Login</g:link>
                 </div>
 
             </g:if>

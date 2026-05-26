@@ -17,7 +17,7 @@ class WorkflowController{
 
   @Secured(['ROLE_EDITOR', 'IS_AUTHENTICATED_FULLY'])
   def action(){
-    log.debug("WorkflowController::action(${params})")
+    log.info("WorkflowController::action(${params})")
     def result = [:]
     result.ref = request.getHeader('referer')
 
@@ -81,7 +81,7 @@ class WorkflowController{
             log.debug("Execute query")
             // doQuery(result.qbetemplate, params, result)
             def target_class = grailsApplication.getArtefact("Domain", qresult.qbetemplate.baseclass)
-            HQLBuilder.build(grailsApplication, qresult.qbetemplate, params, qresult, target_class, genericOIDService)
+            HQLBuilder.build(grailsApplication, qresult.qbetemplate, params, target_class)
 
             qresult.recset.each {
               def oid_to_action = "${it.class.name}:${it.id}"

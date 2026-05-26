@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta name="layout" content="wekb"/>
-    <title>we:kb : Package Management</title>
+    <title>we:kb | wekb -  Package Management</title>
 </head>
 
 <body>

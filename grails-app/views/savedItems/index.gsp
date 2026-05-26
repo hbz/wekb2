@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta name="layout" content="wekb" />
-<title>we:kb : Saved Searchs</title>
+<title>we:kb | wekb -  Saved Searchs</title>
 </head>
 <body>
 

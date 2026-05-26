@@ -36,7 +36,7 @@ class Api2Service {
 
     }
 
-    static List complexSortFields = ['titleCount', 'currentTippCount', 'deletedTippCount', 'retiredTippCount', 'expectedTippCount']
+    static List complexSortFields = ['titleCount', 'currentTippCount', 'deletedTippCount', 'retiredTippCount', 'expectedTippCount', 'lastTryDate']
 
     public Map getApiTemplate(String type) {
         return ApiTemplates.get(type);
@@ -552,8 +552,8 @@ class Api2Service {
                                         type       : 'lookup',
                                         baseClass  : 'wekb.RefdataValue',
                                         refdataCategory    : RCConstants.YN,
-                                        qparam     : 'forwardingUsageStatistcs',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'forwardingUsageStatistcs'],
+                                        qparam     : 'forwardingUsageStatistics',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'forwardingUsageStatistics'],
                                 ],
                         ],
                         qbeSortFields: [
@@ -632,7 +632,7 @@ class Api2Service {
                                 ],
                                 [
                                         qparam     : 'platformUuid',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'hostPlatform.uuid']
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'pkg.nominalPlatform.uuid']
                                 ],
 
                         ],
@@ -644,7 +644,7 @@ class Api2Service {
                                 [sort: 'dateCreated'],
                                 [sort: 'curatoryGroups.curatoryGroup.name'],
                                 [sort: 'pkg.name'],
-                                [sort: 'hostPlatform.name'],
+                                [sort: 'pkg.nominalPlatform.name'],
                                 [sort: 'publicationType.value'],
                                 [sort: 'medium.value'],
                                 [sort: 'firstAuthor'],
@@ -1628,12 +1628,15 @@ class Api2Service {
                 result.remoteAccess = object.remoteAccess?.value
                 result.printDownloadChapter = object.printDownloadChapter?.value
                 result.quotesByCopyPaste = object.quotesByCopyPaste?.value
-                //result.forwardingUsageStatistcs = object.forwardingUsageStatistcs?.value
+                result.forwardingUsageStatistics = object.forwardingUsageStatistics?.value
                 result.alertNewEbookPackages = object.alertNewEbookPackages?.value
-                //result.alertExchangeEbookPackages = object.alertExchangeEbookPackages?.value
 
-                result.urlPristLists = object.urlPristLists
-                //result.urlTitleLists = object.urlTitleLists
+                result.urlPriceLists = object.urlPriceLists
+
+                result.licenseBasedEBInterlibrarySupported = object.licenseBasedEBInterlibrarySupported?.value
+                result.range = object.range?.value
+                result.agreementModel = object.agreementModel?.value
+
 
                 result.roles = []
                 object.roles.each { role ->
@@ -1665,10 +1668,18 @@ class Api2Service {
 
                 result.contacts = []
                 object.contacts.each { Contact contact ->
+                    List languages = []
+                    contact.languages.each { language ->
+                        languages.add([value     : language.value,
+                                       value_de  : language.value_de,
+                                       value_en  : language.value_en])
+                    }
+
                     result.contacts.add([content    : contact.content,
                                          contentType: contact.contentType?.value,
                                          type       : contact.type?.value,
-                                         language   : contact.language?.value])
+                                         language   : contact.languages ?  contact.languages[0].value : '',
+                                         languages: languages])
                 }
 
 
@@ -1770,7 +1781,7 @@ class Api2Service {
                 result.rssUrl = object.rssUrl
                 result.individualDesignLogo = object.individualDesignLogo?.value
                 result.fullTextSearch = object.fullTextSearch?.value
-                result.forwardingUsageStatistcs = object.forwardingUsageStatistcs?.value
+                result.forwardingUsageStatistics = object.forwardingUsageStatistics?.value
 
                 if (object.hasProperty('curatoryGroups')) {
                     result.curatoryGroups = []
@@ -1825,9 +1836,9 @@ class Api2Service {
                     result.tippPackageUuid = object.pkg.uuid
                 }
 
-                if (object.hostPlatform) {
+                if (object.pkg.nominalPlatform) {
                     // !!!!! observe closely! Danger of session mismatches and performance bottlenecks!!!!!
-                    Platform hostPlatform = (Platform) GrailsHibernateUtil.unwrapIfProxy(object.hostPlatform)
+                    Platform hostPlatform = (Platform) GrailsHibernateUtil.unwrapIfProxy(object.pkg.nominalPlatform)
                     result.hostPlatform = hostPlatform.getOID()
                     result.hostPlatformName = hostPlatform.name
                     result.hostPlatformUuid = hostPlatform.uuid
@@ -1973,6 +1984,7 @@ class Api2Service {
                 result.webShopOrders = object.webShopOrders ? RDStore.YN_YES.value : RDStore.YN_NO.value
                 result.xmlOrders = object.xmlOrders ? RDStore.YN_YES.value : RDStore.YN_NO.value
                 result.ediOrders = object.ediOrders ? RDStore.YN_YES.value : RDStore.YN_NO.value
+                result.emailOrders = object.emailOrders ? RDStore.YN_YES.value : RDStore.YN_NO.value
 
                 result.paperInvoice = object.paperInvoice ? RDStore.YN_YES.value : RDStore.YN_NO.value
                 result.managementOfCredits = object.managementOfCredits ? RDStore.YN_YES.value : RDStore.YN_NO.value
@@ -2005,10 +2017,18 @@ class Api2Service {
 
                 result.contacts = []
                 object.contacts.each { Contact contact ->
+                    List languages = []
+                    contact.languages.each { language ->
+                        languages.add([value     : language.value,
+                                              value_de  : language.value_de,
+                                              value_en  : language.value_en])
+                    }
+
                     result.contacts.add([content    : contact.content,
                                          contentType: contact.contentType?.value,
                                          type       : contact.type?.value,
-                                         language   : contact.language?.value])
+                                         language   : contact.languages ?  contact.languages[0].value : '',
+                                         languages: languages])
                 }
 
 
@@ -2177,6 +2197,7 @@ class Api2Service {
             Map<String, Map> ddcMap = sql.rows(ddcQuery, tippIdParams).collectEntries { GroovyRowResult row -> [row['tipp_fk'], slurper.parseText(row['ddcs'].toString())] }
             Map<String, Map> langMap = sql.rows(languageQuery, tippIdParams).collectEntries { GroovyRowResult row -> [row['cl_tipp_fk'], slurper.parseText(row['lang'].toString())] }
             Map<String, Map> curatoryGroupMap = sql.rows(curatoryGroupQuery, tippPkgParams).collectEntries { GroovyRowResult row -> [row['cgp_pkg_fk'], slurper.parseText(row['cg'].toString())] }
+
             principalRows.eachWithIndex { GroovyRowResult row, int i ->
                 //long startInner = System.currentTimeMillis()
                 row['sortname'] = generateSortName(row['name'])
@@ -2217,6 +2238,7 @@ class Api2Service {
 
             result.searchTime = searchTime + ' ms'
             log.debug("Search completed after ${searchTime}")
+            sql.close()
         }
         else if (globalSearchComponentType) {
             def searchResult = [:]
@@ -2273,15 +2295,39 @@ class Api2Service {
 
                 target_class = grailsApplication.getArtefact("Domain", apiSearchTemplate.baseclass)
                 //HQLBuilder.build(grailsApplication, apiSearchTemplate, cleaned_params, searchResult, target_class, genericOIDService, "rows")
-                HQLBuilder.build(grailsApplication, apiSearchTemplate, cleaned_params, searchResult, target_class, genericOIDService)
+                Map hql_Map = HQLBuilder.build(grailsApplication, apiSearchTemplate, cleaned_params, target_class)
 
-                log.debug("Query complete");
+                def baseclass = target_class.getClazz()
+
+                log.info("Attempt count qry: ${hql_Map.count_hql}")
+                log.info("Attempt qry: ${hql_Map.fetch_hql}")
+                log.info("Bindvars: ${hql_Map.params_hql}")
+                def count_start_time = System.currentTimeMillis()
+                searchResult.reccount = baseclass.executeQuery(hql_Map.count_hql, hql_Map.params_hql,[readOnly:true])[0]
+
+                log.info("Count completed (${searchResult.reccount}) after ${System.currentTimeMillis() - count_start_time} ms")
+
+                def query_params = [:]
+                if ( searchResult.max )
+                    query_params.max = searchResult.max
+                if ( searchResult.offset )
+                    query_params.offset = searchResult.offset
+
+                query_params.readOnly = true
+
+
+                def query_start_time = System.currentTimeMillis()
+                // log.debug("Get data rows..")
+                searchResult.recset = baseclass.executeQuery(hql_Map.fetch_hql, hql_Map.params_hql, query_params)
+
+                log.info("Fetch completed after ${System.currentTimeMillis() - query_start_time} ms")
+
 
                 //Add information to result
                 result.result_count_total = searchResult.reccount
                 result.result_count = searchResult.recset.size()
-                result.sort = searchResult.sort
-                result.order = searchResult.order
+                result.sort = hql_Map.sort
+                result.order = hql_Map.order
                 result.offset = searchResult.offset
                 result.max = searchResult.max
                 result.page_current = (searchResult.offset / searchResult.max) + 1
@@ -2598,4 +2644,76 @@ class Api2Service {
 
         result
     }
+
+    Map getCorrectTippDuplicate(GrailsParameterMap params, Map result){
+        result.uuid = null
+        if(params.uuid) {
+            TitleInstancePackagePlatform tipp = TitleInstancePackagePlatform.findByUuid(params.uuid)
+            TitleInstancePackagePlatform correctTipp
+            if (tipp && tipp.getTippDuplicatesByTitleIDWithOutRemovedCount() > 0) {
+                List tipps = tipp.findTippDuplicatesByTitleIDWithoutRemoved()
+
+                List currentTipps = tipps.findAll { it.status == RDStore.KBC_STATUS_CURRENT }
+
+                if (currentTipps.size() > 0) {
+                    correctTipp = currentTipps.sort { it.lastUpdated }.reverse()[0]
+                }
+
+                if (!correctTipp) {
+                    List expectedTipps = tipps.findAll { it.status == RDStore.KBC_STATUS_EXPECTED }
+                    if (expectedTipps.size() > 0) {
+                        correctTipp = expectedTipps.sort { it.lastUpdated }.reverse()[0]
+                    }
+                    if (!correctTipp) {
+                        List retiredTipps = tipps.findAll { it.status == RDStore.KBC_STATUS_RETIRED }
+                        if (expectedTipps.size() > 0) {
+                            correctTipp = retiredTipps.sort { it.lastUpdated }.reverse()[0]
+                        }
+
+                        if (!correctTipp) {
+                            List deletedTipps = tipps.findAll { it.status == RDStore.KBC_STATUS_DELETED }
+                            if (expectedTipps.size() > 0) {
+                                correctTipp = deletedTipps.sort { it.lastUpdated }.reverse()[0]
+                            }
+                        }
+                    }
+                }
+
+                result.uuid = correctTipp ? correctTipp.uuid : null
+            }else if(tipp && tipp.getTippDuplicatesByURLCount() > 0){
+                List tipps = tipp.findTippDuplicatesByURL()
+
+                List currentTipps = tipps.findAll { it.status == RDStore.KBC_STATUS_CURRENT }
+
+                if (currentTipps.size() > 0) {
+                    correctTipp = currentTipps.sort { it.lastUpdated }.reverse()[0]
+                }
+
+                if (!correctTipp) {
+                    List expectedTipps = tipps.findAll { it.status == RDStore.KBC_STATUS_EXPECTED }
+                    if (expectedTipps.size() > 0) {
+                        correctTipp = expectedTipps.sort { it.lastUpdated }.reverse()[0]
+                    }
+                    if (!correctTipp) {
+                        List retiredTipps = tipps.findAll { it.status == RDStore.KBC_STATUS_RETIRED }
+                        if (expectedTipps.size() > 0) {
+                            correctTipp = retiredTipps.sort { it.lastUpdated }.reverse()[0]
+                        }
+
+                        if (!correctTipp) {
+                            List deletedTipps = tipps.findAll { it.status == RDStore.KBC_STATUS_DELETED }
+                            if (expectedTipps.size() > 0) {
+                                correctTipp = deletedTipps.sort { it.lastUpdated }.reverse()[0]
+                            }
+                        }
+                    }
+                }
+                result.uuid = correctTipp ? correctTipp.uuid : null
+            }
+        }
+
+        result
+    }
+
+
 }

@@ -26,6 +26,8 @@ class UpdatePackageInfo {
     int countNewTipps = 0
     int countNowTippsInWekb = 0
     int countPreviouslyTippsInWekb = 0
+    int countCurrentTipps = 0
+    int countDeletedTipps = 0
 
     boolean onlyRowsWithLastChanged = false
 
@@ -78,6 +80,8 @@ class UpdatePackageInfo {
         countNewTipps column: 'upi_count_new_tipps'
         countNowTippsInWekb column: 'upi_count_now_tipps'
         countPreviouslyTippsInWekb column: 'upi_count_previously_tipps'
+        countCurrentTipps column: 'upi_count_current_tipps'
+        countDeletedTipps column: 'upi_count_deleted_tipps'
 
         onlyRowsWithLastChanged column: 'upi_only_rows_with_last_changed'
 

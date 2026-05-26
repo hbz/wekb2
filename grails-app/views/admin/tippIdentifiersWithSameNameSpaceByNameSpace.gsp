@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta name="layout" content="wekb"/>
-    <title>we:kb : Title Identifiers with same Identifier Namespace </title>
+    <title>we:kb | wekb -  Title Identifiers with same Identifier Namespace </title>
 </head>
 
 <body>
@@ -52,8 +52,8 @@
             </td>
             <td>
                 <g:link controller="resource" action="show"
-                        id="${t.hostPlatform.getOID()}">
-                    ${t.hostPlatform.name}
+                        id="${t.pkg.nominalPlatform.getOID()}">
+                    ${t.pkg.nominalPlatform.name}
                 </g:link>
             </td>
             <td>${t.publicationType?.value}</td>

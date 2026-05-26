@@ -27,14 +27,10 @@ class PublicController {
     if(ServerUtils.getCurrentServer() == ServerUtils.SERVER_PROD) {
         text += "Disallow: /search/index/ \n"
         text += "Disallow: /search/componentSearch/ \n"
-        text += "Disallow: /resource/index/ \n"
-        text += "Disallow: /resource/show/ \n"
         text += "Disallow: /login/ \n"
         text += "Disallow: /public/api2/ \n"
         text += "Disallow: /public/wcagFeedbackForm/ \n"
         text += "Disallow: /public/sendFeedbackForm/ \n"
-        text += "Disallow: /public/wcagPlainEnglish/ \n"
-        text += "Disallow: /public/packageContent/ \n"
         text += "Disallow: /public/packageContent/ \n"
         text += "Disallow: /public/tippContent/ \n"
         text += "Disallow: /public/identifierContent/ \n"
@@ -42,6 +38,14 @@ class PublicController {
         text += "Disallow: /public/platformContent/ \n"
         text += "Disallow: /public/kbart/ \n"
         text += "Disallow: /public/packageTSVExport/ \n"
+
+        text += "Disallow: /search/index? \n"
+        text += "Disallow: /?qbe= \n"
+        text += "Disallow: /metadata/ \n"
+        text += "Disallow: /package/ \n"
+        text += "Disallow: /resource/ \n"
+        text += "Disallow: /search/inlineSearch? \n"
+
 
     }
     else {
@@ -77,6 +81,13 @@ class PublicController {
 
   def wcagFeedbackForm() {
     log.info("wcagFeedbackForm::${params}")
+    def result = [:]
+    //println(params)
+    result
+  }
+
+  def aboutWekb() {
+    log.info("aboutWekb::${params}")
     def result = [:]
     //println(params)
     result

@@ -37,7 +37,7 @@ class AjaxHtmlController {
      */
     @Transactional
     def addToCollection() {
-        log.debug("AjaxController::addToCollection ${params}")
+        log.info("AjaxController::addToCollection ${params}")
         User user = springSecurityService.currentUser
         def contextObj = genericOIDService.resolveOID3(params.__context)
         def new_obj = null
@@ -125,11 +125,6 @@ class AjaxHtmlController {
                         if (!params.title || params.title.size() == 0) {
                             log.debug("missing title for TIPP creation")
                             errors.add(g.message(code: 'tipp.title.nullable', default: 'Please provide a title for the TIPP'))
-                        }
-
-                        if (!params.hostPlatform || params.hostPlatform.size() == 0) {
-                            log.debug("missing platform for TIPP creation")
-                            errors.add(g.message(code: 'tipp.hostPlatform.nullable', default: 'Please provide a platform for the TIPP'))
                         }
 
                         if (!params.url || params.url.size() == 0) {
@@ -330,6 +325,10 @@ class AjaxHtmlController {
             flash.error = g.message(code: 'component.listItem.notFound.label')
         }
 
+        if(contextObj instanceof Contact){
+            contextObj = contextObj.org ?: contextObj.vendor
+        }
+
         redirect(controller: 'resource', action: 'show', id: contextObj.class.name + ':' + contextObj.id, params: [activeTab: params.activeTab])
     }
 
@@ -394,6 +393,10 @@ class AjaxHtmlController {
         } else {
             flash.error = g.message(code: 'component.context.notFound.label')
             log.debug("Unable to locate instance of context class with oid ${params.__context}")
+        }
+
+        if(contextObj instanceof Contact){
+            contextObj = contextObj.org ?: contextObj.vendor
         }
 
         redirect(controller: 'resource', action: 'show', id: contextObj.class.name + ':' + contextObj.id, params: [activeTab: params.activeTab])
@@ -880,15 +883,25 @@ class AjaxHtmlController {
             if (editable) {
                 if (contentType == RDStore.CONTACT_CONTENT_TYPE_EMAIL) {
                     if (content ==~ /[_A-Za-z0-9-]+(.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(.[A-Za-z0-9]+)*(.[A-Za-z]{2,})/) {
-                        contact = new Contact(content: content, contentType: contentType, language: language, type: type)
+                        contact = new Contact(content: content, contentType: contentType, type: type)
                         contact[objectType] = owner
+
+                        if(language){
+                            contact.addToLanguages(language)
+                        }
+
                         contact.save()
                     } else {
                         flash.error = g.message(code: 'contact.email.validation.fail')
                     }
                 } else {
-                    contact = new Contact(content: content, contentType: contentType, language: language, type: type)
+                    contact = new Contact(content: content, contentType: contentType, type: type)
                     contact[objectType] = owner
+
+                    if(language){
+                        contact.addToLanguages(language)
+                    }
+
                     contact.save()
                 }
             } else {

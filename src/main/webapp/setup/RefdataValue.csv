@@ -1,6 +1,7 @@
 rdc;token;value_de;value_en
 Update.Status;Successful;Successful;Successful
 Update.Status;Failed;Failed;Failed
+Update.Status;Info;Info;Info
 Update.Status;Warning;Warning;Warning
 Update.Type;New Title;New Title;New Title
 Update.Type;Changed Title;Changed Title;Changed Title
@@ -528,6 +529,12 @@ Price.type;open access apc;open access apc;open access apc
 Price.type;perpetual;perpetual;perpetual
 Price.type;subscription;subscription;subscription
 Price.type;topup;topup;topup
+Provider.Range;Regional;Regional;Regional
+Provider.Range;National;National;National
+Provider.Agreement.Model;Nationwide license agreement;Nationwide license agreement;Nationwide license agreement
+Provider.Agreement.Model;License agreement with list of participants;License agreement with list of participants;License agreement with list of participants
+Provider.Agreement.Model;Clause in consortial license agreement;Clause in consortial license agreement;Clause in consortial license agreement
+Provider.Agreement.Model;Clause in local license agreements;Clause in local license agreements;Clause in local license agreements
 Source.DataFormat;KBART;KBART;KBART
 Source.DataFormat;Proprietary;Proprietary;Proprietary
 Source.DataSupplyMethod;eMail;eMail;eMail

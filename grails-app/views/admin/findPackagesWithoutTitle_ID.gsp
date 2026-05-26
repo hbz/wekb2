@@ -1,17 +1,22 @@
+<%@ page import="wekb.helper.RDStore" %>
 <!DOCTYPE html>
 <html>
 <head>
     <meta name="layout" content="wekb"/>
-    <title>we:kb : Packages with Tipp without Title_ID</title>
+    <title>we:kb | wekb -  Packages with Tipp without Title_ID</title>
 </head>
 
 <body>
 
 <wekb:serviceInjection/>
 
-<h1 class="ui header">Packages with Tipp without Title_ID (${totalCount})</h1>
+<h1 class="ui header">Packages with Tipp without Title_ID (${totalCount}) Status  -> ${[wekb.helper.RDStore.KBC_STATUS_CURRENT.value_en, RDStore.KBC_STATUS_RETIRED.value_en, RDStore.KBC_STATUS_EXPECTED.value_en]}</h1>
 
 <g:set var="allCount" value="${0}"/>
+<g:set var="allCurrentCount" value="${0}"/>
+
+
+<semui:flashMessage data="${flash}"/>
 
 <div class="container">
 
@@ -23,9 +28,12 @@
             <th>Provider</th>
             <th>Platform</th>
             <semui:sortableColumn property="curatoryGroups" title="Curatory Groups"/>
-            <th>Auto Update</th>
+            <th>Source</th>
+            <semui:sortableColumn property="autoUpdate" title="Auto Update"/>
             <th>Titles</th>
-            <semui:sortableColumn property="tippsWithoutTitleIDCount" title="Tipp without Title ID"/>
+            <semui:sortableColumn property="currentTippsWithoutTitleIDCount" title="Current Titles without Title ID"/>
+            <semui:sortableColumn property="tippsWithoutTitleIDCount" title="Titles without Title ID"/>
+            <th>Action</th>
         </tr>
         </thead>
         <tbody>
@@ -52,7 +60,7 @@
                     </g:each>
                 </td>
                 <td>
-                    <g:if test="${pkg.kbartSource?.automaticUpdates}">
+                    <g:if test="${pkg.kbartSource}">
                         <i class="check green circle icon"
                            title="${message(code: 'default.boolean.true')}"></i>
                     </g:if>
@@ -60,6 +68,18 @@
                         <i class="times red circle icon"
                            title="${message(code: 'default.boolean.false')}"></i>
                     </g:else>
+                </td>
+                <td>
+                    <g:if test="${pkg.kbartSource}">
+                        <g:if test="${pkg.kbartSource.automaticUpdates}">
+                            <i class="check green circle icon"
+                               title="${message(code: 'default.boolean.true')}"></i>
+                        </g:if>
+                        <g:else>
+                            <i class="times red circle icon"
+                               title="${message(code: 'default.boolean.false')}"></i>
+                        </g:else>
+                    </g:if>
                 </td>
                 <td>
                     <g:set var="allTipps1" value="${pkg.getTippCountWithoutRemoved()}"/>
@@ -73,6 +93,15 @@
                     </g:else>
                 </td>
                 <td>
+                    <g:set var="tippCurrentCount" value="${pkgMap.currentTippsWithoutTitleIDCount}"/>
+                    <g:link controller="admin" action="findTippWithoutTitleIDByPkg" id="${pkg.uuid}" target="_blank"
+                            params="[max: 100, offset: 0, status: 'Current']">
+                        ${tippCurrentCount}
+                    </g:link>
+
+                    <g:set var="allCurrentCount" value="${allCurrentCount+tippCurrentCount}"/>
+                </td>
+                <td>
                     <g:set var="tippCount" value="${pkgMap.tippsWithoutTitleIDCount}"/>
                     <g:link controller="admin" action="findTippWithoutTitleIDByPkg" id="${pkg.uuid}" target="_blank"
                             params="[max: 100, offset: 0]">
@@ -80,6 +109,11 @@
                     </g:link>
 
                     <g:set var="allCount" value="${allCount+tippCount}"/>
+                </td>
+                <td>
+                    <g:link class="ui button" controller="admin" action="deleteTippsWithoutTitleIDByPkg" id="${pkg.uuid}">
+                        Delete
+                    </g:link>
                 </td>
             </tr>
         </g:each>
@@ -93,7 +127,10 @@
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
+            <td>${allCurrentCount}</td>
             <td>${allCount}</td>
+            <td></td>
         </tr>
         </tfoot>
     </table>

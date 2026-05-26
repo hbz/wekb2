@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta name="layout" content="wekb"/>
-    <title>we:kb : Release Notes</title>
+    <title>we:kb | wekb -  Release Notes</title>
   </head>
   <body>
    <h1 class="ui header">Release Notes</h1>

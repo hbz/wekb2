@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta name="layout" content="wekb"/>
-    <title>we:kb :
+    <title>we:kb | wekb -
     <g:if test="${displayobj}">
         <g:message code="${displayobj.class.simpleName.toLowerCase()}.label" default="${displayobj.getDomainName()}"/> : ${displayobj.getShowName()}
     </g:if><g:else>
@@ -107,9 +107,157 @@
             <h1 class="ui header"><g:message code="${displayobj.class.simpleName.toLowerCase()}.label" default="${displayobj.getDomainName()}"/>: ${displayobj.getShowName()}</h1>
 
             <sec:ifAnyGranted roles="ROLE_ADMIN">
-                <g:if test="${displayobj instanceof wekb.Package && displayobj.isPackageLinkedInLaser()}">
-                    <g:render template="/templates/laserInfosForPkg" model="${[pkg: displayobj]}"/>
+                <g:if test="${displayobj instanceof wekb.Package}">
+                    <g:if test="${displayobj.isPackageLinkedInLaser()}">
+                        <g:render template="/templates/laserInfosForPkg" model="${[pkg: displayobj]}"/>
+                    </g:if>
+                    <g:set var="tippDuplicatesByTitleIDCount" value="${displayobj.getTippDuplicatesByTitleIDWithOutRemovedCount()}"/>
+                    <g:set var="tippDuplicatesByURLCount" value="${displayobj.getTippDuplicatesByURLCount()}"/>
+                    <g:set var="tippDuplicatesByNameCount" value="${displayobj.getTippDuplicatesByNameCount()}"/>
+
+                    <g:if test="${tippDuplicatesByTitleIDCount > 0}">
+                        <div class="ui warning icon message">
+
+                            <div class="content wekb-inline-lists">
+                                <div class="header">
+                                    Duplicates of Tipps with Title_ID
+                                </div>
+
+                                <div class="ui bulleted list">
+
+                                    <div class="item">
+                                        <g:link controller="admin" action="findTippDuplicatesByPkg" id="${displayobj.uuid}" target="_blank"
+                                                params="[tippsDuplicatesBy: 'titleID', max: 100, offset: 0]">
+                                            ${tippDuplicatesByTitleIDCount}
+                                        </g:link>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </g:if>
+
+                    <g:if test="${tippDuplicatesByURLCount > 0}">
+                        <div class="ui warning icon message">
+
+                            <div class="content wekb-inline-lists">
+                                <div class="header">
+                                    Duplicates of Tipps with Url
+                                </div>
+
+                                <div class="ui bulleted list">
+
+                                    <div class="item">
+                                        <g:link controller="admin" action="findTippDuplicatesByPkg" id="${displayobj.uuid}" target="_blank"
+                                                params="[tippsDuplicatesBy: 'url', max: 100, offset: 0]">
+                                            ${tippDuplicatesByURLCount}
+                                        </g:link>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </g:if>
+
+                    <g:if test="${tippDuplicatesByNameCount > 0}">
+                        <div class="ui warning icon message">
+
+                            <div class="content wekb-inline-lists">
+                                <div class="header">
+                                    Duplicates of Tipps with Name
+                                </div>
+
+                                <div class="ui bulleted list">
+
+                                    <div class="item">
+                                        <g:link controller="admin" action="findTippDuplicatesByPkg" id="${displayobj.uuid}" target="_blank"
+                                                params="[tippsDuplicatesBy: 'name', max: 100, offset: 0]">
+                                            ${tippDuplicatesByNameCount}
+                                        </g:link>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </g:if>
                 </g:if>
+
+                <g:if test="${displayobj instanceof wekb.TitleInstancePackagePlatform}">
+
+                    <g:render template="/templates/laserInfosForTipp" model="${[pkg: displayobj.pkg, tipp: displayobj]}"/>
+
+
+                    <g:set var="tippDuplicatesByTitleIDCount" value="${displayobj.getTippDuplicatesByTitleIDWithOutRemovedCount()}"/>
+                    <g:set var="tippDuplicatesByURLCount" value="${displayobj.getTippDuplicatesByURLCount()}"/>
+                    <g:set var="tippDuplicatesByNameCount" value="${displayobj.getTippDuplicatesByNameCount()}"/>
+
+                    <g:if test="${tippDuplicatesByTitleIDCount > 0}">
+                        <div class="ui warning icon message">
+
+                            <div class="content wekb-inline-lists">
+                                <div class="header">
+                                    Tipp Duplicates with Title_ID (${tippDuplicatesByTitleIDCount})
+                                </div>
+
+                                <div class="ui bulleted list">
+                                    <g:each in="${displayobj.findTippDuplicatesByTitleIDWithoutRemoved()}" var="tipp">
+                                        <g:if test="${tipp.id != displayobj.id}">
+                                            <div class="item">
+                                                <g:link controller="resource" action="show"
+                                                        id="${'wekb.TitleInstancePackagePlatform:' + tipp.id}">${tipp.name} [${tipp.status.getI10n('value')}] (${tipp.id})</g:link>
+                                            </div>
+                                        </g:if>
+                                    </g:each>
+                                </div>
+                            </div>
+                        </div>
+
+                    </g:if>
+
+                    <g:if test="${tippDuplicatesByNameCount > 0}">
+                        <div class="ui warning icon message">
+
+                            <div class="content wekb-inline-lists">
+                                <div class="header">
+                                    Tipp Duplicates with Name (${tippDuplicatesByNameCount})
+                                </div>
+
+                                <div class="ui bulleted list">
+                                    <g:each in="${displayobj.findTippDuplicatesByName()}" var="tipp">
+                                        <g:if test="${tipp.id != displayobj.id}">
+                                            <div class="item">
+                                                <g:link controller="resource" action="show"
+                                                        id="${'wekb.TitleInstancePackagePlatform:' + tipp.id}">${tipp.name} [${tipp.status.getI10n('value')}] (${tipp.id})</g:link>
+                                            </div>
+                                        </g:if>
+                                    </g:each>
+                                </div>
+                            </div>
+                        </div>
+
+                    </g:if>
+
+                    <g:if test="${tippDuplicatesByURLCount > 0}">
+                        <div class="ui warning icon message">
+
+                            <div class="content wekb-inline-lists">
+                                <div class="header">
+                                    Tipp Duplicates with URL (${tippDuplicatesByURLCount})
+                                </div>
+
+                                <div class="ui bulleted list">
+                                    <g:each in="${displayobj.findTippDuplicatesByURL()}" var="tipp">
+                                        <g:if test="${tipp.id != displayobj.id}">
+                                            <div class="item">
+                                                <g:link controller="resource" action="show"
+                                                        id="${'wekb.TitleInstancePackagePlatform:' + tipp.id}">${tipp.name} [${tipp.status.getI10n('value')}] (${tipp.id})</g:link>
+                                            </div>
+                                        </g:if>
+                                    </g:each>
+                                </div>
+                            </div>
+                        </div>
+
+                    </g:if>
+                </g:if>
+
             </sec:ifAnyGranted>
 
             <g:if test="${displaytemplate != null}">

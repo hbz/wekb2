@@ -50,17 +50,17 @@
                 Platform
             </dt>
             <dd>
-                <g:if test="${controllerName == 'create'}">
+                <g:if test="${false}">
                     <semui:xEditableManyToOne value="${d.hostPlatform ? d.hostPlatform.getOID() : null}" owner="${d}"
                                               field="hostPlatform" baseClass="wekb.Platform"
                                               required="true"/>
                 </g:if>
                 <g:else>
-                    <g:if test="${d.hostPlatform}">
+                    <g:if test="${d.pkg && d.pkg.nominalPlatform}">
                         <g:link controller="resource" action="show"
-                                id="${d.hostPlatform.getOID()}">${d.hostPlatform.name}</g:link>
+                                id="${d.pkg.nominalPlatform.getOID()}">${d.pkg.nominalPlatform.name}</g:link>
                     </g:if>
-                    <g:else>Empty</g:else>
+                    <g:else>Automatic from Nominal Platform of Package</g:else>
                 </g:else>
             </dd>
         </dl>

@@ -44,6 +44,8 @@ class KbartSource extends AbstractBase implements Auditable {
     String ftpUsername
     String ftpPassword
 
+    String kbartFileHash
+
     static hasMany = [
             curatoryGroups: CuratoryGroupKbartSource
     ]
@@ -52,7 +54,7 @@ class KbartSource extends AbstractBase implements Auditable {
         id column: 'ks_id'
         version column: 'ks_version'
 
-        uuid column: 'ks_uuid'
+        uuid column: 'ks_uuid', index: 'ks_uuid_idx'
         name column: 'ks_name'
 
         lastUpdated column: 'ks_last_updated'
@@ -78,6 +80,8 @@ class KbartSource extends AbstractBase implements Auditable {
         ftpDirectory column: 'ks_ftp_directory'
         ftpUsername column: 'ks_ftp_username'
         ftpPassword column: 'ks_ftp_password'
+
+        kbartFileHash column: 'ks_kbart_file_hash', type: 'text'
     }
 
     static constraints = {
@@ -116,6 +120,8 @@ class KbartSource extends AbstractBase implements Auditable {
         ftpUsername (nullable: true, blank: true)
         ftpPassword (nullable: true, blank: true)
         ftpDirectory (nullable: true, blank: true)
+
+        kbartFileHash (nullable: true, blank: true)
     }
 
     @Override

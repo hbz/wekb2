@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta name="layout" content="wekb"/>
-    <title>we:kb : Permanent Titles in Laser [Status: ${status}]</title>
+    <title>we:kb | wekb -  Packages linked with Permanent Titles in Laser [Status: ${status}]</title>
 </head>
 
 <body>
@@ -15,6 +15,17 @@
 
 
 <div class="container">
+
+    <g:if test="${provider}">
+        <h2>Packages linked with Permanent Titles in Laser by Provider: ${provider.name}</h2>
+        <g:each in="${['Current', 'Expected', 'Retired', 'Deleted', 'Removed']}" var="stat">
+            <g:link controller="admin" action="linkedPackageWithPermanentTitlesInLaser" params="${[providerUuid: provider.uuid, status: stat]}" class="ui button">Packages with PT Status ${stat} (${laserService.packagesWithPermanentTitlesInLaserByProviderCount(stat, provider.uuid)})</g:link>
+            <br><br>
+        </g:each>
+    </g:if>
+
+
+    <g:set var="sumPtCount" value="${0}"/>
 
     <table class="ui selectable striped sortable celled table">
         <thead>
@@ -33,7 +44,8 @@
         </tr>
         </thead>
         <tbody>
-        <g:each in="${pkgs}" var="pkg" status="i">
+        <g:each in="${pkgs}" var="pkgLaser" status="i">
+            <g:set var="pkgWekb" value="${wekb.Package.findByUuid(pkgLaser.uuid)}"/>
             <tr>
                 <td>
                     ${(params.offset ? params.offset.toInteger() : 0) + i + 1}
@@ -68,7 +80,7 @@
                     </g:else>
                 </td>
                 <td>
-                    <g:link action="linkedSubsInLaser" controller="admin" id="${pkgWekb.id}">${pkgLaser.packageLinkedInLaserCount}</g:link>
+                    <g:link action="linkedSubsInLaser" controller="admin" id="${pkgWekb.id}" params="[status: status]">${pkgLaser.packageLinkedInLaserCount}</g:link>
                 </td>
                 <td>
                     ${pkgWekb.getTippCountWithStatus(status)}
@@ -78,11 +90,19 @@
                     ${pkgLaser.tippCount}
                 </td>
                 <td>
-                    ${pkgLaser.ptCount}
+                    <g:link controller="admin" action="permanentTitlesInLaser" params="[status: status]" id="${pkgWekb.id}">${pkgLaser.ptCount}</g:link>
+
+                    <g:set var="sumPtCount" value="${sumPtCount + pkgLaser.ptCount}"/>
                 </td>
             </tr>
         </g:each>
         </tbody>
+    <tfoot>
+    <tr>
+        <td colspan="10"></td>
+        <td>Total: ${sumPtCount}</td>
+    </tr>
+    </tfoot>
     </table>
 
 </div>

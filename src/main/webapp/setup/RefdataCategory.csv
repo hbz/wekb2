@@ -45,6 +45,8 @@ Platform.Statistics.Update;Platform Statistics Update;Platform Statistics Update
 Platform.Counter.Api.Authentication.Method;Platform Counter Api Authentication Method;Platform Counter Api Authentication Method
 Provider.Print.Download.Chapter;Print/Download Chapter;Print/Download Chapter
 Price.type;Price type;Price type
+Provider.Range;Provider Range;Provider Range
+Provider.Agreement.Model;Provider Agreement model;Provider Agreement model
 Source.DataFormat;Source Data Format;Source Data Format
 Source.DataSupplyMethod;Source Data Supply Method;Source Data Supply Method
 Source.Frequency;Source Frequency;Source Frequency

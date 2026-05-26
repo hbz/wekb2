@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta name="layout" content="wekb"/>
-    <title>we:kb : Statistics</title>
+    <title>we:kb | wekb -  Statistics</title>
 
 </head>
 

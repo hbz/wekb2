@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta name="layout" content="wekb"/>
-    <title>we:kb : Upload Packages</title>
+    <title>we:kb | wekb -  Upload Packages</title>
 </head>
 
 <body>
@@ -51,6 +51,7 @@
             <tr>
                 <th>ColumnName</th>
                 <th>Description of Column</th>
+                <th>Mandatory</th>
                 <th>Necessary Format</th>
             </tr>
             </thead>
@@ -95,11 +96,14 @@
                             break
                         case 'source_default_supply_method': args.addAll([RDStore.KS_DSMETHOD_HTTP_URL.value, RDStore.KS_DSMETHOD_FTP.value])
                             break
+                        case 'publication_type': datas = RefdataCategory.lookup(RCConstants.TIPP_PUBLICATION_TYPE).sort{it.value}.collect { it -> it.value }
+                            break
                     }
                 %>
                 <tr>
                     <td>${message(code: "packageBatch.columnName.${mpg}", args: args ?: '')}</td>
                     <td>${message(code: "packageBatch.description.${mpg}") ?: ''}</td>
+                    <td>${message(code: "packageBatch.mandatory.${mpg}") ?: ''}</td>
                     <td>${message(code: "packageBatch.format.${mpg}", args: [raw("<ul><li>${args.join('</li><li>')}</li></ul>")]) ?: ''}</td>
                 </tr>
             </g:each>

@@ -67,18 +67,23 @@ class Org extends AbstractBase implements Auditable {
   RefdataValue quotesByCopyPaste
 
   @RefdataAnnotation(cat = RCConstants.YN)
-  RefdataValue forwardingUsageStatistcs
+  RefdataValue forwardingUsageStatistics
 
   @RefdataAnnotation(cat = RCConstants.YN)
   RefdataValue alertNewEbookPackages
 
-  @RefdataAnnotation(cat = RCConstants.YN)
-  RefdataValue alertExchangeEbookPackages
-
-  String urlPristLists
-  String urlTitleLists
+  String urlPriceLists
 
   String urlToTrainingMaterials
+
+    @RefdataAnnotation(cat = RCConstants.YN)
+    RefdataValue licenseBasedEBInterlibrarySupported
+
+    @RefdataAnnotation(cat = RCConstants.PROVIDER_RANGE)
+    RefdataValue range
+
+    @RefdataAnnotation(cat = RCConstants.PROVIDER_AGREEMENT_MODEL)
+    RefdataValue agreementModel
 
 
   Set variantNames = []
@@ -101,7 +106,7 @@ class Org extends AbstractBase implements Auditable {
     id column: 'org_id'
     version column: 'org_version'
 
-    uuid column: 'org_uuid'
+    uuid column: 'org_uuid', index: 'org_uuid_idx'
     name column: 'org_name'
     abbreviatedName column: 'org_abbreviated_name'
 
@@ -145,16 +150,18 @@ class Org extends AbstractBase implements Auditable {
 
     quotesByCopyPaste column: 'org_quotes_by_copy_paste'
 
-    forwardingUsageStatistcs column: 'org_forwarding_usage_statistcs'
+    forwardingUsageStatistics column: 'org_forwarding_usage_statistics'
 
     alertNewEbookPackages column: 'org_alert_new_ebook_packages'
 
-    alertExchangeEbookPackages column: 'org_alert_exchange_ebook_packages'
+    urlPriceLists column: 'org_url_price_lists'
 
-    urlPristLists column: 'org_url_prist_lists'
-
-    urlTitleLists column: 'org_url_title_lists'
     urlToTrainingMaterials column: 'org_url_to_training_materials'
+
+
+    licenseBasedEBInterlibrarySupported column: 'org_license_based_eb_interlibrary_supported'
+    range column: 'org_range'
+    agreementModel column: 'org_agreement_model'
   }
 
   static constraints = {
@@ -188,13 +195,16 @@ class Org extends AbstractBase implements Auditable {
     remoteAccess(nullable: true, blank: false)
     printDownloadChapter(nullable: true, blank: false)
     quotesByCopyPaste(nullable: true, blank: false)
-    forwardingUsageStatistcs(nullable: true, blank: false)
+    forwardingUsageStatistics(nullable: true, blank: false)
     alertNewEbookPackages(nullable: true, blank: false)
-    alertExchangeEbookPackages(nullable: true, blank: false)
 
-    urlPristLists(nullable: true, blank: true)
-    urlTitleLists(nullable: true, blank: true)
+    urlPriceLists(nullable: true, blank: true)
+
     urlToTrainingMaterials(nullable: true, blank: true)
+
+      licenseBasedEBInterlibrarySupported (nullable: true, blank: true)
+      range(nullable: true, blank: true)
+      agreementModel(nullable: true, blank: true)
   }
 
   @Override

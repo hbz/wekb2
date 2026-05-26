@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta name="layout" content="wekb"/>
-    <title>we:kb : FTP Test</title>
+    <title>we:kb | wekb -  FTP Test</title>
 </head>
 
 <body>

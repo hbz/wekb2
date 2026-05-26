@@ -3,7 +3,8 @@
 <html>
 <head>
     <meta name="layout" content="wekb"/>
-    <title>we:kb News</title>
+    <meta name="description" content="In the we:kb (pronounced wekb), the providers manage their current electronic sales units and meta-information themselves.">
+    <title>we:kb | wekb News</title>
 </head>
 
 <body>

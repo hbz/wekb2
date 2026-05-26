@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta name="layout" content="wekb"/>
-    <title>we:kb : Components</title>
+    <title>we:kb | wekb -  Components</title>
 </head>
 
 <body>
