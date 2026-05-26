@@ -2,6 +2,7 @@ package wekb
 
 import grails.converters.JSON
 import grails.gorm.transactions.Transactional
+import grails.plugin.springsecurity.SpringSecurityService
 import grails.plugin.springsecurity.SpringSecurityUtils
 import grails.web.mvc.FlashScope
 import grails.web.servlet.mvc.GrailsParameterMap
@@ -18,7 +19,7 @@ class SearchService {
     GenericOIDService genericOIDService
     GlobalSearchTemplatesService globalSearchTemplatesService
     DisplayTemplateService displayTemplateService
-    ClassExaminationService classExaminationService
+    SpringSecurityService springSecurityService
     AccessService accessService
     TenantSwitchService tenantSwitchService
 
@@ -327,7 +328,7 @@ class SearchService {
                                 link: link,
                                 value: (cobj != null ? (cobj) : '-Empty-'),
                                 outGoingLink: rh.outGoingLink ?: null,
-                                jumpToLink: jumpToLink ?: null,
+                                jumpToLink: jumpToLink && springSecurityService.isLoggedIn() ? jumpToLink : null, //TMP ERMS-7301
                                 globalSearchTemplateProperty: rh.property])
                 }
             }
