@@ -16,7 +16,7 @@ import wekb.auth.User
 
 class SearchController {
 
-    GenericOIDService genericOIDService
+    GlobalSearchTemplatesService globalSearchTemplatesService
     SearchService searchService
     AccessService accessService
 
@@ -296,8 +296,16 @@ class SearchController {
         def searchResult = [:]
 
         if ((params.qbe in accessService.allowedComponentSearch) || (springSecurityService.isLoggedIn() && SpringSecurityUtils.ifAnyGranted("ROLE_ADMIN"))) {
-            searchResult = searchService.search(user, searchResult, params)
-
+            if(params.qbe == 'g:tipps') {
+                if(params.keySet().intersect(globalSearchTemplatesService.tipps().qbeConfig.qbeForm.qparam).size() > 1)
+                    searchResult = searchService.search(user, searchResult, params)
+                else {
+                    searchResult.result = [qbetemplate: globalSearchTemplatesService.tipps(), hide: []]
+                    flash.error = "Please submit at least two parameters to run a query!"
+                }
+            }
+            else
+                searchResult = searchService.search(user, searchResult, params)
         } else {
             searchResult.result = [:]
            flash.error = "This search is not allowed!"

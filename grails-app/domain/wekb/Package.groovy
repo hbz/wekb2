@@ -2,6 +2,7 @@ package wekb
 
 import grails.plugins.orm.auditable.Auditable
 import wekb.annotations.RefdataAnnotation
+import wekb.annotations.TrigramLowerIndex
 import wekb.base.AbstractBase
 import wekb.helper.BeanStore
 import wekb.helper.RCConstants
@@ -14,6 +15,7 @@ import javax.persistence.Transient
 @Slf4j
 class Package  extends AbstractBase implements Auditable {
 
+  @TrigramLowerIndex()
   String name
   String normname
 

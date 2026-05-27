@@ -10,6 +10,7 @@ import liquibase.repackaged.com.opencsv.ICSVParser
 import wekb.auth.Role
 import wekb.auth.User
 import wekb.helper.RCConstants
+import wekb.utils.DatabaseUtils
 
 import javax.servlet.http.HttpServletRequest
 
@@ -130,6 +131,9 @@ class BootStrapService {
 
         anonymizeUsers()
 
+        log.info("Setup Trigram indices")
+        initTrigramIndices()
+
         log.info("Ensuring ElasticSearch index")
         ensureEsIndices()
 
@@ -229,6 +233,9 @@ class BootStrapService {
         }
     }
 
+    void initTrigramIndices() {
+        //DatabaseUtils.initTrigramIndices() not working because of outdated database
+    }
 
     def ensureEsIndices() {
         def esIndices = grailsApplication.config.getProperty('wekb.es.indices', Map)?.values()
