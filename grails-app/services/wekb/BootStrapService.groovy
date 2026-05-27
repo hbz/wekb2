@@ -234,7 +234,7 @@ class BootStrapService {
     }
 
     void initTrigramIndices() {
-        //DatabaseUtils.initTrigramIndices() not working because of outdated database
+        DatabaseUtils.initTrigramIndices()
     }
 
     def ensureEsIndices() {
