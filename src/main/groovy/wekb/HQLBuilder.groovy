@@ -159,7 +159,10 @@ public class HQLBuilder {
 
     String fetch_hql, count_clause = null
     if ( returnObjectsOrRows=='objects' ) {
-      fetch_hql = "select ${qbetemplate.useDistinct == true ? 'distinct' : ''} o.id ${hql}".toString()
+      if(qbetemplate.useDistinct == true)
+        fetch_hql = "select distinct o ${hql}".toString()
+      else
+        fetch_hql = "select o.id ${hql}".toString()
     }
     else {
       fetch_hql = "select ${buildFieldList(qbetemplate.qbeConfig.qbeResults)} ${hql}".toString()

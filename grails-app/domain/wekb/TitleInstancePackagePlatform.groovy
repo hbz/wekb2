@@ -4,6 +4,7 @@ import grails.plugins.orm.auditable.Auditable
 import wekb.annotations.HbzKbartAnnotation
 import wekb.annotations.KbartAnnotation
 import wekb.annotations.RefdataAnnotation
+import wekb.annotations.TrigramLowerIndex
 import wekb.base.AbstractBase
 import wekb.helper.BeanStore
 import wekb.helper.RCConstants
@@ -16,6 +17,7 @@ import java.text.SimpleDateFormat
 @Slf4j
 class TitleInstancePackagePlatform  extends AbstractBase implements Auditable {
 
+  @TrigramLowerIndex()
   String name
   RefdataValue status
 
@@ -30,12 +32,14 @@ class TitleInstancePackagePlatform  extends AbstractBase implements Auditable {
   @RefdataAnnotation(cat = RCConstants.TIPP_OPEN_ACCESS)
   RefdataValue openAccess
 
+  @TrigramLowerIndex()
   @HbzKbartAnnotation(kbartField = 'subject_area' , type='all')
   String subjectArea
 
   @HbzKbartAnnotation(kbartField = 'monograph_parent_collection_title' , type='monographs')
   String series
 
+  @TrigramLowerIndex()
   @KbartAnnotation(kbartField = 'publisher_name' , type='all')
   String publisherName
 
@@ -51,9 +55,11 @@ class TitleInstancePackagePlatform  extends AbstractBase implements Auditable {
   @HbzKbartAnnotation(kbartField = 'last_changed' , type='all')
   Date lastChangedExternal
 
+  @TrigramLowerIndex()
   @KbartAnnotation(kbartField = 'first_author' , type='monographs')
   String firstAuthor
 
+  @TrigramLowerIndex()
   @KbartAnnotation(kbartField = 'first_editor' , type='monographs')
   String firstEditor
 

@@ -62,14 +62,19 @@ class SearchService {
         // log.debug("Get data rows..")
         List idset, rowset, recset
          tenantSwitchService.withTenantRole {
-             rowset = baseclass.executeQuery(hql_Map.fetch_hql, hql_Map.params_hql)
-             if(hql_Map.count_clause) {
-                 idset = rowset.collect { row -> row[0] }
-                 recset = baseclass.executeQuery('select o, '+hql_Map.count_clause+' from '+baseclass.name+' o where o.id in (:idSet) '+hql_Map.order_clause, [idSet: idset.drop(result.offset).take(result.max)])
+             if(qbetemplate.useDistinct == true) {
+                 recset = baseclass.executeQuery(hql_Map.fetch_hql, hql_Map.params_hql, query_params)
              }
              else {
-                 idset = rowset
-                 recset = baseclass.executeQuery('select o from '+baseclass.name+' o where o.id in (:idSet) '+hql_Map.order_clause, [idSet: idset.drop(result.offset).take(result.max)])
+                 rowset = baseclass.executeQuery(hql_Map.fetch_hql, hql_Map.params_hql)
+                 if(hql_Map.count_clause) {
+                     idset = rowset.collect { row -> row[0] }
+                     recset = baseclass.executeQuery('select o, '+hql_Map.count_clause+' from '+baseclass.name+' o where o.id in (:idSet) '+hql_Map.order_clause, [idSet: idset.drop(result.offset).take(result.max)])
+                 }
+                 else {
+                     idset = rowset
+                     recset = baseclass.executeQuery('select o from '+baseclass.name+' o where o.id in (:idSet) '+hql_Map.order_clause, [idSet: idset.drop(result.offset).take(result.max)])
+                 }
              }
         }
 
