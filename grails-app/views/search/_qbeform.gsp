@@ -34,7 +34,6 @@
 
     <% Map advancedSearchMap = [:] %>
     <div class="ui segment">
-        <h1 class="ui header"><g:message code="search.filter"/></h1>
     <g:form method="get" class="ui form wekb-filter" controller="${controllerName}" action="${actionName}" id="${params.id}">
 
         <input type="hidden" name="qbe" value="${params.qbe}"/>
@@ -387,8 +386,13 @@
         <g:else>
             <div class="ui right floated buttons">
                 <g:if test="${!hideResetButton}">
-                <g:link class="ui button" controller="${controllerName}" action="${actionName}"
-                        params="[id: params.id, qbe: params.qbe]"><g:message code="search.reset"/></g:link>
+                    <%
+                        Map<String, Object> resetParams = [id: params.id, qbe: params.qbe]
+                        if(qbetemplate.containsKey('defaultStatus'))
+                            resetParams.qp_status = qbetemplate.defaultStatus
+                    %>
+                    <g:link class="ui button" controller="${controllerName}" action="${actionName}"
+                            params="${resetParams}"><g:message code="search.reset"/></g:link>
                 </g:if>
                 <button class="ui button primary" type="submit" value="Search"
                         name="searchAction"><g:message code="search.filter"/></button>

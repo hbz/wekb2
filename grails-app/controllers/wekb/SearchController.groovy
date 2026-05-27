@@ -296,16 +296,9 @@ class SearchController {
         def searchResult = [:]
 
         if ((params.qbe in accessService.allowedComponentSearch) || (springSecurityService.isLoggedIn() && SpringSecurityUtils.ifAnyGranted("ROLE_ADMIN"))) {
-            if(params.qbe == 'g:tipps') {
-                if(params.keySet().intersect(globalSearchTemplatesService.tipps().qbeConfig.qbeForm.qparam).size() > 1)
-                    searchResult = searchService.search(user, searchResult, params)
-                else {
-                    searchResult.result = [qbetemplate: globalSearchTemplatesService.tipps(), hide: []]
-                    flash.error = "Please submit at least two parameters to run a query!"
-                }
-            }
-            else
-                searchResult = searchService.search(user, searchResult, params)
+            searchResult = searchService.search(user, searchResult, params)
+            if(searchResult.result.containsKey('error'))
+                flash.error = searchResult.result.error
         } else {
             searchResult.result = [:]
            flash.error = "This search is not allowed!"
