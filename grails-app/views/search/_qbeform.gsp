@@ -34,7 +34,7 @@
 
     <% Map advancedSearchMap = [:] %>
     <div class="ui segment">
-    <g:form method="get" class="ui form wekb-filter" controller="${controllerName}" action="${actionName}" id="${params.id}">
+    <g:form method="get" class="ui form ${minInput ? 'wekb-filter-mininput' : 'wekb-filter'}" controller="${controllerName}" action="${actionName}" id="${params.id}">
 
         <input type="hidden" name="qbe" value="${params.qbe}"/>
 
@@ -429,3 +429,50 @@
 </g:else>
 
 
+
+<g:javascript>
+    <g:if test="${minInput}">
+        $.fn.form.settings.rules.minInput = function() {
+            let fields = new Array();
+            <g:each in="${formdefn}" var="fld">
+                <g:if test="${!fld.hide}">
+                    fields.push('[name="${fld.qparam}"');
+                </g:if>
+            </g:each>
+            let inputFilledCount = 0;
+            let minInput = ${minInput};
+            $.each(fields, function(i, field) {
+                if($(field).val().length > 0) {
+                    inputFilledCount++;
+                }
+            });
+            return inputFilledCount >= minInput;
+        }
+
+        $('.wekb-filter-mininput').form({
+            on: 'submit',
+            inline: true,
+            fields: {
+            <g:each in="${formdefn}" var="fld">
+                <g:if test="${!fld.hide}">
+                    ${fld.qparam}: {
+                        identifier: '${fld.qparam}',
+                        rules: [
+                            {
+                                type: 'minInput',
+                                prompt: 'At least two fields need to be filled!'
+                            }
+                        ]
+                    },
+                </g:if>
+            </g:each>
+            },
+            onSuccess: function() {
+                let fields = $(this).find('input[type=text], input[type=hidden], select');
+                let emptyFields = fields.filter(function(){ return !this.value; });
+                // remove unused filter params
+                emptyFields.attr('disabled', 'disabled');
+            }
+        });
+    </g:if>
+</g:javascript>
