@@ -25,28 +25,10 @@ class PublicController {
     String text = "User-agent: *\n"
 
     if(ServerUtils.getCurrentServer() == ServerUtils.SERVER_PROD) {
-        text += "Disallow: /search/index/ \n"
-        text += "Disallow: /search/componentSearch/ \n"
-        text += "Disallow: /login/ \n"
-        text += "Disallow: /public/api2/ \n"
-        text += "Disallow: /public/wcagFeedbackForm/ \n"
-        text += "Disallow: /public/sendFeedbackForm/ \n"
-        text += "Disallow: /public/packageContent/ \n"
-        text += "Disallow: /public/tippContent/ \n"
-        text += "Disallow: /public/identifierContent/ \n"
-        text += "Disallow: /public/orgContent/ \n"
-        text += "Disallow: /public/platformContent/ \n"
-        text += "Disallow: /public/kbart/ \n"
-        text += "Disallow: /public/packageTSVExport/ \n"
-
-        text += "Disallow: /search/index? \n"
-        text += "Disallow: /?qbe= \n"
-        text += "Disallow: /metadata/ \n"
-        text += "Disallow: /package/ \n"
-        text += "Disallow: /resource/ \n"
-        text += "Disallow: /search/inlineSearch? \n"
-
-
+        text += "Disallow: /\n"
+        text += "Allow: /\$\n"
+        text += "Allow: /public/wekbNews\n"
+        text += "Allow: /public/aboutWekb\n"
     }
     else {
       text += "Disallow: / \n"
