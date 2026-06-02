@@ -134,6 +134,9 @@ class CreateComponentService {
                     if (result.newobj instanceof TitleInstancePackagePlatform && (params.pkg == null || params.url == null || params.name == null)) {
                         result.errors=["Please fill Package and Host Platform URL to create the component."]
                     }
+                    else if (result.newobj instanceof Package && (params.nominalPlatform == null || params.provider == null || params.status == null)) {
+                        result.errors=["Please fill Platform, Provider and Status to create the component."]
+                    }
                     else if (!propertyWasSet) {
                         // Add an error message here if no property was set via data sent through from the form.
                         log.debug("No properties set");
@@ -144,6 +147,10 @@ class CreateComponentService {
 
                         if(result.newobj instanceof User && (user.isAdmin() || user.getSuperUserStatus())){
                             result.newobj.enabled = true
+                        }
+
+                        if(result.newobj instanceof TitleInstancePackagePlatform ){
+                            result.newobj.hostPlatform = result.newobj.pkg.nominalPlatform
                         }
 
                         if(result.newobj.hasProperty('uuid')){
@@ -379,6 +386,11 @@ class CreateComponentService {
 
                     if (dupes && dupes.size() > 0) {
                         globalErrors << "The we:kb already has a package with the name '${name}'. Therefore a package with the name could not be created!"
+                        name = null
+                    }
+
+                    if(colMap.provider_uuid == null || colMap.nominal_platform_uuid == null ){
+                        globalErrors << "The package with the name '${name}' could not be created, because provider_uuid and nominal_platform_uuid not set!"
                         name = null
                     }
                 }
