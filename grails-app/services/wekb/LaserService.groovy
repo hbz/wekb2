@@ -470,7 +470,7 @@ class LaserService {
                                                    rv.rdv_value_en as status,
                                                    sub_start_date,
                                                    sub_end_date,
-                                                   sub_has_perpetual_access,
+                                                   rv4.rdv_value_en as sub_has_perpetual_access,
                                                    rv2.rdv_value_en as holding_selection,
                                                    rv3.rdv_value_en as sub_typ,
                                                    (SELECT COUNT(DISTINCT pt_tipp_fk)
@@ -492,6 +492,7 @@ class LaserService {
                                                      left join org oo on oo.org_id = o.or_org_fk
                                                      left join refdata_value rv on s.sub_status_rv_fk = rv.rdv_id
                                                      left join refdata_value rv2 on s.sub_holding_selection_rv_fk = rv2.rdv_id
+                                                     left join refdata_value rv4 on s.sub_has_perpetual_access_rv_fk = rv4.rdv_id
                                             left join refdata_value rv3 on s.sub_type_rv_fk = rv3.rdv_id
                                             where pkg_gokb_id = :wekbUuid 
                                             and (sub_parent_sub_fk is not null and o.or_roletype_fk IN (select rdv_id from refdata_value join refdata_category on rdv_owner = rdc_id where (rdv_value = 'Subscriber_Consortial' or rdv_value ='Subscriber_Consortial_Hidden') and rdc_description = 'organisational.role')
@@ -512,10 +513,10 @@ class LaserService {
 
                 if(perpetualAccess){
                     if(perpetualAccess == 'true'){
-                        query = query + ' and sub_has_perpetual_access = true '
+                        query = query + '''and sub_has_perpetual_access_rv_fk = 'Yes' '''
                     }
                     if(perpetualAccess == 'false'){
-                        query = query + ' and sub_has_perpetual_access = false '
+                        query = query + ''' and sub_has_perpetual_access_rv_fk = 'No' '''
                     }
 
                 }
@@ -631,7 +632,7 @@ class LaserService {
                                    rv3.rdv_value_en as sub_status,
                                    sub_start_date,
                                    sub_end_date,
-                                   sub_has_perpetual_access,
+                                   rv6.rdv_value_en as sub_has_perpetual_access,
                                    rv4.rdv_value_en as holding_selection,
                                    rv5.rdv_value_en as sub_typ
                        
@@ -644,7 +645,8 @@ class LaserService {
                                               left join subscription s on pt_subscription_fk = s.sub_id
                                                 left join refdata_value rv3 on s.sub_status_rv_fk = rv3.rdv_id
                                                 left join refdata_value rv4 on s.sub_holding_selection_rv_fk = rv4.rdv_id
-                                                left join refdata_value rv5 on s.sub_type_rv_fk = rv5.rdv_id
+                                                left join refdata_value rv5 on s.sub_type_rv_fk = rv5.rdv_id,
+                                                left join refdata_value rv6 on s.sub_has_perpetual_access_rv_fk = rv6.rdv_id
                                     where pt_tipp_fk in ( 
                                                     SELECT tipp_id FROM title_instance_package_platform
                                                     left join package pkg2 on pkg2.pkg_id = title_instance_package_platform.tipp_pkg_fk 
@@ -930,7 +932,9 @@ class LaserService {
                 sql = Sql.newInstance(config.laserDBUrl, config.laserDBUser, config.laserDBPassword, config.laserDBDriver)
 
 
-                packageLinkedCount = sql.rows("select count(*) from subscription_package left join package p on p.pkg_id = subscription_package.sp_pkg_fk left join subscription s on subscription_package.sp_sub_fk = s.sub_id where p.pkg_gokb_id = :wekbUuid and s.sub_has_perpetual_access = true", [wekbUuid: wekbUuid])[0]['count']
+                packageLinkedCount = sql.rows("select count(*) from subscription_package left join package p on p.pkg_id = subscription_package.sp_pkg_fk left join subscription s on subscription_package.sp_sub_fk = s.sub_id " +
+                        "left join refdata_value rv6 on s.sub_has_perpetual_access_rv_fk = rv6.rdv_id " +
+                        "where p.pkg_gokb_id = :wekbUuid and rv6.value_en = 'Yes'", [wekbUuid: wekbUuid])[0]['count']
 
                 sql.close()
             }
@@ -961,7 +965,9 @@ class LaserService {
                 sql = Sql.newInstance(config.laserDBUrl, config.laserDBUser, config.laserDBPassword, config.laserDBDriver)
 
 
-                packageLinkedCount = sql.rows("select count(*) from subscription_package left join package p on p.pkg_id = subscription_package.sp_pkg_fk left join subscription s on subscription_package.sp_sub_fk = s.sub_id where p.pkg_gokb_id = :wekbUuid and s.sub_has_perpetual_access = false", [wekbUuid: wekbUuid])[0]['count']
+                packageLinkedCount = sql.rows("select count(*) from subscription_package left join package p on p.pkg_id = subscription_package.sp_pkg_fk left join subscription s on subscription_package.sp_sub_fk = s.sub_id " +
+                        "left join refdata_value rv6 on s.sub_has_perpetual_access_rv_fk = rv6.rdv_id " +
+                        "where p.pkg_gokb_id = :wekbUuid and rv6.value_en = 'No'", [wekbUuid: wekbUuid])[0]['count']
 
                 sql.close()
             }
@@ -1113,14 +1119,15 @@ class LaserService {
                                                    rv.rdv_value_en as status,
                                                    sub_start_date,
                                                    sub_end_date,
-                                                   sub_has_perpetual_access,
+                                                   rv4.rdv_value_en as sub_has_perpetual_access,
                                                    rv2.rdv_value_en as holding_selection,
                                                    rv3.rdv_value_en as sub_typ
                                             from subscription s
                                                      left join org_role o on s.sub_id = o.or_sub_fk
                                                      left join org oo on oo.org_id = o.or_org_fk
                                                      left join refdata_value rv on s.sub_status_rv_fk = rv.rdv_id
-                                                     left join refdata_value rv2 on s.sub_holding_selection_rv_fk = rv2.rdv_id
+                                                     left join refdata_value rv2 on s.sub_holding_selection_rv_fk = rv2.rdv_id,
+                                                     left join refdata_value rv4 on s.sub_has_perpetual_access_rv_fk = rv4.rdv_id
                                             left join refdata_value rv3 on s.sub_type_rv_fk = rv3.rdv_id
                                             where sub_id = :laserID 
                                             and (sub_parent_sub_fk is not null and o.or_roletype_fk IN (select rdv_id from refdata_value join refdata_category on rdv_owner = rdc_id where (rdv_value = 'Subscriber_Consortial' or rdv_value ='Subscriber_Consortial_Hidden') and rdc_description = 'organisational.role')
@@ -1246,7 +1253,7 @@ class LaserService {
     }
 
     String getLaserURL() {
-        grailsApplication.config.getProperty('laserUrl', String)
+        return 'http://localhost:8080'
     }
 
     String getLaserSubURL() {
