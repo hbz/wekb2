@@ -61,7 +61,7 @@
         </sec:ifAnyGranted>
 
         <g:render template="qbeform"
-                  model="${[formdefn: qbetemplate.qbeConfig?.qbeForm, 'hide': (hide), cfg: qbetemplate.qbeConfig]}"/>
+                  model="${[formdefn: qbetemplate.qbeConfig?.qbeForm, 'hide': (hide), cfg: qbetemplate.qbeConfig, minInput: qbetemplate.minInput]}"/>
 
         <g:if test="${recset && !init}">
             <g:render template="qberesult"

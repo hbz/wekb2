@@ -2162,6 +2162,7 @@ class GlobalSearchTemplatesService {
 
     Map tipps() {
         Map result = [
+                minInput: 2,
                 baseclass: 'wekb.TitleInstancePackagePlatform',
                 msgCode    : 'titleinstancepackageplatform.plural',
                 title    : 'Titles',

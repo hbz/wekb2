@@ -158,46 +158,54 @@ class SearchService {
 
             // Looked up a template from somewhere, see if we can execute a search
             if ( result.qbetemplate) {
+                boolean preconditionsMet = (result.qbetemplate.containsKey('minInput') && cleaned_params.keySet().intersect(result.qbetemplate.qbeConfig.qbeForm.qparam).size() >= result.qbetemplate.minInput) || !result.qbetemplate.containsKey('minInput')
+                if(preconditionsMet) {
+                    params.sort = params.sort ?: result.qbetemplate.defaultSort
+                    params.order = params.order ?: result.qbetemplate.defaultOrder
+                    if(result.qbetemplate.defaultStatus) {
+                        if(params.searchAction == 'Search'){
+                            params.status = cleaned_params.qp_status ?: null
+                            cleaned_params.qp_status = cleaned_params.qp_status ?: null
+                        }else {
+                            params.status = cleaned_params.qp_status ?: result.qbetemplate.defaultStatus
+                            cleaned_params.qp_status = cleaned_params.qp_status ?: result.qbetemplate.defaultStatus
+                        }
 
-                params.sort = params.sort ?: result.qbetemplate.defaultSort
-                params.order = params.order ?: result.qbetemplate.defaultOrder
-                if(result.qbetemplate.defaultStatus) {
-                    if(params.searchAction == 'Search'){
-                        params.status = cleaned_params.qp_status ?: null
-                        cleaned_params.qp_status = cleaned_params.qp_status ?: null
-                    }else {
-                        params.status = cleaned_params.qp_status ?: result.qbetemplate.defaultStatus
-                        cleaned_params.qp_status = cleaned_params.qp_status ?: result.qbetemplate.defaultStatus
                     }
 
-                }
+                    Class target_class = Class.forName(result.qbetemplate.baseclass);
+                    def read_perm = accessService.checkReadable(result.qbetemplate.baseclass)
 
-                Class target_class = Class.forName(result.qbetemplate.baseclass);
-                def read_perm = accessService.checkReadable(result.qbetemplate.baseclass)
-
-                if(params.qbe == 'g:updateTippInfos') {
-                    if (!params.qp_aup_id && !params.qp_tipp_id) {
-                        if (!SpringSecurityUtils.ifAnyGranted('ROLE_SUPERUSER')) {
-                            read_perm = false
+                    if(params.qbe == 'g:updateTippInfos') {
+                        if (!params.qp_aup_id && !params.qp_tipp_id) {
+                            if (!SpringSecurityUtils.ifAnyGranted('ROLE_SUPERUSER')) {
+                                read_perm = false
+                            }
                         }
                     }
+
+                    result.classSimpleName = target_class.simpleName
+
+                    if (read_perm && !params.init) {
+
+                        log.debug("Execute query");
+                        doQuery(result.qbetemplate, cleaned_params, result)
+                        log.debug("Query complete");
+                        result.lasthit = result.offset + result.max > result.reccount ? result.reccount : ( result.offset + result.max )
+
+                        // Add the page information.
+                        result.page_current = (result.offset / result.max) + 1
+                        result.page_total = (result.reccount / result.max).toInteger() + (result.reccount % result.max > 0 ? 1 : 0)
+
+                    }else if (!read_perm){
+                        return [status: 403]
+                    }
                 }
-
-                result.classSimpleName = target_class.simpleName
-
-                if (read_perm && !params.init) {
-
-                    log.debug("Execute query");
-                    doQuery(result.qbetemplate, cleaned_params, result)
-                    log.debug("Query complete");
-                    result.lasthit = result.offset + result.max > result.reccount ? result.reccount : ( result.offset + result.max )
-
-                    // Add the page information.
-                    result.page_current = (result.offset / result.max) + 1
-                    result.page_total = (result.reccount / result.max).toInteger() + (result.reccount % result.max > 0 ? 1 : 0)
-
-                }else if (!read_perm){
-                    return [status: 403]
+                else {
+                    if(cleaned_params.containsKey('searchAction')) {
+                        result.error = "Please submit at least two parameters to run a query!"
+                        log.error("insufficient filter parameters")
+                    }
                 }
             }
             else {
