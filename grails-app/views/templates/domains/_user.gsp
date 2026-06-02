@@ -31,7 +31,7 @@
                     </dl>
                 </g:if>
                 <g:if test="${controllerName != 'create'}">
-                    <dl>
+                    %{--<dl>
                         <dt class="control-label">Enabled</dt>
                         <dd>
                             <semui:xEditableBoolean owner="${d}" field="enabled"/>
@@ -43,7 +43,7 @@
                         <dd>
                             <semui:xEditableBoolean owner="${d}" field="accountExpired"/>
                         </dd>
-                    </dl>
+                    </dl>--}%
                     <dl>
                         <dt class="control-label">Account Locked</dt>
                         <dd>

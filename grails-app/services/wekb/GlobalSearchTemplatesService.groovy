@@ -2931,7 +2931,7 @@ class GlobalSearchTemplatesService {
                                         placeholder: 'Email',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'email']
                                 ],
-                                [
+                               /* [
                                         type       : 'dropDown',
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.YN,
@@ -2950,7 +2950,7 @@ class GlobalSearchTemplatesService {
                                         placeholder: 'Account Expired',
                                         propType   : 'Boolean',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'accountExpired'],
-                                ],
+                                ],*/
                                 [
                                         type       : 'dropDown',
                                         baseClass  : 'wekb.RefdataValue',
