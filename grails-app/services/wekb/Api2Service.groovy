@@ -2318,7 +2318,19 @@ class Api2Service {
 
                 def query_start_time = System.currentTimeMillis()
                 // log.debug("Get data rows..")
-                searchResult.recset = baseclass.executeQuery(hql_Map.fetch_hql, hql_Map.params_hql, query_params)
+
+                List idset, rowset, recset
+                rowset = baseclass.executeQuery(hql_Map.fetch_hql, hql_Map.params_hql)
+                if (hql_Map.count_clause) {
+                    idset = rowset.collect { row -> row[0] }
+                    recset = baseclass.executeQuery('select o, ' + hql_Map.count_clause + ' from ' + baseclass.name + ' o where o.id in (:idSet) ' + hql_Map.order_clause, [idSet: idset.drop(searchResult.offset).take(searchResult.max)])
+                } else {
+                    idset = rowset
+                    recset = baseclass.executeQuery('select o from ' + baseclass.name + ' o where o.id in (:idSet) ' + hql_Map.order_clause, [idSet: idset.drop(searchResult.offset).take(searchResult.max)])
+                }
+
+
+                searchResult.recset = recset
 
                 log.info("Fetch completed after ${System.currentTimeMillis() - query_start_time} ms")
 
