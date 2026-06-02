@@ -1614,7 +1614,7 @@ class GlobalSearchTemplatesService {
                                         msgCode    : 'default.name',
                                         qparam     : 'qp_name',
                                         placeholder: 'Name',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'name', 'wildcard': 'B']
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'name', 'wildcard': 'B', normalise: false]
                                 ],
                                 [
                                         type       : 'dropDown',
@@ -2099,7 +2099,7 @@ class GlobalSearchTemplatesService {
                                         msgCode    : 'default.name',
                                         qparam     : 'qp_name',
                                         placeholder: 'Name',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'name']
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'name', 'wildcard': 'B', normalise: false]
                                 ],
                                 [
                                         type       : 'dropDown',
