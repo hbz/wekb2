@@ -513,10 +513,10 @@ class LaserService {
 
                 if(perpetualAccess){
                     if(perpetualAccess == 'true'){
-                        query = query + '''and sub_has_perpetual_access_rv_fk = 'Yes' '''
+                        query = query + '''and rv4.value_en = 'Yes' '''
                     }
                     if(perpetualAccess == 'false'){
-                        query = query + ''' and sub_has_perpetual_access_rv_fk = 'No' '''
+                        query = query + ''' and rv4.value_en = 'No' '''
                     }
 
                 }
