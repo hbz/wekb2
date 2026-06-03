@@ -228,7 +228,7 @@ class ExportService {
     def exportPackageBatchImportTemplate(def outputStream) {
 
         List titles = ["package_uuid", "package_name", "provider_uuid", "nominal_platform_uuid", "description", "description_url", "breakable", "content_type",
-                              "file", "open_access", "payment_type", "scope", "national_range", "regional_range", "provider_product_id", "ddc", "source_default_supply_method", "source_url", "source_ftp_server_url", "source_ftp_directory", "source_ftp_file_name", "source_ftp_username", "source_ftp_password", "frequency", "automated_updates", "archiving_agency", "open_access_of_archiving_agency", "post_cancellation_access_of_archiving_agency", "publication_title", "publication_type", "title_id", "title_url"]
+                              "file", "open_access", "payment_type", "scope", "national_range", "regional_range", "free_trial", "free_trial_phase", "provider_product_id", "ddc", "source_default_supply_method", "source_url", "source_ftp_server_url", "source_ftp_directory", "source_ftp_file_name", "source_ftp_username", "source_ftp_password", "frequency", "automated_updates", "archiving_agency", "open_access_of_archiving_agency", "post_cancellation_access_of_archiving_agency", "publication_title", "publication_type", "title_id", "title_url"]
 
 
         XSSFWorkbook workbook = new XSSFWorkbook()
@@ -260,6 +260,8 @@ class ExportService {
                 case 'scope': datas = RefdataCategory.lookup(RCConstants.PACKAGE_SCOPE).sort{it.value}.collect { it -> it.value }
                     break
                 case 'editing_status': datas = RefdataCategory.lookup(RCConstants.PACKAGE_EDITING_STATUS).sort{it.value}.collect { it -> it.value }
+                    break
+                case 'free_trial': datas = RefdataCategory.lookup(RCConstants.YN).sort{it.value}.collect { it -> it.value }
                     break
                 case 'national_range': //Because many to many
                     break
@@ -656,7 +658,7 @@ class ExportService {
         def export_date = dateFormatService.formatDate(new Date())
         List<String> titleHeaders = ["package_uuid", "package_name", "provider_name", "provider_uuid", "nominal_platform_name",
                                      "nominal_platform_uuid", "description", "description_url", "breakable", "content_type",
-                                     "file", "open_access", "payment_type", "scope", "national_range", "regional_range", "provider_product_id", "ddc",
+                                     "file", "open_access", "payment_type", "scope", "national_range", "regional_range", "free_trial", "free_trial_phase", "provider_product_id", "ddc",
                                      "source_default_supply_method", "source_url", "source_ftp_server_url", "source_ftp_directory", "source_ftp_file_name", "source_ftp_username", "source_ftp_password",
                                      "frequency", "automated_updates",
                                      "archiving_agency", "open_access_of_archiving_agency", "post_cancellation_access_of_archiving_agency"]
@@ -685,6 +687,8 @@ class ExportService {
             row.add(sanitize(pkg.scope?.value))
             row.add(sanitize(pkg.nationalRanges?.value.join(',')))
             row.add(sanitize(pkg.regionalRanges?.value.join(',')))
+            row.add(sanitize(pkg.freeTrial?.value))
+            row.add(sanitize(pkg.freeTrialPhase))
             row.add(sanitize(pkg.getAnbieterProduktIDs()))
             row.add(sanitize(pkg.ddcs?.value.join(',')))
             row.add(sanitize(pkg.kbartSource?.defaultSupplyMethod?.value))

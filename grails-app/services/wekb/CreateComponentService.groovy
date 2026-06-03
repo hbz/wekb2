@@ -294,6 +294,10 @@ class CreateComponentService {
                     break
                 case "editing_status": colMap.editing_status = c
                     break
+                case "free_trial": colMap.free_trial = c
+                    break
+                case "free_trial_phase": colMap.free_trial_phase = c
+                    break
                 case "national_range": colMap.national_ranges = c
                     break
                 case "regional_range": colMap.regional_ranges = c
@@ -501,6 +505,19 @@ class CreateComponentService {
                             }
                         }
 
+                        if (colMap.free_trial != null) {
+                            String value = cols[colMap.free_trial].trim()
+                            if (value) {
+                                RefdataValue refdataValue = RefdataCategory.lookup(RCConstants.YN, value)
+                                if (refdataValue)
+                                    pkg.freeTrial = refdataValue
+                            }
+                        }
+
+                        if (colMap.free_trial_phase != null && cols[colMap.free_trial_phase]) {
+                            pkg.freeTrialPhase = cols[colMap.free_trial_phase].trim()
+                        }
+
                         if (colMap.national_ranges && cols[colMap.national_ranges]) {
                             List<String> national_ranges = cols[colMap.national_ranges].split(',')
                             national_ranges.each { String value ->
@@ -684,7 +701,7 @@ class CreateComponentService {
                             }
 
 
-                            if(!package_uuid){
+                            if(!package_uuid || pkg.getTippCount() == 0){
                                 if ((pkg && pkg.nominalPlatform ) && colMap.publication_title != null && cols[colMap.publication_title] && colMap.publication_type != null && cols[colMap.publication_type] && colMap.title_url != null && cols[colMap.title_url] && (pkg.getAnbieterProduktIDs() || colMap.title_id != null && cols[colMap.title_id])) {
 
                                     String value = cols[colMap.publication_type].trim()
