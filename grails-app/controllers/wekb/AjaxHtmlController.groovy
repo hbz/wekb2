@@ -17,6 +17,7 @@ import org.grails.datastore.mapping.model.types.OneToOne
 import org.springframework.security.access.annotation.Secured
 
 import java.text.SimpleDateFormat
+import java.util.regex.Pattern
 
 @Secured(['ROLE_EDITOR', 'ROLE_VENDOR_EDITOR', 'ROLE_ADMIN', 'IS_AUTHENTICATED_FULLY'])
 class AjaxHtmlController {
@@ -642,7 +643,7 @@ class AjaxHtmlController {
         if ((params.identifierNamespace?.trim()) &&
                 (params.identifierValue?.trim()) &&
                 (params.__context?.trim())) {
-            def ns = genericOIDService.resolveOID(params.identifierNamespace)
+            IdentifierNamespace ns = genericOIDService.resolveOID(params.identifierNamespace)
 
             if ((ns != null) && (owner != null)) {
                 def editable = accessService.checkEditableObject(owner, params)
@@ -658,13 +659,19 @@ class AjaxHtmlController {
                         if (ident) {
                             flash.error = g.message(code: 'identifier.no.unique.by.component')
                         } else if (!ident) {
-                            ident = new Identifier(namespace: ns, value: params.identifierValue)
-                            ident.setReference(owner)
-                            boolean success = ident.save() //needed to trigger afterInsert() temp solution
-                            if (success) {
-                                flash.success = g.message(code: 'identifier.create.success')
-                            } else {
-                                flash.error = g.message(code: 'identifier.create.fail')
+
+                            Pattern pattern = ns.pattern ? ~"${ns.pattern}" : null
+                            if (pattern && !(params.identifierValue ==~ pattern)) {
+                                flash.error = g.message(code: 'identifier.create.pattern.fail', args: ns.pattern)
+                            }else {
+                                ident = new Identifier(namespace: ns, value: params.identifierValue)
+                                ident.setReference(owner)
+                                boolean success = ident.save() //needed to trigger afterInsert() temp solution
+                                if (success) {
+                                    flash.success = g.message(code: 'identifier.create.success')
+                                } else {
+                                    flash.error = g.message(code: 'identifier.create.fail')
+                                }
                             }
                         }
                     }

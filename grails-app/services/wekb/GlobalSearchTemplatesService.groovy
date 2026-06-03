@@ -1614,7 +1614,7 @@ class GlobalSearchTemplatesService {
                                         msgCode    : 'default.name',
                                         qparam     : 'qp_name',
                                         placeholder: 'Name',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'name', 'wildcard': 'B']
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'name', 'wildcard': 'B', normalise: false]
                                 ],
                                 [
                                         type       : 'dropDown',
@@ -2099,7 +2099,7 @@ class GlobalSearchTemplatesService {
                                         msgCode    : 'default.name',
                                         qparam     : 'qp_name',
                                         placeholder: 'Name',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'name']
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'name', 'wildcard': 'B', normalise: false]
                                 ],
                                 [
                                         type       : 'dropDown',
@@ -2931,7 +2931,7 @@ class GlobalSearchTemplatesService {
                                         placeholder: 'Email',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'email']
                                 ],
-                                [
+                               /* [
                                         type       : 'dropDown',
                                         baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.YN,
@@ -2950,7 +2950,7 @@ class GlobalSearchTemplatesService {
                                         placeholder: 'Account Expired',
                                         propType   : 'Boolean',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'accountExpired'],
-                                ],
+                                ],*/
                                 [
                                         type       : 'dropDown',
                                         baseClass  : 'wekb.RefdataValue',

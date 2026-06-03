@@ -48,7 +48,7 @@ class ExportService {
                 outputStream << file.bytes
             }
             outputStream.close()
-        }else if (pkg.kbartSource.ftpServerUrl) {
+        }else if (pkg.kbartSource && pkg.kbartSource.ftpServerUrl) {
             File file = ftpConnectService.ftpConnectAndGetFile(pkg.kbartSource)
             if(file)
                 outputStream << file.bytes
