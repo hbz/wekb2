@@ -1253,7 +1253,7 @@ class LaserService {
     }
 
     String getLaserURL() {
-        return 'http://localhost:8080'
+        grailsApplication.config.getProperty('laserUrl', String)
     }
 
     String getLaserSubURL() {
