@@ -226,7 +226,7 @@ class Package  extends AbstractBase implements Auditable {
 
 
   @Transient
-  public getCurrentTippCount() {
+  int getCurrentTippCount() {
     def refdata_status = RDStore.KBC_STATUS_CURRENT
     int result = TitleInstancePackagePlatform.executeQuery("select count(*) from TitleInstancePackagePlatform as t where t.pkg = :pkg and t.status = :status"
       , [pkg: this, status: refdata_status])[0]
@@ -235,7 +235,7 @@ class Package  extends AbstractBase implements Auditable {
   }
 
   @Transient
-  public getTippCount() {
+  int getTippCount() {
     int result = TitleInstancePackagePlatform.executeQuery("select count(*) from TitleInstancePackagePlatform as t where t.pkg = :pkg"
             , [pkg: this])[0]
 
@@ -243,7 +243,7 @@ class Package  extends AbstractBase implements Auditable {
   }
 
   @Transient
-  public getTippCountWithoutRemoved() {
+  int getTippCountWithoutRemoved() {
     def refdata_status = RDStore.KBC_STATUS_REMOVED
     int result = TitleInstancePackagePlatform.executeQuery("select count(*) from TitleInstancePackagePlatform as t where t.pkg = :pkg and t.status != :status"
             , [pkg: this, status: refdata_status])[0]
@@ -252,7 +252,7 @@ class Package  extends AbstractBase implements Auditable {
   }
 
   @Transient
-  public getRetiredTippCount() {
+  int getRetiredTippCount() {
     def refdata_status = RDStore.KBC_STATUS_RETIRED
     int result = TitleInstancePackagePlatform.executeQuery("select count(*) from TitleInstancePackagePlatform as t where t.pkg = :pkg and t.status = :status"
             , [pkg: this, status: refdata_status])[0]
@@ -261,7 +261,7 @@ class Package  extends AbstractBase implements Auditable {
   }
 
   @Transient
-  public getExpectedTippCount() {
+  int getExpectedTippCount() {
     def refdata_status = RDStore.KBC_STATUS_EXPECTED
     int result = TitleInstancePackagePlatform.executeQuery("select count(*) from TitleInstancePackagePlatform as t where t.pkg = :pkg and t.status = :status"
             , [pkg: this, status: refdata_status])[0]
@@ -270,7 +270,7 @@ class Package  extends AbstractBase implements Auditable {
   }
 
   @Transient
-  public getDeletedTippCount() {
+  int getDeletedTippCount() {
     def refdata_status = RDStore.KBC_STATUS_DELETED
     int result = TitleInstancePackagePlatform.executeQuery("select count(*) from TitleInstancePackagePlatform as t where t.pkg = :pkg and t.status = :status"
             , [pkg: this, status: refdata_status])[0]
