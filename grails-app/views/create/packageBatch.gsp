@@ -74,6 +74,8 @@
                             break
                         case 'scope': args.addAll(RefdataCategory.lookup(RCConstants.PACKAGE_SCOPE).sort { it.value }.collect { it -> it.value })
                             break
+                        case 'free_trial': args.addAll(RefdataCategory.lookup(RCConstants.YN).sort { it.value }.collect { it -> it.value })
+                            break
                         case 'editing_status': args.addAll(RefdataCategory.lookup(RCConstants.PACKAGE_EDITING_STATUS).sort { it.value }.collect { it -> it.value })
                             break
                         case 'national_range': args.addAll(["GB", "FR", "DE", "AT", "CH", "NL"])
