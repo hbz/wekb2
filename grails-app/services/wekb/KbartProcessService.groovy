@@ -786,7 +786,7 @@ class KbartProcessService {
 
 
 
-                List<String> rows = tsvFile.newInputStream().text.split('\n')
+                List<String> rows = tsvFile.newInputStream().text.readLines()
                 if(rows.size() > 1){
                     Map<String, Integer> colMap = [:]
 
