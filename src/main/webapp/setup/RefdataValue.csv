@@ -543,9 +543,7 @@ Source.DataSupplyMethod;HTTP Url;HTTP Url;HTTP Url
 Source.DataSupplyMethod;Other;Other;Other
 Source.Frequency;Daily;Daily;Daily
 Source.Frequency;Monthly;Monthly;Monthly
-Source.Frequency;Quarterly;Quarterly;Quarterly
 Source.Frequency;Weekly;Weekly;Weekly
-Source.Frequency;Yearly;Yearly;Yearly
 TIPPCoverageStatement.CoverageDepth;Abstracts;Abstracts;Abstracts
 TIPPCoverageStatement.CoverageDepth;Fulltext;Fulltext;Fulltext
 TIPPCoverageStatement.CoverageDepth;Selected Articles;Selected Articles;Selected Articles
