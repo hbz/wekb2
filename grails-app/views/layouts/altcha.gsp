@@ -12,11 +12,9 @@
     </g:if>
     <link rel="shortcut icon" href="${resource(dir: 'images', file: 'favicon.ico')}" type="image/x-icon">
 
-    %{-- TODO: jQuery fix -- }%
-%{--    <asset:javascript src="altcha.js"/>--}%
-    <script async defer src="https://cdn.jsdelivr.net/gh/altcha-org/altcha@3.0.11/dist/main/altcha.min.js" type="module"></script>
+    <script src="/assets/jquery-3.6.0.min.js"></script>
+    <script src="/assets/altcha/altcha.min.js" async defer type="module"></script>
 
-    <asset:javascript src="jquery-3.6.0.min.js"/>
     <asset:stylesheet src="wekb.css"/>
 </head>
 

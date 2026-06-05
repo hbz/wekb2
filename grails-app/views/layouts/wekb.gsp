@@ -2,7 +2,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title><g:layoutTitle default="we:kb"/></title>
@@ -20,7 +19,6 @@
 
     <asset:javascript src="wekb.js"/>
     <asset:stylesheet src="wekb.css"/>
-
 </head>
 
 <wekb:serviceInjection/>
