@@ -42,7 +42,8 @@ class AltchaInterceptor implements grails.artefact.Interceptor {
             // AltchaClient.renewClient(request)
         }
         else if (! AltchaClient.isValid(request)) {
-            redirect(controller: 'altcha', action: 'prompt', params: [origin: request.getRequestURI()])
+            String origin = request.getRequestURI() + (request.getQueryString() ? ('?' + request.getQueryString()) : '')
+            redirect(controller: 'altcha', action: 'prompt', params: [origin: origin])
             return false
         }
         return true
