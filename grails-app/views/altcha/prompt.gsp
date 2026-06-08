@@ -26,7 +26,7 @@
                 ></altcha-widget>
             </div>
             <div class="field">
-                <button class="altcha-button we-link"> Ich bin ein Mensch! </button>
+                <button class="altcha-button we-link"> Finde ich gut; ich bin ein Mensch! </button>
             </div>
         </form>
     </div>

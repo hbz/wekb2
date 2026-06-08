@@ -13,6 +13,8 @@ class AltchaController {
 
     @Secured(['permitAll'])
     def prompt() {
+        log.info 'ALTCHA.PROMPT -> ' + request.getRemoteAddr()
+
         Map<String, Object> result = [:]
         result
     }
@@ -41,6 +43,8 @@ class AltchaController {
 
     @Secured(['permitAll'])
     def submit() {
+        log.info 'ALTCHA.SUBMIT'
+
         String wt  = AltchaClient.getWidgetToken(request)
         String b64 = params.get(wt)
 
