@@ -1,10 +1,10 @@
 package wekb
 
+import grails.plugin.springsecurity.SpringSecurityService
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
-import org.springframework.security.web.savedrequest.DefaultSavedRequest
-import org.springframework.security.web.savedrequest.HttpSessionRequestCache
 import wekb.helper.RCConstants
 import wekb.helper.RDStore
+import wekb.system.AltchaClient
 import wekb.utils.ServerUtils
 import grails.plugins.mail.MailService
 
@@ -20,6 +20,7 @@ class PublicController {
   ExportService exportService
   MailService mailService
   SearchService searchService
+  SpringSecurityService springSecurityService
 
   def robots() {
     String text = "User-agent: *\n"
@@ -28,7 +29,9 @@ class PublicController {
         text += "Disallow: /\n"
         text += "Allow: /\$\n"
         text += "Allow: /public/wekbNews\n"
-        text += "Allow: /public/aboutWekb\n"
+        text += "Allow: /public/wcagFeedbackForm\n"
+        text += "Allow: /public/wcagPlainEnglish\n"
+        text += "Allow: /public/wekbNews\n"
     }
     else {
       text += "Disallow: / \n"
@@ -111,8 +114,45 @@ class PublicController {
     redirect(controller: 'resource', action: 'show', id: params.id)
   }
 
-
   def index() {
+    log.info("PublicController::index ${params}")
+//    logRequestFrom()
+
+    Map<String, Object> result = [:]
+    String view = 'index'
+
+    if (springSecurityService.isLoggedIn() || AltchaClient.isValid(request)) {
+      view = 'indexValidated'
+
+      params.qbe = 'g:publicPackages'
+      result = searchService.search(null, [:], params).result
+    }
+    else {
+      result.origin = request.getRequestURI() + (request.getQueryString() ? ('?' + request.getQueryString()) : '')
+    }
+
+    result.componentsOfStatistic = ['Provider', 'Package', 'Platform', 'TitleInstancePackagePlatform']
+    result.countComponent = [:]
+
+    Map<String, Object> query_params = [forbiddenStatus : [
+            RDStore.KBC_STATUS_CURRENT, RDStore.KBC_STATUS_RETIRED, RDStore.KBC_STATUS_DELETED, RDStore.KBC_STATUS_EXPECTED
+    ]]
+
+    result.componentsOfStatistic.each { cmp ->
+      if (cmp == 'Provider') {
+        result.countComponent."${cmp.toLowerCase()}" = Org.executeQuery("select count(*) from Org as o where o.status in (:forbiddenStatus)", query_params, [readOnly: true])[0]
+      }
+      else {
+        def fetch_all = "select count(*) from ${cmp} as o where status in (:forbiddenStatus)"
+        result.countComponent."${cmp.toLowerCase()}" = Package.executeQuery(fetch_all.toString(), query_params, [readOnly: true])[0]
+      }
+    }
+
+    println '###### ' + result
+    render(view: view, model: result)
+  }
+
+  private index_old() {
     log.info("PublicController::index ${params}");
     logRequestFrom()
     def result = [:]
