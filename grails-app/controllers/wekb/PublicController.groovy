@@ -25,11 +25,10 @@ class PublicController {
   def robots() {
     String text = "User-agent: *\n"
 
-    if(ServerUtils.getCurrentServer() == ServerUtils.SERVER_PROD) {
+    if (ServerUtils.getCurrentServer() == ServerUtils.SERVER_PROD) {
         text += "Disallow: /\n"
         text += "Allow: /\$\n"
-        text += "Allow: /public/wekbNews\n"
-        text += "Allow: /public/wcagFeedbackForm\n"
+        text += "Allow: /public/aboutWekb\n"
         text += "Allow: /public/wcagPlainEnglish\n"
         text += "Allow: /public/wekbNews\n"
     }
