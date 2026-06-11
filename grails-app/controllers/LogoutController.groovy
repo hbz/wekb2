@@ -1,6 +1,8 @@
 import grails.plugin.springsecurity.SpringSecurityUtils
+import wekb.annotations.AltchaAnnotation
 import wekb.system.AltchaClient
 
+@AltchaAnnotation(comment = AltchaAnnotation.ACCESS_ALLOWED)
 class LogoutController {
 
 	/**

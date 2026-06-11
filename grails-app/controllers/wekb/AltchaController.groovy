@@ -3,9 +3,11 @@ package wekb
 import grails.plugin.springsecurity.annotation.Secured
 import groovy.json.JsonOutput
 import org.altcha.altcha.Altcha
+import wekb.annotations.AltchaAnnotation
 import wekb.system.AltchaClient
 
 @Secured(['permitAll'])
+@AltchaAnnotation(comment = AltchaAnnotation.ACCESS_ALLOWED)
 class AltchaController {
 
     public static final Altcha.Algorithm ALTCHA_ALGORITHM   = Altcha.Algorithm.SHA256

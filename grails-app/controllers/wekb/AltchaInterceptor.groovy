@@ -13,13 +13,12 @@ class AltchaInterceptor implements grails.artefact.Interceptor {
      * defines which controller calls should be caught up, in this case every controller
      */
     AltchaInterceptor() {
-        // -> see PublicController.robots()
-
         matchAll()
             .excludes(uri: '/')
             .excludes(uri: '/public/aboutWekb')
             .excludes(uri: '/public/wcagPlainEnglish')
             .excludes(uri: '/public/wekbNews')
+            .excludes(uri: '/robots.txt')
             .excludes(controller: 'altcha')
             .excludes(controller: 'api2')
             .excludes(controller: 'login')
