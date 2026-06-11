@@ -2,6 +2,7 @@ package wekb
 
 import grails.plugin.springsecurity.SpringSecurityService
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
+import wekb.annotations.AltchaAnnotation
 import wekb.helper.RCConstants
 import wekb.helper.RDStore
 import wekb.system.AltchaClient
@@ -22,6 +23,7 @@ class PublicController {
   SearchService searchService
   SpringSecurityService springSecurityService
 
+  @AltchaAnnotation(comment = AltchaAnnotation.ACCESS_ALLOWED)
   def robots() {
     String text = "User-agent: *\n"
 
@@ -38,6 +40,7 @@ class PublicController {
     render(text: text, contentType: "text/plain", encoding: "UTF-8")
   }
 
+  @AltchaAnnotation(comment = AltchaAnnotation.ACCESS_ALLOWED)
   def wcagPlainEnglish() {
     log.info("wcagPlainEnglish::${params}")
     def result = [:]
@@ -70,6 +73,7 @@ class PublicController {
     result
   }
 
+  @AltchaAnnotation(comment = AltchaAnnotation.ACCESS_ALLOWED)
   def aboutWekb() {
     log.info("aboutWekb::${params}")
     def result = [:]
@@ -326,6 +330,7 @@ class PublicController {
 
   }
 
+  @AltchaAnnotation(comment = AltchaAnnotation.ACCESS_ALLOWED)
   def wekbNews(){
     log.info("wekbNews::${params}")
     Map result = [:]

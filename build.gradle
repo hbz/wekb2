@@ -14,7 +14,7 @@ buildscript {
 
         //NOT DEFAULT
         classpath "org.grails.plugins:database-migration:4.1.0"
-        classpath "com.gorylenko.gradle-git-properties:gradle-git-properties:2.4.1"
+        classpath "com.gorylenko.gradle-git-properties:gradle-git-properties:2.5.7"
         classpath 'org.quartz-scheduler:quartz:2.3.2'
     }
 }
@@ -125,7 +125,7 @@ dependencies {
 
     runtimeOnly 'org.apache.tomcat:tomcat-jdbc'
     runtimeOnly 'javax.xml.bind:jaxb-api:2.3.1'                             // 2018 : [?]
-    runtimeOnly 'org.postgresql:postgresql:42.5.1'                          // 2022
+    runtimeOnly 'org.postgresql:postgresql:42.5.6'                          // 2024
 
     // https://mvnrepository.com/artifact/commons-net/commons-net
     implementation group: 'commons-net', name: 'commons-net', version: '3.9.0' //2022 -> for FTP

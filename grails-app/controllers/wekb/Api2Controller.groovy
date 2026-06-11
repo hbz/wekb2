@@ -2,14 +2,13 @@ package wekb
 
 import grails.plugin.springsecurity.SpringSecurityService
 import grails.web.servlet.mvc.GrailsParameterMap
-import org.springframework.security.web.savedrequest.DefaultSavedRequest
-import org.springframework.security.web.savedrequest.HttpSessionRequestCache
+import wekb.annotations.AltchaAnnotation
 import wekb.auth.User
 import grails.converters.JSON
 
 import java.security.SecureRandom
 
-
+@AltchaAnnotation(comment = AltchaAnnotation.ACCESS_ALLOWED)
 class Api2Controller {
     SecureRandom rand = new SecureRandom()
 

@@ -1,12 +1,19 @@
 <%@ page import="wekb.system.AltchaClient" %>
 
-<form action="${createLink(controller: 'altcha', action: 'submit')}" method="post" id="altcha-form" class="ui form">
-    <input type="hidden" name="origin" value="${altchaFormOrigin}" />
-    <div class="field">
-        Aufgrund des massiven Anstiegs der Anfragen von Webcrawlern und KI-Bots haben wir beschlossen, .. bla bla.
-        <br />
-        Diese Maßnahme soll weiterhin die Verfügbarkeit und Leistung des Systems gewährleisten.
-    </div>
+<form action="${createLink(controller: 'altcha', action: 'submit')}" method="post"
+      id="altcha-form" class="ui form${altchaForm.startpage ? '' : ' content'}"
+>
+    <input type="hidden" name="origin" value="${altchaForm.origin}" />
+    <g:if test="${! altchaForm.startpage}">
+        <div class="field">
+            <i class="robot large grey icon"></i>
+            <br />
+            <br />
+            Due to the massive increase in requests from web crawlers and AI bots, we have decided to... blah blah.
+            <br />
+            This measure is intended to ensure the continued availability and performance of the system.
+        </div>
+    </g:if>
     <div class="field">
         <altcha-widget
                 challenge="${createLink(controller: 'altcha', action: 'challenge', absolute:true)}"
@@ -16,6 +23,6 @@
         ></altcha-widget>
     </div>
     <div class="field">
-        <button class="altcha-button we-link"> Finde ich gut; ich bin ein Mensch! </button>
+        <button class="ui fluid ${altchaForm.startpage ? 'huge ' : ''}button we-link"> Great - let's search! </button>
     </div>
 </form>
