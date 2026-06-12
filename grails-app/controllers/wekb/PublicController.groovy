@@ -151,7 +151,6 @@ class PublicController {
       }
     }
 
-    println '###### ' + result
     render(view: view, model: result)
   }
 
