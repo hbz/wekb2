@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="In the we:kb (pronounced wekb), the providers manage their current electronic sales units and meta-information themselves.">
     <g:if test="${ServerUtils.getCurrentServer() == ServerUtils.SERVER_PROD}">
-        <meta name="google-site-verification" content="-kK1UKmjJAt_9QnZg6YL-96yI65sls58pHyheOOrS0M">
+        <meta name="google-site-verification" content="-kK1UKmjJAt_9QnZg6YL-96yI65sls58pHyheOOrS0M444">
     </g:if>
     <link rel="shortcut icon" href="${resource(dir: 'images', file: 'favicon.ico')}" type="image/x-icon">
 
