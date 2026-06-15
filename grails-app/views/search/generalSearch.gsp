@@ -30,7 +30,7 @@
   }
 }
 </script>
-    <title>we:kb | wekb</title>
+    <title>we:kb | wekb - ${message(code: 'public.genSearch')}</title>
 </head>
 
 <body>
@@ -39,7 +39,7 @@
 
 <semui:flashMessage data="${flash}"/>
 
-<g:render template="number-chart-hero"/>
+<h1 class="ui header">${message(code: 'public.genSearch')}</h1>
 
 <g:render template="/search/qbeform"
           model="${[formdefn: qbetemplate.qbeConfig?.qbeForm, 'hide': (hide), cfg: qbetemplate.qbeConfig]}"/>

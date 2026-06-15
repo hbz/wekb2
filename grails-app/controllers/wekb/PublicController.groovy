@@ -40,14 +40,6 @@ class PublicController {
     render(text: text, contentType: "text/plain", encoding: "UTF-8")
   }
 
-  @AltchaAnnotation(comment = AltchaAnnotation.ACCESS_ALLOWED)
-  def wcagPlainEnglish() {
-    log.info("wcagPlainEnglish::${params}")
-    def result = [:]
-    //println(params)
-    result
-  }
-
   def sendFeedbackForm() {
     def result = [:]
     try {
@@ -68,14 +60,6 @@ class PublicController {
 
   def wcagFeedbackForm() {
     log.info("wcagFeedbackForm::${params}")
-    def result = [:]
-    //println(params)
-    result
-  }
-
-  @AltchaAnnotation(comment = AltchaAnnotation.ACCESS_ALLOWED)
-  def aboutWekb() {
-    log.info("aboutWekb::${params}")
     def result = [:]
     //println(params)
     result
@@ -115,43 +99,6 @@ class PublicController {
     log.info("tippContent::${params}")
     logRequestFrom()
     redirect(controller: 'resource', action: 'show', id: params.id)
-  }
-
-  def index() {
-    log.info("PublicController::index ${params}")
-//    logRequestFrom()
-
-    Map<String, Object> result = [:]
-    String view = 'index'
-
-    if (springSecurityService.isLoggedIn() || AltchaClient.isValid(request)) {
-      view = 'indexValidated'
-
-      params.qbe = 'g:publicPackages'
-      result = searchService.search(null, [:], params).result
-    }
-    else {
-      result.origin = request.getRequestURI() + (request.getQueryString() ? ('?' + request.getQueryString()) : '')
-    }
-
-    result.componentsOfStatistic = ['Provider', 'Package', 'Platform', 'TitleInstancePackagePlatform']
-    result.countComponent = [:]
-
-    Map<String, Object> query_params = [forbiddenStatus : [
-            RDStore.KBC_STATUS_CURRENT, RDStore.KBC_STATUS_RETIRED, RDStore.KBC_STATUS_DELETED, RDStore.KBC_STATUS_EXPECTED
-    ]]
-
-    result.componentsOfStatistic.each { cmp ->
-      if (cmp == 'Provider') {
-        result.countComponent."${cmp.toLowerCase()}" = Org.executeQuery("select count(*) from Org as o where o.status in (:forbiddenStatus)", query_params, [readOnly: true])[0]
-      }
-      else {
-        def fetch_all = "select count(*) from ${cmp} as o where status in (:forbiddenStatus)"
-        result.countComponent."${cmp.toLowerCase()}" = Package.executeQuery(fetch_all.toString(), query_params, [readOnly: true])[0]
-      }
-    }
-
-    render(view: view, model: result)
   }
 
   private index_old() {
@@ -327,6 +274,48 @@ class PublicController {
   private void logRequestFrom(){
     log.info 'Request from ' + request.getRemoteAddr() + ' for ' + request.requestURI + ' ---> Host: ' + request.getRemoteHost() + ''
 
+  }
+
+  @AltchaAnnotation(comment = AltchaAnnotation.ACCESS_ALLOWED)
+  def index() {
+    log.info("index::${params}")
+    Map result = [:]
+
+    if (!(springSecurityService.isLoggedIn() || AltchaClient.isValid(request))) {
+      result.showAltcha = true
+      result.origin = request.getRequestURI() + (request.getQueryString() ? ('?' + request.getQueryString()) : '')
+
+      if (result.origin = '/') {
+        result.origin = '/search/generalSearch'
+      }
+    }
+
+    Map query_params = [forbiddenStatus : [RDStore.KBC_STATUS_CURRENT, RDStore.KBC_STATUS_RETIRED, RDStore.KBC_STATUS_DELETED, RDStore.KBC_STATUS_EXPECTED]]
+
+    result.countComponent = [
+            Provider  : Org.executeQuery("select count(*) from Org where status in (:forbiddenStatus)",       query_params, [readOnly: true])[0],
+            Package   : Org.executeQuery("select count(*) from Package where status in (:forbiddenStatus)",   query_params, [readOnly: true])[0],
+            Platform  : Org.executeQuery("select count(*) from Platform where status in (:forbiddenStatus)",  query_params, [readOnly: true])[0],
+            TIPP      : Org.executeQuery("select count(*) from TitleInstancePackagePlatform  where status in (:forbiddenStatus)", query_params, [readOnly: true])[0],
+    ]
+
+    result
+  }
+
+  @AltchaAnnotation(comment = AltchaAnnotation.ACCESS_ALLOWED)
+  def aboutWekb() {
+    log.info("aboutWekb::${params}")
+    Map result = [:]
+    //println(params)
+    result
+  }
+
+  @AltchaAnnotation(comment = AltchaAnnotation.ACCESS_ALLOWED)
+  def wcagPlainEnglish() {
+    log.info("wcagPlainEnglish::${params}")
+    Map result = [:]
+    //println(params)
+    result
   }
 
   @AltchaAnnotation(comment = AltchaAnnotation.ACCESS_ALLOWED)

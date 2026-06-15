@@ -9,9 +9,7 @@
             <i class="robot large grey icon"></i>
             <br />
             <br />
-            Due to the massive increase in requests from web crawlers and AI bots, we have decided to... blah blah.
-            <br />
-            This measure is intended to ensure the continued availability and performance of the system.
+            This protection against web crawlers and AI bots is intended to ensure the continuous performance and availability of the system.
         </div>
     </g:if>
     <div class="field">
@@ -23,6 +21,11 @@
         ></altcha-widget>
     </div>
     <div class="field">
-        <button class="ui fluid ${altchaForm.startpage ? 'huge ' : ''}button we-link"> Great - let's search! </button>
+        <g:if test="${altchaForm.startpage}">
+            <button class="ui fluid huge button we-link"> ${message(code: 'public.genSearch')} </button>
+        </g:if>
+        <g:else>
+            <button class="ui fluid button we-link"> Yes, i'm human! </button>
+        </g:else>
     </div>
 </form>

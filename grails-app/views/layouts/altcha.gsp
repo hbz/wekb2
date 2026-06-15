@@ -46,6 +46,7 @@
     <div class="item">
         <div class="header"><g:message code="default.button.search"/></div>
         <div class="menu">
+            <g:link class="item we-link" controller="search" action="generalSearch"><g:message code="public.genSearch"/></g:link>
             <g:link class="item we-link" controller="search" action="index"><g:message code="public.allComponents"/></g:link>
             <g:link class="item we-link" controller="search" action="componentSearch"
                     params="[qbe: 'g:publicPackages']"><g:message code="public.packages"/></g:link>
