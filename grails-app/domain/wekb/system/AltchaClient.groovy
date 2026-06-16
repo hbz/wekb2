@@ -44,8 +44,8 @@ class AltchaClient {
       ac.save()
     }
   }
-  static void removeExpiredClient(AltchaClient ac) {
-    static_logger.debug('removeExpiredClient')
+  static void removeClient(AltchaClient ac) {
+    static_logger.debug('removeClient')
 
     withTransaction {
       if (ac) {
@@ -65,7 +65,7 @@ class AltchaClient {
       }
       else {
         static_logger.debug('client expired: ' + ch)
-        removeExpiredClient(ac)
+        removeClient(ac)
         return false
       }
     }

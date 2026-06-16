@@ -15,7 +15,7 @@ class LogoutController {
 
 //		String ch = AltchaClient.getClientHash(request)
 //		AltchaClient ac = AltchaClient.findByClient(ch)
-//		AltchaClient.removeExpiredClient(ac)
+//		AltchaClient.removeClient(ac)
 
 		redirect uri: SpringSecurityUtils.securityConfig.logout.filterProcessesUrl // '/j_spring_security_logout'
 	}
