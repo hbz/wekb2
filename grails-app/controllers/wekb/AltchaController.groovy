@@ -5,6 +5,7 @@ import groovy.json.JsonOutput
 import org.altcha.altcha.Altcha
 import wekb.annotations.AltchaAnnotation
 import wekb.system.AltchaClient
+import wekb.utils.ServerUtils
 
 @Secured(['permitAll'])
 @AltchaAnnotation(comment = AltchaAnnotation.ACCESS_ALLOWED)
@@ -60,5 +61,21 @@ class AltchaController {
         }
 
         redirect(url: params.origin)
+    }
+
+    @Secured(['permitAll'])
+    def revoke() {
+        log.info 'ALTCHA.REVOKE (DEBUG/TESTING)'
+
+        if (ServerUtils.getCurrentServer() in [ServerUtils.SERVER_LOCAL, ServerUtils.SERVER_DEV]) {
+            String ch = AltchaClient.getClientHash(request)
+            AltchaClient ac = AltchaClient.findByClient(ch)
+
+            if (ac) {
+                log.debug('client requested revoke: ' + ch)
+                AltchaClient.removeClient(ac)
+            }
+        }
+        redirect(controller: 'public', action: 'index')
     }
 }

@@ -154,17 +154,6 @@ class SearchController {
         }
     }
 
-    def generalSearch() {
-        log.info("SearchController::generalSearch ${params}")
-        Map result = [:]
-
-        params.qbe = 'g:publicPackages'
-        def searchResult = searchService.search(null, [:], params)
-        result = searchResult.result
-
-        result
-    }
-
     def spotlightSearch() {
         log.info("SearchController::spotlightSearch ${params}")
         Map result = [:]

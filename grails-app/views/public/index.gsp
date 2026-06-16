@@ -1,4 +1,6 @@
-<%@ page import="wekb.system.AltchaClient" %>
+<%@ page import="wekb.utils.ServerUtils; wekb.system.AltchaClient" %>
+<wekb:serviceInjection/>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -49,10 +51,15 @@
         <g:if test="${showAltcha}">
             <g:render template="/templates/altchaForm" model="[altchaForm: [origin: origin, startpage: true]]"/>
         </g:if>
-%{--        <g:else>--}%
-%{--            <br/>--}%
-%{--            <a href="/search/generalSearch" class="ui fluid huge button we-link"> ${message(code: 'public.genSearch')} </a>--}%
-%{--        </g:else>--}%
+        <g:else>
+            <br/>
+            <a href="/search/componentSearch?qbe=g:publicPackages" class="ui fluid huge button we-link"> ${message(code: 'public.searchPackages')} </a>
+
+            <g:if test="${ServerUtils.getCurrentServer() in [ServerUtils.SERVER_LOCAL, ServerUtils.SERVER_DEV] && AltchaClient.isValid(request)}">%{-- DEBUG/TESTING --}%
+                <br/>
+                <a href="/altcha/revoke" class="ui orange button we-link"> REVOKE ALTCHA TOKEN </a>
+            </g:if>
+        </g:else>
     </div>
 </body>
 </html>
