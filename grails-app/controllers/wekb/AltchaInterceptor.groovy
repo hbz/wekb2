@@ -19,6 +19,7 @@ class AltchaInterceptor implements grails.artefact.Interceptor {
             .excludes(uri: '/public/wcagPlainEnglish')
             .excludes(uri: '/public/wekbNews')
             .excludes(uri: '/robots.txt')
+            .excludes(uri: '/sitemap.xml')
             .excludes(controller: 'altcha')
             .excludes(controller: 'api2')
             .excludes(controller: 'login')

@@ -37,7 +37,12 @@ class PublicController {
     else {
       text += "Disallow: / \n"
     }
-    render(text: text, contentType: "text/plain", encoding: "UTF-8")
+    render(text: text, contentType: 'text/plain', encoding: 'UTF-8')
+  }
+
+  @AltchaAnnotation(comment = AltchaAnnotation.ACCESS_ALLOWED)
+  def sitemap() {
+    render(view: 'sitemap.xml', contentType: 'application/xml', encoding: 'UTF-8')
   }
 
   def sendFeedbackForm() {
