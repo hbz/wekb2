@@ -33,7 +33,8 @@ class AdminController {
   ComponentStatisticService componentStatisticService
   ConcurrencyManagerService concurrencyManagerService
   AutoUpdatePackagesService autoUpdatePackagesService
-    AdminService adminService
+  AutoUpdatePlatformsService autoUpdatePlatformsService
+  AdminService adminService
   def ESWrapperService
   ExportService exportService
   SpringSecurityService springSecurityService
@@ -179,6 +180,20 @@ class AdminController {
     log.info("autoUpdatePackagesAllTitles: auto update packages job completed.")
 
     redirect(controller: 'search', action: 'componentSearch', params: [qbe: 'g:updatePackageInfos'])
+  }
+
+  @Secured(['ROLE_SUPERUSER'])
+  def autoUpdatePlatformCounterSources() {
+    log.info("autoUpdatePlatformCounterSources: Beginning manually triggered update COUNTER sources job.")
+    executorService.execute({
+      Thread.currentThread().setName('autoUpdatePlatformCounterSources')
+      autoUpdatePlatformsService.updatePlatformCounterSources()
+      log.info("autUpdatePlatformCounterSources: Manually triggered update COUNTER sources job completed.")
+    })
+
+
+    //redirect(controller: 'search', action: 'componentSearch', params: [qbe: 'g:platforms']) //productive use
+    redirect(action: 'index')
   }
 
   @Secured(['ROLE_SUPERUSER'])

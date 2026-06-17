@@ -82,6 +82,7 @@ dependencies {
 
     implementation "com.bertramlabs.plugins:asset-pipeline-grails:3.4.7"
 
+    implementation "io.micronaut:micronaut-http-client"
 
     //NO DEFAULT dependencies
 

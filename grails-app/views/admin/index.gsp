@@ -70,6 +70,8 @@
                         onclick="return confirm('Are you sure?')">Auto Update All Packages (Last Changed)</g:link>
                 <g:link class="item" controller="admin" action="autoUpdatePackagesAllTitles"
                         onclick="return confirm('Are you sure?')">Auto Update All Packages</g:link>
+                <g:link class="item" controller="admin" action="autoUpdatePlatformCounterSources"
+                        onclick="return confirm('Are you sure?')">Auto Update Platform COUNTER Sources</g:link>
                 %{-- <g:link class="item" controller="admin" action="cleanupTippIdentifersWithSameNamespace"
                          onclick="return confirm('Are you sure?')">Cleanup Tipp Identifers with same Namespace</g:link>--}%
                 <g:link class="item" controller="admin" action="setTippsWithoutUrlToDeleted"

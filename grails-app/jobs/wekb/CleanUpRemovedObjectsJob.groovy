@@ -14,7 +14,7 @@ class CleanUpRemovedObjectsJob {
 
     static triggers = {
         // Cron timer.
-        cron name: 'CleanUpRemovedObjects', cronExpression: "0 0 7 ? * FRI *" // ever Friday at 07:00
+        cron name: 'CleanUpRemovedObjects', cronExpression: "0 0 7 ? * FRI *" // every Friday at 07:00
     }
 
     def execute() {
