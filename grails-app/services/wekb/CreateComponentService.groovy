@@ -134,6 +134,9 @@ class CreateComponentService {
                     if (result.newobj instanceof TitleInstancePackagePlatform && (params.pkg == null || params.url == null || params.name == null)) {
                         result.errors=["Please fill Package and Host Platform URL to create the component."]
                     }
+                    else if (result.newobj instanceof Package && (params.nominalPlatform == null || params.provider == null || params.status == null)) {
+                        result.errors=["Please fill Platform, Provider and Status to create the component."]
+                    }
                     else if (!propertyWasSet) {
                         // Add an error message here if no property was set via data sent through from the form.
                         log.debug("No properties set");
@@ -144,6 +147,10 @@ class CreateComponentService {
 
                         if(result.newobj instanceof User && (user.isAdmin() || user.getSuperUserStatus())){
                             result.newobj.enabled = true
+                        }
+
+                        if(result.newobj instanceof TitleInstancePackagePlatform ){
+                            result.newobj.hostPlatform = result.newobj.pkg.nominalPlatform
                         }
 
                         if(result.newobj.hasProperty('uuid')){
@@ -287,6 +294,10 @@ class CreateComponentService {
                     break
                 case "editing_status": colMap.editing_status = c
                     break
+                case "free_trial": colMap.free_trial = c
+                    break
+                case "free_trial_phase": colMap.free_trial_phase = c
+                    break
                 case "national_range": colMap.national_ranges = c
                     break
                 case "regional_range": colMap.regional_ranges = c
@@ -379,6 +390,11 @@ class CreateComponentService {
 
                     if (dupes && dupes.size() > 0) {
                         globalErrors << "The we:kb already has a package with the name '${name}'. Therefore a package with the name could not be created!"
+                        name = null
+                    }
+
+                    if(colMap.provider_uuid == null || colMap.nominal_platform_uuid == null ){
+                        globalErrors << "The package with the name '${name}' could not be created, because provider_uuid and nominal_platform_uuid not set!"
                         name = null
                     }
                 }
@@ -487,6 +503,19 @@ class CreateComponentService {
                                 if (refdataValue)
                                     pkg.scope = refdataValue
                             }
+                        }
+
+                        if (colMap.free_trial != null) {
+                            String value = cols[colMap.free_trial].trim()
+                            if (value) {
+                                RefdataValue refdataValue = RefdataCategory.lookup(RCConstants.YN, value)
+                                if (refdataValue)
+                                    pkg.freeTrial = refdataValue
+                            }
+                        }
+
+                        if (colMap.free_trial_phase != null && cols[colMap.free_trial_phase]) {
+                            pkg.freeTrialPhase = cols[colMap.free_trial_phase].trim()
                         }
 
                         if (colMap.national_ranges && cols[colMap.national_ranges]) {
@@ -672,7 +701,7 @@ class CreateComponentService {
                             }
 
 
-                            if(!package_uuid){
+                            if(!package_uuid || pkg.getTippCount() == 0){
                                 if ((pkg && pkg.nominalPlatform ) && colMap.publication_title != null && cols[colMap.publication_title] && colMap.publication_type != null && cols[colMap.publication_type] && colMap.title_url != null && cols[colMap.title_url] && (pkg.getAnbieterProduktIDs() || colMap.title_id != null && cols[colMap.title_id])) {
 
                                     String value = cols[colMap.publication_type].trim()

@@ -248,6 +248,8 @@ public class HQLBuilder {
       if ( hql_builder_context.declared_scopes.containsKey(newscope) ) {
         // Already established scope for this context
         log.debug("${newscope} already a declared contest");
+          Class target_class = GrailsClassUtils.getPropertyType(the_class, head)
+          processQryContextType(hql_builder_context,crit, proppath, newscope, target_class, baseclass, grailsApplication)
       }
       else {
         // log.debug("Intermediate establish scope - ${head} :: ${proppath}");
