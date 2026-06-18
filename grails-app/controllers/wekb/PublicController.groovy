@@ -3,10 +3,8 @@ package wekb
 import grails.plugin.springsecurity.SpringSecurityService
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
 import wekb.annotations.AltchaAnnotation
-import wekb.helper.RCConstants
 import wekb.helper.RDStore
 import wekb.system.AltchaClient
-import wekb.utils.ServerUtils
 import grails.plugins.mail.MailService
 
 import javax.servlet.ServletOutputStream
@@ -20,24 +18,11 @@ class PublicController {
   def dateFormatService
   ExportService exportService
   MailService mailService
-  SearchService searchService
   SpringSecurityService springSecurityService
 
   @AltchaAnnotation(comment = AltchaAnnotation.ACCESS_ALLOWED)
   def robots() {
-    String text = "User-agent: *\n"
-
-    if (ServerUtils.getCurrentServer() == ServerUtils.SERVER_PROD) {
-        text += "Disallow: /\n"
-        text += "Allow: /\$\n"
-        text += "Allow: /public/aboutWekb\n"
-        text += "Allow: /public/wcagPlainEnglish\n"
-        text += "Allow: /public/wekbNews\n"
-    }
-    else {
-      text += "Disallow: / \n"
-    }
-    render(text: text, contentType: 'text/plain', encoding: 'UTF-8')
+    render(view: 'robots.txt', contentType: 'text/plain', encoding: 'UTF-8')
   }
 
   @AltchaAnnotation(comment = AltchaAnnotation.ACCESS_ALLOWED)
@@ -54,7 +39,6 @@ class PublicController {
         from 'wekb@hbz-nrw.de'
         subject grailsApplication.config.getProperty('systemId', String) + ' - Feedback-Mechanismus Barrierefreiheit'
         body (view: '/mailTemplate/text/wcagFeedback', model: [name:params.name, email:params.eMail, url:params.url, comment:params.comment])
-
       }
     }
     catch (Exception e) {
@@ -66,7 +50,6 @@ class PublicController {
   def wcagFeedbackForm() {
     log.info("wcagFeedbackForm::${params}")
     def result = [:]
-    //println(params)
     result
   }
 
@@ -106,53 +89,6 @@ class PublicController {
     redirect(controller: 'resource', action: 'show', id: params.id)
   }
 
-  private index_old() {
-    log.info("PublicController::index ${params}");
-    logRequestFrom()
-    def result = [:]
-
-    def searchResult = [:]
-
-    params.qbe = 'g:publicPackages'
-    searchResult = searchService.search(null, searchResult, params)
-
-    result = searchResult.result
-
-    //result.s_action = actionName
-    //result.s_controller = controllerName
-
-
-    //for statistic panel
-    Map query_params = [forbiddenStatus : [RDStore.KBC_STATUS_CURRENT, RDStore.KBC_STATUS_RETIRED, RDStore.KBC_STATUS_DELETED, RDStore.KBC_STATUS_EXPECTED]]
-
-    //List providerRoles = [RefdataCategory.lookup(RCConstants.ORG_ROLE, 'Content Provider'), RefdataCategory.lookup(RCConstants.ORG_ROLE, 'Platform Provider'), RefdataCategory.lookup(RCConstants.ORG_ROLE, 'Publisher')]
-
-    //def query_params2 = [forbiddenStatus : [RDStore.KBC_STATUS_DELETED, RDStore.KBC_STATUS_REMOVED], roles: providerRoles]
-
-    def query_params2 = [forbiddenStatus : [RDStore.KBC_STATUS_REMOVED]]
-
-    result.componentsOfStatistic = ["Provider", "Package", "Platform", "TitleInstancePackagePlatform"]
-
-    result.countComponent = [:]
-    result.componentsOfStatistic.each { component ->
-      if(component == "Provider"){
-        //result.countComponent."${component.toLowerCase()}" = Org.executeQuery("select count(o.id) from Org as o where exists (select orgRoles from o.roles as orgRoles where orgRoles in (:roles)) and o.status not in (:forbiddenStatus)", query_params2, [readOnly: true])[0]
-        result.countComponent."${component.toLowerCase()}" = Org.executeQuery("select count(*) from Org as o where o.status in (:forbiddenStatus)", query_params, [readOnly: true])[0]
-      }else {
-        def fetch_all = "select count(*) from ${component} as o where status in (:forbiddenStatus)"
-        result.countComponent."${component.toLowerCase()}" = Package.executeQuery(fetch_all.toString(), query_params, [readOnly: true])[0]
-      }
-
-    }
-
-   /* params.max = mutableParams.max
-    params.offset = mutableParams.offset
-    params.remove('newMax')
-    params.remove('search')*/
-
-    result
-  }
-
   def kbart() {
     log.info("kbart::${params}")
     wekb.Package pkg = genericOIDService.resolveOID(params.id)
@@ -178,7 +114,6 @@ class PublicController {
 
       exportService.exportOriginalKBART(out, pkg)
       return
-
     }
     catch ( Exception e ) {
       log.error("Problem with export",e);
@@ -278,7 +213,6 @@ class PublicController {
 
   private void logRequestFrom(){
     log.info 'Request from ' + request.getRemoteAddr() + ' for ' + request.requestURI + ' ---> Host: ' + request.getRemoteHost() + ''
-
   }
 
   @AltchaAnnotation(comment = AltchaAnnotation.ACCESS_ALLOWED)
@@ -311,7 +245,6 @@ class PublicController {
   def aboutWekb() {
     log.info("aboutWekb::${params}")
     Map result = [:]
-    //println(params)
     result
   }
 
@@ -319,7 +252,6 @@ class PublicController {
   def wcagPlainEnglish() {
     log.info("wcagPlainEnglish::${params}")
     Map result = [:]
-    //println(params)
     result
   }
 

@@ -111,12 +111,6 @@ dependencies {
     implementation 'org.liquibase:liquibase-core:4.11.0'                    // 2022 : + org.grails.plugins:database-migration
     implementation 'org.quartz-scheduler:quartz:2.4.1'                      // 2025
 
-
-    // https://mvnrepository.com/artifact/org.grails.plugins/grails-melody-plugin
-    //not supported in Grails 5
-    //implementation 'org.grails.plugins:grails-melody-plugin:1.80.0' // 2019
-
-
     implementation group: 'org.codehaus.groovy.modules.http-builder', name: 'http-builder', version: '0.7.1'
 
     implementation 'dk.glasius:external-config:3.2.0'                       // 2023
