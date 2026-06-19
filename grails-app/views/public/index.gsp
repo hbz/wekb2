@@ -15,7 +15,10 @@
 </head>
 <body>
     <div class="container">
-        <h1>we knowledge base</h1>
+        <h1 class="ui header">we:kb</h1>
+        <p>
+            Provider-Curated Knowledge Base Freely Available under CC0
+        </p>
 
         <h2 class="ui header">Provider and Platform Data</h2>
         <h3 class="ui header">
