@@ -27,6 +27,7 @@ import org.springframework.security.web.WebAttributes
 import org.springframework.security.web.authentication.session.SessionAuthenticationException
 import org.springframework.security.web.savedrequest.DefaultSavedRequest
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache
+import wekb.annotations.AltchaAnnotation
 import wekb.auth.User
 import wekb.helper.BeanStore
 import wekb.utils.PasswordUtils
@@ -34,6 +35,7 @@ import wekb.utils.PasswordUtils
 import javax.servlet.http.HttpServletResponse
 
 @Secured('permitAll')
+@AltchaAnnotation(comment = AltchaAnnotation.ACCESS_ALLOWED)
 class LoginController {
 
     MailService mailService

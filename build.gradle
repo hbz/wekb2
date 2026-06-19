@@ -14,7 +14,7 @@ buildscript {
 
         //NOT DEFAULT
         classpath "org.grails.plugins:database-migration:4.1.0"
-        classpath "com.gorylenko.gradle-git-properties:gradle-git-properties:2.4.1"
+        classpath "com.gorylenko.gradle-git-properties:gradle-git-properties:2.5.7"
         classpath 'org.quartz-scheduler:quartz:2.3.2'
     }
 }
@@ -86,6 +86,8 @@ dependencies {
 
     //NO DEFAULT dependencies
 
+    implementation 'org.altcha:altcha:1.3.0'                                // 2025
+
     implementation 'org.elasticsearch:elasticsearch:7.16.3'                                 // 2022
     implementation 'org.elasticsearch.client:elasticsearch-rest-high-level-client:7.16.3'   // 2022
 
@@ -103,31 +105,25 @@ dependencies {
     implementation 'net.sf.ehcache:ehcache:2.10.9.2'                        // 2021
 
 
-    implementation 'com.github.albfernandez:juniversalchardet:2.4.0'        // 2020
+    implementation 'com.github.albfernandez:juniversalchardet:2.5.0'        // 2024
     implementation group: "org.apache.poi", name: "poi-ooxml", version: "5.0.0"
     implementation 'org.codehaus.gpars:gpars:1.2.1'                         // 2014
-    implementation 'org.codehaus.janino:janino:3.1.9'                       // 2022 : logback
+    implementation 'org.codehaus.janino:janino:3.1.12'                      // 2024 : logback
     implementation 'org.liquibase:liquibase-core:4.11.0'                    // 2022 : + org.grails.plugins:database-migration
-    implementation 'org.quartz-scheduler:quartz:2.3.2'                      // 2019
-
-
-    // https://mvnrepository.com/artifact/org.grails.plugins/grails-melody-plugin
-    //not supported in Grails 5
-    //implementation 'org.grails.plugins:grails-melody-plugin:1.80.0' // 2019
-
+    implementation 'org.quartz-scheduler:quartz:2.4.1'                      // 2025
 
     implementation group: 'org.codehaus.groovy.modules.http-builder', name: 'http-builder', version: '0.7.1'
 
-    implementation 'dk.glasius:external-config:3.1.1'
+    implementation 'dk.glasius:external-config:3.2.0'                       // 2023
 
     // --------------------------------------------------
 
     runtimeOnly 'org.apache.tomcat:tomcat-jdbc'
     runtimeOnly 'javax.xml.bind:jaxb-api:2.3.1'                             // 2018 : [?]
-    runtimeOnly 'org.postgresql:postgresql:42.5.1'                          // 2022
+    runtimeOnly 'org.postgresql:postgresql:42.5.6'                          // 2024
 
     // https://mvnrepository.com/artifact/commons-net/commons-net
-    implementation group: 'commons-net', name: 'commons-net', version: '3.9.0' //2022 -> for FTP
+    implementation group: 'commons-net', name: 'commons-net', version: '3.11.1' //2024 -> for FTP
 
     /*implementation 'org.apache.tika:tika-core:2.9.1'               // for detect encoding in files
     implementation 'org.apache.tika:tika-parsers-standard-package:2.9.1'*/

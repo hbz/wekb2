@@ -12,9 +12,9 @@ class UrlMappings {
 
         "/package"(controller: 'packages')
 
-        // for no google indexing
-        "/robots.txt"(controller: 'public', action: 'robots')
-
+        // SEO
+        "/robots.txt"   (controller: 'public', action: 'robots')
+        "/sitemap.xml"  (controller: 'public', action: 'sitemap')
 
         // Server errors
         "400"(controller: 'error', action: 'badRequest')
