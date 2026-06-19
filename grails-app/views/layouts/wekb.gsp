@@ -2,7 +2,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title><g:layoutTitle default="we:kb"/></title>
@@ -20,7 +19,6 @@
 
     <asset:javascript src="wekb.js"/>
     <asset:stylesheet src="wekb.css"/>
-
 </head>
 
 <wekb:serviceInjection/>
@@ -33,7 +31,7 @@
 
 <body class="pushable">
 <wekb:serverlabel server="${currentServer}"/>
-<!-- skip to main content / for screenreader --!>
+<!-- skip to main content / for screenreader -->
 
 
 <nav class="ui left vertical inverted visible menu sidebar ${serverLabel}" id="toc" aria-label="main navigation" >
@@ -195,8 +193,7 @@
             </div>
 
             <div class="item">
-                <g:link class="ui inverted button" controller="logout"><i
-                        class="sign out alternate icon"></i>Logout</g:link>
+                <g:link class="ui inverted button" controller="logout"><i class="sign out alternate icon"></i>Logout</g:link>
             </div>
         </g:if>
 
@@ -222,7 +219,9 @@
         </div>
     </div>
 </div>
+
 <div style="position: absolute; right: 0"  id="jumper"></div>
+
 <div class="pusher shrink" id="main">
     <div class="wekb-content">
         <main class="ui main fluid container">
@@ -231,7 +230,6 @@
         <g:render template="/layouts/footer"/>
     </div>
 </div>
-
 
 %{-- global loading indicator --}%
 <div class="ui page dimmer" id="globalLoadingIndicator">

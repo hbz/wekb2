@@ -70,6 +70,8 @@
                         onclick="return confirm('Are you sure?')">Auto Update All Packages (Last Changed)</g:link>
                 <g:link class="item" controller="admin" action="autoUpdatePackagesAllTitles"
                         onclick="return confirm('Are you sure?')">Auto Update All Packages</g:link>
+                <g:link class="item" controller="admin" action="autoUpdatePlatformCounterSources"
+                        onclick="return confirm('Are you sure?')">Auto Update Platform COUNTER Sources</g:link>
                 %{-- <g:link class="item" controller="admin" action="cleanupTippIdentifersWithSameNamespace"
                          onclick="return confirm('Are you sure?')">Cleanup Tipp Identifers with same Namespace</g:link>--}%
                 <g:link class="item" controller="admin" action="setTippsWithoutUrlToDeleted"
@@ -209,7 +211,7 @@
         Application Info
     </h2>
     <table class="ui selectable striped sortable celled table">
-        <tr><td>Tomcat Version</td><td>${org.apache.catalina.util.ServerInfo.serverInfo}</td></tr>
+        
         <tr><td>App profile</td><td>${grailsApplication.config.getProperty('grails.profile')}</td></tr>
         <tr><td>Git Branch</td><td><g:meta name="build.git.branch"/></td></tr>
         <tr><td>Git Commit</td><td><g:meta name="build.git.revision"/></td></tr>

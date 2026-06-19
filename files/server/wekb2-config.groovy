@@ -27,6 +27,7 @@ wekb.es.cluster = 'wekb_es'
 wekb.es.host = 'localhost'
 wekb.ftupdate_enabled = false
 wekb.packageUpdate.enabled = false
+wekb.counterSourceUpdate.enabled = false
 wekb.enable_statsrewrite = false
 wekb.sendJobInfosJob = false
 wekb.kbartImportStorageLocation = '/tmp/kbartImport'

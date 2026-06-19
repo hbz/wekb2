@@ -287,7 +287,6 @@ class SearchController {
         result;
     }
 
-
     def componentSearch() {
         User user = springSecurityService.currentUser
 
