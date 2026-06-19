@@ -211,7 +211,7 @@
         Application Info
     </h2>
     <table class="ui selectable striped sortable celled table">
-        <tr><td>Tomcat Version</td><td>${org.apache.catalina.util.ServerInfo.serverInfo}</td></tr>
+        
         <tr><td>App profile</td><td>${grailsApplication.config.getProperty('grails.profile')}</td></tr>
         <tr><td>Git Branch</td><td><g:meta name="build.git.branch"/></td></tr>
         <tr><td>Git Commit</td><td><g:meta name="build.git.revision"/></td></tr>
