@@ -7,6 +7,12 @@ import org.grails.orm.hibernate.cfg.GrailsHibernateUtil
 @CompileStatic
 class RDStore {
 
+    public static final API_AUTH_CUSTOMER_REQUESTOR_API = getRefdataValue('Requestor Key+Customer ID+central API Key', RCConstants.PLATFORM_COUNTER_API_AUTH_METHOD)
+    public static final API_AUTH_REQUESTOR_API          = getRefdataValue('Requestor Key+API Key', RCConstants.PLATFORM_COUNTER_API_AUTH_METHOD)
+    public static final API_AUTH_CUSTOMER_API           = getRefdataValue('Customer ID+API Key', RCConstants.PLATFORM_COUNTER_API_AUTH_METHOD)
+    public static final API_AUTH_CUSTOMER_REQUESTOR     = getRefdataValue('Requestor Key+Customer ID', RCConstants.PLATFORM_COUNTER_API_AUTH_METHOD)
+    public static final API_IP_WHITELISTING             = getRefdataValue('IP whitelisting', RCConstants.PLATFORM_COUNTER_API_AUTH_METHOD)
+
     public static final CONTACT_CONTENT_TYPE_EMAIL = getRefdataValue('E-Mail', RCConstants.CONTACT_CONTENT_TYPE)
 
     public static final CURATORY_GROUP_TYPE_PROVIDER = getRefdataValue('Provider', RCConstants.CURATORY_GROUP_TYPE)

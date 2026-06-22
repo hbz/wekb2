@@ -1,88 +1,68 @@
-<%@ page import=" wekb.Platform; wekb.Org" %>
-<!DOCTYPE html>
-<html>
-<head>
-    <meta name="layout" content="wekb"/>
-    <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  "@id": "https://wekb.hbz-nrw.de/",
-  "url": "https://wekb.hbz-nrw.de/",
-  "name": "we:kb | wekb",
-  "description": "In the we:kb (pronounced wekb), the providers manage their current electronic sales units and meta-information themselves.",
-  "potentialAction": {
-    "@type": "SearchAction",
-    "target": "https://wekb.hbz-nrw.de/?qbe=g%3ApublicPackages&qp_name={Name of Package}&qp_identifier={Identifier}&qp_curgroup={Curatory Group}&qp_provider={Provider}&qp_source_automaticUpdates={Source Automatic Updates}&qp_status={Status}&qp_contentType={Content Type}&qp_ddc={DDCs}&qp_paymentType={Payment Type}&qp_oa={Open Access}&qp_archivingAgency={Package Archiving Agency}&searchAction=Search",
-    "query-input": [
-      "optional name=qp_name",
-      "optional name=qp_identifier",
-      "optional name=qp_curgroup",
-      "optional name=qp_provider",
-      "optional name=qp_source",
-      "optional name=qp_status",
-      "optional name=qp_contentType",
-      "optional name=qp_ddc",
-      "optional name=qp_paymentType",
-      "optional name=qp_oa",
-      "optional name=qp_archivingAgency"
-    ]
-  }
-}
-</script>
-    <title>we:kb | wekb</title>
-</head>
-
-<body>
-
+<%@ page import="wekb.utils.ServerUtils; wekb.system.AltchaClient" %>
 <wekb:serviceInjection/>
 
-<semui:flashMessage data="${flash}"/>
-
-<g:render template="number-chart-hero"/>
-
-<g:render template="/search/qbeform"
-          model="${[formdefn: qbetemplate.qbeConfig?.qbeForm, 'hide': (hide), cfg: qbetemplate.qbeConfig]}"/>
-
-<div class="container">
-
-    %{--<div class="ui header">
-        <h1>Results ${resultsTotal}</h1>
-    </div>
-
-    <div class="ui form">
-        <g:form controller="public" action="${actionName}"
-                method="get"
-                params="${params}">
-            <div class="ui right floated header inline field">
-                <label>Results on Page</label>
-                <g:select name="newMax" from="[10, 25, 50, 100]" value="${params.max}"
-                          onChange="this.form.submit()"/>
-            </div>
-        </g:form>
-    </div>
-
-    <br>
-    <br>
---}%
-
-    <g:if test="${(qbetemplate.message != null)}">
-        <semui:message message="${qbetemplate.message}"/>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <g:if test="${showAltcha}">
+        <meta name="layout" content="altcha" />
     </g:if>
-
-    <g:if test="${recset && !init}">
-        <g:render template="/search/qberesult"
-                  model="${[qbeConfig: qbetemplate.qbeConfig, rows: new_recset, offset: offset, det: det, page: page_current, page_max: page_total, baseClass: qbetemplate.baseclass]}"/>
-    </g:if>
-    <g:elseif test="${!init && !params.inline}">
-        <g:render template="/search/qbeempty"/>
-    </g:elseif>
     <g:else>
-        <semui:message>
-            <p>No results.</p>
-        </semui:message>
+        <meta name="layout" content="wekb" />
     </g:else>
 
-</div>
+    <title>we:kb | wekb</title>
+</head>
+<body>
+    <div class="container">
+        <h1 class="ui header">we:kb</h1>
+        <p>
+            Provider-Curated Knowledge Base Freely Available under CC0
+        </p>
+
+        <h2 class="ui header">Provider and Platform Data</h2>
+        <h3 class="ui header">
+            <g:formatNumber number="${countComponent['Provider']}" type="number" format="###.###"/> Providers and
+            <g:formatNumber number="${countComponent['Platform']}" type="number" format="###.###"/> Platforms
+        </h3>
+        <p>
+            In we:kb, content providers and library suppliers may contribute valuable information about their services,
+            platforms, and products and share this data with the library community.
+            This ensures that libraries have access to up-to-date and authoritative information directly from the source.
+        </p>
+
+        <h2 class="ui header">Package information and title data</h2>
+        <h3 class="ui header">
+            <g:formatNumber number="${countComponent['Package']}" type="number" format="###.###"/> Packages and
+            <g:formatNumber number="${countComponent['TIPP']}" type="number" format="###.###"/> Titles
+        </h3>
+        <p>
+            Content providers can create and maintain packages that reflect their current products and sales units.
+            Each package can include detailed metadata and title information.
+            Automated import and update routines ensure to keep the package content current and provide libraries with a reliable overview of available titles.
+        </p>
+
+        <h2 class="ui header">Synchronization with LAS:eR</h2>
+        <p>
+            All data maintained in we:kb is seamlessly integrated in the Electronic Resource Management System LAS:eR (<a href="https://laser.hbz-nrw.de">https://laser.hbz-nrw.de</a>) where its visibility and usability is increased.
+            In LAS:eR, a large community of consortia and academic institutions across the DACH region is able to work with the data provided in we:kb
+            and manage electronic resources in the context of their specific license agreements.
+        </p>
+
+        <br/>
+
+        <g:if test="${showAltcha}">
+            <g:render template="/templates/altchaForm" model="[altchaForm: [origin: origin, startpage: true]]"/>
+        </g:if>
+        <g:else>
+            <br/>
+            <a href="/search/componentSearch?qbe=g:publicPackages" class="ui fluid huge button we-link"> ${message(code: 'public.searchPackages')} </a>
+
+            <g:if test="${ServerUtils.getCurrentServer() in [ServerUtils.SERVER_LOCAL, ServerUtils.SERVER_DEV] && AltchaClient.isValid(request)}">%{-- DEBUG/TESTING --}%
+                <br/>
+                <a href="/altcha/revoke" class="ui orange button we-link"> REVOKE ALTCHA TOKEN </a>
+            </g:if>
+        </g:else>
+    </div>
 </body>
 </html>
