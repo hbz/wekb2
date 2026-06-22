@@ -155,5 +155,24 @@ class Identifier {
     "${this.class.name}:${id}"
   }
 
+    String getURL() {
+        if(value) {
+            if(value.startsWith('http')) {
+                return value
+            }else if (namespace.urlPrefix) {
+                if (namespace.urlPrefix.endsWith('=')) {
+                    return "${namespace.urlPrefix}${value}"
+                }
+                else if (namespace.urlPrefix.endsWith('/')) {
+                    return "${namespace.urlPrefix}${value}"
+                }
+                else {
+                    return "${namespace.urlPrefix}/${value}"
+                }
+            }
+        }
+        null
+    }
+
 
 }

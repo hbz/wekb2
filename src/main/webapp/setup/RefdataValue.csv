@@ -288,6 +288,7 @@ Currency;GBP;GBP;GBP
 Currency;USD;USD;USD
 DeletedComponent.Status;Permanently Deleted;Permanently Deleted;Permanently Deleted
 IdentifierNamespace.TargetType;Org;Provider;Provider
+IdentifierNamespace.TargetType;Vendor;Vendor;Vendor
 IdentifierNamespace.TargetType;Package;Package;Package
 IdentifierNamespace.TargetType;TitleInstancePackagePlatform;TitleInstancePackagePlatform;TitleInstancePackagePlatform
 Job.Type;AutoUpdatePackagesJob;AutoUpdatePackagesJob;AutoUpdatePackagesJob

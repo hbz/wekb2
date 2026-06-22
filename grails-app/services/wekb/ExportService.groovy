@@ -354,10 +354,6 @@ class ExportService {
         List<String> onlineIdentifier = ["eissn", "eisbn"]
 
         String doiIdentifier = IdentifierNamespace.DOI
-        String zdbIdentifier = IdentifierNamespace.ZDB
-        String ezbIdentifier = IdentifierNamespace.EZB
-        String packageEzbAnchor = IdentifierNamespace.PACKAGE_EZB_ANCHOR
-        String packageIsci = IdentifierNamespace.PACKAGE_ISCI
 
         RefdataValue priceTypeList = RDStore.PRICE_TYPE_LIST
         RefdataValue priceTypeOAAPC = RDStore.PRICE_TYPE_OA_APC
@@ -535,40 +531,46 @@ class ExportService {
                                     }
                                     break;
                                 case 'zdb_id':
-                                    List identifiers = Identifier.executeQuery('select i.value from Identifier as i where LOWER(i.namespace.value) = :namespaceValue and i.tipp.id = :tippID', [namespaceValue: zdbIdentifier.toLowerCase(), tippID: tippID], [readOnly: true])
+                                   /* List identifiers = Identifier.executeQuery('select i.value from Identifier as i where LOWER(i.namespace.value) = :namespaceValue and i.tipp.id = :tippID', [namespaceValue: zdbIdentifier.toLowerCase(), tippID: tippID], [readOnly: true])
 
                                     if (identifiers.size() > 0) {
                                         row.add(identifiers.join(';'))
                                     } else {
                                         row.add("")
-                                    }
+                                    }*/
+
+                                    row.add("")
                                     break;
                                 case 'ezb_id':
-                                    List identifiers = Identifier.executeQuery('select i.value from Identifier as i where LOWER(i.namespace.value) = :namespaceValue and i.tipp.id = :tippID', [namespaceValue: ezbIdentifier.toLowerCase(), tippID: tippID], [readOnly: true])
+                                    /*List identifiers = Identifier.executeQuery('select i.value from Identifier as i where LOWER(i.namespace.value) = :namespaceValue and i.tipp.id = :tippID', [namespaceValue: ezbIdentifier.toLowerCase(), tippID: tippID], [readOnly: true])
 
                                     if (identifiers.size() > 0) {
                                         row.add(identifiers.join(';'))
                                     } else {
                                         row.add("")
-                                    }
+                                    }*/
+
+                                    row.add("")
                                     break;
                                 case 'package_ezb_anchor':
-                                    List identifiers = Identifier.executeQuery('select i.value from Identifier as i where LOWER(i.namespace.value) = :namespaceValue and i.tipp.id = :tippID', [namespaceValue: packageEzbAnchor.toLowerCase(), tippID: tippID], [readOnly: true])
+                                    /*List identifiers = Identifier.executeQuery('select i.value from Identifier as i where LOWER(i.namespace.value) = :namespaceValue and i.tipp.id = :tippID', [namespaceValue: packageEzbAnchor.toLowerCase(), tippID: tippID], [readOnly: true])
 
                                     if (identifiers.size() > 0) {
                                         row.add(identifiers.join(';'))
                                     } else {
                                         row.add("")
-                                    }
+                                    }*/
+                                    row.add("")
                                     break;
                                 case 'package_isci':
-                                    List identifiers = Identifier.executeQuery('select i.value from Identifier as i where LOWER(i.namespace.value) = :namespaceValue and i.tipp.id = :tippID', [namespaceValue: packageIsci.toLowerCase(), tippID: tippID], [readOnly: true])
+                                  /*  List identifiers = Identifier.executeQuery('select i.value from Identifier as i where LOWER(i.namespace.value) = :namespaceValue and i.tipp.id = :tippID', [namespaceValue: packageIsci.toLowerCase(), tippID: tippID], [readOnly: true])
 
                                     if (identifiers.size() > 0) {
                                         row.add(identifiers.join(';'))
                                     } else {
                                         row.add("")
-                                    }
+                                    }*/
+                                    row.add("")
                                     break;
                                 case 'languages':
                                     List<ComponentLanguage> languages = ComponentLanguage.executeQuery('select language.value from ComponentLanguage where tipp.id = :tippID', [tippID: tippID], [readOnly: true])
@@ -920,14 +922,14 @@ class ExportService {
                                         num_last_vol_online: 'tcs_end_volume as num_last_vol_online',
                                         num_last_issue_online: 'tcs_end_issue as num_last_issue_online',
                                         coverage_depth: '(select rdv_value from refdata_value where rdv_id = tcs_depth) as coverage_depth',
-                                        zdb_id: "(select string_agg(id_value,',') from identifier where id_tipp_fk = tipp_id and id_namespace_fk = ${IdentifierNamespace.findByValue(IdentifierNamespace.ZDB).id}) as zdb_id",
-                                        ezb_id: "(select string_agg(id_value,',') from identifier where id_tipp_fk = tipp_id and id_namespace_fk = '${IdentifierNamespace.findByValueAndTargetType(IdentifierNamespace.EZB, RDStore.IDENTIFIER_NAMESPACE_TARGET_TYPE_TIPP).id}') as ezb_id",
-                                        package_ezb_anchor: "(select string_agg(id_value,',') from identifier where id_pkg_fk = tipp_id and id_namespace_fk = '${IdentifierNamespace.findByValueAndTargetType(IdentifierNamespace.PACKAGE_EZB_ANCHOR, RDStore.IDENTIFIER_NAMESPACE_TARGET_TYPE_TIPP).id}') as package_ezb_anchor",
+                                        zdb_id: "(select '' from identifier where id_tipp_fk = tipp_id and id_namespace_fk = ${IdentifierNamespace.findByValue(IdentifierNamespace.ZDB).id}) as zdb_id",
+                                        ezb_id: "(select '' from identifier where id_tipp_fk = tipp_id and id_namespace_fk = '${IdentifierNamespace.findByValueAndTargetType(IdentifierNamespace.EZB, RDStore.IDENTIFIER_NAMESPACE_TARGET_TYPE_TIPP).id}') as ezb_id",
+                                        package_ezb_anchor: "(select '' from identifier where id_pkg_fk = tipp_id and id_namespace_fk = '${IdentifierNamespace.findByValueAndTargetType(IdentifierNamespace.PACKAGE_EZB_ANCHOR, RDStore.IDENTIFIER_NAMESPACE_TARGET_TYPE_TIPP).id}') as package_ezb_anchor",
                                         oa_type: '(select rdv_value from refdata_value where rdv_id = tipp_open_access_rv_fk) as oa_type',
                                         oa_apc_eur: "(select trim(to_char(tp_price, '999999999D99')) from tipp_price where tp_tipp_fk = tipp_id and tp_currency_fk = ${RDStore.CURRENCY_EUR.id} and tp_type_fk = ${priceTypeOAAPC} order by tp_last_updated desc limit 1) as oa_apc_eur",
                                         oa_apc_usd: "(select trim(to_char(tp_price, '999999999D99')) from tipp_price where tp_tipp_fk = tipp_id and tp_currency_fk = ${RDStore.CURRENCY_GBP.id} and tp_type_fk = ${priceTypeOAAPC} order by tp_last_updated desc limit 1) as oa_apc_usd",
                                         oa_apc_gbp: "(select trim(to_char(tp_price, '999999999D99')) from tipp_price where tp_tipp_fk = tipp_id and tp_currency_fk = ${RDStore.CURRENCY_USD.id} and tp_type_fk = ${priceTypeOAAPC} order by tp_last_updated desc limit 1) as oa_apc_gbp",
-                                        package_isil: "(select string_agg(id_value,',') from identifier where id_pkg_fk = tipp_id and id_namespace_fk = '${IdentifierNamespace.findByValueAndTargetType(IdentifierNamespace.PACKAGE_ISIL, RDStore.IDENTIFIER_NAMESPACE_TARGET_TYPE_TIPP).id}') as package_isil",
+                                        package_isil: "(select '' from identifier where id_pkg_fk = tipp_id and id_namespace_fk = '${IdentifierNamespace.findByValueAndTargetType(IdentifierNamespace.PACKAGE_ISIL, RDStore.IDENTIFIER_NAMESPACE_TARGET_TYPE_TIPP).id}') as package_isil",
                                         title_wekb_uuid: 'tipp_uuid as title_wekb_uuid',
                                         package_wekb_uuid: 'pkg_uuid as package_wekb_uuid',
                                         //ill_indicator: "null as ill_indicator",
