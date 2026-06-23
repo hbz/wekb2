@@ -342,7 +342,7 @@ class AutoUpdatePackagesService {
                                     lastUpdateURL = url.toString()
                                     try {
                                         file = exportService.kbartFromUrl(lastUpdateURL, updatePackageInfo)
-                                        if(file.size() > 0){
+                                        if(file && file.size() > 0){
                                             updatePackageInfo.status = RDStore.UPDATE_STATUS_SUCCESSFUL
                                             updatePackageInfo.save()
                                             log.info("Found File by URL: ${lastUpdateURL}")
@@ -364,7 +364,7 @@ class AutoUpdatePackagesService {
                                         lastUpdateURL = url.toString()
                                         try {
                                             file = exportService.kbartFromUrl(lastUpdateURL, updatePackageInfo)
-                                            if(file.size() > 0){
+                                            if(file && file.size() > 0){
                                                 updatePackageInfo.status = RDStore.UPDATE_STATUS_SUCCESSFUL
                                                 updatePackageInfo.save()
                                                 log.info("Found File by URL: ${lastUpdateURL}")
