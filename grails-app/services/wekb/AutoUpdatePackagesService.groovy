@@ -535,6 +535,8 @@ class AutoUpdatePackagesService {
                 }
             }
         }
+
+        kbartProcessService.cleanUpUpdateInfosTables(pkg)
         log.info("End startAutoPackageUpdate Package ($pkg.name) -> $pkg.id")
     }
 

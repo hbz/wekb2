@@ -69,6 +69,8 @@ class KbartProcessService {
                 updatePackageInfo = kbartImportProcess(kbartRows, pkg, lastUpdateURL, updatePackageInfo, onlyRowsWithLastChanged)
             }
 
+            cleanUpUpdateInfosTables(pkg)
+
         } catch (Exception exception) {
             log.error("Error by kbartImportManual: ${exception.message}")
 
@@ -1073,4 +1075,36 @@ class KbartProcessService {
             'semicolon'  : ';',
             'tab'        : '\t',
     ]
+
+    def cleanUpUpdateInfosTables(Package pkg){
+        log.info("cleanUpUpdateInfosTables for ${pkg.name} (${pkg.id})")
+
+        Calendar cal = Calendar.getInstance()
+        cal.add(Calendar.MONTH, -24)
+        int updateInfosCount = UpdatePackageInfo.executeQuery("select count(*) from UpdatePackageInfo upi where upi.pkg = :pkg", [pkg: pkg])[0]
+
+        if(updateInfosCount > 25) {
+            updateInfosCount = UpdatePackageInfo.executeQuery("select count(*) from UpdatePackageInfo upi where upi.pkg = :pkg and upi.dateCreated < :cal", [pkg: pkg, cal: cal.getTime()])[0]
+            List<UpdatePackageInfo> updatePackageInfoList = UpdatePackageInfo.executeQuery("select upi from UpdatePackageInfo upi where upi.pkg = :pkg and upi.dateCreated < :cal", [pkg: pkg, cal: cal.getTime()])
+
+            log.info("Count of UpdatePackageInfos for 24 Months: ${updateInfosCount}")
+
+            int updateTippInfosCount = UpdateTippInfo.executeQuery("select count(*) from UpdateTippInfo uti where uti.updatePackageInfo in :upi", [upi: updatePackageInfoList])[0]
+            List<UpdateTippInfo> updateTippInfoList = UpdateTippInfo.executeQuery("select uti from UpdateTippInfo uti where uti.updatePackageInfo in :upi", [upi: updatePackageInfoList])
+
+            log.info("Count of UpdateTippInfosCount for 24 Months: ${updateTippInfosCount}")
+
+            updateTippInfoList.each {
+                it.delete()
+            }
+
+            updatePackageInfoList.each {
+                it.delete()
+            }
+
+        }else {
+            log.info("No UpdatePackageInfos to clean. Leave the last ${updateInfosCount} UpdatePackageInfos")
+        }
+
+    }
 }
