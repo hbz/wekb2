@@ -662,7 +662,7 @@ class AjaxHtmlController {
 
                             Pattern pattern = ns.pattern ? ~"${ns.pattern}" : null
                             if (pattern && !(params.identifierValue ==~ pattern)) {
-                                flash.error = g.message(code: 'identifier.create.pattern.fail', args: ns.pattern)
+                                flash.error = g.message(code: 'identifier.create.pattern.fail', args: [ns.pattern])
                             }else {
                                 ident = new Identifier(namespace: ns, value: params.identifierValue)
                                 ident.setReference(owner)
