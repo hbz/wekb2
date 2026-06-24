@@ -513,10 +513,10 @@ class LaserService {
 
                 if(perpetualAccess){
                     if(perpetualAccess == 'true'){
-                        query = query + '''and rv4.value_en = 'Yes' '''
+                        query = query + '''and rv4.rdv_value_en = 'Yes' '''
                     }
                     if(perpetualAccess == 'false'){
-                        query = query + ''' and rv4.value_en = 'No' '''
+                        query = query + ''' and rv4.rdv_value_en = 'No' '''
                     }
 
                 }
@@ -934,7 +934,7 @@ class LaserService {
 
                 packageLinkedCount = sql.rows("select count(*) from subscription_package left join package p on p.pkg_id = subscription_package.sp_pkg_fk left join subscription s on subscription_package.sp_sub_fk = s.sub_id " +
                         "left join refdata_value rv6 on s.sub_has_perpetual_access_rv_fk = rv6.rdv_id " +
-                        "where p.pkg_gokb_id = :wekbUuid and rv6.value_en = 'Yes'", [wekbUuid: wekbUuid])[0]['count']
+                        "where p.pkg_gokb_id = :wekbUuid and rv6.rdv_value_en = 'Yes'", [wekbUuid: wekbUuid])[0]['count']
 
                 sql.close()
             }
@@ -967,7 +967,7 @@ class LaserService {
 
                 packageLinkedCount = sql.rows("select count(*) from subscription_package left join package p on p.pkg_id = subscription_package.sp_pkg_fk left join subscription s on subscription_package.sp_sub_fk = s.sub_id " +
                         "left join refdata_value rv6 on s.sub_has_perpetual_access_rv_fk = rv6.rdv_id " +
-                        "where p.pkg_gokb_id = :wekbUuid and rv6.value_en = 'No'", [wekbUuid: wekbUuid])[0]['count']
+                        "where p.pkg_gokb_id = :wekbUuid and rv6.rdv_value_en = 'No'", [wekbUuid: wekbUuid])[0]['count']
 
                 sql.close()
             }
