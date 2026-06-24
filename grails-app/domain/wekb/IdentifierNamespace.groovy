@@ -9,9 +9,7 @@ import javax.persistence.Transient
 class IdentifierNamespace {
 
   //title identifier namespaces
-  public static final String ZDB        = 'zdb'
   public static final String EZB        = 'ezb'
-  public static final String ZDB_PPN    = 'zdb_ppn'
   public static final String DOI        = 'doi'
   public static final String ISSN       = 'issn'
   public static final String EISSN      = 'eissn'
@@ -20,19 +18,21 @@ class IdentifierNamespace {
 
   //package identifier namespaces
   public static final String PKG_ID        = 'Anbieter_Produkt_ID'
-  public static final String PACKAGE_EZB_ANCHOR = "package_ezb_anchor"
-  public static final String PACKAGE_ISCI = "package_isci"
   public static final String PACKAGE_ISIL = "isil"
 
 
   String name
   String value
+  String description_en
+    boolean isHardData = false
 
   @RefdataAnnotation(cat = RCConstants.IDENTIFIER_NAMESPACE_TARGET_TYPE)
   RefdataValue targetType
 
   String pattern
   String family
+
+    String urlPrefix
 
   Date dateCreated
   Date lastUpdated
@@ -47,6 +47,9 @@ class IdentifierNamespace {
     pattern column:'idns_pattern'
     dateCreated column:'idns_date_created'
     lastUpdated column:'idns_last_updated'
+      description_en column: 'idns_description_en'
+      isHardData column: 'idns_hard_data'
+      urlPrefix       column:'idns_url_prefix'
   }
 
   static constraints = {
@@ -57,6 +60,8 @@ class IdentifierNamespace {
     targetType (nullable:true, blank:false)
     dateCreated(nullable:true, blank:true)
     lastUpdated(nullable:true, blank:true)
+      description_en(nullable:true, blank:true)
+      urlPrefix       (nullable:true, blank:false)
 
     value(unique: ['value', 'targetType'])
   }

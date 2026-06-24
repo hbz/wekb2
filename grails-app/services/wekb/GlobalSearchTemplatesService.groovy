@@ -194,16 +194,20 @@ class GlobalSearchTemplatesService {
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'targetType']
                                 ],
                                 [
-                                        prompt     : 'Category',
-                                        qparam     : 'qp_family',
-                                        placeholder: 'Category',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'family', 'wildcard': 'B']
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.YN,
+                                        prompt     : 'Hard Data',
+                                        qparam     : 'qp_hardData',
+                                        placeholder: 'Hard Data',
+                                        propType   : 'Boolean',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'isHardData'],
                                 ],
                         ],
                         qbeResults: [
                                 [heading: 'Name', property: 'name', sort: 'name'],
                                 [heading: 'Value', property: 'value', link: true, sort: 'value', linkInfo: 'Link to Identifier Namespace'],
-                                [heading: 'Category', property: 'family', sort: 'family'],
+                                [heading: 'Hard Data', property: 'isHardData', sort: 'isHardData'],
                                 [heading: 'Target Type', property: 'targetType.value', sort: 'targetType.value'],
                                 [heading: 'Count', property: 'identifiersCount', sort: 'identifiersCount']
                         ]
@@ -744,17 +748,6 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'dropDown',
                                         baseClass  : 'wekb.RefdataValue',
-                                        filter1    : RCConstants.PACKAGE_CONSISTENT,
-                                        prompt     : 'Consistent Type',
-                                        msgCode     : 'package.consistent',
-                                        qparam     : 'qp_consistent',
-                                        placeholder: 'Consistent Type',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'consistent'],
-                                        advancedSearch: [title: "More filter options ...", category: 'Package']
-                                ],
-                                [
-                                        type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.PACKAGE_PAYMENT_TYPE,
                                         prompt     : 'Paid',
                                         msgCode     : 'package.paymentType',
@@ -1004,17 +997,6 @@ class GlobalSearchTemplatesService {
                                         qparam     : 'qp_breakable',
                                         placeholder: 'Breakable Type',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'breakable'],
-                                        advancedSearch: [title: "More filter options ...", category: 'Package']
-                                ],
-                                [
-                                        type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
-                                        filter1    : RCConstants.PACKAGE_CONSISTENT,
-                                        prompt     : 'Consistent Type',
-                                        msgCode     : 'package.consistent',
-                                        qparam     : 'qp_consistent',
-                                        placeholder: 'Consistent Type',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'consistent'],
                                         advancedSearch: [title: "More filter options ...", category: 'Package']
                                 ],
                                 [
