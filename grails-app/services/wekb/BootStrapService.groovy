@@ -53,81 +53,8 @@ class BootStrapService {
         refdataReorderService.reorderRefdata()
 
         log.info("Ensure default Identifier namespaces")
-        def namespaces = [
-                [value: 'cup', name: 'cup', targetType: 'TitleInstancePackagePlatform'],
-                [value: 'dnb', name: 'dnb', targetType: 'TitleInstancePackagePlatform'],
-                [value: 'doi', name: 'DOI', targetType: 'TitleInstancePackagePlatform'],
-                [value: 'eissn', name: 'e-ISSN', family: 'isxn', pattern: "^\\d{4}\\-\\d{3}[\\dX]\$", targetType: 'TitleInstancePackagePlatform'],
-                [value: 'ezb', name: 'EZB-ID', targetType: 'TitleInstancePackagePlatform'],
-                [value: 'gnd-id', name: 'gnd-id', targetType: 'TitleInstancePackagePlatform'],
-                [value: 'eisbn', name: 'eISBN', family: 'isxn', pattern: "^(?=[0-9]{13}\$|(?=(?:[0-9]+-){4})[0-9-]{17}\$)97[89]-?[0-9]{1,5}-?[0-9]+-?[0-9]+-?[0-9]\$", targetType: 'TitleInstancePackagePlatform'],
-                [value: 'issn', name: 'p-ISSN', family: 'isxn', pattern: "^\\d{4}\\-\\d{3}[\\dX]\$", targetType: 'TitleInstancePackagePlatform'],
-                [value: 'issnl', name: 'ISSN-L', family: 'isxn', pattern: "^\\d{4}\\-\\d{3}[\\dX]\$", targetType: 'TitleInstancePackagePlatform'],
-                [value: 'isil', name: 'ISIL', pattern: "^(?=[0-9A-Z-]{4,16}\$)[A-Z]{1,4}-[A-Z0-9]{1,11}(-[A-Z0-9]+)?\$",  targetType: 'TitleInstancePackagePlatform'],
-                [value: 'isbn', name: 'ISBN', family: 'isxn', pattern: "^(?=[0-9]{13}\$|(?=(?:[0-9]+-){4})[0-9-]{17}\$)97[89]-?[0-9]{1,5}-?[0-9]+-?[0-9]+-?[0-9]\$", targetType: 'TitleInstancePackagePlatform'],
-                [value: 'oclc', name: 'oclc', targetType: 'TitleInstancePackagePlatform'],
-                [value: 'preselect', name: 'preselect', targetType: 'TitleInstancePackagePlatform'],
-                [value: 'zdb', name: 'ZDB-ID', pattern: "^\\d+-[\\dxX]\$", targetType: 'TitleInstancePackagePlatform'],
 
-                //Kbart Import
-                [value: 'ill_indicator', name: 'Ill Indicator',  targetType: 'TitleInstancePackagePlatform'],
-                [value: 'package_isci', name: 'Package ISCI',  targetType: 'TitleInstancePackagePlatform'],
-                [value: 'package_isil', name: 'Package ISIL',  targetType: 'TitleInstancePackagePlatform'],
-                [value: 'package_ezb_anchor', name: 'EZB Anchor',  targetType: 'TitleInstancePackagePlatform'],
-
-
-                [value: 'Anbieter_Produkt_ID', name: 'Provider_Product_ID', targetType: 'Package'],
-                [value: 'dnb', name: 'dnb', targetType: 'Package'],
-                [value: 'doi', name: 'DOI', targetType: 'Package'],
-                [value: 'ezb', name: 'EZB-ID', targetType: 'Package'],
-                [value: 'gvk_ppn', name: 'gvk_ppn', targetType: 'Package'],
-                [value: 'isil', name: 'ISIL', pattern: "^(?=[0-9A-Z-]{4,16}\$)[A-Z]{1,4}-[A-Z0-9]{1,11}(-[A-Z0-9]+)?\$",  targetType: 'Package'],
-                [value: 'package_isci', name: 'Package ISCI',  targetType: 'Package'],
-                [value: 'package_ezb_anchor', name: 'EZB Anchor',  targetType: 'Package'],
-                [value: 'zdb', name: 'ZDB-ID', pattern: "^\\d+-[\\dxX]\$", targetType: 'Package'],
-                [value: 'zdb_ppn', name: 'EZB Anchor',  targetType: 'Package'],
-
-
-                [value: 'gnd-id', name: 'gnd-id', targetType: 'Org'],
-                [value: 'dbpedia', name: 'DBpedia', targetType: 'Org'],
-                [value: 'viaf', name: 'VIAF', targetType: 'Org'],
-                [value: 'loc id', name: 'LOC ID', targetType: 'Org'],
-                [value: 'isni', name: 'ISNI', targetType: 'Org'],
-                [value: 'ror id', name: 'ROR ID', targetType: 'Org'],
-                [value: 'wikidata id', name: 'Wikidata ID', targetType: 'Org'],
-                [value: 'crossref funder id', name: 'Crossref Funder ID', targetType: 'Org'],
-
-        ]
-
-        namespaces.each { ns ->
-            RefdataValue targetType = RefdataValue.findByValueAndOwner(ns.targetType, RefdataCategory.findByDesc(RCConstants.IDENTIFIER_NAMESPACE_TARGET_TYPE))
-            def ns_obj = IdentifierNamespace.findByValueAndTargetType(ns.value, targetType)
-
-            if (ns_obj) {
-                if (ns.pattern && !ns_obj.pattern) {
-                    ns_obj.pattern = ns.pattern
-                }
-
-                if (ns.name && !ns_obj.name) {
-                    ns_obj.name = ns.name
-                }
-
-                if (ns.family && !ns_obj.family) {
-                    ns_obj.family = ns.family
-                }
-
-                if (ns.targetType) {
-                    ns_obj.targetType = targetType
-                }
-
-                ns_obj.save()
-            } else {
-                ns.targetType = targetType
-                ns_obj = new IdentifierNamespace(ns).save(failOnError: true)
-            }
-
-            log.info("Ensured ${ns_obj}!")
-        }
+        setIdentifierNamespace()
 
         anonymizeUsers()
 
@@ -142,6 +69,73 @@ class BootStrapService {
     }
 
     def destroy = {
+    }
+
+    void setIdentifierNamespace() {
+
+        List<Map<String, Object>> namespaces = getParsedCsvData('setup/IdentifierNamespace.csv', 'IdentifierNamespace') as List<Map<String, Object>>
+
+        RefdataCategory targetTypeCategory = RefdataCategory.findByDesc(RCConstants.IDENTIFIER_NAMESPACE_TARGET_TYPE)
+
+        List<IdentifierNamespace> hardCodedIDNS = IdentifierNamespace.findAllByIsHardData(true)
+
+        hardCodedIDNS.each { IdentifierNamespace current ->
+            Map<String, Object> hardCodedNamespaceProps = namespaces.find { Map<String, Object> hardCoded -> hardCoded.value.toLowerCase() == current.value.toLowerCase() && hardCoded.targetType == current.targetType.value }
+            boolean updated = false
+            if(hardCodedNamespaceProps) {
+                hardCodedNamespaceProps.each { String prop, Object value ->
+                    if(prop == 'targetType'){
+                        RefdataValue targetType = RefdataValue.findByValueAndOwner(value, targetTypeCategory)
+                        if(targetType && current[prop] != targetType) {
+                            current[prop] = targetType
+                            updated = true
+                        }
+                    }else{
+                        if(current[prop] != value) {
+                            current[prop] = value
+                            updated = true
+                        }
+                    }
+                }
+                if(!hardCodedNamespaceProps.containsKey('pattern') && current.pattern) {
+                    current.pattern = null
+                    updated = true
+                }
+            }
+            else {
+                current.isHardData = false
+                updated = true
+            }
+            if(updated)
+                current.save()
+        }
+
+        namespaces.each { Map<String, Object> namespaceProperties ->
+            if(!hardCodedIDNS.find { IdentifierNamespace existing -> existing.value.toLowerCase() == namespaceProperties.value.toLowerCase() && existing.targetType.value == namespaceProperties.targetType }) {
+                namespaceProperties.isHardData = true
+                RefdataValue targetType = RefdataValue.findByValueAndOwner(namespaceProperties.targetType, targetTypeCategory)
+
+                if(targetType) {
+                    IdentifierNamespace idns = IdentifierNamespace.executeQuery('''
+                                                                                select ns
+                                                                                from IdentifierNamespace ns
+                                                                                where lower(trim(ns.value)) = :value
+                                                                                  and ns.targetType = :targetType
+                    ''', [value     : namespaceProperties.value.toLowerCase(),
+                          targetType: targetType]).find()
+                    if (!idns) {
+                        idns = new IdentifierNamespace([value: namespaceProperties.value, targetType: targetType])
+                    }
+                    idns.name = namespaceProperties.name
+                    idns.description_en = namespaceProperties.description_en
+                    idns.isHardData = namespaceProperties.isHardData
+                    idns.pattern = namespaceProperties.pattern
+                    idns.urlPrefix = namespaceProperties.urlPrefix
+                    if (!idns.save())
+                        log.error(idns.getErrors().getAllErrors().toListString())
+                }
+            }
+        }
     }
 
 
@@ -255,7 +249,7 @@ class BootStrapService {
         List result = []
         File csvFile = grailsApplication.mainContext.getResource(filePath).file
 
-        if (! ['RefdataCategory', 'RefdataValue'].contains(objType)) {
+        if (! ['RefdataCategory', 'RefdataValue', 'IdentifierNamespace'].contains(objType)) {
             println "WARNING: invalid object type ${objType}!"
         }
         else if (! csvFile.exists()) {
@@ -271,7 +265,7 @@ class BootStrapService {
                 while (line = csvr.readNext()) {
                     if (line[0]) {
                         if (objType == 'RefdataCategory') {
-                            // CSV: [token, value_de, value_en]
+                            // CSV: [token; value_de; value_en]
                             Map<String, Object> map = [
                                     token   : line[0].trim(),
                                     desc_de: line[1].trim(),
@@ -281,7 +275,7 @@ class BootStrapService {
                             result.add(map)
                         }
                         if (objType == 'RefdataValue') {
-                            // CSV: [rdc, token, value_de, value_en]
+                            // CSV: [rdc; token; value_de; value_en]
                             Map<String, Object> map = [
                                     token   : line[1].trim(),
                                     rdc     : line[0].trim(),
@@ -289,6 +283,18 @@ class BootStrapService {
                                     value_en: line[3].trim(),
                                     hardData: true
 
+                            ]
+                            result.add(map)
+                        }
+                        if (objType == 'IdentifierNamespace') {
+                            // CSV: [value; name; description_en; targetType; url_prefix; pattern]
+                            Map<String, Object> map = [
+                                    value     : line[0].trim(),
+                                    name: line[1].trim(),
+                                    description_en: line[2].trim() ?: null,
+                                    targetType        : line[3].trim() ?: null,
+                                    urlPrefix     : line[4].trim() ?: null,
+                                    pattern: line[5].trim() ?: null
                             ]
                             result.add(map)
                         }

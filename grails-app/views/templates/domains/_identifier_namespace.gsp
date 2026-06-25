@@ -27,6 +27,24 @@
                                         config="${RCConstants.IDENTIFIER_NAMESPACE_TARGET_TYPE}"/></dd>
         </dl>
 
+        <dl>
+            <dt class="control-label">Hard Data</dt>
+            <dd><semui:xEditableBoolean owner="${d}" field="isHardData"/></dd>
+
+        </dl>
+
+        <dl>
+            <dt class="control-label">urlPrefix</dt>
+            <dd><semui:xEditable owner="${d}" field="urlPrefix"/></dd>
+
+        </dl>
+
+        <dl>
+            <dt class="control-label">Description</dt>
+            <dd><semui:xEditable owner="${d}" field="description_en"/></dd>
+
+        </dl>
+
         <g:if test="${d.id}">
             <semui:tabs>
                 <semui:tabsItemWithoutLink tab="identifiers" defaultTab="identifiers" activeTab="${params.activeTab}"

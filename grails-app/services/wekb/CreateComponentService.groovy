@@ -393,10 +393,24 @@ class CreateComponentService {
                         name = null
                     }
 
-                    if(colMap.provider_uuid == null || colMap.nominal_platform_uuid == null ){
+                    if(!(colMap.provider_uuid != null && cols[colMap.provider_uuid]) || !(colMap.nominal_platform_uuid != null && cols[colMap.nominal_platform_uuid]) ){
                         globalErrors << "The package with the name '${name}' could not be created, because provider_uuid and nominal_platform_uuid not set!"
                         name = null
+                    }else{
+                            Org provider = Org.findByUuid(cols[colMap.provider_uuid].trim())
+                            if (!provider){
+                                globalErrors << "The package with the name '${name}' could not be created, because provider_uuid is wrong!"
+                                name = null
+                            }
+
+                            Platform platform = Platform.findByUuid(cols[colMap.nominal_platform_uuid].trim())
+                            if (!platform){
+                                globalErrors << "The package with the name '${name}' could not be created, because nominal_platform_uuid is wrong!"
+                                name = null
+                            }
                     }
+
+
                 }
                 try {
 
