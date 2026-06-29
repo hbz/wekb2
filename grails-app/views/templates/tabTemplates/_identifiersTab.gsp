@@ -1,4 +1,4 @@
-<%@ page import="wekb.ClassUtils; wekb.helper.RDStore; wekb.TitleInstancePackagePlatform;" %>
+<%@ page import="wekb.RefdataValue; wekb.helper.RCConstants; wekb.RefdataCategory; wekb.ClassUtils; wekb.helper.RDStore; wekb.TitleInstancePackagePlatform;" %>
 <semui:tabsItemContent tab="identifiers" class="${activeTab ? 'active' : ''}" defaultTab="${defaultTab}" activeTab="${params.activeTab}" counts="${d.ids.size()}">
 
     <table class="ui selectable striped sortable celled table">
@@ -92,9 +92,14 @@
 
                         <div class="field">
                             <label>Identifier Namespace</label>
-                            <semui:simpleReferenceDropdown name="identifierNamespace"
-                                                           baseClass="wekb.IdentifierNamespace"
-                                                           filter1="${d.class.simpleName}"/>
+
+                            <semui:dropdownWithExplanations id="identifierNamespace" name="ns.id"
+                                                             from="${wekb.IdentifierNamespace.findAllByTargetType(RefdataValue.findByValueAndOwner(d.class.simpleName, RefdataCategory.findByDesc(RCConstants.IDENTIFIER_NAMESPACE_TARGET_TYPE)), [sort: 'name'])}"
+                                                             optionKey="id"
+                                                             optionValue="name"
+                                                             optionExpl="description_en"
+                                                             required=""
+                                                             class="ui search dropdown"/>
                         </div>
 
                         <div class="field">
