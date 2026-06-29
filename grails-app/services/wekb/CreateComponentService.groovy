@@ -346,7 +346,7 @@ class CreateComponentService {
 
         rows.remove(0)
 
-        RefdataValue status_deleted = RDStore.KBC_STATUS_DELETED
+        List<RefdataValue> statusList = [RDStore.KBC_STATUS_DELETED, RDStore.KBC_STATUS_REMOVED]
         List identifiers = []
         List sources = []
 
@@ -377,15 +377,15 @@ class CreateComponentService {
                         String value = cols[colMap.anbieter_produkt_id].trim()
                         if (value) {
                             IdentifierNamespace namespace = IdentifierNamespace.findByValueAndTargetType(IdentifierNamespace.PKG_ID, RDStore.IDENTIFIER_NAMESPACE_TARGET_TYPE_PACKAGE)
-                            dupes = Identifier.executeQuery('select ident.pkg from Identifier ident where ident.namespace = :ns and ident.value != :val and ident.value = :value and ident.pkg is not null and ident.pkg.status not in (:stat) and exists ( select cgp from CuratoryGroupPackage cgp where cgp.pkg = ident.pkg and cgp.curatoryGroup in (:curGroup))', [value: value, ns: namespace, val: 'Unknown', stat: status_deleted, curGroup: curatoryGroups])
+                            dupes = Identifier.executeQuery('select ident.pkg from Identifier ident where ident.namespace = :ns and ident.value != :val and ident.value = :value and ident.pkg is not null and ident.pkg.status not in (:stat) and exists ( select cgp from CuratoryGroupPackage cgp where cgp.pkg = ident.pkg and cgp.curatoryGroup in (:curGroup))', [value: value, ns: namespace, val: 'Unknown', stat: statusList, curGroup: curatoryGroups])
                         }else{
-                            dupes = Package.executeQuery("select p from Package as p where lower(name) like :name and status not in (:stat) and exists ( select cgp from CuratoryGroupPackage cgp where cgp.pkg = p and cgp.curatoryGroup in (:curGroup))", [name: name.toLowerCase().trim(), stat: status_deleted, curGroup: curatoryGroups])
+                            dupes = Package.executeQuery("select p from Package as p where lower(name) like :name and status not in (:stat) and exists ( select cgp from CuratoryGroupPackage cgp where cgp.pkg = p and cgp.curatoryGroup in (:curGroup))", [name: name.toLowerCase().trim(), stat: statusList, curGroup: curatoryGroups])
                         }
                     }else {
-                        dupes = Package.executeQuery("select p from Package as p where lower(name) like :name and status not in (:stat)", [name: name.toLowerCase().trim(), stat: status_deleted])
+                        dupes = Package.executeQuery("select p from Package as p where lower(name) like :name and status not in (:stat)", [name: name.toLowerCase().trim(), stat: statusList])
 
                         if (curatoryGroups) {
-                            dupes = Package.executeQuery("select p from Package as p where lower(name) like :name and status not in (:stat) and exists ( select cgp from CuratoryGroupPackage cgp where cgp.pkg = p and cgp.curatoryGroup in (:curGroup))", [name: name.toLowerCase().trim(), stat: status_deleted, curGroup: curatoryGroups])
+                            dupes = Package.executeQuery("select p from Package as p where lower(name) like :name and status not in (:stat) and exists ( select cgp from CuratoryGroupPackage cgp where cgp.pkg = p and cgp.curatoryGroup in (:curGroup))", [name: name.toLowerCase().trim(), stat: statusList, curGroup: curatoryGroups])
                         }
                     }
 
@@ -395,7 +395,7 @@ class CreateComponentService {
                     }
 
                     if(!(colMap.provider_uuid != null && cols[colMap.provider_uuid]) || !(colMap.nominal_platform_uuid != null && cols[colMap.nominal_platform_uuid]) ){
-                        globalErrors << "The package with the name '${name}' could not be created, because provider_uuid and nominal_platform_uuid not set!"
+                        globalErrors << "The package with the name '${name}' could not be created, because provider_uuid or nominal_platform_uuid not set!"
                         name = null
                     }else{
                             Org provider = Org.findByUuid(cols[colMap.provider_uuid].trim())
@@ -793,7 +793,7 @@ class CreateComponentService {
 
             if(aPackage) {
                 if (aPackage.kbartSource == null) {
-                    def dupes = KbartSource.findAllByNameIlikeAndStatusNotEqual(aPackage.name, status_deleted)
+                    def dupes = KbartSource.findAllByNameIlikeAndStatusNotInList(aPackage.name, statusList)
                     String sourceName = aPackage.name
                     if (dupes && dupes.size() > 0) {
                         sourceName = "${sourceName} ${dupes.size() + 1}"
@@ -809,7 +809,7 @@ class CreateComponentService {
                     kbartSource = new KbartSource(name: sourceName, uuid: UUID.randomUUID().toString(), status: RDStore.KBC_STATUS_CURRENT, kbartHasWekbFields: false)
                 } else {
                     kbartSource = aPackage.kbartSource
-                    def dupes = KbartSource.findAllByNameIlikeAndStatusNotEqual(aPackage.name, status_deleted)
+                    def dupes = KbartSource.findAllByNameIlikeAndStatusNotInList(aPackage.name, statusList)
                     String sourceName = aPackage.name
                     if (dupes && dupes.size() > 0) {
                         sourceName = "${sourceName} ${dupes.size() + 1}"
