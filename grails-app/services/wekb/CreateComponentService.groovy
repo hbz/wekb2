@@ -151,6 +151,7 @@ class CreateComponentService {
 
                         if(result.newobj instanceof TitleInstancePackagePlatform ){
                             result.newobj.hostPlatform = result.newobj.pkg.nominalPlatform
+                            result.newobj.status = RDStore.KBC_STATUS_CURRENT
                         }
 
                         if(result.newobj.hasProperty('uuid')){
