@@ -98,7 +98,7 @@ class SemanticInplaceTagLib {
             out << "</a>"
         } else {
             if (!attrs.disabled) {
-                out << "<span class=\"${attrs.class ?: ''}\">"
+                out << "<span class=\"${attrs.class ?: ''}\" style=\"white-space: pre-wrap;\">"
                 if (body) {
                     out << body()
                 } else {
