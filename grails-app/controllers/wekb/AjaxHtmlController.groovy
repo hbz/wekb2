@@ -493,48 +493,63 @@ class AjaxHtmlController {
             def editable = accessService.checkEditableObject(target_object, params)
 
             if (editable || target_object == user) {
-                if (params.type == 'date') {
-                    SimpleDateFormat sdf = DateUtils.getSDF_NoTime()
-                    def backup = target_object."${params.name}"
-
-                    try {
-                        if (params.value && params.value.size() > 0) {
-                            // parse new date
-                            def parsed_date = sdf.parse(params.value)
-                            target_object."${params.name}" = parsed_date
+                if(target_object instanceof Identifier){
+                    def pattern = target_object.namespace.pattern ? ~"${target_object.namespace.pattern}" : null
+                    if (pattern && !(params.value ==~ pattern)) {
+                        errors['global'] = [[message: g.message(code: "identifier.create.pattern.fail.${target_object.namespace.value.trim().toLowerCase()}")]]
+                    }
+                    else {
+                        target_object.value = params.value
+                        if (target_object.validate()) {
+                            target_object.save()
                         } else {
-                            // delete existing date
-                            target_object."${params.name}" = null
+                            errors = messageService.processValidationErrors(target_object.errors, request.locale)
                         }
-                        target_object.save(failOnError: true)
                     }
-                    catch (Exception e) {
-                        target_object."${params.name}" = backup
-                        log.error(e.toString())
+                }else {
+                    if (params.type == 'date') {
+                        SimpleDateFormat sdf = DateUtils.getSDF_NoTime()
+                        def backup = target_object."${params.name}"
+
+                        try {
+                            if (params.value && params.value.size() > 0) {
+                                // parse new date
+                                def parsed_date = sdf.parse(params.value)
+                                target_object."${params.name}" = parsed_date
+                            } else {
+                                // delete existing date
+                                target_object."${params.name}" = null
+                            }
+                            target_object.save(failOnError: true)
+                        }
+                        catch (Exception e) {
+                            target_object."${params.name}" = backup
+                            log.error(e.toString())
+                        }
+
+                        //target_object."${params.name}" = params.date('value',params.dateFormat ?: 'yyyy-MM-dd')
+                    } else if (params.type == 'boolean') {
+                        target_object."${params.name}" = params.boolean('value')
+                    } else if (params.name == 'uuid' || (params.name == 'password' && !user.getAdminStatus())) {
+                        errors[params.name] = "This property is not editable."
+                    } else {
+                        def binding_properties = [:]
+                        def new_val = params.value?.trim() ?: null
+
+                        if (target_object instanceof KbartSource && params.name == 'url' && new_val != null && new_val != target_object.url) {
+                            target_object.lastRun = null
+                            target_object.lastUpdateUrl = null
+                        }
+
+                        binding_properties[params.name] = new_val
+                        bindData(target_object, binding_properties)
                     }
 
-                    //target_object."${params.name}" = params.date('value',params.dateFormat ?: 'yyyy-MM-dd')
-                } else if (params.type == 'boolean') {
-                    target_object."${params.name}" = params.boolean('value')
-                } else if (params.name == 'uuid' || (params.name == 'password' && !user.getAdminStatus())) {
-                    errors[params.name] = "This property is not editable."
-                } else {
-                    def binding_properties = [:]
-                    def new_val = params.value?.trim() ?: null
-                    
-                    if(target_object instanceof KbartSource && params.name == 'url' && new_val != null && new_val != target_object.url){
-                        target_object.lastRun = null
-                        target_object.lastUpdateUrl = null
+                    if (target_object.validate()) {
+                        target_object.save()
+                    } else {
+                        errors = messageService.processValidationErrors(target_object.errors, request.locale)
                     }
-
-                    binding_properties[params.name] = new_val
-                    bindData(target_object, binding_properties)
-                }
-
-                if (target_object.validate()) {
-                    target_object.save()
-                } else {
-                    errors = messageService.processValidationErrors(target_object.errors, request.locale)
                 }
             } else {
                 errors['global'] = [[message: "Object ${target_object} is not editable.".toString()]]
@@ -662,7 +677,7 @@ class AjaxHtmlController {
 
                             Pattern pattern = ns.pattern ? ~"${ns.pattern}" : null
                             if (pattern && !(params.identifierValue ==~ pattern)) {
-                                flash.error = g.message(code: 'identifier.create.pattern.fail', args: [ns.pattern])
+                                flash.error = g.message(code: "identifier.create.pattern.fail.${ns.value.trim().toLowerCase()}")
                             }else {
                                 ident = new Identifier(namespace: ns, value: params.identifierValue)
                                 ident.setReference(owner)

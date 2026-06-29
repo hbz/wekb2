@@ -1,6 +1,6 @@
 package wekb
 
-
+import org.springframework.context.MessageSource
 import wekb.helper.RCConstants
 import wekb.helper.RDStore
 import grails.gorm.transactions.Transactional
@@ -19,6 +19,7 @@ class KbartImportService {
     CleanupService cleanupService
 
     DateFormatService dateFormatService
+    MessageSource messageSource
 
 
     /*Platform platformUpsertDTO(platformDTO) {
@@ -1076,7 +1077,7 @@ class KbartImportService {
                 def pattern = ns.pattern ? ~"${ns.pattern}" : null
                 if (pattern && !(newValue ==~ pattern)) {
                     UpdateTippInfo updateTippInfo = new UpdateTippInfo(
-                            description: "$kbartProperty has wrong format to import.",
+                            description: "$kbartProperty has wrong format to import. "+messageSource.getMessage("identifier.create.pattern.fail.${ns.value.trim().toLowerCase()}", null, Locale.ENGLISH),
                             tipp: tipp,
                             startTime: new Date(),
                             endTime: new Date(),
