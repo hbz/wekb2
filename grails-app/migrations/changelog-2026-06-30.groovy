@@ -24,7 +24,6 @@ databaseChangeLog = {
     changeSet(author: "djebeniani (generated)", id: "1782808528285-5") {
         addColumn(tableName: "update_package_info") {
             column(name: "upi_count_deleted_tipps_by_process", type: "int4") {
-                constraints(nullable: "false")
             }
         }
     }
@@ -50,6 +49,5 @@ databaseChangeLog = {
             rollback {}
         }
     }
-
 
 }
