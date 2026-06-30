@@ -1,4 +1,4 @@
-<%@ page import="wekb.Package; wekb.helper.RCConstants; wekb.RefdataCategory;" %>
+<%@ page import="wekb.IdentifierNamespace; wekb.RefdataValue; wekb.Package; wekb.helper.RCConstants; wekb.RefdataCategory;" %>
 <g:set var="counter" value="${offset}"/>
 
 
@@ -80,9 +80,13 @@
 
                                 <div class="field">
                                     <label>Identifier Namespace</label>
-                                    <semui:simpleReferenceDropdown name="identifierNamespace"
-                                                                   baseClass="wekb.IdentifierNamespace"
-                                                                   filter1="${row_obj.class.simpleName}"/>
+                                    <semui:dropdownWithExplanations id="identifierNamespace" name="ns.id"
+                                                                    from="${IdentifierNamespace.findAllByTargetType(RefdataValue.findByValueAndOwner(d.class.simpleName, RefdataCategory.findByDesc(RCConstants.IDENTIFIER_NAMESPACE_TARGET_TYPE)), [sort: 'name'])}"
+                                                                    optionKey="id"
+                                                                    optionValue="name"
+                                                                    optionExpl="description_en"
+                                                                    required=""
+                                                                    class="ui search dropdown"/>
                                 </div>
 
                                 <div class="field">
