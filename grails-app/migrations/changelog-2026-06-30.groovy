@@ -21,5 +21,35 @@ databaseChangeLog = {
         addNotNullConstraint(columnDataType: "boolean", columnName: "idns_hard_data", tableName: "identifier_namespace", validate: "true")
     }
 
+    changeSet(author: "djebeniani (generated)", id: "1782808528285-5") {
+        addColumn(tableName: "update_package_info") {
+            column(name: "upi_count_deleted_tipps_by_process", type: "int4") {
+                constraints(nullable: "false")
+            }
+        }
+    }
+
+    changeSet(author: "djebeniani (modified)", id: "1782808528285-6") {
+        grailsChange {
+            change {
+
+                sql.executeUpdate('update update_package_info set upi_count_deleted_tipps_by_process = 0 where upi_count_deleted_tipps_by_process is null')
+
+            }
+            rollback {}
+        }
+    }
+
+    changeSet(author: "djebeniani (modified)", id: "1782808528285-7") {
+        grailsChange {
+            change {
+
+                sql.executeUpdate('alter table update_package_info alter column upi_count_deleted_tipps_by_process set not null;')
+
+            }
+            rollback {}
+        }
+    }
+
 
 }

@@ -3090,6 +3090,7 @@ class GlobalSearchTemplatesService {
                                 [heading: 'Removed Titles ', property: 'countRemovedTipps', sort: 'countRemovedTipps', jumpToLink: '/search/componentSearch/wekb.UpdatePackageInfo:objectID?qbe=g:updateTippInfos&qp_aup_id=objectID&&qp_type='+RefdataValue.class.name + ':' + RDStore.UPDATE_TYPE_REMOVED_TITLE.id, linkInfo: 'Link to Removed Titles'],
                                 [heading: 'New Titles', property: 'countNewTipps', sort: 'countNewTipps', jumpToLink: '/search/componentSearch/wekb.UpdatePackageInfo:objectID?qbe=g:updateTippInfos&qp_aup_id=objectID&&qp_type='+RefdataValue.class.name + ':' + RDStore.UPDATE_TYPE_NEW_TITLE.id, linkInfo: 'Link to New Titles'],
                                 [heading: 'Invalid Titles', property: 'countInValidTipps', sort: 'countInValidTipps', jumpToLink: '/search/componentSearch/wekb.UpdatePackageInfo:objectID?qbe=g:updateTippInfos&qp_aup_id=objectID&&qp_type='+RefdataValue.class.name + ':' + RDStore.UPDATE_TYPE_INVAILD_TITLE.id, linkInfo: 'Link to Invalid Titles'],
+                                [heading: 'Deleted Titles by Process', property: 'countDeletedTippsByProcess', sort: 'countDeletedTippsByProcess', jumpToLink: '/search/componentSearch/wekb.UpdatePackageInfo:objectID?qbe=g:updateTippInfos&qp_aup_id=objectID&&qp_type='+RefdataValue.class.name + ':' + RDStore.UPDATE_TYPE_DELETED_TITLE.id, linkInfo: 'Link to Deleted Titles'],
 
                         ]
                 ]
