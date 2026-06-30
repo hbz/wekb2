@@ -93,7 +93,7 @@
                         <div class="field">
                             <label>Identifier Namespace</label>
 
-                            <semui:dropdownWithExplanations id="identifierNamespace" name="ns.id"
+                            <semui:dropdownWithExplanations id="identifierNamespace" name="identifierNamespace"
                                                              from="${wekb.IdentifierNamespace.findAllByTargetType(RefdataValue.findByValueAndOwner(d.class.simpleName, RefdataCategory.findByDesc(RCConstants.IDENTIFIER_NAMESPACE_TARGET_TYPE)), [sort: 'name'])}"
                                                              optionKey="id"
                                                              optionValue="name"
