@@ -20,7 +20,7 @@
             Alternate Names
         </semui:tabsItemWithoutLink>
 
-        <semui:tabsItemWithoutLink tab="packages" activeTab="${params.activeTab}" counts="${d.packages.size()}">
+        <semui:tabsItemWithoutLink tab="packages" activeTab="${params.activeTab}" counts="${d.getPackagesCount()}">
             Packages
         </semui:tabsItemWithoutLink>
 
@@ -30,7 +30,7 @@
     </semui:tabs>
 
 
-    <g:render template="/templates/tabTemplates/identifiersTab" model="${[d: d, defaultTab: 'identifiers']}"/>
+    <g:render template="/templates/tabTemplates/identifiersTab" model="${[d: d]}"/>
 
 
     <semui:tabsItemContent tab="anOrder" defaultTab="anOrder" activeTab="${params.activeTab}">
