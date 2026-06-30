@@ -5,6 +5,7 @@ Update.Status;Info;Info;Info
 Update.Status;Warning;Warning;Warning
 Update.Type;New Title;New Title;New Title
 Update.Type;Changed Title;Changed Title;Changed Title
+Update.Type;Deleted Title;Deleted Title;Deleted Title
 Update.Type;Removed Title;Removed Title;Removed Title
 Update.Type;Failed Title;Failed Title;Failed Title
 Update.Type;Invaild Title;Invaild Title;Invaild Title

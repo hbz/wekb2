@@ -57,6 +57,7 @@ class RDStore {
     public static final UPDATE_TYPE_REMOVED_TITLE    = getRefdataValue('Removed Title', RCConstants.UPDATE_TYPE)
     public static final UPDATE_TYPE_FAILED_TITLE    = getRefdataValue('Failed Title', RCConstants.UPDATE_TYPE)
     public static final UPDATE_TYPE_INVAILD_TITLE    = getRefdataValue('Invaild Title', RCConstants.UPDATE_TYPE)
+    public static final UPDATE_TYPE_DELETED_TITLE    = getRefdataValue('Deleted Title', RCConstants.UPDATE_TYPE)
 
     public static final YN_YES              = getRefdataValue('Yes', RCConstants.YN)
     public static final YN_NO               = getRefdataValue('No', RCConstants.YN)

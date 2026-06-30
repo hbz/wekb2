@@ -215,6 +215,7 @@ class KbartProcessService {
         int countInvalidKbartRowsForTipps = 0
         int countExistingTippsAfterImport = 0
         int idx = 0
+        int countDeletedTippsByProcess = 0
 
         int kbartRowsCount = kbartRows.size()
 
@@ -676,7 +677,7 @@ class KbartProcessService {
                                     startTime: currentDate,
                                     endTime: currentDate,
                                     status: RDStore.UPDATE_STATUS_SUCCESSFUL,
-                                    type: RDStore.UPDATE_TYPE_CHANGED_TITLE,
+                                    type: RDStore.UPDATE_TYPE_DELETED_TITLE,
                                     oldValue: tipp.status.value,
                                     newValue: 'Deleted',
                                     tippProperty: 'status',
@@ -686,7 +687,7 @@ class KbartProcessService {
                                     dateCreated: currentDate,
                                     uuid: UUID.randomUUID().toString()
                             )
-                            changedTipps++
+                            countDeletedTippsByProcess++
                             session.insert(updateTippInfo)
                         }
                     }
@@ -700,7 +701,7 @@ class KbartProcessService {
             
             if(!processFailed) {
                 String description = "Package Update: (KbartLines: ${kbartRowsCount}, " +
-                        "Processed Titles in this run: ${idx}, All Titles previously: ${previouslyTipps}, All Titles now: ${countExistingTippsAfterImport}, Removed Titles: ${removedTipps}, New All Titles: ${newTipps}, Changed All Titles: ${changedTipps})"
+                        "Processed Titles in this run: ${idx}, All Titles previously: ${previouslyTipps}, All Titles now: ${countExistingTippsAfterImport}, Removed Titles: ${removedTipps}, New All Titles: ${newTipps}, Changed All Titles: ${changedTipps}), Deleted All Titles: ${countDeletedTippsByProcess})"
 
               /*  UpdatePackageInfo.executeUpdate("update UpdatePackageInfo set countKbartRows = ${kbartRowsCount}, " +
                         "countChangedTipps = ${changedTipps}, " +
@@ -725,6 +726,7 @@ class KbartProcessService {
                     updatePackageInfo.endTime = new Date()
                     updatePackageInfo.description = description
                     updatePackageInfo.countChangedTipps = changedTipps > 0 ? changedTipps : 0
+                    updatePackageInfo.countDeletedTippsByProcess = countDeletedTippsByProcess > 0 ? countDeletedTippsByProcess : 0
                     updatePackageInfo.countInValidTipps = countInvalidKbartRowsForTipps > 0 ? countInvalidKbartRowsForTipps : 0
                     updatePackageInfo.countKbartRows = kbartRowsCount > 0 ? kbartRowsCount : 0
                     updatePackageInfo.countNewTipps = newTipps > 0 ? newTipps : 0
@@ -768,6 +770,7 @@ class KbartProcessService {
                 }
                 updatePackageInfo.description = description2
                 updatePackageInfo.countChangedTipps = changedTipps > 0 ? changedTipps : 0
+                updatePackageInfo.countDeletedTippsByProcess = countDeletedTippsByProcess > 0 ? countDeletedTippsByProcess : 0
                 updatePackageInfo.countInValidTipps = countInvalidKbartRowsForTipps > 0 ? countInvalidKbartRowsForTipps : 0
                 updatePackageInfo.countKbartRows = kbartRowsCount > 0 ? kbartRowsCount : 0
                 updatePackageInfo.countNewTipps = newTipps > 0 ? newTipps : 0

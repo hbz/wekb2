@@ -655,10 +655,10 @@ class AjaxHtmlController {
         def owner = genericOIDService.resolveOID(params.__context)
         def identifier_instance = null
         // Check identifier namespace present, and identifier value valid for that namespace
-        if ((params.identifierNamespace?.trim()) &&
+        if ((params.identifierNamespace) &&
                 (params.identifierValue?.trim()) &&
                 (params.__context?.trim())) {
-            IdentifierNamespace ns = genericOIDService.resolveOID(params.identifierNamespace)
+            IdentifierNamespace ns = IdentifierNamespace.get(params.identifierNamespace)
 
             if ((ns != null) && (owner != null)) {
                 def editable = accessService.checkEditableObject(owner, params)

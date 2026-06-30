@@ -25,7 +25,8 @@ class Identifier {
           tipp: TitleInstancePackagePlatform,
           org: Org,
           platform: Platform,
-          pkg: Package
+          pkg: Package,
+          vendor: Vendor
   ]
 
 
@@ -33,6 +34,7 @@ class Identifier {
     uuid(nullable: false, unique: false, blank: false, maxSize: 2048)
     tipp(nullable:true)
     org(nullable:true)
+      vendor(nullable:true)
     platform(nullable:true)
     pkg(nullable:true)
     namespace(nullable: false, blank: false)
@@ -56,6 +58,7 @@ class Identifier {
     uuid column: 'id_uuid', type: 'text', index: 'id_uuid_idx'
     tipp column: 'id_tipp_fk', index: 'id_tipp_idx'
     org column: 'id_org_fk', index: 'id_org_idx'
+      vendor column: 'id_vendor_fk', index: 'id_vendor_idx'
     platform column: 'id_platform_fk', index: 'id_platform_idx'
     pkg column: 'id_pkg_fk', index: 'id_pkg_idx'
     lastUpdated column: 'id_last_updated'
@@ -111,6 +114,7 @@ class Identifier {
     String name
 
     name = object instanceof Org ?      'org' : name
+      name = object instanceof Vendor ?      'vendor' : name
     name = object instanceof Package ?  'pkg' : name
     name = object instanceof TitleInstancePackagePlatform ? 'tipp' : name
     name = object instanceof Platform ?      'platform' : name
@@ -120,6 +124,7 @@ class Identifier {
 
   void setReference(def owner) {
     org  = owner instanceof Org ? owner : org
+      vendor  = owner instanceof Vendor ? owner : vendor
     pkg  = owner instanceof Package ? owner : pkg
     platform = owner instanceof Platform ?  owner : platform
     tipp = owner instanceof TitleInstancePackagePlatform ? owner : tipp
@@ -129,7 +134,7 @@ class Identifier {
     int refCount = 0
     def ref
 
-    List<String> fks = ['platform', 'org', 'pkg', 'tipp']
+    List<String> fks = ['platform', 'org', 'pkg', 'tipp', 'vendor']
     fks.each { fk ->
       if (this."${fk}") {
         refCount++
