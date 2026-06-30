@@ -116,6 +116,8 @@ dependencies {
 
     implementation 'dk.glasius:external-config:3.2.0'                       // 2023
 
+    implementation "org.apache.commons:commons-csv:1.14.1"                  //2025
+
     // --------------------------------------------------
 
     runtimeOnly 'org.apache.tomcat:tomcat-jdbc'
