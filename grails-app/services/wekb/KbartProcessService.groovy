@@ -18,6 +18,9 @@ import java.nio.file.Path
 import java.nio.file.StandardCopyOption
 import java.time.LocalDate
 import java.time.ZoneId
+import org.apache.commons.csv.CSVFormat
+import org.apache.commons.csv.CSVParser
+import org.apache.commons.csv.CSVRecord
 
 @Transactional
 class KbartProcessService {
@@ -27,6 +30,70 @@ class KbartProcessService {
     CleanupService cleanupService
     SessionFactory sessionFactory
     LaserService laserService
+
+
+    Set<String> supportedHeaders = [
+            "publication_title",
+            "print_identifier",
+            "online_identifier",
+            "date_first_issue_online",
+            "num_first_vol_online",
+            "date_last_issue_online",
+            "num_first_issue_online",
+            "num_last_vol_online",
+            "num_last_issue_online",
+            "title_url",
+            "first_author",
+            "title_id",
+            "embargo_info",
+            "coverage_depth",
+            "notes",
+            "publisher_name",
+            "publication_type",
+            "date_monograph_published_print",
+            "date_monograph_published_online",
+            "monograph_volume",
+            "monograph_edition",
+            "first_editor",
+            "parent_publication_title_id",
+            "preceding_publication_title_id",
+            "superseding_publication_title_id",
+            "access_type",
+
+            // WEKB
+            "oa_type",
+            "ddc",
+            "medium",
+            "doi_identifier",
+            "subject_area",
+            "language",
+            "package_name",
+            "package_id",
+            "access_start_date",
+            "access_end_date",
+            "last_changed",
+            "status",
+            "listprice_eur",
+            "listprice_usd",
+            "listprice_gbp",
+            "monograph_parent_collection_title",
+            "zdb_id",
+            "ezb_id",
+            "package_ezb_anchor",
+            "oa_gold",
+            "oa_hybrid",
+            "oa_apc_eur",
+            "oa_apc_usd",
+            "oa_apc_gbp",
+            "package_isil",
+            "package_isci",
+            "ill_indicator",
+            "title_gokb_uuid",
+            "package_gokb_uuid",
+            "title_wekb_uuid",
+            "package_wekb_uuid"
+    ] as Set
+
 
     void kbartImportManual(Package pkg, File tsvFile, Boolean onlyRowsWithLastChanged){
         log.info("Beginn kbartImportManual ${pkg.name}")
@@ -786,209 +853,107 @@ class KbartProcessService {
 
             try {
 
+                Reader reader = tsvFile.newInputStream().newReader("UTF-8")
 
+                String firstLine = tsvFile.withReader("UTF-8") { it.readLine() }
+                String delimiter = getDelimiter(firstLine)
 
-                List<String> rows = tsvFile.newInputStream().text.readLines()
-                if(rows.size() > 1){
-                    Map<String, Integer> colMap = [:]
+                if (!delimiter) {
+                    log.warn("no delimiter $delimiter: ${lastUpdateURL}")
 
-                    String delimiter = getDelimiter(rows[0])
-                    if(delimiter) {
-                        rows[0].split(delimiter).eachWithIndex { String headerCol, int c ->
-                            if (headerCol.startsWith("\uFEFF"))
-                                headerCol = headerCol.substring(1)
-                            //println("headerCol: ${headerCol}")
-                            switch (headerCol.toLowerCase().trim()) {
-                                case "publication_title": colMap.publication_title = c
-                                    countMinimumKbartStandard++
-                                    break
-                                case "print_identifier": colMap.print_identifier = c
-                                    break
-                                case "online_identifier": colMap.online_identifier = c
-                                    break
-                                case "date_first_issue_online": colMap.date_first_issue_online = c
-                                    break
-                                case "num_first_vol_online": colMap.num_first_vol_online = c
-                                    break
-                                case "date_last_issue_online": colMap.date_last_issue_online = c
-                                    break
-                                case "num_first_issue_online": colMap.num_first_issue_online = c
-                                    break
-                                case "num_last_vol_online": colMap.num_last_vol_online = c
-                                    break
-                                case "num_last_issue_online": colMap.num_last_issue_online = c
-                                    break
-                                case "title_url": colMap.title_url = c
-                                    countMinimumKbartStandard++
-                                    break
-                                case "first_author": colMap.first_author = c
-                                    break
-                                case "title_id": colMap.title_id = c
-                                    countMinimumKbartStandard++
-                                    break
-                                case "embargo_info": colMap.embargo_info = c
-                                    break
-                                case "coverage_depth": colMap.coverage_depth = c
-                                    break
-                                case "notes": colMap.notes = c
-                                    break
-                                case "publisher_name": colMap.publisher_name = c
-                                    break
-                                case "publication_type": colMap.publication_type = c
-                                    break
-                                case "date_monograph_published_print": colMap.date_monograph_published_print = c
-                                    break
-                                case "date_monograph_published_online": colMap.date_monograph_published_online = c
-                                    break
-                                case "monograph_volume": colMap.monograph_volume = c
-                                    break
-                                case "monograph_edition": colMap.monograph_edition = c
-                                    break
-                                case "first_editor": colMap.first_editor = c
-                                    break
-                                case "parent_publication_title_id": colMap.parent_publication_title_id = c
-                                    break
-                                case "preceding_publication_title_id": colMap.preceding_publication_title_id = c
-                                    break
-                                case "superseding_publication_title_id": colMap.superseding_publication_title_id = c
-                                    break
-                                case "access_type": colMap.access_type = c
-                                    break
-
-                                    //beginn with headercolumn spec for wekb
-                                case "oa_type": colMap.oa_type = c
-                                    break
-                                case "ddc": colMap.ddc = c
-                                    break
-                                case "medium": colMap.medium = c
-                                    break
-                                case "doi_identifier": colMap.doi_identifier = c
-                                    break
-                                case "subject_area": colMap.subject_area = c
-                                    break
-                                case "language": colMap.language = c
-                                    break
-                                case "package_name": colMap.package_name = c
-                                    break
-                                case "package_id": colMap.package_id = c
-                                    break
-                                case "access_start_date": colMap.access_start_date = c
-                                    break
-                                case "access_end_date": colMap.access_end_date = c
-                                    break
-                                case "last_changed": colMap.last_changed = c
-                                    break
-                                case "status": colMap.status = c
-                                    break
-                                case "listprice_eur": colMap.listprice_eur = c
-                                    break
-                                case "listprice_usd": colMap.listprice_usd = c
-                                    break
-                                case "listprice_gbp": colMap.listprice_gbp = c
-                                    break
-                                case "monograph_parent_collection_title": colMap.monograph_parent_collection_title = c
-                                    break
-                                case "zdb_id": colMap.zdb_id = c
-                                    break
-                                case "ezb_id": colMap.ezb_id = c
-                                    break
-                                case "package_ezb_anchor": colMap.package_ezb_anchor = c
-                                    break
-                                case "oa_gold": colMap.oa_gold = c
-                                    break
-                                case "oa_hybrid": colMap.oa_hybrid = c
-                                    break
-                                case "oa_apc_eur": colMap.oa_apc_eur = c
-                                    break
-                                case "oa_apc_usd": colMap.oa_apc_usd = c
-                                    break
-                                case "oa_apc_gbp": colMap.oa_apc_gbp = c
-                                    break
-                                case "package_isil": colMap.package_isil = c
-                                    break
-                                case "package_isci": colMap.package_isci = c
-                                    break
-                                case "ill_indicator": colMap.ill_indicator = c
-                                    break
-                                case "title_gokb_uuid": colMap.title_gokb_uuid = c
-                                    break
-                                case "package_gokb_uuid": colMap.package_gokb_uuid = c
-                                    break
-                                case "title_wekb_uuid": colMap.title_wekb_uuid = c
-                                    break
-                                case "package_wekb_uuid": colMap.package_wekb_uuid = c
-                                    break
-                                default: log.info("unhandled parameter type ${headerCol}, ignoring ...")
-                                    break
-                            }
+                    UpdatePackageInfo.withTransaction {
+                        String description = "Separator for the KBART was not recognized. The following separators are recognized: Tab, comma, semicolons. "
+                        if(lastUpdateURL && updatePackageInfo.automaticUpdate){
+                            description = description+ "File from URL: ${lastUpdateURL}"
                         }
+                        updatePackageInfo.description = description
+                        updatePackageInfo.status = RDStore.UPDATE_STATUS_FAILED
+                        updatePackageInfo.endTime = new Date()
+                        updatePackageInfo.updateUrl = lastUpdateURL
+                        updatePackageInfo.countPreviouslyTippsInWekb = updatePackageInfo.pkg.getTippCountWithoutRemoved()
+                        updatePackageInfo.countNowTippsInWekb = updatePackageInfo.pkg.getTippCountWithoutRemoved()
+                        updatePackageInfo.countCurrentTipps = updatePackageInfo.pkg.getCurrentTippCount()
+                        updatePackageInfo.countDeletedTipps = updatePackageInfo.pkg.getDeletedTippCount()
+                        updatePackageInfo.save()
+                    }
+                    return
+                }
 
-                        if (minimumKbartStandard.size() != countMinimumKbartStandard) {
-                            log.warn("KBART file does not have one or any of the headers: ${minimumKbartStandard}")
+                char delimiterChar = delimiter == "\\t" ? '\t' as char : delimiter.charAt(0)
 
-                            UpdatePackageInfo.withTransaction {
-                                String description = "KBART file does not have one or any of the headers: ${minimumKbartStandard.join(', ')}. "
-                                if(lastUpdateURL && updatePackageInfo.automaticUpdate){
-                                    description = description+ "File from URL: ${lastUpdateURL}"
-                                }
-                                updatePackageInfo.description = description
-                                updatePackageInfo.status = RDStore.UPDATE_STATUS_FAILED
-                                updatePackageInfo.endTime = new Date()
-                                updatePackageInfo.updateUrl = lastUpdateURL
-                                updatePackageInfo.countPreviouslyTippsInWekb = updatePackageInfo.pkg.getTippCountWithoutRemoved()
-                                updatePackageInfo.countNowTippsInWekb = updatePackageInfo.pkg.getTippCountWithoutRemoved()
-                                updatePackageInfo.countCurrentTipps = updatePackageInfo.pkg.getCurrentTippCount()
-                                updatePackageInfo.countDeletedTipps = updatePackageInfo.pkg.getDeletedTippCount()
-                                updatePackageInfo.save()
-                            }
+                CSVFormat format = CSVFormat.DEFAULT.builder()
+                        .setDelimiter(delimiterChar)
+                        .setHeader()
+                        .setSkipHeaderRecord(true)
+                        .setIgnoreEmptyLines(false)
+                        .setTrim(false)
+                        .build()
 
+                CSVParser parser = format.parse(reader)
 
-                        } else {
-                            //Don't delete the header
-                            //rows.remove(0)
-                            countRows = rows.size() - 1
-                            Set<String> filteredRows = []
-                            filteredRows.addAll(rows)
-                            //log.debug("Begin kbart processing rows ${countRows}")
-                            filteredRows.eachWithIndex { row, Integer r ->
-                                //log.debug("now processing entry ${row}")
-                                List<String> cols = row.split(delimiter)
-                                Map rowMap = [:]
-                                colMap.eachWithIndex { def entry, int i ->
-                                    if (cols[entry.value] && !cols[entry.value].isEmpty()) {
-                                        rowMap."${entry.key}" = cols[entry.value].replace("\r", "")
-                                    }
-                                    // With rowMap."${entry.key}".replaceAll(/\"/, "") come not in titles with  "A" Force
-                                    //rowMap."${entry.key}" = rowMap."${entry.key}" ? rowMap."${entry.key}".replaceAll(/\"/, "") : rowMap."${entry.key}"
-                                    rowMap."${entry.key}" = rowMap."${entry.key}" ? rowMap."${entry.key}".replaceAll("\\x00", "") : rowMap."${entry.key}"
-                                }
-                                if(rowMap.publication_title != null) {
-                                    rowMap.rowIndex = r
-                                    result << rowMap
-                                }
-                            }
-                            //log.debug("End kbart processing rows ${countRows}")
+                Map<String, Integer> headerMap = parser.headerMap.collectEntries { String header, Integer index ->
+                    String normalized = normalizeHeader(header)
+                    [(normalized): index]
+                }
+
+                Set<String> missingMinimumHeaders = minimumKbartStandard.findAll {
+                    !headerMap.containsKey(it)
+                } as Set
+
+                if (missingMinimumHeaders) {
+                    log.warn("KBART file does not have required headers: ${missingMinimumHeaders}")
+
+                    UpdatePackageInfo.withTransaction {
+                        String description = "KBART file does not have one or any of the headers: ${minimumKbartStandard.join(', ')}. "
+                        if(lastUpdateURL && updatePackageInfo.automaticUpdate){
+                            description = description+ "File from URL: ${lastUpdateURL}"
                         }
-                    }else {
-                        log.warn("no delimiter $delimiter: ${lastUpdateURL}")
+                        updatePackageInfo.description = description
+                        updatePackageInfo.status = RDStore.UPDATE_STATUS_FAILED
+                        updatePackageInfo.endTime = new Date()
+                        updatePackageInfo.updateUrl = lastUpdateURL
+                        updatePackageInfo.countPreviouslyTippsInWekb = updatePackageInfo.pkg.getTippCountWithoutRemoved()
+                        updatePackageInfo.countNowTippsInWekb = updatePackageInfo.pkg.getTippCountWithoutRemoved()
+                        updatePackageInfo.countCurrentTipps = updatePackageInfo.pkg.getCurrentTippCount()
+                        updatePackageInfo.countDeletedTipps = updatePackageInfo.pkg.getDeletedTippCount()
+                        updatePackageInfo.save()
+                    }
 
-                        UpdatePackageInfo.withTransaction {
-                            String description = "Separator for the KBART was not recognized. The following separators are recognized: Tab, comma, semicolons. "
-                            if(lastUpdateURL && updatePackageInfo.automaticUpdate){
-                                description = description+ "File from URL: ${lastUpdateURL}"
+                    return
+                }
+
+                headerMap.keySet().each { String header ->
+                    if (!supportedHeaders.contains(header)) {
+                        log.info("Unhandled parameter type ${header}, ignoring ...")
+                    }
+                }
+
+                int rowIndex = 1
+
+                parser.each { CSVRecord record ->
+                    Map rowMap = [:]
+
+                    supportedHeaders.each { String header ->
+                        if (headerMap.containsKey(header)) {
+                            String value = cleanValue(record.get(header))
+
+                            if (value) {
+                                rowMap[header] = value
                             }
-                            updatePackageInfo.description = description
-                            updatePackageInfo.status = RDStore.UPDATE_STATUS_FAILED
-                            updatePackageInfo.endTime = new Date()
-                            updatePackageInfo.updateUrl = lastUpdateURL
-                            updatePackageInfo.countPreviouslyTippsInWekb = updatePackageInfo.pkg.getTippCountWithoutRemoved()
-                            updatePackageInfo.countNowTippsInWekb = updatePackageInfo.pkg.getTippCountWithoutRemoved()
-                            updatePackageInfo.countCurrentTipps = updatePackageInfo.pkg.getCurrentTippCount()
-                            updatePackageInfo.countDeletedTipps = updatePackageInfo.pkg.getDeletedTippCount()
-                            updatePackageInfo.save()
                         }
                     }
-                }else {
+
+                    if (rowMap.publication_title) {
+                        rowMap.rowIndex = rowIndex
+                        result << rowMap
+                    }
+
+                    rowIndex++
+                }
+
+                countRows = rowIndex - 1
+
+                if(countRows == 0){
                     log.warn("KBART file is empty:  ${lastUpdateURL}")
                     UpdatePackageInfo.withTransaction {
                         String description = "KBART file is empty. "
@@ -1106,5 +1071,18 @@ class KbartProcessService {
             log.info("No UpdatePackageInfos to clean. Leave the last ${updateInfosCount} UpdatePackageInfos")
         }
 
+    }
+
+    String normalizeHeader(String header) {
+        header
+                ?.replaceFirst(/^\uFEFF/, "")
+                ?.trim()
+                ?.toLowerCase()
+    }
+
+    String cleanValue(String value) {
+        value
+                ?.replace("\r", "")
+                ?.replaceAll("\\x00", "")
     }
 }
