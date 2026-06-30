@@ -596,8 +596,10 @@ class GlobalSearchTemplatesService {
                                         hide       : true
                                 ],
                                 [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.Vendor',
                                         qparam     : 'qp_vendor_id',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'vendors.vendor.id', 'type': 'java.lang.Long'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'placeHolderForVendor'],
                                         hide       : true
                                 ],
                                 [
@@ -840,8 +842,10 @@ class GlobalSearchTemplatesService {
                                         hide       : true
                                 ],
                                 [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.Vendor',
                                         qparam     : 'qp_vendor_id',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'vendors.vendor.id', 'type': 'java.lang.Long'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'placeHolderForVendor'],
                                         hide       : true
                                 ],
                                 [
