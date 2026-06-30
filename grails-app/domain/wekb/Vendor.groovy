@@ -59,6 +59,7 @@ class Vendor extends AbstractBase implements Auditable {
     invoiceDispatchs: VendorInvoiceDispatch,
     electronicDeliveryDelays: VendorElectronicDeliveryDelay,
     variantNames        : ComponentVariantName,
+    ids: Identifier
   ]
 
   static mapping = {
