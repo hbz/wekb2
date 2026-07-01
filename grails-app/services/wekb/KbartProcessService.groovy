@@ -894,14 +894,22 @@ class KbartProcessService {
 
                 CSVParser parser = format.parse(reader)
 
-                Map<String, Integer> headerMap = parser.headerMap.collectEntries { String header, Integer index ->
-                    String normalized = normalizeHeader(header)
-                    [(normalized): index]
+
+                Map<String, String> normalizedToOriginalHeader = [:]
+
+                parser.headerMap.each { String originalHeader, Integer index ->
+                    String normalizedHeader = normalizeHeader(originalHeader)
+                    normalizedToOriginalHeader[normalizedHeader] = originalHeader
                 }
 
-                Set<String> missingMinimumHeaders = minimumKbartStandard.findAll {
-                    !headerMap.containsKey(it)
-                } as Set
+                Set<String> missingMinimumHeaders = []
+
+                minimumKbartStandard.each { requiredHeader ->
+                    if (!normalizedToOriginalHeader.containsKey(requiredHeader)) {
+                        missingMinimumHeaders << requiredHeader
+                    }
+                }
+
 
                 if (missingMinimumHeaders) {
                     log.warn("KBART file does not have required headers: ${missingMinimumHeaders}")
@@ -925,9 +933,9 @@ class KbartProcessService {
                     return
                 }
 
-                headerMap.keySet().each { String header ->
-                    if (!supportedHeaders.contains(header)) {
-                        log.info("Unhandled parameter type ${header}, ignoring ...")
+                normalizedToOriginalHeader.keySet().each { String normalizedHeader ->
+                    if (!supportedHeaders.contains(normalizedHeader)) {
+                        log.info("Unhandled parameter type ${normalizedHeader}, ignoring ...")
                     }
                 }
 
@@ -936,12 +944,14 @@ class KbartProcessService {
                 parser.each { CSVRecord record ->
                     Map rowMap = [:]
 
-                    supportedHeaders.each { String header ->
-                        if (headerMap.containsKey(header)) {
-                            String value = cleanValue(record.get(header))
+                    supportedHeaders.each { String normalizedHeader ->
+                        String originalHeader = normalizedToOriginalHeader[normalizedHeader]
+
+                        if (originalHeader != null && record.isMapped(originalHeader)) {
+                            String value = cleanValue(record.get(originalHeader))
 
                             if (value) {
-                                rowMap[header] = value
+                                rowMap[normalizedHeader] = value
                             }
                         }
                     }
@@ -955,6 +965,8 @@ class KbartProcessService {
                 }
 
                 countRows = rowIndex - 1
+
+                reader.close()
 
                 if(countRows == 0){
                     log.warn("KBART file is empty:  ${lastUpdateURL}")
