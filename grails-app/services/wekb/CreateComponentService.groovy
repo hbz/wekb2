@@ -861,9 +861,9 @@ class CreateComponentService {
                     kbartSource.automaticUpdates = map.automaticUpdates
                 }
 
-                if (map.targetNamespace) {
+                /*if (map.targetNamespace) {
                     kbartSource.targetNamespace = IdentifierNamespace.get(map.targetNamespace)
-                }
+                }*/
                 if (kbartSource.save(flush: true) || kbartSource.isAttached()) {
 
                     if(curatoryGroups) {
