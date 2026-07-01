@@ -98,7 +98,7 @@ class SemanticInplaceTagLib {
             out << "</a>"
         } else {
             if (!attrs.disabled) {
-                out << "<span class=\"${attrs.class ?: ''}\">"
+                out << "<span class=\"${attrs.class ?: ''}\" style=\"white-space: pre-wrap;\">"
                 if (body) {
                     out << body()
                 } else {
@@ -596,6 +596,44 @@ class SemanticInplaceTagLib {
         }
 
         result
+    }
+
+    def dropdownWithExplanations = { attrs, body ->
+        if (!attrs.name) {
+            throwTagError("Tag [ui:dropdownWithExplanations] is missing required attribute [name]")
+        }
+        if (!attrs.containsKey('from')) {
+            throwTagError("Tag [ui:dropdownWithExplanations] is missing required attribute [from]")
+        }
+
+        String id           = attrs.id ?: ''
+        String cssClass     = attrs.class ?: ''
+        String noSelection  = attrs.noSelection ?: ''
+
+        def optionKey = attrs.remove('optionKey')
+        def optionValue = attrs.remove('optionValue')
+        def optionExpl = attrs.remove('optionExpl')
+
+        out << '<div class="ui dropdown selection ' + cssClass + '" id="' + id + '">'
+        out <<     '<input type="hidden" name="' + attrs.name + '"' + (attrs.value ? ' value="' + attrs.value + '">' : '>')
+        out <<     '<i class="dropdown icon"></i>'
+        out <<     '<div class="default text">' + noSelection + '</div>'
+        out <<     '<div class="menu">'
+
+        attrs.from.each { el ->
+            out << '<div class="item" data-value="'
+            if(optionKey) {
+                out << el[optionKey]
+            }
+            out << '">'
+            if(el[optionExpl]) {
+                out << '<span class="description">' + el[optionExpl] + '</span>'
+            }
+            out << '<span class="text">'+el[optionValue].toString().encodeAsHTML()+'</span>'
+            out << '</div>'
+        }
+        out <<     '</div>'
+        out << '</div>'
     }
 
 

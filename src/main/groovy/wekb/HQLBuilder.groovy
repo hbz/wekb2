@@ -404,6 +404,10 @@ public class HQLBuilder {
                 hql_builder_context."${addToQuery}".add("${crit.defn.contextTree.negate ? 'not ' : ''} o in (select p.provider from Package as p join p.vendors as vendor_pkg where vendor_pkg.vendor = :${crit.defn.qparam}) ");
                 hql_builder_context.bindvars[crit.defn.qparam] = value
               }
+                if (baseclass.toString() == 'class wekb.Package') {
+                    hql_builder_context."${addToQuery}".add("${crit.defn.contextTree.negate ? 'not ' : ''} o in (select vendor_pkg.pkg from Package as p join p.vendors as vendor_pkg where vendor_pkg.vendor = :${crit.defn.qparam}) ");
+                    hql_builder_context.bindvars[crit.defn.qparam] = value
+                }
             }
           }
         }

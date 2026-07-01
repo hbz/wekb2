@@ -1,4 +1,4 @@
-<%@ page import="wekb.Package; wekb.helper.RCConstants; wekb.RefdataCategory;" %>
+<%@ page import="wekb.IdentifierNamespace; wekb.RefdataValue; wekb.Package; wekb.helper.RCConstants; wekb.RefdataCategory;" %>
 <g:set var="counter" value="${offset}"/>
 
 
@@ -15,8 +15,7 @@
         </tr>
         <tr>
             <th>#</th>
-            <th>Identifier Namespace Name</th>
-            <th>Identifier Namespace Value</th>
+            <th>Namespace</th>
             <th>Identifier</th>
             <th>Action</th>
         </tr>
@@ -39,16 +38,18 @@
                                         <td>${i + 1}</td>
                                         <td>
                                             ${identifier.namespace.name}
-                                        </td>
-                                        <td>
-                                            ${identifier.namespace.value}
+
+                                            <g:if test="${identifier.namespace.description_en}">
+                                                <div class="ui primary  label" data-tooltip="${identifier.namespace.description_en}">
+                                                    <i class="info icon"></i>
+                                                </div>
+                                            </g:if>
                                         </td>
                                         <td>
                                             <semui:xEditable owner="${identifier}" field="value"/>
-                                            &nbsp;
-                                            <g:link controller="resource" action="show"
-                                                    id="${identifier.getOID()}"
-                                                    title="Jump to resource"><i class="fas fa-eye"></i></g:link>
+
+                                            <semui:showOutGoingLink text="Identifier Url" outGoingLink="${identifier.getURL()}"/>
+
                                         </td>
                                         <g:if test="${editable}">
                                             <td>
@@ -79,9 +80,13 @@
 
                                 <div class="field">
                                     <label>Identifier Namespace</label>
-                                    <semui:simpleReferenceDropdown name="identifierNamespace"
-                                                                   baseClass="wekb.IdentifierNamespace"
-                                                                   filter1="${row_obj.class.simpleName}"/>
+                                    <semui:dropdownWithExplanations id="identifierNamespace" name="identifierNamespace"
+                                                                    from="${IdentifierNamespace.findAllByTargetType(RefdataValue.findByValueAndOwner(d.class.simpleName, RefdataCategory.findByDesc(RCConstants.IDENTIFIER_NAMESPACE_TARGET_TYPE)), [sort: 'name'])}"
+                                                                    optionKey="id"
+                                                                    optionValue="name"
+                                                                    optionExpl="description_en"
+                                                                    required=""
+                                                                    class="ui search dropdown"/>
                                 </div>
 
                                 <div class="field">

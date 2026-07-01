@@ -13,11 +13,14 @@
         <semui:tabsItemWithoutLink tab="supplierInformation" activeTab="${params.activeTab}">
             Supplier information
         </semui:tabsItemWithoutLink>
+        <semui:tabsItemWithoutLink tab="identifiers" activeTab="${params.activeTab}" counts="${d.ids.size()}">
+            Identifiers
+        </semui:tabsItemWithoutLink>
         <semui:tabsItemWithoutLink tab="variantNames" activeTab="${params.activeTab}" counts="${d.variantNames.size()}">
             Alternate Names
         </semui:tabsItemWithoutLink>
 
-        <semui:tabsItemWithoutLink tab="packages" activeTab="${params.activeTab}" counts="${d.packages.size()}">
+        <semui:tabsItemWithoutLink tab="packages" activeTab="${params.activeTab}" counts="${d.getPackagesCount()}">
             Packages
         </semui:tabsItemWithoutLink>
 
@@ -25,6 +28,9 @@
             Providers
         </semui:tabsItemWithoutLink>
     </semui:tabs>
+
+
+    <g:render template="/templates/tabTemplates/identifiersTab" model="${[d: d]}"/>
 
 
     <semui:tabsItemContent tab="anOrder" defaultTab="anOrder" activeTab="${params.activeTab}">

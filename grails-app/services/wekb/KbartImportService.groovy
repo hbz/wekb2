@@ -1,6 +1,6 @@
 package wekb
 
-
+import org.springframework.context.MessageSource
 import wekb.helper.RCConstants
 import wekb.helper.RDStore
 import grails.gorm.transactions.Transactional
@@ -19,6 +19,7 @@ class KbartImportService {
     CleanupService cleanupService
 
     DateFormatService dateFormatService
+    MessageSource messageSource
 
 
     /*Platform platformUpsertDTO(platformDTO) {
@@ -1076,7 +1077,7 @@ class KbartImportService {
                 def pattern = ns.pattern ? ~"${ns.pattern}" : null
                 if (pattern && !(newValue ==~ pattern)) {
                     UpdateTippInfo updateTippInfo = new UpdateTippInfo(
-                            description: "$kbartProperty has wrong format to import.",
+                            description: "$kbartProperty has wrong format to import. "+messageSource.getMessage("identifier.create.pattern.fail.${ns.value.trim().toLowerCase()}", null, Locale.ENGLISH),
                             tipp: tipp,
                             startTime: new Date(),
                             endTime: new Date(),
@@ -2073,17 +2074,17 @@ class KbartImportService {
             identifierNameSpacesExistOnTipp << "package_ezb_anchor"
         }
 
-        // KBART -> zdb_id  -> identifiers['zdb']
+    /*    // KBART -> zdb_id  -> identifiers['zdb']
         if (tippMap.zdb_id) {
             result.changedTipp = createOrUpdateIdentifierForTipp(result, tipp, IdentifierNamespace.ZDB, tippMap.zdb_id, 'zdb_id', updatePackageInfo)
             identifierNameSpacesExistOnTipp << IdentifierNamespace.ZDB
-        }
+        }*/
 
-        // KBART -> ezb_id -> identifiers['ezb']
+/*        // KBART -> ezb_id -> identifiers['ezb']
         if (tippMap.ezb_id) {
             result.changedTipp = createOrUpdateIdentifierForTipp(result, tipp, IdentifierNamespace.EZB, tippMap.ezb_id, 'ezb_id', updatePackageInfo)
             identifierNameSpacesExistOnTipp << IdentifierNamespace.EZB
-        }
+        }*/
 
         if (tipp.publicationType == RDStore.TIPP_PUBLIC_TYPE_SERIAL) {
             // KBART -> print_identifier-> identifiers
@@ -2481,7 +2482,7 @@ class KbartImportService {
                                     result.changedTipp = createOrUpdateIdentifierForTipp(result, tipp, "package_ezb_anchor", tippMap.kbartRowMap.package_ezb_anchor, 'package_ezb_anchor', updatePackageInfo)
                                 }
 
-                                // KBART -> zdb_id  -> identifiers['zdb']
+                               /* // KBART -> zdb_id  -> identifiers['zdb']
                                 if (tippMap.kbartRowMap.zdb_id) {
                                     result.changedTipp = createOrUpdateIdentifierForTipp(result, tipp, IdentifierNamespace.ZDB, tippMap.kbartRowMap.zdb_id, 'zdb_id', updatePackageInfo)
                                 }
@@ -2489,7 +2490,7 @@ class KbartImportService {
                                 // KBART -> ezb_id -> identifiers['ezb']
                                 if (tippMap.kbartRowMap.ezb_id) {
                                     result.changedTipp = createOrUpdateIdentifierForTipp(result, tipp, IdentifierNamespace.EZB, tippMap.kbartRowMap.ezb_id, 'ezb_id', updatePackageInfo)
-                                }
+                                }*/
 
                                 if (tipp.publicationType == RDStore.TIPP_PUBLIC_TYPE_SERIAL) {
                                     // KBART -> print_identifier-> identifiers

@@ -194,16 +194,20 @@ class GlobalSearchTemplatesService {
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'targetType']
                                 ],
                                 [
-                                        prompt     : 'Category',
-                                        qparam     : 'qp_family',
-                                        placeholder: 'Category',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'family', 'wildcard': 'B']
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.YN,
+                                        prompt     : 'Hard Data',
+                                        qparam     : 'qp_hardData',
+                                        placeholder: 'Hard Data',
+                                        propType   : 'Boolean',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'isHardData'],
                                 ],
                         ],
                         qbeResults: [
                                 [heading: 'Name', property: 'name', sort: 'name'],
                                 [heading: 'Value', property: 'value', link: true, sort: 'value', linkInfo: 'Link to Identifier Namespace'],
-                                [heading: 'Category', property: 'family', sort: 'family'],
+                                [heading: 'Hard Data', property: 'isHardData', sort: 'isHardData'],
                                 [heading: 'Target Type', property: 'targetType.value', sort: 'targetType.value'],
                                 [heading: 'Count', property: 'identifiersCount', sort: 'identifiersCount']
                         ]
@@ -592,8 +596,10 @@ class GlobalSearchTemplatesService {
                                         hide       : true
                                 ],
                                 [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.Vendor',
                                         qparam     : 'qp_vendor_id',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'vendors.vendor.id', 'type': 'java.lang.Long'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'placeHolderForVendor'],
                                         hide       : true
                                 ],
                                 [
@@ -744,17 +750,6 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'dropDown',
                                         baseClass  : 'wekb.RefdataValue',
-                                        filter1    : RCConstants.PACKAGE_CONSISTENT,
-                                        prompt     : 'Consistent Type',
-                                        msgCode     : 'package.consistent',
-                                        qparam     : 'qp_consistent',
-                                        placeholder: 'Consistent Type',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'consistent'],
-                                        advancedSearch: [title: "More filter options ...", category: 'Package']
-                                ],
-                                [
-                                        type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
                                         filter1    : RCConstants.PACKAGE_PAYMENT_TYPE,
                                         prompt     : 'Paid',
                                         msgCode     : 'package.paymentType',
@@ -847,8 +842,10 @@ class GlobalSearchTemplatesService {
                                         hide       : true
                                 ],
                                 [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.Vendor',
                                         qparam     : 'qp_vendor_id',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'vendors.vendor.id', 'type': 'java.lang.Long'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'placeHolderForVendor'],
                                         hide       : true
                                 ],
                                 [
@@ -1004,17 +1001,6 @@ class GlobalSearchTemplatesService {
                                         qparam     : 'qp_breakable',
                                         placeholder: 'Breakable Type',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'breakable'],
-                                        advancedSearch: [title: "More filter options ...", category: 'Package']
-                                ],
-                                [
-                                        type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
-                                        filter1    : RCConstants.PACKAGE_CONSISTENT,
-                                        prompt     : 'Consistent Type',
-                                        msgCode     : 'package.consistent',
-                                        qparam     : 'qp_consistent',
-                                        placeholder: 'Consistent Type',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'consistent'],
                                         advancedSearch: [title: "More filter options ...", category: 'Package']
                                 ],
                                 [
@@ -3108,6 +3094,7 @@ class GlobalSearchTemplatesService {
                                 [heading: 'Removed Titles ', property: 'countRemovedTipps', sort: 'countRemovedTipps', jumpToLink: '/search/componentSearch/wekb.UpdatePackageInfo:objectID?qbe=g:updateTippInfos&qp_aup_id=objectID&&qp_type='+RefdataValue.class.name + ':' + RDStore.UPDATE_TYPE_REMOVED_TITLE.id, linkInfo: 'Link to Removed Titles'],
                                 [heading: 'New Titles', property: 'countNewTipps', sort: 'countNewTipps', jumpToLink: '/search/componentSearch/wekb.UpdatePackageInfo:objectID?qbe=g:updateTippInfos&qp_aup_id=objectID&&qp_type='+RefdataValue.class.name + ':' + RDStore.UPDATE_TYPE_NEW_TITLE.id, linkInfo: 'Link to New Titles'],
                                 [heading: 'Invalid Titles', property: 'countInValidTipps', sort: 'countInValidTipps', jumpToLink: '/search/componentSearch/wekb.UpdatePackageInfo:objectID?qbe=g:updateTippInfos&qp_aup_id=objectID&&qp_type='+RefdataValue.class.name + ':' + RDStore.UPDATE_TYPE_INVAILD_TITLE.id, linkInfo: 'Link to Invalid Titles'],
+                                [heading: 'Deleted Titles by Process', property: 'countDeletedTippsByProcess', sort: 'countDeletedTippsByProcess', jumpToLink: '/search/componentSearch/wekb.UpdatePackageInfo:objectID?qbe=g:updateTippInfos&qp_aup_id=objectID&&qp_type='+RefdataValue.class.name + ':' + RDStore.UPDATE_TYPE_DELETED_TITLE.id, linkInfo: 'Link to Deleted Titles'],
 
                         ]
                 ]

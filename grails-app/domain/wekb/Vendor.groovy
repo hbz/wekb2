@@ -59,6 +59,7 @@ class Vendor extends AbstractBase implements Auditable {
     invoiceDispatchs: VendorInvoiceDispatch,
     electronicDeliveryDelays: VendorElectronicDeliveryDelay,
     variantNames        : ComponentVariantName,
+    ids: Identifier
   ]
 
   static mapping = {
@@ -203,4 +204,11 @@ class Vendor extends AbstractBase implements Auditable {
     Vendor.executeQuery("select count(*) from Org as o where o in (select p.provider from Package as p join p.vendors as vendor_pkg where vendor_pkg.vendor = :vendor)", [vendor: this])[0]
 
   }
+
+    @Transient
+    int getPackagesCount(){
+
+        PackageVendor.executeQuery("select count(*) from PackageVendor as o where o.vendor = :vendor and o.pkg.status != :status", [vendor: this, status: RDStore.KBC_STATUS_REMOVED])[0]
+
+    }
 }

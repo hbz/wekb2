@@ -5,6 +5,7 @@ Update.Status;Info;Info;Info
 Update.Status;Warning;Warning;Warning
 Update.Type;New Title;New Title;New Title
 Update.Type;Changed Title;Changed Title;Changed Title
+Update.Type;Deleted Title;Deleted Title;Deleted Title
 Update.Type;Removed Title;Removed Title;Removed Title
 Update.Type;Failed Title;Failed Title;Failed Title
 Update.Type;Invaild Title;Invaild Title;Invaild Title
@@ -288,6 +289,7 @@ Currency;GBP;GBP;GBP
 Currency;USD;USD;USD
 DeletedComponent.Status;Permanently Deleted;Permanently Deleted;Permanently Deleted
 IdentifierNamespace.TargetType;Org;Provider;Provider
+IdentifierNamespace.TargetType;Vendor;Vendor;Vendor
 IdentifierNamespace.TargetType;Package;Package;Package
 IdentifierNamespace.TargetType;TitleInstancePackagePlatform;TitleInstancePackagePlatform;TitleInstancePackagePlatform
 Job.Type;AutoUpdatePackagesJob;AutoUpdatePackagesJob;AutoUpdatePackagesJob
@@ -543,9 +545,7 @@ Source.DataSupplyMethod;HTTP Url;HTTP Url;HTTP Url
 Source.DataSupplyMethod;Other;Other;Other
 Source.Frequency;Daily;Daily;Daily
 Source.Frequency;Monthly;Monthly;Monthly
-Source.Frequency;Quarterly;Quarterly;Quarterly
 Source.Frequency;Weekly;Weekly;Weekly
-Source.Frequency;Yearly;Yearly;Yearly
 TIPPCoverageStatement.CoverageDepth;Abstracts;Abstracts;Abstracts
 TIPPCoverageStatement.CoverageDepth;Fulltext;Fulltext;Fulltext
 TIPPCoverageStatement.CoverageDepth;Selected Articles;Selected Articles;Selected Articles

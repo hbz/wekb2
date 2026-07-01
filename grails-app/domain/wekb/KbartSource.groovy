@@ -164,9 +164,9 @@ class KbartSource extends AbstractBase implements Auditable {
     }
 
     boolean needsUpdate() {
-        if (lastRun == null) {
+       /* if (lastRun == null) {
             return true
-        }
+        }*/
         if (frequency != null) {
             LocalDate today = LocalDateTime.now().toLocalDate()
             def interval = intervals.get(frequency.value)

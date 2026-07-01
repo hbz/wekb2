@@ -1,11 +1,10 @@
-<%@ page import="wekb.ClassUtils; wekb.helper.RDStore; wekb.TitleInstancePackagePlatform;" %>
+<%@ page import="wekb.RefdataValue; wekb.helper.RCConstants; wekb.RefdataCategory; wekb.ClassUtils; wekb.helper.RDStore; wekb.TitleInstancePackagePlatform;" %>
 <semui:tabsItemContent tab="identifiers" class="${activeTab ? 'active' : ''}" defaultTab="${defaultTab}" activeTab="${params.activeTab}" counts="${d.ids.size()}">
 
     <table class="ui selectable striped sortable celled table">
         <thead>
         <tr>
-            <th>Identifier Namespace Name</th>
-            <th>Identifier Namespace Value</th>
+            <th>Namespace</th>
             <th>Identifier</th>
             <g:if test="${editable}">
                 <th>Actions</th>
@@ -17,9 +16,12 @@
                 <tr>
                     <td>
                         ${identifier.namespace.name}
-                    </td>
-                    <td>
-                        ${identifier.namespace.value}
+
+                        <g:if test="${identifier.namespace.description_en}">
+                            <span data-position="right" data-tooltip="${identifier.namespace.description_en}">
+                                <i class="small circular info icon"></i>
+                            </span>
+                        </g:if>
                     </td>
                     <td>
 
@@ -36,7 +38,7 @@
                             </span>
                         </g:else>
 
-                        <g:if test="${identifier.namespace.value == 'doi'}">
+                       %{-- <g:if test="${identifier.namespace.value == 'doi'}">
                             <g:set value="${identifier.value ? (identifier.value.startsWith('http') ? identifier.value : 'https://www.doi.org/'+identifier.value) : ""}"
                                    var="url"/>
                         </g:if>
@@ -47,16 +49,18 @@
                         <g:else>
                             <g:set value="${identifier.value ? (identifier.value.startsWith('http') ? identifier.value : "") : ""}"
                                    var="url"/>
-                        </g:else>
+                        </g:else>--}%
 
 
 
-                        <g:if test="${url}">
+                     %{--   <g:if test="${url}">
                             &nbsp;<a aria-label="${identifier.value}" href="${url}" target="_blank"><i
                                 class="external alternate icon"></i></a>
-                        </g:if>
+                        </g:if>--}%
 
-                            <g:link controller="resource" action="show" id="${identifier.getOID()}" title="Jump to resource"><i class="fas fa-eye"></i></g:link>
+                        <semui:showOutGoingLink text="Identifier Url" outGoingLink="${identifier.getURL()}"/>
+
+                        <g:link controller="resource" action="show" id="${identifier.getOID()}" title="Identifier Infos"><i class="equals icon"></i></g:link>
                     </td>
                     <g:if test="${editable}">
                         <td>
@@ -88,9 +92,14 @@
 
                         <div class="field">
                             <label>Identifier Namespace</label>
-                            <semui:simpleReferenceDropdown name="identifierNamespace"
-                                                           baseClass="wekb.IdentifierNamespace"
-                                                           filter1="${d.class.simpleName}"/>
+
+                            <semui:dropdownWithExplanations id="identifierNamespace" name="identifierNamespace"
+                                                             from="${wekb.IdentifierNamespace.findAllByTargetType(RefdataValue.findByValueAndOwner(d.class.simpleName, RefdataCategory.findByDesc(RCConstants.IDENTIFIER_NAMESPACE_TARGET_TYPE)), [sort: 'name'])}"
+                                                             optionKey="id"
+                                                             optionValue="name"
+                                                             optionExpl="description_en"
+                                                             required=""
+                                                             class="ui search dropdown"/>
                         </div>
 
                         <div class="field">
