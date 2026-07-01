@@ -886,6 +886,7 @@ class KbartProcessService {
 
                 CSVFormat format = CSVFormat.DEFAULT.builder()
                         .setDelimiter(delimiterChar)
+                        .setQuote(null)
                         .setHeader()
                         .setSkipHeaderRecord(true)
                         .setIgnoreEmptyLines(false)
