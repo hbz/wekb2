@@ -889,6 +889,7 @@ class KbartProcessService {
                         .setQuote(null)
                         .setHeader()
                         .setSkipHeaderRecord(true)
+                        .setAllowMissingColumnNames(true)
                         .setIgnoreEmptyLines(false)
                         .setTrim(false)
                         .build()
@@ -898,10 +899,13 @@ class KbartProcessService {
 
                 Map<String, String> normalizedToOriginalHeader = [:]
 
-                parser.headerMap.each { String originalHeader, Integer index ->
-                    String normalizedHeader = normalizeHeader(originalHeader)
-                    normalizedToOriginalHeader[normalizedHeader] = originalHeader
-                }
+                    parser.headerMap.each { String originalHeader, Integer index ->
+                        String normalizedHeader = normalizeHeader(originalHeader)
+
+                        if (normalizedHeader) {
+                            normalizedToOriginalHeader[normalizedHeader] = originalHeader
+                        }
+                    }
 
                 Set<String> missingMinimumHeaders = []
 
