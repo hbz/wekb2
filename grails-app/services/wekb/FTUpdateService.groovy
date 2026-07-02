@@ -257,7 +257,7 @@ class FTUpdateService {
           result.contacts.add([  content: contact.content,
                                  contentType: contact.contentType?.value,
                                  type: contact.type?.value,
-                                 language: contact.language?.value])
+                                 languages: contact.languages?.value])
         }
         result.homepage = kbc.homepage
 
