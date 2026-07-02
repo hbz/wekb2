@@ -27,7 +27,6 @@
                 <th>Platform</th>
                 <th>Source</th>
                 <th>Frequency</th>
-                <th>Title ID Namespace</th>
                 <th>Automated Updates</th>
             </tr>
             </thead>
@@ -62,13 +61,6 @@
                             ${pkg.kbartSource.frequency.getI10n('value')}
                         </g:if>
                     </td>
-
-                    <td>
-                        <g:if test="${pkg.kbartSource}">
-                            ${IdentifierNamespace.findByValueAndTargetType('title_id', RDStore.IDENTIFIER_NAMESPACE_TARGET_TYPE_TIPP).value}
-                        </g:if>
-                    </td>
-
                     <td>
                         <g:if test="${pkg.kbartSource}">
                             ${pkg.kbartSource.automaticUpdates ? 'Yes' : 'No'}

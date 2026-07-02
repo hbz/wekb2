@@ -104,7 +104,7 @@ class FtpConnectService {
         String username = kbartSource.ftpUsername
         String password = kbartSource.ftpPassword
 
-        String remoteDir = kbartSource.ftpDirectory
+        String remoteDir = kbartSource.ftpDirectory ?: '/'
         if(remoteDir.endsWith("/")){
             remoteDir =remoteDir+kbartSource.ftpFileName
         }else{

@@ -1,4 +1,20 @@
-<%@ page import="wekb.helper.RCConstants" %>
+<%@ page import="wekb.helper.RDStore; wekb.helper.RCConstants" %>
+
+<g:set var="overwriteEditable" value="${d.pkg.kbartSource ? false : editable}"/>
+
+<g:if test="${d.pkg.kbartSource}">
+    <div class="ui info icon message">
+
+        <div class="content wekb-inline-lists">
+            <div class="header">No editable rights by package with kbart source</div>
+            <div class="content">
+                You cannot edit this title because the package has a KBART source, and all changes are made via the KBART file.
+            </div>
+        </div>
+
+    </div>
+</g:if>
+
 <div class="ui segment">
     <div class="content wekb-inline-lists">
         <dl>
@@ -6,7 +22,7 @@
                 <g:message code="titleinstancepackageplatform.name"/>
             </dt>
             <dd>
-                <semui:xEditable owner="${d}" field="name" required="true"/>
+                <semui:xEditable owner="${d}" field="name" required="true" overwriteEditable="${overwriteEditable}"/>
             </dd>
         </dl>
         <dl>
@@ -43,6 +59,9 @@
                     </g:if>
                     <g:else>Empty</g:else>
                 </g:if>
+                <g:else>
+                    Automatic from Package
+                </g:else>
             </dd>
         </dl>
         <dl>
@@ -69,7 +88,7 @@
                 <g:message code="titleinstancepackageplatform.url"/>
             </dt>
             <dd>
-                <semui:xEditable owner="${d}" field="url" validation="url" outGoingLink="true" required="true"/>
+                <semui:xEditable owner="${d}" field="url" validation="url" outGoingLink="true" required="true" overwriteEditable="${overwriteEditable}"/>
             </dd>
         </dl>
         <dl>
@@ -77,7 +96,11 @@
                 <g:message code="default.status"/>
             </dt>
             <dd>
-                <semui:xEditableRefData owner="${d}" field="status" config="${RCConstants.COMPONENT_STATUS}"/>
+                <g:if test="${!d.status}">
+                    ${RDStore.KBC_STATUS_CURRENT.value_en}
+                </g:if><g:else>
+                    ${d.status.value_en}
+                </g:else>
                 %{--  <sec:ifAnyGranted roles="ROLE_SUPERUSER">
                       <semui:xEditableRefData owner="${d}" field="status" config="${RCConstants.COMPONENT_STATUS}"/>
                   </sec:ifAnyGranted>
@@ -92,7 +115,7 @@
             </dt>
             <dd>
                 <semui:xEditableRefData owner="${d}" field="publicationType"
-                                        config="${RCConstants.TIPP_PUBLICATION_TYPE}"/>
+                                        config="${RCConstants.TIPP_PUBLICATION_TYPE}" overwriteEditable="${overwriteEditable}"/>
             </dd>
         </dl>
         <dl>
@@ -100,7 +123,7 @@
                 <g:message code="titleinstancepackageplatform.medium"/>
             </dt>
             <dd>
-                <semui:xEditableRefData owner="${d}" field="medium" config="${RCConstants.TIPP_MEDIUM}"/>
+                <semui:xEditableRefData owner="${d}" field="medium" config="${RCConstants.TIPP_MEDIUM}" overwriteEditable="${overwriteEditable}"/>
             </dd>
         </dl>
         <dl>
@@ -116,7 +139,7 @@
                 <g:message code="titleinstancepackageplatform.firstAuthor"/>
             </dt>
             <dd>
-                <semui:xEditable owner="${d}" field="firstAuthor"/>
+                <semui:xEditable owner="${d}" field="firstAuthor" overwriteEditable="${overwriteEditable}"/>
             </dd>
         </dl>
         <dl>
@@ -124,7 +147,7 @@
                 <g:message code="titleinstancepackageplatform.firstEditor"/>
             </dt>
             <dd>
-                <semui:xEditable owner="${d}" field="firstEditor"/>
+                <semui:xEditable owner="${d}" field="firstEditor" overwriteEditable="${overwriteEditable}"/>
             </dd>
         </dl>
         <dl>
@@ -132,7 +155,7 @@
                 <g:message code="titleinstancepackageplatform.publisherName"/>
             </dt>
             <dd>
-                <semui:xEditable owner="${d}" field="publisherName"/>
+                <semui:xEditable owner="${d}" field="publisherName" overwriteEditable="${overwriteEditable}"/>
             </dd>
         </dl>
         <dl>
@@ -141,7 +164,7 @@
             </dt>
             <dd>
                 <semui:xEditable owner="${d}" type="date"
-                                 field="dateFirstInPrint"/>
+                                 field="dateFirstInPrint" overwriteEditable="${overwriteEditable}"/>
             </dd>
         </dl>
         <dl>
@@ -150,7 +173,7 @@
             </dt>
             <dd>
                 <semui:xEditable owner="${d}" type="date"
-                                 field="dateFirstOnline"/>
+                                 field="dateFirstOnline" overwriteEditable="${overwriteEditable}"/>
             </dd>
         </dl>
         <dl>
@@ -159,7 +182,7 @@
             </dt>
             <dd>
                 <semui:xEditable owner="${d}" type="date"
-                                 field="accessStartDate"/>
+                                 field="accessStartDate" overwriteEditable="${overwriteEditable}"/>
             </dd>
         </dl>
         <dl>
@@ -168,7 +191,7 @@
             </dt>
             <dd>
                 <semui:xEditable owner="${d}" type="date"
-                                 field="accessEndDate"/>
+                                 field="accessEndDate" overwriteEditable="${overwriteEditable}"/>
             </dd>
         </dl>
         <dl>
@@ -176,7 +199,7 @@
                 <g:message code="titleinstancepackageplatform.volumeNumber"/>
             </dt>
             <dd>
-                <semui:xEditable owner="${d}" field="volumeNumber"/>
+                <semui:xEditable owner="${d}" field="volumeNumber" overwriteEditable="${overwriteEditable}"/>
             </dd>
         </dl>
         <dl>
@@ -184,7 +207,7 @@
                 <g:message code="titleinstancepackageplatform.editionStatement"/>
             </dt>
             <dd>
-                <semui:xEditable owner="${d}" field="editionStatement"/>
+                <semui:xEditable owner="${d}" field="editionStatement" overwriteEditable="${overwriteEditable}"/>
             </dd>
         </dl>
         <dl>
@@ -193,7 +216,7 @@
             </dt>
             <dd>
                 <semui:xEditableRefData owner="${d}" field="accessType"
-                                        config="${RCConstants.TIPP_ACCESS_TYPE}"/>
+                                        config="${RCConstants.TIPP_ACCESS_TYPE}" overwriteEditable="${overwriteEditable}"/>
             </dd>
         </dl>
         <dl>
@@ -201,7 +224,7 @@
                 <g:message code="titleinstancepackageplatform.note"/>
             </dt>
             <dd>
-                <semui:xEditable owner="${d}" field="note"/>
+                <semui:xEditable owner="${d}" field="note" overwriteEditable="${overwriteEditable}"/>
             </dd>
         </dl>
         <dl>
@@ -209,7 +232,7 @@
                 <g:message code="titleinstancepackageplatform.lastChangedExternal"/>
             </dt>
             <dd>
-                <semui:xEditable owner="${d}" field="lastChangedExternal" type="date"/>
+                <semui:xEditable owner="${d}" field="lastChangedExternal" type="date" overwriteEditable="${overwriteEditable}"/>
             </dd>
 
         </dl>
