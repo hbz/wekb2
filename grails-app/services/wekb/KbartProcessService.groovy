@@ -866,8 +866,8 @@ class KbartProcessService {
 
                     UpdatePackageInfo.withTransaction {
                         String description = "Separator for the KBART was not recognized. The following separators are recognized: Tab, comma, semicolons. "
-                        if(lastUpdateURL && updatePackageInfo.automaticUpdate){
-                            description = description+ "File from URL: ${lastUpdateURL}"
+                        if (lastUpdateURL && updatePackageInfo.automaticUpdate) {
+                            description = description + "File from URL: ${lastUpdateURL}"
                         }
                         updatePackageInfo.description = description
                         updatePackageInfo.status = RDStore.UPDATE_STATUS_FAILED
@@ -879,8 +879,8 @@ class KbartProcessService {
                         updatePackageInfo.countDeletedTipps = updatePackageInfo.pkg.getDeletedTippCount()
                         updatePackageInfo.save()
                     }
-                    return
-                }
+
+                } else {
 
                 char delimiterChar = delimiter == "\\t" ? '\t' as char : delimiter.charAt(0)
 
@@ -917,8 +917,8 @@ class KbartProcessService {
 
                     UpdatePackageInfo.withTransaction {
                         String description = "KBART file does not have one or any of the headers: ${minimumKbartStandard.join(', ')}. "
-                        if(lastUpdateURL && updatePackageInfo.automaticUpdate){
-                            description = description+ "File from URL: ${lastUpdateURL}"
+                        if (lastUpdateURL && updatePackageInfo.automaticUpdate) {
+                            description = description + "File from URL: ${lastUpdateURL}"
                         }
                         updatePackageInfo.description = description
                         updatePackageInfo.status = RDStore.UPDATE_STATUS_FAILED
@@ -930,63 +930,64 @@ class KbartProcessService {
                         updatePackageInfo.countDeletedTipps = updatePackageInfo.pkg.getDeletedTippCount()
                         updatePackageInfo.save()
                     }
+                } else {
 
-                    return
-                }
-
-                normalizedToOriginalHeader.keySet().each { String normalizedHeader ->
-                    if (!supportedHeaders.contains(normalizedHeader)) {
-                        log.info("Unhandled parameter type ${normalizedHeader}, ignoring ...")
+                    normalizedToOriginalHeader.keySet().each { String normalizedHeader ->
+                        if (!supportedHeaders.contains(normalizedHeader)) {
+                            log.info("Unhandled parameter type ${normalizedHeader}, ignoring ...")
+                        }
                     }
-                }
 
-                int rowIndex = 1
+                    int rowIndex = 1
 
-                parser.each { CSVRecord record ->
-                    Map rowMap = [:]
+                    parser.each { CSVRecord record ->
+                        Map rowMap = [:]
 
-                    supportedHeaders.each { String normalizedHeader ->
-                        String originalHeader = normalizedToOriginalHeader[normalizedHeader]
+                        supportedHeaders.each { String normalizedHeader ->
+                            String originalHeader = normalizedToOriginalHeader[normalizedHeader]
 
-                        if (originalHeader != null && record.isMapped(originalHeader)) {
-                            String value = cleanValue(record.get(originalHeader))
+                            if (originalHeader != null && record.isMapped(originalHeader)) {
+                                String value = cleanValue(record.get(originalHeader))
 
-                            if (value) {
-                                rowMap[normalizedHeader] = value
+                                if (value) {
+                                    rowMap[normalizedHeader] = value
+                                }
                             }
                         }
-                    }
 
-                    if (rowMap.publication_title) {
-                        rowMap.rowIndex = rowIndex
-                        result << rowMap
-                    }
-
-                    rowIndex++
-                }
-
-                countRows = rowIndex - 1
-
-                reader.close()
-
-                if(countRows == 0){
-                    log.warn("KBART file is empty:  ${lastUpdateURL}")
-                    UpdatePackageInfo.withTransaction {
-                        String description = "KBART file is empty. "
-                        if(lastUpdateURL && updatePackageInfo.automaticUpdate){
-                            description = description+ "File from URL: ${lastUpdateURL}"
+                        if (rowMap.publication_title) {
+                            rowMap.rowIndex = rowIndex
+                            result << rowMap
                         }
-                        updatePackageInfo.description = description
-                        updatePackageInfo.status = RDStore.UPDATE_STATUS_FAILED
-                        updatePackageInfo.endTime = new Date()
-                        updatePackageInfo.updateUrl = lastUpdateURL
-                        updatePackageInfo.countPreviouslyTippsInWekb = updatePackageInfo.pkg.getTippCountWithoutRemoved()
-                        updatePackageInfo.countNowTippsInWekb = updatePackageInfo.pkg.getTippCountWithoutRemoved()
-                        updatePackageInfo.countCurrentTipps = updatePackageInfo.pkg.getCurrentTippCount()
-                        updatePackageInfo.countDeletedTipps = updatePackageInfo.pkg.getDeletedTippCount()
-                        updatePackageInfo.save()
+
+                        rowIndex++
+                    }
+
+                    countRows = rowIndex - 1
+
+                    reader.close()
+
+
+                    if (countRows == 0) {
+                        log.warn("KBART file is empty:  ${lastUpdateURL}")
+                        UpdatePackageInfo.withTransaction {
+                            String description = "KBART file is empty. "
+                            if (lastUpdateURL && updatePackageInfo.automaticUpdate) {
+                                description = description + "File from URL: ${lastUpdateURL}"
+                            }
+                            updatePackageInfo.description = description
+                            updatePackageInfo.status = RDStore.UPDATE_STATUS_FAILED
+                            updatePackageInfo.endTime = new Date()
+                            updatePackageInfo.updateUrl = lastUpdateURL
+                            updatePackageInfo.countPreviouslyTippsInWekb = updatePackageInfo.pkg.getTippCountWithoutRemoved()
+                            updatePackageInfo.countNowTippsInWekb = updatePackageInfo.pkg.getTippCountWithoutRemoved()
+                            updatePackageInfo.countCurrentTipps = updatePackageInfo.pkg.getCurrentTippCount()
+                            updatePackageInfo.countDeletedTipps = updatePackageInfo.pkg.getDeletedTippCount()
+                            updatePackageInfo.save()
+                        }
                     }
                 }
+            }
             } catch (Exception e) {
                 log.error("Error by KbartProcess: ${e.message}")
                 int previouslyTipps = TitleInstancePackagePlatform.executeQuery(
