@@ -167,6 +167,7 @@ class KbartProcessService {
         log.info("Begin kbartImportProcess Package ($pkg.name)")
 
         boolean processFailed = false
+        String processFailedText = "An error occurred while processing the KBART file. More information can be seen in the system log. "
 
         RefdataValue status_current = RDStore.KBC_STATUS_CURRENT
         RefdataValue status_deleted = RDStore.KBC_STATUS_DELETED
@@ -175,11 +176,9 @@ class KbartProcessService {
 
         List listStatus = [status_current, status_expected, status_deleted, status_retired]
 
-        Map headerOfKbart = kbartRows[0]
+        Map firstRow = kbartRows[0]
 
-        //println("Header = ${headerOfKbart}")
-
-        kbartRows.remove(0)
+        //kbartRows.remove(0)
 
         //Needed if kbart not wekb standard
         boolean setAllTippsNotInKbartToDeleted = true
@@ -187,7 +186,7 @@ class KbartProcessService {
 
 
        if(kbartRows.size() > 0){
-            if (headerOfKbart.containsKey("status")) {
+            if (firstRow.containsKey("status")) {
                 log.info("kbart has status field and is wekb standard")
                 setAllTippsNotInKbartToDeleted = false
                 kbartHasWekbFields = true
@@ -233,7 +232,7 @@ class KbartProcessService {
             log.info("Matched package has ${previouslyTipps} TIPPs")
 
             if(onlyRowsWithLastChanged){
-                if(headerOfKbart.containsKey("last_changed") && (pkg.kbartSource)) {
+                if(firstRow.containsKey("last_changed") && (pkg.kbartSource)) {
                     LocalDate currentLastChangedInKbart = convertToLocalDateViaInstant(lastChangedInKbart)
                     LocalDate lastUpdated = convertToLocalDateViaInstant(pkg.kbartSource.lastRun)
                     if(lastUpdated && currentLastChangedInKbart && currentLastChangedInKbart.isBefore(lastUpdated)){
@@ -556,10 +555,10 @@ class KbartProcessService {
 
             countInvalidKbartRowsForTipps = invalidKbartRowsForTipps.size()
 
-            if (kbartRows.size() > 0 && kbartRows.size() > countInvalidKbartRowsForTipps) {
-            } else {
+            if (kbartRows.size() > 0 && countInvalidKbartRowsForTipps > 0 && countInvalidKbartRowsForTipps > kbartRows.size()) {
                 log.info("imported Package $pkg.name contains no valid TIPPs")
                 processFailed = true
+                processFailedText = "The Kbart contains no valid Titles. Please check the titles on rows: ${invalidKbartRowsForTipps.join(', ')} ."
             }
 
 
@@ -764,7 +763,7 @@ class KbartProcessService {
                 Package aPackage = Package.get(updatePackageInfo.pkg.id)
                 //UpdatePackageInfo newUpdatePackageInfo = new UpdatePackageInfo(pkg: aPackage, startTime: updatePackageInfo.startTime, automaticUpdate: updatePackageInfo.automaticUpdate, kbartHasWekbFields:  updatePackageInfo.kbartHasWekbFields, lastRun:  updatePackageInfo.lastRun)
                 updatePackageInfo.endTime = new Date()
-                String description2 = "An error occurred while processing the KBART file. More information can be seen in the system log. "
+                String description2 = processFailedText
                 if(lastUpdateURL && updatePackageInfo.automaticUpdate){
                     description2 = description2+ "File from URL: ${lastUpdateURL}"
                 }
