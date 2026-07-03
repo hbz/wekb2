@@ -717,7 +717,7 @@ class CreateComponentService {
 
 
                             if(!package_uuid || pkg.getTippCount() == 0){
-                                if ((pkg && pkg.nominalPlatform ) && colMap.publication_title != null && cols[colMap.publication_title] && colMap.publication_type != null && cols[colMap.publication_type] && colMap.title_url != null && cols[colMap.title_url] && (pkg.getAnbieterProduktIDs() || colMap.title_id != null && cols[colMap.title_id])) {
+                                if ((pkg && pkg.nominalPlatform ) && colMap.publication_title != null && cols[colMap.publication_title] && colMap.publication_type != null && cols[colMap.publication_type] && colMap.title_url != null && cols[colMap.title_url]) {
 
                                     String value = cols[colMap.publication_type].trim()
                                     RefdataValue publicationType

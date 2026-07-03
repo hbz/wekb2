@@ -98,7 +98,7 @@
                             break
                         case 'source_default_supply_method': args.addAll([RDStore.KS_DSMETHOD_HTTP_URL.value, RDStore.KS_DSMETHOD_FTP.value])
                             break
-                        case 'publication_type': datas = RefdataCategory.lookup(RCConstants.TIPP_PUBLICATION_TYPE).sort{it.value}.collect { it -> it.value }
+                        case 'publication_type': args.addAll([RefdataCategory.lookup(RCConstants.TIPP_PUBLICATION_TYPE).sort{it.value}.collect { it -> it.value }])
                             break
                     }
                 %>
