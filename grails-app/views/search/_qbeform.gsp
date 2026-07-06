@@ -171,6 +171,9 @@
                             </g:else>
                         </div>
                     </g:elseif>
+                    <g:elseif test="${fld.type == 'date'}">
+                        <semui:datepicker label="${fld.msgCode ?: fld.prompt}" id="${fld.qparam}" name="${fld.qparam}" placeholder="${fld.placeholder}" value="${params[fld.qparam]}" />
+                    </g:elseif>
                     <g:else>
                         <label for="${fld.qparam}">
                             <g:if test="${fld.msgCode}">
@@ -346,6 +349,9 @@
                                     </div>
                                 </g:else>
                             </div>
+                        </g:elseif>
+                        <g:elseif test="${field.type == 'date'}">
+                            <semui:datepicker label="${field.msgCode ?: field.prompt}" id="${field.qparam}" name="${field.qparam}" placeholder="${field.placeholder}" value="${params[field.qparam]}" />
                         </g:elseif>
                         <g:else>
                             <label for="${field.qparam}">

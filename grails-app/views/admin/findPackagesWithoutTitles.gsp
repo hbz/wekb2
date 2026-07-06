@@ -105,11 +105,7 @@
                 </td>
                 <td>
                     <g:set var="object" value="${pkg.getOID()}"/>
-                    <g:link class="ui button" controller="workflow" action="action"
-                            params="[component: object, selectedAction: 'workFlowMethod::updatePackageFromKbartSource', curationOverride: true]">Trigger Update (Changed Titles) </g:link>
 
-                    <br>
-                    <br>
                     <g:link class="ui button primary" controller="workflow" action="action"
                             params="[component: object, selectedAction: 'workFlowMethod::updatePackageAllTitlesFromKbartSource', curationOverride: true]">Trigger Update (all Titles)</g:link>
                 </td>

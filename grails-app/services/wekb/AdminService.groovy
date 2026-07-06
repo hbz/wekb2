@@ -5,13 +5,17 @@ import grails.plugin.springsecurity.SpringSecurityService
 import wekb.helper.RDStore
 import wekb.tools.UrlToolkit
 
+import java.util.concurrent.ExecutorService
+
 @Transactional
 class AdminService {
 
     def sessionRegistry
+    AutoUpdatePackagesService autoUpdatePackagesService
     SpringSecurityService springSecurityService
     FtpConnectService ftpConnectService
     ExportService exportService
+    ExecutorService executorService
     FileCheckService fileCheckService
 
     int setKbartFileHashs(Date lastRun) {
@@ -154,5 +158,44 @@ class AdminService {
         }
 
         return count
+    }
+
+
+    Map updateListOfPackageWithKbart(List<Package> packageList){
+        Map result = [:]
+
+        Set<Thread> threadSetMain = Thread.getAllStackTraces().keySet()
+        Thread[] threadArrayMain = threadSetMain.toArray(new Thread[threadSetMain.size()])
+        boolean processRunningMain = false
+        threadArrayMain.each { Thread thread ->
+            if (thread.name == 'aUPAdmin') {
+                processRunningMain = true
+            }
+        }
+
+        if (processRunningMain) {
+            result.error = "The package update for ${packageList.size()} Package is already running. Please wait this has finished."
+        } else {
+            executorService.execute({
+                Thread.currentThread().setName('aUPAdmin')
+
+                packageList.each { aPackage ->
+                    Package aPackage1 = Package.get(aPackage.id)
+
+                    try {
+                        autoUpdatePackagesService.startAutoPackageUpdate(aPackage1, false)
+                    }catch (Exception exception) {
+                        log.error("Error by updateListOfPackageWithKbart (${aPackage1.id} -> ${aPackage1.name}): ${exception.message}")
+                        //exception.printStackTrace()
+                    }
+
+                }
+            })
+
+            result.message = "The package update for ${packageList.size()} Package was started. This runs in the background."
+        }
+
+        result
+
     }
 }

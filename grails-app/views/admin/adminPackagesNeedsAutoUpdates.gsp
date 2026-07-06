@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta name="layout" content="wekb"/>
-    <title>we:kb | wekb -  Packages due to automatic update of Curatory Groups (${groups.sort{it.name}.name.join(',')})</title>
+    <title>we:kb | wekb -  Packages due to automatic update </title>
 </head>
 
 <body>
@@ -12,7 +12,7 @@
 
 <semui:flashMessage data="${flash}"/>
 
-<h1 class="ui header">${pkgs.size()} packages needing auto updates of Curatory Groups (${groups.name.join(',')})</h1>
+<h1 class="ui header">${pkgs.size()} packages needing auto updates</h1>
 
 
 <div class="container">
@@ -22,7 +22,6 @@
         <tr>
             <th>#</th>
             <th>Name</th>
-            <th>Provider</th>
             <th>Source / KBART URL</th>
             <th>Last Update URL</th>
             <th>Frequency</th>
@@ -42,9 +41,8 @@
                     <g:link controller="resource" action="show" id="${pkg.getOID()}">
                         ${pkg.name}
                     </g:link>
-                </td>
-                <td>
-                    ${pkg.provider}
+                    <br>
+                    <strong>(${pkg.provider})</strong>
                 </td>
                 <td>
                     <g:link controller="resource" action="show" id="${pkg.kbartSource.getOID()}">
@@ -52,11 +50,18 @@
                     </g:link>
                     <br>
                     <br>
-                    ${pkg.kbartSource.url}
                     <semui:showOutGoingLink text="KBART Url" outGoingLink="${pkg.kbartSource.url}"/>
                 </td>
                 <td>
-                    ${pkg.kbartSource.lastUpdateUrl} <semui:showOutGoingLink text="Last Update Url" outGoingLink="${pkg.kbartSource.lastUpdateUrl}"/>
+                    <g:if test="${pkg.kbartSource.url == pkg.kbartSource.lastUpdateUrl}">
+                        Same URL with KBART URL
+                    </g:if>
+                    <g:elseif test="${pkg.kbartSource.url != pkg.kbartSource.lastUpdateUrl}">
+                        <semui:showOutGoingLink text="Last Update Url" outGoingLink="${pkg.kbartSource.lastUpdateUrl}"/>
+                    </g:elseif>
+                    <g:elseif test="${pkg.kbartSource.ftpServerUrl}">
+                        FTP
+                    </g:elseif>
                 </td>
                 <td>
                     ${pkg.kbartSource.frequency.getI10n('value')}
