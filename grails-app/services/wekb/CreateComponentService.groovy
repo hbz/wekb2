@@ -131,8 +131,8 @@ class CreateComponentService {
                        result.newobj.postCreateClosure.call([user:user])
                      }*/
 
-                    if (result.newobj instanceof TitleInstancePackagePlatform && (params.pkg == null || params.url == null || params.name == null)) {
-                        result.errors=["Please fill Package and Host Platform URL to create the component."]
+                    if (result.newobj instanceof TitleInstancePackagePlatform && (params.pkg == null || params.url == null || params.name == null || params.publicationType == null)) {
+                        result.errors=["Please fill Title, Package, Publication Type and Host Platform URL to create the component."]
                     }
                     else if (result.newobj instanceof Package && (params.nominalPlatform == null || params.provider == null || params.status == null)) {
                         result.errors=["Please fill Platform, Provider and Status to create the component."]
