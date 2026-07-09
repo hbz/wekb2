@@ -1077,7 +1077,7 @@ class KbartImportService {
                 def pattern = ns.pattern ? ~"${ns.pattern}" : null
                 if (pattern && !(newValue ==~ pattern)) {
                     UpdateTippInfo updateTippInfo = new UpdateTippInfo(
-                            description: "$kbartProperty has wrong format to import. "+messageSource.getMessage("identifier.create.pattern.fail.${ns.value.trim().toLowerCase()}", null, Locale.ENGLISH),
+                            description: "$kbartProperty has wrong format to import. "+messageSource.getMessage("identifier.create.pattern.fail.${ns.value.replaceAll("\\s", "").toLowerCase()}", null, Locale.ENGLISH),
                             tipp: tipp,
                             startTime: new Date(),
                             endTime: new Date(),

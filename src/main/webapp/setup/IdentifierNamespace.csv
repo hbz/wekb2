@@ -9,8 +9,8 @@ gnd-id;GND-ID;Unique and stable identifier for your institution in the GND (Inte
 gnd-id;GND-ID;Unique and stable identifier for your institution in the GND (Integrated Authority File);Vendor;https://d-nb.info/gnd/;^(?:https?://d-nb\.info/gnd/)?[0-9Xx-]{7,12}$
 isbn;pISBN;International Standard Serial Number, here for the print version;TitleInstancePackagePlatform;https://isbnsearch.org/isbn/;
 isil;ISIL (ZDB product identifier);identfier for complete or partial packages, assigned by the ISIL agency ;Package;https://isil.staatsbibliothek-berlin.de/isil/;^(?:info:isil/)?[A-Z]{1,5}-[A-Z0-9-]+$
-isni;ISNI;International Standard Name Identifier, serves as a unique identifier for creative individuals or organizations, regardless of name variations or spellings;Org;https://isni.org/isni/;^(?:https?://isni.org/isni/)?(?:\d{15}[\dXx]
-isni;ISNI;International Standard Name Identifier, serves as a unique identifier for creative individuals or organizations, regardless of name variations or spellings;Vendor;https://isni.org/isni/;^(?:https?://isni.org/isni/)?(?:\d{15}[\dXx]
+isni;ISNI;International Standard Name Identifier, serves as a unique identifier for creative individuals or organizations, regardless of name variations or spellings;Org;https://isni.org/isni/;^(?:https?://isni\.org/isni/)?\d{15}[\dXx]$
+isni;ISNI;International Standard Name Identifier, serves as a unique identifier for creative individuals or organizations, regardless of name variations or spellings;Vendor;https://isni.org/isni/;^(?:https?://isni\.org/isni/)?\d{15}[\dXx]$
 issn;pISSN;International Standard Serial Number, here for the print version;TitleInstancePackagePlatform;https://portal.issn.org/resource/ISSN/;
 Ringgold-ID;Ringgold-ID;International identifier for organisations in the field of scientific communication and publishing in the Ringgold Identify Database;Org;https://ido.ringgold.com/search/results?simple=;^\d+$
 Ringgold-ID;Ringgold-ID;International identifier for organisations in the field of scientific communication and publishing in the Ringgold Identify Database;Vendor;https://ido.ringgold.com/search/results?simple=;^\d+$
