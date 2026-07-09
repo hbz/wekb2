@@ -98,6 +98,8 @@
                 <g:link class="item" controller="admin" action="findPackagesAutoUpdatesTippsDiff">Auto Update Packages with Tipp Diff</g:link>
                 <g:link class="item" controller="admin" action="tippIdentifiersWithSameNameSpace">Title Identifiers with same Identifier Namespace</g:link>
                 <g:link class="item" controller="admin" action="checkCuratoryGroups">Check Curatory Groups</g:link>
+                <g:link class="item" controller="admin" action="adminAutoUpdatePackages">Search Auto Update Packages</g:link>
+                <g:link class="item" controller="admin" action="adminPackagesNeedsAutoUpdates">Packages due to automatic update</g:link>
             </div>
         </div>
 

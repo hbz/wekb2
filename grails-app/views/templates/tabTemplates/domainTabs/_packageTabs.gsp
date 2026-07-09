@@ -45,7 +45,7 @@
 
     <semui:tabsItemContent tab="currentTipps" defaultTab="currentTipps" activeTab="${params.activeTab}">
 
-        <g:if test="${editable}">
+        <g:if test="${editable && !d.kbartSource}">
             <div class="ui right floated buttons">
                 <g:link class="ui button primary" controller="create" action="index"
                         params="[tmpl: 'wekb.TitleInstancePackagePlatform', linkwithPkg: d.id, linkwithPlatform: d.nominalPlatform?.id]">Create new title for this package</g:link>

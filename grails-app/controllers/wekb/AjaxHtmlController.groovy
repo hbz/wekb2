@@ -496,7 +496,7 @@ class AjaxHtmlController {
                 if(target_object instanceof Identifier){
                     def pattern = target_object.namespace.pattern ? ~"${target_object.namespace.pattern}" : null
                     if (pattern && !(params.value ==~ pattern)) {
-                        errors['global'] = [[message: g.message(code: "identifier.create.pattern.fail.${target_object.namespace.value.trim().toLowerCase()}")]]
+                        errors['global'] = [[message: g.message(code: "identifier.create.pattern.fail.${target_object.namespace.value.replaceAll("\\s", "").toLowerCase()}")]]
                     }
                     else {
                         target_object.value = params.value
@@ -677,7 +677,7 @@ class AjaxHtmlController {
 
                             Pattern pattern = ns.pattern ? ~"${ns.pattern}" : null
                             if (pattern && !(params.identifierValue ==~ pattern)) {
-                                flash.error = g.message(code: "identifier.create.pattern.fail.${ns.value.trim().toLowerCase()}")
+                                flash.error = g.message(code: "identifier.create.pattern.fail.${ns.value.replaceAll("\\s", "").toLowerCase()}")
                             }else {
                                 ident = new Identifier(namespace: ns, value: params.identifierValue)
                                 ident.setReference(owner)

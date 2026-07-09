@@ -9,6 +9,9 @@ import org.grails.taglib.encoder.OutputContextLookupHelper
 import org.springframework.context.MessageSource
 import org.springframework.web.servlet.support.RequestContextUtils
 import wekb.helper.BeanStore
+import wekb.utils.DateUtils
+
+import java.text.SimpleDateFormat
 
 class SemanticTagLib {
 
@@ -862,6 +865,52 @@ class SemanticTagLib {
             }
 
         }
+
+        out << '</div>'
+    }
+
+    def datepicker = { attrs, body ->
+
+        String inputCssClass = attrs.inputCssClass ?: ''
+        String label = attrs.label ?: '&nbsp'
+        String name = attrs.name ?: ''
+        String id = attrs.id ?: ''
+        String placeholder = attrs.placeholder ?: "${message(code: 'default.date.label')}"
+
+        SimpleDateFormat sdf = DateUtils.getSDF_NoTime()
+        String value = ''
+        try {
+            value = attrs.value ? sdf.format(attrs.value) : value
+        }
+        catch (Exception e) {
+            value = attrs.value
+        }
+
+        String classes    = attrs.containsKey('required') ? 'field required' : 'field'
+        String required   = attrs.containsKey('required') ? 'required=""' : ''
+        String mandatoryField   = attrs.containsKey('required') ? "${message(code: 'messageRequiredField')}" :""
+
+        boolean hideLabel = attrs.hideLabel ? false : true
+
+        if (attrs.class) {
+            classes += ' ' + attrs.class
+        }
+        // check for field errors
+        if (attrs.bean && g.fieldError([bean: attrs.bean, field: "${name}"])) {
+            classes += ' error'
+        }
+
+        out << '<div class="' + classes +'">'
+        if (hideLabel) {
+            out << '<label for="' + id + '">' + label + ' ' + mandatoryField + '</label>'
+        }
+        String type = attrs.type == 'year' ? 'yearpicker' : 'datepicker'
+        out <<   '<div class="ui calendar '+type+'">'
+        out <<     '<div class="ui input left icon">'
+        out <<       '<i aria-hidden="true" class="calendar alternate outline icon"></i>'
+        out <<       '<input class="' + inputCssClass + '" name="' + name +  '" id="' + id +'" type="text" placeholder="' + placeholder + '" value="' + value + '" ' + required + '>'
+        out <<     '</div>'
+        out <<   '</div>'
 
         out << '</div>'
     }
