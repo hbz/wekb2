@@ -1,6 +1,6 @@
 <%@ page import="wekb.helper.RDStore; wekb.helper.RCConstants" %>
 
-<g:if test="${d.pkg.kbartSource}">
+<g:if test="${d.pkg && d.pkg.kbartSource}">
     <div class="ui info icon message">
 
         <div class="content wekb-inline-lists">
