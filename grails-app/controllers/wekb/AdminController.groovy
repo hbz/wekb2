@@ -1402,4 +1402,84 @@ class AdminController {
 
     }
 
+    def adminAutoUpdatePackages() {
+        def searchResult = [:]
+
+        searchResult.user = springSecurityService.currentUser
+
+        params.qbe = 'g:adminPackages'
+        params.qp_source_automaticUpdates = RDStore.YN_YES
+
+        params.max = params.max ?: '500'
+        params.sort = params.sort ?: 'name'
+        params.order = params.order ?: 'asc'
+
+        searchResult = searchService.search(searchResult.user, searchResult, params)
+
+        searchResult.result
+    }
+
+    def processPackageUpdate() {
+        def searchResult = [:]
+        searchResult.user = springSecurityService.currentUser
+
+        params.qbe = 'g:adminPackages'
+        params.qp_source_automaticUpdates = RDStore.YN_YES
+        params.sort = params.sort ?: 'name'
+        params.order = params.order ?: 'asc'
+        params.max = '25000'
+        params.offset = 0
+
+        searchResult = searchService.search(searchResult.user, searchResult, params)
+
+        searchResult.result
+
+        List<Package> packageList = []
+        searchResult.result.new_recset.each {
+            if(it.obj.kbartSource && it.obj.kbartSource.automaticUpdates) {
+                packageList << it.obj
+            }
+        }
+
+        Map result = [:]
+        if(packageList.size() > 0){
+            result = adminService.updateListOfPackageWithKbart(packageList)
+        }else{
+            flash.error = 'No package filtered!'
+        }
+
+        if(result.error){
+            flash.error = result.error
+        }
+
+        if(result.message){
+            flash.message = result.message
+        }
+
+        redirect(url: request.getHeader('referer'))
+
+    }
+
+    def adminPackagesNeedsAutoUpdates() {
+        log.info("myPackagesNeedsAutoUpdates::${params}")
+        def result =  [:]
+
+        List pkgs = []
+
+        Package.executeQuery(
+                "select p from Package p " +
+                        " WHERE  " +
+                        " p.kbartSource is not null AND " +
+                        " p.kbartSource.automaticUpdates = true " +
+                        " AND (p.kbartSource.lastRun is null or p.kbartSource.lastRun < current_date) order by p.name").each { Package p ->
+            if (p.kbartSource.needsUpdate()) {
+                pkgs << p
+            }
+        }
+
+        result.pkgs = pkgs
+
+        result
+    }
+
 }

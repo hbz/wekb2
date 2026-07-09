@@ -131,8 +131,8 @@ class CreateComponentService {
                        result.newobj.postCreateClosure.call([user:user])
                      }*/
 
-                    if (result.newobj instanceof TitleInstancePackagePlatform && (params.pkg == null || params.url == null || params.name == null)) {
-                        result.errors=["Please fill Package and Host Platform URL to create the component."]
+                    if (result.newobj instanceof TitleInstancePackagePlatform && (params.pkg == null || params.url == null || params.name == null || params.publicationType == null)) {
+                        result.errors=["Please fill Title, Package, Publication Type and Host Platform URL to create the component."]
                     }
                     else if (result.newobj instanceof Package && (params.nominalPlatform == null || params.provider == null || params.status == null)) {
                         result.errors=["Please fill Platform, Provider and Status to create the component."]
@@ -717,7 +717,7 @@ class CreateComponentService {
 
 
                             if(!package_uuid || pkg.getTippCount() == 0){
-                                if ((pkg && pkg.nominalPlatform ) && colMap.publication_title != null && cols[colMap.publication_title] && colMap.publication_type != null && cols[colMap.publication_type] && colMap.title_url != null && cols[colMap.title_url] && (pkg.getAnbieterProduktIDs() || colMap.title_id != null && cols[colMap.title_id])) {
+                                if ((pkg && pkg.nominalPlatform ) && colMap.publication_title != null && cols[colMap.publication_title] && colMap.publication_type != null && cols[colMap.publication_type] && colMap.title_url != null && cols[colMap.title_url]) {
 
                                     String value = cols[colMap.publication_type].trim()
                                     RefdataValue publicationType

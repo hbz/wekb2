@@ -26,6 +26,49 @@
 
 console.log('+ wekb.js')
 
+wekb = {
+    configs: {
+
+        datepicker: {
+            type: 'date',
+            onChange: function (date, text, mode) {
+            },
+            onShow: function () {
+                $('.ui.popup.calendar .table .link').attr({
+                    'role': 'button'
+                });
+            },
+            firstDayOfWeek: 1,
+            monthFirst: false,
+            minDate: new Date('1582-10-15'), //this is the start of the gregorian calendar
+            maxDate: new Date('2099-12-31'), //our grand-grandchildren may update this date ...
+            formatter: {
+                date: function (date, settings) {
+                    if (!date) return '';
+                    var day = date.getDate();
+                    if (day < 10) day = "0" + day;
+                    var month = date.getMonth() + 1;
+                    if (month < 10) month = "0" + month;
+                    var year = date.getFullYear();
+                    return year + '-' + month + '-' + day;
+                }
+            },
+        },
+        yearpicker: {
+            type: 'year',
+            onChange: function (date, text, mode) {
+            },
+            onShow: function () {
+                $('.ui.popup.calendar .table .link').attr({
+                    'role': 'button'
+                });
+            },
+            minDate: new Date('1582-10-15'), //this is the start of the gregorian calendar
+            maxDate: new Date('2099-12-31'), //our grand-grandchildren may update this date ...
+        }
+    },
+}
+
 
 $(function () {
 
@@ -423,5 +466,9 @@ $(function () {
         // remove unused filter params
         emptyFields.attr('disabled', 'disabled');
     });
+
+    // datepicker + yearpicker
+    $(".datepicker").calendar(wekb.configs.datepicker);
+    $(".yearpicker").calendar(wekb.configs.yearpicker);
 });
 

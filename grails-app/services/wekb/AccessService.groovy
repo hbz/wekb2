@@ -78,46 +78,48 @@ class AccessService {
 
         if (SpringSecurityUtils.ifAnyGranted("ROLE_EDITOR, ROLE_VENDOR_EDITOR, ROLE_ADMIN, ROLE_SUPERUSER")) {
             def curatedObj = null
-            if(o instanceof Identifier){
-                curatedObj = o.reference.hasProperty('curatoryGroups') ? o.reference : ( o.reference.hasProperty('pkg') ? o.reference.pkg : null )
-            }else if(o instanceof Contact){
-                curatedObj = o.org ?: o.vendor
-            }else if(o instanceof VendorElectronicDeliveryDelay){
-                curatedObj = o.vendor
-            }else if(o instanceof VendorLibrarySystem){
-                curatedObj = o.vendor
-            }
-            else if(o instanceof VendorInvoiceDispatch){
-                curatedObj = o.vendor
-            }
-            else if(o instanceof VendorElectronicBilling){
-                curatedObj = o.vendor
-            } else if (o instanceof ProviderInvoicingVendor) {
-                curatedObj = o.provider
-            } else if (o instanceof ProviderInvoiceDispatch) {
-                curatedObj = o.provider
-            } else if (o instanceof ProviderElectronicBilling) {
-                curatedObj = o.provider
-            }
-            else {
-                curatedObj = o.hasProperty('curatoryGroups') ? o : ( o.hasProperty('pkg') ? o.pkg : null )
-            }
-
             User user = springSecurityService.currentUser
-            if (curatedObj && curatedObj.curatoryGroups && user.curatoryGroupUsers && !(curatedObj instanceof User)) {
 
-                if(user && user.curatoryGroupUsers.curatoryGroup.id.intersect(curatedObj.curatoryGroups.curatoryGroup.id).size() > 0)
-                {
-                    editable = true //SecurityApi.isTypeEditable(o.getClass(), true) ?: (grailsParameterMap.curationOverride == 'true' && user.isAdmin())
-                }else {
-                    editable = (curationOverride && user.isAdmin()) //SpringSecurityUtils.ifAnyGranted('ROLE_SUPERUSER') ?: (grailsParameterMap.curationOverride == 'true' && user.isAdmin())
-                }
+            if(o instanceof TitleInstancePackagePlatform && o.pkg.kbartSource){
+                editable = (curationOverride && user.isAdmin())
             }else {
-                if(o instanceof CuratoryGroup && user && user.curatoryGroupUsers && o.id in user.curatoryGroupUsers.curatoryGroup?.id){
-                    editable = SpringSecurityUtils.ifAnyGranted('ROLE_ADMIN')
+
+                if (o instanceof Identifier) {
+                    curatedObj = o.reference.hasProperty('curatoryGroups') ? o.reference : (o.reference.hasProperty('pkg') ? o.reference.pkg : null)
+                } else if (o instanceof Contact) {
+                    curatedObj = o.org ?: o.vendor
+                } else if (o instanceof VendorElectronicDeliveryDelay) {
+                    curatedObj = o.vendor
+                } else if (o instanceof VendorLibrarySystem) {
+                    curatedObj = o.vendor
+                } else if (o instanceof VendorInvoiceDispatch) {
+                    curatedObj = o.vendor
+                } else if (o instanceof VendorElectronicBilling) {
+                    curatedObj = o.vendor
+                } else if (o instanceof ProviderInvoicingVendor) {
+                    curatedObj = o.provider
+                } else if (o instanceof ProviderInvoiceDispatch) {
+                    curatedObj = o.provider
+                } else if (o instanceof ProviderElectronicBilling) {
+                    curatedObj = o.provider
+                } else {
+                    curatedObj = o.hasProperty('curatoryGroups') ? o : (o.hasProperty('pkg') ? o.pkg : null)
                 }
-                else{
-                    editable = SpringSecurityUtils.ifAnyGranted('ROLE_SUPERUSER')
+
+                if (curatedObj && curatedObj.curatoryGroups && user.curatoryGroupUsers && !(curatedObj instanceof User)) {
+
+                    if (user && user.curatoryGroupUsers.curatoryGroup.id.intersect(curatedObj.curatoryGroups.curatoryGroup.id).size() > 0) {
+                        editable = true //SecurityApi.isTypeEditable(o.getClass(), true) ?: (grailsParameterMap.curationOverride == 'true' && user.isAdmin())
+                    } else {
+                        editable = (curationOverride && user.isAdmin())
+                        //SpringSecurityUtils.ifAnyGranted('ROLE_SUPERUSER') ?: (grailsParameterMap.curationOverride == 'true' && user.isAdmin())
+                    }
+                } else {
+                    if (o instanceof CuratoryGroup && user && user.curatoryGroupUsers && o.id in user.curatoryGroupUsers.curatoryGroup?.id) {
+                        editable = SpringSecurityUtils.ifAnyGranted('ROLE_ADMIN')
+                    } else {
+                        editable = SpringSecurityUtils.ifAnyGranted('ROLE_SUPERUSER')
+                    }
                 }
             }
         }

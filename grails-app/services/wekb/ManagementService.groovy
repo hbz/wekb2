@@ -438,13 +438,16 @@ class ManagementService {
                     if(params.processLinkVendor == 'unlinkVendor'){
                         packages.each { Package pkg ->
                             if (accessService.checkEditableObject(pkg, params)) {
-                                List splitVendorParam = params['vendor'].split(':')
-                                Long refVendorId = Long.parseLong(splitVendorParam[1])
-                                Vendor vendor = Vendor.get(refVendorId)
-                                if (vendor) {
-                                    PackageVendor packageVendor = PackageVendor.findByPkgAndVendor(pkg, vendor)
-                                    if (packageVendor) {
-                                        packageVendor.delete()
+                                List vendors = params.list('vendors')
+                                vendors.each { String vendorOBID ->
+                                    List splitVendorParam = vendorOBID.split(':')
+                                    Long refVendorId = Long.parseLong(splitVendorParam[1])
+                                    Vendor vendor = Vendor.get(refVendorId)
+                                    if (vendor) {
+                                        PackageVendor packageVendor = PackageVendor.findByPkgAndVendor(pkg, vendor)
+                                        if (packageVendor) {
+                                            packageVendor.delete()
+                                        }
                                     }
                                 }
                             }
