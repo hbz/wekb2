@@ -55,10 +55,8 @@ class GlobalSearchTemplatesService {
                         qbeForm   : [
                                 //Hiden fields
                                 [
-                                        type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
                                         qparam     : 'qp_source_automaticUpdates',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'kbartSource.automaticUpdates'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'kbartSource.automaticUpdates', 'type': 'boolean'],
                                         hide: true
                                 ],
 
@@ -340,6 +338,7 @@ class GlobalSearchTemplatesService {
                 title       : 'Providers',
                 defaultSort : 'name',
                 defaultOrder: 'asc',
+                defaultStatus: RefdataValue.class.name + ':' + RDStore.KBC_STATUS_CURRENT.id,
                 qbeConfig   : [
                         qbeForm   : [
                                 //Hidden Fields
@@ -2762,6 +2761,7 @@ class GlobalSearchTemplatesService {
                 title       : 'Library Suppliers',
                 defaultSort : 'name',
                 defaultOrder: 'asc',
+                defaultStatus: RefdataValue.class.name + ':' + RDStore.KBC_STATUS_CURRENT.id,
                 qbeConfig   : [
                         qbeForm   : [
                                 //Hidden Fields

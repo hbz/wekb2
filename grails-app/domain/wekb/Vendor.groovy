@@ -201,7 +201,7 @@ class Vendor extends AbstractBase implements Auditable {
   @Transient
   int getProvidersCount(){
 
-    Vendor.executeQuery("select count(*) from Org as o where o in (select p.provider from Package as p join p.vendors as vendor_pkg where vendor_pkg.vendor = :vendor)", [vendor: this])[0]
+    Vendor.executeQuery("select count(*) from Org as o where o in (select p.provider from Package as p join p.vendors as vendor_pkg where vendor_pkg.vendor = :vendor and p.status != :status)", [vendor: this, status: RDStore.KBC_STATUS_REMOVED])[0]
 
   }
 
