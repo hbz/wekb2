@@ -113,7 +113,7 @@
             </dt>
             <dd>
                 <semui:xEditableRefData owner="${d}" field="publicationType"
-                                        config="${RCConstants.TIPP_PUBLICATION_TYPE}" />
+                                        config="${RCConstants.TIPP_PUBLICATION_TYPE}" required="true" />
             </dd>
         </dl>
         <dl>
