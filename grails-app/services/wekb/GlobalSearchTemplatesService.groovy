@@ -338,6 +338,7 @@ class GlobalSearchTemplatesService {
                 title       : 'Providers',
                 defaultSort : 'name',
                 defaultOrder: 'asc',
+                defaultStatus: RefdataValue.class.name + ':' + RDStore.KBC_STATUS_CURRENT.id,
                 qbeConfig   : [
                         qbeForm   : [
                                 //Hidden Fields
@@ -2760,6 +2761,7 @@ class GlobalSearchTemplatesService {
                 title       : 'Library Suppliers',
                 defaultSort : 'name',
                 defaultOrder: 'asc',
+                defaultStatus: RefdataValue.class.name + ':' + RDStore.KBC_STATUS_CURRENT.id,
                 qbeConfig   : [
                         qbeForm   : [
                                 //Hidden Fields
