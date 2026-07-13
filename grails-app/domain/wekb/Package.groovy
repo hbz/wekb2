@@ -328,8 +328,10 @@ class Package  extends AbstractBase implements Auditable {
     log.debug("package::removeWithTipps");
     log.debug("Updating package status to removed");
     def removedStatus = RDStore.KBC_STATUS_REMOVED
+
     Package.withTransaction {
       this.status = removedStatus
+        PackageVendor.executeQuery('delete from PackageVendor where pkg = :pkg', [pkg: this])
       if(this.kbartSource){
         this.kbartSource.status = removedStatus
         this.kbartSource.save()
