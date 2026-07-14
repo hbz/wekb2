@@ -164,10 +164,10 @@ class SearchService {
                     params.order = params.order ?: result.qbetemplate.defaultOrder
                     if(result.qbetemplate.defaultStatus) {
                         if(params.searchAction == 'Search'){
-                            params.status = cleaned_params.qp_status ?: null
+                            params.qp_status = cleaned_params.qp_status ?: null
                             cleaned_params.qp_status = cleaned_params.qp_status ?: null
                         }else {
-                            params.status = cleaned_params.qp_status ?: result.qbetemplate.defaultStatus
+                            params.qp_status = cleaned_params.qp_status ?: result.qbetemplate.defaultStatus
                             cleaned_params.qp_status = cleaned_params.qp_status ?: result.qbetemplate.defaultStatus
                         }
 
