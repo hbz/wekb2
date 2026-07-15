@@ -817,7 +817,7 @@ class KbartProcessService {
 
         Closure markImportAsFailed = { String description ->
             UpdatePackageInfo.withTransaction {
-                updatePackageInfo.refresh()
+                //updatePackageInfo.refresh()
 
                 if (lastUpdateURL && updatePackageInfo.automaticUpdate) {
                     description += "File from URL: ${lastUpdateURL}"
