@@ -38,8 +38,8 @@ class KbartProcessService {
             "online_identifier",
             "date_first_issue_online",
             "num_first_vol_online",
-            "date_last_issue_online",
             "num_first_issue_online",
+            "date_last_issue_online",
             "num_last_vol_online",
             "num_last_issue_online",
             "title_url",
@@ -92,8 +92,16 @@ class KbartProcessService {
             "package_gokb_uuid",
             "title_wekb_uuid",
             "package_wekb_uuid"
-    ] as Set
+    ] as Set<String>
 
+    Set<String> allowedEncodings = [
+            "UTF-8",
+            "UTF8",
+            "WINDOWS-1252",
+            "CP1252",
+            "US-ASCII",
+            "ASCII"
+    ] as Set<String>
 
     void kbartImportManual(Package pkg, File tsvFile, Boolean onlyRowsWithLastChanged){
         log.info("Beginn kbartImportManual ${pkg.name}")
@@ -477,6 +485,7 @@ class KbartProcessService {
             if(kbartRowsToCreateTipps.size() > 0){
                 newtippIdList = kbartImportService.createTippBatch(kbartRowsToCreateTipps, updatePackageInfo)
                 log.info("kbartRowsToCreateTipps: newTippList size -> "+newtippIdList.size())
+                newTipps = newtippIdList.size()
 
             }
 
@@ -801,41 +810,19 @@ class KbartProcessService {
     }
 
     List kbartProcess(File tsvFile, String lastUpdateURL, UpdatePackageInfo updatePackageInfo) {
-        log.info("Begin KbartProcess, transmitted: ${tsvFile.length()}")
-        boolean encodingPass
-        int countRows = 0
-        List result = []
-        String encoding
-        if(StandardCharsets.US_ASCII.newEncoder().canEncode(tsvFile.newInputStream().text)) {
-            encodingPass = true
-        }
-        else {
-            InputStream is = new FileInputStream(tsvFile)
-            try {
-                encoding = UniversalDetector.detectCharset(is)
-            } finally {
-                is.close()
-            }
+        log.info("Begin KbartProcess, transmitted: ${tsvFile?.length() ?: 0}")
 
-  /*          if(encoding == null){
-                CharsetMatch[] charsetMatches= new CharsetDetector().setText(tsvFile.newInputStream()).detectAll()
-                log.debug("charsetMatches -> "+charsetMatches)
-               charsetMatches.eachWithIndex{ CharsetMatch entry, int i ->
-                   if(entry.name == "UTF-8" && entry.confidence > 5){
-                       log.debug("set encoding after match in charsetMatches: confidence -> "+entry.confidence)
-                       encoding = "UTF-8"
-                   }
-               }
-            }*/
-            encodingPass = encoding in ["UTF-8", "WINDOWS-1252", "US-ASCII"]
-        }
-        if(!encodingPass) {
-            log.warn("Encoding of file is wrong. File encoding is: ${encoding}")
+        int countRows = 0
+        List<Map<String, Object>> result = []
+
+        Closure markImportAsFailed = { String description ->
             UpdatePackageInfo.withTransaction {
-                String description = "Encoding of KBART file is wrong. File encoding was: ${encoding}. "
-                if(lastUpdateURL && updatePackageInfo.automaticUpdate){
-                    description = description+ "File from URL: ${lastUpdateURL}"
+                //updatePackageInfo.refresh()
+
+                if (lastUpdateURL && updatePackageInfo.automaticUpdate) {
+                    description += "File from URL: ${lastUpdateURL}"
                 }
+
                 updatePackageInfo.description = description
                 updatePackageInfo.status = RDStore.UPDATE_STATUS_FAILED
                 updatePackageInfo.endTime = new Date()
@@ -844,183 +831,292 @@ class KbartProcessService {
                 updatePackageInfo.countNowTippsInWekb = updatePackageInfo.pkg.getTippCountWithoutRemoved()
                 updatePackageInfo.countCurrentTipps = updatePackageInfo.pkg.getCurrentTippCount()
                 updatePackageInfo.countDeletedTipps = updatePackageInfo.pkg.getDeletedTippCount()
+
                 updatePackageInfo.save()
             }
         }
-        else {
-            List minimumKbartStandard = ['publication_title',
-                                         'title_url',
-                                         'title_id']
-            int countMinimumKbartStandard = 0
 
-            try {
+        if (tsvFile == null || !tsvFile.exists() || !tsvFile.isFile()) {
+            log.warn("KBART file does not exist or is not a file: ${tsvFile}")
 
-                Reader reader = tsvFile.newInputStream().newReader("UTF-8")
+            markImportAsFailed("KBART file does not exist or is not a valid file. ")
 
-                String firstLine = tsvFile.withReader("UTF-8") { it.readLine() }
-                String delimiter = getDelimiter(firstLine)
+            log.info("End KbartProcess with ${countRows} rows")
+            return result
+        }
 
-                if (!delimiter) {
-                    log.warn("no delimiter $delimiter: ${lastUpdateURL}")
+        if (tsvFile.length() == 0) {
+            log.warn("KBART file is empty: ${lastUpdateURL}")
 
-                    UpdatePackageInfo.withTransaction {
-                        String description = "Separator for the KBART was not recognized. The following separators are recognized: Tab, comma, semicolons. "
-                        if (lastUpdateURL && updatePackageInfo.automaticUpdate) {
-                            description = description + "File from URL: ${lastUpdateURL}"
-                        }
-                        updatePackageInfo.description = description
-                        updatePackageInfo.status = RDStore.UPDATE_STATUS_FAILED
-                        updatePackageInfo.endTime = new Date()
-                        updatePackageInfo.updateUrl = lastUpdateURL
-                        updatePackageInfo.countPreviouslyTippsInWekb = updatePackageInfo.pkg.getTippCountWithoutRemoved()
-                        updatePackageInfo.countNowTippsInWekb = updatePackageInfo.pkg.getTippCountWithoutRemoved()
-                        updatePackageInfo.countCurrentTipps = updatePackageInfo.pkg.getCurrentTippCount()
-                        updatePackageInfo.countDeletedTipps = updatePackageInfo.pkg.getDeletedTippCount()
-                        updatePackageInfo.save()
-                    }
+            markImportAsFailed("KBART file is empty. ")
 
-                } else {
+            log.info("End KbartProcess with ${countRows} rows")
+            return result
+        }
 
-                char delimiterChar = delimiter == "\\t" ? '\t' as char : delimiter.charAt(0)
+        Set<String> minimumKbartStandard = [
+                "publication_title",
+                "title_url",
+                "title_id"
+        ] as Set<String>
 
-                CSVFormat format = CSVFormat.DEFAULT.builder()
-                        .setDelimiter(delimiterChar)
-                        .setQuote(null)
-                        .setHeader()
-                        .setSkipHeaderRecord(true)
-                        .setAllowMissingColumnNames(true)
-                        .setIgnoreEmptyLines(false)
-                        .setTrim(false)
-                        .build()
+        String encoding = null
 
-                CSVParser parser = format.parse(reader)
+        try {
+            boolean asciiFile
 
+            tsvFile.withInputStream { InputStream inputStream ->
+                String content = inputStream.getText(StandardCharsets.US_ASCII.name())
+                asciiFile = StandardCharsets.US_ASCII.newEncoder().canEncode(content)
+            }
 
-                Map<String, String> normalizedToOriginalHeader = [:]
-
-                    parser.headerMap.each { String originalHeader, Integer index ->
-                        String normalizedHeader = normalizeHeader(originalHeader)
-
-                        if (normalizedHeader) {
-                            normalizedToOriginalHeader[normalizedHeader] = originalHeader
-                        }
-                    }
-
-                Set<String> missingMinimumHeaders = []
-
-                minimumKbartStandard.each { requiredHeader ->
-                    if (!normalizedToOriginalHeader.containsKey(requiredHeader)) {
-                        missingMinimumHeaders << requiredHeader
-                    }
+            if (asciiFile) {
+                encoding = StandardCharsets.US_ASCII.name()
+            } else {
+                tsvFile.withInputStream { InputStream inputStream ->
+                    encoding = UniversalDetector.detectCharset(inputStream)
                 }
+            }
 
+            String normalizedEncoding = encoding?.trim()?.toUpperCase(Locale.ROOT)
 
-                if (missingMinimumHeaders) {
-                    log.warn("KBART file does not have required headers: ${missingMinimumHeaders}")
+            if (!normalizedEncoding || !allowedEncodings.contains(normalizedEncoding)) {
+                log.warn(
+                        "Encoding of file is wrong. File encoding is: ${encoding}"
+                )
 
-                    UpdatePackageInfo.withTransaction {
-                        String description = "KBART file does not have one or any of the headers: ${minimumKbartStandard.join(', ')}. "
-                        if (lastUpdateURL && updatePackageInfo.automaticUpdate) {
-                            description = description + "File from URL: ${lastUpdateURL}"
-                        }
-                        updatePackageInfo.description = description
-                        updatePackageInfo.status = RDStore.UPDATE_STATUS_FAILED
-                        updatePackageInfo.endTime = new Date()
-                        updatePackageInfo.updateUrl = lastUpdateURL
-                        updatePackageInfo.countPreviouslyTippsInWekb = updatePackageInfo.pkg.getTippCountWithoutRemoved()
-                        updatePackageInfo.countNowTippsInWekb = updatePackageInfo.pkg.getTippCountWithoutRemoved()
-                        updatePackageInfo.countCurrentTipps = updatePackageInfo.pkg.getCurrentTippCount()
-                        updatePackageInfo.countDeletedTipps = updatePackageInfo.pkg.getDeletedTippCount()
-                        updatePackageInfo.save()
-                    }
-                } else {
+                markImportAsFailed("Encoding of KBART file is wrong. File encoding was: ${encoding}. AllowedEncodings: ${allowedEncodings}"
+                )
+                log.info("End KbartProcess with ${countRows} rows")
+                return result
+            }
 
-                    normalizedToOriginalHeader.keySet().each { String normalizedHeader ->
-                        if (!supportedHeaders.contains(normalizedHeader)) {
-                            log.info("Unhandled parameter type ${normalizedHeader}, ignoring ...")
-                        }
-                    }
+            if (normalizedEncoding in ["WINDOWS-1252", "CP1252"]) {
+                encoding = "windows-1252"
+            } else if (normalizedEncoding in ["UTF-8", "UTF8"]) {
+                encoding = "UTF-8"
+            } else {
+                encoding = "US-ASCII"
+            }
 
-                    int rowIndex = 1
+        } catch (Exception encodingException) {
+            log.error(
+                    "Could not determine KBART encoding: " +
+                            "${encodingException.message}",
+                    encodingException
+            )
 
-                    parser.each { CSVRecord record ->
-                        Map rowMap = [:]
+            markImportAsFailed("The encoding of the KBART file could not be determined. AllowedEncodings: ${allowedEncodings}")
 
-                        supportedHeaders.each { String normalizedHeader ->
-                            String originalHeader = normalizedToOriginalHeader[normalizedHeader]
+            log.info("End KbartProcess with ${countRows} rows")
+            return result
+        }
 
-                            if (originalHeader != null && record.isMapped(originalHeader)) {
-                                String value = cleanValue(record.get(originalHeader))
+        Reader reader = null
+        CSVParser parser = null
 
-                                if (value) {
-                                    rowMap[normalizedHeader] = value
-                                }
-                            }
-                        }
+        try {
 
-                        if (rowMap.publication_title) {
-                            rowMap.rowIndex = rowIndex
-                            result << rowMap
-                        }
+            String firstLine
 
-                        rowIndex++
-                    }
+            tsvFile.withReader(encoding) { BufferedReader bufferedReader ->
+                String currentLine
 
-                    countRows = rowIndex - 1
-
-                    reader.close()
-
-
-                    if (countRows == 0) {
-                        log.warn("KBART file is empty:  ${lastUpdateURL}")
-                        UpdatePackageInfo.withTransaction {
-                            String description = "KBART file is empty. "
-                            if (lastUpdateURL && updatePackageInfo.automaticUpdate) {
-                                description = description + "File from URL: ${lastUpdateURL}"
-                            }
-                            updatePackageInfo.description = description
-                            updatePackageInfo.status = RDStore.UPDATE_STATUS_FAILED
-                            updatePackageInfo.endTime = new Date()
-                            updatePackageInfo.updateUrl = lastUpdateURL
-                            updatePackageInfo.countPreviouslyTippsInWekb = updatePackageInfo.pkg.getTippCountWithoutRemoved()
-                            updatePackageInfo.countNowTippsInWekb = updatePackageInfo.pkg.getTippCountWithoutRemoved()
-                            updatePackageInfo.countCurrentTipps = updatePackageInfo.pkg.getCurrentTippCount()
-                            updatePackageInfo.countDeletedTipps = updatePackageInfo.pkg.getDeletedTippCount()
-                            updatePackageInfo.save()
-                        }
+                while ((currentLine = bufferedReader.readLine()) != null) {
+                    if (!currentLine.trim().isEmpty()) {
+                        firstLine = currentLine
+                        break
                     }
                 }
             }
-            } catch (Exception e) {
-                log.error("Error by KbartProcess: ${e.message}")
-                int previouslyTipps = TitleInstancePackagePlatform.executeQuery(
-                        "select count(*) from TitleInstancePackagePlatform tipp where " +
-                                "tipp.status in :status and " +
-                                "tipp.pkg = :package",
-                        [package: updatePackageInfo.pkg, status: [RDStore.KBC_STATUS_CURRENT, RDStore.KBC_STATUS_DELETED, RDStore.KBC_STATUS_RETIRED, RDStore.KBC_STATUS_EXPECTED]])[0]
-                //e.printStackTrace()
-                UpdatePackageInfo.withTransaction {
-                    updatePackageInfo.refresh()
-                    String description = "An error occurred while processing the KBART file. More information can be seen in the system log. "
-                    if(lastUpdateURL && updatePackageInfo.automaticUpdate){
-                        description = description+ "File from URL: ${lastUpdateURL}"
+
+            if (!firstLine) {
+                log.warn("KBART file has no header: ${lastUpdateURL}")
+
+                markImportAsFailed("KBART file is empty or does not contain a header. ")
+
+                return result
+            }
+
+            String delimiter = getDelimiter(firstLine)
+
+            if (!delimiter) {
+                log.warn("No delimiter recognized: ${lastUpdateURL}")
+
+                markImportAsFailed("Separator for the KBART file was not recognized. " +
+                                "The following separators are recognized: " +
+                                "tab, comma and semicolon. ")
+
+                return result
+            }
+
+            char delimiterChar = resolveKbartDelimiter(delimiter)
+
+            CSVFormat format = CSVFormat.DEFAULT.builder().setDelimiter(delimiterChar)
+                    .setQuote(null)
+                    .setHeader()
+                    .setSkipHeaderRecord(true)
+                    .setAllowMissingColumnNames(true)
+                    .setIgnoreEmptyLines(true)
+                    .setTrim(false)
+                    .build()
+
+            reader = tsvFile.newInputStream().newReader(encoding)
+            parser = format.parse(reader)
+
+            Map<String, Integer> columnIndexes = [:]
+
+            parser.headerMap.each {
+                String originalHeader,
+                Integer columnIndex ->
+
+                    String normalizedHeader = normalizeKbartHeader(originalHeader)
+
+                    if (!normalizedHeader) {
+                        log.debug(
+                                "Ignoring empty KBART header at column ${columnIndex}"
+                        )
+                        return
                     }
-                    updatePackageInfo.description = description
-                    updatePackageInfo.status = RDStore.UPDATE_STATUS_FAILED
-                    updatePackageInfo.endTime = new Date()
-                    updatePackageInfo.updateUrl = lastUpdateURL
-                    updatePackageInfo.countPreviouslyTippsInWekb = updatePackageInfo.pkg.getTippCountWithoutRemoved()
-                    updatePackageInfo.countNowTippsInWekb = updatePackageInfo.pkg.getTippCountWithoutRemoved()
-                    updatePackageInfo.countCurrentTipps = updatePackageInfo.pkg.getCurrentTippCount()
-                    updatePackageInfo.countDeletedTipps = updatePackageInfo.pkg.getDeletedTippCount()
-                    updatePackageInfo.save()
+
+                    if (columnIndexes.containsKey(normalizedHeader)) {
+                        log.warn(
+                                "Duplicate KBART header '${normalizedHeader}' " +
+                                        "at column ${columnIndex}; " +
+                                        "the first occurrence will be used"
+                        )
+                        return
+                    }
+
+                    columnIndexes[normalizedHeader] = columnIndex
+            }
+
+            Set<String> missingMinimumHeaders = [] as Set<String>
+
+            minimumKbartStandard.each { String requiredHeader ->
+                String normalizedRequiredHeader =
+                        normalizeKbartHeader(requiredHeader)
+
+                if (!columnIndexes.containsKey(normalizedRequiredHeader)) {
+                    missingMinimumHeaders << normalizedRequiredHeader
+                }
+            }
+
+            if (!missingMinimumHeaders.isEmpty()) {
+                log.warn("KBART file does not have required headers: " + "${missingMinimumHeaders}")
+
+                markImportAsFailed("KBART file does not have the required headers: " +
+                                "${missingMinimumHeaders.join(', ')}. ")
+
+                return result
+            }
+
+            columnIndexes.keySet().each { String normalizedHeader ->
+                if (!supportedHeaders.contains(normalizedHeader)) {
+                    log.info("Unhandled parameter type ${normalizedHeader}, ignoring ...")
+                }
+            }
+
+            int expectedColumnCount = parser.headerMap.size()
+            int importedRows = 0
+            int skippedRows = 0
+
+            parser.each { CSVRecord record ->
+                countRows++
+
+                if (record.size() != expectedColumnCount) {
+                    log.warn("KBART row ${record.recordNumber} has an invalid column count: expected ${expectedColumnCount}, found ${record.size()}")
                 }
 
+                Map<String, Object> rowMap = [:]
+
+                columnIndexes.each {
+                    String normalizedHeader,
+                    Integer columnIndex ->
+
+                        if (!supportedHeaders.contains(normalizedHeader)) {
+                            return
+                        }
+
+                        if (columnIndex == null ||
+                                columnIndex < 0 ||
+                                columnIndex >= record.size()) {
+
+                            log.debug("Column '${normalizedHeader}' at index ${columnIndex} is missing in KBART row ${record.recordNumber}")
+
+                            return
+                        }
+
+                        String value = cleanKbartValue(record.get(columnIndex))
+
+                        if (value != null) {
+                            rowMap[normalizedHeader] = value
+                        }
+                }
+
+                if (rowMap.publication_title) {
+                    rowMap.rowIndex = record.recordNumber
+
+                    result << rowMap
+                    importedRows++
+                } else {
+                    skippedRows++
+
+                    log.warn(
+                            "Ignoring KBART row ${record.recordNumber}: " +
+                                    "publication_title is empty or missing"
+                    )
+                }
+            }
+
+            if (countRows == 0) {
+                log.warn("KBART file contains no data rows: ${lastUpdateURL}")
+
+                markImportAsFailed("KBART file is empty. ")
+
+                return result
+            }
+
+            log.info(
+                    "KBART processing completed: " +
+                            "${countRows} rows processed, " +
+                            "${importedRows} rows imported, " +
+                            "${skippedRows} rows skipped"
+            )
+
+        } catch (Exception exception) {
+            log.error(
+                    "Error by KbartProcess: ${exception.message}",
+                    exception
+            )
+
+            markImportAsFailed("An error occurred while processing the KBART file. More information can be seen in the system log. ")
+
+        } finally {
+            if (parser != null) {
+                try {
+                    parser.close()
+                } catch (Exception closeException) {
+                    log.warn(
+                            "Could not close KBART CSV parser: " +
+                                    "${closeException.message}"
+                    )
+                }
+            } else if (reader != null) {
+                try {
+                    reader.close()
+                } catch (Exception closeException) {
+                    log.warn(
+                            "Could not close KBART reader: " +
+                                    "${closeException.message}"
+                    )
+                }
             }
         }
+
         log.info("End KbartProcess with ${countRows} rows")
 
-        result
+        return result
     }
 
     public LocalDate convertToLocalDateViaInstant(Date dateToConvert) {
@@ -1093,16 +1189,49 @@ class KbartProcessService {
 
     }
 
-    String normalizeHeader(String header) {
-        header
-                ?.replaceFirst(/^\uFEFF/, "")
-                ?.trim()
-                ?.toLowerCase()
+    private static char resolveKbartDelimiter(String delimiter) {
+        if (!delimiter) {
+            throw new IllegalArgumentException(
+                    "Delimiter must not be null or empty"
+            )
+        }
+
+        if (delimiter == "\\t" || delimiter == "\t") {
+            return '\t' as char
+        }
+
+        return delimiter.charAt(0)
     }
 
-    String cleanValue(String value) {
-        value
-                ?.replace("\r", "")
-                ?.replaceAll("\\x00", "")
+    private static String normalizeKbartHeader(String header) {
+        if (header == null) {
+            return null
+        }
+
+        String normalized = header
+                .replaceFirst(/^\uFEFF/, "")
+                .replace("\u0000", "")
+                .trim()
+                .toLowerCase(Locale.ROOT)
+
+        if (normalized == "superceding_publication_title_id") {
+            return "superseding_publication_title_id"
+        }
+
+        return normalized ?: null
     }
+
+    private static String cleanKbartValue(String value) {
+        if (value == null) {
+            return null
+        }
+
+        String cleaned = value
+                .replace("\u0000", "")
+                .replace("\r", "")
+                .trim()
+
+        return cleaned ?: null
+    }
+
 }
