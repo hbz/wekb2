@@ -477,6 +477,7 @@ class KbartProcessService {
             if(kbartRowsToCreateTipps.size() > 0){
                 newtippIdList = kbartImportService.createTippBatch(kbartRowsToCreateTipps, updatePackageInfo)
                 log.info("kbartRowsToCreateTipps: newTippList size -> "+newtippIdList.size())
+                newTipps = newtippIdList.size()
 
             }
 
