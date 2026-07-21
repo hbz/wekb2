@@ -27,7 +27,7 @@
 
 
 
-# Update or Install Fomantic UI for the first time
+# Install Fomantic UI for the first time
 
 - change the package.json to the new fomantic ui version
 - change the semantic.json to the new fomantic ui version
@@ -49,7 +49,7 @@
 
 - only the themes 'default' and 'wekb' should remain in 'files/frontend/semantic/src/themes'
 
-## Pay attention to new files from the Fomantic UI update 
+## Pay attention to new files from the Fomantic UI update
 
 - add them to git repository
 
@@ -60,7 +60,48 @@
 
      gulp build
 
+# Update Fomantic UI
 
+1. Change to folder 'frontend'
+
+   cd C:\Users\xxx\IdeaProjects\yyy\files\frontend
+
+2. Installing new fomantic version
+
+For Version 2.9.4:
+
+    npm install fomantic-ui@2.9.4
+
+This makes the new version available here:
+
+    frontend\node_modules\fomantic-ui\
+
+The files in the folder 'frontend\semantic\' is not touched by this.
+
+3. Secure your own adaptations
+
+Here are the files that can contain individual customizations:
+
+
+    semantic\src\theme.config
+    semantic.json
+
+
+4. Copy the new files from node_modules\fomantic-ui to our framework stucture under files/frontend/semantic
+
+
+    Copy-Item .\node_modules\fomantic-ui\tasks\* .\semantic\tasks\ -Recurse -Force
+    Copy-Item .\node_modules\fomantic-ui\src\* .\semantic\src -Recurse -Force
+    Copy-Item .\node_modules\fomantic-ui\gulpfile.js .\semantic\gulpfile.js -Force
+
+5. Watch out for new structure after update, delete or merge old files
+
+
+6. Build css
+
+
+    cd semantic
+    gulp build
 
 
 # How to customize CSS
