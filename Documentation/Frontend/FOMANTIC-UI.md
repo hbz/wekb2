@@ -27,7 +27,7 @@
 
 
 
-# Update or Install Fomantic UI for the first time
+# Install Fomantic UI for the first time
 
 - change the package.json to the new fomantic ui version
 - change the semantic.json to the new fomantic ui version
@@ -67,6 +67,19 @@
 - check if the needed node version is installed on your pc with 'nvm current'
 - go to the folder 'files\frontend'
 
+
+    npm install --ignore-scripts fomantic-ui
+    npm update
+    cd node_modules/fomantic-ui
+    npx gulp install
+
+- go to the folder 'files\frontend'
+
+
+    Copy-Item .\node_modules\fomantic-ui\tasks\* .\semantic\tasks\ -Recurse -Force
+    Copy-Item .\node_modules\fomantic-ui\src\* .\semantic\src\ -Recurse -Force
+    Copy-Item .\node_modules\fomantic-ui\gulpfile.js .\semantic\gulpfile.js -Force
+    Copy-Item .\node_modules\fomantic-ui\themes\* .\semantic\themes\ -Recurse -Force
 
 
 # How to customize CSS
