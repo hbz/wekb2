@@ -60,6 +60,12 @@
 
      gulp build
 
+# Update Fomantic UI 
+
+- change the package.json to the new fomantic ui version
+- change the semantic.json to the new fomantic ui version
+- check if the needed node version is installed on your pc with 'nvm current'
+- go to the folder 'files\frontend'
 
 
 
