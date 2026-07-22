@@ -80,12 +80,6 @@ The files in the folder 'frontend\semantic\' is not touched by this.
 
 3. Secure your own adaptations
 
-Here are the files that can contain individual customizations:
-
-
-    semantic\src\theme.config
-    semantic.json
-
 
 4. Copy the new files from node_modules\fomantic-ui to our framework stucture under files/frontend/semantic
 
