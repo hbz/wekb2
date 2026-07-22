@@ -76,7 +76,7 @@ This makes the new version available here:
 
     frontend\node_modules\fomantic-ui\
 
-The files in the folder 'frontend\semantic\' is not touched by this.
+The files in the folder 'frontend\semantic\src' are not touched by this, only files/frontend/package.json and files/frontend/package-lock.json
 
 3. Secure your own adaptations
 
