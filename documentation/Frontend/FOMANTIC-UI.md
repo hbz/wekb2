@@ -89,9 +89,9 @@ The files in the folder 'frontend\semantic\src' are not touched by this, only fi
     Copy-Item .\node_modules\fomantic-ui\gulpfile.js .\semantic\gulpfile.js -Force
 
 5. Watch out for new structure after update, delete or merge old files, delete all the other themes you do not need. Merge your own custom files with the new files.
+   Change the version of fomantic-ui in files/frontend/semantic.json.
 
-
-6. Build css
+6. Build css. 
 
 
     cd semantic
