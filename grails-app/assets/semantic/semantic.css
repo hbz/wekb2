@@ -41873,7 +41873,7 @@ ol.ui.list ol li,
 .ui.list .list > .disabled.item,
 .ui.list > .disabled.item {
   pointer-events: none;
-  color: rgba(40, 40, 40, 0.3) !important;
+  color: rgba(40, 40, 40, 0.7) !important;
 }
 
 .ui.inverted.list .list > .disabled.item,
@@ -44490,7 +44490,7 @@ dd {
 .ui.disabled.segments,
 .ui.disabled.segment {
   opacity: 0.45;
-  color: rgba(40, 40, 40, 0.3);
+  color: rgba(40, 40, 40, 0.7);
   pointer-events: none;
   -webkit-user-select: none;
   -ms-user-select: none;
@@ -45822,7 +45822,7 @@ dd {
 .ui.steps:not(.circular) .disabled.step,
 .ui.steps:not(.circular) .disabled.step .title,
 .ui.steps:not(.circular) .disabled.step .description {
-  color: rgba(40, 40, 40, 0.3);
+  color: rgba(40, 40, 40, 0.7);
 }
 
 .ui.steps:not(.circular) .disabled.step::after {
@@ -52172,7 +52172,7 @@ dd {
 .ui.ui.menu .item.disabled {
   cursor: default;
   background-color: transparent;
-  color: rgba(40, 40, 40, 0.3);
+  color: rgba(40, 40, 40, 0.7);
   pointer-events: none;
 }
 
@@ -56051,7 +56051,7 @@ Floated Menu / Item
 .ui.table tr.disabled:hover,
 .ui.table tr:hover td.disabled {
   pointer-events: none;
-  color: rgba(40, 40, 40, 0.3);
+  color: rgba(40, 40, 40, 0.7);
 }
 
 /*******************************
@@ -58571,7 +58571,7 @@ Floated Menu / Item
 
 .ui.sortable.table th.disabled:hover {
   cursor: auto;
-  color: rgba(40, 40, 40, 0.3);
+  color: rgba(40, 40, 40, 0.7);
 }
 
 .ui.sortable.table > thead > tr > th:hover {
@@ -58674,7 +58674,7 @@ Floated Menu / Item
 .ui.inverted.table tr.disabled:not([class="disabled"]) td,
 .ui.inverted.table tr.disabled td[class]:not(.disabled),
 .ui.inverted.table tr:hover td.disabled:not([class="disabled"]) {
-  color: rgba(40, 40, 40, 0.3);
+  color: rgba(40, 40, 40, 0.7);
 }
 
 /* Definition */
@@ -59859,7 +59859,7 @@ Floated Menu / Item
 
 .ui.disabled.card {
   opacity: 0.45;
-  color: rgba(40, 40, 40, 0.3);
+  color: rgba(40, 40, 40, 0.7);
   pointer-events: none;
 }
 
@@ -64647,7 +64647,7 @@ a.inverted.ui.card:hover,
 .ui.ui.calendar .ui.table tr .disabled {
   pointer-events: auto;
   cursor: default;
-  color: rgba(40, 40, 40, 0.3);
+  color: rgba(40, 40, 40, 0.7);
 }
 
 .ui.calendar .ui.table tr .adjacent:not(.disabled):not(.active) {
