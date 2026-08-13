@@ -101,7 +101,7 @@ class AutoUpdatePlatformsService {
         else if(!platform.counterRegistryApiUuid)
             platform.counterRegistryApiUuid = registryUUID
         boolean withRequestorId = Boolean.valueOf(platformRecord.requestor_id_required),
-        withApiKey = Boolean.valueOf(platformRecord.qpi_key_required),
+        withApiKey = Boolean.valueOf(platformRecord.api_key_required),
         withIpWhiteListing = Boolean.valueOf(platformRecord.ip_address_authorization)
         if(withRequestorId) {
             if(withApiKey) {
