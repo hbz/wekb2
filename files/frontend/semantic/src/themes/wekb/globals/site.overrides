@@ -70,3 +70,11 @@
 html {
     font-size: 100%;
 }
+
+/* -------------------
+ WCAG Links in bodycopy
+-------------------- */
+
+p > a {
+    font-weight: @bold;
+}
