@@ -1,5 +1,7 @@
 {
-  "dependencies": {
-    "fomantic-ui": "^2.9.3"
+  "devDependencies": {
+    "fomantic-ui": "^2.9.4",
+    "gulp": "^5.0.1",
+    "gulp-cli": "^3.1.0"
   }
 }

@@ -5,7 +5,7 @@
         <div class="ui stackable  divided equal height stackable grid center aligned">
 
             <div class="five wide column left aligned">
-                <img height="30" alt="Logo wekb" src="${resource(dir: 'images', file: 'wekb-logo.svg')}"/>
+                <img height="30" alt="Logo we:kb" src="${resource(dir: 'images', file: 'wekb-logo.svg')}"/>
 
                 <p>©${Year.now().getValue()} Hochschulbibliothekszentrum des Landes Nordrhein-Westfalen (hbz) <br> ‧ Jülicher Straße 6 ‧ 50674 Köln<br>  ‧ +49 221 400 75-0
                 </p>
