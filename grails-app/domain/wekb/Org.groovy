@@ -290,7 +290,7 @@ class Org extends AbstractBase implements Auditable {
 
   @Transient
   List<Platform> getProvidedPlatforms(){
-    Platform.executeQuery('select p from Platform as p where provider = :provider', [provider: this])
+    Platform.executeQuery('select p from Platform as p where provider = :provider and status != :status', [provider: this, status: RDStore.KBC_STATUS_REMOVED])
   }
 
   @Transient
@@ -300,7 +300,7 @@ class Org extends AbstractBase implements Auditable {
 
   @Transient
   int getProvidedPlatformsCount(){
-    Platform.executeQuery('select count(*) from Platform as p where provider = :provider', [provider: this])[0]
+    Platform.executeQuery('select count(*) from Platform as p where provider = :provider and status != :status', [provider: this, status: RDStore.KBC_STATUS_REMOVED])[0]
   }
 
   @Transient
