@@ -405,6 +405,11 @@
 @positiveColorFocus: if(iscolor(@positiveColor), saturate(darken(@positiveColor, 15), 100, relative), @positiveColor);
 @positiveColorActive: if(iscolor(@positiveColor), saturate(darken(@positiveColor, 15), 100, relative), @positiveColor);
 
+/* -------------------
+      Disabled
+-------------------- */
+
+@disabledTextColor: rgba(40, 40, 40, 0.7);
 
 
 
