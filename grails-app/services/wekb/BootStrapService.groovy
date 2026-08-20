@@ -236,7 +236,7 @@ class BootStrapService {
                 //CSVReader csvr = new CSVReader(reader, (char) ';', (char) '"', (char) '\\', (int) 1)
                 String[] line
 
-                ICSVParser csvp = new CSVParser((char) ';', (char) '"', (char) '\\', false, true, false, CSVParser.DEFAULT_NULL_FIELD_INDICATOR, Locale.getDefault())
+                ICSVParser csvp = new CSVParser((char) ';', (char) '"', CSVParser.NULL_CHARACTER, false, true, false, CSVParser.DEFAULT_NULL_FIELD_INDICATOR, Locale.getDefault())
                 CSVReader csvr = new CSVReaderBuilder( reader ).withCSVParser( csvp ).withSkipLines( 1 ).build()
                 while (line = csvr.readNext()) {
                     if (line[0]) {
