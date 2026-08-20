@@ -376,6 +376,19 @@ class KbartProcessService {
                                                     }
 
                                                     if (!kbartHasWekbFields && updateTipp && updateTipp.status != RDStore.KBC_STATUS_CURRENT) {
+                                                        UpdateTippInfo updateTippInfo = new UpdateTippInfo(
+                                                                description: "Changes in Title '${updateTipp.name}'",
+                                                                tipp: updateTipp,
+                                                                startTime: new Date(),
+                                                                endTime: new Date(),
+                                                                status: RDStore.UPDATE_STATUS_SUCCESSFUL,
+                                                                type: RDStore.UPDATE_TYPE_CHANGED_TITLE,
+                                                                oldValue: updateTipp.status.value_en,
+                                                                newValue: RDStore.KBC_STATUS_CURRENT.value_en,
+                                                                tippProperty: 'status',
+                                                                updatePackageInfo: updatePackageInfo
+                                                        ).save()
+
                                                         updateTipp.status = RDStore.KBC_STATUS_CURRENT
                                                         setTippsNotToDeleted << updateTipp.id
                                                     }
