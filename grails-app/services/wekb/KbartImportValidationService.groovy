@@ -216,10 +216,9 @@ class KbartImportValidationService {
             }
         }*/
 
-        if (!tippMap.publication_title) {
+        if (!tippMap.publication_title?.trim()) {
             result.valid = false
             errorMessage = "Missing publication title!"
-
         }
 
 /*        if(result.valid) {

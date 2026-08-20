@@ -1933,6 +1933,8 @@ class KbartImportService {
         // KBART -> publication_type -> publicationType
         if (tippMap.publication_type) {
             result.changedTipp = checkAndSetByChangedValue(result, tipp, 'RefDataValue', updatePackageInfo, tippMap, "publication_type", "publicationType", false, RCConstants.TIPP_PUBLICATION_TYPE)
+        }else {
+            result.changedTipp = checkAndSetByChangedValue(result, tipp, 'RefDataValue', updatePackageInfo, tippMap, "publication_type", "publicationType", false, RCConstants.TIPP_PUBLICATION_TYPE)
         }
         //log.debug("5")
         // KBART -> medium -> medium
@@ -2351,9 +2353,8 @@ class KbartImportService {
                                 tipp_medium = determineMediumRef(tippMap.medium)
                             }
                             RefdataValue tipp_publicationType = null
-                            if (tippMap.type) {
-                                tipp_publicationType = determinePublicationType(tippMap.type)
-                            }
+
+                            tipp_publicationType = determinePublicationType(tippMap.type)
 
                             RefdataValue tipp_accessType = null
                             if (tippMap.access_type && tippMap.access_type.length() > 0) {
@@ -2696,8 +2697,6 @@ class KbartImportService {
                 }
 
             }*/
-
-            String title = tippMap.publication_title
 
             /*countTipps = TitleInstancePackagePlatform.executeQuery('select count(*) from TitleInstancePackagePlatform as tipp ' +
                     'where tipp.pkg = :pkg and tipp.status != :removed and tipp.name = :tiDtoName ',
