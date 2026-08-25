@@ -283,7 +283,7 @@ class PublicController {
       List newItems = objectNews?.newInDB ?: []
       List changedItems = objectNews?.lastUpdatedInDB ?: []
 
-      // Neue und geänderte Einträge zusammen maximal vier
+      // new and changed items maximal four all together
       List events = (newItems + changedItems).unique().take(4)
 
       events.each { event ->
