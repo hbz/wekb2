@@ -15,6 +15,7 @@
     <script src="/assets/jquery-3.6.0.min.js"></script>
     <script src="/assets/altcha/altcha.min.js" async defer type="module"></script>
 
+    <asset:javascript src="wekb.js"/>
     <asset:stylesheet src="wekb.css"/>
 </head>
 
