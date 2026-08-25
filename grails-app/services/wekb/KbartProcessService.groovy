@@ -12,6 +12,9 @@ import org.hibernate.StatelessSession
 import org.hibernate.Transaction
 import org.mozilla.universalchardet.UniversalDetector
 
+import java.nio.ByteBuffer
+import java.nio.charset.CharacterCodingException
+import java.nio.charset.CodingErrorAction
 import java.nio.charset.StandardCharsets
 import java.nio.file.Files
 import java.nio.file.Path
@@ -96,11 +99,9 @@ class KbartProcessService {
 
     Set<String> allowedEncodings = [
             "UTF-8",
-            "UTF8",
             "WINDOWS-1252",
-            "CP1252",
-            "US-ASCII",
-            "ASCII"
+            "UTF-16LE",
+            "UTF-16BE",
     ] as Set<String>
 
     void kbartImportManual(Package pkg, File tsvFile, Boolean onlyRowsWithLastChanged){
@@ -876,50 +877,36 @@ class KbartProcessService {
         String encoding = null
 
         try {
-            boolean asciiFile
 
-            tsvFile.withInputStream { InputStream inputStream ->
-                String content = inputStream.getText(StandardCharsets.US_ASCII.name())
-                asciiFile = StandardCharsets.US_ASCII.newEncoder().canEncode(content)
-            }
+            encoding = determineEncoding(tsvFile)
 
-            if (asciiFile) {
-                encoding = StandardCharsets.US_ASCII.name()
-            } else {
-                tsvFile.withInputStream { InputStream inputStream ->
-                    encoding = UniversalDetector.detectCharset(inputStream)
-                }
-            }
+            if (!encoding || !allowedEncodings.contains(encoding)) {
 
-            String normalizedEncoding = encoding?.trim()?.toUpperCase(Locale.ROOT)
+                log.warn("Encoding of file is wrong. File encoding is: ${encoding}")
 
-            if (!normalizedEncoding || !allowedEncodings.contains(normalizedEncoding)) {
-                log.warn(
-                        "Encoding of file is wrong. File encoding is: ${encoding}"
+                markImportAsFailed(
+                        "Encoding of KBART file is wrong. " +
+                                "File encoding was: ${encoding}. " +
+                                "AllowedEncodings: ${allowedEncodings}"
                 )
 
-                markImportAsFailed("Encoding of KBART file is wrong. File encoding was: ${encoding}. AllowedEncodings: ${allowedEncodings}"
-                )
                 log.info("End KbartProcess with ${countRows} rows")
                 return result
             }
 
-            if (normalizedEncoding in ["WINDOWS-1252", "CP1252"]) {
-                encoding = "windows-1252"
-            } else if (normalizedEncoding in ["UTF-8", "UTF8"]) {
-                encoding = "UTF-8"
-            } else {
-                encoding = "US-ASCII"
-            }
+            log.debug("Detected KBART encoding: ${encoding}")
 
         } catch (Exception encodingException) {
+
             log.error(
-                    "Could not determine KBART encoding: " +
-                            "${encodingException.message}",
+                    "Could not determine KBART encoding: ${encodingException.message}",
                     encodingException
             )
 
-            markImportAsFailed("The encoding of the KBART file could not be determined. AllowedEncodings: ${allowedEncodings}")
+            markImportAsFailed(
+                    "The encoding of the KBART file could not be determined. " +
+                            "AllowedEncodings: ${allowedEncodings}"
+            )
 
             log.info("End KbartProcess with ${countRows} rows")
             return result
@@ -1245,6 +1232,109 @@ class KbartProcessService {
                 .trim()
 
         return cleaned ?: null
+    }
+
+
+    static String determineEncoding(File file) {
+
+        // BOM prüfen
+        byte[] bom = new byte[4]
+
+        int bytesRead = file.withInputStream { InputStream inputStream ->
+            inputStream.read(bom)
+        }
+
+        // UTF-8 BOM: EF BB BF
+        if (bytesRead >= 3 &&
+                (bom[0] & 0xFF) == 0xEF &&
+                (bom[1] & 0xFF) == 0xBB &&
+                (bom[2] & 0xFF) == 0xBF) {
+
+            return "UTF-8"
+        }
+
+        // UTF-16 LE BOM: FF FE
+        if (bytesRead >= 2 &&
+                (bom[0] & 0xFF) == 0xFF &&
+                (bom[1] & 0xFF) == 0xFE) {
+
+            return "UTF-16LE"
+        }
+
+        // UTF-16 BE BOM: FE FF
+        if (bytesRead >= 2 &&
+                (bom[0] & 0xFF) == 0xFE &&
+                (bom[1] & 0xFF) == 0xFF) {
+
+            return "UTF-16BE"
+        }
+
+
+        if (isValidUtf8(file)) {
+            return "UTF-8"
+        }
+
+
+        // Fallback: UniversalDetector
+        String detectedEncoding
+
+        file.withInputStream { InputStream inputStream ->
+            detectedEncoding = UniversalDetector.detectCharset(inputStream)
+        }
+
+        return normalizeEncoding(detectedEncoding)
+    }
+
+
+    private static boolean isValidUtf8(File file) {
+
+        def decoder = StandardCharsets.UTF_8.newDecoder()
+
+        decoder.onMalformedInput(CodingErrorAction.REPORT)
+        decoder.onUnmappableCharacter(CodingErrorAction.REPORT)
+
+        try {
+            decoder.decode(ByteBuffer.wrap(file.bytes))
+            return true
+        }
+        catch (CharacterCodingException ignored) {
+            return false
+        }
+    }
+
+
+    private static String normalizeEncoding(String encoding) {
+
+        if (!encoding) {
+            return null
+        }
+
+        String normalized = encoding.trim().toUpperCase(Locale.ROOT)
+
+        switch (normalized) {
+
+            case "UTF8":
+            case "UTF-8":
+                return "UTF-8"
+            case "ASCII":
+            case "US-ASCII":
+                return "US-ASCII"
+
+            case "CP1252":
+            case "WINDOWS-1252":
+                return "WINDOWS-1252"
+
+            case "UTF16LE":
+            case "UTF-16LE":
+                return "UTF-16LE"
+
+            case "UTF16BE":
+            case "UTF-16BE":
+                return "UTF-16BE"
+
+            default:
+                return normalized
+        }
     }
 
 }
