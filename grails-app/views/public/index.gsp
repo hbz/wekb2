@@ -1,4 +1,4 @@
-<%@ page import="wekb.utils.ServerUtils; wekb.system.AltchaClient" %>
+<%@ page import="wekb.utils.ServerUtils; wekb.system.AltchaClient; wekb.ui.Icon;" %>
 <wekb:serviceInjection/>
 
 <!DOCTYPE html>
@@ -12,44 +12,315 @@
     </g:else>
 
     <title>we:kb | wekb</title>
+
 </head>
 <body>
+<style>
+.full-height-grid {
+    min-height: 100vh;
+    margin: 0 !important;
+}
+
+
+</style>
+    <g:set var="objectIcons" value="${[
+            package : Icon.PACKAGE,
+            platform: Icon.PLATFORM,
+            provider: Icon.PROVIDER,
+            tipp    : Icon.TIPP
+    ]}" />
     <div class="container">
-        <h1 class="ui header">we:kb</h1>
-        <p>
-            Provider-Curated Knowledge Base Freely Available under CC0
-        </p>
+        <div class="ui main fluid container">
+            <div class="ui stackable grid full-height-grid">
+                <aside class="four wide column" style="background-color:#f9fafb;border-right: 1px solid rgba(34, 36, 38, .15);">
+                    <h3 class="ui header">we:kb News</h3>
+                    <g:if test="${allNews}">
+                        <div class="ui connected feed news-feed">
 
-        <h2 class="ui header">Provider and Platform Data</h2>
-        <h3 class="ui header">
-            <g:formatNumber number="${countComponent['Provider']}" type="number" format="###.###"/> Providers and
-            <g:formatNumber number="${countComponent['Platform']}" type="number" format="###.###"/> Platforms
-        </h3>
-        <p>
-            In we:kb, content providers and library suppliers may contribute valuable information about their services,
-            platforms, and products and share this data with the library community.
-            This ensures that libraries have access to up-to-date and authoritative information directly from the source.
-        </p>
+                            <g:each in="${allNews}" var="item">
+                                <article class="event">
+                                    <div class="label">
+                                        <i class="${objectIcons[item.object] ?: 'info circle'} icon"
+                                           aria-hidden="true"></i>
+                                    </div>
 
-        <h2 class="ui header">Package information and title data</h2>
-        <h3 class="ui header">
-            <g:formatNumber number="${countComponent['Package']}" type="number" format="###.###"/> Packages and
-            <g:formatNumber number="${countComponent['TIPP']}" type="number" format="###.###"/> Titles
-        </h3>
-        <p>
-            Content providers can create and maintain packages that reflect their current products and sales units.
-            Each package can include detailed metadata and title information.
-            Automated import and update routines ensure to keep the package content current and provide libraries with a reliable overview of available titles.
-        </p>
+                                    <div class="content">
+                                        ${item.event}
+                                    </div>
+                                </article>
+                            </g:each>
 
-        <h2 class="ui header">Synchronization with LAS:eR</h2>
-        <p>
-            All data maintained in we:kb is seamlessly integrated in the Electronic Resource Management System LAS:eR (<a href="https://laser.hbz-nrw.de">https://laser.hbz-nrw.de</a>) where its visibility and usability is increased.
-            In LAS:eR, a large community of consortia and academic institutions across the DACH region is able to work with the data provided in we:kb
-            and manage electronic resources in the context of their specific license agreements.
-        </p>
+                        </div>
+                    </g:if>
+                    <g:else>
+                        <div class="ui info message">
+                            Derzeit liegen keine neuen oder geänderten Inhalte vor.
+                        </div>
+                    </g:else>
+%{--                    <div class="ui connected feed">
+                        <div class="event">
+                            <div class="label" data-tooltip="Package" data-position="top left">
+                                <i class="orange circular inverted gift icon"></i>
+                            </div>
+                            <div class="content">
+                                <div class="date">
+                                    23.07.2026
+                                </div>
+                                <div class="summary">
+                                    Inlibra Paket C.H.Beck Jura Wirtschaftsrecht 2026 I <label class="ui tiny black label">NEW</label>
+                                </div>
+                                <div class="extra text">
+                                    Nomos Verlagsgesellschaft mbH & Co. KG
+                                </div>
+                            </div>
+                        </div>
+                        <div class="event">
+                            <div class="label" data-tooltip="Package" data-position="top left">
+                                <i class="orange circular inverted gift icon"></i>
+                            </div>
+                            <div class="content">
+                                <div class="date">
+                                    23.07.2026
+                                </div>
+                                <div class="summary">
+                                    scholars_Wirtschaft 2026_2 <label class="ui tiny black label">NEW</label>
+                                </div>
+                                <div class="extra text">
+                                    utb GmbH
+                                </div>
+                            </div>
+                        </div>
+                        <div class="event">
+                            <div class="label" data-tooltip="Package" data-position="top left">
+                                <i class="orange circular inverted gift icon"></i>
+                            </div>
+                            <div class="content">
+                                <div class="date">
+                                    23.07.2026
+                                </div>
+                                <div class="summary">
+                                    scholars_Sprachwissenschaft/Spracherwerb 2026_2 <label class="ui tiny black label">NEW</label>
+                                </div>
+                                <div class="extra text">
+                                    utb GmbH
+                                </div>
+                            </div>
+                        </div>
+                        <div class="event">
+                            <div class="label" data-tooltip="Package" data-position="top left">
+                                <i class="orange circular inverted gift icon"></i>
+                            </div>
+                            <div class="content">
+                                <div class="date">
+                                    23.07.2026
+                                </div>
+                                <div class="summary">
+                                    scholars_Sprachwissenschaft allg./Anglistik 2026_2 <label class="ui tiny black label">NEW</label>
+                                </div>
+                                <div class="extra text">
+                                    utb GmbH
+                                </div>
+                            </div>
+                        </div>
+                        <div class="event">
+                            <div class="label" data-tooltip="Package" data-position="top left">
+                                <i class="circle outline mini icon"></i>
+                            </div>
+                            <div class="content">
+                                <div class="summary">
+                                    <a href="#">More news about packages</a>
+                                </div>
+                                <div class="extra text"> </div>
+                                <div class="extra text"> </div>
+                            </div>
+                        </div>
+                        <div class="event">
+                            <div class="label" data-tooltip="Platform" data-position="top left">
+                                <i class="yellow circular inverted cloud icon"></i>
+                            </div>
+                            <div class="content">
+                                <div class="date">
+                                    23.07.2026
+                                </div>
+                                <div class="summary">
+                                    LinkedIn Learning <label class="ui tiny black label">NEW</label>
+                                </div>
+                                <div class="extra text">
+                                    LinkedIn
+                                </div>
+                            </div>
+                        </div>
+                        <div class="event">
+                            <div class="label" data-tooltip="Provider" data-position="top left">
+                                <i class="yellow circular inverted broadcast tower icon" style="background-color: #b54800;
+                                border-color: #b54800;"></i>
+                            </div>
+                            <div class="content">
+                                <div class="date">
+                                    23.07.2026
+                                </div>
+                                <div class="summary">
+                                    LinkedIn Learning <label class="ui tiny black label">NEW</label>
+                                </div>
+                                <div class="extra text">
+                                    LinkedIn
+                                </div>
+                            </div>
+                        </div>
+                        <div class="event">
+                            <div class="label">
+                                <i class="yellow circular inverted broadcast tower icon" style="    background-color: #b54800;
+                                border-color: #b54800;"></i>
+                            </div>
+                            <div class="content">
+                                <div class="date">
+                                    23.07.2026
+                                </div>
+                                <div class="summary">
+                                    IBISWorld GmbH <label class="ui tiny black label">CHANGE</label>
+                                </div>
+                                <div class="extra text">
+                                    IBISWorld GmbH
+                                </div>
+                            </div>
+                        </div>
+                        <div class="event">
+                            <div class="label" data-tooltip="Library Suppliers" data-position="top left">
+                                <i class="yellow circular inverted handshake icon" style="background-color: #5d7c62;
+                                border-color: #b54800;"></i>
+                            </div>
+                            <div class="content">
+                                <div class="date">
+                                    14.07.2026
+                                </div>
+                                <div class="summary">
+                                    EBSCO Information Services GmbH <label class="ui tiny black label">CHANGE</label>
+                                </div>
+                                <div class="extra text">
+                                    EBSCO Information Services GmbH
+                                </div>
+                            </div>
+                        </div>
+                    </div>--}%
 
-        <br/>
+                </aside>
+                <main class="twelve wide column hero-chart-column">
+
+                    <section class="hero-claim">
+                        <h1>
+                            <span>Provider Tool we:kb</span>
+                        </h1>
+                        <p>Provider-Curated Knowledge Base – Freely available under CC0
+                        </p>
+                        <div>
+                            <button class="ui big tertiary  button">
+                                <i class="download icon"></i>
+                                Data Export
+                            </button>
+                            <button class="ui big tertiary  button">
+                                <i class="assistive listening systems icon"></i>
+                                Sync to LAS:eR
+                            </button>
+                            <button class="ui big blue button">
+                                <i class="search icon"></i>
+                                Search Now</button>
+                        </div>
+                    </section>
+                    <section class="statistics-chart" aria-label="Statistiken">
+                        <div class="statistics-track">
+                            <div class="statistics-line" aria-hidden="true">
+                                <div class="statistics-line-progress"></div>
+                            </div>
+                            <article class="statistic" data-delay="0">
+                                <div class="statistic-marker" aria-hidden="true">
+                                    <span class="statistic-dot">
+                                        <i class="broadcast tower icon"></i>
+                                    </span>
+                                </div>
+                                <div class="statistic-number" data-value="118" data-decimals="0">
+                                    0
+                                </div>
+
+                                <h3 class="statistic-title">
+                                    Providers
+                                </h3>
+
+                                <p class="statistic-description">
+                                    Content providers and library suppliers share authoritative service information directly with the library community.
+                                </p>
+
+                            </article>
+
+                            <article class="statistic" data-delay="350">
+
+                                <div class="statistic-marker" aria-hidden="true">
+                                    <span class="statistic-dot">
+                                        <i class="cloud icon"></i>
+                                    </span>
+                                </div>
+                                <div class="statistic-number" data-value="189" data-decimals="0">
+                                    0
+                                </div>
+                                <h3 class="statistic-title">
+                                    Platforms
+                                </h3>
+                                <p class="statistic-description">
+                                    Information on platform services answers central questions
+                                    concerning authentication methods, usage statistics and matters
+                                    of accessibility on providers' platforms.
+                                </p>
+                            </article>
+                            <article class="statistic" data-delay="700">
+
+                                <div class="statistic-marker" aria-hidden="true">
+                                    <span class="statistic-dot">
+                                        <i class="gift icon"></i>
+                                    </span>
+                                </div>
+
+                                <div class="statistic-number" data-value="7778" data-decimals="0">
+                                    0
+                                </div>
+
+                                <h3 class="statistic-title">
+                                    Packages
+                                </h3>
+
+                                <p class="statistic-description">
+                                    Content providers create and maintain packages that reflect their
+                                    current sales units, heightening the visibility of these products
+                                    and giving detailed descriptions with regard to their content.
+                                </p>
+
+                            </article>
+
+                            <article class="statistic" data-delay="1050">
+
+                                <div class="statistic-marker" aria-hidden="true">
+                                    <span class="statistic-dot">
+                                        <i class="book icon"></i>
+                                    </span>
+                                </div>
+
+                                <div class="statistic-number" data-value="7.34" data-decimals="2" data-suffix=" Mio.">
+                                    0
+                                </div>
+
+                                <h3 class="statistic-title">
+                                    Titles
+                                </h3>
+
+                                <p class="statistic-description">
+                                    Automated updates provide reliable, up-to-date package and title information.
+                                </p>
+                            </article>
+                        </div>
+                    </section>
+
+                </main>
+            </div>
+        </div>
+
 
         <g:if test="${showAltcha}">
             <g:render template="/templates/altchaForm" model="[altchaForm: [origin: origin, startpage: true]]"/>

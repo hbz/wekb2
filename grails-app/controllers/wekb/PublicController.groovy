@@ -238,6 +238,64 @@ class PublicController {
             TIPP      : Org.executeQuery("select count(*) from TitleInstancePackagePlatform  where status in (:forbiddenStatus)", query_params, [readOnly: true])[0],
     ]
 
+
+
+    result.dateNow = new Date()
+
+    Date dateFor14Days = Date.from(LocalDate.now().minusDays(14).atStartOfDay(ZoneId.systemDefault()).toInstant())
+
+    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd")
+
+    result.dateFor14Days =  format.format(dateFor14Days)
+
+    List newsAboutObjects = [
+                             'Org',
+                             'Platform',
+                             'Vendor',
+                             'Package'
+    ]
+
+    List status = [RDStore.KBC_STATUS_CURRENT, RDStore.KBC_STATUS_RETIRED, RDStore.KBC_STATUS_DELETED, RDStore.KBC_STATUS_EXPECTED]
+    result.news = [:]
+
+    newsAboutObjects.each{ String domainClassName ->
+      result.news[domainClassName.toLowerCase()] = [:]
+
+      String queryNewCount = "select count(*) from ${domainClassName} where  status in (:status) and dateCreated >= :daysBefore"
+      result.news[domainClassName.toLowerCase()] .countNewInDB = Package.executeQuery(queryNewCount, [status: status, daysBefore: dateFor14Days])[0]
+      String queryLastUpdatedCount = "select count(*) from ${domainClassName} where TO_CHAR(dateCreated,'YYYY-MM-DD') != TO_CHAR(lastUpdated,'YYYY-MM-DD') and status in (:status) and lastUpdated >= :daysBefore"
+      result.news[domainClassName.toLowerCase()] .countLastUpdatedInDB = Package.executeQuery(queryLastUpdatedCount, [status: status, daysBefore: dateFor14Days])[0]
+
+
+      String queryNew = "from ${domainClassName} where  status in (:status) and dateCreated >= :daysBefore order by dateCreated desc"
+      result.news[domainClassName.toLowerCase()] .newInDB = Package.executeQuery(queryNew, [status: status, daysBefore: dateFor14Days], [max: 50, offset: 0])
+      String queryLastUpdated = "from ${domainClassName} where TO_CHAR(dateCreated,'YYYY-MM-DD') != TO_CHAR(lastUpdated,'YYYY-MM-DD') and status in (:status) and lastUpdated >= :daysBefore order by lastUpdated desc"
+      result.news[domainClassName.toLowerCase()] .lastUpdatedInDB = Package.executeQuery(queryLastUpdated, [status: status, daysBefore: dateFor14Days], [max: 50, offset: 0])
+
+    }
+
+    List allNews = []
+
+    newsAboutObjects.each { String domainClassName ->
+      String objectKey = domainClassName.toLowerCase()
+      Map objectNews = result.news[objectKey]
+
+      List newItems = objectNews?.newInDB ?: []
+      List changedItems = objectNews?.lastUpdatedInDB ?: []
+
+      // Neue und geänderte Einträge zusammen maximal vier
+      List events = (newItems + changedItems).unique().take(4)
+
+      events.each { event ->
+        allNews << [
+                object: objectKey,
+                event : event
+        ]
+      }
+    }
+
+    result.allNews = allNews
+
     result
   }
 
