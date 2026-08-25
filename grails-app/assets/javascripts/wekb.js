@@ -20,6 +20,8 @@
 
 //=require modules/verticalNavi.js
 
+//=require modules/newsFeedCutter.js
+
 //=require modules/paginationNavi.js
 
 //=require modules/responsiveTables.js
@@ -75,6 +77,7 @@ $(function () {
     a11yIcon.go();
     verticalNavi.go();
     paginationNavi.go();
+    newsFeedCutter.go();
     responsiveTables.go();
 
     $('.ui.sticky')
