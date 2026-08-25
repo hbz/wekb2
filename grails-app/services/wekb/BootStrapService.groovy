@@ -56,8 +56,6 @@ class BootStrapService {
 
         setIdentifierNamespace()
 
-        anonymizeUsers()
-
         log.info("Setup Trigram indices")
         initTrigramIndices()
 
@@ -205,28 +203,6 @@ class BootStrapService {
     }
 
 
-    def anonymizeUsers() {
-        if(grailsApplication.config.getProperty('wekb.anonymizeUsers', Boolean)) {
-            log.info("anonymizeUsers")
-            User.findAll().each { User user ->
-
-                log.info("anonymizeUsers ${user.displayName} ${user.username}")
-                if(user.curatoryGroupUsers && user.curatoryGroupUsers.curatoryGroup.find{CuratoryGroup curatoryGroup -> curatoryGroup.name == "hbz" || curatoryGroup.name == "LAS:eR"}){
-                    user.email = 'local@localhost.local'
-                }else {
-                    user.username = "User ${user.id}"
-                    user.displayName = "User ${user.id}"
-                    user.email = 'local@localhost.local'
-                    user.password = "${user.lastUpdated}+${user.id}"
-                    user.enabled = false
-                    user.accountLocked = true
-                    user.save()
-                }
-
-            }
-        }
-    }
-
     void initTrigramIndices() {
         DatabaseUtils.initTrigramIndices()
     }
@@ -260,7 +236,7 @@ class BootStrapService {
                 //CSVReader csvr = new CSVReader(reader, (char) ';', (char) '"', (char) '\\', (int) 1)
                 String[] line
 
-                ICSVParser csvp = new CSVParser((char) ';', (char) '"', (char) '\\', false, true, false, CSVParser.DEFAULT_NULL_FIELD_INDICATOR, Locale.getDefault())
+                ICSVParser csvp = new CSVParser((char) ';', (char) '"', CSVParser.NULL_CHARACTER, false, true, false, CSVParser.DEFAULT_NULL_FIELD_INDICATOR, Locale.getDefault())
                 CSVReader csvr = new CSVReaderBuilder( reader ).withCSVParser( csvp ).withSkipLines( 1 ).build()
                 while (line = csvr.readNext()) {
                     if (line[0]) {

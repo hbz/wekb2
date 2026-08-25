@@ -323,6 +323,7 @@ class GlobalSearchTemplatesService {
                                 [heading: 'Name', property: 'name', sort: 'name'],
                                 [heading: 'Value', property: 'value', link: true, sort: 'value', linkInfo: 'Link to Identifier Namespace'],
                                 [heading: 'Hard Data', property: 'isHardData', sort: 'isHardData'],
+                                [heading: 'Pattern', property: 'pattern', sort: 'pattern'],
                                 [heading: 'Target Type', property: 'targetType.value', sort: 'targetType.value'],
                                 [heading: 'Count', property: 'identifiersCount', sort: 'identifiersCount']
                         ]

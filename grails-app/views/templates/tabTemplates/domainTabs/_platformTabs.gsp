@@ -10,11 +10,6 @@
         <semui:tabsItemWithoutLink tab="statistic" activeTab="${params.activeTab}">
             Statistics
         </semui:tabsItemWithoutLink>
-        <g:if test="${user && (SpringSecurityUtils.ifAnyGranted("ROLE_ADMIN, ROLE_COUNTER") || user.curatoryGroupUsers.curatoryGroup.id.intersect(d.curatoryGroups.curatoryGroup.id))}">
-            <semui:tabsItemWithoutLink tab="counterApiInfo" activeTab="${params.activeTab}">
-                Counter Api Key Information
-            </semui:tabsItemWithoutLink>
-        </g:if>
         <semui:tabsItemWithoutLink tab="accessibility" activeTab="${params.activeTab}">
             Accessibility
         </semui:tabsItemWithoutLink>
@@ -268,6 +263,15 @@
 
             <dl>
                 <dt class="control-label">
+                    Counter Api Authentication Method
+                </dt>
+                <dd>
+                    <semui:xEditableRefData owner="${d}" field="counterApiAuthenticationMethod"
+                                            config="${RCConstants.PLATFORM_COUNTER_API_AUTH_METHOD}"/>
+                </dd>
+            </dl>
+            <dl>
+                <dt class="control-label">
                     Forwarding Usage Statistcs
                 </dt>
                 <dd>
@@ -285,47 +289,6 @@
             </dl>
         </div>
     </semui:tabsItemContent>
-
-    <g:if test="${user && (SpringSecurityUtils.ifAnyGranted("ROLE_ADMIN, ROLE_COUNTER") || user.curatoryGroupUsers.curatoryGroup.id.intersect(d.curatoryGroups.curatoryGroup.id))}">
-
-        <semui:tabsItemContent tab="counterApiInfo" activeTab="${params.activeTab}">
-            <div class="content wekb-inline-lists">
-                <dl>
-                    <dt class="control-label">
-                        Counter Api Authentication Method
-                    </dt>
-                    <dd>
-                        <semui:xEditableRefData owner="${d}" field="counterApiAuthenticationMethod"
-                                                config="${RCConstants.PLATFORM_COUNTER_API_AUTH_METHOD}"/>
-                    </dd>
-                </dl>
-                <dl>
-                    <dt class="control-label">
-                        Central Api Key
-                    </dt>
-                    <dd>
-                        <semui:xEditable owner="${d}" field="centralApiKey"/>
-                    </dd>
-                </dl>
-                <dl>
-                    <dt class="control-label">
-                        Label for Customer ID
-                    </dt>
-                    <dd>
-                        <semui:xEditable owner="${d}" field="internLabelForCustomerID"/>
-                    </dd>
-                </dl>
-                <dl>
-                    <dt class="control-label">
-                        Label for Requestor-ID / API-Key
-                    </dt>
-                    <dd>
-                        <semui:xEditable owner="${d}" field="internLabelForRequestorKey"/>
-                    </dd>
-                </dl>
-            </div>
-        </semui:tabsItemContent>
-    </g:if>
 
     <semui:tabsItemContent tab="accessibility" activeTab="${params.activeTab}">
         <div class="sixteen wide column">
