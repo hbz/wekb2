@@ -27,7 +27,15 @@
             package : Icon.PACKAGE,
             platform: Icon.PLATFORM,
             provider: Icon.PROVIDER,
-            tipp    : Icon.TIPP
+            vendor  : Icon.VENDOR,
+            org     : Icon.ORG
+    ]}" />
+    <g:set var="objectColors" value="${[
+            package : 'package',
+            platform: 'platform',
+            provider: 'provider',
+            vendor  : 'vendor',
+            org     : 'org'
     ]}" />
     <div class="container">
         <div class="ui main fluid container">
@@ -40,7 +48,7 @@
                             <g:each in="${allNews}" var="item">
                                 <article class="event">
                                     <div class="label">
-                                        <i class="${objectIcons[item.object] ?: 'info circle'} icon"
+                                        <i class="inverted circular wekb-${objectColors[item.object] ?: 'red'} ${objectIcons[item.object] ?: 'info circle'} icon"
                                            aria-hidden="true"></i>
                                     </div>
 

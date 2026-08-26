@@ -36835,6 +36835,40 @@ i.icon.youtube.play::before {
 *******************************/
 
 /*******************************
+         Theme Overrides
+*******************************/
+
+i.inverted.circular.wekb-package.icon {
+  background-color: #76007a !important;
+  color: #fff !important;
+}
+
+i.inverted.circular.wekb-organisation.icon {
+  background-color: #00b5ad !important;
+  color: #fff !important;
+}
+
+i.inverted.circular.wekb-platform.icon {
+  background-color: #FBC71C !important;
+  color: #fff !important;
+}
+
+i.inverted.circular.wekb-vendor.icon {
+  background-color: #b54800 !important;
+  color: #fff !important;
+}
+
+i.inverted.circular.wekb-title.icon {
+  background-color: #2185d0 !important;
+  color: #fff !important;
+}
+
+i.inverted.circular.wekb-provider.icon {
+  background-color: #5d7c62 !important;
+  color: #fff !important;
+}
+
+/*******************************
          Site Overrides
 *******************************/
 /*!
