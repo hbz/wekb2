@@ -16,12 +16,28 @@
 </head>
 <body>
 <style>
-.full-height-grid {
-    min-height: 100vh;
-    margin: 0 !important;
+
+.wekb-content > .ui.main.container {
+    flex: 1;
+    display: flex;
+}
+.wekb-columns {
+    flex: 1;
+    display: flex;
 }
 
+.wekb-columns > aside {
+    flex: 0 0 25%;
+    background: #eee;
+}
 
+.wekb-columns > main {
+    flex: 1;
+}
+
+.wekb-content > footer {
+    flex: 0 0 auto;
+}
 </style>
     <g:set var="objectIcons" value="${[
             package : Icon.PACKAGE,
@@ -37,8 +53,9 @@
             vendor  : 'vendor',
             org     : 'org'
     ]}" />
-    <div class="container">
-        <div class="ui main fluid container">
+
+%{--    <div class="container">
+        <div class="ui main fluid container">--}%
             <div class="ui stackable grid full-height-grid">
                 <aside class="four wide column" style="background-color:#f9fafb;border-right: 1px solid rgba(34, 36, 38, .15);">
                     <h3 class="ui header">we:kb News</h3>
@@ -326,8 +343,8 @@
                     </section>
 
                 </main>
-            </div>
-        </div>
+          </div>
+%{--  </div>--}%
 
 
         <g:if test="${showAltcha}">
@@ -342,6 +359,6 @@
                 <a href="/altcha/revoke" class="ui orange button we-link"> REVOKE ALTCHA TOKEN </a>
             </g:if>
         </g:else>
-    </div>
+%{--    </div>--}%
 </body>
 </html>
