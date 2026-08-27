@@ -224,7 +224,7 @@ class PublicController {
       result.showAltcha = true
       result.origin = request.getRequestURI() + (request.getQueryString() ? ('?' + request.getQueryString()) : '')
 
-      if (result.origin = '/') {
+      if (result.origin == '/') {
         result.origin = '/search/componentSearch?qbe=g:publicPackages'
       }
     }
@@ -242,11 +242,11 @@ class PublicController {
 
     result.dateNow = new Date()
 
-    Date dateFor14Days = Date.from(LocalDate.now().minusDays(14).atStartOfDay(ZoneId.systemDefault()).toInstant())
+    Date dateFor6Years = Date.from(LocalDate.now().minusDays(2190).atStartOfDay(ZoneId.systemDefault()).toInstant())
 
     SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd")
 
-    result.dateFor14Days =  format.format(dateFor14Days)
+    result.dateFor6Years =  format.format(dateFor6Years)
 
     List newsAboutObjects = [
                              'Org',
@@ -256,45 +256,67 @@ class PublicController {
     ]
 
     List status = [RDStore.KBC_STATUS_CURRENT, RDStore.KBC_STATUS_RETIRED, RDStore.KBC_STATUS_DELETED, RDStore.KBC_STATUS_EXPECTED]
+
     result.news = [:]
 
     newsAboutObjects.each{ String domainClassName ->
       result.news[domainClassName.toLowerCase()] = [:]
 
-      String queryNewCount = "select count(*) from ${domainClassName} where  status in (:status) and dateCreated >= :daysBefore"
-      result.news[domainClassName.toLowerCase()] .countNewInDB = Package.executeQuery(queryNewCount, [status: status, daysBefore: dateFor14Days])[0]
-      String queryLastUpdatedCount = "select count(*) from ${domainClassName} where TO_CHAR(dateCreated,'YYYY-MM-DD') != TO_CHAR(lastUpdated,'YYYY-MM-DD') and status in (:status) and lastUpdated >= :daysBefore"
-      result.news[domainClassName.toLowerCase()] .countLastUpdatedInDB = Package.executeQuery(queryLastUpdatedCount, [status: status, daysBefore: dateFor14Days])[0]
-
-
       String queryNew = "from ${domainClassName} where  status in (:status) and dateCreated >= :daysBefore order by dateCreated desc"
-      result.news[domainClassName.toLowerCase()] .newInDB = Package.executeQuery(queryNew, [status: status, daysBefore: dateFor14Days], [max: 50, offset: 0])
+      result.news[domainClassName.toLowerCase()] .newInDB = Package.executeQuery(queryNew, [status: status, daysBefore: dateFor6Years], [max: 50, offset: 0])
       String queryLastUpdated = "from ${domainClassName} where TO_CHAR(dateCreated,'YYYY-MM-DD') != TO_CHAR(lastUpdated,'YYYY-MM-DD') and status in (:status) and lastUpdated >= :daysBefore order by lastUpdated desc"
-      result.news[domainClassName.toLowerCase()] .lastUpdatedInDB = Package.executeQuery(queryLastUpdated, [status: status, daysBefore: dateFor14Days], [max: 50, offset: 0])
+      result.news[domainClassName.toLowerCase()] .lastUpdatedInDB = Package.executeQuery(queryLastUpdated, [status: status, daysBefore: dateFor6Years], [max: 50, offset: 0])
 
     }
-
-    List allNews = []
+    List<Map> allNews = []
 
     newsAboutObjects.each { String domainClassName ->
       String objectKey = domainClassName.toLowerCase()
       Map objectNews = result.news[objectKey]
 
-      List newItems = objectNews?.newInDB ?: []
-      List changedItems = objectNews?.lastUpdatedInDB ?: []
+      List<Map> newItems = (objectNews?.newInDB ?: []).collect { event ->
+        def provider = null
 
-      // new and changed items maximal four all together
-      List events = (newItems + changedItems).unique().take(4)
+        if (objectKey in ['platform', 'package']) {
+          provider = event.provider
+        }
 
-      events.each { event ->
-        allNews << [
-                object: objectKey,
-                event : event
+        return [
+                object    : objectKey,
+                event     : event,
+                provider  : provider,
+                changeType: 'new',
+                date      : event.dateCreated
         ]
       }
+
+      List<Map> changedItems = (objectNews?.lastUpdatedInDB ?: []).collect { event ->
+        def provider = null
+
+        if (objectKey in ['platform', 'package']) {
+          provider = event.provider
+        }
+
+
+        return [
+                object    : objectKey,
+                event     : event,
+                provider  : provider,
+                changeType: 'updated',
+                date      : event.lastUpdated
+        ]
+      }
+
+      List<Map> events = (newItems + changedItems)
+              .sort { Map a, Map b -> b.date <=> a.date }
+              .take(5)
+
+      allNews.addAll(events)
     }
 
-    result.allNews = allNews
+    result.allNews = allNews.sort { Map a, Map b ->
+      b.date <=> a.date
+    }
 
     result
   }

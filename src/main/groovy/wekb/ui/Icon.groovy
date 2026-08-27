@@ -10,7 +10,7 @@ class Icon {
 
         public static String ORG                        = 'university icon'
 
-        public static String PACKAGE                    = 'orangebox icon'
+        public static String PACKAGE                    = 'box icon'
 
         public static String PLATFORM                   = 'cloud icon'
 

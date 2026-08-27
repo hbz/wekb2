@@ -9,8 +9,8 @@ i.inverted.circular.wekb-package.icon {
 }
 
 // ****  organisation **** //
-i.inverted.circular.wekb-organisation.icon {
-    background-color: @organisation!important ;
+i.inverted.circular.wekb-org.icon {
+    background-color: @org!important ;
     color: #fff!important;
 }
 

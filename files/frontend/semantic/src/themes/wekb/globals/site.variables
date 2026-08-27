@@ -425,7 +425,7 @@
 
 @package            :   @o-violet;
 @title              :   @o-blue;
-@organisation       :   @o-teal; /* bluegreen */
+@org                :   @o-teal; /* bluegreen */
 @platform           :   @o-yellow;
 @vendor             :   @o-brown;
 @provider           :   @o-grey-green;
