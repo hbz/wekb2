@@ -40,7 +40,7 @@ const newsFeedCutter = {
 
                 const articleBottom = this
                     .getBoundingClientRect()
-                    .bottom;
+                    .bottom+100;
 
                 if (articleBottom > newsColumnBottom) {
                     $article.hide();

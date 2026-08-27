@@ -17,6 +17,17 @@
 
 <body>
 <style>
+
+body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+.pusher {
+    display: flex;
+}
 .wekb-columns {
     align-items: stretch;
 }
@@ -31,6 +42,7 @@
     flex: 1;
     display: flex;
     overflow: hidden;
+    padding: 0;
 }
 
 footer {
@@ -39,7 +51,6 @@ footer {
 
 .full-height-grid {
     flex: 1 1 auto;
-    height: 100%;
     min-height: 0;
     margin-top: 0 !important;
     margin-bottom: 0 !important;
@@ -54,6 +65,8 @@ footer {
     background-color: #f9fafb;
     border-right: 1px solid rgba(34, 36, 38, .15);
     align-items: flex-start;
+    padding-left: 2rem!important;
+    padding-right: 2rem!important;
 }
 
 .news-feed {
@@ -77,6 +90,9 @@ footer {
 
 .ui.feed > .event > .label .icon {
     font-size: 1.3em;
+}
+.hero-chart-column {
+    flex:1;
 }
 </style>
 <g:set var="objectConfig" value="${[
