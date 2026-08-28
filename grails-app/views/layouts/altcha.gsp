@@ -27,7 +27,7 @@
 <!-- skip to main content / for screenreader -->
 
 
-<nav class="ui left vertical inverted visible menu sidebar ${serverLabel}" id="toc" aria-label="main navigation" >
+%{--<nav class="ui left vertical inverted visible menu sidebar ${serverLabel}" id="toc" aria-label="main navigation" >
 
     <g:link controller="public" action="index" class="header item">
         <img alt="Logo wekb" src="${resource(dir: 'images', file: 'logo.svg')}"/>
@@ -66,7 +66,7 @@
         </div>
     </div>
 
-</nav>
+</nav>--}%
 
 <div class="ui top fixed inverted shrink menu" role="search">
     <div class="ui fluid container">
@@ -106,7 +106,7 @@
 
 <div style="position: absolute; right: 0"  id="jumper"></div>
 
-<div class="pusher shrink" id="main">
+<div class="pusher" style="padding-right: 0 !important;" id="main">
     <div class="wekb-content">
         <main class="ui main fluid container">
             <g:layoutBody/>
