@@ -206,7 +206,7 @@ footer {
                         </span>
                     </div>
 
-                    <div class="statistic-number" data-value="<g:formatNumber number="${countComponent['Provider']}" type="number" />" data-decimals="0">
+                    <div class="statistic-number" data-value="${countComponent['Provider']}" data-decimals="0">
                         0
                     </div>
 
@@ -228,7 +228,7 @@ footer {
                         </span>
                     </div>
 
-                    <div class="statistic-number" data-value="<g:formatNumber number="${countComponent['Platform']}" type="number" format="###.###"/>" data-decimals="0">
+                    <div class="statistic-number" data-value="${countComponent['Platform']}" data-decimals="0">
                         0
                     </div>
 
@@ -250,7 +250,7 @@ footer {
                         </span>
                     </div>
 
-                    <div class="statistic-number" data-value="<g:formatNumber number="${countComponent['Package']}" type="number" format="###.###"/>" data-decimals="0">
+                    <div class="statistic-number" data-value="${countComponent['Package']}" data-decimals="0">
                         0
                     </div>
 
@@ -274,7 +274,10 @@ footer {
                         </span>
                     </div>
 
-                    <div class="statistic-number" data-value="<g:formatNumber number="${countComponent['TIPP']}" type="number" format="###.###"/>" data-decimals="2" data-suffix=" Mio.">
+                    <div class="statistic-number" data-value="${countComponent['TIPP']}"
+                         data-decimals="1"
+                         data-suffix="M"
+                         data-millions="true">
                         0
                     </div>
 

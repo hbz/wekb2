@@ -19,13 +19,15 @@ const landingpageAnimation = {
         /**
          * Formatiert eine Zahl nach deutscher Schreibweise.
          */
-        function formatNumber(value, decimals, suffix) {
-            return (
-                value.toLocaleString('de-DE', {
-                    minimumFractionDigits: decimals,
-                    maximumFractionDigits: decimals
-                }) + suffix
-            );
+        function formatNumber(value, decimals, suffix, millions = false) {
+            if (millions) {
+                value = value / 1_000_000;
+            }
+
+            return value.toLocaleString('en-US', {
+                minimumFractionDigits: decimals,
+                maximumFractionDigits: decimals
+            }) + suffix;
         }
 
         /**
@@ -35,6 +37,8 @@ const landingpageAnimation = {
             const targetValue = Number(element.dataset.value);
             const decimals = Number(element.dataset.decimals || 0);
             const suffix = element.dataset.suffix || '';
+            const millions = element.dataset.millions === 'true';
+
             const duration = 1400;
 
             if (!Number.isFinite(targetValue)) {
@@ -48,17 +52,14 @@ const landingpageAnimation = {
                 const elapsed = currentTime - startTime;
                 const progress = Math.min(elapsed / duration, 1);
 
-                /*
-                 * Ease-out cubic:
-                 * Die Animation startet schneller und endet weich.
-                 */
                 const easedProgress = 1 - Math.pow(1 - progress, 3);
                 const currentValue = targetValue * easedProgress;
 
                 element.textContent = formatNumber(
                     currentValue,
                     decimals,
-                    suffix
+                    suffix,
+                    millions
                 );
 
                 if (progress < 1) {
@@ -67,7 +68,8 @@ const landingpageAnimation = {
                     element.textContent = formatNumber(
                         targetValue,
                         decimals,
-                        suffix
+                        suffix,
+                        millions
                     );
                 }
             }
