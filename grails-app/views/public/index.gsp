@@ -206,7 +206,7 @@ footer {
                         </span>
                     </div>
 
-                    <div class="statistic-number" data-value="118" data-decimals="0">
+                    <div class="statistic-number" data-value="<g:formatNumber number="${countComponent['Provider']}" type="number" />" data-decimals="0">
                         0
                     </div>
 
@@ -228,7 +228,7 @@ footer {
                         </span>
                     </div>
 
-                    <div class="statistic-number" data-value="189" data-decimals="0">
+                    <div class="statistic-number" data-value="<g:formatNumber number="${countComponent['Platform']}" type="number" format="###.###"/>" data-decimals="0">
                         0
                     </div>
 
@@ -250,7 +250,7 @@ footer {
                         </span>
                     </div>
 
-                    <div class="statistic-number" data-value="7778" data-decimals="0">
+                    <div class="statistic-number" data-value="<g:formatNumber number="${countComponent['Package']}" type="number" format="###.###"/>" data-decimals="0">
                         0
                     </div>
 
@@ -274,7 +274,7 @@ footer {
                         </span>
                     </div>
 
-                    <div class="statistic-number" data-value="7.34" data-decimals="2" data-suffix=" Mio.">
+                    <div class="statistic-number" data-value="<g:formatNumber number="${countComponent['TIPP']}" type="number" format="###.###"/>" data-decimals="2" data-suffix=" Mio.">
                         0
                     </div>
 
@@ -290,8 +290,10 @@ footer {
         </section>
     </main>
 </div>
-
-
+<g:formatNumber number="${countComponent['Provider']}" type="number" format="###.###"/> Providers and
+<g:formatNumber number="${countComponent['Platform']}" type="number" format="###.###"/> Platforms
+<g:formatNumber number="${countComponent['Package']}" type="number" format="###.###"/> Packages and
+<g:formatNumber number="${countComponent['TIPP']}" type="number" format="###.###"/> Titles
 
 <g:if test="${showAltcha}">
     <g:render template="/templates/altchaForm" model="[altchaForm: [origin: origin, startpage: true]]"/>
