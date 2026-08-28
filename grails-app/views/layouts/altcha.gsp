@@ -68,20 +68,23 @@
 
 </nav>--}%
 
-<div class="ui top fixed inverted shrink menu" role="search">
-    <div class="ui fluid container">
+<div class="ui top fixed menu" role="search">
+    <div class="ui fluid container" style="padding: 0">
         <a class="launch icon item" id="sidebar-menu-button">
             <i class="content icon"></i>
         </a>
+        <g:link controller="public" action="index" class="header item">
+            <img class="ui image" width="100" alt="Logo wekb" src="${resource(dir: 'images', file: 'wekb-logo.svg')}"/>
+        </g:link>
 
-        <div class="ui category search item inverted disabled" id="spotlightSearch" style="flex-grow:1;">
+%{--        <div class="ui category search item inverted disabled" id="spotlightSearch" style="flex-grow:1;">
             <div class="ui inverted icon input">
                 <input class="prompt" type="text" aria-label="${g.message(code: 'public.globalSearch.placeHolder')}" placeholder="${g.message(code: 'public.globalSearch.placeHolder')}">
                 <i class="search link icon"></i>
             </div>
 
             <div class="results"></div>
-        </div>
+        </div>--}%
 
 %{--        <div class="ui simple dropdown item">
             <i class="globe alternate icon icon"></i>
@@ -96,7 +99,7 @@
             <g:set var="backUrl" value="${request.forwardURI ?: request.requestURI}${request.queryString ? '?' + request.queryString : ''}" />
 
             <div class="item">
-                <g:link class="ui inverted button" controller="login" action="auth"
+                <g:link class="ui basic black button" controller="login" action="auth"
                         params="[( 'spring-security-redirect' ): URLDecoder.decode(backUrl.replace('/altcha/prompt?origin=', ''), 'UTF-8')]">
                 <i class="sign in alternate icon icon"></i>Login</g:link>
             </div>

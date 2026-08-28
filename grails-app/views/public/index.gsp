@@ -175,24 +175,26 @@ footer {
     </aside>
     <main class="twelve wide column hero-chart-column">
         <section class="hero-claim">
-            <h1>
-                <span>Provider Tool we:kb</span>
+            <h1>Provider Tool <span>we:kb</span>
             </h1>
-            <p>Provider-Curated Knowledge Base – Freely available under CC0
-            </p>
-            <div>
-                <button class="ui big tertiary  button">
-                    <i class="download icon"></i>
-                    Data Export
-                </button>
-                <button class="ui big tertiary  button">
-                    <i class="assistive listening systems icon"></i>
-                    Sync to LAS:eR
-                </button>
-                <button class="ui big blue button">
-                    <i class="search icon"></i>
-                    Search Now</button>
+            <div style="display: flex;" >
+                <p>Provider-Curated Knowledge Base – Freely available under CC0</p>
+                <g:if test="${showAltcha}">
+                    <g:render template="/templates/altchaForm" model="[altchaForm: [origin: origin, startpage: true]]"/>
+                </g:if>
+                <g:else>
+                    <div style="margin-left: 10rem">
+                        <a href="/search/componentSearch?qbe=g:publicPackages" class="ui big blue button">
+                            <i class="search icon"></i>
+                            Search Now</a>
+
+                        <g:if test="${ServerUtils.getCurrentServer() in [ServerUtils.SERVER_LOCAL, ServerUtils.SERVER_DEV] && AltchaClient.isValid(request)}">%{-- DEBUG/TESTING --}%
+                            <a href="/altcha/revoke" class="ui big orange button we-link">REVOKE ALTCHA TOKEN</a>
+                        </g:if>
+                    </div>
+                </g:else>
             </div>
+
         </section>
         <section class="statistics-chart" aria-label="Statistiken">
             <div class="statistics-track">
@@ -246,7 +248,7 @@ footer {
 
                     <div class="statistic-marker" aria-hidden="true">
                         <span class="statistic-dot">
-                            <i class="gift icon"></i>
+                            <i class="box icon"></i>
                         </span>
                     </div>
 
@@ -293,23 +295,5 @@ footer {
         </section>
     </main>
 </div>
-<g:formatNumber number="${countComponent['Provider']}" type="number" format="###.###"/> Providers and
-<g:formatNumber number="${countComponent['Platform']}" type="number" format="###.###"/> Platforms
-<g:formatNumber number="${countComponent['Package']}" type="number" format="###.###"/> Packages and
-<g:formatNumber number="${countComponent['TIPP']}" type="number" format="###.###"/> Titles
-
-<g:if test="${showAltcha}">
-    <g:render template="/templates/altchaForm" model="[altchaForm: [origin: origin, startpage: true]]"/>
-</g:if>
-<g:else>
-    <br/>
-    <a href="/search/componentSearch?qbe=g:publicPackages" class="ui fluid huge button we-link">${message(code: 'public.searchPackages')}</a>
-
-    <g:if test="${ServerUtils.getCurrentServer() in [ServerUtils.SERVER_LOCAL, ServerUtils.SERVER_DEV] && AltchaClient.isValid(request)}">%{-- DEBUG/TESTING --}%
-        <br/>
-        <a href="/altcha/revoke" class="ui orange button we-link">REVOKE ALTCHA TOKEN</a>
-    </g:if>
-</g:else>
-
 </body>
 </html>

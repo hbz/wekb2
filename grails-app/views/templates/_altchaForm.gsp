@@ -20,12 +20,16 @@
                 display="invisible"
         ></altcha-widget>
     </div>
-    <div class="field">
-        <g:if test="${altchaForm.startpage}">
-            <button class="ui fluid huge button we-link"> ${message(code: 'public.searchPackages')} </button>
-        </g:if>
-        <g:else>
+    <g:if test="${altchaForm.startpage}">
+        <div class="field" style="margin-left: 10rem">
+            <a href="/search/componentSearch?qbe=g:publicPackages" class="ui big blue button">
+            <i class="search icon"></i>
+            Search Now</a>
+        </div>
+    </g:if>
+    <g:else>
+        <div class="field">
             <button class="ui fluid button we-link"> Yes, i'm human! </button>
-        </g:else>
-    </div>
+        </div>
+    </g:else>
 </form>
