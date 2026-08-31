@@ -123,7 +123,7 @@ class GlobalSearchTemplatesService {
                                         prompt     : 'LastRun after',
                                         placeholder: 'LastRun after',
                                         qparam     : 'lastRunAfter',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'greater', 'prop': 'kbartSource.lastRun', 'type': 'java.util.Date'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'greaterOrNull', 'prop': 'kbartSource.lastRun', 'type': 'java.util.Date'],
                                 ],
 
                                 [
@@ -131,7 +131,7 @@ class GlobalSearchTemplatesService {
                                         prompt     : 'LastRun before',
                                         placeholder: 'LastRun before',
                                         qparam     : 'lastRunBefore',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'smaller', 'prop': 'kbartSource.lastRun', 'type': 'java.util.Date'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'smallerOrNull', 'prop': 'kbartSource.lastRun', 'type': 'java.util.Date'],
                                 ],
                         ],
                         qbeResults: [
