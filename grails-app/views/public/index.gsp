@@ -68,6 +68,11 @@ footer {
     padding-left: 2rem!important;
     padding-right: 2rem!important;
 }
+.news-column-inner {
+    position: absolute;
+    inset: 1rem;
+    overflow: hidden;
+}
 
 .news-feed {
     flex: 1 1 auto;
@@ -120,58 +125,60 @@ footer {
 
 <div class="ui stackable grid full-height-grid">
     <aside class="four wide column news-column">
-        <h3 class="ui header">we:kb News</h3>
-        <g:if test="${allNews}">
-            <div class="ui connected feed news-feed">
-                <g:each in="${allNews}" var="item">
-                    <article class="event">
-                        <div class="label" data-tooltip="${objectConfig[item.object]?.tooltip}" data-position="top left">
-                            <i class="inverted circular wekb-${objectConfig[item.object]?.color} ${objectConfig[item.object]?.icon}"
-                               aria-hidden="true"></i>
-                        </div>
-                        <div class="content">
-                            <div class="date">
-                                <g:formatDate
-                                        format="${message(code: 'default.date.format')}"
-                                        date="${item.date}"/>
+        <div class="news-column-inner">
+            <h3 class="ui header">we:kb News</h3>
+            <g:if test="${allNews}">
+                <div class="ui connected feed news-feed">
+                    <g:each in="${allNews}" var="item">
+                        <article class="event">
+                            <div class="label" data-tooltip="${objectConfig[item.object]?.tooltip}" data-position="top left">
+                                <i class="inverted circular wekb-${objectConfig[item.object]?.color} ${objectConfig[item.object]?.icon}"
+                                   aria-hidden="true"></i>
                             </div>
-                            <div class="summary">
-                                <g:link controller="resource"
-                                        action="show"
-                                        id="${item.event.getOID()}">
-                                    ${item.event}
-                                </g:link>
-                                <label class="ui tiny black label">
-                                    <g:if test="${item.changeType == 'new'}">
-                                        NEW
-                                    </g:if>
-                                    <g:else>
-                                        CHANGED
-                                    </g:else>
-                                </label>
-                            </div>
-                            <div class="extra text">
-                                <g:if test="${item.provider}">
+                            <div class="content">
+                                <div class="date">
+                                    <g:formatDate
+                                            format="${message(code: 'default.date.format')}"
+                                            date="${item.date}"/>
+                                </div>
+                                <div class="summary">
                                     <g:link controller="resource"
                                             action="show"
-                                            id="${item.provider.getOID()}">
-                                        ${item.provider.name}
+                                            id="${item.event.getOID()}">
+                                        ${item.event}
                                     </g:link>
-                                </g:if>
+                                    <label class="ui tiny black label">
+                                        <g:if test="${item.changeType == 'new'}">
+                                            NEW
+                                        </g:if>
+                                        <g:else>
+                                            CHANGED
+                                        </g:else>
+                                    </label>
+                                </div>
+                                <div class="extra text">
+                                    <g:if test="${item.provider}">
+                                        <g:link controller="resource"
+                                                action="show"
+                                                id="${item.provider.getOID()}">
+                                            ${item.provider.name}
+                                        </g:link>
+                                    </g:if>
+                                </div>
                             </div>
-                        </div>
-                    </article>
-                </g:each>
-            </div>
-            <g:link class="ui black basic button news-more" controller="public"
-                    action="wekbNews">More News</g:link>
-        </g:if>
-        <g:else>
-            <div class="ui info message">
-                There are currently no new or updated entries.
-            </div>
-        </g:else>
+                        </article>
+                    </g:each>
+                </div>
+                <g:link class="ui black basic button news-more" controller="public"
+                        action="wekbNews">More News</g:link>
+            </g:if>
 
+            <g:else>
+                <div class="ui info message">
+                    There are currently no new or updated entries.
+                </div>
+            </g:else>
+        </div>
     </aside>
     <main class="twelve wide column hero-chart-column">
         <section class="hero-claim">
