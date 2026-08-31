@@ -36854,7 +36854,7 @@ i.inverted.circular.wekb-platform.icon {
 }
 
 i.inverted.circular.wekb-vendor.icon {
-  background-color: #b54800 !important;
+  background-color: #5d7c62 !important;
   color: #fff !important;
 }
 
@@ -36864,7 +36864,7 @@ i.inverted.circular.wekb-title.icon {
 }
 
 i.inverted.circular.wekb-provider.icon {
-  background-color: #5d7c62 !important;
+  background-color: #b54800 !important;
   color: #fff !important;
 }
 
@@ -45223,6 +45223,7 @@ dd {
 
 .ui.segment.footer.wekb-footer {
   padding: 40px;
+  margin: 0;
   background-color: rgba(76, 127, 144, 0.16);
 }
 

@@ -427,5 +427,5 @@
 @title              :   @o-blue;
 @org                :   @o-teal; /* bluegreen */
 @platform           :   @o-yellow;
-@vendor             :   @o-brown;
-@provider           :   @o-grey-green;
+@vendor             :   @o-grey-green;
+@provider           :   @o-brown;

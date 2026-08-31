@@ -9,13 +9,18 @@
 
                 <p>©${Year.now().getValue()} Hochschulbibliothekszentrum des Landes Nordrhein-Westfalen (hbz) <br> ‧ Jülicher Straße 6 ‧ 50674 Köln<br>  ‧ +49 221 400 75-0
                 </p>
+                <a target="blank" href="https://www.hbz-nrw.de/">
+                    <img alt="hbz" style="height: 30px; margin-right:10px;"
+                         src="${resource(dir: 'images', file: 'hbz-logo.svg')}"/>
+                </a>
                 <a rel="license" href="http://creativecommons.org/publicdomain/zero/1.0/">
                     <img alt="CC0 1.0 Universal - Public Domain Dedication"
                          src="${resource(dir: 'images', file: 'CC-Zero-badge.svg.png')}"/>
                 </a>
+
             </div>
 
-            <div class="three wide column left aligned">
+            <div class="two wide column left aligned">
 
                 <h2 class="ui  header"><g:message code="footer.about"/> </h2>
 
@@ -29,7 +34,8 @@
                            href="https://service-wiki.hbz-nrw.de/pages/viewpage.action?pageId=771129406"><g:message code="footer.manual"/></a>
                     </div>
                 </div>
-
+            </div>
+            <div class="two wide column left aligned">
                 <h2 class="ui  header"><g:message code="footer.technicalDetails"/></h2>
 
                 <div class="ui  link list">
@@ -64,7 +70,7 @@
                 </div>
             </div>
 
-            <div class="four wide column left aligned">
+            <div class="two wide column left aligned">
                 <h2 class="ui  header"><g:message code="footer.contactUs"/></h2>
 
                 <div class="ui  link list ">
@@ -82,7 +88,7 @@
                 </div>
             </div>
 
-            <div class="four wide column left aligned">
+            <div class="two wide column left aligned">
                 <h2 class="ui  header"><g:message code="footer.accessibility"/></h2>
 
                 <div class="ui  link list ">

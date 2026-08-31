@@ -4,6 +4,7 @@
 // wcag
 .ui.segment.footer.wekb-footer {
   padding: 40px;
+  margin: 0;
   background-color: rgb(76 127 144 / 16%);
   .ui.link.list .item,
   .ui.link.list .item a:not(.ui),

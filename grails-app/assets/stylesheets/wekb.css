@@ -178,11 +178,12 @@ main {
  ********************************/
 
 :root {
+    --chart-green: #5d7c62;
     --chart-brown: #b54800;
     --chart-yellow: #fbbd08;
     --chart-orange: #f2711c;
     --chart-blue: #2185d0;
-
+    --chart-purple:#76007a;
     --chart-text: #1b1c1d;
     --chart-muted: #6b7280;
     --chart-line: #dfe5eb;
@@ -195,36 +196,32 @@ main {
 
 .hero-claim {
     min-height: 25vh;
-
     display: flex;
     flex-direction: column;
-
     position: relative;
     z-index: 2;
-
     flex: 0 0 auto;
-
     padding: 3rem 3rem 0 !important;
     margin: 0 !important;
 
     background: transparent !important;
 }
-
 .hero-claim h1 {
     margin: 0;
-
     font-size: clamp(4.8rem, 8vw, 5.5rem);
     font-weight: 200;
     line-height: 0.92;
     letter-spacing: -0.06em;
+}
 
-    background-image: linear-gradient(90deg, blue, yellow, red, purple);
+
+.hero-claim h1 span {
+
+    background-image: linear-gradient(90deg, yellow, brown );
     background-image: linear-gradient(
             90deg,
             var(--chart-brown),
-            var(--chart-yellow),
-            var(--chart-orange),
-            var(--chart-blue)
+            var(--chart-yellow)
     );
 
     -webkit-background-clip: text;
@@ -232,27 +229,20 @@ main {
 }
 
 .hero-claim h1 span {
-    display: block;
     font-weight: 700;
 }
 
 .hero-claim p {
     margin-top: 1.5rem;
-
     font-size: 1.4rem;
     line-height: 1.5;
-
-    max-width: 32rem;
-
     opacity: 0.65;
 }
 
 .hero-chart-column {
     position: relative;
     width: 100%;
-
     background-color: #fff;
-
     background-image:
         /* weicher Farbverlauf unten */ radial-gradient(
             ellipse at 25% 75%,
@@ -265,7 +255,6 @@ main {
             rgb(238,245,254)0%,
             transparent 45%
     );
-
     background-size: 100% 100%, 100% 100%, 90px 90px, 90px 90px;
 }
 
@@ -279,9 +268,7 @@ main {
 
 .statistics-chart {
     width: 100%;
-
     padding: 4rem 2rem;
-
     overflow: hidden;
 }
 
@@ -291,13 +278,9 @@ main {
 
 .statistics-track {
     position: relative;
-
     display: grid;
-
     grid-template-columns: repeat(4, minmax(0, 1fr));
-
     width: 100%;
-
     margin: 0 auto;
 }
 
@@ -323,13 +306,9 @@ main {
      */
     left: 12.5%;
     width: 75%;
-
     height: 3px;
-
     background: var(--chart-line);
-
     overflow: hidden;
-
     border-radius: 999px;
 }
 
@@ -340,17 +319,14 @@ main {
 .statistics-line-progress {
     width: 100%;
     height: 100%;
-
     border-radius: inherit;
-
     background: linear-gradient(
             90deg,
             var(--chart-brown),
             var(--chart-yellow),
-            var(--chart-orange),
+            var(--chart-purple),
             var(--chart-blue)
     );
-
     transform: scaleX(0);
     transform-origin: left center;
 }
@@ -365,17 +341,13 @@ main {
 
 .statistic {
     position: relative;
-
     min-width: 0;
-
     /*
      * Etwas Abstand zwischen
      * den Textspalten.
      */
     padding: 0 4rem 0 0;
-
     opacity: 0;
-
     transform: translateY(1rem);
 }
 
@@ -421,12 +393,9 @@ main {
 
 .statistic-marker {
     position: relative;
-
     z-index: 2;
-
     display: grid;
     place-items: center;
-
     width: 6rem;
     height: 6rem;
 
@@ -434,13 +403,9 @@ main {
      * Kreis horizontal zentrieren
      */
     margin: 0 auto 1.25rem auto;
-
     border: 1px solid rgba(0, 0, 0, 0.08);
-
     border-radius: 50%;
-
     background: #ffffff;
-
     box-shadow: 0 0 0 0.75rem rgba(33, 133, 208, 0.04),
     0 0.75rem 2rem rgba(0, 0, 0, 0.08);
 
@@ -460,14 +425,10 @@ main {
 .statistic-dot {
     display: grid;
     place-items: center;
-
     width: 3.2rem;
     height: 3.2rem;
-
     border-radius: 50%;
-
     background: currentColor;
-
     transform: scale(0);
 }
 
@@ -477,14 +438,10 @@ main {
 
 .statistic-dot .icon {
     margin: 0 !important;
-
     width: auto !important;
     height: auto !important;
-
     font-size: 1.35rem;
-
     line-height: 1 !important;
-
     color: #ffffff;
 }
 
@@ -501,7 +458,7 @@ main {
 }
 
 .statistic:nth-of-type(3) {
-    color: var(--chart-orange);
+    color: var(--chart-purple);
 }
 
 .statistic:nth-of-type(4) {
@@ -521,7 +478,7 @@ main {
 }
 
 .statistic:nth-of-type(3) .statistic-dot {
-    box-shadow: 0 0 0 0.55rem rgba(242, 113, 28, 0.15);
+    box-shadow: 0 0 0 0.55rem rgba(118, 0, 122, 0.15);
 }
 
 .statistic:nth-of-type(4) .statistic-dot {
@@ -574,21 +531,13 @@ main {
 
 .statistic-number {
     min-height: 1.2em;
-
     margin-bottom: 0.45rem;
-
     font-size: clamp(2rem, 4vw, 4rem);
-
     font-weight: 750;
-
     line-height: 1;
-
     letter-spacing: -0.05em;
-
     color: currentColor;
-
     white-space: nowrap;
-
     /*
      * Zahl zentriert
      */
@@ -602,13 +551,9 @@ main {
 
 .statistic-title {
     margin: 0 0 1.5rem;
-
     font-size: clamp(1rem, 1.5vw, 1.35rem);
-
     font-weight: 700;
-
     line-height: 1.2;
-
     color: var(--chart-text);
 
     /*
@@ -623,20 +568,14 @@ main {
 
 .statistic-description {
     width: 100%;
-
     max-width: none;
-
     margin: 0;
-
     /*
      * Größer als vorher
      */
     font-size: 1.2rem;
-
     line-height: 1.6;
-
     color: var(--chart-muted);
-
     /*
      * Fließtext linksbündig
      */
@@ -718,7 +657,6 @@ main {
 
     .statistics-track {
         grid-template-columns: repeat(2, minmax(0, 1fr));
-
         gap: 3.5rem 2rem;
     }
 
