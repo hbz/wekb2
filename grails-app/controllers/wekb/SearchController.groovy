@@ -18,7 +18,7 @@ import wekb.auth.User
 class SearchController {
 
     GlobalSearchTemplatesService globalSearchTemplatesService
-    ESSearchService esSearchService
+    def ESSearchService
     SearchService searchService
     AccessService accessService
 
@@ -55,7 +55,7 @@ class SearchController {
                 result.max = params.max ? Integer.parseInt(params.max) : (user ? user.defaultPageSizeAsInteger : 10)
                 result.offset = params.offset ? Integer.parseInt(params.offset) : 0
 
-                def query_str = esSearchService.buildQuery_for_ES(searchParams)
+                def query_str = ESSearchService.buildQuery_for_ES(searchParams)
 
                 log.debug("Searching for ${query_str}");
 
@@ -176,7 +176,7 @@ class SearchController {
                 //result.max = params.max ? Integer.parseInt(params.max) : (user ? user.defaultPageSizeAsInteger : 10)
                 //result.offset = params.offset ? Integer.parseInt(params.offset) : 0
 
-                def query_str = esSearchService.buildQuery_for_ES(searchParams)
+                def query_str = ESSearchService.buildQuery_for_ES(searchParams)
 
                 log.debug("Searching for ${query_str}")
 

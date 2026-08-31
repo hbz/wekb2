@@ -331,7 +331,7 @@ class Package  extends AbstractBase implements Auditable {
 
     Package.withTransaction {
       this.status = removedStatus
-        PackageVendor.executeQuery('delete from PackageVendor where pkg = :pkg', [pkg: this])
+        PackageVendor.executeUpdate('delete from PackageVendor where pkg = :pkg', [pkg: this])
       if(this.kbartSource){
         this.kbartSource.status = removedStatus
         this.kbartSource.save()

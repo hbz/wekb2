@@ -90,14 +90,11 @@ class Platform  extends AbstractBase implements Auditable {
   @RefdataAnnotation(cat = RCConstants.PLATFORM_COUNTER_API_AUTH_METHOD)
   RefdataValue counterApiAuthenticationMethod
 
-  String centralApiKey
   String counterR5CounterPlatform
 
   Date lastAuditDate
   String counterRegistryApiUuid
 
-  String internLabelForCustomerID
-  String internLabelForRequestorKey
 
   Org provider
 
@@ -199,10 +196,7 @@ class Platform  extends AbstractBase implements Auditable {
     statisticsUpdate column: 'plat_statistics_update_fk_rv'
     counterRegistryApiUuid column: 'plat_counter_registry_api_uuid', index: 'plat_counter_registry_api_uuid_idx'
     counterApiAuthenticationMethod column: 'plat_counter_api_authentication_method'
-    centralApiKey column: 'plat_central_api_key', type: 'text'
     counterR5CounterPlatform column: 'plat_counter_r5_counter_platform', type: 'text'
-    internLabelForCustomerID column: 'plat_intern_label_for_customer_id', type: 'text'
-    internLabelForRequestorKey column: 'plat_intern_label_for_requestor_key', type: 'text'
     lastAuditDate column: 'plat_last_audit_date'
 
     provider column: 'plat_provider_fk'
@@ -270,10 +264,7 @@ class Platform  extends AbstractBase implements Auditable {
     statisticsAdminPortalUrl(nullable: true, blank: false)
     statisticsUpdate(nullable: true, blank: false)
     counterApiAuthenticationMethod (nullable: true, blank: false)
-    centralApiKey(nullable: true, blank: true)
     counterR5CounterPlatform(nullable: true, blank: false)
-    internLabelForCustomerID(nullable: true, blank: true)
-    internLabelForRequestorKey(nullable: true, blank: true)
     lastAuditDate (nullable: true)
 
     counterRegistryApiUuid(nullable: true, blank: false)
