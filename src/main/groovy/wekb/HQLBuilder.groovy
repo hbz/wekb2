@@ -443,6 +443,30 @@ public class HQLBuilder {
         }
         break;
 
+        case 'greaterOrNull':
+            hql_builder_context."${addToQuery}".add("(${crit.defn.contextTree.negate?'not ':''} ${scoped_property} >= :${crit.defn.qparam} OR ${crit.defn.contextTree.negate?'not ':''} ${scoped_property} IS NULL)");
+            switch ( crit.defn.contextTree.type ) {
+                case 'java.util.Date':
+                    hql_builder_context.bindvars[crit.defn.qparam] = parseDate(crit.value.toString(), [new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"), new SimpleDateFormat("yyyy-MM-dd")])
+                    break;
+                default:
+                    hql_builder_context.bindvars[crit.defn.qparam] = crit.value.toString().trim();
+                    break;
+            }
+            break;
+
+        case 'smallerOrNull':
+            hql_builder_context."${addToQuery}".add("(${crit.defn.contextTree.negate?'not ':''} ${scoped_property} <= :${crit.defn.qparam} OR ${crit.defn.contextTree.negate?'not ':''} ${scoped_property} IS NULL) ");
+            switch ( crit.defn.contextTree.type ) {
+                case 'java.util.Date':
+                    hql_builder_context.bindvars[crit.defn.qparam] = parseDate(crit.value.toString(), [new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"), new SimpleDateFormat("yyyy-MM-dd")])
+                    break;
+                default:
+                    hql_builder_context.bindvars[crit.defn.qparam] = crit.value.toString().trim();
+                    break;
+            }
+            break;
+
       case 'ilike_Combine_Name_And_VariantNames':
         String query = " (lower(o.name) like :${crit.defn.qparam} OR exists (select cvn from ComponentVariantName as cvn where lower(cvn.variantName) like :${crit.defn.qparam} AND (cvn.org = o OR cvn.pkg = o )))"
         def base_value = crit.value.toLowerCase().trim()
