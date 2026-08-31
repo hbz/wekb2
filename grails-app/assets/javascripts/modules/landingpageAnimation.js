@@ -21,7 +21,7 @@ const landingpageAnimation = {
          */
         function formatNumber(value, decimals, suffix, millions = false) {
             if (millions) {
-                value = value / 1_000_000;
+                value = value / 1000000;
             }
 
             return value.toLocaleString('en-US', {
