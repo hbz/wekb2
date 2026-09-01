@@ -18,60 +18,69 @@
 <body>
 <style>
 
-body {
-    margin: 0;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-}
-.pusher {
-    display: flex;
-}
-.wekb-columns {
-    align-items: stretch;
-}
-
 .wekb-content {
     flex: 1 1 auto;
     display: flex;
-    overflow: hidden;
+    overflow: visible;
+
+    background-color: #fff;
+
+    background-image:
+            radial-gradient(
+                    ellipse at 25% 45%,
+                    rgba(242, 113, 28, 0.09) 0%,
+                    transparent 48%
+            ),
+            radial-gradient(
+                    ellipse at 88% 42%,
+                    rgba(33, 133, 208, 0.08) 0%,
+                    transparent 50%
+            );
 }
 
 .wekb-content > .ui.main.container {
-    flex: 1;
+    flex: 1 1 auto;
     display: flex;
-    overflow: hidden;
-    padding: 0;
+    overflow: visible;
 }
 
 footer {
-    flex: 0 0 auto;
+    /*flex: 0 0 auto;*/
 }
 
 .full-height-grid {
     flex: 1 1 auto;
-    min-height: 0;
+    min-height: auto;
     margin-top: 0 !important;
     margin-bottom: 0 !important;
 }
-
+.wekb-columns {
+    align-items: stretch;
+}
 .news-column {
     display: flex !important;
     flex-direction: column;
-    height: 100%;
     min-height: 0;
     overflow: hidden;
-    background-color: #f9fafb;
-    border-right: 1px solid rgba(34, 36, 38, .15);
     align-items: flex-start;
     padding-left: 2rem!important;
     padding-right: 2rem!important;
+
 }
 .news-column-inner {
     position: absolute;
     inset: 1rem;
     overflow: hidden;
+    margin: 3rem;
+    padding: 1rem;
+
+    background: rgba(255, 255, 255, 1);
+
+    border: 1px solid rgba(34, 36, 38, 0.07);
+    border-radius: 1rem;
+
+    box-shadow:
+            0 0.4rem 1.5rem rgba(34, 36, 38, 0.045);
 }
 
 .news-feed {
@@ -97,7 +106,8 @@ footer {
     font-size: 1.3em;
 }
 .hero-chart-column {
-    flex:1;
+    flex: 1 1 auto;
+    /*min-height: auto;*/
 }
 </style>
 <g:set var="objectConfig" value="${[
@@ -205,99 +215,105 @@ footer {
         </section>
         <section class="statistics-chart" aria-label="Statistiken">
             <div class="statistics-track">
-                <div class="statistics-line" aria-hidden="true">
+%{--                <div class="statistics-line" aria-hidden="true">
                     <div class="statistics-line-progress"></div>
-                </div>
-                <article class="statistic" data-delay="0">
-                    <div class="statistic-marker" aria-hidden="true">
-                        <span class="statistic-dot">
-                            <i class="broadcast tower icon"></i>
-                        </span>
-                    </div>
+                </div>--}%
+                <a href="/search/componentSearch?qbe=g%3Aorgs" class="statistic" data-delay="0" data-tooltip="${message(code: 'public.searchProviders')}">
+                    <article>
+                        <div class="statistic-marker" aria-hidden="true">
+                            <span class="statistic-dot">
+                                <i class="broadcast tower icon"></i>
+                            </span>
+                        </div>
 
-                    <div class="statistic-number" data-value="${countComponent['Provider']}" data-decimals="0">
-                        0
-                    </div>
+                        <div class="statistic-number" data-value="${countComponent['Provider']}" data-decimals="0">
+                            0
+                        </div>
 
-                    <h3 class="statistic-title">
-                        Providers
-                    </h3>
+                        <h3 class="statistic-title">
+                            Providers
+                        </h3>
 
-                    <p class="statistic-description">
-                        Content providers and library suppliers share authoritative service information directly with the library community.
-                    </p>
+                        <p class="statistic-description">
+                            Content providers and library suppliers share authoritative service information directly with the library community.
+                        </p>
 
-                </article>
+                    </article>
+                </a>
+                <a href="/search/componentSearch?qbe=g%3Aplatforms" class="statistic" data-delay="350" data-tooltip="${message(code: 'public.searchPlatforms')}">
+                    <article>
 
-                <article class="statistic" data-delay="350">
+                        <div class="statistic-marker" aria-hidden="true">
+                            <span class="statistic-dot">
+                                <i class="cloud icon"></i>
+                            </span>
+                        </div>
 
-                    <div class="statistic-marker" aria-hidden="true">
-                        <span class="statistic-dot">
-                            <i class="cloud icon"></i>
-                        </span>
-                    </div>
+                        <div class="statistic-number" data-value="${countComponent['Platform']}" data-decimals="0">
+                            0
+                        </div>
 
-                    <div class="statistic-number" data-value="${countComponent['Platform']}" data-decimals="0">
-                        0
-                    </div>
+                        <h3 class="statistic-title">
+                            Platforms
+                        </h3>
 
-                    <h3 class="statistic-title">
-                        Platforms
-                    </h3>
+                        <p class="statistic-description">
+                            Information on platform services answers central questions
+                            concerning authentication methods, usage statistics and matters
+                            of accessibility on providers' platforms.
+                        </p>
+                    </article>
+                </a>
+                <a href="/search/componentSearch?qbe=g%3ApublicPackages" class="statistic" data-delay="700" data-tooltip="${message(code: 'public.searchPackages')}">
+                    <article>
 
-                    <p class="statistic-description">
-                        Information on platform services answers central questions
-                        concerning authentication methods, usage statistics and matters
-                        of accessibility on providers' platforms.
-                    </p>
-                </article>
-                <article class="statistic" data-delay="700">
+                        <div class="statistic-marker" aria-hidden="true">
+                            <span class="statistic-dot">
+                                <i class="box icon"></i>
+                            </span>
+                        </div>
 
-                    <div class="statistic-marker" aria-hidden="true">
-                        <span class="statistic-dot">
-                            <i class="box icon"></i>
-                        </span>
-                    </div>
+                        <div class="statistic-number" data-value="${countComponent['Package']}" data-decimals="0">
+                            0
+                        </div>
 
-                    <div class="statistic-number" data-value="${countComponent['Package']}" data-decimals="0">
-                        0
-                    </div>
+                        <h3 class="statistic-title">
+                            Packages
+                        </h3>
 
-                    <h3 class="statistic-title">
-                        Packages
-                    </h3>
+                        <p class="statistic-description">
+                            Content providers create and maintain packages that reflect their
+                            current sales units, heightening the visibility of these products
+                            and giving detailed descriptions with regard to their content.
+                        </p>
 
-                    <p class="statistic-description">
-                        Content providers create and maintain packages that reflect their
-                        current sales units, heightening the visibility of these products
-                        and giving detailed descriptions with regard to their content.
-                    </p>
+                    </article>
+                </a>
+                <a href="/search/componentSearch?qbe=g%3Atipps&qp_status=wekb.RefdataValue%3A65" class="statistic" data-delay="1050" data-tooltip="${message(code: 'public.searchTitles')}">
+                    <article>
 
-                </article>
+                        <div class="statistic-marker" aria-hidden="true">
+                            <span class="statistic-dot">
+                                <i class="book icon"></i>
+                            </span>
+                        </div>
 
-                <article class="statistic" data-delay="1050">
+                        <div class="statistic-number" data-value="${countComponent['TIPP']}"
+                             data-decimals="1"
+                             data-suffix="M"
+                             data-millions="true">
+                            0
+                        </div>
 
-                    <div class="statistic-marker" aria-hidden="true">
-                        <span class="statistic-dot">
-                            <i class="book icon"></i>
-                        </span>
-                    </div>
+                        <h3 class="statistic-title">
+                            Titles
+                        </h3>
 
-                    <div class="statistic-number" data-value="${countComponent['TIPP']}"
-                         data-decimals="1"
-                         data-suffix="M"
-                         data-millions="true">
-                        0
-                    </div>
-
-                    <h3 class="statistic-title">
-                        Titles
-                    </h3>
-
-                    <p class="statistic-description">
-                        Automated updates provide reliable, up-to-date package and title information.
-                    </p>
-                </article>
+                        <p class="statistic-description">
+                            Automated updates provide reliable, up-to-date package and title information.
+                        </p>
+                    </article>
+                </a>
             </div>
         </section>
     </main>

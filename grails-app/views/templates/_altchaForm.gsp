@@ -22,7 +22,7 @@
     </div>
     <div class="field">
         <g:if test="${altchaForm.startpage}">
-            <button class="ui  blue big button we-link" style="margin-left: 10rem"> ${message(code: 'public.searchPackages')} </button>
+            <button class="ui  blue big button we-link" style="margin-left: 10rem">Search Now</button>
         </g:if>
         <g:else>
             <button class="ui fluid button we-link"> Yes, i'm human! </button>
