@@ -44,10 +44,6 @@
     overflow: visible;
 }
 
-footer {
-    /*flex: 0 0 auto;*/
-}
-
 .full-height-grid {
     flex: 1 1 auto;
     min-height: auto;
@@ -107,7 +103,6 @@ footer {
 }
 .hero-chart-column {
     flex: 1 1 auto;
-    /*min-height: auto;*/
 }
 </style>
 <g:set var="objectConfig" value="${[
@@ -215,9 +210,6 @@ footer {
         </section>
         <section class="statistics-chart" aria-label="Statistiken">
             <div class="statistics-track">
-%{--                <div class="statistics-line" aria-hidden="true">
-                    <div class="statistics-line-progress"></div>
-                </div>--}%
                 <a href="/search/componentSearch?qbe=g%3Aorgs" class="statistic" data-delay="0" data-tooltip="${message(code: 'public.searchProviders')}">
                     <article>
                         <div class="statistic-marker" aria-hidden="true">

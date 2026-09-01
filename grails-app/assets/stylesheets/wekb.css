@@ -241,20 +241,6 @@ main {
 .hero-chart-column {
     position: relative;
     width: 100%;
-/*    background-color: #fff;
-    background-image:
-        radial-gradient(
-            ellipse at 25% 75%,
-            rgba(255, 166, 105, 0.16) 0%,
-            transparent 45%
-    ),
-    radial-gradient(
-            ellipse at 75% 75%,
-                !* rgba(135, 120, 255, 0.14) 0%,*!
-            rgb(238,245,254)0%,
-            transparent 45%
-    );
-    background-size: 100% 100%, 100% 100%, 90px 90px, 90px 90px;*/
 }
 
 * {
@@ -282,40 +268,6 @@ main {
     width: 100%;
     margin: 0 auto;
     gap: 1.5rem;
-}
-
-/********************************
- * Horizontale Grundlinie
- ********************************/
-
-.statistics-line {
-    position: absolute;
-    top: 3rem;
-    left: 12.5%;
-    width: 75%;
-    height: 3px;
-    background: var(--chart-line);
-    overflow: hidden;
-    border-radius: 999px;
-}
-
-/********************************
- * Animierte Linie
- ********************************/
-
-.statistics-line-progress {
-    width: 100%;
-    height: 100%;
-    border-radius: inherit;
-    background: linear-gradient(
-            90deg,
-            var(--chart-brown),
-            var(--chart-yellow),
-            var(--chart-purple),
-            var(--chart-blue)
-    );
-    transform: scaleX(0);
-    transform-origin: left center;
 }
 
 .statistics-chart.is-visible .statistics-line-progress {
@@ -553,17 +505,6 @@ a.statistic:hover {
     line-height: 1.6;
     color: var(--chart-muted);
     text-align: left;
-}
-
-/********************************
- * Keyframes:
- * Linie
- ********************************/
-
-@keyframes draw-statistics-line {
-    to {
-        transform: scaleX(1);
-    }
 }
 
 /********************************
