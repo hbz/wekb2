@@ -187,7 +187,7 @@
     </aside>
     <main class="twelve wide column hero-chart-column">
         <section class="hero-claim">
-            <h1>Provider Tool <span>we:kb</span>
+            <h1>Provider Tool <span>we:kb&nbsp;</span>
             </h1>
             <div style="display: flex;" >
                 <p>Provider-Curated Knowledge Base – Freely available under CC0</p>
