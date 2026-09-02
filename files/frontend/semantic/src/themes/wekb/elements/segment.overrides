@@ -5,11 +5,22 @@
 .ui.segment.footer.wekb-footer {
   padding: 40px;
   margin: 0;
-  background-color: rgb(76 127 144 / 16%);
+  background-color: #f7f8fa;
+
+  .ui.header,
   .ui.link.list .item,
   .ui.link.list .item a:not(.ui),
   .ui.link.list a.item {
-    color: rgb(0 0 0 / 71%);
+    color: #6f717a;
+  }
+
+  .ui.link.list .item,
+  .ui.link.list .item a:not(.ui),
+  .ui.link.list a.item {
     padding: 5px 0;
+  }
+
+  .ui.grid > .column:not(.row) {
+    padding-top: 0 !important;
   }
 }
