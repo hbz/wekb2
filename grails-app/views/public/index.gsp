@@ -191,123 +191,24 @@
             </h1>
             <div style="display: flex;" >
                 <p>Provider-Curated Knowledge Base – Freely available under CC0</p>
-                <g:if test="${showAltcha}">
-                    <g:render template="/templates/altchaForm" model="[altchaForm: [origin: origin, startpage: true]]"/>
+
+            </div>
+        </section>
+        <g:if test="${showAltcha}">
+            <g:render template="/templates/altchaForm" model="[altchaForm: [origin: origin, startpage: true]]"/>
+        </g:if>
+        <g:else>
+                <a href="/search/componentSearch?qbe=g:publicPackages"
+                   style="margin: 2rem 2rem 1rem 3rem;"
+                   class="ui big blue icon button">
+                    <i class="search icon"></i>
+                    Search we:kb</a>
+                <g:if test="${ServerUtils.getCurrentServer() in [ServerUtils.SERVER_LOCAL, ServerUtils.SERVER_DEV] && AltchaClient.isValid(request)}">%{-- DEBUG/TESTING --}%
+                    <a href="/altcha/revoke" class="ui big orange button we-link">REVOKE ALTCHA TOKEN</a>
                 </g:if>
-                <g:else>
-                    <div style="margin-left: 10rem">
-                        <a href="/search/componentSearch?qbe=g:publicPackages" class="ui big blue button">
-                            <i class="search icon"></i>
-                            Search Now</a>
+                <g:render template="/templates/statistic"/>
 
-                        <g:if test="${ServerUtils.getCurrentServer() in [ServerUtils.SERVER_LOCAL, ServerUtils.SERVER_DEV] && AltchaClient.isValid(request)}">%{-- DEBUG/TESTING --}%
-                            <a href="/altcha/revoke" class="ui big orange button we-link">REVOKE ALTCHA TOKEN</a>
-                        </g:if>
-                    </div>
-                </g:else>
-            </div>
-
-        </section>
-        <section class="statistics-chart" aria-label="Statistiken">
-            <div class="statistics-track">
-                <a href="/search/componentSearch?qbe=g%3Aorgs" class="statistic" data-delay="0" data-tooltip="${message(code: 'public.searchProviders')}">
-                    <article>
-                        <div class="statistic-marker" aria-hidden="true">
-                            <span class="statistic-dot">
-                                <i class="broadcast tower icon"></i>
-                            </span>
-                        </div>
-
-                        <div class="statistic-number" data-value="${countComponent['Provider']}" data-decimals="0">
-                            0
-                        </div>
-
-                        <h3 class="statistic-title">
-                            Providers
-                        </h3>
-
-                        <p class="statistic-description">
-                            Content providers and library suppliers share authoritative service information directly with the library community.
-                        </p>
-
-                    </article>
-                </a>
-                <a href="/search/componentSearch?qbe=g%3Aplatforms" class="statistic" data-delay="350" data-tooltip="${message(code: 'public.searchPlatforms')}">
-                    <article>
-
-                        <div class="statistic-marker" aria-hidden="true">
-                            <span class="statistic-dot">
-                                <i class="cloud icon"></i>
-                            </span>
-                        </div>
-
-                        <div class="statistic-number" data-value="${countComponent['Platform']}" data-decimals="0">
-                            0
-                        </div>
-
-                        <h3 class="statistic-title">
-                            Platforms
-                        </h3>
-
-                        <p class="statistic-description">
-                            Information on platform services answers central questions
-                            concerning authentication methods, usage statistics and matters
-                            of accessibility on providers' platforms.
-                        </p>
-                    </article>
-                </a>
-                <a href="/search/componentSearch?qbe=g%3ApublicPackages" class="statistic" data-delay="700" data-tooltip="${message(code: 'public.searchPackages')}">
-                    <article>
-
-                        <div class="statistic-marker" aria-hidden="true">
-                            <span class="statistic-dot">
-                                <i class="box icon"></i>
-                            </span>
-                        </div>
-
-                        <div class="statistic-number" data-value="${countComponent['Package']}" data-decimals="0">
-                            0
-                        </div>
-
-                        <h3 class="statistic-title">
-                            Packages
-                        </h3>
-
-                        <p class="statistic-description">
-                            Content providers create and maintain packages that reflect their
-                            current sales units, heightening the visibility of these products
-                            and giving detailed descriptions with regard to their content.
-                        </p>
-
-                    </article>
-                </a>
-                <a href="/search/componentSearch?qbe=g%3Atipps&qp_status=wekb.RefdataValue%3A65" class="statistic" data-delay="1050" data-tooltip="${message(code: 'public.searchTitles')}">
-                    <article>
-
-                        <div class="statistic-marker" aria-hidden="true">
-                            <span class="statistic-dot">
-                                <i class="book icon"></i>
-                            </span>
-                        </div>
-
-                        <div class="statistic-number" data-value="${countComponent['TIPP']}"
-                             data-decimals="1"
-                             data-suffix="M"
-                             data-millions="true">
-                            0
-                        </div>
-
-                        <h3 class="statistic-title">
-                            Titles
-                        </h3>
-
-                        <p class="statistic-description">
-                            Automated updates provide reliable, up-to-date package and title information.
-                        </p>
-                    </article>
-                </a>
-            </div>
-        </section>
+        </g:else>
     </main>
 </div>
 </body>

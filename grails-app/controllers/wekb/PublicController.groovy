@@ -225,7 +225,7 @@ class PublicController {
       result.origin = request.getRequestURI() + (request.getQueryString() ? ('?' + request.getQueryString()) : '')
 
       if (result.origin == '/') {
-        result.origin = '/search/componentSearch?qbe=g:publicPackages'
+        result.origin = 'qbe=g%3ApublicPackages'
       }
     }
 
