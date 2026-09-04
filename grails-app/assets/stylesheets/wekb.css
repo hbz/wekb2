@@ -195,7 +195,7 @@ main {
  ********************************/
 
 .hero-claim {
-    min-height: 25vh;
+    min-height: 10vh;
     display: flex;
     flex-direction: column;
     position: relative;
@@ -253,7 +253,7 @@ main {
 
 .statistics-chart {
     width: 100%;
-    padding: 4rem 2rem;
+    padding: 4rem 2rem 0 3rem;
     overflow: hidden;
 }
 
@@ -268,10 +268,8 @@ main {
     width: 100%;
     margin: 0 auto;
     gap: 1.5rem;
-}
-
-.statistics-chart.is-visible .statistics-line-progress {
-    animation: draw-statistics-line 1.6s 0.2s ease forwards;
+    align-items: stretch;
+    grid-auto-rows: 1fr;
 }
 
 /********************************
@@ -279,9 +277,11 @@ main {
  ********************************/
 
 .statistic {
+    display: flex;
+    flex-direction: column;
+    align-self: stretch;
     position: relative;
     min-width: 0;
-    padding: 0 4rem 0 4rem;
     opacity: 0;
     transform: translateY(1rem);
 
@@ -295,8 +295,14 @@ main {
     box-shadow:
             0 0.4rem 1.5rem rgba(34, 36, 38, 0.045);
 }
-
-a.statistic:hover {
+.statistic > .statistic-description {
+    margin-bottom: 1.5rem;
+}
+.statistics-track > .statistic > .ui.button {
+    margin: auto 0 0;
+    align-self: center;
+}
+.statistic:has(.button:hover) {
     transform: translateY(-3px);
 
     border-color: rgba(34, 36, 38, 0.2);
@@ -561,10 +567,10 @@ a.statistic:hover {
 }
 
 /********************************
- * Tablet
+ * wide screen Monitor Breakpoint
  ********************************/
 
-@media (max-width: 800px) {
+@media (max-width: 1920px) {
     .statistics-chart {
         padding: 3rem 1.25rem;
     }
@@ -574,20 +580,15 @@ a.statistic:hover {
         gap: 3.5rem 2rem;
     }
 
-    .statistics-line {
-        display: none;
-    }
-
-    .statistic {
-        padding: 0 2rem 0 0;
-    }
-
     .statistic:nth-child(even) {
         padding-right: 0;
     }
 
     .statistic-description {
         font-size: 1.05rem;
+    }
+    .ui.grid>.column:not(.row).news-column {
+        display: none!important;
     }
 }
 
@@ -631,16 +632,11 @@ a.statistic:hover {
  ********************************/
 
 @media (prefers-reduced-motion: reduce) {
-    .statistics-line-progress,
     .statistic,
     .statistic-marker,
     .statistic-dot {
         animation: none !important;
         transition: none !important;
-    }
-
-    .statistics-line-progress {
-        transform: scaleX(1);
     }
 
     .statistic,
