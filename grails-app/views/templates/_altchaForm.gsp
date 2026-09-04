@@ -3,8 +3,8 @@
 <form action="${createLink(controller: 'altcha', action: 'submit')}" method="post"
       id="altcha-form" class="ui form${altchaForm.startpage ? '' : ' content'}"
 >
-    <input type="hidden" name="origin" value="${altchaForm.origin}" />
     <g:if test="${! altchaForm.startpage}">
+        <input type="hidden" name="origin" value="${altchaForm.origin}" />
         <div class="field">
             <i class="robot large grey icon"></i>
             <br />
@@ -22,7 +22,16 @@
     </div>
     <div class="field">
         <g:if test="${altchaForm.startpage}">
-            <button class="ui fluid huge button we-link"> ${message(code: 'public.searchPackages')} </button>
+            <button
+                    class="ui  blue big icon button we-link"
+                    style="margin: 2rem 2rem 1rem 3rem;"
+                    type="submit"
+                    name="origin"
+                    value="/search/componentSearch?qbe=g%3ApublicPackages">
+                <i class="search icon"></i>
+                Search we:kb
+            </button>
+            <g:render template="/templates/statistic"/>
         </g:if>
         <g:else>
             <button class="ui fluid button we-link"> Yes, i'm human! </button>

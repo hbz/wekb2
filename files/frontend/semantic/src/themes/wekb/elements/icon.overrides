@@ -1,0 +1,42 @@
+/*******************************
+         Theme Overrides
+*******************************/
+
+// ****  Package **** //
+i.inverted.circular.wekb-package.icon {
+    background-color: @package!important ;
+    color: #fff!important;
+}
+
+// ****  organisation **** //
+i.inverted.circular.wekb-org.icon {
+    background-color: @org!important ;
+    color: #fff!important;
+}
+
+// ****  platform **** //
+i.inverted.circular.wekb-platform.icon {
+    background-color: @platform!important;
+    color: #fff!important;
+}
+
+// ****  Vendor **** //
+i.inverted.circular.wekb-vendor.icon {
+    background-color: @vendor!important;
+    color: #fff!important;
+}
+
+// ****  Title **** //
+i.inverted.circular.wekb-title.icon {
+    background-color: @title!important;
+    color: #fff!important;
+}
+
+// ****  Provider **** //
+i.inverted.circular.wekb-provider.icon {
+    background-color: @provider!important;
+    color: #fff!important;
+}
+
+
+
