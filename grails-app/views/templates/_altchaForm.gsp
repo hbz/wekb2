@@ -3,8 +3,8 @@
 <form action="${createLink(controller: 'altcha', action: 'submit')}" method="post"
       id="altcha-form" class="ui form${altchaForm.startpage ? '' : ' content'}"
 >
-    <input type="hidden" name="origin" value="${altchaForm.origin}" />
     <g:if test="${! altchaForm.startpage}">
+        <input type="hidden" name="origin" value="${altchaForm.origin}" />
         <div class="field">
             <i class="robot large grey icon"></i>
             <br />
