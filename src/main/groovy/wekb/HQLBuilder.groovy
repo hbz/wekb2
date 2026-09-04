@@ -201,9 +201,23 @@ public class HQLBuilder {
               order_clause = " order by expectedTippCount ${hql_builder_context.order}"
               break
           case 'lastTryDate':
-              fetch_hql = fetch_hql.replaceFirst(" o.id ", " o.id, (select max(upi.endTime) from wekb.UpdatePackageInfo as upi where upi.endTime is not null and upi.pkg = o.id) as updateSuccessDate ")
-              count_clause = "(select max(upi.endTime) from wekb.UpdatePackageInfo as upi where upi.endTime is not null and upi.pkg = o.id) as updateSuccessDate"
-              order_clause = " order by updateSuccessDate ${hql_builder_context.order}"
+              String updateSuccessDateQuery = """(select max(upi.endTime)
+                     from wekb.UpdatePackageInfo as upi
+                     where upi.endTime is not null
+                       and upi.pkg = o.id)"""
+
+              fetch_hql = fetch_hql.replaceFirst(
+                      " o.id ",
+                      " o.id, ${updateSuccessDateQuery} as updateSuccessDate "
+              )
+
+              count_clause = "${updateSuccessDateQuery} as updateSuccessDate"
+              String nullOrder = hql_builder_context.order?.toLowerCase() == 'asc'
+                      ? "case when ${updateSuccessDateQuery} is null then 0 else 1 end"
+                      : "case when ${updateSuccessDateQuery} is null then 1 else 0 end"
+
+              order_clause = """order by ${nullOrder} asc,
+        updateSuccessDate ${hql_builder_context.order}"""
               break
       }
       fetch_hql += order_clause

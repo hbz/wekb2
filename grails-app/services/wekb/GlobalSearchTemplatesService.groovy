@@ -3196,7 +3196,7 @@ class GlobalSearchTemplatesService {
                                 ],
                         ],
                         qbeResults: [
-                                [heading: 'Description', property: 'description'/*, link: true, linkInfo: 'Link to Package Update Info'*/],
+                                [heading: 'Description', property: 'description', link: true, linkInfo: 'Link to Package Update Info'],
                                 [heading: 'Package', property: 'pkg.name', link: 'isNotPackageInPackage', linkInfo: 'Link to Package'],
                                 [heading: 'Status', property: 'status', sort: 'status.value'],
                                 [heading: 'Automatic Update', property: 'automaticUpdate', sort: 'automaticUpdate'],
