@@ -3303,7 +3303,7 @@ class GlobalSearchTemplatesService {
                                 ]
                         ],
                         qbeResults: [
-                                [heading: 'Description', property: 'description'/*, link: true, linkInfo: 'Link to Title Update Info'*/],
+                                [heading: 'Description', property: 'description', link: true, linkInfo: 'Link to Title Update Info'],
                                 [heading: 'Title', property: 'tipp.name', sort: 'tipp.name', link: 'isNotTippInTipp', linkInfo: 'Link to Title', ],
                                 [heading: 'Status', property: 'status', sort: 'status.value'],
                                 [heading: 'Type', property: 'type', sort: 'type.value'],
