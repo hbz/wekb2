@@ -80,7 +80,8 @@ class WorkflowService {
 
                         [code: 'workFlowMethod::manualKbartImport', label: 'Manual KBART Import', message: '', onlyAdmin: false, group: 1],
                        /* [code: 'workFlowMethod::updatePackageFromKbartSource', label: 'Trigger KBART Update (Changed Titles)', message: '', onlyAdmin: false, group: 1],*/
-                        [code: 'workFlowMethod::updatePackageAllTitlesFromKbartSource', label: 'Trigger KBART Update (all Titles)', message: '', onlyAdmin: false, group: 1]
+                        [code: 'workFlowMethod::updatePackageAllTitlesFromKbartSource', label: 'Trigger KBART Update (all Titles)', message: '', onlyAdmin: false, group: 1],
+                        [code: 'workFlowMethod::updatePackageAllTitlesFromKbartSourceAdmin', label: 'Trigger KBART Update (all Titles) ADMIN', message: '', onlyAdmin: true, group: 1]
                 ]
                 break
             case Platform.class.name:
@@ -218,6 +219,43 @@ class WorkflowService {
     private Map updatePackageAllTitlesFromKbartSource(Package pkg) {
         Map result = [:]
         result = updatePackageFromKbartSource(pkg, true)
+        result
+    }
+
+    private Map updatePackageAllTitlesFromKbartSourceAdmin(Package pkg) {
+        Map result = [:]
+        log.info("updatePackageAllTitlesFromKbartSourceAdmin for Package ${pkg}..")
+
+        if (pkg && pkg.nominalPlatform && pkg.kbartSource && (pkg.kbartSource.url)) {
+            Set<Thread> threadSet = Thread.getAllStackTraces().keySet()
+            Thread[] threadArray = threadSet.toArray(new Thread[threadSet.size()])
+            boolean processRunning = false
+            threadArray.each { Thread thread ->
+                if (thread.name == 'uPFKS' + pkg.id) {
+                    processRunning = true
+                }
+            }
+
+            if (processRunning) {
+                result.error = 'A package update is already in progress. Please wait this has finished.'
+            } else {
+                executorService.execute({
+                    Package aPackage = Package.get(pkg.id)
+                    Thread.currentThread().setName('uPFKS' + pkg.id)
+                    autoUpdatePackagesService.lookupForSuccessfullUpdate(aPackage)
+                })
+
+                result.success = "The package update for Package '${pkg.name}' was started. This runs in the background. When the update has gone through, you will see this on the Auto Update Info of the package tab."
+            }
+        } else if (!pkg) {
+            result.error = "Unable to reference provided Package!"
+        } else if (!pkg.nominalPlatform) {
+            result.error = "Please check the nominal Platform by the package! No nominal Platform set!"
+        }else {
+            result.error = "Please check the source for validity! Check URL. THIS FUNCTION NOT WORKING!!!!!!! "
+        }
+
+        result.ref = grailsLinkGenerator.link(controller: 'resource', action: 'show', id: pkg.getOID(), absolute: true)
         result
     }
 

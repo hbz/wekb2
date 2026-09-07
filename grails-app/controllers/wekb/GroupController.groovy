@@ -241,7 +241,7 @@ class GroupController {
 
             def out = response.outputStream
 
-            exportService.exportPackages(out, searchResult.result.recset)
+            exportService.exportPackagesAsTsv(out, searchResult.result.recset)
 
         }
         catch (Exception e) {

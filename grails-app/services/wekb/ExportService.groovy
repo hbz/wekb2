@@ -28,6 +28,11 @@ import javax.sql.DataSource
 import java.nio.file.Files
 import java.text.SimpleDateFormat
 
+import org.apache.commons.csv.CSVFormat
+import org.apache.commons.csv.CSVPrinter
+
+import java.nio.charset.StandardCharsets
+
 
 @Transactional
 class ExportService {
@@ -668,6 +673,239 @@ class ExportService {
         }
         outputStream.flush()
         outputStream.close()
+    }
+
+
+    void exportPackagesAsTsv(OutputStream outputStream, List<Package> packages) {
+
+        Writer writer = new OutputStreamWriter(outputStream, StandardCharsets.UTF_8)
+
+        CSVFormat format = CSVFormat.TDF.builder()
+                .setQuote('"' as char)
+                .setRecordSeparator("\r\n")
+                .build()
+
+        CSVPrinter csvPrinter = new CSVPrinter(writer, format)
+
+        try {
+            csvPrinter.printRecord(
+                    "package_uuid",
+                    "package_name",
+                    "provider_name",
+                    "provider_uuid",
+                    "nominal_platform_name",
+                    "nominal_platform_uuid",
+                    "description",
+                    "description_url",
+                    "breakable",
+                    "content_type",
+                    "file",
+                    "open_access",
+                    "payment_type",
+                    "scope",
+                    "national_range",
+                    "regional_range",
+                    "free_trial",
+                    "free_trial_phase",
+                    "provider_product_id",
+                    "ddc",
+                    "source_default_supply_method",
+                    "source_url",
+                    "source_ftp_server_url",
+                    "source_ftp_directory",
+                    "source_ftp_file_name",
+                    "source_ftp_username",
+                    "source_ftp_password",
+                    "frequency",
+                    "automated_updates",
+                    "archiving_agency",
+                    "open_access_of_archiving_agency",
+                    "post_cancellation_access_of_archiving_agency",
+                    "publication_title",
+                    "publication_type",
+                    "title_id",
+                    "title_url"
+            )
+
+
+            packages.each { Package pkg ->
+
+                String nationalRanges = ""
+
+                if (pkg.nationalRanges) {
+
+                    nationalRanges = pkg.nationalRanges
+                            .collect { RefdataValue rdv ->
+                                rdv.value
+                            }
+                            .findAll { it }
+                            .join(",")
+                }
+
+                String regionalRanges = ""
+
+                if (pkg.regionalRanges) {
+
+                    regionalRanges = pkg.regionalRanges
+                            .collect { RefdataValue rdv ->
+                                rdv.value
+                            }
+                            .findAll { it }
+                            .join(",")
+                }
+
+                String ddcs = ""
+
+                if (pkg.ddcs) {
+
+                    ddcs = pkg.ddcs
+                            .collect { RefdataValue rdv ->
+                                rdv.value
+                            }
+                            .findAll { it }
+                            .join(",")
+                }
+
+
+                String providerProductId = null
+
+                pkg.ids?.each { Identifier identifier ->
+
+                    if (identifier?.namespace?.value == IdentifierNamespace.PKG_ID) {
+                        if (!providerProductId) {
+                            providerProductId = identifier.value
+                        }
+                    }
+                }
+
+                KbartSource source = pkg.kbartSource
+
+                String sourceUrl = source?.url
+
+                String frequency = source?.frequency?.value
+
+                String automatedUpdates = ""
+
+                if (source?.automaticUpdates != null) {
+
+                    automatedUpdates = source.automaticUpdates ? RDStore.YN_YES?.value : RDStore.YN_NO?.value
+                }
+
+                String sourceFtpServerUrl = source?.ftpServerUrl
+                String sourceFtpDirectory = source?.ftpDirectory
+                String sourceFtpFileName = source?.ftpFileName
+                String sourceFtpUsername = source?.ftpUsername
+                String sourceFtpPassword = source?.ftpPassword
+                String sourceDefaultSupplyMethod = source?.defaultSupplyMethod?.value
+
+                PackageArchivingAgency packageArchivingAgency = null
+
+                if (pkg.paas) {
+                    packageArchivingAgency = pkg.paas.first()
+                }
+
+                String archivingAgency = packageArchivingAgency?.archivingAgency?.value
+
+                String openAccessOfArchivingAgency = packageArchivingAgency?.openAccess?.value
+
+                String postCancellationAccessOfArchivingAgency = packageArchivingAgency?.postCancellationAccess?.value
+
+                TitleInstancePackagePlatform tipp = null
+
+                if (pkg.tipps.size() == 1) {
+                    tipp = pkg.tipps.first()
+                }
+
+                String publicationTitle = tipp?.name
+
+                String publicationType = tipp?.publicationType?.value
+
+                String titleUrl = tipp?.url
+
+                String titleId = null
+
+                if (tipp?.ids) {
+
+                    Identifier titleIdentifier =
+                            tipp.ids.find { Identifier identifier ->
+
+                                identifier?.namespace?.value ==
+                                        "title_id"
+                            }
+
+                    titleId = titleIdentifier?.value
+                }
+
+
+                csvPrinter.printRecord(
+                        nullToEmpty(pkg.uuid),
+                        nullToEmpty(pkg.name),
+
+                        nullToEmpty(pkg.provider?.name),
+                        nullToEmpty(pkg.provider?.uuid),
+                        nullToEmpty(pkg.nominalPlatform?.name),
+                        nullToEmpty(pkg.nominalPlatform?.uuid),
+
+
+                        /*
+                         * DESCRIPTION NICHT trimmen!
+                         */
+                        nullToEmpty(pkg.description),
+
+                        nullToEmpty(pkg.descriptionURL),
+
+                        nullToEmpty(pkg.breakable?.value),
+                        nullToEmpty(pkg.contentType?.value),
+                        nullToEmpty(pkg.file?.value),
+                        nullToEmpty(pkg.openAccess?.value),
+                        nullToEmpty(pkg.paymentType?.value),
+                        nullToEmpty(pkg.scope?.value),
+
+                        nullToEmpty(nationalRanges),
+                        nullToEmpty(regionalRanges),
+
+                        nullToEmpty(pkg.freeTrial?.value),
+                        nullToEmpty(pkg.freeTrialPhase),
+
+                        nullToEmpty(providerProductId),
+
+                        nullToEmpty(ddcs),
+
+                        nullToEmpty(sourceDefaultSupplyMethod),
+                        nullToEmpty(sourceUrl),
+                        nullToEmpty(sourceFtpServerUrl),
+                        nullToEmpty(sourceFtpDirectory),
+                        nullToEmpty(sourceFtpFileName),
+                        nullToEmpty(sourceFtpUsername),
+                        nullToEmpty(sourceFtpPassword),
+
+                        nullToEmpty(frequency),
+                        nullToEmpty(automatedUpdates),
+
+                        nullToEmpty(archivingAgency),
+                        nullToEmpty(openAccessOfArchivingAgency),
+                        nullToEmpty(postCancellationAccessOfArchivingAgency),
+
+
+                        nullToEmpty(publicationTitle),
+                        nullToEmpty(publicationType),
+                        nullToEmpty(titleId),
+                        nullToEmpty(titleUrl)
+                )
+            }
+
+            csvPrinter.flush()
+
+        }
+        finally {
+
+            csvPrinter.close()
+        }
+    }
+
+    private String nullToEmpty(Object value) {
+
+        return value != null ? value.toString() : ""
     }
 
     @Deprecated

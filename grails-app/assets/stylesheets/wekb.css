@@ -123,11 +123,6 @@
     width: 70%;
     word-wrap: break-word;
 }
-body {
-/*    display: flex;
-    min-height: 100vh;
-    flex-direction: column;*/
-}
 main {
     flex:1;
 }
@@ -176,6 +171,483 @@ main {
 
 .js-copyTrigger:hover {
     cursor: pointer;
+}
+
+/********************************
+ * Chart Farben
+ ********************************/
+
+:root {
+    --chart-green: #5d7c62;
+    --chart-brown: #b54800;
+    --chart-yellow: #fbbd08;
+    --chart-orange: #f2711c;
+    --chart-blue: #2185d0;
+    --chart-purple:#76007a;
+    --chart-text: #1b1c1d;
+    --chart-muted: #6b7280;
+    --chart-line: #dfe5eb;
+    --chart-background: #ffffff;
+}
+
+/********************************
+ * Hero
+ ********************************/
+
+.hero-claim {
+    min-height: 10vh;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    z-index: 2;
+    flex: 0 0 auto;
+    padding: 3rem 3rem 0 !important;
+    margin: 0 !important;
+    background: transparent !important;
+}
+.hero-claim h1 {
+    margin: 0;
+    font-size: clamp(4.8rem, 8vw, 5.5rem);
+    font-weight: 200;
+    line-height: 0.92;
+    letter-spacing: -0.06em;
+}
+
+
+.hero-claim h1 span {
+
+    background-image: linear-gradient(90deg, yellow, brown );
+    background-image: linear-gradient(
+            90deg,
+            var(--chart-brown),
+            var(--chart-yellow)
+    );
+
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero-claim h1 span {
+    font-weight: 700;
+}
+
+.hero-claim p {
+    margin-top: 1.5rem;
+    font-size: 1.4rem;
+    line-height: 1.5;
+    opacity: 0.65;
+}
+
+.hero-chart-column {
+    position: relative;
+    width: 100%;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+/********************************
+ * Statistik Chart
+ ********************************/
+
+.statistics-chart {
+    width: 100%;
+    padding: 4rem 2rem 4rem 3rem;
+    overflow: hidden;
+}
+
+/********************************
+ * Grid
+ ********************************/
+
+.statistics-track {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    width: 100%;
+    margin: 0 auto;
+    gap: 1.5rem;
+    align-items: stretch;
+    grid-auto-rows: 1fr;
+}
+
+/********************************
+ * Einzelne Statistik
+ ********************************/
+
+.statistic {
+    display: flex;
+    flex-direction: column;
+    align-self: stretch;
+    position: relative;
+    min-width: 0;
+    opacity: 0;
+    transform: translateY(1rem);
+
+    padding: 2rem 1.5rem;
+
+    background: rgba(255, 255, 255, 0.32);
+
+    border: 1px solid rgba(34, 36, 38, 0.07);
+    border-radius: 1rem;
+
+    box-shadow:
+            0 0.4rem 1.5rem rgba(34, 36, 38, 0.045);
+}
+.statistic > .statistic-description {
+    margin-bottom: 1.5rem;
+}
+.statistics-track > .statistic > .ui.button {
+    margin: auto 0 0;
+    align-self: center;
+}
+.statistic:has(.button:hover) {
+    transform: translateY(-3px);
+
+    border-color: rgba(34, 36, 38, 0.2);
+
+    box-shadow:
+            0 0.7rem 2rem rgba(34, 36, 38, 0.2);
+    text-decoration: none!important;
+}
+
+/********************************
+ * Statistik einblenden
+ ********************************/
+
+.statistics-chart.is-visible .statistic {
+    animation: reveal-statistic 0.6s ease forwards;
+}
+
+/********************************
+ * Zeitversetztes Einblenden
+ ********************************/
+
+.statistics-chart.is-visible .statistic:nth-of-type(1) {
+    animation-delay: 0.1s;
+}
+
+.statistics-chart.is-visible .statistic:nth-of-type(2) {
+    animation-delay: 0.45s;
+}
+
+.statistics-chart.is-visible .statistic:nth-of-type(3) {
+    animation-delay: 0.8s;
+}
+
+.statistics-chart.is-visible .statistic:nth-of-type(4) {
+    animation-delay: 1.15s;
+}
+
+/********************************
+ * Äußerer Kreis
+ ********************************/
+
+.statistic-marker {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    place-items: center;
+    width: 6rem;
+    height: 6rem;
+    margin: 0 auto 1.25rem auto;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 50%;
+    background: #ffffff;
+    box-shadow: 0 0 0 0.75rem rgba(33, 133, 208, 0.04),
+    0 0.75rem 2rem rgba(0, 0, 0, 0.08);
+    opacity: 0;
+
+    transform: scale(0.35);
+}
+
+/********************************
+ * Innerer farbiger Kreis
+ ********************************/
+
+.statistic-dot {
+    display: grid;
+    place-items: center;
+    width: 3.2rem;
+    height: 3.2rem;
+    border-radius: 50%;
+    background: currentColor;
+    transform: scale(0);
+}
+
+/********************************
+ * Icon im Kreis
+ ********************************/
+
+.statistic-dot .icon {
+    margin: 0 !important;
+    width: auto !important;
+    height: auto !important;
+    font-size: 1.35rem;
+    line-height: 1 !important;
+    color: #ffffff;
+}
+
+/********************************
+ * Farben der Statistiken
+ ********************************/
+
+.statistic:nth-of-type(1) {
+    color: var(--chart-brown);
+}
+
+.statistic:nth-of-type(2) {
+    color: var(--chart-yellow);
+}
+
+.statistic:nth-of-type(3) {
+    color: var(--chart-purple);
+}
+
+.statistic:nth-of-type(4) {
+    color: var(--chart-blue);
+}
+
+/********************************
+ * Heller Ring um inneren Kreis
+ ********************************/
+
+.statistic:nth-of-type(1) .statistic-dot {
+    box-shadow: 0 0 0 0.55rem rgba(181, 72, 0, 0.18);
+}
+
+.statistic:nth-of-type(2) .statistic-dot {
+    box-shadow: 0 0 0 0.55rem rgba(251, 189, 8, 0.18);
+}
+
+.statistic:nth-of-type(3) .statistic-dot {
+    box-shadow: 0 0 0 0.55rem rgba(118, 0, 122, 0.15);
+}
+
+.statistic:nth-of-type(4) .statistic-dot {
+    box-shadow: 0 0 0 0.55rem rgba(33, 133, 208, 0.15);
+}
+
+/********************************
+ * Animation äußerer Kreis
+ ********************************/
+
+.statistics-chart.is-visible .statistic:nth-of-type(1) .statistic-marker {
+    animation: marker-appear 0.65s 0.1s cubic-bezier(0.2, 0.8, 0.2, 1.2) forwards;
+}
+
+.statistics-chart.is-visible .statistic:nth-of-type(2) .statistic-marker {
+    animation: marker-appear 0.65s 0.45s cubic-bezier(0.2, 0.8, 0.2, 1.2) forwards;
+}
+
+.statistics-chart.is-visible .statistic:nth-of-type(3) .statistic-marker {
+    animation: marker-appear 0.65s 0.8s cubic-bezier(0.2, 0.8, 0.2, 1.2) forwards;
+}
+
+.statistics-chart.is-visible .statistic:nth-of-type(4) .statistic-marker {
+    animation: marker-appear 0.65s 1.15s cubic-bezier(0.2, 0.8, 0.2, 1.2) forwards;
+}
+
+/********************************
+ * Animation innerer Kreis + Icon
+ ********************************/
+
+.statistics-chart.is-visible .statistic:nth-of-type(1) .statistic-dot {
+    animation: dot-appear 0.45s 0.25s cubic-bezier(0.2, 0.8, 0.2, 1.25) forwards;
+}
+
+.statistics-chart.is-visible .statistic:nth-of-type(2) .statistic-dot {
+    animation: dot-appear 0.45s 0.6s cubic-bezier(0.2, 0.8, 0.2, 1.25) forwards;
+}
+
+.statistics-chart.is-visible .statistic:nth-of-type(3) .statistic-dot {
+    animation: dot-appear 0.45s 0.95s cubic-bezier(0.2, 0.8, 0.2, 1.25) forwards;
+}
+
+.statistics-chart.is-visible .statistic:nth-of-type(4) .statistic-dot {
+    animation: dot-appear 0.45s 1.3s cubic-bezier(0.2, 0.8, 0.2, 1.25) forwards;
+}
+
+/********************************
+ * Große Zahl
+ ********************************/
+
+.statistic-number {
+    min-height: 1.2em;
+    margin-bottom: 0.45rem;
+    font-size: clamp(2rem, 4vw, 4rem);
+    font-weight: 750;
+    line-height: 1;
+    letter-spacing: -0.05em;
+    color: currentColor;
+    white-space: nowrap;
+    text-align: center;
+}
+
+/********************************
+ * Überschrift
+ * Providers / Platforms / ...
+ ********************************/
+
+.statistic-title {
+    margin: 0 0 1.5rem;
+    font-size: clamp(1rem, 1.5vw, 1.35rem);
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--chart-text);
+    text-align: center;
+}
+
+/********************************
+ * Längerer Beschreibungstext
+ ********************************/
+
+.statistic-description {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    font-size: 1.2rem;
+    line-height: 1.6;
+    color: var(--chart-muted);
+    text-align: left;
+}
+
+/********************************
+ * Keyframes:
+ * komplette Statistik
+ ********************************/
+
+@keyframes reveal-statistic {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/********************************
+ * Keyframes:
+ * äußerer Kreis
+ ********************************/
+
+@keyframes marker-appear {
+    0% {
+        opacity: 0;
+        transform: scale(0.35);
+    }
+
+    70% {
+        opacity: 1;
+        transform: scale(1.08);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/********************************
+ * Keyframes:
+ * innerer Kreis + Icon
+ ********************************/
+
+@keyframes dot-appear {
+    0% {
+        transform: scale(0);
+    }
+
+    75% {
+        transform: scale(1.15);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+/********************************
+ * wide screen Monitor Breakpoint
+ ********************************/
+
+@media (max-width: 1920px) {
+    .statistics-chart {
+        padding: 3rem 1.25rem;
+    }
+
+    .statistics-track {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 3.5rem 2rem;
+    }
+
+    .statistic:nth-child(even) {
+        padding-right: 0;
+    }
+
+    .statistic-description {
+        font-size: 1.05rem;
+    }
+    .ui.grid>.column:not(.row).news-column {
+        display: none!important;
+    }
+}
+
+/********************************
+ * Smartphone
+ ********************************/
+
+@media (max-width: 520px) {
+    .statistics-chart {
+        padding: 2.5rem 1rem;
+    }
+
+    .statistics-track {
+        grid-template-columns: 1fr;
+
+        gap: 3rem;
+    }
+
+    .statistic {
+        padding-right: 0;
+    }
+
+    .statistic-number {
+        font-size: 3rem;
+    }
+
+    .statistic-title {
+        margin-bottom: 1rem;
+    }
+
+    .statistic-description {
+        width: 100%;
+        max-width: none;
+
+        font-size: 1.05rem;
+    }
+}
+
+/********************************
+ * Reduced Motion
+ ********************************/
+
+@media (prefers-reduced-motion: reduce) {
+    .statistic,
+    .statistic-marker,
+    .statistic-dot {
+        animation: none !important;
+        transition: none !important;
+    }
+
+    .statistic,
+    .statistic-marker {
+        opacity: 1;
+        transform: none;
+    }
+
+    .statistic-dot {
+        transform: none;
+    }
 }
 
 

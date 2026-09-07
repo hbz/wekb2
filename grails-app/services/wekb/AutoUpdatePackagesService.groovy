@@ -557,5 +557,116 @@ class AutoUpdatePackagesService {
         return file
     }
 
+    void lookupForSuccessfullUpdate(Package pkg) {
+
+        if (!pkg.kbartSource?.url) {
+            return
+        }
+
+        List<URL> updateUrls = getUrlsForUpdate(pkg)
+
+        log.info("Got updateUrls: ${updateUrls}")
+
+        String successfulUrl = findSuccessfulUpdateUrl(updateUrls)
+
+        // Fallback: letzte erfolgreiche URL erneut probieren
+        if (!successfulUrl && pkg.kbartSource.lastUpdateUrl) {
+            successfulUrl = findSuccessfulUpdateUrl([new URL(pkg.kbartSource.lastUpdateUrl)])
+        }
+
+        if (!successfulUrl) {
+            log.warn("No working update URL found for package ${pkg.id}")
+            return
+        }
+
+        pkg.kbartSource.lastUpdateUrl = successfulUrl
+        pkg.kbartSource.save()
+
+        startAutoPackageUpdate(pkg)
+    }
+
+
+    List<URL> getUrlsForUpdate(Package pkg) {
+
+        String url = pkg.kbartSource.url
+
+        // Paket wurde noch nie erfolgreich aktualisiert
+        if (pkg.getTippCount() == 0 || !pkg.kbartSource.lastRun) {
+
+            Date dateFromUrl = getDateFromUrl(url)
+
+            if (dateFromUrl) {
+                return getUpdateUrls(url, dateFromUrl, pkg.dateCreated)
+            }
+
+            return [new URL(url.replace(' ', '%20'))]
+        }
+
+        // Paket enthält bereits Daten
+        String updateUrl = url
+
+        if ((UrlToolkit.containsDateStamp(url) || UrlToolkit.containsDateStampPlaceholder(url)) && pkg.kbartSource.lastUpdateUrl) {
+            updateUrl = pkg.kbartSource.lastUpdateUrl
+        }
+
+        Date dateFromUrl = getDateFromUrl(updateUrl)
+
+        return getUpdateUrls(updateUrl, dateFromUrl, pkg.dateCreated)
+    }
+
+
+    String findSuccessfulUpdateUrl(List<URL> urls) {
+
+        if (!urls) {
+            return null
+        }
+
+        // neueste URL zuerst
+        for (URL url : urls.reverse()) {
+
+            try {
+                File file = exportService.kbartFromUrl(url.toString())
+
+                if (file?.size() > 0) {
+                    log.info("Found file by URL: ${url}")
+                    return url.toString()
+                }
+
+            } catch (Exception e) {
+                log.error(
+                        "Exception while loading KBART URL ${url}: ${e.message}"
+                )
+            }
+        }
+
+        return null
+    }
+
+
+    Date getDateFromUrl(String url) {
+
+        if (!url || !UrlToolkit.containsDateStamp(url)) {
+            return null
+        }
+
+        Matcher matcher = (url =~ /(\d{4}[-_]\d{2}[-_]\d{2})/)
+
+        if (!matcher.find()) {
+            return null
+        }
+
+        try {
+            String dateString = matcher.group(1).replace('_', '-')
+
+            LocalDate localDate = LocalDate.parse(dateString, DateTimeFormatter.ISO_LOCAL_DATE)
+
+            return Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant())
+
+        } catch (Exception e) {
+            log.warn("Could not parse date from URL '${url}': ${e.message}")
+            return null
+        }
+    }
+
 
 }

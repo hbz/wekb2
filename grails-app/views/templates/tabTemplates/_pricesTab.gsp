@@ -5,7 +5,7 @@
             <thead>
             <tr>
                 <th>Price Type</th>
-                <th>Value</th>
+                <th>Net Price</th>
                 <th>Currency</th>
                %{-- <th>Start Date</th>
                 <th>End Date</th>--}%
@@ -58,7 +58,7 @@
                                 filter1="${RCConstants.PRICE_TYPE}"/>
                     </div>
                     <div class="field">
-                        <label for="price">Price</label>
+                        <label for="price">Net Price</label>
 
                         <input type="number" id="price" name="price" step="0.01"/>
                     </div>
