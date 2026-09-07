@@ -162,14 +162,7 @@
             <i class="content icon"></i>
         </a>
 
-%{--        <div class="ui category search item inverted" id="spotlightSearch" style="flex-grow:1;">
-            <div class="ui inverted icon input">
-                <input class="prompt" type="text" aria-label="${g.message(code: 'public.globalSearch.placeHolder')}" placeholder="${g.message(code: 'public.globalSearch.placeHolder')}">
-                <i class="search link icon"></i>
-            </div>
 
-            <div class="results"></div>
-        </div>--}%
 
 %{--        <div class="ui simple dropdown item">
             <i class="globe alternate icon icon"></i>
@@ -179,10 +172,15 @@
                 <g:link class="item" controller="${controllerName}" action="${actionName}" params="${params+[lang: 'de']}"><g:message code="language.de"/></g:link>
             </div>
         </div>--}%
-
-
-
         <div class="right menu">
+            <div class="ui category search item" id="spotlightSearch" style=" width: 32rem;">
+                <div class="ui fluid icon input">
+                    <input class="prompt" style="background: #ebedf0;" type="text" aria-label="${g.message(code: 'public.globalSearch.placeHolder')}"
+                           placeholder="${g.message(code: 'public.globalSearch.placeHolder')}">
+                    <i class="search link icon"></i>
+                </div>
+                <div class="results"></div>
+            </div>
             <g:if test="${isUserLoggedIn}">
                 <div class="ui dropdown icon item">
                     <i class="ui icon user"></i>&nbsp; ${user.displayName ?: user.username}
