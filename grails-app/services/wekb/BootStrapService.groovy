@@ -45,6 +45,7 @@ class BootStrapService {
             def suRole = Role.findByAuthority('ROLE_SUPERUSER') ?: new Role(authority: 'ROLE_SUPERUSER', roleType: 'global').save(failOnError: true)
             def counterRole = Role.findByAuthority('ROLE_COUNTER') ?: new Role(authority: 'ROLE_COUNTER', roleType: 'global').save(failOnError: true)
             def vendorEditorRole = Role.findByAuthority('ROLE_VENDOR_EDITOR') ?: new Role(authority: 'ROLE_VENDOR_EDITOR', roleType: 'global').save(failOnError: true)
+            def kbartApiRole = Role.findByAuthority('ROLE_KBART_API') ?: new Role(authority: 'ROLE_KBART_API', roleType: 'global').save(failOnError: true)
         }
 
         setRefDatas()
