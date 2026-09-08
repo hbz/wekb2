@@ -23,5 +23,5 @@ ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT ON TABLES TO wekb_without
 ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT USAGE, SELECT ON SEQUENCES TO wekb_without_login;
 
 
-ALTER ROLE wekb_without_login set statement_timeout TO 60000;
-ALTER ROLE wekb_with_login set statement_timeout TO 300000;
+ALTER ROLE wekb_without_login set statement_timeout TO 120000;
+ALTER ROLE wekb_with_login set statement_timeout TO 0;
