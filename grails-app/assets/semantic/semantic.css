@@ -27711,7 +27711,7 @@ a.ui.inverted.black.header.header.header:hover {
 *******************************/
 
 footer h2.ui.header {
-  font-size: 1.28571429rem;
+  font-size: 1rem;
 }
 
 .wekb-inline-lists .wekb-header:last-child {
@@ -36835,6 +36835,40 @@ i.icon.youtube.play::before {
 *******************************/
 
 /*******************************
+         Theme Overrides
+*******************************/
+
+i.inverted.circular.wekb-package.icon {
+  background-color: #76007a !important;
+  color: #fff !important;
+}
+
+i.inverted.circular.wekb-org.icon {
+  background-color: #00b5ad !important;
+  color: #fff !important;
+}
+
+i.inverted.circular.wekb-platform.icon {
+  background-color: #FBC71C !important;
+  color: #fff !important;
+}
+
+i.inverted.circular.wekb-vendor.icon {
+  background-color: #5d7c62 !important;
+  color: #fff !important;
+}
+
+i.inverted.circular.wekb-title.icon {
+  background-color: #2185d0 !important;
+  color: #fff !important;
+}
+
+i.inverted.circular.wekb-provider.icon {
+  background-color: #b54800 !important;
+  color: #fff !important;
+}
+
+/*******************************
          Site Overrides
 *******************************/
 /*!
@@ -45189,14 +45223,31 @@ dd {
 
 .ui.segment.footer.wekb-footer {
   padding: 40px;
-  background-color: rgba(76, 127, 144, 0.16);
+  margin: 0;
+  background-color: #f7f8fa;
+}
+
+.ui.segment.footer.wekb-footer .ui.header,
+.ui.segment.footer.wekb-footer .ui.link.list .item,
+.ui.segment.footer.wekb-footer .ui.link.list .item a:not(.ui),
+.ui.segment.footer.wekb-footer .ui.link.list a.item {
+  color: #6f717a;
 }
 
 .ui.segment.footer.wekb-footer .ui.link.list .item,
 .ui.segment.footer.wekb-footer .ui.link.list .item a:not(.ui),
 .ui.segment.footer.wekb-footer .ui.link.list a.item {
-  color: rgba(0, 0, 0, 0.71);
   padding: 5px 0;
+}
+
+.ui.segment.footer.wekb-footer .ui.grid > .column:not(.row) {
+  padding-top: 0 !important;
+}
+
+@media only screen and (min-width: 1200px) {
+  footer .ui.ui.ui.container:not(.fluid) {
+    width: 1800px;
+  }
 }
 
 /*******************************
@@ -61991,7 +62042,7 @@ a.inverted.ui.card:hover,
 .ui.feed > .event > .content .date {
   margin: -0.5rem 0 0;
   padding: 0;
-  color: rgba(0, 0, 0, 0.4);
+  color: rgba(0, 0, 0, 0.67);
   font-weight: normal;
   font-size: 1em;
   font-style: normal;
@@ -62032,7 +62083,7 @@ a.inverted.ui.card:hover,
   font-style: normal;
   margin: 0 0 0 0.5em;
   padding: 0;
-  color: rgba(0, 0, 0, 0.4);
+  color: rgba(0, 0, 0, 0.67);
 }
 
 .ui.feed > .event > .content .summary > .date:not(.floated) {
@@ -62795,6 +62846,10 @@ a.inverted.ui.card:hover,
   opacity: 0.45;
   pointer-events: none;
 }
+
+/*******************************
+         Theme Overrides
+*******************************/
 
 /*******************************
          Theme Overrides

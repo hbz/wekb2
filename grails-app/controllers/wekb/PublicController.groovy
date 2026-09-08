@@ -224,7 +224,7 @@ class PublicController {
       result.showAltcha = true
       result.origin = request.getRequestURI() + (request.getQueryString() ? ('?' + request.getQueryString()) : '')
 
-      if (result.origin = '/') {
+      if (result.origin == '/') {
         result.origin = '/search/componentSearch?qbe=g:publicPackages'
       }
     }
@@ -237,6 +237,86 @@ class PublicController {
             Platform  : Org.executeQuery("select count(*) from Platform where status in (:forbiddenStatus)",  query_params, [readOnly: true])[0],
             TIPP      : Org.executeQuery("select count(*) from TitleInstancePackagePlatform  where status in (:forbiddenStatus)", query_params, [readOnly: true])[0],
     ]
+
+
+
+    result.dateNow = new Date()
+
+    Date dateFor6Years = Date.from(LocalDate.now().minusDays(2190).atStartOfDay(ZoneId.systemDefault()).toInstant())
+
+    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd")
+
+    result.dateFor6Years =  format.format(dateFor6Years)
+
+    List newsAboutObjects = [
+                             'Org',
+                             'Platform',
+                             'Vendor',
+                             'Package'
+    ]
+
+    List status = [RDStore.KBC_STATUS_CURRENT, RDStore.KBC_STATUS_RETIRED, RDStore.KBC_STATUS_DELETED, RDStore.KBC_STATUS_EXPECTED]
+
+    result.news = [:]
+
+    newsAboutObjects.each{ String domainClassName ->
+      result.news[domainClassName.toLowerCase()] = [:]
+
+      String queryNew = "from ${domainClassName} where  status in (:status) and dateCreated >= :daysBefore order by dateCreated desc"
+      result.news[domainClassName.toLowerCase()] .newInDB = Package.executeQuery(queryNew, [status: status, daysBefore: dateFor6Years], [max: 50, offset: 0])
+      String queryLastUpdated = "from ${domainClassName} where TO_CHAR(dateCreated,'YYYY-MM-DD') != TO_CHAR(lastUpdated,'YYYY-MM-DD') and status in (:status) and lastUpdated >= :daysBefore order by lastUpdated desc"
+      result.news[domainClassName.toLowerCase()] .lastUpdatedInDB = Package.executeQuery(queryLastUpdated, [status: status, daysBefore: dateFor6Years], [max: 50, offset: 0])
+
+    }
+    List<Map> allNews = []
+
+    newsAboutObjects.each { String domainClassName ->
+      String objectKey = domainClassName.toLowerCase()
+      Map objectNews = result.news[objectKey]
+
+      List<Map> newItems = (objectNews?.newInDB ?: []).collect { event ->
+        def provider = null
+
+        if (objectKey in ['platform', 'package']) {
+          provider = event.provider
+        }
+
+        return [
+                object    : objectKey,
+                event     : event,
+                provider  : provider,
+                changeType: 'new',
+                date      : event.dateCreated
+        ]
+      }
+
+      List<Map> changedItems = (objectNews?.lastUpdatedInDB ?: []).collect { event ->
+        def provider = null
+
+        if (objectKey in ['platform', 'package']) {
+          provider = event.provider
+        }
+
+
+        return [
+                object    : objectKey,
+                event     : event,
+                provider  : provider,
+                changeType: 'updated',
+                date      : event.lastUpdated
+        ]
+      }
+
+      List<Map> events = (newItems + changedItems)
+              .sort { Map a, Map b -> b.date <=> a.date }
+              .take(5)
+
+      allNews.addAll(events)
+    }
+
+    result.allNews = allNews.sort { Map a, Map b ->
+      b.date <=> a.date
+    }
 
     result
   }

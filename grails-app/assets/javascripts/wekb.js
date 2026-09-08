@@ -22,6 +22,10 @@
 
 //=require modules/paginationNavi.js
 
+//=require modules/newsFeedCutter.js
+
+//=require modules/landingpageAnimation.js
+
 //=require modules/responsiveTables.js
 
 console.log('+ wekb.js')
@@ -75,6 +79,8 @@ $(function () {
     a11yIcon.go();
     verticalNavi.go();
     paginationNavi.go();
+    newsFeedCutter.go();
+    landingpageAnimation.go();
     responsiveTables.go();
 
     $('.ui.sticky')

@@ -1,68 +1,215 @@
-<%@ page import="wekb.utils.ServerUtils; wekb.system.AltchaClient" %>
+<%@ page import="wekb.utils.ServerUtils; wekb.system.AltchaClient; wekb.ui.Icon;" %>
 <wekb:serviceInjection/>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <g:if test="${showAltcha}">
-        <meta name="layout" content="altcha" />
+        <meta name="layout" content="altcha"/>
     </g:if>
     <g:else>
-        <meta name="layout" content="wekb" />
+        <meta name="layout" content="wekb"/>
     </g:else>
 
     <title>we:kb | wekb</title>
+
 </head>
+
 <body>
-    <div class="container">
-        <h1 class="ui header">we:kb</h1>
-        <p>
-            Provider-Curated Knowledge Base Freely Available under CC0
-        </p>
+<style>
 
-        <h2 class="ui header">Provider and Platform Data</h2>
-        <h3 class="ui header">
-            <g:formatNumber number="${countComponent['Provider']}" type="number" format="###.###"/> Providers and
-            <g:formatNumber number="${countComponent['Platform']}" type="number" format="###.###"/> Platforms
-        </h3>
-        <p>
-            In we:kb, content providers and library suppliers may contribute valuable information about their services,
-            platforms, and products and share this data with the library community.
-            This ensures that libraries have access to up-to-date and authoritative information directly from the source.
-        </p>
+.wekb-content {
+    flex: 1 1 auto;
+    display: flex;
+    overflow: visible;
 
-        <h2 class="ui header">Package information and title data</h2>
-        <h3 class="ui header">
-            <g:formatNumber number="${countComponent['Package']}" type="number" format="###.###"/> Packages and
-            <g:formatNumber number="${countComponent['TIPP']}" type="number" format="###.###"/> Titles
-        </h3>
-        <p>
-            Content providers can create and maintain packages that reflect their current products and sales units.
-            Each package can include detailed metadata and title information.
-            Automated import and update routines ensure to keep the package content current and provide libraries with a reliable overview of available titles.
-        </p>
+    background-color: #fff;
 
-        <h2 class="ui header">Synchronization with LAS:eR</h2>
-        <p>
-            All data maintained in we:kb is seamlessly integrated in the Electronic Resource Management System LAS:eR (<a href="https://laser.hbz-nrw.de">https://laser.hbz-nrw.de</a>) where its visibility and usability is increased.
-            In LAS:eR, a large community of consortia and academic institutions across the DACH region is able to work with the data provided in we:kb
-            and manage electronic resources in the context of their specific license agreements.
-        </p>
+    background-image:
+            radial-gradient(
+                    ellipse at 25% 45%,
+                    rgba(242, 113, 28, 0.09) 0%,
+                    transparent 48%
+            ),
+            radial-gradient(
+                    ellipse at 88% 42%,
+                    rgba(33, 133, 208, 0.08) 0%,
+                    transparent 50%
+            );
+}
 
-        <br/>
+.wekb-content > .ui.main.container {
+    flex: 1 1 auto;
+    display: flex;
+    overflow: visible;
+}
 
+.full-height-grid {
+    flex: 1 1 auto;
+    min-height: auto;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+}
+.wekb-columns {
+    align-items: stretch;
+}
+.news-column {
+    display: flex !important;
+    flex-direction: column;
+    min-height: 0;
+    overflow: hidden;
+    align-items: flex-start;
+    padding-left: 2rem!important;
+    padding-right: 2rem!important;
+
+}
+.news-column-inner {
+    position: absolute;
+    inset: 1rem;
+    overflow: hidden;
+    margin: 3rem;
+    padding: 1rem;
+
+    background: rgba(255, 255, 255, 1);
+
+    border: 1px solid rgba(34, 36, 38, 0.07);
+    border-radius: 1rem;
+
+    box-shadow:
+            0 0.4rem 1.5rem rgba(34, 36, 38, 0.045);
+}
+
+.news-feed {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.ui.feed > .event > .content .extra {
+    margin: 0.1em 0 0;
+}
+
+.ui.button.news-more {
+    width: auto;
+    margin: 0 0 30px 50px;
+}
+
+.ui.connected.feed > .event.last-visible::before {
+    border-left: none;
+}
+
+.ui.feed > .event > .label .icon {
+    font-size: 1.3em;
+}
+.hero-chart-column {
+    flex: 1 1 auto;
+}
+</style>
+<g:set var="objectConfig" value="${[
+        'package' : [
+                icon   : Icon.PACKAGE,
+                color  : 'package',
+                tooltip: 'Package'
+        ],
+        'platform': [
+                icon   : Icon.PLATFORM,
+                color  : 'platform',
+                tooltip: 'Platform'
+        ],
+        'vendor'  : [
+                icon   : Icon.VENDOR,
+                color  : 'vendor',
+                tooltip: 'Library Suppliers'
+        ],
+        'org'     : [
+                icon   : Icon.PROVIDER,
+                color  : 'provider',
+                tooltip: 'Provider'
+        ]
+]}"/>
+
+<div class="ui stackable grid full-height-grid">
+    <aside class="four wide column news-column">
+        <div class="news-column-inner">
+            <h3 class="ui header">we:kb News</h3>
+            <g:if test="${allNews}">
+                <div class="ui connected feed news-feed">
+                    <g:each in="${allNews}" var="item">
+                        <article class="event">
+                            <div class="label" data-tooltip="${objectConfig[item.object]?.tooltip}" data-position="top left">
+                                <i class="inverted circular wekb-${objectConfig[item.object]?.color} ${objectConfig[item.object]?.icon}"
+                                   aria-hidden="true"></i>
+                            </div>
+                            <div class="content">
+                                <div class="date">
+                                    <g:formatDate
+                                            format="${message(code: 'default.date.format')}"
+                                            date="${item.date}"/>
+                                </div>
+                                <div class="summary">
+                                    <g:link controller="resource"
+                                            action="show"
+                                            id="${item.event.getOID()}">
+                                        ${item.event}
+                                    </g:link>
+                                    <label class="ui tiny black label">
+                                        <g:if test="${item.changeType == 'new'}">
+                                            NEW
+                                        </g:if>
+                                        <g:else>
+                                            CHANGED
+                                        </g:else>
+                                    </label>
+                                </div>
+                                <div class="extra text">
+                                    <g:if test="${item.provider}">
+                                        <g:link controller="resource"
+                                                action="show"
+                                                id="${item.provider.getOID()}">
+                                            ${item.provider.name}
+                                        </g:link>
+                                    </g:if>
+                                </div>
+                            </div>
+                        </article>
+                    </g:each>
+                </div>
+                <g:link class="ui black basic button news-more" controller="public"
+                        action="wekbNews">More News</g:link>
+            </g:if>
+
+            <g:else>
+                <div class="ui info message">
+                    There are currently no new or updated entries.
+                </div>
+            </g:else>
+        </div>
+    </aside>
+    <main class="twelve wide column hero-chart-column">
+        <section class="hero-claim">
+            <h1>Provider Tool <span>we:kb&nbsp;</span>
+            </h1>
+            <div style="display: flex;" >
+                <p>Provider-Curated Knowledge Base – Freely available under CC0</p>
+
+            </div>
+        </section>
         <g:if test="${showAltcha}">
             <g:render template="/templates/altchaForm" model="[altchaForm: [origin: origin, startpage: true]]"/>
         </g:if>
         <g:else>
-            <br/>
-            <a href="/search/componentSearch?qbe=g:publicPackages" class="ui fluid huge button we-link"> ${message(code: 'public.searchPackages')} </a>
+                <a href="/search/componentSearch?qbe=g:publicPackages"
+                   style="margin: 2rem 2rem 1rem 3rem;"
+                   class="ui big blue icon button">
+                    <i class="search icon"></i>
+                    Search we:kb</a>
+                <g:if test="${ServerUtils.getCurrentServer() in [ServerUtils.SERVER_LOCAL, ServerUtils.SERVER_DEV] && AltchaClient.isValid(request)}">%{-- DEBUG/TESTING --}%
+                    <a href="/altcha/revoke" class="ui big orange button we-link">REVOKE ALTCHA TOKEN</a>
+                </g:if>
+                <g:render template="/templates/statistic"/>
 
-            <g:if test="${ServerUtils.getCurrentServer() in [ServerUtils.SERVER_LOCAL, ServerUtils.SERVER_DEV] && AltchaClient.isValid(request)}">%{-- DEBUG/TESTING --}%
-                <br/>
-                <a href="/altcha/revoke" class="ui orange button we-link"> REVOKE ALTCHA TOKEN </a>
-            </g:if>
         </g:else>
-    </div>
+    </main>
+</div>
 </body>
 </html>
