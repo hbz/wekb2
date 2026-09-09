@@ -242,11 +242,11 @@ class PublicController {
 
     result.dateNow = new Date()
 
-    Date dateFor6Years = Date.from(LocalDate.now().minusDays(2190).atStartOfDay(ZoneId.systemDefault()).toInstant())
+    Date dateFor60Days = Date.from(LocalDate.now().minusDays(60).atStartOfDay(ZoneId.systemDefault()).toInstant())
 
     SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd")
 
-    result.dateFor6Years =  format.format(dateFor6Years)
+    result.dateFor60Days =  format.format(dateFor60Days)
 
     List newsAboutObjects = [
                              'Org',
@@ -263,9 +263,9 @@ class PublicController {
       result.news[domainClassName.toLowerCase()] = [:]
 
       String queryNew = "from ${domainClassName} where  status in (:status) and dateCreated >= :daysBefore order by dateCreated desc"
-      result.news[domainClassName.toLowerCase()] .newInDB = Package.executeQuery(queryNew, [status: status, daysBefore: dateFor6Years], [max: 50, offset: 0])
+      result.news[domainClassName.toLowerCase()] .newInDB = Package.executeQuery(queryNew, [status: status, daysBefore: dateFor60Days], [max: 4, offset: 0])
       String queryLastUpdated = "from ${domainClassName} where TO_CHAR(dateCreated,'YYYY-MM-DD') != TO_CHAR(lastUpdated,'YYYY-MM-DD') and status in (:status) and lastUpdated >= :daysBefore order by lastUpdated desc"
-      result.news[domainClassName.toLowerCase()] .lastUpdatedInDB = Package.executeQuery(queryLastUpdated, [status: status, daysBefore: dateFor6Years], [max: 50, offset: 0])
+      result.news[domainClassName.toLowerCase()] .lastUpdatedInDB = Package.executeQuery(queryLastUpdated, [status: status, daysBefore: dateFor60Days], [max: 2, offset: 0])
 
     }
     List<Map> allNews = []
@@ -308,15 +308,11 @@ class PublicController {
       }
 
       List<Map> events = (newItems + changedItems)
-              .sort { Map a, Map b -> b.date <=> a.date }
-              .take(5)
 
       allNews.addAll(events)
     }
 
-    result.allNews = allNews.sort { Map a, Map b ->
-      b.date <=> a.date
-    }
+    result.allNews = allNews
 
     result
   }
