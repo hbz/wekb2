@@ -349,7 +349,7 @@ class SearchService {
                                 link: link,
                                 value: (cobj != null ? (cobj) : '-Empty-'),
                                 outGoingLink: rh.outGoingLink ?: null,
-                                jumpToLink: jumpToLink && springSecurityService.isLoggedIn() ? jumpToLink : null, //TMP ERMS-7301
+                                jumpToLink: jumpToLink ?: null,
                                 globalSearchTemplateProperty: rh.property])
                 }
             }
