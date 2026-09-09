@@ -265,7 +265,7 @@ class PublicController {
       String queryNew = "from ${domainClassName} where  status in (:status) and dateCreated >= :daysBefore order by dateCreated desc"
       result.news[domainClassName.toLowerCase()] .newInDB = Package.executeQuery(queryNew, [status: status, daysBefore: dateFor30Days], [max: 4, offset: 0])
       String queryLastUpdated = "from ${domainClassName} where TO_CHAR(dateCreated,'YYYY-MM-DD') != TO_CHAR(lastUpdated,'YYYY-MM-DD') and status in (:status) and lastUpdated >= :daysBefore order by lastUpdated desc"
-      result.news[domainClassName.toLowerCase()] .lastUpdatedInDB = Package.executeQuery(queryLastUpdated, [status: status, daysBefore: dateFor30Days], [max: 4, offset: 0])
+      result.news[domainClassName.toLowerCase()] .lastUpdatedInDB = Package.executeQuery(queryLastUpdated, [status: status, daysBefore: dateFor30Days], [max: 2, offset: 0])
 
     }
     List<Map> allNews = []
