@@ -216,8 +216,27 @@ public class HQLBuilder {
                       ? "case when ${updateSuccessDateQuery} is null then 0 else 1 end"
                       : "case when ${updateSuccessDateQuery} is null then 1 else 0 end"
 
-              order_clause = """order by ${nullOrder} asc,
+              order_clause = """ order by ${nullOrder} asc,
         updateSuccessDate ${hql_builder_context.order}"""
+              break
+          case 'kbartSourceAutomaticUpdates':
+              String automaticUpdatesQuery = """(select ks.automaticUpdates
+                     from wekb.KbartSource as ks
+                     where ks.id = o.kbartSource.id)"""
+
+              fetch_hql = fetch_hql.replaceFirst(
+                      " o.id ",
+                      " o.id, ${automaticUpdatesQuery} as kbartSourceAutomaticUpdates "
+              )
+
+              count_clause = "${automaticUpdatesQuery} as kbartSourceAutomaticUpdates"
+
+              String nullOrder = hql_builder_context.order?.toLowerCase() == 'asc'
+                      ? "case when ${automaticUpdatesQuery} is null then 0 else 1 end"
+                      : "case when ${automaticUpdatesQuery} is null then 1 else 0 end"
+
+              order_clause = """ order by ${nullOrder} asc,
+                        kbartSourceAutomaticUpdates ${hql_builder_context.order}"""
               break
       }
       fetch_hql += order_clause

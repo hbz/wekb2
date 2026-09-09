@@ -155,6 +155,10 @@ class CreateComponentService {
                             result.newobj.enabled = true
                         }
 
+                        if (result.newobj instanceof Package && params.contentType == null) {
+                            result.newobj.contentType = RDStore.PKG_CONTENT_TYPE_NOTSET
+                        }
+
                         if(result.newobj instanceof TitleInstancePackagePlatform ){
                             result.newobj.hostPlatform = result.newobj.pkg.nominalPlatform
                             result.newobj.status = RDStore.KBC_STATUS_CURRENT
@@ -822,7 +826,11 @@ class CreateComponentService {
 
                             if (refdataValue) {
                                 pkg.contentType = refdataValue
+                            } else {
+                                pkg.contentType = RDStore.PKG_CONTENT_TYPE_NOTSET
                             }
+                        } else {
+                            pkg.contentType = RDStore.PKG_CONTENT_TYPE_NOTSET
                         }
 
                         /*

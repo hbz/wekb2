@@ -172,11 +172,17 @@ class Package  extends AbstractBase implements Auditable {
   def beforeInsert() {
     super.beforeInsertHandler()
     generateNormname()
+      if(contentType == null){
+          contentType = RDStore.PKG_CONTENT_TYPE_NOTSET
+      }
   }
 
   @Override
   def beforeUpdate() {
     generateNormname()
+      if(contentType == null){
+          contentType = RDStore.PKG_CONTENT_TYPE_NOTSET
+      }
     super.beforeUpdateHandler()
   }
 

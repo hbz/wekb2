@@ -353,6 +353,7 @@ Package.ContentType;Database;Database;Database
 Package.ContentType;Journal;Journal;Journal
 Package.ContentType;Mixed;Mixed;Mixed
 Package.ContentType;Other;Other;Other
+Package.ContentType;Not Set;Not Set;Not Set
 Package.Editing.Status;Concluded;Concluded;Concluded
 Package.Editing.Status;Ongoing;Ongoing;Ongoing
 Package.File;Back File;Back File;Back File
