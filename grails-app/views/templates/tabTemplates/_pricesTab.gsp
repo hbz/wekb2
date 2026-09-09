@@ -4,7 +4,7 @@
         <table class="ui selectable striped sortable celled table">
             <thead>
             <tr>
-                <th>Price Type</th>
+               %{-- <th>Price Type</th>--}%
                 <th>Net Price</th>
                 <th>Currency</th>
                %{-- <th>Start Date</th>
@@ -17,7 +17,7 @@
             <tbody>
             <g:each in="${d.prices.findAll{it.endDate == null}}" var="somePrice">
                 <tr>
-                    <td><semui:xEditableRefData owner="${somePrice}" field="priceType" config="${RCConstants.PRICE_TYPE}"/></td>
+                    %{--<td><semui:xEditableRefData owner="${somePrice}" field="priceType" config="${RCConstants.PRICE_TYPE}"/></td>--}%
                     <td><semui:xEditable owner="${somePrice}" field="price"/></td>
                     <td><semui:xEditableRefData owner="${somePrice}" field="currency" config="${RCConstants.CURRENCY}"/></td>
                 %{--    <td><semui:xEditable owner="${somePrice}" field="startDate" type="date"/></td>
@@ -49,14 +49,15 @@
                            value="wekb.TippPrice"/>
                     <input type="hidden" name="__recip" value="tipp"/>
                     <input type="hidden" name="curationOverride" value="${params.curationOverride}"/>
+                    <input type="hidden" name="priceType" value="${wekb.helper.RDStore.PRICE_TYPE_LIST}"/>
 
-                    <div class="field">
+                  %{--  <div class="field">
                         <label>Price Type</label>
                         <semui:simpleReferenceDropdown
                                 name="priceType"
                                 baseClass="wekb.RefdataValue"
                                 filter1="${RCConstants.PRICE_TYPE}"/>
-                    </div>
+                    </div>--}%
                     <div class="field">
                         <label for="price">Net Price</label>
 
