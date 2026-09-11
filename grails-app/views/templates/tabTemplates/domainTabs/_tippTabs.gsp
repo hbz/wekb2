@@ -14,9 +14,6 @@
         <semui:tabsItemWithoutLink tab="subjectArea">
             Subject Area
         </semui:tabsItemWithoutLink>
-        <semui:tabsItemWithoutLink tab="ddcs" counts="${d.ddcs.size()}">
-            DDCs
-        </semui:tabsItemWithoutLink>
         <semui:tabsItemWithoutLink tab="series">
             Series
         </semui:tabsItemWithoutLink>
@@ -51,8 +48,6 @@
               model="${[d: d, activeTab: (d.publicationType?.value != 'Serial')]}"/>
 
     <g:render template="/templates/tabTemplates/subjectAreaTab" model="${[d: d]}"/>
-
-    <g:render template="/templates/tabTemplates/ddcsTab" model="${[d: d]}"/>
 
     <g:render template="/templates/tabTemplates/seriesTab" model="${[d: d]}"/>
 

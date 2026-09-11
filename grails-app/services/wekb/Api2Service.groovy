@@ -781,11 +781,6 @@ class Api2Service {
                                         startDate: "to_char(tp_start_date, '${DateUtils.DATE_FORMAT_ISO_SQL}')",
                                         endDate: "to_char(tp_end_date, '${DateUtils.DATE_FORMAT_ISO_SQL}')"
                                 ],
-                                ddcFields: [
-                                        value: 'rdv_value',
-                                        value_de: 'rdv_value_de',
-                                        value_en: 'rdv_value_en',
-                                ],
                                 languageFields: [
                                         value: 'rdv_value',
                                         value_de: 'rdv_value_de',

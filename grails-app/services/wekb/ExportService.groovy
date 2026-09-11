@@ -377,7 +377,6 @@ class ExportService {
                 " 'doiIdentifier',"+
                 " tipp.subjectArea, " +
                 " 'languages', " +
-                " 'ddcs', " +
                 " (select value from RefdataValue where id = tipp.accessType), " +
                 " (select value from RefdataValue where id = cs.coverageDepth), " +
                 " 'pkg.name', " +
@@ -536,15 +535,6 @@ class ExportService {
 
                                     if (languages.size() > 0) {
                                         row.add(languages.join(';'))
-                                    } else {
-                                        row.add("")
-                                    }
-                                    break;
-                                case 'ddcs':
-                                    TitleInstancePackagePlatform titleInstancePackagePlatform = TitleInstancePackagePlatform.get(tippID)
-
-                                    if (titleInstancePackagePlatform.ddcs.size() > 0) {
-                                        row.add(titleInstancePackagePlatform.ddcs.join(';'))
                                     } else {
                                         row.add("")
                                     }

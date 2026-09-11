@@ -65,7 +65,6 @@ class KbartProcessService {
 
             // WEKB
             "oa_type",
-            "ddc",
             "medium",
             "doi_identifier",
             "subject_area",
