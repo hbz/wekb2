@@ -238,6 +238,25 @@ public class HQLBuilder {
               order_clause = """ order by ${nullOrder} asc,
                         kbartSourceAutomaticUpdates ${hql_builder_context.order}"""
               break
+          case 'lastRun':
+              String lastRunQuery = """(select ks.lastRun
+                     from wekb.KbartSource as ks
+                     where ks.id = o.kbartSource.id)"""
+
+              fetch_hql = fetch_hql.replaceFirst(
+                      " o.id ",
+                      " o.id, ${lastRunQuery} as kbartSourceLastRun "
+              )
+
+              count_clause = "${lastRunQuery} as kbartSourceLastRun"
+
+              String nullOrder = hql_builder_context.order?.toLowerCase() == 'asc'
+                      ? "case when ${lastRunQuery} is null then 0 else 1 end"
+                      : "case when ${lastRunQuery} is null then 1 else 0 end"
+
+              order_clause = """ order by ${nullOrder} asc,
+                        kbartSourceLastRun ${hql_builder_context.order}"""
+              break
       }
       fetch_hql += order_clause
     }
