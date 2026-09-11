@@ -27,6 +27,10 @@
         <semui:tabsItemWithoutLink tab="providers" activeTab="${params.activeTab}" counts="${d.getProvidersCount()}">
             Providers
         </semui:tabsItemWithoutLink>
+
+        <semui:tabsItemWithoutLink tab="currentTitles" activeTab="${params.activeTab}" counts="${d.getCurrentTitlesCount()}">
+            Current Titles
+        </semui:tabsItemWithoutLink>
     </semui:tabs>
 
 
@@ -450,8 +454,18 @@
         <div class="content">
 
             <g:link class="display-inline" controller="search" action="inlineSearch"
-                    params="[s_controllerName: controllerName, s_actionName: actionName, objectUUID: params.id, max: params.max, offset: params.activeTab == 'providers' ? params.offset : '', sort: params.activeTab == 'providers' ? params.sort : '', order: params.activeTab == 'providers' ? params.order : '', qbe: 'g:orgs', qp_vendor_id: d.id, inline: true, refOID: d.getOID(), hide: ['qp_vendor', 'qp_vendor_id']]"
+                    params="[s_controllerName: controllerName, s_actionName: actionName, objectUUID: params.id, max: params.max, offset: params.activeTab == 'providers' ? params.offset : '', sort: params.activeTab == 'providers' ? params.sort : '', order: params.activeTab == 'providers' ? params.order : '', qbe: 'g:providersByVendor', qp_vendor_id: d.id, inline: true, refOID: d.getOID(), hide: ['qp_vendor', 'qp_vendor_id']]"
                     id="">Providers</g:link>
+
+        </div>
+    </semui:tabsItemContent>
+
+    <semui:tabsItemContent tab="currentTitles" activeTab="${params.activeTab}">
+        <div class="content">
+
+            <g:link class="display-inline" controller="search" action="inlineSearch"
+                    params="[s_controllerName: controllerName, s_actionName: actionName, objectUUID: params.id, max: params.max, offset: params.activeTab == 'currentTitles' ? params.offset : '', sort: params.activeTab == 'currentTitles' ? params.sort : '', order: params.activeTab == 'currentTitles' ? params.order : '', qbe: 'g:tipps', qp_vendor_id: d.id, inline: true, refOID: d.getOID(), hide: ['qp_vendor', 'qp_vendor_id']]"
+                    id="">Current Titles</g:link>
 
         </div>
     </semui:tabsItemContent>

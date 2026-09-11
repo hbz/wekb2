@@ -211,4 +211,10 @@ class Vendor extends AbstractBase implements Auditable {
         PackageVendor.executeQuery("select count(*) from PackageVendor as o where o.vendor = :vendor and o.pkg.status != :status", [vendor: this, status: RDStore.KBC_STATUS_REMOVED])[0]
 
     }
+
+    int getCurrentTitlesCount(){
+
+        TitleInstancePackagePlatform.executeQuery("select count(*) from TitleInstancePackagePlatform as tipp where tipp.status = :tippStatus and tipp.pkg in (select o.pkg from PackageVendor as o where o.vendor = :vendor and o.pkg.status != :pkgStatus)", [vendor: this, pkgStatus: RDStore.KBC_STATUS_REMOVED, tippStatus: RDStore.KBC_STATUS_CURRENT])[0]
+
+    }
 }

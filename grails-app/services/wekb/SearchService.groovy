@@ -9,6 +9,7 @@ import grails.web.servlet.mvc.GrailsParameterMap
 import org.grails.web.servlet.mvc.GrailsWebRequest
 import org.grails.web.util.WebUtils
 import wekb.auth.User
+import wekb.helper.RDStore
 import wekb.system.SavedSearch
 
 import javax.servlet.http.HttpServletRequest
@@ -158,7 +159,7 @@ class SearchService {
 
             // Looked up a template from somewhere, see if we can execute a search
             if ( result.qbetemplate) {
-                boolean preconditionsMet = (result.qbetemplate.containsKey('minInput') && cleaned_params.keySet().intersect(result.qbetemplate.qbeConfig.qbeForm.qparam).size() >= result.qbetemplate.minInput) || !result.qbetemplate.containsKey('minInput')
+                boolean preconditionsMet = (params.inline || params.hide || (result.qbetemplate.containsKey('minInput') && cleaned_params.keySet().intersect(result.qbetemplate.qbeConfig.qbeForm.qparam).size() >= result.qbetemplate.minInput) || !result.qbetemplate.containsKey('minInput'))
                 if(preconditionsMet) {
                     params.sort = params.sort ?: result.qbetemplate.defaultSort
                     params.order = params.order ?: result.qbetemplate.defaultOrder
@@ -205,6 +206,8 @@ class SearchService {
                     if(cleaned_params.containsKey('searchAction')) {
                         result.error = "Please submit at least two parameters to run a query!"
                         log.error("insufficient filter parameters")
+                    }else {
+                        log.error("preconditionsMet is false")
                     }
                 }
             }
@@ -282,45 +285,58 @@ class SearchService {
                     ppath.eachWithIndex { prop, idx ->
                         def sp = prop.minus('?')
 
-                        if(result.qbetemplate.baseclass != 'wekb.RefdataValue' && cobj?.class?.name == 'wekb.RefdataValue' ) {
-                            cobj = cobj.getI10n('value')
-                        }
-                        else if(sp == 'curatoryGroupsCuratoryGroup') {
-                            if(cobj instanceof Package){
-                                cobj = CuratoryGroupPackage.findAllByPkg(cobj)?.curatoryGroup
-                            }else if(cobj instanceof Platform){
-                                cobj = CuratoryGroupPlatform.findAllByPlatform(cobj)?.curatoryGroup
-                            }else if(cobj instanceof Org){
-                                cobj = CuratoryGroupOrg.findAllByOrg(cobj)?.curatoryGroup
-                            }else if(cobj instanceof KbartSource){
-                                cobj = CuratoryGroupKbartSource.findAllByKbartSource(cobj)?.curatoryGroup
-                            }
-                            else if(cobj instanceof User){
-                                cobj = CuratoryGroupUser.findAllByUser(cobj)?.curatoryGroup
-                            }
-                        }
-                        else {
-                            if ( cobj && (cobj.hasProperty(sp) || (cobj.respondsTo(sp)?.size() > 0))) {
+                        if(sp == "placeHolderForCountPackagesByVendor"){
+                            Vendor vendor = Vendor.get(params.qp_vendor_id)
+                            cobj = Package.executeQuery('''select count(*) from Package as p where p.provider = :provider and
+                            p in (select pv.pkg from PackageVendor as pv where pv.vendor = :vendor and pv.pkg.status != :status)''',
+                                    [provider: r, vendor: vendor, status: RDStore.KBC_STATUS_REMOVED])[0]
+                            //PlaceHolderJumpToLink
+                            rh.jumpToLink = "/search/componentSearch?qp_vendor_id=${vendor.id}&qbe=g:packages&hide=qp_vendor_id&refOID=wekb.Vendor:${vendor.id}&qp_provider=wekb.Org:${r.id}"
+                        }else if(sp == "placeHolderForCountTitlesByVendor"){
+                            Vendor vendor = Vendor.get(params.qp_vendor_id)
+                            cobj = TitleInstancePackagePlatform.executeQuery('''select count(*) from TitleInstancePackagePlatform as t where t.status = :tippStatus and
+                             t.pkg in (select p from Package as p where p.provider = :provider and
+                                p in (select pv.pkg from PackageVendor as pv where pv.vendor = :vendor and pv.pkg.status != :pkgStatus))  ''',
+                                    [provider: r, vendor: vendor, pkgStatus: RDStore.KBC_STATUS_REMOVED, tippStatus: RDStore.KBC_STATUS_CURRENT])[0]
+                            //PlaceHolderJumpToLink
+                            rh.jumpToLink = "/search/componentSearch?qp_vendor_id=${vendor.id}&qbe=g:tipps&hide=qp_vendor_id&refOID=wekb.Vendor:${vendor.id}&qp_provider=wekb.Org:${r.id}&qp_status_value=Current"
+                        }else {
 
-                                def oobj = cobj
-
-                                cobj = cobj[sp]
-
-                                if ( sp == 'name' && !cobj && oobj.respondsTo('getShowName')) {
-                                    cobj = oobj.getShowName()
+                            if (result.qbetemplate.baseclass != 'wekb.RefdataValue' && cobj?.class?.name == 'wekb.RefdataValue') {
+                                cobj = cobj.getI10n('value')
+                            } else if (sp == 'curatoryGroupsCuratoryGroup') {
+                                if (cobj instanceof Package) {
+                                    cobj = CuratoryGroupPackage.findAllByPkg(cobj)?.curatoryGroup
+                                } else if (cobj instanceof Platform) {
+                                    cobj = CuratoryGroupPlatform.findAllByPlatform(cobj)?.curatoryGroup
+                                } else if (cobj instanceof Org) {
+                                    cobj = CuratoryGroupOrg.findAllByOrg(cobj)?.curatoryGroup
+                                } else if (cobj instanceof KbartSource) {
+                                    cobj = CuratoryGroupKbartSource.findAllByKbartSource(cobj)?.curatoryGroup
+                                } else if (cobj instanceof User) {
+                                    cobj = CuratoryGroupUser.findAllByUser(cobj)?.curatoryGroup
                                 }
+                            } else {
+                                if (cobj && (cobj.hasProperty(sp) || (cobj.respondsTo(sp)?.size() > 0))) {
 
-                                if (ppath.size() > 1 && idx == ppath.size()-2) {
-                                    if (cobj && sp != 'class') {
-                                        final_oid = cobj.getOID()
+                                    def oobj = cobj
+
+                                    cobj = cobj[sp]
+
+                                    if (sp == 'name' && !cobj && oobj.respondsTo('getShowName')) {
+                                        cobj = oobj.getShowName()
                                     }
-                                    else {
-                                        final_oid = null
+
+                                    if (ppath.size() > 1 && idx == ppath.size() - 2) {
+                                        if (cobj && sp != 'class') {
+                                            final_oid = cobj.getOID()
+                                        } else {
+                                            final_oid = null
+                                        }
                                     }
+                                } else {
+                                    cobj = null
                                 }
-                            }
-                            else {
-                                cobj = null
                             }
                         }
                     }

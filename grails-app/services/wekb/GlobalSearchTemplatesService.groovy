@@ -18,6 +18,7 @@ class GlobalSearchTemplatesService {
         globalSearchTemplates.put('myPackageManagement', myPackageManagement())
         globalSearchTemplates.put('namespaces', namespaces())
         globalSearchTemplates.put('orgs', orgs())
+        globalSearchTemplates.put('providersByVendor', providersByVendor())
         globalSearchTemplates.put('packages', packages())
         globalSearchTemplates.put('publicPackages', publicPackages())
         globalSearchTemplates.put('platforms', platforms())
@@ -679,6 +680,270 @@ class GlobalSearchTemplatesService {
                                 [heading: 'Packages', property: 'providedPackagesCount', jumpToLink: '/search/componentSearch/wekb.Org:objectID?qbe=g:packages&hide=qp_provider&hide=qp_provider_id&refOID=wekb.Org:objectID&qp_provider_id=objectID', linkInfo: 'Link to Packages'],
                                 [heading: 'Platforms', property: 'providedPlatformsCount', jumpToLink: '/search/componentSearch/wekb.Org:objectID?qbe=g:platforms&hide=qp_provider&hide=qp_provider_id&refOID=wekb.Org:objectID&qp_provider_id=objectID', linkInfo: 'Link to Platforms']
 
+                        ]
+                ]
+        ]
+
+        result
+    }
+
+
+    Map providersByVendor() {
+        Map result = [
+                baseclass   : 'wekb.Org',
+                msgCode    : 'org.plural',
+                title       : 'Providers',
+                defaultSort : 'name',
+                defaultOrder: 'asc',
+                defaultStatus: RefdataValue.class.name + ':' + RDStore.KBC_STATUS_CURRENT.id,
+                qbeConfig   : [
+                        qbeForm   : [
+                                //Hidden Fields
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.CuratoryGroup',
+                                        qparam     : 'qp_curgroups',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'placeHolderForCuratoryGroups'],
+                                        hide       : true
+                                ],
+                                [
+                                        qparam     : 'changedSince',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'greater', 'prop': 'lastUpdated', 'type': 'java.util.Date'],
+                                        hide       : true
+                                ],
+                                [
+                                        qparam     : 'createdSince',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'greater', 'prop': 'dateCreated', 'type': 'java.util.Date'],
+                                        hide       : true
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.Vendor',
+                                        qparam     : 'qp_vendor_id',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'placeHolderForVendor'],
+                                        hide       : true
+                                ],
+                                //General Fields
+                                [
+                                        prompt     : 'Name',
+                                        msgCode    : 'default.name',
+                                        qparam     : 'qp_name',
+                                        placeholder: 'Name',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike_Combine_Name_And_VariantNames_And_AbbreviatedName_Org', 'prop': 'name', 'wildcard': 'B']
+                                ],
+                                [
+                                        prompt     : 'Identifier',
+                                        msgCode     : 'identifier.value',
+                                        qparam     : 'qp_identifier',
+                                        placeholder: 'Identifier Value',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'ids.value']
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.CuratoryGroup',
+                                        prompt     : 'Curatory Group',
+                                        msgCode     : 'curatorygroup.label',
+                                        qparam     : 'qp_curgroup',
+                                        placeholder: 'Curatory Group',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'curatoryGroups.curatoryGroup']
+                                ],
+                                [
+                                        type       : 'dropDownMultiple',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.COMPONENT_STATUS,
+                                        prompt     : 'Status',
+                                        msgCode    : 'default.status',
+                                        qparam     : 'qp_status',
+                                        placeholder: 'Status',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'status']
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.ORG_ROLE,
+                                        prompt     : 'Role',
+                                        msgCode     : 'org.role',
+                                        qparam     : 'qp_roles',
+                                        placeholder: 'Role',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'roles'],
+                                ],
+                                //--------------------------------------------------------------------------------------------
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.YN,
+                                        prompt     : 'Inhouse Invoicing',
+                                        msgCode     : 'org.invoicingYourself',
+                                        qparam     : 'invoicingYourself',
+                                        placeholder: 'Inhouse Invoicing',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'invoicingYourself'],
+                                        advancedSearch: [title: "Invoicing", category: 'invoice']
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.VENDOR_ELECTRONIC_BILLING,
+                                        prompt     : 'Electronic Invoice Formats',
+                                        msgCode     : 'org.electronicBillings',
+                                        qparam     : 'electronicBillings',
+                                        placeholder: 'Electronic Invoice Formats',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'electronicBillings'],
+                                        advancedSearch: [title: "Invoicing", category: 'invoice']
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.VENDOR_INVOICE_DISPATCH,
+                                        prompt     : 'Invoice dispatch via',
+                                        msgCode     : 'org.invoiceDispatchs',
+                                        qparam     : 'invoiceDispatchs',
+                                        placeholder: 'Invoice dispatch via',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'invoiceDispatchs'],
+                                        advancedSearch: [title: "Invoicing", category: 'invoice']
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.YN,
+                                        prompt     : 'Paper Invoice',
+                                        msgCode     : 'org.paperInvoice',
+                                        qparam     : 'paperInvoice',
+                                        placeholder: 'Paper Invoice',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'paperInvoice'],
+                                        advancedSearch: [title: "Invoicing", category: 'invoice']
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.YN,
+                                        prompt     : 'Management of Credits',
+                                        msgCode     : 'org.managementOfCredits',
+                                        qparam     : 'managementOfCredits',
+                                        placeholder: 'Management of Credits',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'managementOfCredits'],
+                                        advancedSearch: [title: "Invoicing", category: 'invoice']
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.YN,
+                                        prompt     : 'Processing of compensation payments (credits/subsequent debits)',
+                                        msgCode     : 'org.processingOfCompensationPayments',
+                                        qparam     : 'processingOfCompensationPayments',
+                                        placeholder: 'Processing of compensation payments (credits/subsequent debits)',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'processingOfCompensationPayments'],
+                                        advancedSearch: [title: "Invoicing", category: 'invoice']
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.YN,
+                                        prompt     : 'Individual invoice design',
+                                        msgCode     : 'org.individualInvoiceDesign',
+                                        qparam     : 'individualInvoiceDesign',
+                                        placeholder: 'Individual invoice design',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'individualInvoiceDesign'],
+                                        advancedSearch: [title: "Invoicing", category: 'invoice']
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.Vendor',
+                                        prompt     : 'Invoicing possible by library supplier',
+                                        msgCode     : 'org.invoicingVendors',
+                                        qparam     : 'invoicingVendors',
+                                        placeholder: 'Invoicing possible by library supplier',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'invoicingVendors'],
+                                        advancedSearch: [title: "Invoicing", category: 'invoice']
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.ORG_DRM,
+                                        prompt     : 'DRM',
+                                        msgCode     : 'org.drm',
+                                        qparam     : 'drm',
+                                        selectPlaceHolder: 'value',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'drm'],
+                                        advancedSearch: [title: "Usage rights", category: 'usageRights']
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.YN,
+                                        prompt     : 'Remote Access',
+                                        msgCode     : 'org.remoteAccess',
+                                        qparam     : 'remoteAccess',
+                                        selectPlaceHolder: 'value',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'remoteAccess'],
+                                        advancedSearch: [title: "Usage rights", category: 'usageRights']
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.PROVIDER_PRINT_DOWNLOAD,
+                                        prompt     : 'Print/Download',
+                                        //msgCode     : 'org.printDownloadChapter',
+                                        qparam     : 'printDownloadChapter',
+                                        selectPlaceHolder: 'value',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'printDownloadChapter'],
+                                        advancedSearch: [title: "Usage rights", category: 'usageRights']
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.YN,
+                                        prompt     : 'Quotes By Copy/Paste',
+                                        msgCode     : 'org.quotesByCopyPaste',
+                                        qparam     : 'quotesByCopyPaste',
+                                        selectPlaceHolder: 'value',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'quotesByCopyPaste'],
+                                        advancedSearch: [title: "Usage rights", category: 'usageRights']
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.YN,
+                                        prompt     : 'License-based e-book interlibrary loan supported',
+                                        msgCode     : 'org.licenseBasedEBInterlibrarySupported',
+                                        qparam     : 'licenseBasedEBInterlibrarySupported',
+                                        selectPlaceHolder: 'value',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'licenseBasedEBInterlibrarySupported'],
+                                        advancedSearch: [title: "Interlibrary Loan", category: 'interlibraryLoan']
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.PROVIDER_RANGE,
+                                        prompt     : 'Range',
+                                        msgCode     : 'org.range',
+                                        qparam     : 'range',
+                                        selectPlaceHolder: 'value',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'range'],
+                                        advancedSearch: [title: "Interlibrary Loan", category: 'interlibraryLoan']
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.PROVIDER_AGREEMENT_MODEL,
+                                        prompt     : 'Agreement model',
+                                        msgCode     : 'org.agreementModel',
+                                        qparam     : 'agreementModel',
+                                        selectPlaceHolder: 'value',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'agreementModel'],
+                                        advancedSearch: [title: "Interlibrary Loan", category: 'interlibraryLoan']
+                                ],
+
+
+
+                        ],
+                        qbeResults: [
+                                [heading: 'Provider', property: 'name', sort: 'name', link: true, linkInfo: 'Link to Provider'],
+                                [heading: 'Abbreviated Name', property: 'abbreviatedName', sort: 'abbreviatedName', link: true, linkInfo: 'Link to Provider'],
+                                [heading: 'Homepage', property: 'homepage', sort: 'homepage', outGoingLink: true, linkInfo: 'Link to Homepage'],
+                                [heading: 'Last Updated', property: 'lastUpdated', sort: 'lastUpdated'],
+                                [heading: 'Status', property: 'status.value', sort: 'status'],
+                                [heading: 'Current Titles', property: 'placeHolderForCountTitlesByVendor', jumpToLink: 'placeHolderJumpToLink'],
+                                [heading: 'Packages', property: 'placeHolderForCountPackagesByVendor', jumpToLink: 'placeHolderJumpToLink', linkInfo: 'Link to Packages'],
                         ]
                 ]
         ]
@@ -2321,6 +2586,13 @@ class GlobalSearchTemplatesService {
                                 [
                                         qparam     : 'createdSince',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'greater', 'prop': 'dateCreated', 'type': 'java.util.Date'],
+                                        hide       : true
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.Vendor',
+                                        qparam     : 'qp_vendor_id',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'placeHolderForVendor'],
                                         hide       : true
                                 ],
                                 //General Fields
