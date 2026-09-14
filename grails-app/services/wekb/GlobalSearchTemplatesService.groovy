@@ -116,7 +116,7 @@ class GlobalSearchTemplatesService {
                                         msgCode     : 'kbartSource.frequency',
                                         qparam     : 'qp_source_frequency',
                                         placeholder: 'Source Frequency',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'kbartSource.frequency'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'kbartSource.frequency'],
                                 ],
 
                                 [
@@ -432,7 +432,7 @@ class GlobalSearchTemplatesService {
                                         msgCode     : 'org.electronicBillings',
                                         qparam     : 'electronicBillings',
                                         placeholder: 'Electronic Invoice Formats',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'electronicBillings'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'electronicBillings'],
                                         advancedSearch: [title: "Invoicing", category: 'invoice']
                                 ],
                                 [
@@ -443,7 +443,7 @@ class GlobalSearchTemplatesService {
                                         msgCode     : 'org.invoiceDispatchs',
                                         qparam     : 'invoiceDispatchs',
                                         placeholder: 'Invoice dispatch via',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'invoiceDispatchs'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'invoiceDispatchs'],
                                         advancedSearch: [title: "Invoicing", category: 'invoice']
                                 ],
                                 [
@@ -574,7 +574,7 @@ class GlobalSearchTemplatesService {
                                         msgCode     : 'org.drm',
                                         qparam     : 'drm',
                                         selectPlaceHolder: 'value',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'drm'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'drm'],
                                         advancedSearch: [title: "Usage rights", category: 'usageRights']
                                 ],
                                 [
@@ -596,7 +596,7 @@ class GlobalSearchTemplatesService {
                                         //msgCode     : 'org.printDownloadChapter',
                                         qparam     : 'printDownloadChapter',
                                         selectPlaceHolder: 'value',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'printDownloadChapter'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'printDownloadChapter'],
                                         advancedSearch: [title: "Usage rights", category: 'usageRights']
                                 ],
                                 [
@@ -652,7 +652,7 @@ class GlobalSearchTemplatesService {
                                         msgCode     : 'org.range',
                                         qparam     : 'range',
                                         selectPlaceHolder: 'value',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'range'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'range'],
                                         advancedSearch: [title: "Interlibrary Loan", category: 'interlibraryLoan']
                                 ],
                                 [
@@ -663,7 +663,7 @@ class GlobalSearchTemplatesService {
                                         msgCode     : 'org.agreementModel',
                                         qparam     : 'agreementModel',
                                         selectPlaceHolder: 'value',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'agreementModel'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'agreementModel'],
                                         advancedSearch: [title: "Interlibrary Loan", category: 'interlibraryLoan']
                                 ],
 
@@ -787,7 +787,7 @@ class GlobalSearchTemplatesService {
                                         msgCode     : 'org.electronicBillings',
                                         qparam     : 'electronicBillings',
                                         placeholder: 'Electronic Invoice Formats',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'electronicBillings'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'electronicBillings'],
                                         advancedSearch: [title: "Invoicing", category: 'invoice']
                                 ],
                                 [
@@ -798,7 +798,7 @@ class GlobalSearchTemplatesService {
                                         msgCode     : 'org.invoiceDispatchs',
                                         qparam     : 'invoiceDispatchs',
                                         placeholder: 'Invoice dispatch via',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'invoiceDispatchs'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'invoiceDispatchs'],
                                         advancedSearch: [title: "Invoicing", category: 'invoice']
                                 ],
                                 [
@@ -863,7 +863,7 @@ class GlobalSearchTemplatesService {
                                         msgCode     : 'org.drm',
                                         qparam     : 'drm',
                                         selectPlaceHolder: 'value',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'drm'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'drm'],
                                         advancedSearch: [title: "Usage rights", category: 'usageRights']
                                 ],
                                 [
@@ -885,7 +885,7 @@ class GlobalSearchTemplatesService {
                                         //msgCode     : 'org.printDownloadChapter',
                                         qparam     : 'printDownloadChapter',
                                         selectPlaceHolder: 'value',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'printDownloadChapter'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'printDownloadChapter'],
                                         advancedSearch: [title: "Usage rights", category: 'usageRights']
                                 ],
                                 [
@@ -918,7 +918,7 @@ class GlobalSearchTemplatesService {
                                         msgCode     : 'org.range',
                                         qparam     : 'range',
                                         selectPlaceHolder: 'value',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'range'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'range'],
                                         advancedSearch: [title: "Interlibrary Loan", category: 'interlibraryLoan']
                                 ],
                                 [
@@ -929,7 +929,7 @@ class GlobalSearchTemplatesService {
                                         msgCode     : 'org.agreementModel',
                                         qparam     : 'agreementModel',
                                         selectPlaceHolder: 'value',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'agreementModel'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'agreementModel'],
                                         advancedSearch: [title: "Interlibrary Loan", category: 'interlibraryLoan']
                                 ],
 
@@ -1063,7 +1063,7 @@ class GlobalSearchTemplatesService {
                                         msgCode     : 'package.scope',
                                         qparam     : 'qp_scope',
                                         placeholder: 'Scope',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'scope'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'scope'],
                                 ],
                                 [
                                         type       : 'dropDown',
@@ -1073,7 +1073,7 @@ class GlobalSearchTemplatesService {
                                         msgCode     : 'package.contentType',
                                         qparam     : 'qp_content',
                                         placeholder: 'Content Type',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'contentType'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'contentType'],
                                 ],
                                 [
                                         type       : 'dropDown',
@@ -1083,7 +1083,7 @@ class GlobalSearchTemplatesService {
                                         msgCode     : 'package.openAccess',
                                         qparam     : 'qp_oa',
                                         placeholder: 'Open Access',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'openAccess'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'openAccess'],
                                 ],
                                 [
                                         type     : 'dropDownGroup',
@@ -1103,7 +1103,7 @@ class GlobalSearchTemplatesService {
                                         msgCode     : 'package.archivingAgency',
                                         qparam     : 'qp_archivingAgency',
                                         placeholder: 'Package Archiving Agency',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'paas.archivingAgency']
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'paas.archivingAgency']
                                 ],
                                 [
                                         type       : 'dropDown',
@@ -1126,7 +1126,7 @@ class GlobalSearchTemplatesService {
                                         msgCode     : 'package.breakable',
                                         qparam     : 'qp_breakable',
                                         placeholder: 'Breakable Type',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'breakable'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'breakable'],
                                         advancedSearch: [title: "More filter options ...", category: 'Package']
                                 ],
                                 [
@@ -1137,7 +1137,7 @@ class GlobalSearchTemplatesService {
                                         msgCode     : 'package.paymentType',
                                         qparam     : 'qp_paymentType',
                                         placeholder: 'Paid',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'paymentType'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'paymentType'],
                                         advancedSearch: [title: "More filter options ...", category: 'Package']
                                 ],
                                 [
@@ -1148,7 +1148,7 @@ class GlobalSearchTemplatesService {
                                         msgCode     : 'package.file',
                                         qparam     : 'qp_file',
                                         placeholder: 'File',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'file'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'file'],
                                         advancedSearch: [title: "More filter options ...", category: 'Package']
                                 ],
                                 [
@@ -1309,7 +1309,7 @@ class GlobalSearchTemplatesService {
                                         msgCode     : 'package.scope',
                                         qparam     : 'qp_scope',
                                         placeholder: 'Scope',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'scope'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'scope'],
                                 ],
                                 [
                                         type       : 'dropDown',
@@ -1319,7 +1319,7 @@ class GlobalSearchTemplatesService {
                                         msgCode     : 'package.contentType',
                                         qparam     : 'qp_content',
                                         placeholder: 'Content Type',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'contentType'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'contentType'],
                                 ],
                                 [
                                         type       : 'dropDown',
@@ -1329,7 +1329,7 @@ class GlobalSearchTemplatesService {
                                         msgCode     : 'package.openAccess',
                                         qparam     : 'qp_oa',
                                         placeholder: 'Open Access',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'openAccess'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'openAccess'],
                                 ],
                                 [
                                         type     : 'dropDownGroup',
@@ -1349,7 +1349,7 @@ class GlobalSearchTemplatesService {
                                         msgCode     : 'package.archivingAgency',
                                         qparam     : 'qp_archivingAgency',
                                         placeholder: 'Package Archiving Agency',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'paas.archivingAgency']
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'paas.archivingAgency']
                                 ],
                                 [
                                         type       : 'dropDown',
@@ -1370,7 +1370,7 @@ class GlobalSearchTemplatesService {
                                         msgCode     : 'kbartSource.frequency',
                                         qparam     : 'qp_source_frequency',
                                         placeholder: 'Source Frequency',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'kbartSource.frequency'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'kbartSource.frequency'],
                                 ],
 
                                 //Package Filter
@@ -1382,7 +1382,7 @@ class GlobalSearchTemplatesService {
                                         msgCode     : 'package.breakable',
                                         qparam     : 'qp_breakable',
                                         placeholder: 'Breakable Type',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'breakable'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'breakable'],
                                         advancedSearch: [title: "More filter options ...", category: 'Package']
                                 ],
                                 [
@@ -1393,7 +1393,7 @@ class GlobalSearchTemplatesService {
                                         msgCode     : 'package.paymentType',
                                         qparam     : 'qp_paymentType',
                                         placeholder: 'Paid',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'paymentType'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'paymentType'],
                                         advancedSearch: [title: "More filter options ...", category: 'Package']
                                 ],
                                 [
@@ -1404,7 +1404,7 @@ class GlobalSearchTemplatesService {
                                         msgCode     : 'package.file',
                                         qparam     : 'qp_file',
                                         placeholder: 'File',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'file'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'file'],
                                         advancedSearch: [title: "More filter options ...", category: 'Package']
                                 ],
                                 [
@@ -1557,7 +1557,7 @@ class GlobalSearchTemplatesService {
                                         msgCode     : 'package.contentType',
                                         qparam     : 'qp_contentType',
                                         placeholder: 'Content Type',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'contentType'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'contentType'],
                                         advancedSearch: [title: "Other fields", category: 'Package']
                                 ],
                                 [
@@ -1589,7 +1589,7 @@ class GlobalSearchTemplatesService {
                                         msgCode     : 'package.paymentType',
                                         qparam     : 'qp_paymentType',
                                         placeholder: 'Paid',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'paymentType'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'paymentType'],
                                         advancedSearch: [title: "Other fields", category: 'Package']
                                 ],
                                 [
@@ -1600,7 +1600,7 @@ class GlobalSearchTemplatesService {
                                         msgCode     : 'package.openAccess',
                                         qparam     : 'qp_oa',
                                         placeholder: 'Open Access',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'openAccess'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'openAccess'],
                                         advancedSearch: [title: "Other fields", category: 'Package']
                                 ],
 
@@ -1612,7 +1612,7 @@ class GlobalSearchTemplatesService {
                                         msgCode     : 'package.archivingAgency',
                                         qparam     : 'qp_archivingAgency',
                                         placeholder: 'Package Archiving Agency',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'paas.archivingAgency'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'paas.archivingAgency'],
                                         advancedSearch: [title: "Other fields", category: 'Package']
                                 ],
                                /* //Title Filter
@@ -2049,7 +2049,7 @@ class GlobalSearchTemplatesService {
                                         msgCode     : 'platform.ipAuthentication',
                                         qparam     : 'qp_ipAuthentication',
                                         placeholder: 'IP Auth Supported',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'ipAuthentication'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'ipAuthentication'],
                                         advancedSearch: [title: "Authentication", category: 'Authentication']
                                 ],
                                 [
@@ -2126,7 +2126,7 @@ class GlobalSearchTemplatesService {
                                         msgCode     : 'platform.statisticsFormat',
                                         qparam     : 'qp_statisticsFormat',
                                         placeholder: 'Statistics Format',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'statisticsFormat'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'statisticsFormat'],
                                         advancedSearch: [title: "Statistics", category: 'Statistics']
                                 ],
                                 [
@@ -2181,7 +2181,7 @@ class GlobalSearchTemplatesService {
                                         //msgCode     : 'platform.accessPlatform',
                                         qparam     : 'qp_accessPlatform',
                                         selectPlaceHolder: 'value',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'accessPlatform'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'accessPlatform'],
                                         advancedSearch: [title: "Accessibility", category: 'Accessibility']
                                 ],
                                 [
@@ -2192,7 +2192,7 @@ class GlobalSearchTemplatesService {
                                         //msgCode     : 'platform.viewerForPdf',
                                         qparam     : 'qp_viewerForPdf',
                                         selectPlaceHolder: 'value',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'viewerForPdf'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'viewerForPdf'],
                                         advancedSearch: [title: "Accessibility", category: 'Accessibility']
                                 ],
                                 [
@@ -2203,7 +2203,7 @@ class GlobalSearchTemplatesService {
                                         //msgCode     : 'platform.viewerForEpub',
                                         qparam     : 'qp_viewerForEpub',
                                         selectPlaceHolder: 'value',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'viewerForEpub'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'viewerForEpub'],
                                         advancedSearch: [title: "Accessibility", category: 'Accessibility']
                                 ],
                                 [
@@ -2214,7 +2214,7 @@ class GlobalSearchTemplatesService {
                                         //msgCode     : 'platform.playerForAudio',
                                         qparam     : 'qp_playerForAudio',
                                         selectPlaceHolder: 'value',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'playerForAudio'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'playerForAudio'],
                                         advancedSearch: [title: "Accessibility", category: 'Accessibility']
                                 ],
                                 [
@@ -2225,7 +2225,7 @@ class GlobalSearchTemplatesService {
                                         //msgCode     : 'platform.playerForVideo',
                                         qparam     : 'qp_playerForVideo',
                                         selectPlaceHolder: 'value',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'playerForVideo'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'playerForVideo'],
                                         advancedSearch: [title: "Accessibility", category: 'Accessibility']
                                 ],
                                 [
@@ -2247,7 +2247,7 @@ class GlobalSearchTemplatesService {
                                         //msgCode     : 'platform.accessEPub',
                                         qparam     : 'qp_accessEPub',
                                         selectPlaceHolder: 'value',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'accessEPub'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'accessEPub'],
                                         advancedSearch: [title: "Accessibility", category: 'Accessibility']
                                 ],
                                 [
@@ -2258,7 +2258,7 @@ class GlobalSearchTemplatesService {
                                         //msgCode     : 'platform.accessPdf',
                                         qparam     : 'qp_accessPdf',
                                         selectPlaceHolder: 'value',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'accessPdf'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'accessPdf'],
                                         advancedSearch: [title: "Accessibility", category: 'Accessibility']
                                 ],
                                 [
@@ -2269,7 +2269,7 @@ class GlobalSearchTemplatesService {
                                         //msgCode    : 'platform.accessAudio',
                                         qparam     : 'qp_accessAudio',
                                         selectPlaceHolder: 'value',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'accessAudio'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'accessAudio'],
                                         advancedSearch: [title: "Accessibility", category: 'Accessibility']
                                 ],
                                 [
@@ -2280,7 +2280,7 @@ class GlobalSearchTemplatesService {
                                         //msgCode    : 'platform.accessVideo',
                                         qparam     : 'qp_accessVideo',
                                         selectPlaceHolder: 'value',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'accessVideo'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'accessVideo'],
                                         advancedSearch: [title: "Accessibility", category: 'Accessibility']
                                 ],
                                 [
@@ -2291,7 +2291,7 @@ class GlobalSearchTemplatesService {
                                         //msgCode    : 'platform.accessDatabase',
                                         qparam     : 'qp_accessDatabase',
                                         selectPlaceHolder: 'value',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'accessDatabase'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'accessDatabase'],
                                         advancedSearch: [title: "Accessibility", category: 'Accessibility']
                                 ],
                                 [
@@ -2508,7 +2508,7 @@ class GlobalSearchTemplatesService {
                                         msgCode    : 'kbartsource.frequency',
                                         qparam     : 'qp_frequency',
                                         placeholder: 'Frequencys',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'frequency'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'frequency'],
                                 ],
                         ],
                         qbeResults: [
@@ -2668,7 +2668,7 @@ class GlobalSearchTemplatesService {
                                         msgCode    : 'titleinstancepackageplatform.accessType',
                                         qparam     : 'qp_accessType',
                                         placeholder: 'Access Type',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'accessType'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'accessType'],
                                         advancedSearch: [title: "Other fields", category: 'OtherFields']
                                 ],
                                 [
@@ -2680,7 +2680,7 @@ class GlobalSearchTemplatesService {
                                         msgCode    : 'titleinstancepackageplatform.openAccess',
                                         qparam     : 'qp_openAccess',
                                         placeholder: 'Open Access',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'openAccess'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'openAccess'],
                                         advancedSearch: [title: "Other fields", category: 'OtherFields']
                                 ],
                                 [
@@ -2692,7 +2692,7 @@ class GlobalSearchTemplatesService {
                                         msgCode    : 'titleinstancepackageplatform.publicationType',
                                         qparam     : 'qp_publicationType',
                                         placeholder: 'Type of item',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'publicationType'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'publicationType'],
                                         advancedSearch: [title: "Other fields", category: 'OtherFields']
                                 ],
                                 [
@@ -2704,7 +2704,7 @@ class GlobalSearchTemplatesService {
                                         msgCode    : 'titleinstancepackageplatform.medium',
                                         qparam     : 'qp_medium',
                                         placeholder: 'Medium of item',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'medium'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'medium'],
                                         advancedSearch: [title: "Other fields", category: 'OtherFields']
                                 ],
                                 [
@@ -2779,7 +2779,7 @@ class GlobalSearchTemplatesService {
                                         msgCode    : 'titleinstancepackageplatform.language',
                                         qparam     : 'qp_language',
                                         placeholder: 'Language',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'languages.language'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'languages.language'],
                                         advancedSearch: [title: "Other fields", category: 'OtherFields']
                                 ],
 
@@ -2887,7 +2887,7 @@ class GlobalSearchTemplatesService {
                                         msgCode    : 'titleinstancepackageplatform.medium',
                                         qparam     : 'qp_medium',
                                         placeholder: 'Medium of item',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'medium'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'medium'],
                                 ],
                                 [
                                         prompt     : 'Author',
@@ -2912,7 +2912,7 @@ class GlobalSearchTemplatesService {
                                         msgCode    : 'titleinstancepackageplatform.accessType',
                                         qparam     : 'qp_accessType',
                                         placeholder: 'Access Type',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'accessType'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'accessType'],
                                 ],
                                 [
                                         type     : 'dropDownGroup',
@@ -2978,7 +2978,7 @@ class GlobalSearchTemplatesService {
                                         msgCode    : 'titleinstancepackageplatform.openAccess',
                                         qparam     : 'qp_openAccess',
                                         placeholder: 'Open Access',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'openAccess'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'openAccess'],
                                 ],
                                 [
                                         type       : 'dropDown',
@@ -2989,7 +2989,7 @@ class GlobalSearchTemplatesService {
                                         msgCode    : 'titleinstancepackageplatform.languages',
                                         qparam     : 'qp_language',
                                         placeholder: 'Language',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'languages.language'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'languages.language'],
                                 ],
                                 [
                                         type       : 'dropDownMultiple',
@@ -3135,7 +3135,7 @@ class GlobalSearchTemplatesService {
                                         msgCode     : 'vendor.supportedLibrarySystems',
                                         qparam     : 'supportedLibrarySystems',
                                         placeholder: 'Supported Library Systems',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'supportedLibrarySystems'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'supportedLibrarySystems'],
                                         advancedSearch: [title: "Ordering", category: 'ordering']
                                 ],
                                 [
@@ -3146,7 +3146,7 @@ class GlobalSearchTemplatesService {
                                         msgCode     : 'vendor.electronicDeliveryDelays',
                                         qparam     : 'electronicDeliveryDelays',
                                         placeholder: 'Electronic delivery delay notifications via',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'electronicDeliveryDelays'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'electronicDeliveryDelays'],
                                         advancedSearch: [title: "Ordering", category: 'ordering']
                                 ],
                                 [
@@ -3157,7 +3157,7 @@ class GlobalSearchTemplatesService {
                                         msgCode     : 'vendor.electronicBillings',
                                         qparam     : 'electronicBillings',
                                         placeholder: 'Electronic Invoice Formats',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'electronicBillings'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'electronicBillings'],
                                         advancedSearch: [title: "Invoicing", category: 'invoice']
                                 ],
                                 [
@@ -3168,7 +3168,7 @@ class GlobalSearchTemplatesService {
                                         msgCode     : 'vendor.invoiceDispatchs',
                                         qparam     : 'invoiceDispatchs',
                                         placeholder: 'Invoice dispatch via',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'invoiceDispatchs'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'invoiceDispatchs'],
                                         advancedSearch: [title: "Invoicing", category: 'invoice']
                                 ],
                                 [
@@ -3452,7 +3452,7 @@ class GlobalSearchTemplatesService {
                                         msgCode    : 'default.status',
                                         qparam     : 'qp_status',
                                         placeholder: 'Type',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'status'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'status'],
                                 ],
 
                                 [
@@ -3550,7 +3550,7 @@ class GlobalSearchTemplatesService {
                                         msgCode     : 'default.type',
                                         qparam     : 'qp_type',
                                         placeholder: 'Type',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'type'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'type'],
                                 ],
                                 [
                                         type       : 'dropDown',
@@ -3560,7 +3560,7 @@ class GlobalSearchTemplatesService {
                                         msgCode    : 'default.status',
                                         qparam     : 'qp_status',
                                         placeholder: 'Type',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'status'],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'status'],
                                 ],
                                 [
                                         type       : 'dropDown',
