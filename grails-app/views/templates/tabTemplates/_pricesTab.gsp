@@ -35,7 +35,7 @@
             </tbody>
         </table>
 
-        <g:if test="${editable}">
+        <g:if test="${editable && d.prices.size() == 0}">
             <a class="ui right floated primary button" href="#" onclick="$('#pricesModal').modal('show');">Add Price</a>
 
             <br>
@@ -49,7 +49,7 @@
                            value="wekb.TippPrice"/>
                     <input type="hidden" name="__recip" value="tipp"/>
                     <input type="hidden" name="curationOverride" value="${params.curationOverride}"/>
-                    <input type="hidden" name="priceType" value="${wekb.helper.RDStore.PRICE_TYPE_LIST}"/>
+                    <input type="hidden" name="priceType" value="${wekb.helper.RDStore.PRICE_TYPE_LIST.getOID()}"/>
 
                   %{--  <div class="field">
                         <label>Price Type</label>
