@@ -2756,7 +2756,7 @@ class GlobalSearchTemplatesService {
                                         advancedSearch: [title: "Other fields", category: 'OtherFields']
                                 ],
 
-
+/*
                                 [
                                         type       : 'dropDown',
                                         load       : 'ajax',
@@ -2768,7 +2768,7 @@ class GlobalSearchTemplatesService {
                                         placeholder: 'DDC',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'ddcs'],
                                         advancedSearch: [title: "Other fields", category: 'OtherFields']
-                                ],
+                                ],*/
 
                                 [
                                         type       : 'dropDown',
