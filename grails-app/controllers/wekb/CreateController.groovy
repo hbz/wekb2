@@ -133,25 +133,30 @@ class CreateController {
   def processPackageBatch() {
     log.info("CreateControler::processPackageBatch... ${params}");
         User user = springSecurityService.currentUser
-        MultipartFile tsvFile = request.getFile("tsvFile")
-        if(tsvFile && tsvFile.size > 0) {
-          String encoding = UniversalDetector.detectCharset(tsvFile.getInputStream())
-          if(encoding in ["UTF-8", "US-ASCII", "WINDOWS-1252"]) {
-            Map packagesData = createComponentService.packageBatchImport(tsvFile, user)
+        MultipartFile excelFile = request.getFile("excelFile")
 
-            render view: 'packageBatchCompleted', model: packagesData
-          }
-          else {
-            String errorText = "The file you have uploaded has a wrong character encoding! Please ensure that your file is encoded in UTF-8. Guessed encoding has been: ${encoding}"
-            flash.error = errorText
-            redirect(url: request.getHeader('referer'))
-          }
-        }
-        else {
-          String errorText = "You have not uploaded a valid file!"
-          flash.error = errorText
+      if (!excelFile || excelFile.empty) {
+          flash.error = "Only Excel files in .xlsx format are allowed."
+          redirect(action: 'packageBatch')
+          return
+      }
 
-          redirect(url: request.getHeader('referer'))
-        }
+      String filename = excelFile.originalFilename?.toLowerCase()
+
+      Set<String> allowedContentTypes = [
+              'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+              'application/octet-stream'
+      ]
+
+      if (!filename?.endsWith('.xlsx') || !allowedContentTypes.contains(excelFile.contentType)) {
+          flash.error = "Only Excel files in .xlsx format are allowed."
+          redirect(action: 'packageBatch')
+          return
+      }
+
+      Map packagesData = createComponentService.packageBatchImport(excelFile, user)
+      render view: 'packageBatchCompleted', model: packagesData
+
+
   }
 }

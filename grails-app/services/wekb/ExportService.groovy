@@ -32,6 +32,8 @@ import org.apache.commons.csv.CSVFormat
 import org.apache.commons.csv.CSVPrinter
 
 import java.nio.charset.StandardCharsets
+import org.apache.poi.ss.usermodel.*
+import org.apache.poi.xssf.streaming.SXSSFWorkbook
 
 
 @Transactional
@@ -1113,5 +1115,150 @@ class ExportService {
 
 
         mapping
+    }
+
+
+    SXSSFWorkbook exportPackagesAsExcel(List<Package> packages) {
+
+        List<String> titles = [
+                "package_uuid",
+                "package_name",
+                "provider_uuid",
+                "nominal_platform_uuid",
+                "description",
+                "description_url",
+                "breakable",
+                "content_type",
+                "file",
+                "open_access",
+                "payment_type",
+                "scope",
+                "national_range",
+                "regional_range",
+                "free_trial",
+                "free_trial_phase",
+                "provider_product_id",
+                "ddc",
+                "source_default_supply_method",
+                "source_url",
+                "source_ftp_server_url",
+                "source_ftp_directory",
+                "source_ftp_file_name",
+                "source_ftp_username",
+                "source_ftp_password",
+                "frequency",
+                "automated_updates",
+                "archiving_agency",
+                "open_access_of_archiving_agency",
+                "post_cancellation_access_of_archiving_agency",
+                "publication_title",
+                "publication_type",
+                "title_id",
+                "title_url"
+        ]
+
+        SXSSFWorkbook workbook = new SXSSFWorkbook(100)
+
+        Sheet sheet = workbook.createSheet("Packages")
+
+        CellStyle headerStyle = workbook.createCellStyle()
+
+        Font headerFont = workbook.createFont()
+        headerFont.bold = true
+
+        headerStyle.setFont(headerFont)
+        headerStyle.setWrapText(true)
+
+        CellStyle textStyle = workbook.createCellStyle()
+        textStyle.setDataFormat(workbook.createDataFormat().getFormat("@"))
+
+        CellStyle multilineStyle = workbook.createCellStyle()
+        multilineStyle.setDataFormat(workbook.createDataFormat().getFormat("@"))
+        multilineStyle.setWrapText(true)
+
+        Row headerRow = sheet.createRow(0)
+
+        titles.eachWithIndex { String title, int column ->
+            Cell cell = headerRow.createCell(column)
+            cell.setCellValue(title)
+            cell.setCellStyle(headerStyle)
+        }
+
+        int rowIndex = 1
+
+        packages.each { Package pkg ->
+            Row row = sheet.createRow(rowIndex++)
+            int col = 0
+
+            setExcelText(row, col++, pkg.uuid, textStyle)
+            setExcelText(row, col++, pkg.name, textStyle)
+            setExcelText(row, col++, pkg.provider?.uuid, textStyle)
+            setExcelText(row, col++, pkg.nominalPlatform?.uuid, textStyle)
+            setExcelText(row, col++, pkg.description, multilineStyle)
+            setExcelText(row, col++, pkg.descriptionURL, textStyle)
+            setExcelText(row, col++, pkg.breakable?.value, textStyle)
+            setExcelText(row, col++, pkg.contentType?.value, textStyle)
+            setExcelText(row, col++, pkg.file?.value, textStyle)
+            setExcelText(row, col++, pkg.openAccess?.value, textStyle)
+            setExcelText(row, col++, pkg.paymentType?.value, textStyle)
+            setExcelText(row, col++, pkg.scope?.value, textStyle)
+            setExcelText(row, col++, pkg.nationalRanges?.collect { it.value }?.join(", "), textStyle)
+            setExcelText(row, col++, pkg.regionalRanges?.collect { it.value }?.join(", "), textStyle)
+            setExcelText(row, col++, pkg.freeTrial?.value, textStyle)
+            setExcelText(row, col++, pkg.freeTrialPhase, textStyle)
+            setExcelText(row, col++, pkg.getAnbieterProduktIDs(), textStyle)
+            setExcelText(row, col++, pkg.ddcs?.collect { it.value }?.join(", "), textStyle)
+
+            KbartSource source = pkg.kbartSource
+
+            setExcelText(row, col++, source?.defaultSupplyMethod?.value, textStyle)
+            setExcelText(row, col++, source?.url, textStyle)
+            setExcelText(row, col++, source?.ftpServerUrl, textStyle)
+            setExcelText(row, col++, source?.ftpDirectory, textStyle)
+            setExcelText(row, col++, source?.ftpFileName, textStyle)
+            setExcelText(row, col++, source?.ftpUsername, textStyle)
+            setExcelText(row, col++, source?.ftpPassword, textStyle)
+            setExcelText(row, col++, source?.frequency?.value, textStyle)
+            setExcelText(row, col++, source?.automaticUpdates != null ? (source.automaticUpdates ? "Yes" : "No") : null, textStyle)
+
+            PackageArchivingAgency paa = PackageArchivingAgency.findByPkg(pkg)
+            setExcelText(row, col++, paa?.archivingAgency?.value, textStyle)
+            setExcelText(row, col++, paa?.openAccess?.value, textStyle)
+            setExcelText(row, col++, paa?.postCancellationAccess?.value, textStyle)
+
+            TitleInstancePackagePlatform tipp = TitleInstancePackagePlatform.findByPkg(pkg)
+            String titleId = tipp?.getTitleID()
+            setExcelText(row, col++, tipp?.name, textStyle)
+            setExcelText(row, col++, tipp?.publicationType?.value, textStyle)
+            setExcelText(row, col++, titleId, textStyle)
+            setExcelText(row, col++, tipp?.url, textStyle)
+        }
+
+        sheet.createFreezePane(0, 1)
+
+        return workbook
+    }
+
+
+    private void setExcelText(
+            Row row,
+            int column,
+            Object value,
+            CellStyle style) {
+
+        Cell cell = row.createCell(
+                column,
+                CellType.STRING
+        )
+
+        if (value != null) {
+            cell.setCellValue(
+                    value.toString()
+            )
+        } else {
+            cell.setCellValue("")
+        }
+
+        cell.setCellStyle(style)
     }
 }

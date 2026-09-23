@@ -2,11 +2,6 @@ package wekb
 
 import grails.web.mvc.FlashScope
 
-import org.apache.commons.csv.CSVFormat
-import org.apache.commons.csv.CSVParser
-import org.apache.commons.csv.CSVRecord
-import java.nio.charset.StandardCharsets
-
 import org.grails.web.servlet.mvc.GrailsWebRequest
 import org.grails.web.util.WebUtils
 import wekb.helper.RCConstants
@@ -21,14 +16,18 @@ import org.grails.datastore.mapping.model.types.Association
 import org.grails.datastore.mapping.model.types.ManyToOne
 import org.grails.datastore.mapping.model.types.OneToOne
 import org.springframework.context.i18n.LocaleContextHolder
-import org.springframework.web.multipart.MultipartFile
 import wekb.utils.DateUtils
 
-import javax.servlet.http.HttpServletRequest
 import java.text.SimpleDateFormat
-import java.time.Instant
-import java.time.LocalDateTime
-import java.time.ZoneId
+
+import org.apache.poi.ss.usermodel.Cell
+import org.apache.poi.ss.usermodel.DataFormatter
+import org.apache.poi.ss.usermodel.FormulaEvaluator
+import org.apache.poi.ss.usermodel.Row
+import org.apache.poi.ss.usermodel.Sheet
+import org.apache.poi.ss.usermodel.Workbook
+import org.apache.poi.ss.usermodel.WorkbookFactory
+import org.springframework.web.multipart.MultipartFile
 
 @Transactional
 class CreateComponentService {
@@ -255,7 +254,7 @@ class CreateComponentService {
     }
 
 
-    Map packageBatchImport(MultipartFile tsvFile, User user) {
+    Map packageBatchImport(MultipartFile excelFile, User user) {
 
         List<CuratoryGroup> curatoryGroups = []
 
@@ -269,1629 +268,974 @@ class CreateComponentService {
         Set<String> globalErrors = []
         List<Package> packageList = []
 
-        Reader reader = new InputStreamReader(
-                tsvFile.inputStream,
-                StandardCharsets.UTF_8
-        )
+        Workbook workbook = null
 
-        CSVFormat csvFormat = CSVFormat.TDF.builder()
-                .setQuote('"' as char)
-                .build()
+        DataFormatter formatter
+        FormulaEvaluator evaluator
 
-        CSVParser csvParser = csvFormat.parse(reader)
-
-        List<CSVRecord> rows
+        int rowsCount = 0
 
         try {
-            rows = csvParser.records
-        }
-        finally {
-            csvParser.close()
-            reader.close()
-        }
 
-        if (!rows) {
-            return [
-                    packages : [],
-                    rowsCount: 0,
-                    errors   : ["The uploaded file is empty."]
-            ]
-        }
+            workbook = WorkbookFactory.create(excelFile.inputStream)
 
-        /*
-         * ==========================================================
-         * Header
-         * ==========================================================
-         */
-        CSVRecord header = rows.remove(0)
-
-        header.eachWithIndex { String s, int c ->
-
-            String headerCol = s?.trim()
-
-            if (headerCol?.startsWith("\uFEFF")) {
-                headerCol = headerCol.substring(1)
+            if (workbook.numberOfSheets == 0) {
+                return [packages : [], rowsCount: 0, errors   : ["The uploaded Excel file contains no worksheet."]]
             }
 
-            switch (headerCol?.toLowerCase()) {
+            Sheet sheet = workbook.getSheetAt(0)
 
-                case "package_name":
-                    colMap.name = c
-                    break
-
-                case "package_uuid":
-                    colMap.package_uuid = c
-                    break
-
-                case "provider_uuid":
-                    colMap.provider_uuid = c
-                    break
-
-                case "nominal_platform_uuid":
-                    colMap.nominal_platform_uuid = c
-                    break
-
-                case "description":
-                    colMap.description = c
-                    break
-
-                case "url":
-                case "description_url":
-                    colMap.description_url = c
-                    break
-
-                case "breakable":
-                    colMap.breakable = c
-                    break
-
-                case "consistent":
-                    colMap.consistent = c
-                    break
-
-                case "content_type":
-                    colMap.content_type = c
-                    break
-
-                case "file":
-                    colMap.file = c
-                    break
-
-                case "open_access":
-                    colMap.open_access = c
-                    break
-
-                case "payment_type":
-                    colMap.payment_type = c
-                    break
-
-                case "scope":
-                    colMap.scope = c
-                    break
-
-                case "editing_status":
-                    colMap.editing_status = c
-                    break
-
-                case "free_trial":
-                    colMap.free_trial = c
-                    break
-
-                case "free_trial_phase":
-                    colMap.free_trial_phase = c
-                    break
-
-                case "national_range":
-                    colMap.national_ranges = c
-                    break
-
-                case "regional_range":
-                    colMap.regional_ranges = c
-                    break
-
-                case "anbieter_produkt_id":
-                    colMap.anbieter_produkt_id = c
-                    break
-
-                case "provider_product_id":
-                    colMap.provider_product_id = c
-                    break
-
-                case "ddc":
-                    colMap.ddcs = c
-                    break
-
-                case "source_url":
-                    colMap.source_url = c
-                    break
-
-                case "frequency":
-                    colMap.frequency = c
-                    break
-
-                case "automated_updates":
-                    colMap.automated_updates = c
-                    break
-
-                case "archiving_agency":
-                    colMap.archiving_agency = c
-                    break
-
-                case "open_access_of_archiving_agency":
-                    colMap.open_access_of_archiving_agency = c
-                    break
-
-                case "post_cancellation_access_of_archiving_agency":
-                    colMap.post_cancellation_access_of_archiving_agency = c
-                    break
-
-                case "source_ftp_server_url":
-                    colMap.source_ftp_server_url = c
-                    break
-
-                case "source_ftp_directory":
-                    colMap.source_ftp_directory = c
-                    break
-
-                case "source_ftp_file_name":
-                    colMap.source_ftp_file_name = c
-                    break
-
-                case "source_ftp_username":
-                    colMap.source_ftp_username = c
-                    break
-
-                case "source_ftp_password":
-                    colMap.source_ftp_password = c
-                    break
-
-                case "source_default_supply_method":
-                    colMap.source_default_supply_method = c
-                    break
-
-                case "publication_title":
-                    colMap.publication_title = c
-                    break
-
-                case "publication_type":
-                    colMap.publication_type = c
-                    break
-
-                case "title_id":
-                    colMap.title_id = c
-                    break
-
-                case "title_url":
-                    colMap.title_url = c
-                    break
+            if (!sheet || sheet.physicalNumberOfRows == 0) {
+                return [packages : [], rowsCount: 0, errors   : ["The uploaded file is empty."]]
             }
-        }
 
-        List<RefdataValue> statusList = [
-                RDStore.KBC_STATUS_DELETED,
-                RDStore.KBC_STATUS_REMOVED
-        ]
+            formatter = new DataFormatter()
+            evaluator = workbook.creationHelper.createFormulaEvaluator()
 
-        List identifiers = []
-        List sources = []
+            //Header
+            Row header = sheet.getRow(sheet.firstRowNum)
 
-        /*
-         * ==========================================================
-         * Packages importieren
-         * ==========================================================
-         */
-        rows.each { CSVRecord cols ->
+            if (!header) {
+                return [packages : [], rowsCount: 0, errors   : ["The uploaded Excel file contains no header."]]
+            }
 
-            boolean newCreated = false
-            Package pkg
-            boolean editAllowed = true
+            for (int c = 0; c < header.lastCellNum; c++) {
 
-            String package_uuid = getValue(cols, colMap.package_uuid)
+                Cell cell = header.getCell(c, Row.MissingCellPolicy.RETURN_BLANK_AS_NULL)
 
-            if (package_uuid) {
+                String headerCol = getCellValue(cell, formatter, evaluator)?.trim()
 
-                pkg = Package.findByUuid(package_uuid)
+                if (headerCol?.startsWith("\uFEFF")) {
+                    headerCol = headerCol.substring(1)
+                }
 
-                if (pkg != null &&
-                        !accessService.checkEditableObject(pkg, null)) {
-
-                    globalErrors <<
-                            "You have no authorization to edit the package with the uuid '${package_uuid}'.!"
-
-                    editAllowed = false
+                switch (headerCol?.toLowerCase()) {
+                    case "package_name": colMap.name = c
+                        break
+                    case "package_uuid": colMap.package_uuid = c
+                        break
+                    case "provider_uuid": colMap.provider_uuid = c
+                        break
+                    case "nominal_platform_uuid": colMap.nominal_platform_uuid = c
+                        break
+                    case "description": colMap.description = c
+                        break
+                    case "url":
+                    case "description_url": colMap.description_url = c
+                        break
+                    case "breakable": colMap.breakable = c
+                        break
+                    case "consistent": colMap.consistent = c
+                        break
+                    case "content_type": colMap.content_type = c
+                        break
+                    case "file": colMap.file = c
+                        break
+                    case "open_access": colMap.open_access = c
+                        break
+                    case "payment_type": colMap.payment_type = c
+                        break
+                    case "scope": colMap.scope = c
+                        break
+                    case "editing_status": colMap.editing_status = c
+                        break
+                    case "free_trial": colMap.free_trial = c
+                        break
+                    case "free_trial_phase": colMap.free_trial_phase = c
+                        break
+                    case "national_range": colMap.national_ranges = c
+                        break
+                    case "regional_range": colMap.regional_ranges = c
+                        break
+                    case "anbieter_produkt_id": colMap.anbieter_produkt_id = c
+                        break
+                    case "provider_product_id": colMap.provider_product_id = c
+                        break
+                    case "ddc": colMap.ddcs = c
+                        break
+                    case "source_url": colMap.source_url = c
+                        break
+                    case "frequency": colMap.frequency = c
+                        break
+                    case "automated_updates": colMap.automated_updates = c
+                        break
+                    case "archiving_agency": colMap.archiving_agency = c
+                        break
+                    case "open_access_of_archiving_agency": colMap.open_access_of_archiving_agency = c
+                        break
+                    case "post_cancellation_access_of_archiving_agency": colMap.post_cancellation_access_of_archiving_agency = c
+                        break
+                    case "source_ftp_server_url": colMap.source_ftp_server_url = c
+                        break
+                    case "source_ftp_directory": colMap.source_ftp_directory = c
+                        break
+                    case "source_ftp_file_name": colMap.source_ftp_file_name = c
+                        break
+                    case "source_ftp_username": colMap.source_ftp_username = c
+                        break
+                    case "source_ftp_password": colMap.source_ftp_password = c
+                        break
+                    case "source_default_supply_method": colMap.source_default_supply_method = c
+                        break
+                    case "publication_title": colMap.publication_title = c
+                        break
+                    case "publication_type": colMap.publication_type = c
+                        break
+                    case "title_id": colMap.title_id = c
+                        break
+                    case "title_url": colMap.title_url = c
+                        break
                 }
             }
 
-            String name = getValue(cols, colMap.name)
+            List<RefdataValue> statusList = [RDStore.KBC_STATUS_DELETED, RDStore.KBC_STATUS_REMOVED]
 
-            if (cols.size() > 0 &&
-                    (name || pkg != null) &&
-                    editAllowed) {
+            List identifiers = []
+            List sources = []
 
-                /*
-                 * ==================================================
-                 * Neues Package
-                 * ==================================================
-                 */
-                if (pkg == null) {
+            for (int rowNum = sheet.firstRowNum + 1; rowNum <= sheet.lastRowNum; rowNum++) {
+                Row cols = sheet.getRow(rowNum)
 
-                    def dupes = []
 
-                    if (curatoryGroups &&
-                            colMap.anbieter_produkt_id != null) {
+                //Row Empty
+                if (!cols || isExcelRowEmpty(cols, formatter, evaluator)) {
+                    continue
+                }
 
-                        String value =
-                                getValue(
-                                        cols,
-                                        colMap.anbieter_produkt_id
+                rowsCount++
+
+                boolean newCreated = false
+                Package pkg
+                boolean editAllowed = true
+
+                String package_uuid =
+                        getValue(cols, colMap.package_uuid, formatter, evaluator)
+
+                if (package_uuid) {
+
+                    pkg = Package.findByUuid(package_uuid)
+
+                    if (pkg != null && !accessService.checkEditableObject(pkg, null)) {
+                        globalErrors << "You have no authorization to edit the package with the uuid '${package_uuid}'.!"
+
+                        editAllowed = false
+                    }
+                }
+
+                String name = getValue(cols, colMap.name, formatter, evaluator)
+
+                if ((name || pkg != null) && editAllowed) {
+                    //New package
+                    if (pkg == null) {
+
+                        def dupes = []
+
+                        if (curatoryGroups && colMap.anbieter_produkt_id != null) {
+
+                            String value = getValue(cols, colMap.anbieter_produkt_id, formatter, evaluator)
+
+                            if (value) {
+
+                                IdentifierNamespace namespace = IdentifierNamespace.findByValueAndTargetType(IdentifierNamespace.PKG_ID, RDStore.IDENTIFIER_NAMESPACE_TARGET_TYPE_PACKAGE)
+
+                                dupes = Identifier.executeQuery(
+                                        '''
+                                        select ident.pkg
+                                        from Identifier ident
+                                        where ident.namespace = :ns
+                                          and ident.value != :val
+                                          and ident.value = :value
+                                          and ident.pkg is not null
+                                          and ident.pkg.status not in (:stat)
+                                          and exists (
+                                              select cgp
+                                              from CuratoryGroupPackage cgp
+                                              where cgp.pkg = ident.pkg
+                                                and cgp.curatoryGroup in (:curGroup)
+                                          )
+                                    ''',
+                                        [value   : value,
+                                         ns      : namespace,
+                                         val     : 'Unknown',
+                                         stat    : statusList,
+                                         curGroup: curatoryGroups])
+
+                            } else if (name) {
+
+                                dupes = Package.executeQuery(
+                                        '''
+                                        select p
+                                        from Package p
+                                        where lower(p.name) like :name
+                                          and p.status not in (:stat)
+                                          and exists (
+                                              select cgp
+                                              from CuratoryGroupPackage cgp
+                                              where cgp.pkg = p
+                                                and cgp.curatoryGroup in (:curGroup)
+                                          )
+                                    ''',
+                                        [name    : name.toLowerCase().trim(),
+                                         stat    : statusList,
+                                         curGroup: curatoryGroups]
                                 )
-
-                        if (value) {
-
-                            IdentifierNamespace namespace =
-                                    IdentifierNamespace
-                                            .findByValueAndTargetType(
-                                                    IdentifierNamespace.PKG_ID,
-                                                    RDStore.IDENTIFIER_NAMESPACE_TARGET_TYPE_PACKAGE
-                                            )
-
-                            dupes = Identifier.executeQuery(
-                                    '''
-                                select ident.pkg
-                                from Identifier ident
-                                where ident.namespace = :ns
-                                  and ident.value != :val
-                                  and ident.value = :value
-                                  and ident.pkg is not null
-                                  and ident.pkg.status not in (:stat)
-                                  and exists (
-                                      select cgp
-                                      from CuratoryGroupPackage cgp
-                                      where cgp.pkg = ident.pkg
-                                        and cgp.curatoryGroup in (:curGroup)
-                                  )
-                                ''',
-                                    [
-                                            value   : value,
-                                            ns      : namespace,
-                                            val     : 'Unknown',
-                                            stat    : statusList,
-                                            curGroup: curatoryGroups
-                                    ]
-                            )
+                            }
 
                         } else if (name) {
 
                             dupes = Package.executeQuery(
                                     '''
-                                select p
-                                from Package p
-                                where lower(p.name) like :name
-                                  and p.status not in (:stat)
-                                  and exists (
-                                      select cgp
-                                      from CuratoryGroupPackage cgp
-                                      where cgp.pkg = p
-                                        and cgp.curatoryGroup in (:curGroup)
-                                  )
+                                    select p
+                                    from Package p
+                                    where lower(p.name) like :name
+                                      and p.status not in (:stat)
                                 ''',
-                                    [
-                                            name    : name.toLowerCase().trim(),
-                                            stat    : statusList,
-                                            curGroup: curatoryGroups
-                                    ]
+                                    [name: name.toLowerCase().trim(),
+                                     stat: statusList]
                             )
+
+                            if (curatoryGroups) {
+
+                                dupes = Package.executeQuery(
+                                        '''
+                                        select p
+                                        from Package p
+                                        where lower(p.name) like :name
+                                          and p.status not in (:stat)
+                                          and exists (
+                                              select cgp
+                                              from CuratoryGroupPackage cgp
+                                              where cgp.pkg = p
+                                                and cgp.curatoryGroup in (:curGroup)
+                                          )
+                                    ''',
+                                        [name    : name.toLowerCase().trim(),
+                                         stat    : statusList,
+                                         curGroup: curatoryGroups]
+                                )
+                            }
                         }
 
-                    } else if (name) {
-
-                        dupes = Package.executeQuery(
-                                '''
-                            select p
-                            from Package p
-                            where lower(p.name) like :name
-                              and p.status not in (:stat)
-                            ''',
-                                [
-                                        name: name.toLowerCase().trim(),
-                                        stat: statusList
-                                ]
-                        )
-
-                        if (curatoryGroups) {
-
-                            dupes = Package.executeQuery(
-                                    '''
-                                select p
-                                from Package p
-                                where lower(p.name) like :name
-                                  and p.status not in (:stat)
-                                  and exists (
-                                      select cgp
-                                      from CuratoryGroupPackage cgp
-                                      where cgp.pkg = p
-                                        and cgp.curatoryGroup in (:curGroup)
-                                  )
-                                ''',
-                                    [
-                                            name    : name.toLowerCase().trim(),
-                                            stat    : statusList,
-                                            curGroup: curatoryGroups
-                                    ]
-                            )
-                        }
-                    }
-
-                    if (dupes && dupes.size() > 0) {
-
-                        globalErrors <<
-                                "The we:kb already has a package with the name '${name}'. Therefore a package with the name could not be created!"
-
-                        name = null
-                    }
-
-                    String providerUuid =
-                            getValue(
-                                    cols,
-                                    colMap.provider_uuid
-                            )
-
-                    String platformUuid =
-                            getValue(
-                                    cols,
-                                    colMap.nominal_platform_uuid
-                            )
-
-                    if (!providerUuid || !platformUuid) {
-
-                        globalErrors <<
-                                "The package with the name '${name}' could not be created, because provider_uuid or nominal_platform_uuid not set!"
-
-                        name = null
-                    } else {
-
-                        Org provider =
-                                Org.findByUuid(providerUuid)
-
-                        if (!provider) {
-
-                            globalErrors <<
-                                    "The package with the name '${name}' could not be created, because provider_uuid is wrong!"
-
+                        if (dupes && dupes.size() > 0) {
+                            globalErrors << "The we:kb already has a package with the name '${name}'. Therefore a package with the name could not be created!"
                             name = null
                         }
 
-                        Platform platform =
-                                Platform.findByUuid(platformUuid)
+                        String providerUuid = getValue(cols, colMap.provider_uuid, formatter, evaluator)
 
-                        if (!platform) {
+                        String platformUuid = getValue(cols, colMap.nominal_platform_uuid, formatter, evaluator)
 
-                            globalErrors <<
-                                    "The package with the name '${name}' could not be created, because nominal_platform_uuid is wrong!"
-
+                        if (!providerUuid || !platformUuid) {
+                            globalErrors << "The package with the name '${name}' could not be created, because provider_uuid or nominal_platform_uuid not set!"
                             name = null
-                        }
-                    }
-                }
 
-                try {
-
-                    /*
-                     * Package erzeugen
-                     */
-                    if (name && pkg == null) {
-
-                        String pkg_normname =
-                                Package.generateNormname(name)
-
-                        pkg = new Package(
-                                name: name,
-                                normname: pkg_normname,
-                                uuid: UUID.randomUUID().toString(),
-                                status: RDStore.KBC_STATUS_CURRENT
-                        )
-
-                        pkg.save(flush: true)
-
-                        newCreated = true
-                    }
-
-                    if (pkg != null) {
-
-                        pkg.name = name ?: pkg.name
-
-                        /*
-                         * ==================================================
-                         * Provider
-                         * ==================================================
-                         */
-                        String providerUuid =
-                                getValue(
-                                        cols,
-                                        colMap.provider_uuid
-                                )
-
-                        if (providerUuid) {
-
-                            Org provider =
-                                    Org.findByUuid(providerUuid)
-
-                            if (provider &&
-                                    pkg.provider != provider) {
-
-                                pkg.provider = provider
-                                pkg.save(flush: true)
-                            }
-                        }
-
-                        /*
-                         * ==================================================
-                         * Platform
-                         * ==================================================
-                         */
-                        String platformUuid =
-                                getValue(
-                                        cols,
-                                        colMap.nominal_platform_uuid
-                                )
-
-                        if (platformUuid) {
-
-                            Platform platform =
-                                    Platform.findByUuid(platformUuid)
-
-                            if (platform &&
-                                    pkg.nominalPlatform != platform) {
-
-                                pkg.nominalPlatform = platform
-                                pkg.save(flush: true)
-                            }
-                        }
-
-                        /*
-                         * ==================================================
-                         * Description
-                         * ==================================================
-                         *
-                         * WICHTIG:
-                         * KEIN trim().
-                         *
-                         * Zeilenumbrüche innerhalb des Feldes
-                         * bleiben vollständig erhalten.
-                         */
-                        String description =
-                                getRawValue(
-                                        cols,
-                                        colMap.description
-                                )
-
-                        if (description != null &&
-                                description != "") {
-
-                            pkg.description = description
-                        }
-
-                        /*
-                         * Description URL
-                         */
-                        String descriptionUrl =
-                                getValue(
-                                        cols,
-                                        colMap.description_url
-                                )
-
-                        if (descriptionUrl) {
-                            pkg.descriptionURL = descriptionUrl
-                        }
-
-                        /*
-                         * ==================================================
-                         * Breakable
-                         * ==================================================
-                         */
-                        String value =
-                                getValue(
-                                        cols,
-                                        colMap.breakable
-                                )
-
-                        if (value) {
-
-                            RefdataValue refdataValue =
-                                    RefdataCategory.lookup(
-                                            RCConstants.PACKAGE_BREAKABLE,
-                                            value
-                                    )
-
-                            if (refdataValue) {
-                                pkg.breakable = refdataValue
-                            }
-                        }
-
-                        /*
-                         * Content Type
-                         */
-                        value =
-                                getValue(
-                                        cols,
-                                        colMap.content_type
-                                )
-
-                        if (value) {
-
-                            RefdataValue refdataValue =
-                                    RefdataCategory.lookup(
-                                            RCConstants.PACKAGE_CONTENT_TYPE,
-                                            value
-                                    )
-
-                            if (refdataValue) {
-                                pkg.contentType = refdataValue
-                            } else {
-                                pkg.contentType = RDStore.PKG_CONTENT_TYPE_NOTSET
-                            }
                         } else {
-                            pkg.contentType = RDStore.PKG_CONTENT_TYPE_NOTSET
-                        }
 
-                        /*
-                         * File
-                         */
-                        value =
-                                getValue(
-                                        cols,
-                                        colMap.file
-                                )
+                            Org provider = Org.findByUuid(providerUuid)
 
-                        if (value) {
+                            if (!provider) {
+                                globalErrors << "The package with the name '${name}' could not be created, because provider_uuid is wrong!"
+                                name = null
+                            }
 
-                            RefdataValue refdataValue =
-                                    RefdataCategory.lookup(
-                                            RCConstants.PACKAGE_FILE,
-                                            value
-                                    )
+                            Platform platform = Platform.findByUuid(platformUuid)
 
-                            if (refdataValue) {
-                                pkg.file = refdataValue
+                            if (!platform) {
+                                globalErrors << "The package with the name '${name}' could not be created, because nominal_platform_uuid is wrong!"
+                                name = null
                             }
                         }
+                    }
 
-                        /*
-                         * Open Access
-                         */
-                        value =
-                                getValue(
-                                        cols,
-                                        colMap.open_access
-                                )
+                    try {
 
-                        if (value) {
+                        if (name && pkg == null) {
 
-                            RefdataValue refdataValue =
-                                    RefdataCategory.lookup(
-                                            RCConstants.PACKAGE_OPEN_ACCESS,
-                                            value
-                                    )
+                            String pkg_normname = Package.generateNormname(name)
 
-                            if (refdataValue) {
-                                pkg.openAccess = refdataValue
-                            }
+                            pkg = new Package(name: name, normname: pkg_normname, uuid: UUID.randomUUID().toString(), status: RDStore.KBC_STATUS_CURRENT)
+
+                            pkg.save(flush: true)
+
+                            newCreated = true
                         }
 
-                        /*
-                         * Payment Type
-                         */
-                        value =
-                                getValue(
-                                        cols,
-                                        colMap.payment_type
-                                )
+                        if (pkg != null) {
 
-                        if (value) {
+                            pkg.name = name ?: pkg.name
 
-                            RefdataValue refdataValue =
-                                    RefdataCategory.lookup(
-                                            RCConstants.PACKAGE_PAYMENT_TYPE,
-                                            value
-                                    )
+                            String providerUuid = getValue(cols, colMap.provider_uuid, formatter, evaluator)
 
-                            if (refdataValue) {
-                                pkg.paymentType = refdataValue
-                            }
-                        }
-
-                        /*
-                         * Scope
-                         */
-                        value =
-                                getValue(
-                                        cols,
-                                        colMap.scope
-                                )
-
-                        if (value) {
-
-                            RefdataValue refdataValue =
-                                    RefdataCategory.lookup(
-                                            RCConstants.PACKAGE_SCOPE,
-                                            value
-                                    )
-
-                            if (refdataValue) {
-                                pkg.scope = refdataValue
-                            }
-                        }
-
-                        /*
-                         * Free Trial
-                         */
-                        value =
-                                getValue(
-                                        cols,
-                                        colMap.free_trial
-                                )
-
-                        if (value) {
-
-                            RefdataValue refdataValue =
-                                    RefdataCategory.lookup(
-                                            RCConstants.YN,
-                                            value
-                                    )
-
-                            if (refdataValue) {
-                                pkg.freeTrial = refdataValue
-                            }
-                        }
-
-                        /*
-                         * Free Trial Phase
-                         */
-                        value =
-                                getValue(
-                                        cols,
-                                        colMap.free_trial_phase
-                                )
-
-                        if (value) {
-                            pkg.freeTrialPhase = value
-                        }
-
-                        /*
-                         * ==================================================
-                         * National Ranges
-                         * ==================================================
-                         */
-                        value =
-                                getValue(
-                                        cols,
-                                        colMap.national_ranges
-                                )
-
-                        if (value) {
-
-                            List<String> nationalRanges =
-                                    value.split(',')
-
-                            nationalRanges.each { String range ->
-
-                                String normalized =
-                                        range?.trim()
-
-                                if (normalized) {
-
-                                    RefdataValue refdataValue =
-                                            RefdataCategory.lookup(
-                                                    RCConstants.COUNTRY,
-                                                    normalized
-                                            )
-
-                                    if (refdataValue &&
-                                            !(refdataValue in pkg.nationalRanges)) {
-
-                                        pkg.addToNationalRanges(
-                                                refdataValue
-                                        )
-                                    }
+                            if (providerUuid) {
+                                Org provider = Org.findByUuid(providerUuid)
+                                if (provider && pkg.provider != provider) {
+                                    pkg.provider = provider
+                                    pkg.save(flush: true)
                                 }
                             }
-                        }
 
-                        /*
-                         * ==================================================
-                         * Regional Ranges
-                         * ==================================================
-                         */
-                        value =
-                                getValue(
-                                        cols,
-                                        colMap.regional_ranges
-                                )
+                            String platformUuid = getValue(cols, colMap.nominal_platform_uuid, formatter, evaluator)
 
-                        if (value) {
-
-                            List<String> regionalRanges =
-                                    value.split(',')
-
-                            regionalRanges.each { String range ->
-
-                                String normalized =
-                                        range?.trim()
-
-                                if (normalized) {
-
-                                    RefdataValue refdataValue =
-                                            RefdataCategory.lookup(
-                                                    RCConstants.PACKAGE_REGIONAL_RANGE,
-                                                    normalized
-                                            )
-
-                                    if (refdataValue &&
-                                            !(refdataValue in pkg.regionalRanges)) {
-
-                                        pkg.addToRegionalRanges(
-                                                refdataValue
-                                        )
-                                    }
+                            if (platformUuid) {
+                                Platform platform = Platform.findByUuid(platformUuid)
+                                if (platform && pkg.nominalPlatform != platform) {
+                                    pkg.nominalPlatform = platform
+                                    pkg.save(flush: true)
                                 }
                             }
-                        }
 
-                        /*
-                         * ==================================================
-                         * Anbieter Produkt ID
-                         * ==================================================
-                         */
-                        value =
-                                getValue(
-                                        cols,
-                                        colMap.anbieter_produkt_id
-                                )
+                            String description = getRawValue(cols, colMap.description, formatter, evaluator)
 
-                        if (value) {
+                            if (description != null && description != "") {
+                                pkg.description = description
+                            }
 
-                            Map identifierMap = [
-                                    pkgID: pkg.id,
-                                    ns   : IdentifierNamespace.PKG_ID,
-                                    value: value
-                            ]
+                            String descriptionUrl = getValue(cols, colMap.description_url, formatter, evaluator)
 
-                            identifiers << identifierMap
-                        }
+                            if (descriptionUrl) {
+                                pkg.descriptionURL = descriptionUrl
+                            }
 
-                        /*
-                         * Provider Product ID
-                         */
-                        value =
-                                getValue(
-                                        cols,
-                                        colMap.provider_product_id
-                                )
+                            String value = getValue(cols, colMap.breakable, formatter, evaluator)
 
-                        if (value) {
+                            if (value) {
+                                RefdataValue refdataValue = RefdataCategory.lookup(RCConstants.PACKAGE_BREAKABLE, value)
 
-                            Map identifierMap = [
-                                    pkgID: pkg.id,
-                                    ns   : IdentifierNamespace.PKG_ID,
-                                    value: value
-                            ]
-
-                            identifiers << identifierMap
-                        }
-
-                        /*
-                         * ==================================================
-                         * DDC
-                         * ==================================================
-                         */
-                        value =
-                                getValue(
-                                        cols,
-                                        colMap.ddcs
-                                )
-
-                        if (value) {
-
-                            List<String> ddcs =
-                                    value.split(',')
-
-                            ddcs.each { String ddc ->
-
-                                ddc = ddc?.trim()
-
-                                if (ddc) {
-
-                                    if (ddc.toInteger() < 10) {
-                                        ddc = "00${ddc}"
-                                    } else if (ddc.toInteger() < 100) {
-                                        ddc = "0${ddc}"
-                                    }
-
-                                    RefdataValue refdataValue =
-                                            RefdataCategory.lookup(
-                                                    RCConstants.DDC,
-                                                    ddc
-                                            )
-
-                                    if (refdataValue &&
-                                            !(refdataValue in pkg.ddcs)) {
-
-                                        pkg.addToDdcs(
-                                                refdataValue
-                                        )
-                                    }
+                                if (refdataValue) {
+                                    pkg.breakable = refdataValue
                                 }
                             }
-                        }
 
-                        /*
-                         * Package speichern
-                         */
-                        if (pkg.save(flush: true) ||
-                                pkg.isAttached()) {
-
-                            /*
-                             * ==================================================
-                             * Archiving Agency
-                             * ==================================================
-                             */
-                            value =
-                                    getValue(
-                                            cols,
-                                            colMap.archiving_agency
-                                    )
+                            value = getValue(cols, colMap.content_type, formatter, evaluator)
 
                             if (value) {
 
-                                RefdataValue refdataValue =
-                                        RefdataCategory.lookup(
-                                                RCConstants.PAA_ARCHIVING_AGENCY,
-                                                value
-                                        )
+                                RefdataValue refdataValue = RefdataCategory.lookup(RCConstants.PACKAGE_CONTENT_TYPE, value)
 
                                 if (refdataValue) {
+                                    pkg.contentType = refdataValue
+                                } else {
+                                    pkg.contentType = RDStore.PKG_CONTENT_TYPE_NOTSET
+                                }
+                            } else {
+                                pkg.contentType = RDStore.PKG_CONTENT_TYPE_NOTSET
+                            }
 
-                                    PackageArchivingAgency packageArchivingAgency =
-                                            PackageArchivingAgency
-                                                    .findByPkgAndArchivingAgency(
-                                                            pkg,
-                                                            refdataValue
-                                                    )
+                            value = getValue(cols, colMap.file, formatter, evaluator)
 
-                                    if (!packageArchivingAgency) {
+                            if (value) {
+                                RefdataValue refdataValue = RefdataCategory.lookup(RCConstants.PACKAGE_FILE, value)
 
-                                        packageArchivingAgency =
-                                                new PackageArchivingAgency(
-                                                        archivingAgency:
-                                                                refdataValue,
-                                                        pkg:
-                                                                pkg
-                                                )
+                                if (refdataValue) {
+                                    pkg.file = refdataValue
+                                }
+                            }
+
+                            value = getValue(cols, colMap.open_access, formatter, evaluator)
+
+                            if (value) {
+                                RefdataValue refdataValue = RefdataCategory.lookup(RCConstants.PACKAGE_OPEN_ACCESS, value)
+
+                                if (refdataValue) {
+                                    pkg.openAccess = refdataValue
+                                }
+                            }
+
+                            value = getValue(cols, colMap.payment_type, formatter, evaluator)
+
+                            if (value) {
+
+                                RefdataValue refdataValue = RefdataCategory.lookup(RCConstants.PACKAGE_PAYMENT_TYPE, value)
+
+                                if (refdataValue) {
+                                    pkg.paymentType = refdataValue
+                                }
+                            }
+
+                            value = getValue(cols, colMap.scope, formatter, evaluator)
+
+                            if (value) {
+                                RefdataValue refdataValue = RefdataCategory.lookup(RCConstants.PACKAGE_SCOPE, value)
+
+                                if (refdataValue) {
+                                    pkg.scope = refdataValue
+                                }
+                            }
+
+                            value = getValue(cols, colMap.free_trial, formatter, evaluator)
+
+                            if (value) {
+
+                                RefdataValue refdataValue = RefdataCategory.lookup(RCConstants.YN, value)
+
+                                if (refdataValue) {
+                                    pkg.freeTrial = refdataValue
+                                }
+                            }
+
+                            value = getValue(cols, colMap.free_trial_phase, formatter, evaluator)
+
+                            if (value) {
+                                pkg.freeTrialPhase = value
+                            }
+
+                            value = getValue(cols, colMap.national_ranges, formatter, evaluator)
+
+                            if (value) {
+
+                                List<String> nationalRanges = value.split(',')
+
+                                nationalRanges.each { String range ->
+
+                                    String normalized = range?.trim()
+
+                                    if (normalized) {
+
+                                        RefdataValue refdataValue = RefdataCategory.lookup(RCConstants.COUNTRY, normalized)
+
+                                        if (refdataValue && !(refdataValue in pkg.nationalRanges)) {
+                                            pkg.addToNationalRanges(refdataValue)
+                                        }
                                     }
+                                }
+                            }
 
-                                    if (packageArchivingAgency.save(
-                                            flush: true)) {
 
-                                        /*
-                                         * Open Access
-                                         */
-                                        String paaOp =
-                                                getValue(
-                                                        cols,
-                                                        colMap.open_access_of_archiving_agency
-                                                )
+                            value = getValue(cols, colMap.regional_ranges, formatter, evaluator)
 
-                                        if (paaOp) {
+                            if (value) {
 
-                                            RefdataValue refdataValuePaaOp =
-                                                    RefdataCategory.lookup(
-                                                            RCConstants.PAA_OPEN_ACCESS,
-                                                            paaOp
-                                                    )
+                                List<String> regionalRanges = value.split(',')
 
-                                            if (refdataValuePaaOp) {
-                                                packageArchivingAgency.openAccess =
-                                                        refdataValuePaaOp
-                                            }
+                                regionalRanges.each { String range ->
+
+                                    String normalized = range?.trim()
+
+                                    if (normalized) {
+
+                                        RefdataValue refdataValue = RefdataCategory.lookup(RCConstants.PACKAGE_REGIONAL_RANGE, normalized)
+
+                                        if (refdataValue && !(refdataValue in pkg.regionalRanges)) {
+                                            pkg.addToRegionalRanges(refdataValue)
+                                        }
+                                    }
+                                }
+                            }
+
+                            value = getValue(cols, colMap.anbieter_produkt_id, formatter, evaluator)
+
+                            if (value) {
+
+                                Map identifierMap = [pkgID: pkg.id, ns   : IdentifierNamespace.PKG_ID, value: value]
+                                identifiers << identifierMap
+                            }
+
+                            value = getValue(cols, colMap.provider_product_id, formatter, evaluator)
+
+                            if (value) {
+
+                                Map identifierMap = [pkgID: pkg.id, ns   : IdentifierNamespace.PKG_ID, value: value]
+                                identifiers << identifierMap
+                            }
+
+                            value = getValue(cols, colMap.ddcs, formatter, evaluator)
+
+                            if (value) {
+
+                                List<String> ddcs = value.split(',')
+
+                                ddcs.each { String ddc ->
+
+                                    ddc = ddc?.trim()
+
+                                    if (ddc) {
+
+                                        if (ddc.toInteger() < 10) {
+                                            ddc = "00${ddc}"
+                                        } else if (ddc.toInteger() < 100) {
+                                            ddc = "0${ddc}"
                                         }
 
-                                        /*
-                                         * Post Cancellation Access
-                                         */
-                                        String paaPca =
-                                                getValue(
-                                                        cols,
-                                                        colMap.post_cancellation_access_of_archiving_agency
-                                                )
+                                        RefdataValue refdataValue = RefdataCategory.lookup(RCConstants.DDC, ddc)
 
-                                        if (paaPca) {
+                                        if (refdataValue && !(refdataValue in pkg.ddcs)) {
+                                            pkg.addToDdcs(refdataValue)
+                                        }
+                                    }
+                                }
+                            }
 
-                                            RefdataValue refdataValuePaaPca =
-                                                    RefdataCategory.lookup(
-                                                            RCConstants.PAA_POST_CANCELLATION_ACCESS,
-                                                            paaPca
-                                                    )
+                            if (pkg.save(flush: true) || pkg.isAttached()) {
 
-                                            if (refdataValuePaaPca) {
+                                value = getValue(cols, colMap.archiving_agency, formatter, evaluator)
 
-                                                packageArchivingAgency
-                                                        .postCancellationAccess =
-                                                        refdataValuePaaPca
-                                            }
+                                if (value) {
+
+                                    RefdataValue refdataValue = RefdataCategory.lookup(RCConstants.PAA_ARCHIVING_AGENCY, value)
+
+                                    if (refdataValue) {
+
+                                        PackageArchivingAgency packageArchivingAgency = PackageArchivingAgency.findByPkgAndArchivingAgency(pkg, refdataValue)
+
+                                        if (!packageArchivingAgency) {
+                                            packageArchivingAgency = new PackageArchivingAgency(archivingAgency: refdataValue, pkg: pkg)
                                         }
 
-                                        packageArchivingAgency.save(
-                                                flush: true
-                                        )
-                                    }
-                                }
-                            }
+                                        if (packageArchivingAgency.save(flush: true)) {
+                                            String paaOp = getValue(cols, colMap.open_access_of_archiving_agency, formatter, evaluator)
 
-                            /*
-                             * ==================================================
-                             * Curatory Groups
-                             * ==================================================
-                             */
-                            if (curatoryGroups) {
+                                            if (paaOp) {
 
-                                curatoryGroups.each { CuratoryGroup cg ->
+                                                RefdataValue refdataValuePaaOp = RefdataCategory.lookup(RCConstants.PAA_OPEN_ACCESS, paaOp)
 
-                                    if (!(pkg.curatoryGroups &&
-                                            cg.id in pkg
-                                            .curatoryGroups
-                                            .curatoryGroup
-                                            .id)) {
+                                                if (refdataValuePaaOp) {
+                                                    packageArchivingAgency.openAccess = refdataValuePaaOp
+                                                }
+                                            }
 
-                                        new CuratoryGroupPackage(
-                                                pkg: pkg,
-                                                curatoryGroup: cg
-                                        ).save(flush: true)
-                                    }
-                                }
-                            }
+                                            String paaPca = getValue(cols, colMap.post_cancellation_access_of_archiving_agency, formatter, evaluator)
 
-                            /*
-                             * ==================================================
-                             * Source
-                             * ==================================================
-                             */
-                            String sourceUrl =
-                                    getValue(
-                                            cols,
-                                            colMap.source_url
-                                    )
+                                            if (paaPca) {
 
-                            String sourceFtpServerUrl =
-                                    getValue(
-                                            cols,
-                                            colMap.source_ftp_server_url
-                                    )
+                                                RefdataValue refdataValuePaaPca = RefdataCategory.lookup(RCConstants.PAA_POST_CANCELLATION_ACCESS, paaPca)
 
-                            if (sourceUrl ||
-                                    sourceFtpServerUrl) {
+                                                if (refdataValuePaaPca) {
+                                                    packageArchivingAgency.postCancellationAccess = refdataValuePaaPca
+                                                }
+                                            }
 
-                                Map sourceMap = [:]
-
-                                if (sourceUrl) {
-                                    sourceMap.url = sourceUrl
-                                }
-
-                                /*
-                                 * Supply Method
-                                 */
-                                value =
-                                        getValue(
-                                                cols,
-                                                colMap.source_default_supply_method
-                                        )
-
-                                if (value) {
-
-                                    RefdataValue refdataValue =
-                                            RefdataCategory.lookup(
-                                                    RCConstants.SOURCE_DATA_SUPPLY_METHOD,
-                                                    value
-                                            )
-
-                                    if (refdataValue) {
-
-                                        sourceMap.source_default_supply_method =
-                                                refdataValue.id
+                                            packageArchivingAgency.save(flush: true)
+                                        }
                                     }
                                 }
 
-                                /*
-                                 * FTP
-                                 */
-                                if (sourceFtpServerUrl) {
+                                if (curatoryGroups) {
 
-                                    sourceMap.source_ftp_server_url =
-                                            sourceFtpServerUrl
-                                }
+                                    curatoryGroups.each { CuratoryGroup cg ->
 
-                                value =
-                                        getValue(
-                                                cols,
-                                                colMap.source_ftp_directory
-                                        )
-
-                                if (value) {
-                                    sourceMap.source_ftp_directory =
-                                            value
-                                }
-
-                                value =
-                                        getValue(
-                                                cols,
-                                                colMap.source_ftp_file_name
-                                        )
-
-                                if (value) {
-                                    sourceMap.source_ftp_file_name =
-                                            value
-                                }
-
-                                value =
-                                        getValue(
-                                                cols,
-                                                colMap.source_ftp_username
-                                        )
-
-                                if (value) {
-                                    sourceMap.source_ftp_username =
-                                            value
-                                }
-
-                                value =
-                                        getValue(
-                                                cols,
-                                                colMap.source_ftp_password
-                                        )
-
-                                if (value) {
-                                    sourceMap.source_ftp_password =
-                                            value
-                                }
-
-                                sourceMap.pkgID = pkg.id
-
-                                /*
-                                 * Frequency
-                                 */
-                                value =
-                                        getValue(
-                                                cols,
-                                                colMap.frequency
-                                        )
-
-                                if (value) {
-
-                                    RefdataValue refdataValue =
-                                            RefdataCategory.lookup(
-                                                    RCConstants.SOURCE_FREQUENCY,
-                                                    value
-                                            )
-
-                                    if (refdataValue) {
-                                        sourceMap.frequency =
-                                                refdataValue.id
+                                        if (!(pkg.curatoryGroups && cg.id in pkg.curatoryGroups.curatoryGroup.id)) {
+                                            new CuratoryGroupPackage(pkg: pkg, curatoryGroup: cg).save(flush: true)
+                                        }
                                     }
                                 }
 
-                                /*
-                                 * Automated Updates
-                                 */
-                                value =
-                                        getValue(
-                                                cols,
-                                                colMap.automated_updates
-                                        )
+                                String sourceUrl = getValue(cols, colMap.source_url, formatter, evaluator)
 
-                                if (value) {
+                                String sourceFtpServerUrl = getValue(cols, colMap.source_ftp_server_url, formatter, evaluator)
 
-                                    RefdataValue refdataValue =
-                                            RefdataCategory.lookup(
-                                                    RCConstants.YN,
-                                                    value
-                                            )
+                                if (sourceUrl || sourceFtpServerUrl) {
 
-                                    if (refdataValue) {
+                                    Map sourceMap = [:]
 
-                                        sourceMap.automaticUpdates =
-                                                refdataValue ==
-                                                        RDStore.YN_YES
+                                    if (sourceUrl) {
+                                        sourceMap.url = sourceUrl
                                     }
+
+
+                                    value = getValue(cols, colMap.source_default_supply_method, formatter, evaluator)
+
+                                    if (value) {
+
+                                        RefdataValue refdataValue = RefdataCategory.lookup(RCConstants.SOURCE_DATA_SUPPLY_METHOD, valu)
+
+                                        if (refdataValue) {
+                                            sourceMap.source_default_supply_method = refdataValue.id
+                                        }
+                                    }
+
+                                    if (sourceFtpServerUrl) {
+
+                                        sourceMap.source_ftp_server_url = sourceFtpServerUrl
+                                    }
+
+                                    value = getValue(cols, colMap.source_ftp_directory, formatter, evaluator)
+
+                                    if (value) {
+                                        sourceMap.source_ftp_directory = value
+                                    }
+
+                                    value = getValue(cols, colMap.source_ftp_file_name, formatter, evaluator)
+
+                                    if (value) {
+                                        sourceMap.source_ftp_file_name = value
+                                    }
+
+                                    value = getValue(cols, colMap.source_ftp_username, formatter, evaluator)
+
+                                    if (value) {
+                                        sourceMap.source_ftp_username = value
+                                    }
+
+                                    value = getValue(cols, colMap.source_ftp_password, formatter, evaluator)
+
+                                    if (value) {
+                                        sourceMap.source_ftp_password = value
+                                    }
+
+                                    sourceMap.pkgID = pkg.id
+
+                                    value = getValue(cols, colMap.frequency, formatter, evaluator)
+
+                                    if (value) {
+
+                                        RefdataValue refdataValue = RefdataCategory.lookup(RCConstants.SOURCE_FREQUENCY, value)
+
+                                        if (refdataValue) {
+                                            sourceMap.frequency = refdataValue.id
+                                        }
+                                    }
+
+
+                                    value = getValue(cols, colMap.automated_updates, formatter, evaluator)
+
+                                    if (value) {
+
+                                        RefdataValue refdataValue = RefdataCategory.lookup(RCConstants.YN, value)
+
+                                        if (refdataValue) {
+
+                                            sourceMap.automaticUpdates = refdataValue == RDStore.YN_YES
+                                        }
+                                    }
+
+                                    sources << sourceMap
                                 }
 
-                                sources << sourceMap
-                            }
+                                if (!package_uuid || pkg.getTippCount() == 0) {
 
-                            /*
-                             * ==================================================
-                             * TIPP
-                             * ==================================================
-                             */
-                            if (!package_uuid ||
-                                    pkg.getTippCount() == 0) {
+                                    String publicationTitle = getValue(cols, colMap.publication_title, formatter, evaluator)
 
-                                String publicationTitle =
-                                        getValue(
-                                                cols,
-                                                colMap.publication_title
-                                        )
+                                    String publicationTypeValue = getValue(cols, colMap.publication_type, formatter, evaluator)
 
-                                String publicationTypeValue =
-                                        getValue(
-                                                cols,
-                                                colMap.publication_type
-                                        )
+                                    String titleUrl = getValue(cols, colMap.title_url, formatter, evaluator)
 
-                                String titleUrl =
-                                        getValue(
-                                                cols,
-                                                colMap.title_url
-                                        )
+                                    if (pkg && pkg.nominalPlatform && publicationTitle && publicationTypeValue && titleUrl) {
 
-                                if (pkg &&
-                                        pkg.nominalPlatform &&
-                                        publicationTitle &&
-                                        publicationTypeValue &&
-                                        titleUrl) {
+                                        RefdataValue publicationType = RefdataCategory.lookup(RCConstants.TIPP_PUBLICATION_TYPE, publicationTypeValue)
 
-                                    RefdataValue publicationType =
-                                            RefdataCategory.lookup(
-                                                    RCConstants.TIPP_PUBLICATION_TYPE,
-                                                    publicationTypeValue
-                                            )
-
-                                    TitleInstancePackagePlatform
-                                    titleInstancePackagePlatform =
-                                            new TitleInstancePackagePlatform(
-                                                    pkg:
-                                                            pkg,
-                                                    platform:
-                                                            pkg.nominalPlatform,
-                                                    name:
-                                                            publicationTitle,
-                                                    url:
-                                                            titleUrl,
-                                                    publicationType:
-                                                            publicationType ?:
-                                                                    RDStore.TIPP_PUBLIC_TYPE_NOSET,
-                                                    status:
-                                                            RDStore.KBC_STATUS_CURRENT,
-                                                    uuid:
-                                                            UUID.randomUUID()
-                                                                    .toString()
-                                            )
-
-                                    titleInstancePackagePlatform.save()
-
-                                    /*
-                                     * wie bisher zunächst
-                                     * provider_product_id
-                                     */
-                                    String title_id =
-                                            getValue(
-                                                    cols,
-                                                    colMap.provider_product_id
-                                            )
-
-                                    /*
-                                     * title_id überschreibt es,
-                                     * falls vorhanden
-                                     */
-                                    String importedTitleId =
-                                            getValue(
-                                                    cols,
-                                                    colMap.title_id
-                                            )
-
-                                    if (importedTitleId) {
-                                        title_id =
-                                                importedTitleId
-                                    }
-
-                                    if (title_id &&
-                                            titleInstancePackagePlatform) {
-
-                                        IdentifierNamespace ns =
-                                                IdentifierNamespace
-                                                        .findByValueAndTargetType(
-                                                                'title_id',
-                                                                RDStore.IDENTIFIER_NAMESPACE_TARGET_TYPE_TIPP
-                                                        )
-
-                                        Identifier identifier =
-                                                new Identifier(
-                                                        namespace:
-                                                                ns,
-                                                        value:
-                                                                title_id,
-                                                        tipp:
-                                                                titleInstancePackagePlatform
+                                        TitleInstancePackagePlatform titleInstancePackagePlatform = new TitleInstancePackagePlatform(
+                                                        pkg: pkg,
+                                                        platform: pkg.nominalPlatform,
+                                                        name: publicationTitle,
+                                                        url: titleUrl,
+                                                        publicationType: publicationType ?: RDStore.TIPP_PUBLIC_TYPE_NOSET,
+                                                        status: RDStore.KBC_STATUS_CURRENT,
+                                                        uuid: UUID.randomUUID().toString()
                                                 )
 
-                                        identifier.save(
-                                                flush: true
-                                        )
+                                        titleInstancePackagePlatform.save()
+
+
+                                        String title_id = getValue(cols, colMap.provider_product_id, formatter, evaluator)
+
+                                        String importedTitleId = getValue(cols, colMap.title_id, formatter, evaluator)
+
+                                        if (importedTitleId) {
+                                            title_id = importedTitleId
+                                        }
+
+                                        if (title_id && titleInstancePackagePlatform) {
+
+                                            IdentifierNamespace ns = IdentifierNamespace.findByValueAndTargetType('title_id', RDStore.IDENTIFIER_NAMESPACE_TARGET_TYPE_TIPP)
+
+                                            Identifier identifier = new Identifier(namespace: ns, value: title_id, tipp: titleInstancePackagePlatform)
+
+                                            identifier.save(flush: true)
+                                        }
                                     }
+                                }
+                            }
+
+                            packageList << pkg
+                        }
+
+                    }
+                    catch (Exception e) {
+
+                        if (pkg && newCreated) {
+                            deletionService.expungePkg(pkg.id)
+                        }
+                        log.error("Error on package with the name '${name}': ${e.message}", e)
+                        globalErrors << "Error on package with the name '${name}'. Please try again!"
+                    }
+                }
+            }
+
+
+            IdentifierNamespace namespace = IdentifierNamespace.findByValueAndTargetType(IdentifierNamespace.PKG_ID, RDStore.IDENTIFIER_NAMESPACE_TARGET_TYPE_PACKAGE)
+
+            identifiers.each { Map map ->
+
+                boolean found = false
+
+                Package aPackage = Package.get(map.pkgID)
+
+                if (aPackage) {
+
+                    aPackage.ids.each { Identifier identifier ->
+
+                        if (identifier.namespace.value == map.ns) {
+
+                            if (map.value && identifier.value != map.value) {
+                                identifier = identifier.refresh()
+
+                                identifier.value = map.value
+
+                                identifier.save(flush: true)
+                            }
+
+                            found = true
+                        }
+                    }
+
+                    if (!found && map.value) {
+
+                        Identifier identifier = new Identifier(namespace: namespace, value: map.value, pkg: aPackage)
+
+                        identifier.save(flush: true)
+                    }
+                }
+            }
+
+
+            sources.each { Map map ->
+
+                KbartSource kbartSource
+
+                Package aPackage = Package.get(map.pkgID)
+
+                if (aPackage) {
+
+                    if (aPackage.kbartSource == null) {
+
+                        def dupes = KbartSource.findAllByNameIlikeAndStatusNotInList(aPackage.name, statusList)
+
+                        String sourceName = aPackage.name
+
+                        if (dupes && dupes.size() > 0) {
+
+                            sourceName = "${sourceName} ${dupes.size() + 1}"
+                        }
+
+                        dupes.each { KbartSource source ->
+
+                            if (!Package.findByKbartSource(source)) {
+                                source.status = RDStore.KBC_STATUS_REMOVED
+                                source.save(flush: true)
+                            }
+                        }
+
+                        kbartSource = new KbartSource(
+                                        name: sourceName,
+                                        uuid: UUID.randomUUID().toString(),
+                                        status: RDStore.KBC_STATUS_CURRENT,
+                                        kbartHasWekbFields: false)
+
+                    } else {
+
+                        kbartSource = aPackage.kbartSource
+
+                        def dupes = KbartSource.findAllByNameIlikeAndStatusNotInList(aPackage.name, statusList)
+
+                        String sourceName = aPackage.name
+
+                        if (dupes && dupes.size() > 0) {
+
+                            sourceName = "${sourceName} ${dupes.size() + 1}"
+                        }
+
+                        if (sourceName != kbartSource.name) {
+
+                            kbartSource.name = sourceName
+                        }
+                    }
+
+                    if (map.url) {
+
+                        if (map.url != kbartSource.url) {
+
+                            kbartSource.lastRun = null
+
+                            kbartSource.lastUpdateUrl = null
+                        }
+
+                        kbartSource.url = map.url
+                    }
+
+                    if (map.frequency) {
+                        kbartSource.frequency = RefdataValue.get(map.frequency)
+                    }
+
+
+                    if (map.source_default_supply_method) {
+                        kbartSource.defaultSupplyMethod = RefdataValue.get(map.source_default_supply_method)
+                    }
+
+                    if (map.source_ftp_server_url) {
+                        kbartSource.ftpServerUrl = map.source_ftp_server_url
+                    }
+
+                    if (map.source_ftp_directory) {
+                        kbartSource.ftpDirectory = map.source_ftp_directory
+                    }
+
+                    if (map.source_ftp_file_name) {
+                        kbartSource.ftpFileName = map.source_ftp_file_name
+                    }
+
+                    if (map.source_ftp_username) {
+                        kbartSource.ftpUsername = map.source_ftp_username
+                    }
+
+                    if (map.source_ftp_password) {
+                        kbartSource.ftpPassword = map.source_ftp_password
+                    }
+
+                    if (map.containsKey('automaticUpdates')) {
+                        kbartSource.automaticUpdates = map.automaticUpdates
+                    }
+
+                    if (kbartSource.save(flush: true) ||
+                            kbartSource.isAttached()) {
+
+                        if (curatoryGroups) {
+
+                            curatoryGroups.each { CuratoryGroup cg ->
+
+                                if (!(kbartSource.curatoryGroups && cg.id in kbartSource.curatoryGroups.curatoryGroup.id)) {
+
+                                    new CuratoryGroupKbartSource(kbartSource: kbartSource, curatoryGroup: cg).save(flush: true)
                                 }
                             }
                         }
 
-                        packageList << pkg
-                    }
+                        aPackage = aPackage.refresh()
 
+                        aPackage.kbartSource = kbartSource
+
+                        aPackage.lastUpdated = new Date()
+
+                        aPackage.save(flush: true
+                        )
+                    }
+                }
+            }
+
+            List<Package> packages = []
+
+            packageList.each { Package pkg ->
+
+                if (pkg?.id) {
+
+                    packages << Package.get(pkg.id)
+                }
+            }
+
+            return [packages : packages, rowsCount: rowsCount, errors   : globalErrors]
+
+        }
+        catch (Exception e) {
+
+            log.error("Error while processing Excel package import: ${e.message}", e)
+
+            return [packages : [], rowsCount: rowsCount, errors   : ["The Excel file could not be processed: ${e.message}"]
+            ]
+
+        }
+        finally {
+
+            if (workbook != null) {
+
+                try {
+                    workbook.close()
                 }
                 catch (Exception e) {
-
-                    if (pkg &&
-                            newCreated) {
-
-                        deletionService.expungePkg(
-                                pkg.id
-                        )
-                    }
-
-                    log.error(
-                            "Error on package with the name '${name}': ${e.message}",
-                            e
-                    )
-
-                    globalErrors <<
-                            "Error on package with the name '${name}'. Please try again!"
+                    log.warn("Could not close Excel workbook", e)
                 }
             }
         }
-
-        /*
-         * ==========================================================
-         * Identifier speichern / aktualisieren
-         * ==========================================================
-         */
-        IdentifierNamespace namespace =
-                IdentifierNamespace.findByValueAndTargetType(
-                        IdentifierNamespace.PKG_ID,
-                        RDStore.IDENTIFIER_NAMESPACE_TARGET_TYPE_PACKAGE
-                )
-
-        identifiers.each { Map map ->
-
-            boolean found = false
-
-            Package aPackage =
-                    Package.get(
-                            map.pkgID
-                    )
-
-            if (aPackage) {
-
-                aPackage.ids.each { Identifier identifier ->
-
-                    if (identifier.namespace.value ==
-                            map.ns) {
-
-                        if (map.value &&
-                                identifier.value != map.value) {
-
-                            identifier =
-                                    identifier.refresh()
-
-                            identifier.value =
-                                    map.value
-
-                            identifier.save(
-                                    flush: true
-                            )
-                        }
-
-                        found = true
-                    }
-                }
-
-                if (!found &&
-                        map.value) {
-
-                    Identifier identifier =
-                            new Identifier(
-                                    namespace:
-                                            namespace,
-                                    value:
-                                            map.value,
-                                    pkg:
-                                            aPackage
-                            )
-
-                    identifier.save(
-                            flush: true
-                    )
-                }
-            }
-        }
-
-        /*
-         * ==========================================================
-         * KBART Sources
-         * ==========================================================
-         */
-        sources.each { Map map ->
-
-            KbartSource kbartSource
-
-            Package aPackage =
-                    Package.get(
-                            map.pkgID
-                    )
-
-            if (aPackage) {
-
-                /*
-                 * Neue Source
-                 */
-                if (aPackage.kbartSource == null) {
-
-                    def dupes =
-                            KbartSource
-                                    .findAllByNameIlikeAndStatusNotInList(
-                                            aPackage.name,
-                                            statusList
-                                    )
-
-                    String sourceName =
-                            aPackage.name
-
-                    if (dupes &&
-                            dupes.size() > 0) {
-
-                        sourceName =
-                                "${sourceName} ${dupes.size() + 1}"
-                    }
-
-                    dupes.each { KbartSource source ->
-
-                        if (!Package.findByKbartSource(
-                                source)) {
-
-                            source.status =
-                                    RDStore.KBC_STATUS_REMOVED
-
-                            source.save(
-                                    flush: true
-                            )
-                        }
-                    }
-
-                    kbartSource =
-                            new KbartSource(
-                                    name:
-                                            sourceName,
-                                    uuid:
-                                            UUID.randomUUID()
-                                                    .toString(),
-                                    status:
-                                            RDStore.KBC_STATUS_CURRENT,
-                                    kbartHasWekbFields:
-                                            false
-                            )
-                } else {
-
-                    kbartSource =
-                            aPackage.kbartSource
-
-                    def dupes =
-                            KbartSource
-                                    .findAllByNameIlikeAndStatusNotInList(
-                                            aPackage.name,
-                                            statusList
-                                    )
-
-                    String sourceName =
-                            aPackage.name
-
-                    if (dupes &&
-                            dupes.size() > 0) {
-
-                        sourceName =
-                                "${sourceName} ${dupes.size() + 1}"
-                    }
-
-                    if (sourceName !=
-                            kbartSource.name) {
-
-                        kbartSource.name =
-                                sourceName
-                    }
-                }
-
-                /*
-                 * URL
-                 */
-                if (map.url) {
-
-                    if (map.url !=
-                            kbartSource.url) {
-
-                        kbartSource.lastRun =
-                                null
-
-                        kbartSource.lastUpdateUrl =
-                                null
-                    }
-
-                    kbartSource.url =
-                            map.url
-                }
-
-                /*
-                 * Frequency
-                 */
-                if (map.frequency) {
-
-                    kbartSource.frequency =
-                            RefdataValue.get(
-                                    map.frequency
-                            )
-                }
-
-                /*
-                 * Supply method
-                 */
-                if (map.source_default_supply_method) {
-
-                    kbartSource.defaultSupplyMethod =
-                            RefdataValue.get(
-                                    map.source_default_supply_method
-                            )
-                }
-
-                /*
-                 * FTP
-                 */
-                if (map.source_ftp_server_url) {
-
-                    kbartSource.ftpServerUrl =
-                            map.source_ftp_server_url
-                }
-
-                if (map.source_ftp_directory) {
-
-                    kbartSource.ftpDirectory =
-                            map.source_ftp_directory
-                }
-
-                if (map.source_ftp_file_name) {
-
-                    kbartSource.ftpFileName =
-                            map.source_ftp_file_name
-                }
-
-                if (map.source_ftp_username) {
-
-                    kbartSource.ftpUsername =
-                            map.source_ftp_username
-                }
-
-                if (map.source_ftp_password) {
-
-                    kbartSource.ftpPassword =
-                            map.source_ftp_password
-                }
-
-                /*
-                 * WICHTIG:
-                 *
-                 * containsKey() statt:
-                 *
-                 * if(map.automaticUpdates)
-                 *
-                 * sonst würde false niemals gespeichert.
-                 */
-                if (map.containsKey(
-                        'automaticUpdates')) {
-
-                    kbartSource.automaticUpdates =
-                            map.automaticUpdates
-                }
-
-                if (kbartSource.save(flush: true) ||
-                        kbartSource.isAttached()) {
-
-                    /*
-                     * Curatory Groups
-                     */
-                    if (curatoryGroups) {
-
-                        curatoryGroups.each { CuratoryGroup cg ->
-
-                            if (!(kbartSource.curatoryGroups &&
-                                    cg.id in kbartSource
-                                    .curatoryGroups
-                                    .curatoryGroup
-                                    .id)) {
-
-                                new CuratoryGroupKbartSource(
-                                        kbartSource:
-                                                kbartSource,
-                                        curatoryGroup:
-                                                cg
-                                ).save(
-                                        flush: true
-                                )
-                            }
-                        }
-                    }
-
-                    aPackage =
-                            aPackage.refresh()
-
-                    aPackage.kbartSource =
-                            kbartSource
-
-                    aPackage.lastUpdated =
-                            new Date()
-
-                    aPackage.save(
-                            flush: true
-                    )
-                }
-            }
-        }
-
-        /*
-         * ==========================================================
-         * Ergebnis
-         * ==========================================================
-         */
-        List<Package> packages = []
-
-        packageList.each { Package pkg ->
-
-            if (pkg?.id) {
-
-                packages <<
-                        Package.get(
-                                pkg.id
-                        )
-            }
-        }
-
-        return [
-                packages : packages,
-                rowsCount: rows.size(),
-                errors   : globalErrors
-        ]
     }
 
 
-    private String getValue(
-            CSVRecord cols,
-            Integer index) {
+    private String getValue(Row row, Integer columnIndex, DataFormatter formatter, FormulaEvaluator evaluator) {
 
-        if (cols == null ||
-                index == null ||
-                index < 0 ||
-                index >= cols.size()) {
-
+        if (row == null || columnIndex == null) {
             return null
         }
 
-        return cols.get(index)?.trim()
+        Cell cell = row.getCell(columnIndex, Row.MissingCellPolicy.RETURN_BLANK_AS_NULL)
+
+        if (cell == null) {
+            return null
+        }
+
+        String value = getCellValue(cell, formatter, evaluator)
+
+        value = value?.trim()
+
+        return value ?: null
     }
 
 
-    private String getRawValue(
-            CSVRecord cols,
-            Integer index) {
+    private String getRawValue(Row row, Integer columnIndex, DataFormatter formatter, FormulaEvaluator evaluator) {
 
-        if (cols == null ||
-                index == null ||
-                index < 0 ||
-                index >= cols.size()) {
-
+        if (row == null || columnIndex == null) {
             return null
         }
 
-        return cols.get(index)
+        Cell cell = row.getCell(columnIndex, Row.MissingCellPolicy.RETURN_BLANK_AS_NULL)
+
+        if (cell == null) {
+            return null
+        }
+
+        return getCellValue(cell, formatter, evaluator)
+    }
+
+
+    private String getCellValue(Cell cell, DataFormatter formatter, FormulaEvaluator evaluator) {
+
+        if (cell == null) {
+            return null
+        }
+
+        try {
+            return formatter.formatCellValue(cell, evaluator)
+
+        }
+        catch (Exception e) {
+            return formatter.formatCellValue(cell)
+        }
+    }
+
+
+    private boolean isExcelRowEmpty(Row row, DataFormatter formatter, FormulaEvaluator evaluator) {
+
+        if (row == null) {
+            return true
+        }
+
+        if (row.firstCellNum < 0 || row.lastCellNum < 0) {
+            return true
+        }
+
+        for (int c = row.firstCellNum;
+             c < row.lastCellNum;
+             c++) {
+
+            Cell cell = row.getCell(c, Row.MissingCellPolicy.RETURN_BLANK_AS_NULL)
+
+            if (cell != null) {
+
+                String value = getCellValue(cell, formatter, evaluator)
+
+                if (value?.trim()) {
+                    return false
+                }
+            }
+        }
+
+        return true
     }
 
     FlashScope getCurrentFlashScope() {
