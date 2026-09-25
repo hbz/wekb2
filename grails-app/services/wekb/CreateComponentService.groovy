@@ -836,7 +836,7 @@ class CreateComponentService {
 
                                     if (value) {
 
-                                        RefdataValue refdataValue = RefdataCategory.lookup(RCConstants.SOURCE_DATA_SUPPLY_METHOD, valu)
+                                        RefdataValue refdataValue = RefdataCategory.lookup(RCConstants.SOURCE_DATA_SUPPLY_METHOD, value)
 
                                         if (refdataValue) {
                                             sourceMap.source_default_supply_method = refdataValue.id
