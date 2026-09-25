@@ -238,7 +238,7 @@ public class HQLBuilder {
               order_clause = """ order by ${nullOrder} asc,
                         kbartSourceAutomaticUpdates ${hql_builder_context.order}"""
               break
-          case 'lastRun':
+          case 'kbartSourceLastRun':
               String lastRunQuery = """(select ks.lastRun
                      from wekb.KbartSource as ks
                      where ks.id = o.kbartSource.id)"""

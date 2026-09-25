@@ -140,7 +140,7 @@ class GlobalSearchTemplatesService {
                                 [heading: 'Provider', property: 'provider.name', sort: 'provider.name', link: true, linkInfo: 'Link to Provider'],
                                 [heading: 'Nominal Platform', property: 'nominalPlatform.name', sort: 'nominalPlatform.name', link: true, linkInfo: 'Link to Nominal Platform'],
                                 [heading: 'Last Updated', property: 'lastUpdated', sort: 'lastUpdated'],
-                                [heading: 'Last Run', property: 'kbartSource.lastRun', sort: 'kbartSource.lastRun'],
+                                [heading: 'Last Run', property: 'kbartSource.lastRun', sort: 'kbartSourceLastRun'],
                                 [heading: 'Last Try', property: 'lastTryDate', sort: 'lastTryDate'],
                                 [heading: 'Status', property: 'status.value', sort: 'status'],
                                 [heading: 'Current Titles', property: 'currentTippCount', sort: 'currentTippCount'],
@@ -1932,7 +1932,7 @@ class GlobalSearchTemplatesService {
                                 [heading: 'Expected Titles', property: 'expectedTippCount', sort: 'expectedTippCount'],
                                 [heading: 'Deleted Titles', property: 'deletedTippCount', sort: 'deletedTippCount'],
                                 [heading: 'Last Updated', property: 'lastUpdated', sort: 'lastUpdated'],
-                                [heading: 'Last Run', property: 'kbartSource.lastRun', sort: 'kbartSource.lastRun'],
+                                [heading: 'Last Run', property: 'kbartSource.lastRun', sort: 'kbartSourceLastRun'],
                                 [heading: 'Last Try', property: 'lastTryDate', sort: 'lastTryDate'],
                                 [heading: 'Automatic Updates', property: 'kbartSource.automaticUpdates', sort: 'kbartSourceAutomaticUpdates']
                         ],
