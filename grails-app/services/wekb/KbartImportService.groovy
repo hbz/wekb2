@@ -1934,7 +1934,16 @@ class KbartImportService {
         if (tippMap.publication_type) {
             result.changedTipp = checkAndSetByChangedValue(result, tipp, 'RefDataValue', updatePackageInfo, tippMap, "publication_type", "publicationType", false, RCConstants.TIPP_PUBLICATION_TYPE)
         }else {
-            result.changedTipp = checkAndSetByChangedValue(result, tipp, 'RefDataValue', updatePackageInfo, tippMap, "publication_type", "publicationType", false, RCConstants.TIPP_PUBLICATION_TYPE)
+            String oldValue = renderObjectValue(tipp.publicationType)
+            RefdataValue v = RDStore.TIPP_PUBLIC_TYPE_NOSET
+            String newValue = renderObjectValue(v)
+            if (oldValue.toLowerCase() != newValue.toLowerCase()) {
+                if (!result.newTipp) {
+                    result.changedTipp = true
+                    createUpdateTippInfoByTippChange(tipp, updatePackageInfo, "publication_type", "publicationType", oldValue, newValue)
+                }
+                tipp.publicationType = v
+            }
         }
         //log.debug("5")
         // KBART -> medium -> medium

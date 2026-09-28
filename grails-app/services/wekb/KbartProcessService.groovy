@@ -1061,10 +1061,21 @@ class KbartProcessService {
                 } else {
                     skippedRows++
 
-                    log.warn(
-                            "Ignoring KBART row ${record.recordNumber}: " +
-                                    "publication_title is empty or missing"
-                    )
+                    log.warn("Ignoring KBART row ${record.recordNumber}: publication_title is empty or missing")
+
+                    UpdateTippInfo updateTippInfo = new UpdateTippInfo(
+                            description: "Ignoring KBART row ${record.recordNumber}: publication_title is empty or missing",
+                            tipp: null,
+                            startTime: new Date(),
+                            endTime: new Date(),
+                            status: RDStore.UPDATE_STATUS_FAILED,
+                            type: RDStore.UPDATE_TYPE_INVAILD_TITLE,
+                            oldValue: '',
+                            newValue: '',
+                            tippProperty: 'name',
+                            kbartProperty: 'publication_title',
+                            updatePackageInfo: updatePackageInfo
+                    ).save()
                 }
             }
 
@@ -1076,19 +1087,13 @@ class KbartProcessService {
                 return result
             }
 
-            log.info(
-                    "KBART processing completed: " +
+            log.info("KBART processing completed: " +
                             "${countRows} rows processed, " +
                             "${importedRows} rows imported, " +
-                            "${skippedRows} rows skipped"
-            )
+                            "${skippedRows} rows skipped")
 
         } catch (Exception exception) {
-            log.error(
-                    "Error by KbartProcess: ${exception.message}",
-                    exception
-            )
-
+            log.error("Error by KbartProcess: ${exception.message}", exception)
             markImportAsFailed("An error occurred while processing the KBART file. More information can be seen in the system log. ")
 
         } finally {
@@ -1096,19 +1101,13 @@ class KbartProcessService {
                 try {
                     parser.close()
                 } catch (Exception closeException) {
-                    log.warn(
-                            "Could not close KBART CSV parser: " +
-                                    "${closeException.message}"
-                    )
+                    log.warn("Could not close KBART CSV parser: ${closeException.message}")
                 }
             } else if (reader != null) {
                 try {
                     reader.close()
                 } catch (Exception closeException) {
-                    log.warn(
-                            "Could not close KBART reader: " +
-                                    "${closeException.message}"
-                    )
+                    log.warn("Could not close KBART reader: ${closeException.message}")
                 }
             }
         }
