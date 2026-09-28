@@ -126,16 +126,6 @@
 main {
     flex:1;
 }
-.wekb-local{
-    border-left: 10px solid #5bc0de!important;
-}
-.wekb-dev{
-    border-left: 10px solid #5cb85c!important;
-}
-.wekb-qa{
-    border-left: 10px solid #d9534f!important;
-}
-
 .ui.menu .item.wekb-pagination-custom-input {
     position: relative;
     padding-top: 0;
@@ -196,11 +186,8 @@ main {
 
 .hero-claim {
     min-height: 10vh;
-    display: flex;
-    flex-direction: column;
     position: relative;
     z-index: 2;
-    flex: 0 0 auto;
     padding: 3rem 3rem 0 !important;
     margin: 0 !important;
     background: transparent !important;
@@ -215,36 +202,20 @@ main {
 
 
 .hero-claim h1 span {
-
-    background-image: linear-gradient(90deg, yellow, brown );
+    font-weight: 700;
     background-image: linear-gradient(
             90deg,
             var(--chart-brown),
             var(--chart-yellow)
     );
-
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
-
-.hero-claim h1 span {
-    font-weight: 700;
-}
-
 .hero-claim p {
     margin-top: 1.5rem;
     font-size: 1.4rem;
     line-height: 1.5;
     opacity: 0.65;
-}
-
-.hero-chart-column {
-    position: relative;
-    width: 100%;
-}
-
-* {
-    box-sizing: border-box;
 }
 
 /********************************
@@ -268,7 +239,6 @@ main {
     width: 100%;
     margin: 0 auto;
     gap: 1.5rem;
-    align-items: stretch;
     grid-auto-rows: 1fr;
 }
 
@@ -279,7 +249,6 @@ main {
 .statistic {
     display: flex;
     flex-direction: column;
-    align-self: stretch;
     position: relative;
     min-width: 0;
     opacity: 0;
@@ -580,10 +549,6 @@ main {
         gap: 3.5rem 2rem;
     }
 
-    .statistic:nth-child(even) {
-        padding-right: 0;
-    }
-
     .statistic-description {
         font-size: 1.05rem;
     }
@@ -603,12 +568,7 @@ main {
 
     .statistics-track {
         grid-template-columns: 1fr;
-
         gap: 3rem;
-    }
-
-    .statistic {
-        padding-right: 0;
     }
 
     .statistic-number {
@@ -620,9 +580,6 @@ main {
     }
 
     .statistic-description {
-        width: 100%;
-        max-width: none;
-
         font-size: 1.05rem;
     }
 }
@@ -650,4 +607,23 @@ main {
     }
 }
 
+.statistic:has(> .ui.button:hover) .statistic-dot {
+    transform: translateY(7px) scale(0.08);
+    box-shadow: none;
+    transition:
+            transform 300ms cubic-bezier(0.4, 0, 0.8, 0.2),
+            box-shadow 250ms ease;
+}
+
+.statistic:has(> .ui.button:hover) .statistic-marker {
+    background: none;
+    transform: scale(0.88);
+    border: none;
+    box-shadow:
+            none;
+    transition:
+            transform 300ms ease,
+            background 300ms ease,
+            box-shadow 300ms ease;
+}
 
