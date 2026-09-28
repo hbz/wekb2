@@ -16,68 +16,7 @@
 </head>
 
 <body>
-<style>
 
-.wekb-content > .ui.main.container {
-    flex: 1 1 auto;
-    display: flex;
-}
-
-.full-height-grid {
-    flex: 1;
-    min-height: 0;
-    margin-top: 0 !important;
-    margin-bottom: 0 !important;
-}
-.news-column {
-    min-height: 0;
-    overflow: hidden;
-    padding-left: 2rem !important;
-    padding-right: 2rem !important;
-
-}
-.news-column-inner {
-    position: absolute;
-    inset: 1rem;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    padding: 2rem 1.5rem;
-    margin: 2rem;
-
-    background: rgba(255, 255, 255, 1);
-
-    border: 1px solid rgba(34, 36, 38, 0.07);
-    border-radius: 1rem;
-
-    box-shadow:
-            0 0.4rem 1.5rem rgba(34, 36, 38, 0.045);
-}
-
-.news-feed {
-    flex: 1;
-    min-height: 0;
-    overflow: hidden;
-}
-
-.ui.feed > .event > .content .extra {
-    margin: 0.1em 0 0;
-}
-
-.ui.button.news-more {
-    width: auto;
-    margin: 0;
-    align-self: center;
-}
-
-.ui.connected.feed > .event.last-visible::before {
-    border-left: none;
-}
-
-.ui.feed > .event > .label .icon {
-    font-size: 1.3em;
-}
-</style>
 <g:set var="objectConfig" value="${[
         'package' : [
                 icon   : Icon.PACKAGE,
