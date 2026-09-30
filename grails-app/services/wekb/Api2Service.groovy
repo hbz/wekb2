@@ -36,7 +36,7 @@ class Api2Service {
 
     }
 
-    static List complexSortFields = ['titleCount', 'currentTippCount', 'deletedTippCount', 'retiredTippCount', 'expectedTippCount', 'lastTryDate', 'kbartSourceAutomaticUpdates']
+    static List complexSortFields = ['titleCount', 'currentTippCount', 'deletedTippCount', 'retiredTippCount', 'expectedTippCount', 'lastTryDate', 'kbartSourceAutomaticUpdates', 'kbartSourceLastRun']
 
     public Map getApiTemplate(String type) {
         return ApiTemplates.get(type);
