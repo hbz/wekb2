@@ -35,7 +35,7 @@
             </tbody>
         </table>
 
-        <g:if test="${editable && d.prices.size() == 0}">
+        <g:if test="${editable}">
             <a class="ui right floated primary button" href="#" onclick="$('#pricesModal').modal('show');">Add Price</a>
 
             <br>
