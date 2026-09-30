@@ -35,6 +35,8 @@ class RDStore {
     public static final KS_DSMETHOD_HTTP_URL    = getRefdataValue('HTTP Url', RCConstants.SOURCE_DATA_SUPPLY_METHOD)
     public static final KS_DSMETHOD_FTP    = getRefdataValue('FTP', RCConstants.SOURCE_DATA_SUPPLY_METHOD)
 
+    public static final PKG_CONTENT_TYPE_NOTSET = getRefdataValue('Not Set', RCConstants.PACKAGE_CONTENT_TYPE)
+
     public static final PRICE_TYPE_LIST = getRefdataValue('list', RCConstants.PRICE_TYPE)
     public static final PRICE_TYPE_OA_APC = getRefdataValue('open access apc', RCConstants.PRICE_TYPE)
 

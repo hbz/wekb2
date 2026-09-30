@@ -130,11 +130,11 @@ class PublicController {
       pkg = wekb.Package.findByUuid(params.id)
     }
 
-    if(!pkg || (pkg && pkg.getTippCount() > 200000)){
+    /*if(!pkg || (pkg && pkg.getTippCount() > 200000)){
       flash.error = 'The export of the selected number of titles unfortunately exceeds the line limitation provided in Excel, so that only a smaller fraction of the selected titles can be exported. For a complete title list please contact the content provider directly.'
       redirect(url: request.getHeader('referer'))
       return
-    }
+    }*/
 
     String export_date = dateFormatService.formatDate(new Date());
 
