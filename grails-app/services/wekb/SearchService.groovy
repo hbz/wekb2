@@ -363,7 +363,7 @@ class SearchService {
                         response_record.cols.add([
                                 linkInfo: rh.linkInfo ?: null,
                                 link: link,
-                                value: (cobj != null ? (cobj) : '-Empty-'),
+                                value: (cobj != null ? (cobj) : '—'),
                                 outGoingLink: rh.outGoingLink ?: null,
                                 jumpToLink: jumpToLink ?: null,
                                 globalSearchTemplateProperty: rh.property])
