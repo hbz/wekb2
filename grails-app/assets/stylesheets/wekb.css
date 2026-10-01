@@ -679,4 +679,8 @@ main {
             background 300ms ease,
             box-shadow 300ms ease;
 }
-
+main.ui.main.fluid.container:has(.wekb-altchaCard) {
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+}
