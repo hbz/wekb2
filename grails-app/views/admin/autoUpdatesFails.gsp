@@ -20,7 +20,7 @@ until <g:formatDate date="${new java.util.Date()}" format="${message(code: 'defa
 
 <div class="container">
     <g:if test="${autoUpdates.size() > 0}">
-        <table class="ui selectable striped sortable celled table">
+        <table class="ui selectable sortable padded table">
             <thead>
             <tr>
                 <th>#</th>

@@ -15,7 +15,7 @@
     <g:render template="/search/pagination" model="${params}"/>
 
     <div style="overflow-x: auto">
-    <table class="ui selectable striped sortable celled table">
+    <table class="ui selectable sortable padded table">
         <thead>
         <tr>
             <th>#</th>
@@ -104,7 +104,7 @@
     <g:render template="/search/pagination" model="${params}"/>
     <g:form controller="workflow" action="action" method="post" params="${params}" class='action-form'>
        <div style="overflow-x: auto">
-        <table class="ui selectable striped sortable celled table">
+        <table class="ui selectable sortable padded table">
             <thead>
 %{--            <sec:ifLoggedIn>
               <tr>

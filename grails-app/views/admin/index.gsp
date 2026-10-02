@@ -182,7 +182,7 @@
 <div class="ui segment">
     <h2 class="ui header">Components Infos</h2>
 
-    <table class="ui selectable striped sortable celled table">
+    <table class="ui selectable sortable padded table">
         <thead>
         <tr>
             <th>Name</th>
@@ -212,7 +212,7 @@
     <h2 class="ui header">
         Application Info
     </h2>
-    <table class="ui selectable striped sortable celled table">
+    <table class="ui selectable sortable padded table">
         
         <tr><td>App profile</td><td>${grailsApplication.config.getProperty('grails.profile')}</td></tr>
         <tr><td>Git Branch</td><td><g:meta name="build.git.branch"/></td></tr>
@@ -234,7 +234,7 @@
     <h2 class="ui header">
         Database
     </h2>
-    <table class="ui selectable striped sortable celled table">
+    <table class="ui selectable sortable padded table">
         <tbody>
         <tr><td>DBM version</td><td>${dbmVersion[0]} : ${dbmVersion[1]} -------> ${wekb.utils.DateUtils.getSDF_NoZ().format(dbmVersion[2])}</td></tr>
         <tr><td>DBM updateOnStart</td><td>${grailsApplication.config.getProperty('grails.plugin.databasemigration.updateOnStart', Boolean)}</td>
@@ -248,7 +248,7 @@
     <h2 class="ui header">
         Artefacts
     </h2>
-    <table class="ui selectable striped sortable celled table">
+    <table class="ui selectable sortable padded table">
         <tbody>
         <tr><td>Controllers:</td><td>${grailsApplication.controllerClasses.size()}</td></tr>
         <tr><td>Domains:</td><td>${grailsApplication.domainClasses.size()}</td></tr>
@@ -262,7 +262,7 @@
     <h2 class="ui header">
         Installed Plugins
     </h2>
-    <table class="ui selectable striped sortable celled table">
+    <table class="ui selectable sortable padded table">
         <tbody>
         <g:each var="plugin" in="${applicationContext.getBean('pluginManager').allPlugins}">
             <tr><td>${plugin.name}</td><td>${plugin.version}</td></tr>

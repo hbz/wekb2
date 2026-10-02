@@ -20,7 +20,7 @@
             <br><br>
         </g:if>
 
-        <table class="ui selectable striped sortable celled table">
+        <table class="ui selectable sortable padded table">
             <thead>
             <tr>
                 <th>#</th>

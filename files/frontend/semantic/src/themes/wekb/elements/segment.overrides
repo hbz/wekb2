@@ -24,6 +24,15 @@
     padding-top: 0 !important;
   }
 }
+/********************************
+ * Filter Segment
+ ********************************/
+.segment:has(.wekb-filter) {
+     background: #ffffff4d;
+     border: 2px solid #2e6fd9;
+     box-shadow: 0 0.4rem 1.5rem rgba(34, 36, 38, 0.045);
+}
+
 @media only screen and (min-width: 1200px) {
     footer .ui.ui.ui.container:not(.fluid) {
         width: 1800px;

@@ -32,19 +32,6 @@
 .editable-clear-x:before {
     content: "\f2ed";
 }
-/* label what server */
-.wb-server-label {
-    position: fixed;
-    bottom: 0;
-    right: 0;
-    top: 0;
-    margin: 0 !important;
-    border-radius: 0 !important;
-    z-index: 999;
-}
-.wb-server-label span {
-    line-height: 30px;
-}
 
 .wekb-local{
     border-left: 10px solid #5bc0de!important;

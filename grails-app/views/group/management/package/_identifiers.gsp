@@ -3,7 +3,7 @@
 
 
 <div style="overflow-x: auto">
-    <table class="ui selectable striped sortable celled table">
+    <table class="ui selectable sortable padded table">
         <thead>
         <tr>
             <th rowspan="2">#</th>
@@ -31,7 +31,7 @@
                     </td>
                     <td colspan="5">
                         <g:if test="${row_obj.ids}">
-                            <table class="ui selectable striped sortable celled table">
+                            <table class="ui selectable sortable padded table">
                                 <tbody>
                                 <g:each in="${row_obj.ids.sort { it.namespace?.value }}" var="identifier" status="i">
                                     <tr>

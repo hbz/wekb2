@@ -86,7 +86,7 @@
                 </semui:tabs>
 
                 <semui:tabsItemContent tab="curatoryGroupUsers" activeTab="${params.activeTab}">
-                    <table class="ui selectable striped sortable celled table">
+                    <table class="ui selectable sortable padded table">
                         <thead>
                         <tr>
                             <th>Curatory Group</th>
@@ -149,7 +149,7 @@
         <g:if test="${d.id != null}">
             <g:if test="${userIsAdmin}">
                 <semui:tabsItemContent tab="roles" activeTab="${params.activeTab}">
-                    <table class="ui selectable striped sortable celled table">
+                    <table class="ui selectable sortable padded table">
                         <thead>
                         <tr>
                             <th>Role</th>
