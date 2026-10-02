@@ -1,7 +1,7 @@
 <%@ page import="wekb.RefdataValue; wekb.helper.RCConstants; wekb.RefdataCategory; wekb.ClassUtils; wekb.helper.RDStore; wekb.TitleInstancePackagePlatform;" %>
 <semui:tabsItemContent tab="identifiers" class="${activeTab ? 'active' : ''}" defaultTab="${defaultTab}" activeTab="${params.activeTab}" counts="${d.ids.size()}">
 
-    <table class="ui selectable striped sortable celled table">
+    <table class="ui selectable sortable padded table">
         <thead>
         <tr>
             <th>Namespace</th>

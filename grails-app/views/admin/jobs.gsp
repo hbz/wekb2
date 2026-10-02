@@ -30,7 +30,7 @@
             onClick="window.location.reload()">Reload</button>
     <g:link controller="admin" action="cleanJobList" class="ui button">Clean Job List</g:link>
 
-    <table class="ui selectable striped sortable celled table">
+    <table class="ui selectable sortable padded table">
         <thead>
         <tr>
             <th>ID</th>

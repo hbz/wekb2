@@ -46,7 +46,7 @@
     <h3 class="ui header">Template Description</h3>
 
     <div class="content">
-        <table class="ui selectable striped sortable celled table">
+        <table class="ui selectable sortable padded table">
             <thead>
             <tr>
                 <th>ColumnName</th>

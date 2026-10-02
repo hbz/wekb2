@@ -34,7 +34,7 @@
         <g:render template="/search/pagination" model="${params}"/>
 
             <div style="overflow-x: auto">
-                <table class="ui selectable striped sortable celled table">
+                <table class="ui selectable sortable padded table">
                     <thead>
                     <tr>
                         <th>#</th>
@@ -85,7 +85,7 @@
                                                 </g:each>
                                             </div>
                                         </g:if>
-                                        <g:elseif test="${c.link != null && c.value && c.value != '-Empty-'}">
+                                        <g:elseif test="${c.link != null && c.value && c.value != '—'}">
                                             <g:link controller="resource"
                                                     action="show"
                                                     id="${c.link}">
@@ -113,7 +113,7 @@
                                         </g:elseif>
                                         <g:elseif test="${c.outGoingLink != null}">
                                             <g:render template="/search/qbevalue" model="[c: c]"/>
-                                            <g:if test="${c.value && c.value != '-Empty-'}">
+                                            <g:if test="${c.value && c.value != '—'}">
                                                 &nbsp;<a aria-label="${c.value}"
                                                          href="${c.value.startsWith('http') ? c.value : 'http://' + c.value}"
                                                          target="_blank"><i class="share square icon"></i></a>
