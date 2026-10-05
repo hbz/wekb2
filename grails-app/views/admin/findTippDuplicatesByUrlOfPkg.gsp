@@ -73,7 +73,7 @@
             class="ui button primary">Tipps Duplicates by Status Removed (${pkg.getTippDuplicatesWithStatusByTitleIDCount(wekb.helper.RDStore.KBC_STATUS_REMOVED)})</g:link>
 </g:if>
 
-<table class="ui selectable striped sortable celled table">
+<table class="ui selectable sortable padded table">
     <thead>
     <tr>
         <th>#</th>

@@ -22,7 +22,7 @@
 
     <g:render template="/search/pagination" model="${params}"/>
     <div style="overflow-x: auto">
-    <table class="ui selectable striped sortable celled table">
+    <table class="ui selectable sortable padded table">
         <thead>
         <tr>
             <th>#</th>

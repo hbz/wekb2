@@ -18,7 +18,7 @@
 
     <g:set var="counter" value="${1}" />
     <div class="content">
-    <table class="ui selectable striped sortable celled table">
+    <table class="ui selectable sortable padded table">
             <thead>
             <tr>
                 <th>#</th>
@@ -79,7 +79,7 @@
 
     <g:set var="counter" value="${1}" />
     <div class="content">
-    <table class="ui selectable striped sortable celled table">
+    <table class="ui selectable sortable padded table">
             <thead>
             <tr>
                 <th>#</th>

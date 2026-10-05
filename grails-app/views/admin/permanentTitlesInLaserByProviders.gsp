@@ -27,7 +27,7 @@
     <g:set var="sumDeletedCount" value="${0}"/>
     <g:set var="sumRemovedCount" value="${0}"/>
     <g:set var="sumPackagesCount" value="${0}"/>
-    <table class="ui selectable striped sortable celled table">
+    <table class="ui selectable sortable padded table">
         <thead>
         <tr>
             <th>#</th>

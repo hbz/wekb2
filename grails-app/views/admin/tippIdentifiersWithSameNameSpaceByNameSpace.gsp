@@ -11,7 +11,7 @@
 
 <h1 class="ui header">Title Identifiers with same Identifier Namespace: ${namespace} (${count})</h1>
 
-<table class="ui selectable striped sortable celled table">
+<table class="ui selectable sortable padded table">
     <thead>
     <tr>
         <th>#</th>

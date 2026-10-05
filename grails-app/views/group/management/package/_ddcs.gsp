@@ -28,7 +28,7 @@
     </div>
 
     <div style="overflow-x: auto">
-        <table class="ui selectable striped sortable celled table">
+        <table class="ui selectable sortable padded table">
             <thead>
             <tr>
                 <th rowspan="2"><g:if test="${editable}"><input id="select-all" type="checkbox" name="chkall" /> <div id="numberOfChecked">Select (0)</div></g:if></th>
@@ -64,7 +64,7 @@
                         </td>
                         <td colspan="3">
                             <g:if test="${row_obj.ddcs}">
-                                <table class="ui selectable striped sortable celled table">
+                                <table class="ui selectable sortable padded table">
                                     <tbody>
                                     <g:each in="${row_obj.ddcs.sort { it.value }}" var="ddc" status="i">
                                         <tr>

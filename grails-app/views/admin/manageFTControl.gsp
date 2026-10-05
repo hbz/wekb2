@@ -11,7 +11,7 @@
 
 <div class="ui segment">
     <h2 class="ui header">Full Text Control</h2>
-    <table class="ui selectable striped sortable celled table">
+    <table class="ui selectable sortable padded table">
         <thead>
         <tr>
             <th>domainClassName</th>
@@ -40,7 +40,7 @@
 <div class="ui segment">
     <h2 class="ui header">Indices</h2>
 
-    <table class="ui selectable striped sortable celled table">
+    <table class="ui selectable sortable padded table">
         <thead>
         <tr>
             <th>index</th>
