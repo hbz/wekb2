@@ -21,14 +21,6 @@ h1.ui.header.wekb-pageHeader {
     display: flex;
     align-items: center;
     gap: 8px;
-
-@package            :   @o-violet;
-@title              :   @o-blue;
-@org                :   @o-teal; /* bluegreen */
-@platform           :   @o-yellow;
-@vendor             :   @o-grey-green;
-@provider           :   @o-brown;
-
     > i.circular.inverted.icon {
 
         &.wekb-package{

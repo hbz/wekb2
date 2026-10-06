@@ -27718,7 +27718,6 @@ h1.ui.header.wekb-pageHeader {
   display: flex;
   align-items: center;
   gap: 8px;
-  /* bluegreen */
 }
 
 h1.ui.header.wekb-pageHeader > i.circular.inverted.icon {
