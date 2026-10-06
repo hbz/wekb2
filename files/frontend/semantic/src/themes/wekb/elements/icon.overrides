@@ -37,6 +37,10 @@ i.inverted.circular.wekb-provider.icon {
     background-color: @provider!important;
     color: #fff!important;
 }
-
+i.inverted.circular.icon::before {
+    display: inline-block;
+    transform: scale(.75);
+    transform-origin: center;
+}
 
 

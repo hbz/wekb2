@@ -1,3 +1,84 @@
 /*******************************
          Theme Overrides
 *******************************/
+/*******************************
+         Mixin
+*******************************/
+.icon-color(@color) {
+    background-color: @color !important;
+
+    box-shadow:
+        0 0 0 @header-icon-ring-size
+        fade(@color, 12%);
+}
+
+
+@header-icon-size: 3.5rem;
+@header-icon-symbol-size: 1.8rem;
+@header-icon-ring-size: 0.52rem;
+
+h1.ui.header.wekb-pageHeader {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+@package            :   @o-violet;
+@title              :   @o-blue;
+@org                :   @o-teal; /* bluegreen */
+@platform           :   @o-yellow;
+@vendor             :   @o-grey-green;
+@provider           :   @o-brown;
+
+    > i.circular.inverted.icon {
+
+        &.wekb-package{
+            .icon-color(@package );
+        }
+
+        &.wekb-title {
+            .icon-color(@title );
+        }
+
+        &.wekb-platform {
+            .icon-color(@platform);
+        }
+        &.wekb-provider {
+            .icon-color(@provider);
+        }
+        &.wekb-vendor {
+            .icon-color(@vendor);
+        }
+        &.wekb-org {
+            .icon-color(@org);
+        }
+
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex: 0 0 @header-icon-size;
+
+        width: @header-icon-size !important;
+        min-width: @header-icon-size;
+        max-width: @header-icon-size;
+
+        height: @header-icon-size !important;
+        min-height: @header-icon-size;
+        max-height: @header-icon-size;
+
+        box-sizing: border-box;
+        border-radius: 50% !important;
+
+        padding: 0 !important;
+        margin: 0;
+
+        font-size: @header-icon-symbol-size;
+        line-height: 1 !important;
+        color: #fff !important;
+    }
+
+    > i.icon + .content {
+        display: block;
+        min-width: 0;
+        padding-left: 0;
+    }
+}

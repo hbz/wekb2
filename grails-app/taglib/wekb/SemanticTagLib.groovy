@@ -915,4 +915,40 @@ class SemanticTagLib {
 
         out << '</div>'
     }
+
+    // <ui:h1HeaderWithIcon text="${text}" message="18n.token" args="[key:value]" type="${headerTitleIconType}" total="${totalNumber}" floated="true">
+    //    content
+    // </ui:headerWithIcon>
+
+    def h1HeaderWithIcon = { attrs, body ->
+        String title = attrs.title ?: ''
+        def groups = attrs.groups ?: []
+        String groupNames = groups.collect { it.name }.join(', ')
+        String subTitle = groups
+                ? g.message(
+                code: groups.size() == 1
+                        ? 'header.curatoryGroup'
+                        : 'header.curatoryGroups',
+                args: [groupNames]
+        )
+                : ''
+        out << """
+        <h1 class="ui header wekb-pageHeader">
+            <i class="circular inverted teal users icon"
+               aria-hidden="true"></i>
+            <div class="content">
+                ${title.encodeAsHTML()}
+    """
+
+        if (subTitle) {
+            out << """
+            <div class="sub header">
+                ${subTitle.encodeAsHTML()}
+            </div>
+        """
+        }
+
+        out << '</div></h1>'
+
+    }
 }
