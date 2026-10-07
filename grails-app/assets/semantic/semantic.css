@@ -27748,32 +27748,32 @@ a.ui.inverted.black.header.header.header:hover {
 
 i.circular.inverted.wekb-glowIcon.wekb-package {
   background-color: #76007a !important;
-  box-shadow: 0 0 0 1rem rgba(118, 0, 122, 0.12);
+  box-shadow: 0 0 0 0.7rem rgba(118, 0, 122, 0.12);
 }
 
 i.circular.inverted.wekb-glowIcon.wekb-title {
   background-color: #2185d0 !important;
-  box-shadow: 0 0 0 1rem rgba(33, 133, 208, 0.12);
+  box-shadow: 0 0 0 0.7rem rgba(33, 133, 208, 0.12);
 }
 
 i.circular.inverted.wekb-glowIcon.wekb-platform {
   background-color: #FBC71C !important;
-  box-shadow: 0 0 0 1rem rgba(251, 199, 28, 0.12);
+  box-shadow: 0 0 0 0.7rem rgba(251, 199, 28, 0.12);
 }
 
 i.circular.inverted.wekb-glowIcon.wekb-provider {
   background-color: #b54800 !important;
-  box-shadow: 0 0 0 1rem rgba(181, 72, 0, 0.12);
+  box-shadow: 0 0 0 0.7rem rgba(181, 72, 0, 0.12);
 }
 
 i.circular.inverted.wekb-glowIcon.wekb-vendor {
   background-color: #5d7c62 !important;
-  box-shadow: 0 0 0 1rem rgba(93, 124, 98, 0.12);
+  box-shadow: 0 0 0 0.7rem rgba(93, 124, 98, 0.12);
 }
 
 i.circular.inverted.wekb-glowIcon.wekb-org {
   background-color: #00b5ad !important;
-  box-shadow: 0 0 0 1rem rgba(0, 181, 173, 0.12);
+  box-shadow: 0 0 0 0.7rem rgba(0, 181, 173, 0.12);
 }
 
 footer h2.ui.header {

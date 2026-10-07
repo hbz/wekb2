@@ -371,28 +371,12 @@ main {
  * Innerer farbiger Kreis
  ********************************/
 
-.statistic-dot {
-    display: grid;
-    place-items: center;
-    width: 3.2rem;
-    height: 3.2rem;
-    border-radius: 50%;
-    background: currentColor;
-    transform: scale(0);
-}
+
 
 /********************************
  * Icon im Kreis
  ********************************/
 
-.statistic-dot .icon {
-    margin: 0 !important;
-    width: auto !important;
-    height: auto !important;
-    font-size: 1.35rem;
-    line-height: 1 !important;
-    color: #ffffff;
-}
 
 /********************************
  * Farben der Statistiken

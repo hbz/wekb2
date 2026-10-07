@@ -15,7 +15,7 @@
 
 @header-icon-size: 3.5rem;
 @header-icon-symbol-size: 1.8rem;
-@header-icon-ring-size: 1rem;
+@header-icon-ring-size: .7rem;
 
 .ui.header.wekb-pageHeader {
     display: flex;
