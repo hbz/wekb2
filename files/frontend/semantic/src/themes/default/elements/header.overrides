@@ -15,34 +15,13 @@
 
 @header-icon-size: 3.5rem;
 @header-icon-symbol-size: 1.8rem;
-@header-icon-ring-size: 0.52rem;
+@header-icon-ring-size: 1rem;
 
-h1.ui.header.wekb-pageHeader {
+.ui.header.wekb-pageHeader {
     display: flex;
     align-items: center;
     gap: 8px;
     > i.circular.inverted.icon {
-
-        &.wekb-package{
-            .icon-color(@package );
-        }
-
-        &.wekb-title {
-            .icon-color(@title );
-        }
-
-        &.wekb-platform {
-            .icon-color(@platform);
-        }
-        &.wekb-provider {
-            .icon-color(@provider);
-        }
-        &.wekb-vendor {
-            .icon-color(@vendor);
-        }
-        &.wekb-org {
-            .icon-color(@org);
-        }
 
         display: inline-flex;
         align-items: center;
@@ -74,3 +53,13 @@ h1.ui.header.wekb-pageHeader {
         padding-left: 0;
     }
 }
+
+i.circular.inverted.wekb-glowIcon {
+    &.wekb-package  { .icon-color(@package); }
+    &.wekb-title    { .icon-color(@title); }
+    &.wekb-platform { .icon-color(@platform); }
+    &.wekb-provider { .icon-color(@provider); }
+    &.wekb-vendor   { .icon-color(@vendor); }
+    &.wekb-org      { .icon-color(@org); }
+}
+

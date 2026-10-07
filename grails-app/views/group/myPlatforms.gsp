@@ -6,8 +6,8 @@
 </head>
 
 <body>
-<h1 class="ui header">My Platforms of Curatory Groups (${groups.name.join(',')})</h1>
-
+<h1 class="ui header"> of Curatory Groups (${groups.name.join(',')})</h1>
+<semui:h1HeaderWithIcon iconClass="wekb-platform" title="My Platforms" groups="${groups}" />
 
 
     <g:if test="${(qbetemplate.message != null)}">

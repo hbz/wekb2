@@ -418,6 +418,7 @@ main {
  * Heller Ring um inneren Kreis
  ********************************/
 
+/*
 .statistic:nth-of-type(1) .statistic-dot {
     box-shadow: 0 0 0 0.55rem rgba(181, 72, 0, 0.18);
 }
@@ -433,6 +434,7 @@ main {
 .statistic:nth-of-type(4) .statistic-dot {
     box-shadow: 0 0 0 0.55rem rgba(33, 133, 208, 0.15);
 }
+*/
 
 /********************************
  * Animation äußerer Kreis

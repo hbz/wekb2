@@ -6,8 +6,7 @@
 </head>
 
 <body>
-<semui:h1HeaderWithIcon title="My Packages" subTitle="of curatory groups: "
-                        groups="${groups}" />
+<semui:h1HeaderWithIcon iconClass="wekb-package" title="${message(code: 'obj.myPlatforms')}" groups="${groups}" />
 
 
 %{--<g:link controller="group" action="processPackageUpdate"

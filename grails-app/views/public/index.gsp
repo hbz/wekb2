@@ -49,7 +49,7 @@
                     <g:each in="${allNews}" var="item">
                         <article class="event">
                             <div class="label" data-tooltip="${objectConfig[item.object]?.tooltip}" data-position="top left">
-                                <i class="inverted circular wekb-${objectConfig[item.object]?.color} ${objectConfig[item.object]?.icon}"
+                                <i class="inverted circular wekb-${objectConfig[item.object]?.color} icon"
                                    aria-hidden="true"></i>
                             </div>
                             <div class="content">

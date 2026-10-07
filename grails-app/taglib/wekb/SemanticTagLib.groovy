@@ -922,8 +922,11 @@ class SemanticTagLib {
 
     def h1HeaderWithIcon = { attrs, body ->
         String title = attrs.title ?: ''
+        String iconClass =  attrs.iconClass ?: ''
         def groups = attrs.groups ?: []
+
         String groupNames = groups.collect { it.name }.join(', ')
+
         String subTitle = groups
                 ? g.message(
                 code: groups.size() == 1
@@ -931,10 +934,11 @@ class SemanticTagLib {
                         : 'header.curatoryGroups',
                 args: [groupNames]
         )
-                : ''
+                : (attrs.subTitle ?:'')
+
         out << """
-        <h1 class="ui header wekb-pageHeader">
-            <i class="circular inverted teal users icon"
+        <h1 class="ui header wekb-pageHeader ">
+            <i class="circular inverted ${iconClass} wekb-glowIcon icon"
                aria-hidden="true"></i>
             <div class="content">
                 ${title.encodeAsHTML()}
@@ -949,6 +953,5 @@ class SemanticTagLib {
         }
 
         out << '</div></h1>'
-
     }
 }

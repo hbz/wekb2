@@ -6,36 +6,54 @@
 i.inverted.circular.wekb-package.icon {
     background-color: @package!important ;
     color: #fff!important;
+    &:before {
+        content: "\f466";
+    }
 }
 
 // ****  organisation **** //
 i.inverted.circular.wekb-org.icon {
     background-color: @org!important ;
     color: #fff!important;
+        &:before {
+            content: "\f466";
+        }
 }
 
 // ****  platform **** //
 i.inverted.circular.wekb-platform.icon {
     background-color: @platform!important;
     color: #fff!important;
+    &:before {
+        content: "\f0c2";
+    }
 }
 
 // ****  Vendor **** //
 i.inverted.circular.wekb-vendor.icon {
     background-color: @vendor!important;
     color: #fff!important;
+    &:before {
+        content: "\f2b5";
+    }
 }
 
 // ****  Title **** //
 i.inverted.circular.wekb-title.icon {
     background-color: @title!important;
     color: #fff!important;
+    &:before {
+        content: "\f02d";
+    }
 }
 
 // ****  Provider **** //
 i.inverted.circular.wekb-provider.icon {
     background-color: @provider!important;
     color: #fff!important;
+        &:before {
+            content: "\f519";
+        }
 }
 i.inverted.circular.icon::before {
     display: inline-block;
