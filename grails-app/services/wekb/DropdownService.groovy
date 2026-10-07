@@ -2,6 +2,7 @@ package wekb
 
 import grails.core.GrailsApplication
 import grails.gorm.transactions.Transactional
+import wekb.auth.Role
 import wekb.helper.RCConstants
 import wekb.helper.RDStore
 
@@ -89,7 +90,14 @@ class DropdownService {
                         values.add([id:"${RefdataValue.class.name}:${t.id}", text:"${t.getI10n('value')}"])
                 }
 
-            }else {
+            }else if(baseClass == Role.class.name){
+                    String order = "r.authority"
+                    query = "select r from Role as r  order by ${order}"
+                    Role.executeQuery(query).each { t ->
+                        values.add([id:"${Role.class.name}:${t.id}", text:"${t.authority}"])
+                    }
+            }
+            else {
                 queryMap = [status: [RDStore.KBC_STATUS_DELETED, RDStore.KBC_STATUS_REMOVED]]
                 if(q) {
                     queryString = "and o.name like :queryStringFilter"
