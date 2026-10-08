@@ -6,7 +6,7 @@
 </head>
 
 <body>
-<h1 class="ui header">My Sources of Curatory Groups (${groups.name.join(',')})</h1>
+    <semui:h1HeaderWithIcon iconClass="wekb-source" title="${message(code: 'obj.mySources')}" groups="${groups}" />
 
 
     <g:if test="${(qbetemplate.message != null)}">

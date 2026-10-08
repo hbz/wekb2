@@ -6,9 +6,7 @@
 </head>
 
 <body>
-<h1 class="ui header">My Titles of Curatory Groups (${groups.name.join(',')})</h1>
-
-
+    <semui:h1HeaderWithIcon iconClass="wekb-title" title="${message(code: 'obj.myTitles')}" groups="${groups}" />
 
     <g:if test="${(qbetemplate.message != null)}">
         <semui:message message="${qbetemplate.message}"/>

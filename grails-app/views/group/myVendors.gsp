@@ -6,7 +6,7 @@
 </head>
 
 <body>
-<h1 class="ui header">My Library Suppliers of Curatory Groups (${groups.name.join(',')})</h1>
+    <semui:h1HeaderWithIcon iconClass="wekb-vendors" title="${message(code: 'obj.myVendors')}" groups="${groups}" />
 
 
     <br>

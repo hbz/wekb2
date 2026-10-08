@@ -6,7 +6,7 @@
 </head>
 
 <body>
-<semui:h1HeaderWithIcon iconClass="wekb-package" title="${message(code: 'obj.myPlatforms')}" groups="${groups}" />
+<semui:h1HeaderWithIcon iconClass="wekb-package" title="${message(code: 'obj.myPackages')}" groups="${groups}" />
 
 
 %{--<g:link controller="group" action="processPackageUpdate"

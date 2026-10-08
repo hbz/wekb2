@@ -6,7 +6,7 @@
 </head>
 
 <body>
-<h1 class="ui header">My Providers of Curatory Groups (${groups.name.join(',')})</h1>
+    <semui:h1HeaderWithIcon iconClass="wekb-provider" title="${message(code: 'obj.myProviders')}" groups="${groups}" />
 
 
 

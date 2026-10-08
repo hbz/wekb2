@@ -55,6 +55,48 @@ i.inverted.circular.wekb-provider.icon {
             content: "\f519";
         }
 }
+// ****  Source  **** //
+i.inverted.circular.wekb-source.icon {
+    background-color: @default!important;
+    color: #fff!important;
+        &:before {
+            content: "\f381";
+        }
+}
+
+// ****  Default **** //
+i.inverted.circular.wekb-default.icon {
+    background-color: @default!important;
+    color: #fff!important;
+        &:before {
+            content: "\f15c";
+        }
+}
+// ****  Overview **** //
+i.inverted.circular.wekb-overview.icon {
+    background-color: @default!important;
+    color: #fff!important;
+        &:before {
+            content: "\f009";
+        }
+}
+// ****  Setting **** //
+i.inverted.circular.wekb-setting.icon {
+    background-color: @default!important;
+    color: #fff!important;
+        &:before {
+            content: "\f013";
+        }
+}
+// ****  Information **** //
+i.inverted.circular.wekb-info.icon {
+    background-color: @default!important;
+    color: #fff!important;
+        &:before {
+            content: "\f129";
+        }
+}
+
 i.inverted.circular.icon::before {
     display: inline-block;
     transform: scale(.75);
