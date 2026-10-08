@@ -50,11 +50,7 @@ class TIPPCoverageStatement extends AbstractBase {
     startDate (nullable:true, blank:true)
     startVolume (nullable:true, blank:true)
     startIssue (nullable:true, blank:true)
-    endDate (validator: { val, obj ->
-      if(obj.startDate && val && (obj.hasChanged('endDate') || obj.hasChanged('startDate')) && obj.startDate > val) {
-        return ['endDate.endPriorToStart']
-      }
-    }, nullable:true, blank:true)
+    endDate ( nullable:true, blank:true)
     endVolume (nullable:true, blank:true)
     endIssue (nullable:true, blank:true)
     embargo (nullable:true, blank:true)
