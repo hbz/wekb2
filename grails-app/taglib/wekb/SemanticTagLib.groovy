@@ -938,7 +938,7 @@ class SemanticTagLib {
 
         out << """
         <h1 class="ui header wekb-pageHeader ">
-            <i class="circular inverted ${iconClass} wekb-glowIcon icon"
+            <i class="circular inverted ${iconClass} wekb-glowIconHeader icon"
                aria-hidden="true"></i>
             <div class="content">
                 ${title.encodeAsHTML()}

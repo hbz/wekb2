@@ -2,15 +2,31 @@
          Theme Overrides
 *******************************/
 /*******************************
-         Mixin
+         Mixin for header icon
 *******************************/
-.icon-color(@color) {
+.icon-color-header(@color) {
     background-color: @color !important;
 
     box-shadow:
-        0 0 0 @header-icon-ring-size
-        fade(@color, 12%);
+        // glow ring
+        0 0 0 @header-icon-ring-size fade(@color, 12%);
 }
+
+/*******************************
+         Mixin for landing page icon
+*******************************/
+.icon-color-landing(@color) {
+    background-color: @color !important;
+
+    box-shadow:
+        // glow ring
+        0 0 0 @header-icon-ring-size fade(@color, 12%),
+        // white ring
+        0 0 0 (@header-icon-ring-size + 0.4rem) #fff,
+        //  cast shadow
+        0 5px 14px (@header-icon-ring-size + 0.4rem) rgba(0, 0, 0, 0.10);
+}
+
 
 
 @header-icon-size: 3.5rem;
@@ -54,12 +70,19 @@
     }
 }
 
-i.circular.inverted.wekb-glowIcon {
-    &.wekb-package  { .icon-color(@package); }
-    &.wekb-title    { .icon-color(@title); }
-    &.wekb-platform { .icon-color(@platform); }
-    &.wekb-provider { .icon-color(@provider); }
-    &.wekb-vendor   { .icon-color(@vendor); }
-    &.wekb-org      { .icon-color(@org); }
+i.circular.inverted.wekb-glowIconHeader {
+    &.wekb-package  { .icon-color-header(@package); }
+    &.wekb-title    { .icon-color-header(@title); }
+    &.wekb-platform { .icon-color-header(@platform); }
+    &.wekb-provider { .icon-color-header(@provider); }
+    &.wekb-vendor   { .icon-color-header(@vendor); }
+    &.wekb-org      { .icon-color-header(@org); }
 }
-
+i.circular.inverted.wekb-glowIconLanding {
+    &.wekb-package  { .icon-color-landing(@package); }
+    &.wekb-title    { .icon-color-landing(@title); }
+    &.wekb-platform { .icon-color-landing(@platform); }
+    &.wekb-provider { .icon-color-landing(@provider); }
+    &.wekb-vendor   { .icon-color-landing(@vendor); }
+    &.wekb-org      { .icon-color-landing(@org); }
+}
