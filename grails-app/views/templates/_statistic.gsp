@@ -4,7 +4,7 @@
         <article class="statistic" data-delay="0" >
             <div class="statistic-marker" aria-hidden="true">
                 <span class="statistic-dot">
-                    <i class="inverted circular wekb-provider wekb-glowIcon-landiing big icon"></i>
+                    <i class="inverted circular wekb-provider wekb-glowIconLanding large icon"></i>
                 </span>
             </div>
             <div class="statistic-number" data-value="${countComponent['Provider']}" data-decimals="0">
