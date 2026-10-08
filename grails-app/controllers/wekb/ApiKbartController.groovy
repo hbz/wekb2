@@ -7,9 +7,11 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook
 import wekb.annotations.AltchaAnnotation
 import wekb.auth.User
 import wekb.helper.RDStore
+import wekb.utils.DateUtils
 
 import javax.servlet.ServletOutputStream
 import java.security.SecureRandom
+import java.text.SimpleDateFormat
 
 @AltchaAnnotation(comment = AltchaAnnotation.ACCESS_ALLOWED)
 class ApiKbartController {
@@ -101,8 +103,8 @@ class ApiKbartController {
         if(checkRole){
             if (!user.hasRole('ROLE_KBART_API')) {
                 result.code = 'error'
-                result.message = 'This user does not have permission to access the api!'
-                log.warn('checkPermisson: This user does not have permission to access the api!')
+                result.message = 'This user does not have permission to access the kbart api!'
+                log.warn('checkPermisson: This user does not have permission to access the kbart api!')
                 return result
             }
         }
@@ -230,6 +232,40 @@ class ApiKbartController {
                 response.sendError(500)
                 return
             }
+        }else{
+            response.sendError(401)
+            return
+        }
+    }
+
+    def packageLastRun() {
+        log.info("packageLastRun::${params}")
+
+        Map<String, Object> result = checkPermisson(params, 'ROLE_KBART_API')
+
+        if(result.code == 'success') {
+
+            wekb.Package pkg = genericOIDService.resolveOID(params.id)
+
+            if (!pkg) {
+                pkg = wekb.Package.findByUuid(params.id)
+            }
+
+            if (!pkg /*|| (pkg && pkg.getTippCount() > 200000)*/) {
+                response.sendError(404)
+                return
+            }
+
+            String dateString
+
+            if(pkg.kbartSource && pkg.kbartSource.lastRun){
+                SimpleDateFormat sdf = DateUtils.getSDF_NoTime()
+                dateString = sdf.format(pkg.kbartSource.lastRun)
+            }
+
+            result.lastRun = dateString
+            result.message = dateString
+            render result as JSON
         }else{
             response.sendError(401)
             return
