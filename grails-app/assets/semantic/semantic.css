@@ -27725,6 +27725,125 @@ footer h2.ui.header {
 }
 
 /*******************************
+         Theme Overrides
+*******************************/
+
+/*******************************
+         Mixin for header icon
+*******************************/
+
+/*******************************
+         Mixin for landing page icon
+*******************************/
+
+.ui.header.wekb-pageHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ui.header.wekb-pageHeader > i.circular.inverted.icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 3.5rem;
+  width: 3.5rem !important;
+  min-width: 3.5rem;
+  max-width: 3.5rem;
+  height: 3.5rem !important;
+  min-height: 3.5rem;
+  max-height: 3.5rem;
+  box-sizing: border-box;
+  border-radius: 50% !important;
+  padding: 0 !important;
+  margin: 0;
+  font-size: 1.8rem;
+  line-height: 1 !important;
+  color: #fff !important;
+}
+
+.ui.header.wekb-pageHeader > i.icon + .content {
+  display: block;
+  min-width: 0;
+  padding-left: 0;
+}
+
+i.circular.inverted.wekb-glowIconHeader.wekb-package {
+  background-color: #76007a !important;
+  box-shadow: 0 0 0 0.7rem rgba(118, 0, 122, 0.12);
+}
+
+i.circular.inverted.wekb-glowIconHeader.wekb-title {
+  background-color: #2185d0 !important;
+  box-shadow: 0 0 0 0.7rem rgba(33, 133, 208, 0.12);
+}
+
+i.circular.inverted.wekb-glowIconHeader.wekb-platform {
+  background-color: #FBC71C !important;
+  box-shadow: 0 0 0 0.7rem rgba(251, 199, 28, 0.12);
+}
+
+i.circular.inverted.wekb-glowIconHeader.wekb-provider {
+  background-color: #b54800 !important;
+  box-shadow: 0 0 0 0.7rem rgba(181, 72, 0, 0.12);
+}
+
+i.circular.inverted.wekb-glowIconHeader.wekb-vendor {
+  background-color: #5d7c62 !important;
+  box-shadow: 0 0 0 0.7rem rgba(93, 124, 98, 0.12);
+}
+
+i.circular.inverted.wekb-glowIconHeader.wekb-org {
+  background-color: #00b5ad !important;
+  box-shadow: 0 0 0 0.7rem rgba(0, 181, 173, 0.12);
+}
+
+i.circular.inverted.wekb-glowIconHeader.wekb-source {
+  background-color: grey !important;
+  box-shadow: 0 0 0 0.7rem rgba(128, 128, 128, 0.12);
+}
+
+i.circular.inverted.wekb-glowIconHeader.wekb-default {
+  background-color: grey !important;
+  box-shadow: 0 0 0 0.7rem rgba(128, 128, 128, 0.12);
+}
+
+i.circular.inverted.wekb-glowIconHeader.wekb-setting {
+  background-color: grey !important;
+  box-shadow: 0 0 0 0.7rem rgba(128, 128, 128, 0.12);
+}
+
+i.circular.inverted.wekb-glowIconHeader.wekb-overview {
+  background-color: grey !important;
+  box-shadow: 0 0 0 0.7rem rgba(128, 128, 128, 0.12);
+}
+
+i.circular.inverted.wekb-glowIconHeader.wekb-info {
+  background-color: grey !important;
+  box-shadow: 0 0 0 0.7rem rgba(128, 128, 128, 0.12);
+}
+
+i.circular.inverted.wekb-glowIconLanding.wekb-package {
+  background-color: #76007a !important;
+  box-shadow: 0 0 0 0.7rem rgba(118, 0, 122, 0.12), 0 0 0 1.1rem #fff, 0 5px 14px 1.1rem rgba(0, 0, 0, 0.1);
+}
+
+i.circular.inverted.wekb-glowIconLanding.wekb-title {
+  background-color: #2185d0 !important;
+  box-shadow: 0 0 0 0.7rem rgba(33, 133, 208, 0.12), 0 0 0 1.1rem #fff, 0 5px 14px 1.1rem rgba(0, 0, 0, 0.1);
+}
+
+i.circular.inverted.wekb-glowIconLanding.wekb-platform {
+  background-color: #FBC71C !important;
+  box-shadow: 0 0 0 0.7rem rgba(251, 199, 28, 0.12), 0 0 0 1.1rem #fff, 0 5px 14px 1.1rem rgba(0, 0, 0, 0.1);
+}
+
+i.circular.inverted.wekb-glowIconLanding.wekb-provider {
+  background-color: #b54800 !important;
+  box-shadow: 0 0 0 0.7rem rgba(181, 72, 0, 0.12), 0 0 0 1.1rem #fff, 0 5px 14px 1.1rem rgba(0, 0, 0, 0.1);
+}
+
+/*******************************
          Site Overrides
 *******************************/
 /*!
@@ -36843,9 +36962,17 @@ i.inverted.circular.wekb-package.icon {
   color: #fff !important;
 }
 
+i.inverted.circular.wekb-package.icon:before {
+  content: "\f466";
+}
+
 i.inverted.circular.wekb-org.icon {
   background-color: #00b5ad !important;
   color: #fff !important;
+}
+
+i.inverted.circular.wekb-org.icon:before {
+  content: "\f466";
 }
 
 i.inverted.circular.wekb-platform.icon {
@@ -36853,9 +36980,17 @@ i.inverted.circular.wekb-platform.icon {
   color: #fff !important;
 }
 
+i.inverted.circular.wekb-platform.icon:before {
+  content: "\f0c2";
+}
+
 i.inverted.circular.wekb-vendor.icon {
   background-color: #5d7c62 !important;
   color: #fff !important;
+}
+
+i.inverted.circular.wekb-vendor.icon:before {
+  content: "\f2b5";
 }
 
 i.inverted.circular.wekb-title.icon {
@@ -36863,9 +36998,68 @@ i.inverted.circular.wekb-title.icon {
   color: #fff !important;
 }
 
+i.inverted.circular.wekb-title.icon:before {
+  content: "\f02d";
+}
+
 i.inverted.circular.wekb-provider.icon {
   background-color: #b54800 !important;
   color: #fff !important;
+}
+
+i.inverted.circular.wekb-provider.icon:before {
+  content: "\f519";
+}
+
+i.inverted.circular.wekb-source.icon {
+  background-color: grey !important;
+  color: #fff !important;
+}
+
+i.inverted.circular.wekb-source.icon:before {
+  content: "\f381";
+}
+
+i.inverted.circular.wekb-default.icon {
+  background-color: grey !important;
+  color: #fff !important;
+}
+
+i.inverted.circular.wekb-default.icon:before {
+  content: "\f15c";
+}
+
+i.inverted.circular.wekb-overview.icon {
+  background-color: grey !important;
+  color: #fff !important;
+}
+
+i.inverted.circular.wekb-overview.icon:before {
+  content: "\f009";
+}
+
+i.inverted.circular.wekb-setting.icon {
+  background-color: grey !important;
+  color: #fff !important;
+}
+
+i.inverted.circular.wekb-setting.icon:before {
+  content: "\f013";
+}
+
+i.inverted.circular.wekb-info.icon {
+  background-color: grey !important;
+  color: #fff !important;
+}
+
+i.inverted.circular.wekb-info.icon:before {
+  content: "\f129";
+}
+
+i.inverted.circular.icon::before {
+  display: inline-block;
+  transform: scale(0.75);
+  transform-origin: center;
 }
 
 /*******************************

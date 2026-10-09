@@ -435,3 +435,5 @@
 @platform           :   @o-yellow;
 @vendor             :   @o-grey-green;
 @provider           :   @o-brown;
+
+@default            :   grey;

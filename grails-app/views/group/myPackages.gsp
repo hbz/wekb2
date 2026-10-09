@@ -6,7 +6,8 @@
 </head>
 
 <body>
-<h1 class="ui header">My Packages of Curatory Groups (${groups.name.join(',')})</h1>
+<semui:h1HeaderWithIcon iconClass="wekb-package" title="${message(code: 'obj.myPackages')}" groups="${groups}" />
+
 
 %{--<g:link controller="group" action="processPackageUpdate"
         class="ui left floated primary button">Trigger KBART Update (Changed Titles) for all my Packages</g:link>--}%
