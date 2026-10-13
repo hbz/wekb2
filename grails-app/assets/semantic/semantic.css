@@ -45466,6 +45466,7 @@ dd {
   padding: 40px;
   margin: 0;
   background-color: #f7f8fa;
+  border-radius: 0;
 }
 
 .ui.segment.footer.wekb-footer .ui.header,
