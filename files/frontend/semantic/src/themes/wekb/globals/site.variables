@@ -393,7 +393,7 @@
     Brand Colors
 -------------------- */
 
-@primaryColor: #4c4f52;
+@primaryColor: #2e6fd9;
 @secondaryColor: @blue;
 @positiveColor: @green;
 
