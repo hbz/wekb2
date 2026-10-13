@@ -16,7 +16,7 @@ footer {
     }
 }
 /*******************************
-         Every Side Header
+         Every view header
 *******************************/
 @header-icon-size: 3rem;
 @header-icon-symbol-size: 1.5rem;
