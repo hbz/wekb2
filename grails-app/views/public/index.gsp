@@ -20,22 +20,22 @@
 <g:set var="objectConfig" value="${[
         'package' : [
                 icon   : Icon.PACKAGE,
-                color  : 'package',
+                color  : 'packages',
                 tooltip: 'Package'
         ],
         'platform': [
                 icon   : Icon.PLATFORM,
-                color  : 'platform',
+                color  : 'platforms',
                 tooltip: 'Platform'
         ],
         'vendor'  : [
                 icon   : Icon.VENDOR,
-                color  : 'vendor',
+                color  : 'vendors',
                 tooltip: 'Library Suppliers'
         ],
         'org'     : [
                 icon   : Icon.PROVIDER,
-                color  : 'provider',
+                color  : 'providers',
                 tooltip: 'Provider'
         ]
 ]}"/>

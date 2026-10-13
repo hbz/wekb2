@@ -3,7 +3,7 @@
 *******************************/
 
 // ****  Package **** //
-i.inverted.circular.wekb-package.icon {
+i.inverted.circular.wekb-packages.icon {
     background-color: @package!important ;
     color: #fff!important;
     &:before {
@@ -21,7 +21,7 @@ i.inverted.circular.wekb-org.icon {
 }
 
 // ****  platform **** //
-i.inverted.circular.wekb-platform.icon {
+i.inverted.circular.wekb-platforms.icon {
     background-color: @platform!important;
     color: #fff!important;
     &:before {
@@ -30,7 +30,7 @@ i.inverted.circular.wekb-platform.icon {
 }
 
 // ****  Vendor **** //
-i.inverted.circular.wekb-vendor.icon {
+i.inverted.circular.wekb-vendors.icon {
     background-color: @vendor!important;
     color: #fff!important;
     &:before {
@@ -39,7 +39,7 @@ i.inverted.circular.wekb-vendor.icon {
 }
 
 // ****  Title **** //
-i.inverted.circular.wekb-title.icon {
+i.inverted.circular.wekb-titles.icon {
     background-color: @title!important;
     color: #fff!important;
     &:before {
@@ -48,7 +48,7 @@ i.inverted.circular.wekb-title.icon {
 }
 
 // ****  Provider **** //
-i.inverted.circular.wekb-provider.icon {
+i.inverted.circular.wekb-providers.icon {
     background-color: @provider!important;
     color: #fff!important;
         &:before {
@@ -56,7 +56,7 @@ i.inverted.circular.wekb-provider.icon {
         }
 }
 // ****  Source  **** //
-i.inverted.circular.wekb-source.icon {
+i.inverted.circular.wekb-sources.icon {
     background-color: @default!important;
     color: #fff!important;
         &:before {
@@ -64,6 +64,31 @@ i.inverted.circular.wekb-source.icon {
         }
 }
 
+// ****  Curatory Groups **** //
+i.inverted.circular.wekb-curatory-groups.icon {
+    background-color: @default!important;
+    color: #fff!important;
+        &:before {
+            content: "\f15c";
+        }
+}
+// ****  Reference Data Categories **** //
+i.inverted.circular.wekb-reference-data-categories.icon {
+    background-color: @default!important;
+    color: #fff!important;
+        &:before {
+            content: "\f15c";
+        }
+}
+
+// ****  Library Suppliers **** //
+i.inverted.circular.wekb-library-suppliers.icon {
+    background-color: @vendor!important;
+    color: #fff!important;
+        &:before {
+            content: "\f2b5";
+        }
+}
 // ****  Default **** //
 i.inverted.circular.wekb-default.icon {
     background-color: @default!important;

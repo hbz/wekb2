@@ -949,9 +949,16 @@ class SemanticTagLib {
             <div class="sub header">
                 ${subTitle.encodeAsHTML()}
             </div>
-        """
+            """
         }
+        else
+            out << """
+            <div class="sub header">
+                ${body()}
+            </div>
+            """
 
-        out << '</div></h1>'
+        out << '</div>'
+        out << '</h1>'
     }
 }

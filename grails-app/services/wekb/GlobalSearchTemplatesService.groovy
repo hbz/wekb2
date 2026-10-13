@@ -2448,7 +2448,7 @@ class GlobalSearchTemplatesService {
         Map result = [
                 baseclass: 'wekb.KbartSource',
                 msgCode    : 'kbartsource.plural',
-                title    : 'Source',
+                title    : 'Sources',
                 defaultSort : 'name',
                 defaultOrder: 'asc',
                 qbeConfig: [

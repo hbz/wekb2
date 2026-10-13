@@ -1,1 +1,7 @@
 @textColor: rgba(0, 0, 0, 1);
+/* Ordinality */
+@primaryBackgroundImage: #2e6fd9;
+@primaryTextColor: @invertedTextColor;
+@lightPrimaryTextColor: @invertedTextColor;
+@primaryTextShadow: @invertedTextShadow;
+@primaryBoxShadow: @coloredBoxShadow;
