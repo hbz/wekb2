@@ -2530,6 +2530,7 @@ class GlobalSearchTemplatesService {
 
     Map tipps() {
         Map result = [
+                useDistinct: true,
                 minInput: 2,
                 baseclass: 'wekb.TitleInstancePackagePlatform',
                 msgCode    : 'titleinstancepackageplatform.plural',
@@ -2804,6 +2805,7 @@ class GlobalSearchTemplatesService {
 
     Map tippsOfPkg() {
         Map result = [
+                useDistinct: true,
                 baseclass: 'wekb.TitleInstancePackagePlatform',
                 title    : 'Titles',
                 defaultSort : 'name',
