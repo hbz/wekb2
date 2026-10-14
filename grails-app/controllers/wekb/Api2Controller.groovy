@@ -2,6 +2,9 @@ package wekb
 
 import grails.plugin.springsecurity.SpringSecurityService
 import grails.web.servlet.mvc.GrailsParameterMap
+import org.springframework.security.authentication.AuthenticationManager
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
+import org.springframework.security.core.AuthenticationException
 import wekb.annotations.AltchaAnnotation
 import wekb.auth.User
 import grails.converters.JSON
@@ -14,6 +17,7 @@ class Api2Controller {
 
     Api2Service api2Service
     SpringSecurityService springSecurityService
+    AuthenticationManager authenticationManager
 
     /**
      * Check if the api is up. Just return true.
@@ -70,7 +74,7 @@ class Api2Controller {
     def searchApi() {
         log.info("Api2Controller:searchApi ${params}")
 
-        Map<String, Object> result = checkPermisson(params)
+        Map<String, Object> result = checkPermisson(params, "ROLE_API")
 
         if(result.code == 'success') {
 
@@ -98,7 +102,7 @@ class Api2Controller {
 
     def namespaces() {
         log.info("Api2Controller:namespaces ${params}")
-        Map<String, Object> result = checkPermisson(params)
+        Map<String, Object> result = checkPermisson(params, "ROLE_API")
 
         if(result.code == 'success') {
             def results = []
@@ -126,7 +130,7 @@ class Api2Controller {
 
     def refdataCategories() {
         log.info("Api2Controller:refdataCategories ${params}")
-        Map<String, Object> result = checkPermisson(params)
+        Map<String, Object> result = checkPermisson(params, "ROLE_API")
 
         if(result.code == 'success') {
             def results = []
@@ -161,7 +165,7 @@ class Api2Controller {
 
     def groups() {
         log.info("Api2Controller:groups ${params}")
-        Map<String, Object> result = checkPermisson(params)
+        Map<String, Object> result = checkPermisson(params, "ROLE_API")
 
         if(result.code == 'success') {
             def results = []
@@ -206,48 +210,48 @@ class Api2Controller {
         render result as JSON
     }
 
-    private Map checkPermisson(GrailsParameterMap params, String checkRole = null){
+    private Map checkPermisson(GrailsParameterMap params, String checkRole = null) {
+
         Map result = [code: 'success', message: '']
-        User user
 
-        log.info 'API request from ' + request.getRemoteAddr() + ' for ' + request.requestURI + ' ---> ' + request.getHeaderNames().findAll{
-            it in ['host', 'referer', 'cookie', 'user-agent']
-        }.collect{it + ': ' + request.getHeaders( it )}
-
-        if(!springSecurityService.loggedIn){
-
-            if (params.username && params.password) {
-                springSecurityService.reauthenticate(params.username, params.password)
-
-                if(!springSecurityService.loggedIn){
-                    result.code = 'error'
-                    result.message = 'Your login is not correct!'
-                    return result
-                }
-            }else {
-                result.code = 'error'
-                result.message = 'Please set your authentication to login!'
-                log.warn('checkPermisson: Please set your authentication to login!')
-                return result
-            }
+        if (!params.username || !params.password) {
+            return [
+                    code: 'error',
+                    message: 'Please provide username and password!'
+            ]
         }
 
-        user = springSecurityService.getCurrentUser()
+        try {
+            def authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            params.username.toString(),
+                            params.password.toString()
+                    )
+            )
 
-        if(checkRole){
-            if (!user.hasRole('ROLE_COUNTER')) {
-                result.code = 'error'
-                result.message = 'This user does not have permission to access the api!'
-                log.warn('checkPermisson: This user does not have permission to access the api!')
-                return result
+            if (!authentication.authenticated) {
+                return [
+                        code: 'error',
+                        message: 'Your login is not correct!'
+                ]
             }
-        }else {
-            if (!user.apiUserStatus) {
-                result.code = 'error'
-                result.message = 'This user does not have permission to access the api!'
-                log.warn('checkPermisson: This user does not have permission to access the api!')
-                return result
+
+            if (checkRole && !authentication.authorities.any {
+                it.authority == checkRole
+            }) {
+                return [
+                        code: 'error',
+                        message: 'This user does not have permission to access the KBART API!'
+                ]
             }
+
+        } catch (AuthenticationException e) {
+            log.warn("KBART API authentication failed for user: ${params.username}")
+
+            return [
+                    code: 'error',
+                    message: 'Your login is not correct!'
+            ]
         }
 
         return result
@@ -255,7 +259,7 @@ class Api2Controller {
 
     def correctTippDuplicate() {
         log.info("Api2Controller:correctTippDuplicate ${params}")
-        Map<String, Object> result = checkPermisson(params)
+        Map<String, Object> result = checkPermisson(params, "ROLE_API")
 
         if(result.code == 'success') {
             result = api2Service.getCorrectTippDuplicate(params, result)

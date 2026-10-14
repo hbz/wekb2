@@ -2426,7 +2426,7 @@ class KbartImportService {
                             if (!tipp) {
                                 log.error("TIPP creation failed!")
                                 UpdateTippInfo updateTippInfo = new UpdateTippInfo(
-                                        description: "Creating a new Title '${tippMap.name}' failed",
+                                        description: "Creating a new Title '${tippMap.publication_title}' failed",
                                         tipp: null,
                                         startTime: new Date(),
                                         endTime: new Date(),
@@ -2439,7 +2439,7 @@ class KbartImportService {
 
                                 // updatePackageInfo = updatePackageInfo.refresh()
                                 UpdateTippInfo updateTippInfo = new UpdateTippInfo(
-                                        description: "New Title '${tippMap.name}'",
+                                        description: "New Title '${tippMap.publication_title}'",
                                         tipp: tipp,
                                         startTime: new Date(),
                                         endTime: new Date(),

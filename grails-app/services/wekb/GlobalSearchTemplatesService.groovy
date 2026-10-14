@@ -2710,7 +2710,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type     : 'dropDownGroup',
                                         load     : 'ajax',
-                                        baseClass  : 'wekb.TitleInstancePackagePlatform',
+                                        baseClass  : 'Date',
                                         dropDownType  : 'accessStartDate',
                                         prompt     : 'Access Start Date Year',
                                         msgCode    : 'titleinstancepackageplatform.accessStartDate',
@@ -2722,7 +2722,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type     : 'dropDownGroup',
                                         load     : 'ajax',
-                                        baseClass  : 'wekb.TitleInstancePackagePlatform',
+                                        baseClass  : 'Date',
                                         dropDownType  : 'accessEndDate',
                                         prompt     : 'Access End Date Year',
                                         msgCode    : 'titleinstancepackageplatform.accessEndDate',
@@ -2734,7 +2734,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type     : 'dropDownGroup',
                                         load     : 'ajax',
-                                        baseClass  : 'wekb.TitleInstancePackagePlatform',
+                                        baseClass  : 'Date',
                                         dropDownType  : 'dateFirstOnlineYear',
                                         prompt     : 'Date First Online Year',
                                         msgCode    : 'titleinstancepackageplatform.dateFirstOnline',
@@ -2746,7 +2746,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type     : 'dropDownGroup',
                                         load     : 'ajax',
-                                        baseClass  : 'wekb.TitleInstancePackagePlatform',
+                                        baseClass  : 'String',
                                         dropDownType  : 'subjectArea',
                                         prompt     : 'Subject Area',
                                         msgCode    : 'titleinstancepackageplatform.subjectArea',
@@ -2845,6 +2845,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type     : 'dropDownGroup',
                                         load     : 'ajax',
+                                        baseClass: 'String',
                                         dropDownType  : 'publisher',
                                         prompt     : 'Publisher',
                                         msgCode    : 'titleinstancepackageplatform.publisherName',
@@ -2917,7 +2918,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type     : 'dropDownGroup',
                                         load     : 'ajax',
-                                        baseClass  : 'wekb.TitleInstancePackagePlatform',
+                                        baseClass  : 'String',
                                         dropDownType  : 'subjectArea',
                                         prompt     : 'Subject Area',
                                         msgCode    : 'titleinstancepackageplatform.subjectArea',
@@ -2928,7 +2929,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type     : 'dropDownGroup',
                                         load     : 'ajax',
-                                        baseClass  : 'wekb.TitleInstancePackagePlatform',
+                                        baseClass  : 'Date',
                                         dropDownType  : 'dateFirstOnlineYear',
                                         prompt     : 'Date First Online Year',
                                         msgCode    : 'titleinstancepackageplatform.dateFirstOnline',
@@ -2939,7 +2940,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type     : 'dropDownGroup',
                                         load     : 'ajax',
-                                        baseClass  : 'wekb.TitleInstancePackagePlatform',
+                                        baseClass  : 'Date',
                                         dropDownType  : 'accessStartDate',
                                         prompt     : 'Access Start Date Year',
                                         msgCode    : 'titleinstancepackageplatform.accessStartDate',
@@ -2950,7 +2951,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type     : 'dropDownGroup',
                                         load     : 'ajax',
-                                        baseClass  : 'wekb.TitleInstancePackagePlatform',
+                                        baseClass  : 'Date',
                                         dropDownType  : 'accessEndDate',
                                         prompt     : 'Access End Date Year',
                                         msgCode    : 'titleinstancepackageplatform.accessEndDate',
