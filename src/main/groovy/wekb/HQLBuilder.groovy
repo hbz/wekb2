@@ -670,26 +670,26 @@ public class HQLBuilder {
     return null
   }
 
-    static def getValueFromBaseClass(GrailsApplication grailsApplication, String baseClass, String oid){
-        def value
+    static def getValueFromBaseClass(GrailsApplication grailsApplication, String baseClass, String value){
+        def value_FromBaseClass
         def domain_class = grailsApplication.getArtefact('Domain', baseClass)
         if (domain_class) {
             Long objectID
-            if(oid.contains(':')){
-                List oid_components = oid.split(':')
+            if(value.contains(':')){
+                List oid_components = value.split(':')
                 objectID = Long.parseLong(oid_components[1])
             }
             else {
-                objectID = Long.parseLong(oid)
+                objectID = Long.parseLong(value)
             }
 
-            value = domain_class.getClazz().get(objectID)
+            value_FromBaseClass = domain_class.getClazz().get(objectID)
         }
         else {
             log.debug("getValueFromBaseClass -> Unable to locate domain class ${baseClass} or not readable");
-            value = null
+            value_FromBaseClass = value
         }
-        return value
+        return value_FromBaseClass
     }
 
 }

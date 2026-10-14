@@ -398,7 +398,10 @@ class SemanticInplaceTagLib {
 
         if ((attrs.value != null) && (attrs.value instanceof String && attrs.value.length() > 0)) {
             def o = genericOIDService.resolveOID(attrs.value)
-            out << "data-displayValue=\"${o.toString()}\" "
+            if(o)
+                out << "data-display_value=\"${o.toString()}\" "
+            else
+                out << "data-display_value=\"${attrs.value}\" "
         }
 
         if (attrs.elastic) {
@@ -438,9 +441,9 @@ class SemanticInplaceTagLib {
         if ((attrs.value != null) && (attrs.value instanceof String && attrs.value.length() > 0)) {
             def o = genericOIDService.resolveOID(attrs.value)
             if(o)
-                out << "data-displayValue=\"${o.toString()}\" "
+                out << "data-display_value=\"${o.toString()}\" "
             else
-                out << "data-displayValue=\"${attrs.value}\" "
+                out << "data-display_value=\"${attrs.value}\" "
         }
         String placeholder = attrs.placeholder ?: 'Search for ...'
 
@@ -473,8 +476,8 @@ class SemanticInplaceTagLib {
         if ((attrs.value != null) && (attrs.value instanceof String && attrs.value.length() > 0)) {
             def o = genericOIDService.resolveOID(attrs.value)
             if(o)
-                out << "data-displayValue=\"${o.toString()}\" "
-            else out << "data-displayValue=\"${attrs.value}\" "
+                out << "data-display_value=\"${o.toString()}\" "
+            else out << "data-display_value=\"${attrs.value}\" "
         }
         String placeholder = attrs.placeholder ?: 'Search for ...'
 
