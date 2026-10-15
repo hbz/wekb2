@@ -9,13 +9,30 @@
 <body>
 
 <g:if test="${qbetemplate}">
-    <h1 class="ui header">
-        <g:message code="public.search"/> <g:message code="${qbetemplate.msgCode}" default="${qbetemplate.title}"/>
-        <g:if test="${refObject}">for ${refObject.getDomainName()}:
+        <semui:h1HeaderWithIcon
+                iconClass="${qbetemplate.msgCode
+                        ? 'wekb-' + message(code: qbetemplate.msgCode).toLowerCase().replace(' ', '-')
+                        : (refObject
+                        ? 'wekb-' + refObject.getDomainName().toLowerCase().replace(' ', '-') + 's'
+                        : 'wekb-default')}"
+                title="${qbetemplate.msgCode
+                        ? message(code: qbetemplate.msgCode)
+                        : (refObject
+                        ? refObject.getDomainName()
+                        : 'Object')}">
+
+%{--            title="${message(code: qbetemplate.msgCode, default: qbetemplate.title)}" >--}%
+        <g:if test="${refObject}">
+            ${message(code:'public.search')}  for ${refObject.getDomainName()}:
             <g:link controller="resource" action="show" id="${refObject.getOID()}">${refObject.name}</g:link>
         </g:if>
-    </h1>
-</g:if>
+        <g:else>
+            ${message(code:'public.search')}  ${message(code:'provider.maintained')} ${message(code: qbetemplate.msgCode, default: qbetemplate.title).toLowerCase()}
+        </g:else>
+    </semui:h1HeaderWithIcon>
+
+
+    </g:if>
 <g:else>
     <h1 class="ui header"><g:message code="public.search"/></h1>
 </g:else>

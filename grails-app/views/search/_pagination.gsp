@@ -5,8 +5,10 @@
   %{--<semui:paginate controller="${s_controller}" action="${s_action}" id="${params.id}" params="${params}"
                   max="${max}" total="${reccount}"/>--}%
 
+
   <semui:paginateNew controller="${s_controller}" action="${s_action}" id="${params.id}" params="${params}"
                   max="${max}" total="${reccount}"/>
+
 
 <g:javascript>
   $('nav.pagination').each (function () {

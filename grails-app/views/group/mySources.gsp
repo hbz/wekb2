@@ -6,7 +6,7 @@
 </head>
 
 <body>
-    <semui:h1HeaderWithIcon iconClass="wekb-source" title="${message(code: 'obj.mySources')}" groups="${groups}" />
+    <semui:h1HeaderWithIcon iconClass="wekb-sources" title="${message(code: 'my')} ${message(code: 'source.plural')}" groups="${groups}" />
 
 
     <g:if test="${(qbetemplate.message != null)}">

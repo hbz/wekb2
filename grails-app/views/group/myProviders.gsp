@@ -6,7 +6,7 @@
 </head>
 
 <body>
-    <semui:h1HeaderWithIcon iconClass="wekb-provider" title="${message(code: 'obj.myProviders')}" groups="${groups}" />
+    <semui:h1HeaderWithIcon iconClass="wekb-providers" title="${message(code: 'my')} ${message(code: 'provider.plural')}" groups="${groups}" />
 
 
 

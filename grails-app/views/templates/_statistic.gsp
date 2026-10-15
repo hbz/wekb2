@@ -4,7 +4,7 @@
         <article class="statistic" data-delay="0" >
             <div class="statistic-marker" aria-hidden="true">
                 <span class="statistic-dot">
-                    <i class="inverted circular wekb-provider wekb-glowIconLanding large icon"></i>
+                    <i class="inverted circular wekb-providers wekb-glowIconLanding large icon"></i>
                 </span>
             </div>
             <div class="statistic-number" data-value="${countComponent['Provider']}" data-decimals="0">
@@ -37,7 +37,7 @@
         <article class="statistic" data-delay="350" >
             <div class="statistic-marker" aria-hidden="true">
                 <span class="statistic-dot">
-                    <i class="inverted circular wekb-platform wekb-glowIconLanding large icon"></i>
+                    <i class="inverted circular wekb-platforms wekb-glowIconLanding large icon"></i>
                 </span>
             </div>
 
@@ -74,7 +74,7 @@
         <article class="statistic" data-delay="700">
             <div class="statistic-marker" aria-hidden="true">
                 <span class="statistic-dot">
-                    <i class="inverted circular wekb-package wekb-glowIconLanding large icon"></i>
+                    <i class="inverted circular wekb-packages wekb-glowIconLanding large icon"></i>
                 </span>
             </div>
             <div class="statistic-number" data-value="${countComponent['Package']}" data-decimals="0">
@@ -107,7 +107,7 @@
         <article class="statistic" data-delay="1050">
             <div class="statistic-marker" aria-hidden="true">
                 <span class="statistic-dot">
-                    <i class="inverted circular wekb-title wekb-glowIconLanding large icon"></i>
+                    <i class="inverted circular wekb-titles wekb-glowIconLanding large icon"></i>
                 </span>
             </div>
             <div class="statistic-number" data-value="${countComponent['TIPP']}"

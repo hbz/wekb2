@@ -5,3 +5,9 @@
 @invertedSubMenuColor: #B5B5B5;
 
 @subMenuFontSize: 1em;
+
+
+/* Pagination */
+@paginationMinWidth: 3em;
+@paginationActiveBackground: lighten(@primaryColor, 40);
+@paginationActiveTextColor: @selectedTextColor;

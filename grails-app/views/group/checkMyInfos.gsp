@@ -6,7 +6,7 @@
 </head>
 
 <body>
-<h1 class="ui header">Check my Infos (${groups.name.join(',')})</h1>
+<semui:h1HeaderWithIcon iconClass="wekb-info" title="${message(code: 'check.my.infos')}" groups="${groups}" />
 
 
 <div class="ui accordion">

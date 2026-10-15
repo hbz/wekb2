@@ -333,8 +333,6 @@ class SemanticTagLib {
         int laststep = Math.round(Math.ceil((total / max) as double)) as int
 
 
-        out << '<!--.pagination-->'
-        out << '<div class="ui center aligned basic segment">'
         out << '<nav class="ui pagination wrapping menu" aria-label="pagination2">'
 
         if (currentstep > firststep) {
@@ -426,7 +424,6 @@ class SemanticTagLib {
         }
 
         out << '</nav>'
-        out << '</div><!--.pagination-->'
     }
 
     def paginateNew = { attrs ->
@@ -496,8 +493,7 @@ class SemanticTagLib {
         Map nextMap = [title: (attrs.next ?: messageSource.getMessage('default.paginate.next', null, null, locale))]
 
 
-        out << '<div class="ui center aligned basic segment">'
-        out << '<nav class="ui pagination wrapping menu">'
+        out << '<nav class="ui pagination borderless wrapping menu">'
 
         if (steps && laststep > firststep) {
             if (maxsteps > laststep) { // | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | > |
@@ -661,7 +657,6 @@ class SemanticTagLib {
         out << '    </div>'
         out << '</div>'
         out << '</nav>'
-        out << '</div><!--.pagination-->'
     }
 
     Closure showOutGoingLink = { Map attrs ->
@@ -949,9 +944,16 @@ class SemanticTagLib {
             <div class="sub header">
                 ${subTitle.encodeAsHTML()}
             </div>
-        """
+            """
         }
+        else
+            out << """
+            <div class="sub header">
+                ${body()}
+            </div>
+            """
 
-        out << '</div></h1>'
+        out << '</div>'
+        out << '</h1>'
     }
 }

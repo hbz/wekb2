@@ -16,8 +16,11 @@ footer {
     }
 }
 /*******************************
-         Theme Overrides
+         Every view header
 *******************************/
+@header-icon-size: 3rem;
+@header-icon-symbol-size: 1.5rem;
+@header-icon-ring-size: .6rem;
 /*******************************
          Mixin for header icon
 *******************************/
@@ -43,13 +46,6 @@ footer {
         //  cast shadow
         0 5px 14px (@header-icon-ring-size + 0.4rem) rgba(0, 0, 0, 0.10);
 }
-
-
-
-@header-icon-size: 3.5rem;
-@header-icon-symbol-size: 1.8rem;
-@header-icon-ring-size: .7rem;
-
 .ui.header.wekb-pageHeader {
     display: flex;
     align-items: center;
@@ -88,21 +84,25 @@ footer {
 }
 
 i.circular.inverted.wekb-glowIconHeader {
-    &.wekb-package  { .icon-color-header(@package); }
-    &.wekb-title    { .icon-color-header(@title); }
-    &.wekb-platform { .icon-color-header(@platform); }
-    &.wekb-provider { .icon-color-header(@provider); }
-    &.wekb-vendor   { .icon-color-header(@vendor); }
-    &.wekb-org      { .icon-color-header(@org); }
-    &.wekb-source   { .icon-color-header(@default); }
-    &.wekb-default  { .icon-color-header(@default); }
-    &.wekb-setting  { .icon-color-header(@default); }
-    &.wekb-overview { .icon-color-header(@default); }
-    &.wekb-info     { .icon-color-header(@default); }
+    &.wekb-packages                 { .icon-color-header(@package); }
+    &.wekb-titles                   { .icon-color-header(@title); }
+    &.wekb-platforms                { .icon-color-header(@platform); }
+    &.wekb-providers                { .icon-color-header(@provider); }
+    &.wekb-vendors                  { .icon-color-header(@vendor); }
+    &.wekb-org                      { .icon-color-header(@org); }
+    &.wekb-sources                  { .icon-color-header(@default); }
+    &.wekb-default                  { .icon-color-header(@default); }
+    &.wekb-setting                  { .icon-color-header(@default); }
+    &.wekb-overview                 { .icon-color-header(@default); }
+    &.wekb-info                     { .icon-color-header(@default); }
+    &.wekb-sources                  { .icon-color-header(@default); }
+    &.wekb-curatory-groups          { .icon-color-header(@default); }
+    &.wekb-reference-data-categories { .icon-color-header(@default); }
+    &.wekb-library-suppliers         { .icon-color-header(@default); }
 }
 i.circular.inverted.wekb-glowIconLanding {
-    &.wekb-package  { .icon-color-landing(@package); }
-    &.wekb-title    { .icon-color-landing(@title); }
-    &.wekb-platform { .icon-color-landing(@platform); }
-    &.wekb-provider { .icon-color-landing(@provider); }
+    &.wekb-packages  { .icon-color-landing(@package); }
+    &.wekb-titles    { .icon-color-landing(@title); }
+    &.wekb-platforms { .icon-color-landing(@platform); }
+    &.wekb-providers { .icon-color-landing(@provider); }
 }

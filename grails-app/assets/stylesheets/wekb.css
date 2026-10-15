@@ -607,3 +607,23 @@ main.ui.main.fluid.container:has(.wekb-altchaCard) {
         scale: 1 !important;
     }
 }
+/********************************
+ * Table Toolbar
+ ********************************/
+.ui.segment.wekb-tableToolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+}
+
+.ui.segment.wekb-tableToolbar > .ui.header,
+.ui.segment.wekb-tableToolbar > .ui.pagination.menu {
+    margin: 0;
+}
+.ui.segment.wekb-tableToolbar + form .ui.table {
+    border-top: none;
+    border-bottom: none;
+}
