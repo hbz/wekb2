@@ -124,7 +124,7 @@ i.inverted.circular.wekb-info.icon {
 
 i.inverted.circular.icon::before {
     display: inline-block;
-    transform: scale(.75);
+    transform: scale(.6);
     transform-origin: center;
 }
 

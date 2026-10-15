@@ -20,7 +20,7 @@ footer {
 *******************************/
 @header-icon-size: 3rem;
 @header-icon-symbol-size: 1.5rem;
-@header-icon-ring-size: .7rem;
+@header-icon-ring-size: .6rem;
 /*******************************
          Mixin for header icon
 *******************************/

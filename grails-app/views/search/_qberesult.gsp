@@ -8,14 +8,21 @@
 
 <g:if test="${request.isAjax()}">
 
-    <div class="ui header">
-        <h1><g:message code="search.show.results" args="[offset.toInteger() + 1, lasthit.toInteger() as int, reccount.toInteger() as int]"/></h1>
+    <!--.pagination-->
+    <div class="ui top attached segment wekb-tableToolbar">
+        <h2 class="ui header">
+            ${reccount.toInteger()} ${qbetemplate.msgCode
+                    ? message(code: qbetemplate.msgCode)
+                    : (refObject
+                    ? refObject.getDomainName()
+                    : 'Object')}
+            <div class="sub header"><g:message code="search.show.results" args="[offset.toInteger() + 1, lasthit.toInteger() as int, reccount.toInteger() as int]"/></div>
+        </h2>
+        <g:render template="/search/pagination" model="${params}" />
     </div>
-
-    <g:render template="/search/pagination" model="${params}"/>
-
+    <!--.pagination-->
     <div style="overflow-x: auto">
-    <table class="ui selectable sortable padded table">
+        <table class="ui selectable sortable padded table">
         <thead>
         <tr>
             <th>#</th>
@@ -90,18 +97,33 @@
         </tbody>
     </table>
     </div>
-    <g:render template="/search/pagination" model="${params}"/>
+    <!--.pagination-->
+    <div class="ui bottom attached segment wekb-tableToolbar">
+        <h2 class="ui header">
+            <div class="sub header"><g:message code="search.show.results" args="[offset.toInteger() + 1, lasthit.toInteger() as int, reccount.toInteger() as int]"/></div>
+        </h2>
+        <g:render template="/search/pagination" model="${params}"/>
+    </div>
+    <!--.pagination-->
 </g:if>
 <g:else>
 
     <g:set var="nowDate" value="${new java.util.Date()}"/>
-    <div class="ui header">
-        <h1><g:message code="search.show.results" args="[offset.toInteger() + 1, lasthit.toInteger() as int, reccount.toInteger() as int]"/></h1>
-    </div>
 
     <div class="batch-all-info" style="display:none;"></div>
-
-    <g:render template="/search/pagination" model="${params}"/>
+    <!--.pagination-->
+    <div class="ui top attached segment wekb-tableToolbar">
+        <h2 class="ui header">
+            ${reccount.toInteger()} ${qbetemplate.msgCode
+                    ? message(code: qbetemplate.msgCode)
+                    : (refObject
+                    ? refObject.getDomainName()
+                    : 'Object')}
+            <div class="sub header"><g:message code="search.show.results" args="[offset.toInteger() + 1, lasthit.toInteger() as int, reccount.toInteger() as int]"/></div>
+        </h2>
+        <g:render template="/search/pagination" model="${params}"/>
+    </div>
+    <!--.pagination-->
     <g:form controller="workflow" action="action" method="post" params="${params}" class='action-form'>
        <div style="overflow-x: auto">
         <table class="ui selectable sortable padded table">
@@ -241,7 +263,14 @@
         </table>
        </div>
     </g:form>
-    <g:render template="/search/pagination" model="${params}"/>
+    <!--.pagination-->
+    <div class="ui bottom attached segment wekb-tableToolbar">
+        <h2 class="ui header">
+            <div class="sub header"><g:message code="search.show.results" args="[offset.toInteger() + 1, lasthit.toInteger() as int, reccount.toInteger() as int]"/></div>
+        </h2>
+        <g:render template="/search/pagination" model="${params}"/>
+    </div>
+    <!--.pagination-->
 </g:else>
 
 <br>
