@@ -65,7 +65,6 @@ class KbartProcessService {
 
             // WEKB
             "oa_type",
-            "ddc",
             "medium",
             "doi_identifier",
             "subject_area",
@@ -310,7 +309,7 @@ class KbartProcessService {
                                             invalidKbartRowsForTipps << kbartRow.rowIndex
 
                                             UpdateTippInfo updateTippInfo = new UpdateTippInfo(
-                                                    description: validation_result.errorMessage+" (Row: "+kbartRow.rowIndex+")",
+                                                    description: validation_result.errorMessage+" (Row: "+(kbartRow.rowIndex+1)+")",
                                                     tipp: null,
                                                     startTime: new Date(),
                                                     endTime: new Date(),
@@ -338,19 +337,13 @@ class KbartProcessService {
                                         try {
 
                                             if(updateTipp == null){
-                                                    def trimmed_url = kbartRow.title_url ? kbartRow.title_url.trim() : null
-                                                    log.debug("push in map to create new TIPP..")
-                                                    def tmap = [
-                                                            'pkg'         : pkg,
-                                                            'hostPlatform': pkg.nominalPlatform,
-                                                            'url'         : trimmed_url,
-                                                            'status'      : (kbartRow.status ?: 'Current'),
-                                                            'name'        : (kbartRow.publication_title ?: null),
-                                                            'type'        : (kbartRow.publication_type ?: null),
-                                                            'medium'    : (kbartRow.medium ?: null),
-                                                            'kbartRowMap': kbartRow
-                                                    ]
-                                                    kbartRowsToCreateTipps << tmap
+                                                def trimmed_url = kbartRow.title_url ? kbartRow.title_url.trim() : null
+                                                log.debug("push in map to create new TIPP..")
+                                                Map tmap = kbartRow
+                                                tmap.pkg = pkg
+                                                tmap.hostPlatform = pkg.nominalPlatform
+                                                tmap.url = trimmed_url
+                                                kbartRowsToCreateTipps << tmap
 
 
                                             }else if(updateTipp && !(updateTipp.id in tippsFound)) {
@@ -1054,7 +1047,12 @@ class KbartProcessService {
                         }
                 }
 
-                if (rowMap.publication_title) {
+                rowMap.rowIndex = record.recordNumber
+                result << rowMap
+                importedRows++
+
+
+               /* if (rowMap.publication_title) {
                     rowMap.rowIndex = record.recordNumber
 
                     result << rowMap
@@ -1062,11 +1060,22 @@ class KbartProcessService {
                 } else {
                     skippedRows++
 
-                    log.warn(
-                            "Ignoring KBART row ${record.recordNumber}: " +
-                                    "publication_title is empty or missing"
-                    )
-                }
+                    log.warn("Ignoring KBART row ${record.recordNumber}: publication_title is empty or missing")
+
+                    UpdateTippInfo updateTippInfo = new UpdateTippInfo(
+                            description: "Ignoring KBART row ${record.recordNumber}: publication_title is empty or missing",
+                            tipp: null,
+                            startTime: new Date(),
+                            endTime: new Date(),
+                            status: RDStore.UPDATE_STATUS_FAILED,
+                            type: RDStore.UPDATE_TYPE_INVAILD_TITLE,
+                            oldValue: '',
+                            newValue: '',
+                            tippProperty: 'name',
+                            kbartProperty: 'publication_title',
+                            updatePackageInfo: updatePackageInfo
+                    ).save()
+                }*/
             }
 
             if (countRows == 0) {
@@ -1077,19 +1086,13 @@ class KbartProcessService {
                 return result
             }
 
-            log.info(
-                    "KBART processing completed: " +
+            log.info("KBART processing completed: " +
                             "${countRows} rows processed, " +
                             "${importedRows} rows imported, " +
-                            "${skippedRows} rows skipped"
-            )
+                            "${skippedRows} rows skipped")
 
         } catch (Exception exception) {
-            log.error(
-                    "Error by KbartProcess: ${exception.message}",
-                    exception
-            )
-
+            log.error("Error by KbartProcess: ${exception.message}", exception)
             markImportAsFailed("An error occurred while processing the KBART file. More information can be seen in the system log. ")
 
         } finally {
@@ -1097,19 +1100,13 @@ class KbartProcessService {
                 try {
                     parser.close()
                 } catch (Exception closeException) {
-                    log.warn(
-                            "Could not close KBART CSV parser: " +
-                                    "${closeException.message}"
-                    )
+                    log.warn("Could not close KBART CSV parser: ${closeException.message}")
                 }
             } else if (reader != null) {
                 try {
                     reader.close()
                 } catch (Exception closeException) {
-                    log.warn(
-                            "Could not close KBART reader: " +
-                                    "${closeException.message}"
-                    )
+                    log.warn("Could not close KBART reader: ${closeException.message}")
                 }
             }
         }

@@ -1,6 +1,7 @@
 package wekb
 
 import grails.plugin.springsecurity.SpringSecurityService
+import org.apache.poi.xssf.streaming.SXSSFWorkbook
 import org.apache.xmlbeans.impl.store.Cur
 import wekb.helper.RCConstants
 import wekb.helper.RDStore
@@ -233,15 +234,25 @@ class GroupController {
 
         String export_date = dateFormatService.formatDate(new Date());
 
-        String filename = "wekb_my_packages_${export_date}.tsv"
+        String filename = "wekb_my_packages_${export_date}.xlsx"
 
         try {
-            response.setContentType('text/tab-separated-values');
+            SXSSFWorkbook workbook = exportService.exportPackagesAsExcel(searchResult.result.recset)
+
+            response.contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+
             response.setHeader("Content-disposition", "attachment; filename=\"${filename}\"")
 
-            def out = response.outputStream
+            try {
 
-            exportService.exportPackagesAsTsv(out, searchResult.result.recset)
+                workbook.write(response.outputStream)
+                response.outputStream.flush()
+
+            } finally {
+
+                workbook.dispose()
+                workbook.close()
+            }
 
         }
         catch (Exception e) {

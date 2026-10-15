@@ -509,13 +509,6 @@ class FTUpdateService {
           result.prices.add(price)
         }
 
-        result.ddcs = []
-        kbc.ddcs.each { ddc ->
-          result.ddcs.add([value     : ddc.value,
-                           value_de  : ddc.value_de,
-                           value_en  : ddc.value_en])
-        }
-
         result.languages = []
         kbc.languages.each { ComponentLanguage kbl ->
           result.languages.add([value     : kbl.language.value,

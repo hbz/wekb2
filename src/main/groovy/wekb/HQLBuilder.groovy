@@ -216,8 +216,46 @@ public class HQLBuilder {
                       ? "case when ${updateSuccessDateQuery} is null then 0 else 1 end"
                       : "case when ${updateSuccessDateQuery} is null then 1 else 0 end"
 
-              order_clause = """order by ${nullOrder} asc,
+              order_clause = """ order by ${nullOrder} asc,
         updateSuccessDate ${hql_builder_context.order}"""
+              break
+          case 'kbartSourceAutomaticUpdates':
+              String automaticUpdatesQuery = """(select ks.automaticUpdates
+                     from wekb.KbartSource as ks
+                     where ks.id = o.kbartSource.id)"""
+
+              fetch_hql = fetch_hql.replaceFirst(
+                      " o.id ",
+                      " o.id, ${automaticUpdatesQuery} as kbartSourceAutomaticUpdates "
+              )
+
+              count_clause = "${automaticUpdatesQuery} as kbartSourceAutomaticUpdates"
+
+              String nullOrder = hql_builder_context.order?.toLowerCase() == 'asc'
+                      ? "case when ${automaticUpdatesQuery} is null then 0 else 1 end"
+                      : "case when ${automaticUpdatesQuery} is null then 1 else 0 end"
+
+              order_clause = """ order by ${nullOrder} asc,
+                        kbartSourceAutomaticUpdates ${hql_builder_context.order}"""
+              break
+          case 'kbartSourceLastRun':
+              String lastRunQuery = """(select ks.lastRun
+                     from wekb.KbartSource as ks
+                     where ks.id = o.kbartSource.id)"""
+
+              fetch_hql = fetch_hql.replaceFirst(
+                      " o.id ",
+                      " o.id, ${lastRunQuery} as kbartSourceLastRun "
+              )
+
+              count_clause = "${lastRunQuery} as kbartSourceLastRun"
+
+              String nullOrder = hql_builder_context.order?.toLowerCase() == 'asc'
+                      ? "case when ${lastRunQuery} is null then 0 else 1 end"
+                      : "case when ${lastRunQuery} is null then 1 else 0 end"
+
+              order_clause = """ order by ${nullOrder} asc,
+                        kbartSourceLastRun ${hql_builder_context.order}"""
               break
       }
       fetch_hql += order_clause
@@ -318,7 +356,7 @@ public class HQLBuilder {
         break;
       case 'in':
         hql_builder_context."${addToQuery}".add("${crit.defn.contextTree.negate?'not ':''}${scoped_property} in (:${crit.defn.qparam})")
-        if ( crit.defn.type=='lookup' || crit.defn.type=='dropDown' || crit.defn.type=='dropDownGroup' ) {
+        if ( (crit.defn.type=='lookup' || crit.defn.type=='dropDown' || crit.defn.type=='dropDownGroup') && crit.defn.multiple != 'true') {
           List values = [], parsedValues = []
           if(crit.value instanceof String)
             values << crit.value
@@ -329,7 +367,7 @@ public class HQLBuilder {
             parsedValues << value
           }
           hql_builder_context.bindvars[crit.defn.qparam] = parsedValues
-        }else if (crit.defn.type=='dropDownMultiple'){
+        }else if ((crit.defn.type=='lookup' || crit.defn.type=='dropDown' || crit.defn.type=='dropDownGroup') && crit.defn.multiple == 'true'){
             List values = [], parsedValues = []
             if(crit.value instanceof String)
                 values = crit.value.split(',')
@@ -412,14 +450,19 @@ public class HQLBuilder {
             }
           }
           if(crit.defn.baseClass == 'wekb.Vendor') {
+              //placeHolderForVendor
             def value = Vendor.get(crit.value)
             if(value) {
-              if(baseclass.toString() == 'class wekb.Org') {
-                hql_builder_context."${addToQuery}".add("${crit.defn.contextTree.negate ? 'not ' : ''} o in (select p.provider from Package as p join p.vendors as vendor_pkg where vendor_pkg.vendor = :${crit.defn.qparam}) ");
-                hql_builder_context.bindvars[crit.defn.qparam] = value
-              }
+                if (baseclass.toString() == 'class wekb.Org') {
+                    hql_builder_context."${addToQuery}".add("${crit.defn.contextTree.negate ? 'not ' : ''} o in (select p.provider from Package as p join p.vendors as vendor_pkg where vendor_pkg.vendor = :${crit.defn.qparam}) ");
+                    hql_builder_context.bindvars[crit.defn.qparam] = value
+                }
                 if (baseclass.toString() == 'class wekb.Package') {
                     hql_builder_context."${addToQuery}".add("${crit.defn.contextTree.negate ? 'not ' : ''} o in (select vendor_pkg.pkg from Package as p join p.vendors as vendor_pkg where vendor_pkg.vendor = :${crit.defn.qparam}) ");
+                    hql_builder_context.bindvars[crit.defn.qparam] = value
+                }
+                if (baseclass.toString() == 'class wekb.TitleInstancePackagePlatform') {
+                    hql_builder_context."${addToQuery}".add("${crit.defn.contextTree.negate ? 'not ' : ''} o.pkg in (select vendor_pkg.pkg from Package as p join p.vendors as vendor_pkg where vendor_pkg.vendor = :${crit.defn.qparam}) ");
                     hql_builder_context.bindvars[crit.defn.qparam] = value
                 }
             }
@@ -627,26 +670,26 @@ public class HQLBuilder {
     return null
   }
 
-    static def getValueFromBaseClass(GrailsApplication grailsApplication, String baseClass, String oid){
-        def value
+    static def getValueFromBaseClass(GrailsApplication grailsApplication, String baseClass, String value){
+        def value_FromBaseClass
         def domain_class = grailsApplication.getArtefact('Domain', baseClass)
         if (domain_class) {
             Long objectID
-            if(oid.contains(':')){
-                List oid_components = oid.split(':')
+            if(value.contains(':')){
+                List oid_components = value.split(':')
                 objectID = Long.parseLong(oid_components[1])
             }
             else {
-                objectID = Long.parseLong(oid)
+                objectID = Long.parseLong(value)
             }
 
-            value = domain_class.getClazz().get(objectID)
+            value_FromBaseClass = domain_class.getClazz().get(objectID)
         }
         else {
             log.debug("getValueFromBaseClass -> Unable to locate domain class ${baseClass} or not readable");
-            value = null
+            value_FromBaseClass = value
         }
-        return value
+        return value_FromBaseClass
     }
 
 }

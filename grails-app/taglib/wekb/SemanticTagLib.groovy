@@ -776,7 +776,7 @@ class SemanticTagLib {
 
         String aClass = ((this.pageScope.variables?.actionName == attrs.action && ((attrs.activeTab && attrs.activeTab == params.activeTab) || (attrs.tab && attrs.tab == params[attrs.subTab]))) ? 'item active' : 'item') + (attrs.class ? ' ' + attrs.class : '')
 
-        String counts = (attrs.counts >= 0) ? '<div class="ui '  + ' circular primary label">' + attrs.counts + '</div>' : null
+        String counts = (attrs.counts >= 0) ? '<div class="ui '  + ' circular primary label">' + String.format(Locale.ENGLISH, '%,d', attrs.counts) + '</div>' : null
 
         linkBody = counts ? linkBody + counts : linkBody
 
@@ -807,7 +807,8 @@ class SemanticTagLib {
         out << body()
 
         if (attrs.counts != null) {
-            out << '<div class="ui floating primary circular label">'+attrs.counts+'</div>'
+            String formatted = String.format(Locale.ENGLISH, '%,d', attrs.counts)
+            out << '<div class="ui floating primary circular label">'+formatted+'</div>'
         }
         out << '</div>'
     }

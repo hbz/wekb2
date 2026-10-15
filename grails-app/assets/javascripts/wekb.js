@@ -317,116 +317,6 @@ $(function () {
     $('.search.dropdown .search').removeAttr('autocomplete');
 
 
-    $(".simpleReferenceDropdown").each(function() {
-        var simpleReferenceDropdownURL = ajaxLookUp + "/?baseClass="+$(this).children('input')[0].getAttribute('data-domain')+"&filter1="+$(this).children('input')[0].getAttribute('data-filter1')+"&q={query}"
-
-        $(this).dropdown({
-            clearable: true,
-            forceSelection: false,
-            preserveHTML : false,
-            error : {
-                source      : 'Cannot perform search. No source specified, and Semantic API module not included.',
-                noResults   : 'No results found for your search.',
-                logging     : 'Error encountered during debug logging; operation aborted.',
-                noTemplate  : 'No valid template name specified.',
-                serverError : 'An issue occurred while querying the server.',
-                maxResults  : 'The maxResults setting requires an array of results.',
-                method      : 'The specified method is not defined.'
-            },
-            apiSettings: {
-                // this url parses query server side and returns filtered results
-                url: simpleReferenceDropdownURL,
-                //url: simpleReferenceDropdownURL + "/?baseClass=wekb.RefdataValue&filter1=Component.Status&q={query}"
-                cache: false
-            },
-            fields: {
-                remoteValues: 'values', // grouping for api results
-                values: 'values', // grouping for all dropdown values
-                name: 'text',   // displayed dropdown text
-                value: 'id'   //
-            },
-            onShow: function () {
-                current = $(this).val();
-                $(this).dropdown('set selected', current);
-                $(this).dropdown('set active', current);
-            }
-        });
-        $(this).find('.search').removeAttr('autocomplete');
-    });
-
-    $(".componentsDropDown").each(function() {
-        var componentsDropDownDropdownURL = componentsDropDown + "/?baseClass="+$(this).children('input')[0].getAttribute('data-domain')+"&filter1="+$(this).children('input')[0].getAttribute('data-filter1')+"&q={query}"
-
-        $(this).dropdown({
-            clearable: true,
-            forceSelection: false,
-            preserveHTML : false,
-            error : {
-                source      : 'Cannot perform search. No source specified, and Semantic API module not included.',
-                noResults   : 'No results found for your search.',
-                logging     : 'Error encountered during debug logging; operation aborted.',
-                noTemplate  : 'No valid template name specified.',
-                serverError : 'An issue occurred while querying the server.',
-                maxResults  : 'The maxResults setting requires an array of results.',
-                method      : 'The specified method is not defined.'
-            },
-            apiSettings: {
-                // this url parses query server side and returns filtered results
-                url: componentsDropDownDropdownURL,
-                cache: false
-            },
-            fields: {
-                remoteValues: 'values', // grouping for api results
-                values: 'values', // grouping for all dropdown values
-                name: 'text',   // displayed dropdown text
-                value: 'value'   //
-            },
-            onShow: function () {
-                current = $(this).val();
-                $(this).dropdown('set selected', current);
-                $(this).dropdown('set active', current);
-            }
-        });
-        $(this).find('.search').removeAttr('autocomplete');
-    });
-
-    $(".selectedDropDown").each(function() {
-        var selectedDropDownDropdownURL = selectedDropDown + "&dropDownType="+$(this).children('input')[0].getAttribute('data-domain')+"&refObject="+$(this).children('input')[0].getAttribute('data-refObject')+"&qp_status_id="+$(this).children('input')[0].getAttribute('data-qpStatusId')+"&q={query}"
-
-        $(this).dropdown({
-            clearable: true,
-            forceSelection: false,
-            preserveHTML : false,
-            error : {
-                source      : 'Cannot perform search. No source specified, and Semantic API module not included.',
-                noResults   : 'No results found for your search.',
-                logging     : 'Error encountered during debug logging; operation aborted.',
-                noTemplate  : 'No valid template name specified.',
-                serverError : 'An issue occurred while querying the server.',
-                maxResults  : 'The maxResults setting requires an array of results.',
-                method      : 'The specified method is not defined.'
-            },
-            apiSettings: {
-                // this url parses query server side and returns filtered results
-                url: selectedDropDownDropdownURL,
-                cache: false
-            },
-            fields: {
-                remoteValues: 'values', // grouping for api results
-                values: 'values', // grouping for all dropdown values
-                name: 'text',   // displayed dropdown text
-                value: 'value'   //
-            },
-            onShow: function () {
-                current = $(this).val();
-                $(this).dropdown('set selected', current);
-                $(this).dropdown('set active', current);
-            }
-        });
-        $(this).find('.search').removeAttr('autocomplete');
-    });
-
-
     $('.message .close')
         .on('click', function() {
             $(this)
@@ -476,5 +366,161 @@ $(function () {
     // datepicker + yearpicker
     $(".datepicker").calendar(wekb.configs.datepicker);
     $(".yearpicker").calendar(wekb.configs.yearpicker);
+
+
+    //Initialize Dropdown
+    function initializeRemoteDropdown(selector, buildUrl) {
+
+        $(selector).each(function () {
+
+            const $dropdown = $(this);
+            const $input = $dropdown.children('input[type="hidden"]');
+            const $menu = $dropdown.children('.menu');
+
+            if ($dropdown.data('remoteDropdownInitialized')) {
+                return;
+            }
+
+            if (!$input.length || !$menu.length) {
+                console.warn('Invalid dropdown structure:', this);
+                return;
+            }
+
+            const isMultiple = $dropdown.hasClass('multiple');
+
+            let selectedItems = [];
+
+            try {
+                const rawData = $input.attr('data-selected-items');
+
+                if (rawData) {
+                    const parsed = JSON.parse(rawData);
+
+                    if (Array.isArray(parsed)) {
+                        selectedItems = parsed;
+                    }
+                }
+            } catch (error) {
+                console.error('Invalid data-selected-items:', error);
+            }
+
+            const seen = new Set();
+
+            selectedItems = selectedItems.filter(item => item && item.value != null).map(item => ({
+                    value: String(item.value).trim(),
+                    text: String(item.text ?? item.value).trim()
+                })).filter(item => {
+                    if (!item.value || seen.has(item.value)) {
+                        return false;
+                    }
+                    seen.add(item.value);
+                    return true;
+                });
+
+            if (!isMultiple) {
+                selectedItems = selectedItems.slice(0, 1);
+            }
+
+            const selectedValues = selectedItems.map(item => item.value);
+
+            const dropdownURL = buildUrl($input);
+
+            $menu.empty();
+
+            selectedItems.forEach(function (item) {
+
+                $menu.append(
+                    $('<div>', {
+                        class: 'item',
+                        'data-value': item.value,
+                        'data-text': item.text,
+                        text: item.text
+                    })
+                );
+            });
+
+            $input.val(isMultiple ? selectedValues.join(',') : (selectedValues[0] || ''));
+
+            $dropdown.dropdown({
+                clearable: true,
+                forceSelection: false,
+                preserveHTML: false,
+                apiSettings: {
+                    url: dropdownURL,
+                    cache: false
+                },
+                fields: {
+                    remoteValues: 'values',
+                    values: 'values',
+                    name: 'text',
+                    value: 'id'
+                },
+                onChange: function (value, text) {
+                    console.debug('Dropdown changed:', {
+                        name: $input.attr('name'),
+                        value: value,
+                        text: text
+                    });
+                }
+            });
+
+            if (selectedValues.length > 0) {
+                if (isMultiple) {
+                    $dropdown.dropdown(
+                        'set exactly',
+                        selectedValues
+                    );
+                } else {
+                    $dropdown.dropdown(
+                        'set selected',
+                        selectedValues[0]
+                    );
+                }
+            }
+
+            $dropdown.find('input.search').removeAttr('autocomplete');
+            $dropdown.data('remoteDropdownInitialized', true);
+
+            /*console.debug('Remote dropdown initialized:', {
+                name: $input.attr('name'),
+                multiple: isMultiple,
+                selectedValues: selectedValues,
+                url: dropdownURL
+            });*/
+        });
+    }
+
+
+    // Components dropdown
+    initializeRemoteDropdown('.componentsDropDown', function($input) {
+        return componentsDropDown +
+            '/?baseClass=' +
+            encodeURIComponent($input.attr('data-domain') || '') +
+            '&filter1=' +
+            encodeURIComponent($input.attr('data-filter1') || '') +
+            '&q={query}';
+    });
+
+
+    // Selected dropdown
+    initializeRemoteDropdown('.selectedDropDown', function($input) {
+        return selectedDropDown +
+            '&dropDownType=' +
+            encodeURIComponent($input.attr('data-domain') || '') +
+            '&refObject=' +
+            encodeURIComponent($input.attr('data-refobject') || '') +
+            '&qp_status_id=' +
+            encodeURIComponent($input.attr('data-qpStatusId') || '') +
+            '&q={query}';
+    });
+
+    initializeRemoteDropdown('.simpleReferenceDropdown', function($input) {
+        return ajaxLookUp +
+            '&baseClass=' +
+            encodeURIComponent($input.attr('data-domain') || '') +
+            '&filter1=' +
+            encodeURIComponent($input.attr('data-filter1') || '') +
+            '&q={query}';
+    });
 });
 

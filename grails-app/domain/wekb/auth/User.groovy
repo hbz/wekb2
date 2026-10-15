@@ -177,6 +177,17 @@ class User {
     false
   }
 
+    transient boolean getApiKbartStatus() {
+        Role role = Role.findByAuthority("ROLE_KBART_API")
+
+        if (role != null) {
+            return getAuthorities().contains(role)
+        } else {
+            log.error( "Error loading admin role (ROLE_API)" )
+        }
+        false
+    }
+
   void beforeInsert() {
     _encodePassword()
   }

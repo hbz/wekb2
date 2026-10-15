@@ -6,8 +6,11 @@ import wekb.helper.BeanStore
 class TippPrice {
 
   TitleInstancePackagePlatform tipp
-  RefdataValue priceType
-  RefdataValue currency
+
+    @Deprecated
+    RefdataValue priceType
+
+    RefdataValue currency
   Date startDate
   Date endDate
   Float price

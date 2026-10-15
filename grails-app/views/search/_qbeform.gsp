@@ -73,6 +73,7 @@
                                 </g:else>
                             </label>
                             <semui:simpleReferenceDropdown
+                                    multiple="${fld.multiple}"
                                     id="refdata_${params.inline ? 'inline_' : ''}${fld.qparam}"
                                     name="${fld.qparam}"
                                     baseClass="${fld.baseClass}"
@@ -80,7 +81,7 @@
                                     value="${params[fld.qparam]}"/>
                         </div>
                     </g:if>
-                    <g:elseif test="${fld.type == 'dropDown' || fld.type=='dropDownMultiple'}">
+                    <g:elseif test="${fld.type == 'dropDown'}">
                         <div class="ui field">
                             <label>
                                 <g:if test="${fld.msgCode}">
@@ -91,7 +92,8 @@
                                 </g:else>
                             </label>
                             <g:if test="${fld.load == 'ajax'}">
-                                <semui:componentsDropDown value="${params[fld.qparam]}"
+                                <semui:componentsDropDown multiple="${fld.multiple}"
+                                                          value="${params[fld.qparam]}"
                                                           name="${fld.qparam}"
                                                           baseClass="${fld.baseClass}"
                                                           filter1="${fld.filter1}"
@@ -99,7 +101,7 @@
                                 />
                             </g:if>
                             <g:else>
-                                <div class="ui fluid search selection clearable dropdown ${fld.type=='dropDownMultiple' ? 'multiple' : ''}">
+                                <div class="ui fluid search selection clearable dropdown ${fld.multiple=='true' ? 'multiple' : ''}">
                                     <input type="hidden" name="${fld.qparam}" value="${params[fld.qparam]}">
                                     <i class="dropdown icon"></i>
 
@@ -136,7 +138,8 @@
                                 </g:else>
                             </label>
                             <g:if test="${fld.load == 'ajax'}">
-                                <semui:selectedDropDown value="${params[fld.qparam]}"
+                                <semui:selectedDropDown   multiple="${fld.multiple}"
+                                                          value="${params[fld.qparam]}"
                                                           name="${fld.qparam}"
                                                           dropDownType="${fld.dropDownType}"
                                                           refObject="${refObject.class.name}:${refObject.id}"
@@ -145,7 +148,7 @@
                                 />
                             </g:if>
                             <g:else>
-                                <div class="ui fluid search selection clearable dropdown">
+                                <div class="ui fluid search selection clearable dropdown ${fld.multiple=='true' ? 'multiple' : ''}">
                                     <input type="hidden" name="${fld.qparam}" value="${params[fld.qparam]}">
                                     <i class="dropdown icon"></i>
                                     <g:if test="${fld.selectPlaceHolder}">
@@ -238,6 +241,7 @@
                                     </g:else>
                                 </label>
                                 <semui:simpleReferenceDropdown
+                                        multiple="${field.multiple}"
                                         id="refdata_${params.inline ? 'inline_' : ''}${field.qparam}"
                                         name="${field.qparam}"
                                         baseClass="${field.baseClass}"
@@ -245,7 +249,7 @@
                                         value="${params[field.qparam]}"/>
                             </div>
                         </g:if>
-                        <g:elseif test="${field.type == 'dropDown' || field.type=='dropDownMultiple'}">
+                        <g:elseif test="${field.type == 'dropDown'}">
                             <div class="ui field">
                                 <label>
                                     <g:if test="${field.msgCode}">
@@ -256,7 +260,8 @@
                                     </g:else>
                                 </label>
                                 <g:if test="${field.load == 'ajax'}">
-                                    <semui:componentsDropDown value="${params[field.qparam]}"
+                                    <semui:componentsDropDown multiple="${field.multiple}"
+                                                              value="${params[field.qparam]}"
                                                               name="${field.qparam}"
                                                               baseClass="${field.baseClass}"
                                                               filter1="${field.filter1}"
@@ -264,7 +269,7 @@
                                     />
                                 </g:if>
                                 <g:else>
-                                    <div class="ui fluid search selection clearable dropdown ${field.type=='dropDownMultiple' ? 'multiple' : ''}">
+                                    <div class="ui fluid search selection clearable dropdown ${field.multiple=='true' ? 'multiple' : ''}">
                                         <input type="hidden" name="${field.qparam}" value="${params[field.qparam]}">
                                         <i class="dropdown icon"></i>
 
@@ -303,7 +308,8 @@
                                 </label>
                                 <g:if test="${field.load == 'ajax'}">
                                     <g:if test="${refObject}">
-                                        <semui:selectedDropDown value="${params[field.qparam]}"
+                                        <semui:selectedDropDown multiple="${field.multiple}"
+                                                                value="${params[field.qparam]}"
                                                                 name="${field.qparam}"
                                                                 dropDownType="${field.dropDownType}"
                                                                 refObject="${refObject.class.name}:${refObject.id}"
@@ -312,7 +318,8 @@
                                         />
                                     </g:if>
                                     <g:else>
-                                        <semui:selectedDropDown value="${params[field.qparam]}"
+                                        <semui:selectedDropDown multiple="${field.multiple}"
+                                                                value="${params[field.qparam]}"
                                                                 name="${field.qparam}"
                                                                 dropDownType="${field.dropDownType}"
                                                                 qpStatusId="${params.qp_status_id}"
@@ -321,7 +328,7 @@
                                     </g:else>
                                 </g:if>
                                 <g:else>
-                                    <div class="ui fluid search selection clearable dropdown">
+                                    <div class="ui fluid search selection clearable dropdown ${field.multiple=='true' ? 'multiple' : ''}">
                                         <input type="hidden" name="${field.qparam}" value="${params[field.qparam]}">
                                         <i class="dropdown icon"></i>
 
