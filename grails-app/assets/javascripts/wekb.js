@@ -369,63 +369,130 @@ $(function () {
 
 
     //Initialize Dropdown
-    function initializeDropdown(selector, buildUrl) {
+    function initializeRemoteDropdown(selector, buildUrl) {
 
-        $(selector).each(function() {
+        $(selector).each(function () {
 
             const $dropdown = $(this);
             const $input = $dropdown.children('input[type="hidden"]');
-
-            const selectedValue = $input.val();
-            const selectedText = $input.attr('data-display_value') || selectedValue;
-
-            const dropdownURL = buildUrl($input);
             const $menu = $dropdown.children('.menu');
 
-            // Insert the preselected item before initialization
-            if (selectedValue && selectedText) {
-                $menu.empty();
+            if ($dropdown.data('remoteDropdownInitialized')) {
+                return;
+            }
+
+            if (!$input.length || !$menu.length) {
+                console.warn('Invalid dropdown structure:', this);
+                return;
+            }
+
+            const isMultiple = $dropdown.hasClass('multiple');
+
+            let selectedItems = [];
+
+            try {
+                const rawData = $input.attr('data-selected-items');
+
+                if (rawData) {
+                    const parsed = JSON.parse(rawData);
+
+                    if (Array.isArray(parsed)) {
+                        selectedItems = parsed;
+                    }
+                }
+            } catch (error) {
+                console.error('Invalid data-selected-items:', error);
+            }
+
+            const seen = new Set();
+
+            selectedItems = selectedItems.filter(item => item && item.value != null).map(item => ({
+                    value: String(item.value).trim(),
+                    text: String(item.text ?? item.value).trim()
+                })).filter(item => {
+                    if (!item.value || seen.has(item.value)) {
+                        return false;
+                    }
+                    seen.add(item.value);
+                    return true;
+                });
+
+            if (!isMultiple) {
+                selectedItems = selectedItems.slice(0, 1);
+            }
+
+            const selectedValues = selectedItems.map(item => item.value);
+
+            const dropdownURL = buildUrl($input);
+
+            $menu.empty();
+
+            selectedItems.forEach(function (item) {
 
                 $menu.append(
                     $('<div>', {
                         class: 'item',
-                        'data-value': selectedValue,
-                        text: selectedText
+                        'data-value': item.value,
+                        'data-text': item.text,
+                        text: item.text
                     })
                 );
-            }
+            });
+
+            $input.val(isMultiple ? selectedValues.join(',') : (selectedValues[0] || ''));
 
             $dropdown.dropdown({
                 clearable: true,
                 forceSelection: false,
                 preserveHTML: false,
-
                 apiSettings: {
                     url: dropdownURL,
                     cache: false
                 },
-
                 fields: {
                     remoteValues: 'values',
                     values: 'values',
                     name: 'text',
                     value: 'id'
+                },
+                onChange: function (value, text) {
+                    console.debug('Dropdown changed:', {
+                        name: $input.attr('name'),
+                        value: value,
+                        text: text
+                    });
                 }
             });
 
-            // Restore the initial selection
-            if (selectedValue && selectedText) {
-                $dropdown.dropdown('set selected', selectedValue);
+            if (selectedValues.length > 0) {
+                if (isMultiple) {
+                    $dropdown.dropdown(
+                        'set exactly',
+                        selectedValues
+                    );
+                } else {
+                    $dropdown.dropdown(
+                        'set selected',
+                        selectedValues[0]
+                    );
+                }
             }
 
-            $dropdown.find('.search').removeAttr('autocomplete');
+            $dropdown.find('input.search').removeAttr('autocomplete');
+            $dropdown.data('remoteDropdownInitialized', true);
+
+            /*console.debug('Remote dropdown initialized:', {
+                name: $input.attr('name'),
+                multiple: isMultiple,
+                selectedValues: selectedValues,
+                url: dropdownURL
+            });*/
         });
     }
 
 
     // Components dropdown
-    initializeDropdown('.componentsDropDown', function($input) {
-
+    initializeRemoteDropdown('.componentsDropDown', function($input) {
         return componentsDropDown +
             '/?baseClass=' +
             encodeURIComponent($input.attr('data-domain') || '') +
@@ -436,8 +503,7 @@ $(function () {
 
 
     // Selected dropdown
-    initializeDropdown('.selectedDropDown', function($input) {
-
+    initializeRemoteDropdown('.selectedDropDown', function($input) {
         return selectedDropDown +
             '&dropDownType=' +
             encodeURIComponent($input.attr('data-domain') || '') +
@@ -448,8 +514,7 @@ $(function () {
             '&q={query}';
     });
 
-    initializeDropdown('.simpleReferenceDropdown', function($input) {
-
+    initializeRemoteDropdown('.simpleReferenceDropdown', function($input) {
         return ajaxLookUp +
             '&baseClass=' +
             encodeURIComponent($input.attr('data-domain') || '') +

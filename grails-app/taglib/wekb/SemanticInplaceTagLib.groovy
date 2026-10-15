@@ -1,6 +1,8 @@
 package wekb
 
 import grails.plugin.springsecurity.SpringSecurityService
+import groovy.json.JsonOutput
+import org.springframework.web.util.HtmlUtils
 import wekb.auth.User
 
 
@@ -377,8 +379,13 @@ class SemanticInplaceTagLib {
     }
 
     def simpleReferenceDropdown = { attrs, body ->
+        boolean multiple = attrs.multiple?.toString() == 'true'
 
         out << '<div class="ui fluid search selection dropdown simpleReferenceDropdown '
+
+        if(multiple) {
+            out << 'multiple '
+        }
 
         if(attrs.class)
             out << attrs.class
@@ -397,11 +404,7 @@ class SemanticInplaceTagLib {
         out << "<input type=\"hidden\" value=\"${attrs.value ?: ''}\" name=\"${attrs.name}\" data-domain=\"${attrs.baseClass}\" "
 
         if ((attrs.value != null) && (attrs.value instanceof String && attrs.value.length() > 0)) {
-            def o = genericOIDService.resolveOID(attrs.value)
-            if(o)
-                out << "data-display_value=\"${o.toString()}\" "
-            else
-                out << "data-display_value=\"${attrs.value}\" "
+            appendDropdownValueAttributes(out, attrs.value, multiple)
         }
 
         if (attrs.elastic) {
@@ -425,8 +428,13 @@ class SemanticInplaceTagLib {
     }
 
     def componentsDropDown = { attrs, body ->
+        boolean multiple = attrs.multiple?.toString() == 'true'
 
         out << '<div class="ui fluid search selection clearable dropdown componentsDropDown '
+
+        if(multiple) {
+            out << 'multiple '
+        }
 
         out << '"'
 
@@ -439,11 +447,7 @@ class SemanticInplaceTagLib {
         out << "<input type=\"hidden\" value=\"${attrs.value ?: ''}\" name=\"${attrs.name}\" data-domain=\"${attrs.baseClass}\" "
 
         if ((attrs.value != null) && (attrs.value instanceof String && attrs.value.length() > 0)) {
-            def o = genericOIDService.resolveOID(attrs.value)
-            if(o)
-                out << "data-display_value=\"${o.toString()}\" "
-            else
-                out << "data-display_value=\"${attrs.value}\" "
+            appendDropdownValueAttributes(out, attrs.value, multiple)
         }
         String placeholder = attrs.placeholder ?: 'Search for ...'
 
@@ -460,8 +464,13 @@ class SemanticInplaceTagLib {
     }
 
     def selectedDropDown = { attrs, body ->
+        boolean multiple = attrs.multiple?.toString() == 'true'
 
         out << '<div class="ui fluid search selection clearable dropdown selectedDropDown '
+
+        if(multiple) {
+            out << 'multiple '
+        }
 
         out << '"'
 
@@ -474,10 +483,7 @@ class SemanticInplaceTagLib {
         out << "<input type=\"hidden\" value=\"${attrs.value ?: ''}\" name=\"${attrs.name}\" data-domain=\"${attrs.dropDownType}\" "
 
         if ((attrs.value != null) && (attrs.value instanceof String && attrs.value.length() > 0)) {
-            def o = genericOIDService.resolveOID(attrs.value)
-            if(o)
-                out << "data-display_value=\"${o.toString()}\" "
-            else out << "data-display_value=\"${attrs.value}\" "
+            appendDropdownValueAttributes(out, attrs.value, multiple)
         }
         String placeholder = attrs.placeholder ?: 'Search for ...'
 
@@ -637,6 +643,50 @@ class SemanticInplaceTagLib {
         }
         out <<     '</div>'
         out << '</div>'
+    }
+
+    private List<Map<String, String>> resolveDropdownValues(def value, boolean multiple) {
+
+        List<String> values = (value?.toString() ?: '').split(',').collect { it.trim() }.findAll { it }.unique()
+
+        if (!multiple) {
+            values = values.take(1)
+        }
+
+        values.collect { String oid ->
+
+            def object = genericOIDService.resolveOID(oid)
+
+            String displayValue
+
+            if (object instanceof RefdataValue) {
+                displayValue = object.getI10n('value')?.toString() ?: oid
+            } else if (object) {
+                displayValue = object.toString()
+            } else {
+                displayValue = oid
+            }
+
+            [value: oid,
+             text : displayValue]
+        }
+    }
+
+    private String htmlAttribute(def value) {
+        HtmlUtils.htmlEscape(value?.toString() ?: '')
+    }
+
+    private void appendDropdownValueAttributes(Writer out, def value, boolean multiple) {
+
+        List<Map<String, String>> selectedItems = resolveDropdownValues(value, multiple)
+
+        String selectedValues = selectedItems.collect { it.value }.join(',')
+
+        out << " data-value=\"${htmlAttribute(selectedValues)}\""
+
+        String selectedItemsJson = JsonOutput.toJson(selectedItems)
+
+        out << " data-selected-items=\"${htmlAttribute(selectedItemsJson)}\""
     }
 
 

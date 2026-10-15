@@ -356,7 +356,7 @@ public class HQLBuilder {
         break;
       case 'in':
         hql_builder_context."${addToQuery}".add("${crit.defn.contextTree.negate?'not ':''}${scoped_property} in (:${crit.defn.qparam})")
-        if ( crit.defn.type=='lookup' || crit.defn.type=='dropDown' || crit.defn.type=='dropDownGroup' ) {
+        if ( (crit.defn.type=='lookup' || crit.defn.type=='dropDown' || crit.defn.type=='dropDownGroup') && crit.defn.multiple != 'true') {
           List values = [], parsedValues = []
           if(crit.value instanceof String)
             values << crit.value
@@ -367,7 +367,7 @@ public class HQLBuilder {
             parsedValues << value
           }
           hql_builder_context.bindvars[crit.defn.qparam] = parsedValues
-        }else if (crit.defn.type=='dropDownMultiple'){
+        }else if ((crit.defn.type=='lookup' || crit.defn.type=='dropDown' || crit.defn.type=='dropDownGroup') && crit.defn.multiple == 'true'){
             List values = [], parsedValues = []
             if(crit.value instanceof String)
                 values = crit.value.split(',')

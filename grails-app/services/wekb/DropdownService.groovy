@@ -13,15 +13,15 @@ class DropdownService {
 
     def selectedDropDown(String dropDownType, def object, def status = null, String q = null){
         if(object instanceof Platform && object.getHostedPackages()){
-            selectedDropDown(dropDownType, object.getHostedPackages(), status)
+            selectedDropDown(dropDownType, object.getHostedPackages(), status, q)
         }
         else if (object instanceof Package){
-            selectedDropDown(dropDownType, [object], status)
+            selectedDropDown(dropDownType, [object], status, q)
         }
         else if (object instanceof KbartSource && object.getPackages()){
-            selectedDropDown(dropDownType, object.getPackages(), status)
+            selectedDropDown(dropDownType, object.getPackages(), status, q)
         }else if (object instanceof Org && object.getProvidedPackages()){
-            selectedDropDown(dropDownType, object.getProvidedPackages(), status)
+            selectedDropDown(dropDownType, object.getProvidedPackages(), status, q)
         }else {
             []
         }
