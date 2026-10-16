@@ -580,6 +580,7 @@ class AutoUpdatePackagesService {
         }
 
         pkg.kbartSource.lastUpdateUrl = successfulUrl
+        pkg.kbartSource.kbartFileHash = null
         pkg.kbartSource.save()
 
         startAutoPackageUpdate(pkg)
