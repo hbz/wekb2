@@ -494,7 +494,7 @@ $(function () {
     // Components dropdown
     initializeRemoteDropdown('.componentsDropDown', function($input) {
         return componentsDropDown +
-            '/?baseClass=' +
+            '?baseClass=' +
             encodeURIComponent($input.attr('data-domain') || '') +
             '&filter1=' +
             encodeURIComponent($input.attr('data-filter1') || '') +
@@ -516,7 +516,7 @@ $(function () {
 
     initializeRemoteDropdown('.simpleReferenceDropdown', function($input) {
         return ajaxLookUp +
-            '&baseClass=' +
+            '?baseClass=' +
             encodeURIComponent($input.attr('data-domain') || '') +
             '&filter1=' +
             encodeURIComponent($input.attr('data-filter1') || '') +

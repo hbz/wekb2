@@ -1055,7 +1055,7 @@ class CreateComponentService {
                         if (map.url != kbartSource.url) {
 
                             kbartSource.lastRun = null
-
+                            kbartSource.kbartFileHash = null
                             kbartSource.lastUpdateUrl = null
                         }
 
