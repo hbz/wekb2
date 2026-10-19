@@ -394,6 +394,8 @@ class KbartProcessService {
                                                         updateTipp = updateTipp.save()
                                                         tippsFound.add(updateTipp.id)
                                                     }
+                                            }else{
+                                                log.warn("updateTipp.id in tippsFound: ${updateTipp.id in tippsFound}")
                                             }
 
                                         }
