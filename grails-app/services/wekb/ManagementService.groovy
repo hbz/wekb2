@@ -27,7 +27,7 @@ class ManagementService {
             ],
             [
                     type       : 'lookup',
-                    baseClass  : 'wekb.RefdataValue',
+                    baseClass  : RefdataValue.class.name,
                     filter1    : RCConstants.COMPONENT_STATUS,
                     prompt     : 'Status',
                     bParam     : 'pkg_batch_status',
@@ -41,7 +41,7 @@ class ManagementService {
             ],
             [
                     type       : 'lookup',
-                    baseClass  : 'wekb.RefdataValue',
+                    baseClass  : RefdataValue.class.name,
                     filter1    : RCConstants.PACKAGE_BREAKABLE,
                     prompt     : 'Breakable',
                     bParam     : 'pkg_batch_breakable',
@@ -49,7 +49,7 @@ class ManagementService {
             ],
             [
                     type       : 'lookup',
-                    baseClass  : 'wekb.RefdataValue',
+                    baseClass  : RefdataValue.class.name,
                     filter1    : RCConstants.PACKAGE_CONTENT_TYPE,
                     prompt     : 'Content Type',
                     bParam     : 'pkg_batch_contentType',
@@ -57,7 +57,7 @@ class ManagementService {
             ],
             [
                     type       : 'lookup',
-                    baseClass  : 'wekb.RefdataValue',
+                    baseClass  : RefdataValue.class.name,
                     filter1    : RCConstants.PACKAGE_FILE,
                     prompt     : 'File',
                     bParam     : 'pkg_batch_file',
@@ -65,7 +65,7 @@ class ManagementService {
             ],
             [
                     type       : 'lookup',
-                    baseClass  : 'wekb.RefdataValue',
+                    baseClass  : RefdataValue.class.name,
                     filter1    : RCConstants.PACKAGE_OPEN_ACCESS,
                     prompt     : 'Open Access',
                     bParam     : 'pkg_batch_oa',
@@ -73,7 +73,7 @@ class ManagementService {
             ],
             [
                     type       : 'lookup',
-                    baseClass  : 'wekb.RefdataValue',
+                    baseClass  : RefdataValue.class.name,
                     filter1    : RCConstants.PACKAGE_PAYMENT_TYPE,
                     prompt     : 'Payment Type',
                     bParam     : 'pkg_batch_paymentType',
@@ -81,7 +81,7 @@ class ManagementService {
             ],
             [
                     type       : 'lookup',
-                    baseClass  : 'wekb.RefdataValue',
+                    baseClass  : RefdataValue.class.name,
                     filter1    : RCConstants.PACKAGE_SCOPE,
                     prompt     : 'Scope',
                     bParam     : 'pkg_batch_scope',
@@ -89,7 +89,7 @@ class ManagementService {
             ],
             [
                     type       : 'lookup',
-                    baseClass  : 'wekb.RefdataValue',
+                    baseClass  : RefdataValue.class.name,
                     filter1    : RCConstants.YN,
                     prompt     : 'Free Trial',
                     bParam     : 'pkg_free_trial',
@@ -106,7 +106,7 @@ class ManagementService {
     static packageSourceInfosBatchForm = [
             [
                     type     : 'lookup',
-                    baseClass: 'wekb.RefdataValue',
+                    baseClass: RefdataValue.class.name,
                     filter1  : RCConstants.SOURCE_FREQUENCY,
                     prompt   : 'Frequency',
                     bParam   : 'pkg_batch_frequency',
@@ -114,7 +114,7 @@ class ManagementService {
             ],
             [
                     type     : 'lookup',
-                    baseClass: 'wekb.RefdataValue',
+                    baseClass: RefdataValue.class.name,
                     filter1  : RCConstants.SOURCE_DATA_SUPPLY_METHOD,
                     prompt   : 'Default Supply Method',
                     bParam   : 'pkg_batch_defaultSupplyMethod',
@@ -122,7 +122,7 @@ class ManagementService {
             ],
             [
                     type     : 'lookup',
-                    baseClass: 'wekb.RefdataValue',
+                    baseClass: RefdataValue.class.name,
                     filter1  : RCConstants.SOURCE_DATA_FORMAT,
                     prompt   : 'Default Data Format',
                     bParam   : 'pkg_batch_defaultDataFormat',
@@ -130,7 +130,7 @@ class ManagementService {
             ],
             [
                     type     : 'lookup',
-                    baseClass: 'wekb.RefdataValue',
+                    baseClass: RefdataValue.class.name,
                     filter1  : RCConstants.YN,
                     prompt   : 'Automatic Updates',
                     bParam   : 'pkg_batch_automaticUpdates',
@@ -220,7 +220,7 @@ class ManagementService {
                         if (accessService.checkEditableObject(pkg, params)) {
                             packageGeneralInfosBatchForm.each { Map formMap ->
                                 if (params[formMap.bParam]) {
-                                    if(formMap.type == 'lookup' && formMap.baseClass  == 'wekb.RefdataValue') {
+                                    if(formMap.type == 'lookup' && formMap.baseClass  == RefdataValue.class.name) {
                                         List splitBParam = params[formMap.bParam].split(':')
                                         Long refDataId = Long.parseLong(splitBParam[1])
                                         pkg."${formMap.bProp}" = RefdataValue.get(refDataId) ?: pkg."${formMap.bProp}"
@@ -262,7 +262,7 @@ class ManagementService {
                         if (accessService.checkEditableObject(pkg, params)) {
                             packageSourceInfosBatchForm.each { Map formMap ->
                                 if (params[formMap.bParam] && pkg.kbartSource) {
-                                    if(formMap.type == 'lookup' && formMap.baseClass  == 'wekb.RefdataValue') {
+                                    if(formMap.type == 'lookup' && formMap.baseClass  == RefdataValue.class.name) {
                                         List splitBParam = params[formMap.bParam].split(':')
                                         Long refDataId = Long.parseLong(splitBParam[1])
                                         RefdataValue value = RefdataValue.get(refDataId)

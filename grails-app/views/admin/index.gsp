@@ -1,4 +1,4 @@
-<%@ page import="wekb.utils.DateUtils" %>
+<%@ page import="wekb.auth.User; wekb.Vendor; wekb.Org; wekb.CuratoryGroup; wekb.RefdataValue; wekb.RefdataCategory; wekb.IdentifierNamespace; wekb.utils.DateUtils" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -39,19 +39,19 @@
 
             <div class="ui divided large relaxed list">
                 <g:link class="item" controller="create" action="index"
-                        params="[tmpl: 'wekb.IdentifierNamespace']">Identifier Namespace</g:link>
+                        params="[tmpl: wekb.IdentifierNamespace.class.name]">Identifier Namespace</g:link>
                 <g:link class="item" controller="create" action="index"
-                        params="[tmpl: 'wekb.RefdataCategory']">Refdata Category</g:link>
+                        params="[tmpl: wekb.RefdataCategory.class.name]">Refdata Category</g:link>
                 <g:link class="item" controller="create" action="index"
-                        params="[tmpl: 'wekb.RefdataValue']">Refdata Value</g:link>
+                        params="[tmpl: wekb.RefdataValue.class.name]">Refdata Value</g:link>
                 <g:link class="item" controller="create" action="index"
-                        params="[tmpl: 'wekb.CuratoryGroup']">Curatory Group</g:link>
+                        params="[tmpl: wekb.CuratoryGroup.class.name]">Curatory Group</g:link>
                 <g:link class="item" controller="create" action="index"
-                        params="[tmpl: 'wekb.Org']">Provider</g:link>
+                        params="[tmpl: wekb.Org.class.name]">Provider</g:link>
                 <g:link class="item" controller="create" action="index"
-                        params="[tmpl: 'wekb.Vendor']">Library Supplier</g:link>
+                        params="[tmpl: wekb.Vendor.class.name]">Library Supplier</g:link>
                 <g:link class="item" controller="create" action="index"
-                        params="[tmpl: 'wekb.auth.User']">User</g:link>
+                        params="[tmpl: wekb.auth.User.class.name]">User</g:link>
             </div>
         </div>
 

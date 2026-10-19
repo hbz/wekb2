@@ -79,7 +79,7 @@ class CreateComponentService {
 
                                     related_item = genericOIDService.resolveOID(p.value);
 
-                                    if (!related_item && pprop.getType().name == 'wekb.RefdataValue') {
+                                    if (!related_item && pprop.getType().name == RefdataValue.class.name) {
                                         def rdc = classExaminationService.deriveCategoryForProperty(params.cls, p.key)
                                         related_item = RefdataCategory.lookup(rdc, p.value)
                                     }
