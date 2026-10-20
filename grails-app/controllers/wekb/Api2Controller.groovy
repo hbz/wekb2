@@ -72,9 +72,15 @@ class Api2Controller {
     }
 
     def searchApi() {
+        String username = params.username
+        String password = params.password
+
+        params.remove('username')
+        params.remove('password')
+
         log.info("Api2Controller:searchApi ${params}")
 
-        Map<String, Object> result = checkPermisson(params, "ROLE_API")
+        Map<String, Object> result = checkPermisson(username, password, "ROLE_API")
 
         if(result.code == 'success') {
 
@@ -101,8 +107,14 @@ class Api2Controller {
     }
 
     def namespaces() {
+        String username = params.username
+        String password = params.password
+
+        params.remove('username')
+        params.remove('password')
+
         log.info("Api2Controller:namespaces ${params}")
-        Map<String, Object> result = checkPermisson(params, "ROLE_API")
+        Map<String, Object> result = checkPermisson(username, password, "ROLE_API")
 
         if(result.code == 'success') {
             def results = []
@@ -130,7 +142,7 @@ class Api2Controller {
 
     def refdataCategories() {
         log.info("Api2Controller:refdataCategories ${params}")
-        Map<String, Object> result = checkPermisson(params, "ROLE_API")
+        Map<String, Object> result = checkPermisson(username, password, "ROLE_API")
 
         if(result.code == 'success') {
             def results = []
@@ -165,7 +177,7 @@ class Api2Controller {
 
     def groups() {
         log.info("Api2Controller:groups ${params}")
-        Map<String, Object> result = checkPermisson(params, "ROLE_API")
+        Map<String, Object> result = checkPermisson(username, password, "ROLE_API")
 
         if(result.code == 'success') {
             def results = []
@@ -201,8 +213,14 @@ class Api2Controller {
     }
 
     def sushiSources() {
+        String username = params.username
+        String password = params.password
+
+        params.remove('username')
+        params.remove('password')
+
         log.info("Api2Controller:counterSources ${params}")
-        Map<String, Object> result = checkPermisson(params, 'ROLE_COUNTER')
+        Map<String, Object> result = checkPermisson(username, password, 'ROLE_COUNTER')
 
         if(result.code == 'success') {
            result = api2Service.counterSources(params, result)
@@ -210,11 +228,11 @@ class Api2Controller {
         render result as JSON
     }
 
-    private Map checkPermisson(GrailsParameterMap params, String checkRole = null) {
+    private Map checkPermisson(String username, String password, String checkRole = null) {
 
         Map result = [code: 'success', message: '']
 
-        if (!params.username || !params.password) {
+        if (!username || !password) {
             return [
                     code: 'error',
                     message: 'Please provide username and password!'
@@ -224,8 +242,8 @@ class Api2Controller {
         try {
             def authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
-                            params.username.toString(),
-                            params.password.toString()
+                            username.toString(),
+                            password.toString()
                     )
             )
 
@@ -241,12 +259,12 @@ class Api2Controller {
             }) {
                 return [
                         code: 'error',
-                        message: 'This user does not have permission to access the KBART API!'
+                        message: 'This user does not have permission to access the API!'
                 ]
             }
 
         } catch (AuthenticationException e) {
-            log.warn("KBART API authentication failed for user: ${params.username}")
+            log.warn("API authentication failed for user: ${username}")
 
             return [
                     code: 'error',
@@ -258,8 +276,14 @@ class Api2Controller {
     }
 
     def correctTippDuplicate() {
+        String username = params.username
+        String password = params.password
+
+        params.remove('username')
+        params.remove('password')
+
         log.info("Api2Controller:correctTippDuplicate ${params}")
-        Map<String, Object> result = checkPermisson(params, "ROLE_API")
+        Map<String, Object> result = checkPermisson(username, password, "ROLE_API")
 
         if(result.code == 'success') {
             result = api2Service.getCorrectTippDuplicate(params, result)

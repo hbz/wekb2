@@ -76,11 +76,11 @@ class ApiKbartController {
         //    render (text: "${params.callback}(${json})", contentType: "application/javascript", encoding: "UTF-8")
     }
 
-    private Map checkPermisson(GrailsParameterMap params, String checkRole = null) {
+    private Map checkPermisson(String username, String password, String checkRole = null) {
 
         Map result = [code: 'success', message: '']
 
-        if (!params.username || !params.password) {
+        if (!username || !password) {
             return [
                     code: 'error',
                     message: 'Please provide username and password!'
@@ -90,8 +90,8 @@ class ApiKbartController {
         try {
             def authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
-                            params.username.toString(),
-                            params.password.toString()
+                            username.toString(),
+                            password.toString()
                     )
             )
 
@@ -127,9 +127,15 @@ class ApiKbartController {
     }
 
     def kbart() {
+        String username = params.username
+        String password = params.password
+
+        params.remove('username')
+        params.remove('password')
+
         log.info("kbart::${params}")
 
-        Map<String, Object> result = checkPermisson(params, 'ROLE_KBART_API')
+        Map<String, Object> result = checkPermisson(username, password, 'ROLE_KBART_API')
 
         if(result.code == 'success') {
 
@@ -169,9 +175,15 @@ class ApiKbartController {
     }
 
     def packageTSVExport() {
+        String username = params.username
+        String password = params.password
+
+        params.remove('username')
+        params.remove('password')
+
         log.info("packageTSVExport::${params}")
 
-        Map<String, Object> result = checkPermisson(params, 'ROLE_KBART_API')
+        Map<String, Object> result = checkPermisson(username, password, 'ROLE_KBART_API')
 
         if(result.code == 'success') {
 
@@ -250,9 +262,15 @@ class ApiKbartController {
     }
 
     def packageLastRun() {
+        String username = params.username
+        String password = params.password
+
+        params.remove('username')
+        params.remove('password')
+
         log.info("packageLastRun::${params}")
 
-        Map<String, Object> result = checkPermisson(params, 'ROLE_KBART_API')
+        Map<String, Object> result = checkPermisson(username, password, 'ROLE_KBART_API')
 
         if(result.code == 'success') {
 
