@@ -1,12 +1,12 @@
 <dl>
     <dt class="control-label"><g:message code="package.dateCreated"/></dt>
     <dd>
-        <g:formatDate format="${message(code: 'default.date.format.noZ')}"
+        <wekb:dateTime format="${message(code: 'default.date.format.noZ')}"
                       date="${d.dateCreated}"/>
     </dd>
     <dt class="control-label"><g:message code="package.lastUpdated"/></dt>
     <dd>
-        <g:formatDate format="${message(code: 'default.date.format.noZ')}"
+        <wekb:dateTime format="${message(code: 'default.date.format.noZ')}"
                       date="${d.lastUpdated}"/>
     </dd>
     <g:if test="${d.hasProperty('uuid')}">

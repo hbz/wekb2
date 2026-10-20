@@ -50,5 +50,16 @@ class WekbTagLib {
     def javascript = {final attrs ->
         out << asset.javascript(attrs).toString().replace(' type="text/javascript" ', ' data-type="external" ')
     }
+    def dateTime = { attrs ->
+        if (attrs.date != null) {
+            out << '<span class="wekb-date">'
+            out << g.formatDate(format: 'yyyy-MM-dd', date: attrs.date)
+            out << '</span>'
+
+            out << '<span class="wekb-time">'
+            out << g.formatDate(format: 'HH:mm', date: attrs.date)
+            out << '</span>'
+        }
+    }
 
 }

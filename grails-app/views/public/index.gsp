@@ -54,7 +54,7 @@
                             </div>
                             <div class="content">
                                 <div class="date">
-                                    <g:formatDate
+                                    <wekb:dateTime
                                             format="${message(code: 'default.date.format')}"
                                             date="${item.date}"/>
                                 </div>

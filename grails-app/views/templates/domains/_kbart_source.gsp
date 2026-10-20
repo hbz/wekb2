@@ -97,7 +97,7 @@
                     </g:if>
                 </sec:ifAnyGranted>
                 <sec:ifNotGranted roles="ROLE_SUPERUSER">
-                    <g:formatDate format="${message(code: 'default.date.format.notime')}"
+                    <wekb:dateTime format="${message(code: 'default.date.format.notime')}"
                                   date="${d.lastChangedInKbart}"/>
                 </sec:ifNotGranted>
             </dd>
@@ -114,7 +114,7 @@
                 </sec:ifAnyGranted>
                 <sec:ifNotGranted roles="ROLE_SUPERUSER">
                     <g:if test="${!createObject}">
-                        <g:formatDate format="${message(code: 'default.date.format.noZ')}"
+                        <wekb:dateTime format="${message(code: 'default.date.format.noZ')}"
                                       date="${d.lastRun}"/>
                     </g:if>
                 </sec:ifNotGranted>
@@ -140,7 +140,7 @@
                     <g:message code="kbartsource.nextUpdateTimestamp"/>
                 </dt>
                 <dd>
-                    <g:formatDate format="${message(code: 'default.date.format.noZ')}"
+                    <wekb:dateTime format="${message(code: 'default.date.format.noZ')}"
                                   date="${d.getNextUpdateTimestamp()}"/>
                 </dd>
             </dl>
@@ -156,7 +156,7 @@
                         <g:each in="${d.getAllNextUpdateTimestamp()}" var="updateDate" status="i">
                             <g:if test="${updateDate >= now && count <= 5}">
                                 <div class="item">
-                                    <g:formatDate format="${message(code: 'default.date.format.noZ')}"
+                                    <wekb:dateTime format="${message(code: 'default.date.format.noZ')}"
                                                   date="${updateDate}"/>
                                 </div>
                                 <g:set var="count" value="${count + 1}"/>

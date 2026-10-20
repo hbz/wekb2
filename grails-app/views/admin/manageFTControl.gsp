@@ -27,7 +27,7 @@
                     <semui:xEditable owner="${ftControl}" field="lastTimestamp"/>
                 </td>
                 <td>
-                    <g:formatDate date="${new Date(ftControl.lastTimestamp)}"
+                    <wekb:dateTime date="${new Date(ftControl.lastTimestamp)}"
                                   format="${message(code: 'default.datetime.format')}"/>
                 </td>
             </tr>

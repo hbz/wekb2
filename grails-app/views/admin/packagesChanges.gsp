@@ -55,7 +55,7 @@
                         <td>${pkg.currentTippCount}</td>
                         <td>
                             <g:if test="${pkg.lastUpdated}">
-                                <g:formatDate format="${message(code: 'default.date.format')}"
+                                <wekb:dateTime format="${message(code: 'default.date.format')}"
                                               date="${pkg.lastUpdated}"/>
                             </g:if>
                         </td>
