@@ -19,9 +19,9 @@
     <div class="content">
         The option "Upload Packages" allows you to create several packages at once via the provided package template below.
         <br><br>
-        In order to create your packages, download the template below and type in the name of the packages. Give all the relevant information for each individual package and save the template file.
+        In order to create your packages, download the Excel template below and type in the name of the packages. Give all the relevant information for each individual package and save the file.
         <br>
-        For the upload of the package template, click on „Durchsuchen“ to choose the file you created and Upload it to the we:kb.
+        For uploading the upload template, click on „Choose file“ to choose the file you created and upload it to we:kb.
         <br><br>
         <g:link action="exportPackageBatchImportTemplate"><p>The template file for the batch processing package can be downloaded here</p></g:link>
     </div>
@@ -32,12 +32,25 @@
 
     <div class="content">
         <g:uploadForm class="ui form" action="processPackageBatch" method="post">
-            <div class="fields">
-                <div class="field">
-                <input type="file" class="ui button" name="excelFile" accept=".xls,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
+            <div class="field">
+                <label>Excel File</label>
+
+                <input type="file" id="excelFile" name="excelFile" accept=".xls,.xlsx" required style="display: none;">
+
+                <div class="ui action input">
+                    <input type="text" id="fileName" placeholder="No file selected" readonly>
+
+                    <label for="excelFile" class="ui button">
+                        <i class="folder open icon"></i>
+                        Choose File
+                    </label>
                 </div>
-                <button class="ui primary button" type="submit">Upload</button>
             </div>
+
+            <button class="ui primary button" type="submit">
+                <i class="upload icon"></i>
+                Upload
+            </button>
         </g:uploadForm>
     </div>
 </div>
@@ -114,5 +127,14 @@
 
     </div>
 </div>
+
+<script>
+    document.getElementById('excelFile')
+        .addEventListener('change', function () {
+            const fileName = this.files.length > 0 ? this.files[0].name : 'No file selected';
+            document.getElementById('fileName').value = fileName;
+        });
+</script>
+
 </body>
 </html>

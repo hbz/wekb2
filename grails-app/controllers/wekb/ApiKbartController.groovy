@@ -4,18 +4,24 @@ import grails.converters.JSON
 import grails.plugin.springsecurity.SpringSecurityService
 import grails.web.servlet.mvc.GrailsParameterMap
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
+import org.springframework.security.authentication.AuthenticationManager
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
+import org.springframework.security.core.AuthenticationException
 import wekb.annotations.AltchaAnnotation
 import wekb.auth.User
 import wekb.helper.RDStore
+import wekb.utils.DateUtils
 
 import javax.servlet.ServletOutputStream
 import java.security.SecureRandom
+import java.text.SimpleDateFormat
 
 @AltchaAnnotation(comment = AltchaAnnotation.ACCESS_ALLOWED)
 class ApiKbartController {
     SecureRandom rand = new SecureRandom()
 
     Api2Service api2Service
+    AuthenticationManager authenticationManager
     DateFormatService dateFormatService
     ExportService exportService
     GenericOIDService genericOIDService
@@ -70,41 +76,48 @@ class ApiKbartController {
         //    render (text: "${params.callback}(${json})", contentType: "application/javascript", encoding: "UTF-8")
     }
 
-    private Map checkPermisson(GrailsParameterMap params, String checkRole = null){
+    private Map checkPermisson(GrailsParameterMap params, String checkRole = null) {
+
         Map result = [code: 'success', message: '']
-        User user
 
-        log.info 'APIKBART request from ' + request.getRemoteAddr() + ' for ' + request.requestURI + ' ---> ' + request.getHeaderNames().findAll{
-            it in ['host', 'referer', 'cookie', 'user-agent']
-        }.collect{it + ': ' + request.getHeaders( it )}
-
-        if(!springSecurityService.loggedIn){
-
-            if (params.username && params.password) {
-                springSecurityService.reauthenticate(params.username, params.password)
-
-                if(!springSecurityService.loggedIn){
-                    result.code = 'error'
-                    result.message = 'Your login is not correct!'
-                    return result
-                }
-            }else {
-                result.code = 'error'
-                result.message = 'Please set your authentication to login!'
-                log.warn('checkPermisson: Please set your authentication to login!')
-                return result
-            }
+        if (!params.username || !params.password) {
+            return [
+                    code: 'error',
+                    message: 'Please provide username and password!'
+            ]
         }
 
-        user = springSecurityService.getCurrentUser()
+        try {
+            def authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            params.username.toString(),
+                            params.password.toString()
+                    )
+            )
 
-        if(checkRole){
-            if (!user.hasRole('ROLE_KBART_API')) {
-                result.code = 'error'
-                result.message = 'This user does not have permission to access the api!'
-                log.warn('checkPermisson: This user does not have permission to access the api!')
-                return result
+            if (!authentication.authenticated) {
+                return [
+                        code: 'error',
+                        message: 'Your login is not correct!'
+                ]
             }
+
+            if (checkRole && !authentication.authorities.any {
+                it.authority == checkRole
+            }) {
+                return [
+                        code: 'error',
+                        message: 'This user does not have permission to access the KBART API!'
+                ]
+            }
+
+        } catch (AuthenticationException e) {
+            log.warn("KBART API authentication failed for user: ${params.username}")
+
+            return [
+                    code: 'error',
+                    message: 'Your login is not correct!'
+            ]
         }
 
         return result
@@ -230,6 +243,40 @@ class ApiKbartController {
                 response.sendError(500)
                 return
             }
+        }else{
+            response.sendError(401)
+            return
+        }
+    }
+
+    def packageLastRun() {
+        log.info("packageLastRun::${params}")
+
+        Map<String, Object> result = checkPermisson(params, 'ROLE_KBART_API')
+
+        if(result.code == 'success') {
+
+            wekb.Package pkg = genericOIDService.resolveOID(params.id)
+
+            if (!pkg) {
+                pkg = wekb.Package.findByUuid(params.id)
+            }
+
+            if (!pkg /*|| (pkg && pkg.getTippCount() > 200000)*/) {
+                response.sendError(404)
+                return
+            }
+
+            String dateString
+
+            if(pkg.kbartSource && pkg.kbartSource.lastRun){
+                SimpleDateFormat sdf = DateUtils.getSDF_NoTime()
+                dateString = sdf.format(pkg.kbartSource.lastRun)
+            }
+
+            result.lastRun = dateString
+            result.message = dateString
+            render result as JSON
         }else{
             response.sendError(401)
             return

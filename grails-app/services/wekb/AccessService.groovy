@@ -12,35 +12,35 @@ class AccessService {
 
     SpringSecurityService springSecurityService
 
-    List allowedBaseClasses = ['wekb.CuratoryGroup',
-                               'wekb.Identifier',
-                               'wekb.KbartSource',
-                               'wekb.Org',
-                               'wekb.Package',
-                               'wekb.Platform',
-                               'wekb.RefdataCategory',
-                               'wekb.TitleInstancePackagePlatform',
-                               'wekb.UpdatePackageInfo',
-                               'wekb.UpdateTippInfo',
-                               'wekb.Vendor']
+    List allowedBaseClasses = [CuratoryGroup.class.name,
+                               Identifier.class.name,
+                               KbartSource.class.name,
+                               Org.class.name,
+                               Package.class.name,
+                               Platform.class.name,
+                               RefdataCategory.class.name,
+                               TitleInstancePackagePlatform.class.name,
+                               UpdatePackageInfo.class.name,
+                               UpdateTippInfo.class.name,
+                               Vendor.class.name]
 
-    List allowedToCreate = ['wekb.KbartSource',
-                            'wekb.Org',
-                            'wekb.Package',
-                            'wekb.Platform',
-                            'wekb.TitleInstancePackagePlatform',]
+    List allowedToCreate = [KbartSource.class.name,
+                            Org.class.name,
+                            Package.class.name,
+                            Platform.class.name,
+                            TitleInstancePackagePlatform.class.name,]
 
-    List allowedPublicShow = ['CuratoryGroup',
-                              'Identifier',
-                              'KbartSource',
-                              'Org',
-                              'Package',
-                              'Platform',
-                              'RefdataCategory',
-                              'TitleInstancePackagePlatform',
-                              'UpdatePackageInfo',
-                              'UpdateTippInfo',
-                              'Vendor']
+    List allowedPublicShow = [CuratoryGroup.getSimpleName(),
+                              Identifier.getSimpleName(),
+                              KbartSource.getSimpleName(),
+                              Org.getSimpleName(),
+                              Package.getSimpleName(),
+                              Platform.getSimpleName(),
+                              RefdataCategory.getSimpleName(),
+                              TitleInstancePackagePlatform.getSimpleName(),
+                              UpdatePackageInfo.getSimpleName(),
+                              UpdateTippInfo.getSimpleName(),
+                              Vendor.getSimpleName()]
 
     List allowedComponentSearch = ["g:curatoryGroups",
                                    "g:identifiers",

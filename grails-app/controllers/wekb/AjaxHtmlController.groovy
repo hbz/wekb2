@@ -539,6 +539,7 @@ class AjaxHtmlController {
                         if (target_object instanceof KbartSource && params.name == 'url' && new_val != null && new_val != target_object.url) {
                             target_object.lastRun = null
                             target_object.lastUpdateUrl = null
+                            target_object.kbartFileHash = null
                         }
 
                         binding_properties[params.name] = new_val

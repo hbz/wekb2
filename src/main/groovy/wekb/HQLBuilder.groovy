@@ -356,7 +356,7 @@ public class HQLBuilder {
         break;
       case 'in':
         hql_builder_context."${addToQuery}".add("${crit.defn.contextTree.negate?'not ':''}${scoped_property} in (:${crit.defn.qparam})")
-        if ( crit.defn.type=='lookup' || crit.defn.type=='dropDown' || crit.defn.type=='dropDownGroup' ) {
+        if ( (crit.defn.type=='lookup' || crit.defn.type=='dropDown' || crit.defn.type=='dropDownGroup') && crit.defn.multiple != 'true') {
           List values = [], parsedValues = []
           if(crit.value instanceof String)
             values << crit.value
@@ -367,7 +367,7 @@ public class HQLBuilder {
             parsedValues << value
           }
           hql_builder_context.bindvars[crit.defn.qparam] = parsedValues
-        }else if (crit.defn.type=='dropDownMultiple'){
+        }else if ((crit.defn.type=='lookup' || crit.defn.type=='dropDown' || crit.defn.type=='dropDownGroup') && crit.defn.multiple == 'true'){
             List values = [], parsedValues = []
             if(crit.value instanceof String)
                 values = crit.value.split(',')
@@ -412,14 +412,14 @@ public class HQLBuilder {
       case 'exists':
         if ( crit.defn.type=='lookup' || crit.defn.type=='dropDown' || crit.defn.type=='dropDownGroup' ) {
 
-          if(crit.defn.baseClass == 'wekb.RefdataValue') {
+          if(crit.defn.baseClass == RefdataValue.class.name) {
             def value = getValueFromBaseClass(grailsApplication, crit.defn.baseClass, crit.value)
             if(value && value.class.getSimpleName() == 'RefdataValue') {
               hql_builder_context."${addToQuery}".add("${crit.defn.contextTree.negate ? 'not ' : ''} exists (select ${crit.defn.qparam} from ${scoped_property} as ${crit.defn.qparam} where ${crit.defn.qparam} = :${crit.defn.qparam} ) ");
               hql_builder_context.bindvars[crit.defn.qparam] = value
             }
           }
-          if(crit.defn.baseClass == 'wekb.CuratoryGroup') {
+          if(crit.defn.baseClass == CuratoryGroup.class.name) {
             def value = CuratoryGroup.get(crit.value)
             if(value) {
               if(baseclass.toString() == 'class wekb.Org') {
@@ -449,7 +449,7 @@ public class HQLBuilder {
               }
             }
           }
-          if(crit.defn.baseClass == 'wekb.Vendor') {
+          if(crit.defn.baseClass == Vendor.class.name) {
               //placeHolderForVendor
             def value = Vendor.get(crit.value)
             if(value) {
@@ -670,26 +670,26 @@ public class HQLBuilder {
     return null
   }
 
-    static def getValueFromBaseClass(GrailsApplication grailsApplication, String baseClass, String oid){
-        def value
+    static def getValueFromBaseClass(GrailsApplication grailsApplication, String baseClass, String value){
+        def value_FromBaseClass
         def domain_class = grailsApplication.getArtefact('Domain', baseClass)
         if (domain_class) {
             Long objectID
-            if(oid.contains(':')){
-                List oid_components = oid.split(':')
+            if(value.contains(':')){
+                List oid_components = value.split(':')
                 objectID = Long.parseLong(oid_components[1])
             }
             else {
-                objectID = Long.parseLong(oid)
+                objectID = Long.parseLong(value)
             }
 
-            value = domain_class.getClazz().get(objectID)
+            value_FromBaseClass = domain_class.getClazz().get(objectID)
         }
         else {
             log.debug("getValueFromBaseClass -> Unable to locate domain class ${baseClass} or not readable");
-            value = null
+            value_FromBaseClass = value
         }
-        return value
+        return value_FromBaseClass
     }
 
 }

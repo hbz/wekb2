@@ -1,4 +1,4 @@
-<%@ page import="wekb.utils.ServerUtils; wekb.utils.ServerUtils; wekb.helper.RDStore; wekb.RefdataValue;" %>
+<%@ page import="wekb.Platform; wekb.TitleInstancePackagePlatform; wekb.KbartSource; wekb.utils.ServerUtils; wekb.utils.ServerUtils; wekb.helper.RDStore; wekb.RefdataValue;" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -124,13 +124,13 @@
 
                 <div class="menu">
                     <g:link class="item we-link" controller="create" action="index"
-                            params="[tmpl: 'wekb.Package']"><g:message code="public.packages"/></g:link>
+                            params="[tmpl: wekb.Package.class.name]"><g:message code="public.packages"/></g:link>
                     <g:link class="item we-link" controller="create" action="index"
-                            params="[tmpl: 'wekb.Platform']"><g:message code="public.platforms"/></g:link>
+                            params="[tmpl: wekb.Platform.class.name]"><g:message code="public.platforms"/></g:link>
                     <g:link class="item we-link" controller="create" action="index"
-                            params="[tmpl: 'wekb.KbartSource']"><g:message code="public.sources"/></g:link>
+                            params="[tmpl: wekb.KbartSource.class.name]"><g:message code="public.sources"/></g:link>
                     <g:link class="item we-link" controller="create" action="index"
-                            params="[tmpl: 'wekb.TitleInstancePackagePlatform']"><g:message code="public.titles"/></g:link>
+                            params="[tmpl: wekb.TitleInstancePackagePlatform.class.name]"><g:message code="public.titles"/></g:link>
                 </div>
             </div>
         </sec:ifAnyGranted>

@@ -309,7 +309,7 @@ class KbartProcessService {
                                             invalidKbartRowsForTipps << kbartRow.rowIndex
 
                                             UpdateTippInfo updateTippInfo = new UpdateTippInfo(
-                                                    description: validation_result.errorMessage+" (Row: "+kbartRow.rowIndex+")",
+                                                    description: validation_result.errorMessage+" (Row: "+(kbartRow.rowIndex+1)+")",
                                                     tipp: null,
                                                     startTime: new Date(),
                                                     endTime: new Date(),
@@ -337,19 +337,13 @@ class KbartProcessService {
                                         try {
 
                                             if(updateTipp == null){
-                                                    def trimmed_url = kbartRow.title_url ? kbartRow.title_url.trim() : null
-                                                    log.debug("push in map to create new TIPP..")
-                                                    def tmap = [
-                                                            'pkg'         : pkg,
-                                                            'hostPlatform': pkg.nominalPlatform,
-                                                            'url'         : trimmed_url,
-                                                            'status'      : (kbartRow.status ?: 'Current'),
-                                                            'name'        : (kbartRow.publication_title ?: null),
-                                                            'type'        : (kbartRow.publication_type ?: null),
-                                                            'medium'    : (kbartRow.medium ?: null),
-                                                            'kbartRowMap': kbartRow
-                                                    ]
-                                                    kbartRowsToCreateTipps << tmap
+                                                def trimmed_url = kbartRow.title_url ? kbartRow.title_url.trim() : null
+                                                log.debug("push in map to create new TIPP..")
+                                                Map tmap = kbartRow
+                                                tmap.pkg = pkg
+                                                tmap.hostPlatform = pkg.nominalPlatform
+                                                tmap.url = trimmed_url
+                                                kbartRowsToCreateTipps << tmap
 
 
                                             }else if(updateTipp && !(updateTipp.id in tippsFound)) {
@@ -1053,7 +1047,12 @@ class KbartProcessService {
                         }
                 }
 
-                if (rowMap.publication_title) {
+                rowMap.rowIndex = record.recordNumber
+                result << rowMap
+                importedRows++
+
+
+               /* if (rowMap.publication_title) {
                     rowMap.rowIndex = record.recordNumber
 
                     result << rowMap
@@ -1076,7 +1075,7 @@ class KbartProcessService {
                             kbartProperty: 'publication_title',
                             updatePackageInfo: updatePackageInfo
                     ).save()
-                }
+                }*/
             }
 
             if (countRows == 0) {

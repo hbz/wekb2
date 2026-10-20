@@ -157,6 +157,7 @@ class SearchService {
                 // log.debug("Using template: ${result.qbetemplate}");
             }
 
+            println(result.qbetemplate.baseclass)
             // Looked up a template from somewhere, see if we can execute a search
             if ( result.qbetemplate) {
                 boolean preconditionsMet = (params.inline || params.hide || (result.qbetemplate.containsKey('minInput') && cleaned_params.keySet().intersect(result.qbetemplate.qbeConfig.qbeForm.qparam).size() >= result.qbetemplate.minInput) || !result.qbetemplate.containsKey('minInput'))
@@ -302,7 +303,7 @@ class SearchService {
                             rh.jumpToLink = "/search/componentSearch?qp_vendor_id=${vendor.id}&qbe=g:tipps&hide=qp_vendor_id&refOID=wekb.Vendor:${vendor.id}&qp_provider=wekb.Org:${r.id}&qp_status_value=Current"
                         }else {
 
-                            if (result.qbetemplate.baseclass != 'wekb.RefdataValue' && cobj?.class?.name == 'wekb.RefdataValue') {
+                            if (result.qbetemplate.baseclass != RefdataValue.class.name && cobj?.class?.name == RefdataValue.class.name) {
                                 cobj = cobj.getI10n('value')
                             } else if (sp == 'curatoryGroupsCuratoryGroup') {
                                 if (cobj instanceof Package) {

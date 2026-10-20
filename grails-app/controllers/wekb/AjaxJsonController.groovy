@@ -140,16 +140,12 @@ class AjaxJsonController {
         def result = [:]
         result.values = []
         if (params.baseClass) {
-            dropdownService.componentsDropDown(params.baseClass, params.filter1 ?: '', params.q).each {
-                result.values << [value: it.id, text: "${it.text}"]
-            }
+            result.values = dropdownService.componentsDropDown(params.baseClass, params.filter1 ?: '', params.q)
         }
         else if(params.dropDownGroup == 'true'){
             def refObject = genericOIDService.resolveOID(params.refObject)
             String qp_status_id = params.qp_status_id && params.qp_status_id != 'null' ? params.qp_status_id : null
-            dropdownService.selectedDropDown(params.dropDownType, refObject, qp_status_id, params.q).each {
-                result.values << [value: it.id, text: "${it.text}"]
-            }
+            result.values = dropdownService.selectedDropDown(params.dropDownType, refObject, qp_status_id, params.q)
         }
         else {
             log.debug("Unable to locate domain class ${params.baseClass} or not readable");
