@@ -2805,6 +2805,7 @@ class GlobalSearchTemplatesService {
     Map tippsOfPkg() {
         Map result = [
                 baseclass: 'wekb.TitleInstancePackagePlatform',
+                msgCode    : 'title.plural',
                 title    : 'Titles',
                 defaultSort : 'name',
                 defaultOrder: 'asc',

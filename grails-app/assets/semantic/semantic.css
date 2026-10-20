@@ -27768,22 +27768,22 @@ footer h2.ui.header {
   padding-left: 0;
 }
 
-i.circular.inverted.wekb-glowIconHeader.wekb-packages {
+i.circular.inverted.wekb-glowIconHeader.wekb-package {
   background-color: #76007a !important;
   box-shadow: 0 0 0 0.6rem rgba(118, 0, 122, 0.12);
 }
 
-i.circular.inverted.wekb-glowIconHeader.wekb-titles {
+i.circular.inverted.wekb-glowIconHeader.wekb-titleinstancepackageplatform {
   background-color: #2185d0 !important;
   box-shadow: 0 0 0 0.6rem rgba(33, 133, 208, 0.12);
 }
 
-i.circular.inverted.wekb-glowIconHeader.wekb-platforms {
+i.circular.inverted.wekb-glowIconHeader.wekb-platform {
   background-color: #FBC71C !important;
   box-shadow: 0 0 0 0.6rem rgba(251, 199, 28, 0.12);
 }
 
-i.circular.inverted.wekb-glowIconHeader.wekb-providers {
+i.circular.inverted.wekb-glowIconHeader.wekb-provider {
   background-color: #b54800 !important;
   box-shadow: 0 0 0 0.6rem rgba(181, 72, 0, 0.12);
 }
@@ -27796,11 +27796,6 @@ i.circular.inverted.wekb-glowIconHeader.wekb-vendors {
 i.circular.inverted.wekb-glowIconHeader.wekb-org {
   background-color: #00b5ad !important;
   box-shadow: 0 0 0 0.6rem rgba(0, 181, 173, 0.12);
-}
-
-i.circular.inverted.wekb-glowIconHeader.wekb-sources {
-  background-color: grey !important;
-  box-shadow: 0 0 0 0.6rem rgba(128, 128, 128, 0.12);
 }
 
 i.circular.inverted.wekb-glowIconHeader.wekb-default {
@@ -27823,42 +27818,47 @@ i.circular.inverted.wekb-glowIconHeader.wekb-info {
   box-shadow: 0 0 0 0.6rem rgba(128, 128, 128, 0.12);
 }
 
-i.circular.inverted.wekb-glowIconHeader.wekb-sources {
+i.circular.inverted.wekb-glowIconHeader.wekb-kbartsource {
   background-color: grey !important;
   box-shadow: 0 0 0 0.6rem rgba(128, 128, 128, 0.12);
 }
 
-i.circular.inverted.wekb-glowIconHeader.wekb-curatory-groups {
+i.circular.inverted.wekb-glowIconHeader.wekb-source {
   background-color: grey !important;
   box-shadow: 0 0 0 0.6rem rgba(128, 128, 128, 0.12);
 }
 
-i.circular.inverted.wekb-glowIconHeader.wekb-reference-data-categories {
+i.circular.inverted.wekb-glowIconHeader.wekb-curatorygroup {
   background-color: grey !important;
   box-shadow: 0 0 0 0.6rem rgba(128, 128, 128, 0.12);
 }
 
-i.circular.inverted.wekb-glowIconHeader.wekb-library-suppliers {
+i.circular.inverted.wekb-glowIconHeader.wekb-refdatacategory {
   background-color: grey !important;
   box-shadow: 0 0 0 0.6rem rgba(128, 128, 128, 0.12);
 }
 
-i.circular.inverted.wekb-glowIconLanding.wekb-packages {
+i.circular.inverted.wekb-glowIconHeader.wekb-library-supplier {
+  background-color: grey !important;
+  box-shadow: 0 0 0 0.6rem rgba(128, 128, 128, 0.12);
+}
+
+i.circular.inverted.wekb-glowIconLanding.wekb-package {
   background-color: #76007a !important;
   box-shadow: 0 0 0 0.6rem rgba(118, 0, 122, 0.12), 0 0 0 1rem #fff, 0 5px 14px 1rem rgba(0, 0, 0, 0.1);
 }
 
-i.circular.inverted.wekb-glowIconLanding.wekb-titles {
+i.circular.inverted.wekb-glowIconLanding.wekb-titleinstancepackageplatform {
   background-color: #2185d0 !important;
   box-shadow: 0 0 0 0.6rem rgba(33, 133, 208, 0.12), 0 0 0 1rem #fff, 0 5px 14px 1rem rgba(0, 0, 0, 0.1);
 }
 
-i.circular.inverted.wekb-glowIconLanding.wekb-platforms {
+i.circular.inverted.wekb-glowIconLanding.wekb-platform {
   background-color: #FBC71C !important;
   box-shadow: 0 0 0 0.6rem rgba(251, 199, 28, 0.12), 0 0 0 1rem #fff, 0 5px 14px 1rem rgba(0, 0, 0, 0.1);
 }
 
-i.circular.inverted.wekb-glowIconLanding.wekb-providers {
+i.circular.inverted.wekb-glowIconLanding.wekb-provider {
   background-color: #b54800 !important;
   box-shadow: 0 0 0 0.6rem rgba(181, 72, 0, 0.12), 0 0 0 1rem #fff, 0 5px 14px 1rem rgba(0, 0, 0, 0.1);
 }
@@ -36977,12 +36977,12 @@ i.icon.youtube.play::before {
          Theme Overrides
 *******************************/
 
-i.inverted.circular.wekb-packages.icon {
+i.inverted.circular.wekb-package.icon {
   background-color: #76007a !important;
   color: #fff !important;
 }
 
-i.inverted.circular.wekb-packages.icon:before {
+i.inverted.circular.wekb-package.icon:before {
   content: "\f466";
 }
 
@@ -36995,75 +36995,86 @@ i.inverted.circular.wekb-org.icon:before {
   content: "\f466";
 }
 
-i.inverted.circular.wekb-platforms.icon {
+i.inverted.circular.wekb-platform.icon {
   background-color: #FBC71C !important;
   color: #fff !important;
 }
 
-i.inverted.circular.wekb-platforms.icon:before {
+i.inverted.circular.wekb-platform.icon:before {
   content: "\f0c2";
 }
 
-i.inverted.circular.wekb-vendors.icon {
+i.inverted.circular.wekb-vendor.icon {
   background-color: #5d7c62 !important;
   color: #fff !important;
 }
 
-i.inverted.circular.wekb-vendors.icon:before {
+i.inverted.circular.wekb-vendor.icon:before {
   content: "\f2b5";
 }
 
-i.inverted.circular.wekb-titles.icon {
+i.inverted.circular.wekb-titleinstancepackageplatform.icon,
+i.inverted.circular.wekb-title.icon {
   background-color: #2185d0 !important;
   color: #fff !important;
 }
 
-i.inverted.circular.wekb-titles.icon:before {
+i.inverted.circular.wekb-titleinstancepackageplatform.icon:before,
+i.inverted.circular.wekb-title.icon:before {
   content: "\f02d";
 }
 
-i.inverted.circular.wekb-providers.icon {
+i.inverted.circular.wekb-provider.icon {
   background-color: #b54800 !important;
   color: #fff !important;
 }
 
-i.inverted.circular.wekb-providers.icon:before {
+i.inverted.circular.wekb-provider.icon:before {
   content: "\f519";
 }
 
-i.inverted.circular.wekb-sources.icon {
+i.inverted.circular.wekb-kbartsource.icon {
   background-color: grey !important;
   color: #fff !important;
 }
 
-i.inverted.circular.wekb-sources.icon:before {
+i.inverted.circular.wekb-kbartsource.icon:before {
   content: "\f381";
 }
 
-i.inverted.circular.wekb-curatory-groups.icon {
+i.inverted.circular.wekb-source.icon {
   background-color: grey !important;
   color: #fff !important;
 }
 
-i.inverted.circular.wekb-curatory-groups.icon:before {
-  content: "\f15c";
+i.inverted.circular.wekb-source.icon:before {
+  content: "\f381";
 }
 
-i.inverted.circular.wekb-reference-data-categories.icon {
+i.inverted.circular.wekb-curatorygroup.icon {
   background-color: grey !important;
   color: #fff !important;
 }
 
-i.inverted.circular.wekb-reference-data-categories.icon:before {
+i.inverted.circular.wekb-curatorygroup.icon:before {
   content: "\f15c";
 }
 
-i.inverted.circular.wekb-library-suppliers.icon {
+i.inverted.circular.wekb-refdatacategory.icon {
+  background-color: grey !important;
+  color: #fff !important;
+}
+
+i.inverted.circular.wekb-refdatacategory.icon:before {
+  content: "\f15c";
+}
+
+i.inverted.circular.wekb-library-supplier.icon {
   background-color: #5d7c62 !important;
   color: #fff !important;
 }
 
-i.inverted.circular.wekb-library-suppliers.icon:before {
+i.inverted.circular.wekb-library-supplier.icon:before {
   content: "\f2b5";
 }
 
@@ -45490,7 +45501,7 @@ dd {
  * Filter Segment
  ********************************/
 
-.segment:has(.wekb-filter) {
+.ui.segment.wekb-topFilter {
   background: #ffffff4d;
   border: 2px solid #2e6fd9;
   box-shadow: 0 0.4rem 1.5rem rgba(34, 36, 38, 0.045);
@@ -55294,7 +55305,7 @@ Floated Menu / Item
   margin: 1em 0;
   border: 1px solid rgba(34, 36, 38, 0.15);
   box-shadow: none;
-  border-radius: none;
+  border-radius: 1em;
   text-align: left;
   vertical-align: middle;
   color: rgba(0, 0, 0, 0.87);
@@ -55359,15 +55370,15 @@ Floated Menu / Item
 }
 
 .ui.table > thead > tr:first-child > th:first-child {
-  border-radius: none 0 0 0;
+  border-radius: 1em 0 0 0;
 }
 
 .ui.table > thead > tr:first-child > th:last-child {
-  border-radius: 0 none 0 0;
+  border-radius: 0 1em 0 0;
 }
 
 .ui.table > thead > tr:first-child > th:only-child {
-  border-radius: none none 0 0;
+  border-radius: 1em 1em 0 0;
 }
 
 /* Footer */
@@ -55397,17 +55408,17 @@ Floated Menu / Item
 
 .ui.table > tfoot > tr:last-child > th:first-child,
 .ui.table > tfoot > tr:last-child > td:first-child {
-  border-radius: 0 0 0 none;
+  border-radius: 0 0 0 1em;
 }
 
 .ui.table > tfoot > tr:last-child > th:last-child,
 .ui.table > tfoot > tr:last-child > td:last-child {
-  border-radius: 0 0 none 0;
+  border-radius: 0 0 1em 0;
 }
 
 .ui.table > tfoot > tr:last-child > th:only-child,
 .ui.table > tfoot > tr:last-child > td:only-child {
-  border-radius: 0 0 none none;
+  border-radius: 0 0 1em 1em;
 }
 
 /* Table Row */
@@ -55993,13 +56004,13 @@ Floated Menu / Item
 .ui.scrolling.table > thead {
   background: #F9FAFB;
   color: #F9FAFB;
-  border-radius: none none 0 0;
+  border-radius: 1em 1em 0 0;
 }
 
 .ui.scrolling.table > tfoot {
   background: #F9FAFB;
   color: #F9FAFB;
-  border-radius: 0 0 none none;
+  border-radius: 0 0 1em 1em;
 }
 
 .ui.inverted.scrolling.table > thead {
@@ -56015,7 +56026,7 @@ Floated Menu / Item
 .ui.scrolling.table > thead::-webkit-scrollbar-track,
 .ui.scrolling.table > tfoot::-webkit-scrollbar-track {
   background: inherit;
-  border-radius: none;
+  border-radius: 1em;
 }
 
 @supports (-moz-appearance: none) {
@@ -56852,7 +56863,7 @@ Floated Menu / Item
   margin-bottom: 0;
   top: 0;
   margin-top: 1em;
-  border-radius: none none 0 0;
+  border-radius: 1em 1em 0 0;
 }
 
 .ui.table[class*="top attached"]:first-child {
@@ -56867,7 +56878,7 @@ Floated Menu / Item
   top: 0;
   margin-bottom: 1em;
   box-shadow: none;
-  border-radius: 0 0 none none;
+  border-radius: 0 0 1em 1em;
 }
 
 .ui[class*="bottom attached"].table:last-child {
@@ -59739,7 +59750,7 @@ Floated Menu / Item
   background: #FFFFFF;
   padding: 0;
   border: none;
-  border-radius: 0.375rem;
+  border-radius: 1rem;
   box-shadow: 0 1px 3px 0 #d4d4d5, 0 0 0 1px #d4d4d5;
   transition: box-shadow 0.1s ease, transform 0.1s ease;
   z-index: "";
@@ -59803,18 +59814,18 @@ Floated Menu / Item
 
 .ui.cards > .card > :first-child,
 .ui.card > :first-child {
-  border-radius: 0.375rem 0.375rem 0 0 !important;
+  border-radius: 1rem 1rem 0 0 !important;
   border-top: none !important;
 }
 
 .ui.cards > .card > :last-child,
 .ui.card > :last-child {
-  border-radius: 0 0 0.375rem 0.375rem !important;
+  border-radius: 0 0 1rem 1rem !important;
 }
 
 .ui.cards > .card > :only-child,
 .ui.card > :only-child {
-  border-radius: 0.375rem !important;
+  border-radius: 1rem !important;
 }
 
 /* --------------
@@ -60206,7 +60217,7 @@ Floated Menu / Item
   background: rgba(255, 255, 255, 0.8);
   width: 100%;
   height: 100%;
-  border-radius: 0.375rem;
+  border-radius: 1rem;
   z-index: 100;
 }
 

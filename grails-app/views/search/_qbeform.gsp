@@ -28,13 +28,14 @@
             <button class="ui button primary" type="submit" value="search"
                     name="searchAction">Search View</button>
         </div>
+        <br><br>
     </g:form>
 </g:elseif>
 <g:else>
 
     <% Map advancedSearchMap = [:] %>
     <div class="ui segment">
-    <g:form method="get" class="ui form ${minInput ? 'wekb-filter-mininput' : 'wekb-filter'}" controller="${controllerName}" action="${actionName}" id="${params.id}">
+    <g:form method="get" class="ui form wekb-topFilter ${minInput ? 'wekb-filter-mininput' : 'wekb-filter'}" controller="${controllerName}" action="${actionName}" id="${params.id}">
 
         <input type="hidden" name="qbe" value="${params.qbe}"/>
 
