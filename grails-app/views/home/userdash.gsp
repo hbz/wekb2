@@ -38,7 +38,7 @@
                 <td>
                     <semui:xEditable owner="${itm}" field="name" required="true"/>
                 </td>
-                <td><g:formatDate format="${message(code: 'default.date.format.noZ')}"
+                <td><wekb:dateTime format="${message(code: 'default.date.format.noZ')}"
                                   date="${itm.dateCreated}"/>
                 </td>
                 <td>

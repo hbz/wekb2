@@ -87,7 +87,7 @@
                         <input type="checkbox" name="onlyRowsWithLastChanged">
                         <label>Only update titles with the latest last_changed time stamp in your we:kb/KBART file. Last registered date is:
                             <g:if test="${lastSuccessfulUpdateInfo && lastSuccessfulUpdateInfo.lastChangedInKbart}">
-                                <strong><g:formatDate format="${message(code: 'default.date.format.notime')}"
+                                <strong><wekb:dateTime format="${message(code: 'default.date.format.notime')}"
                                                       date="${lastSuccessfulUpdateInfo.lastChangedInKbart}"/></strong>
                             </g:if><g:else>
                             <strong>Empty</strong>

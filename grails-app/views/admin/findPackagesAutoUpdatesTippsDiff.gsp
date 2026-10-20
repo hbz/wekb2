@@ -80,7 +80,7 @@
                 </td>
                 <td>
                     <g:if test="${pkg.kbartSource.lastRun}">
-                        <g:formatDate date="${pkg.kbartSource.lastRun}"
+                        <wekb:dateTime date="${pkg.kbartSource.lastRun}"
                                       format="${message(code: 'default.date.format')}"/>
                     </g:if>
                 </td>

@@ -63,7 +63,7 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <g:formatDate
+                                        <wekb:dateTime
                                                 format="${message(code: 'default.date.format.noZWihoutSS')}"
                                                 date="${obj.dateCreated}"/>
                                     </td>
@@ -118,7 +118,7 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <g:formatDate
+                                        <wekb:dateTime
                                                 format="${message(code: 'default.date.format.noZWihoutSS')}"
                                                 date="${obj.lastUpdated}"/>
                                     </td>
@@ -194,7 +194,7 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <g:formatDate
+                                        <wekb:dateTime
                                                 format="${message(code: 'default.date.format.noZWihoutSS')}"
                                                 date="${obj.dateCreated}"/>
                                     </td>
@@ -248,7 +248,7 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <g:formatDate
+                                        <wekb:dateTime
                                                 format="${message(code: 'default.date.format.noZWihoutSS')}"
                                                 date="${obj.lastUpdated}"/>
                                     </td>
@@ -317,7 +317,7 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <g:formatDate
+                                        <wekb:dateTime
                                                 format="${message(code: 'default.date.format.noZWihoutSS')}"
                                                 date="${obj.dateCreated}"/>
                                     </td>
@@ -361,7 +361,7 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <g:formatDate
+                                        <wekb:dateTime
                                                 format="${message(code: 'default.date.format.noZWihoutSS')}"
                                                 date="${obj.lastUpdated}"/>
                                     </td>
@@ -428,7 +428,7 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <g:formatDate
+                                        <wekb:dateTime
                                                 format="${message(code: 'default.date.format.noZWihoutSS')}"
                                                 date="${obj.dateCreated}"/>
                                     </td>
@@ -472,7 +472,7 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <g:formatDate
+                                        <wekb:dateTime
                                                 format="${message(code: 'default.date.format.noZWihoutSS')}"
                                                 date="${obj.lastUpdated}"/>
                                     </td>
@@ -551,7 +551,7 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <g:formatDate
+                                        <wekb:dateTime
                                                 format="${message(code: 'default.date.format.noZWihoutSS')}"
                                                 date="${obj.dateCreated}"/>
                                     </td>
@@ -604,7 +604,7 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <g:formatDate
+                                        <wekb:dateTime
                                                 format="${message(code: 'default.date.format.noZWihoutSS')}"
                                                 date="${obj.lastUpdated}"/>
                                     </td>

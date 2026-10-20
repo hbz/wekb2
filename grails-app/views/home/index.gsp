@@ -23,7 +23,7 @@
 
                     <div class="meta">
                         News object added by <strong>${feedEntry.author.name.text()}</strong> on <span
-                            class="stay"><g:formatDate
+                            class="stay"><wekb:dateTime
                                 format="${message(code: 'default.date.format.notime')}"
                                 date="${new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss'Z'").parse(feedEntry.updated.text())}"/></span>
                     </div>

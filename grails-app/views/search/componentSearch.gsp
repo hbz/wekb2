@@ -9,27 +9,19 @@
 <body>
 
 <g:if test="${qbetemplate}">
-        <semui:h1HeaderWithIcon
-                iconClass="${qbetemplate.msgCode
-                        ? 'wekb-' + message(code: qbetemplate.msgCode).toLowerCase().replace(' ', '-')
-                        : (refObject
-                        ? 'wekb-' + refObject.getDomainName().toLowerCase().replace(' ', '-') + 's'
-                        : 'wekb-default')}"
-                title="${qbetemplate.msgCode
-                        ? message(code: qbetemplate.msgCode)
-                        : (refObject
-                        ? refObject.getDomainName()
-                        : 'Object')}">
-
-%{--            title="${message(code: qbetemplate.msgCode, default: qbetemplate.title)}" >--}%
-        <g:if test="${refObject}">
-            ${message(code:'public.search')}  for ${refObject.getDomainName()}:
-            <g:link controller="resource" action="show" id="${refObject.getOID()}">${refObject.name}</g:link>
-        </g:if>
-        <g:else>
-            ${message(code:'public.search')}  ${message(code:'provider.maintained')} ${message(code: qbetemplate.msgCode, default: qbetemplate.title).toLowerCase()}
-        </g:else>
-    </semui:h1HeaderWithIcon>
+    <semui:h1HeaderWithIcon
+            iconClass="${qbetemplate.baseclass.toLowerCase().replace('.', '-')}"
+            title="${qbetemplate.msgCode
+                    ? message(code: qbetemplate.msgCode)
+                    : 'Object'}">
+                <g:if test="${refObject}">
+                    ${message(code:'public.search')}  for ${refObject.getDomainName()}:
+                    <g:link controller="resource" action="show" id="${refObject.getOID()}">${refObject.name}</g:link>
+                </g:if>
+                <g:else>
+                    ${message(code:'public.search')}  ${message(code:'provider.maintained')} ${message(code: qbetemplate.msgCode, default: qbetemplate.title).toLowerCase()}
+                </g:else>
+            </semui:h1HeaderWithIcon>
 
 
     </g:if>

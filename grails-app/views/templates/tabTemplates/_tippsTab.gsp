@@ -55,7 +55,7 @@
             </td>
             <td>
                 <g:if test="${t.lastUpdated}">
-                    <g:formatDate format="${message(code: 'default.date.format.noZ')}"
+                    <wekb:dateTime format="${message(code: 'default.date.format.noZ')}"
                                   date="${t.lastUpdated}"/>
                 </g:if>
             </td>

@@ -3,7 +3,7 @@
 *******************************/
 
 // ****  Package **** //
-i.inverted.circular.wekb-packages.icon {
+i.inverted.circular.wekb-package.icon {
     background-color: @package!important ;
     color: #fff!important;
     &:before {
@@ -21,7 +21,7 @@ i.inverted.circular.wekb-org.icon {
 }
 
 // ****  platform **** //
-i.inverted.circular.wekb-platforms.icon {
+i.inverted.circular.wekb-platform.icon {
     background-color: @platform!important;
     color: #fff!important;
     &:before {
@@ -30,7 +30,7 @@ i.inverted.circular.wekb-platforms.icon {
 }
 
 // ****  Vendor **** //
-i.inverted.circular.wekb-vendors.icon {
+i.inverted.circular.wekb-vendor.icon {
     background-color: @vendor!important;
     color: #fff!important;
     &:before {
@@ -39,7 +39,8 @@ i.inverted.circular.wekb-vendors.icon {
 }
 
 // ****  Title **** //
-i.inverted.circular.wekb-titles.icon {
+i.inverted.circular.wekb-titleinstancepackageplatform.icon,
+i.inverted.circular.wekb-title.icon {
     background-color: @title!important;
     color: #fff!important;
     &:before {
@@ -48,7 +49,7 @@ i.inverted.circular.wekb-titles.icon {
 }
 
 // ****  Provider **** //
-i.inverted.circular.wekb-providers.icon {
+i.inverted.circular.wekb-provider.icon {
     background-color: @provider!important;
     color: #fff!important;
         &:before {
@@ -56,7 +57,14 @@ i.inverted.circular.wekb-providers.icon {
         }
 }
 // ****  Source  **** //
-i.inverted.circular.wekb-sources.icon {
+i.inverted.circular.wekb-kbartsource.icon {
+    background-color: @default!important;
+    color: #fff!important;
+        &:before {
+            content: "\f381";
+        }
+}
+i.inverted.circular.wekb-source.icon {
     background-color: @default!important;
     color: #fff!important;
         &:before {
@@ -64,8 +72,9 @@ i.inverted.circular.wekb-sources.icon {
         }
 }
 
+
 // ****  Curatory Groups **** //
-i.inverted.circular.wekb-curatory-groups.icon {
+i.inverted.circular.wekb-curatorygroup.icon {
     background-color: @default!important;
     color: #fff!important;
         &:before {
@@ -73,7 +82,7 @@ i.inverted.circular.wekb-curatory-groups.icon {
         }
 }
 // ****  Reference Data Categories **** //
-i.inverted.circular.wekb-reference-data-categories.icon {
+i.inverted.circular.wekb-refdatacategory.icon {
     background-color: @default!important;
     color: #fff!important;
         &:before {
@@ -82,7 +91,7 @@ i.inverted.circular.wekb-reference-data-categories.icon {
 }
 
 // ****  Library Suppliers **** //
-i.inverted.circular.wekb-library-suppliers.icon {
+i.inverted.circular.wekb-library-supplier.icon {
     background-color: @vendor!important;
     color: #fff!important;
         &:before {

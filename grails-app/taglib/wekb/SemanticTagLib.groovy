@@ -631,7 +631,7 @@ class SemanticTagLib {
         customInputAttrs.params = new LinkedHashMap<String, Object>()
         customInputAttrs.params.putAll(linkTagAttrs.params)
         allLinkAttrs.putAt('title', messageSource.getMessage('default.paginate.all', null, locale))
-        if (total <= 200) {
+/*        if (total <= 200) {
             allLinkAttrs.class = "item"
             allLinkAttrs.params.remove('offset')
             allLinkAttrs.params.max = 200
@@ -639,7 +639,7 @@ class SemanticTagLib {
         }
         else {
             out << '<div class="disabled item wekb popup" data-content="'+messageSource.getMessage('default.paginate.listTooLong',null,locale)+'"><i class="list icon"></i></div>'
-        }
+        }*/
 
         // Custom Input
 
@@ -760,7 +760,7 @@ class SemanticTagLib {
 
     Closure tabs = { attrs, body ->
         def newClass = attrs.class ?: ''
-        out << '<div class="ui top attached tabular  ' + newClass + ' stackable menu">'
+        out << '<div class="ui ui tabular pointing secondary tabular  ' + newClass + ' stackable menu">'
         out << body()
         out << '</div>'
     }
@@ -810,7 +810,7 @@ class SemanticTagLib {
 
     Closure tabsItemContent = { attrs, body ->
 
-        out << '<div class="ui bottom attached '
+        out << '<div class="ui wekb-tabBottom '
 
         if(attrs.defaultTab && attrs.tab == attrs.defaultTab && !attrs.activeTab){
             out << 'active '

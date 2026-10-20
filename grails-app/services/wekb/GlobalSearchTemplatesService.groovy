@@ -2878,6 +2878,7 @@ class GlobalSearchTemplatesService {
         Map result = [
                 useDistinct: true,
                 baseclass: TitleInstancePackagePlatform.class.name,
+                msgCode    : 'title.plural',
                 title    : 'Titles',
                 defaultSort : 'name',
                 defaultOrder: 'asc',

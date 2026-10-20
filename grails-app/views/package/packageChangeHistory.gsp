@@ -79,11 +79,11 @@
                         </g:else>
                     </td>
                     <td><g:if test="${row_obj.startTime}">
-                        <g:formatDate format="${message(code: 'default.date.format.noZWihoutSS')}"
+                        <wekb:dateTime format="${message(code: 'default.date.format.noZWihoutSS')}"
                                       date="${row_obj.startTime}"/>
                     </g:if></td>
                     <td><g:if test="${row_obj.endTime}">
-                        <g:formatDate format="${message(code: 'default.date.format.noZWihoutSS')}"
+                        <wekb:dateTime format="${message(code: 'default.date.format.noZWihoutSS')}"
                                       date="${row_obj.endTime}"/>
                     </g:if></td>
                    %{-- <td>
@@ -143,7 +143,7 @@
                         </g:else>
                     </td>
                     <td><g:if test="${row_obj.lastChangedInKbart}">
-                        <g:formatDate format="${message(code: 'default.date.format.noZWihoutSS')}"
+                        <wekb:dateTime format="${message(code: 'default.date.format.noZWihoutSS')}"
                                       date="${row_obj.lastChangedInKbart}"/>
                     </g:if></td>
                 </tr>
