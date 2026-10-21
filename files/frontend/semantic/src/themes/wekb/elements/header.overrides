@@ -88,7 +88,7 @@ i.circular.inverted.wekb-glowIconHeader {
     &.wekb-titleinstancepackageplatform { .icon-color-header(@title); }
     &.wekb-platform                     { .icon-color-header(@platform); }
     &.wekb-provider                     { .icon-color-header(@provider); }
-    &.wekb-vendors                      { .icon-color-header(@vendor); }
+    &.wekb-vendor                       { .icon-color-header(@vendor); }
     &.wekb-org                          { .icon-color-header(@org); }
     &.wekb-default                      { .icon-color-header(@default); }
     &.wekb-setting                      { .icon-color-header(@default); }
