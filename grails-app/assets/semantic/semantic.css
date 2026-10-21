@@ -52625,7 +52625,7 @@ Floated Menu / Item
   background: none;
   padding: 0.5em 1.33333333em;
   font-size: 1.14285714em;
-  color: rgba(0, 0, 0, 0.87);
+  color: rgba(0, 0, 0, 0.5);
 }
 
 .ui.vertical.menu .item .menu a.item:hover,
@@ -54525,16 +54525,19 @@ Floated Menu / Item
   margin: 0 0 0.5em;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: rgba(0, 0, 0, 0.7);
 }
 
 .ui.vertical.menu.wekb-sidebar .menu .item {
   font-weight: 600;
 }
 
-.ui.vertical.menu .item .menu .link.item:hover,
-.ui.vertical.menu .item .menu a.item:hover {
-  color: rgba(0, 0, 0, 0.5);
+.ui.inverted.menu {
+  background: #242b33;
+}
+
+.ui.vertical.inverted.menu .menu .item,
+.ui.vertical.inverted.menu .menu .item a:not(.ui) {
+  color: white;
 }
 
 /* --------------
