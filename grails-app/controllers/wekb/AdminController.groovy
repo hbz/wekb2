@@ -433,7 +433,7 @@ class AdminController {
 
         searchResult.user = springSecurityService.currentUser
 
-        params.qbe = 'g:adminPackagesWithoutNameSpace'
+        params.qbe = 'g:adminPackagesWithoutTitleID'
         params.qp_source_automaticUpdates = params.qp_source_automaticUpdates ?: RDStore.YN_YES.getOID()
         params.qp_namespace_value = params.qp_namespace_value ?: IdentifierNamespace.findByValueAndTargetType('title_id', RDStore.IDENTIFIER_NAMESPACE_TARGET_TYPE_TIPP).getOID()
         params.qp_status = params.qp_status ?: [RDStore.KBC_STATUS_CURRENT.getOID(), RDStore.KBC_STATUS_RETIRED.getOID(), RDStore.KBC_STATUS_EXPECTED.getOID()]
@@ -489,7 +489,7 @@ class AdminController {
         log.debug("findTippWithoutTitleIDByPkg::${params}")
         def result = [:]
 
-        Package aPackage = Package.findByUuid(params.id)
+        Package aPackage = Package.findById(params.id)
 
         List<TitleInstancePackagePlatform> tippsByWithoutTitleID
         if (params.status == 'Current') {

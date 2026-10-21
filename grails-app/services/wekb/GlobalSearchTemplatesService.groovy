@@ -12,7 +12,7 @@ class GlobalSearchTemplatesService {
     @javax.annotation.PostConstruct
     def init() {
         globalSearchTemplates.put('adminPackages', adminPackages())
-        globalSearchTemplates.put('adminPackagesWithoutNameSpace', adminPackagesWithoutNameSpace())
+        globalSearchTemplates.put('adminPackagesWithoutTitleID', adminPackagesWithoutTitleID())
         globalSearchTemplates.put('curatoryGroups', curatoryGroups())
         globalSearchTemplates.put('identifiers', identifiers())
         globalSearchTemplates.put('jobResults', jobResults())
@@ -163,15 +163,27 @@ class GlobalSearchTemplatesService {
         result
     }
 
-    Map adminPackagesWithoutNameSpace() {
+    Map adminPackagesWithoutTitleID() {
         Map result = [
                 baseclass   : 'wekb.Package',
                 msgCode    : 'package.plural',
-                title       : 'Packages without Identifier Namespace by Titles',
+                title       : 'Packages without Title_ID by Titles',
                 defaultSort : 'lastUpdated',
                 defaultOrder: 'desc',
                 qbeConfig   : [
                         qbeForm   : [
+                                [
+                                        type       : 'lookup',
+                                        baseClass  : 'wekb.IdentifierNamespace',
+                                        prompt     : 'Namespace',
+                                        msgCode     : 'identifier.namespace',
+                                        qparam     : 'qp_namespace_value',
+                                        placeholder: 'Namespace',
+                                        filter1    : RDStore.IDENTIFIER_NAMESPACE_TARGET_TYPE_TIPP.value,
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'tipps.ids.namespace', negate: true],
+                                        hide: true
+                                ],
+
                                //General Fields
                                 [
                                         prompt     : 'Name of Package',
@@ -179,16 +191,6 @@ class GlobalSearchTemplatesService {
                                         qparam     : 'qp_name',
                                         placeholder: 'Package Name',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'name', 'wildcard': 'B', normalise: false]
-                                ],
-                                [
-                                       type       : 'lookup',
-                                       baseClass  : 'wekb.IdentifierNamespace',
-                                       prompt     : 'Namespace',
-                                       msgCode     : 'identifier.namespace',
-                                       qparam     : 'qp_namespace_value',
-                                       placeholder: 'Namespace',
-                                       filter1    : RDStore.IDENTIFIER_NAMESPACE_TARGET_TYPE_TIPP.value,
-                                       contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'tipps.ids.namespace', negate: true],
                                 ],
                                 [
                                         type       : 'dropDown',
@@ -271,8 +273,8 @@ class GlobalSearchTemplatesService {
                                 [heading: 'Status', property: 'status.value', sort: 'status'],
                                 [heading: 'Frequency', property: 'kbartSource.frequency.value'],
                                 [heading: 'Default Supply Method', property: 'kbartSource.defaultSupplyMethod.value'],
-                                [heading: 'Current Titles without IN', property: 'currentTippsWithoutTitleIDCount'],
-                                [heading: 'Titles without IN', property: 'tippsWithoutTitleIDCount'],
+                                [heading: 'Current Titles without Namespace', property: 'currentTippsWithoutTitleIDCount', jumpToLink: '/admin/findTippWithoutTitleIDByPkg/objectID?status=Current', linkInfo: 'Link to Current Titles'],
+                                [heading: 'Titles without Namespace', property: 'tippsWithoutTitleIDCount', jumpToLink: '/admin/findTippWithoutTitleIDByPkg/objectID', linkInfo: 'Link to Titles'],
                                 [heading: 'Automatic Updates', property: 'kbartSource.automaticUpdates', sort: 'kbartSourceAutomaticUpdates'],
                                 [heading: 'Source', property: 'kbartSource.name', link: true, sort: 'kbartSource.name', linkInfo: 'Link to Source']
                         ],
