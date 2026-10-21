@@ -438,7 +438,7 @@ class AdminController {
         params.qp_namespace_value = params.qp_namespace_value ?: IdentifierNamespace.findByValueAndTargetType('title_id', RDStore.IDENTIFIER_NAMESPACE_TARGET_TYPE_TIPP).getOID()
         params.qp_status = params.qp_status ?: [RDStore.KBC_STATUS_CURRENT.getOID(), RDStore.KBC_STATUS_RETIRED.getOID(), RDStore.KBC_STATUS_EXPECTED.getOID()]
 
-        params.max = params.max ?: '20'
+        params.max = params.max ?: '50'
         params.sort = params.sort ?: 'name'
         params.order = params.order ?: 'asc'
 
