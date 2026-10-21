@@ -1,5 +1,8 @@
 package wekb
 
+import wekb.auth.User
+import wekb.system.JobResult
+
 public class DisplayTemplateService {
 
   private globalDisplayTemplates = new java.util.HashMap<String,Map>()

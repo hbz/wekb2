@@ -1,8 +1,11 @@
 package wekb
 
+import wekb.auth.Role
+import wekb.auth.User
 import wekb.helper.RCConstants
 import grails.gorm.transactions.Transactional
 import wekb.helper.RDStore
+import wekb.system.JobResult
 
 @Transactional
 class GlobalSearchTemplatesService {
