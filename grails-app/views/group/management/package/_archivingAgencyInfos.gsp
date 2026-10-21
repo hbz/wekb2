@@ -37,7 +37,7 @@
     </div>
 
     <div style="overflow-x: auto">
-        <table class="ui selectable sortable padded table">
+        <table class="ui selectable sortable table">
             <thead>
             <tr>
                 <th rowspan="2">

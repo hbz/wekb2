@@ -8,7 +8,7 @@
 
 
     <div style="overflow-x: auto">
-        <table class="ui selectable sortable padded table">
+        <table class="ui selectable sortable table">
             <thead>
             <tr>
                 <th><g:if test="${editable}"><input id="select-all" type="checkbox" name="chkall" /> <div id="numberOfChecked">Select (0)</div></g:if></th>

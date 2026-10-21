@@ -11,3 +11,15 @@
 @paginationMinWidth: 3em;
 @paginationActiveBackground: lighten(@primaryColor, 40);
 @paginationActiveTextColor: @selectedTextColor;
+
+
+/* Navigation */
+@verticalBackground: #f9fafb;
+
+/* Zurückgenommene Abschnittsüberschriften */
+@verticalHeaderFontSize: @relativeSmall;
+@verticalHeaderFontWeight: @normal;
+
+/* Deutlichere Untermenüpunkte */
+@subMenuFontSize: @relativeLarge;
+@subMenuTextColor: rgba(0, 0, 0, .87);

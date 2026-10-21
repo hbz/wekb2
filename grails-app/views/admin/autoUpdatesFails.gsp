@@ -20,7 +20,7 @@ until <wekb:dateTime date="${new java.util.Date()}" format="${message(code: 'def
 
 <div class="container">
     <g:if test="${autoUpdates.size() > 0}">
-        <table class="ui selectable sortable padded table">
+        <table class="ui selectable sortable table">
             <thead>
             <tr>
                 <th>#</th>

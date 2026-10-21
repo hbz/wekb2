@@ -22,7 +22,7 @@
     </div>
     <!--.pagination-->
     <div style="overflow-x: auto">
-        <table class="ui selectable sortable padded table">
+        <table class="ui selectable sortable table">
             <thead>
                 <tr>
                     <th>#</th>
@@ -126,7 +126,7 @@
     <!--.pagination-->
     <g:form controller="workflow" action="action" method="post" params="${params}" class='action-form'>
        <div style="overflow-x: auto">
-        <table class="ui selectable sortable padded table">
+        <table class="ui selectable sortable table">
             <thead>
 %{--            <sec:ifLoggedIn>
               <tr>

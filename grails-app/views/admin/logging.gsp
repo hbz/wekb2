@@ -8,7 +8,7 @@
 <body>
 <h1 class="ui header">Logging (${totalCount})</h1>
 
-<table class="ui selectable sortable padded table">
+<table class="ui selectable sortable table">
     <thead>
     <tr>
         <th>Logger</th>

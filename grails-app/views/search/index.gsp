@@ -123,7 +123,7 @@
             </div></div>
 
         <div class="twelve wide column">
-            <table class="ui selectable sortable padded table">
+            <table class="ui selectable sortable table">
                 <thead>
                 <tr>
                     <th>#</th>

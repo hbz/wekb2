@@ -30,7 +30,7 @@
 <div class="container">
 
         <h3>Tipps without Title ID (${totalCountByWithoutTitleID})</h3>
-        <table class="ui selectable sortable padded table">
+        <table class="ui selectable sortable table">
             <thead>
             <tr>
                 <th>#</th>

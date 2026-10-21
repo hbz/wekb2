@@ -27795,7 +27795,7 @@ i.circular.inverted.wekb-glowIconHeader.wekb-provider {
   box-shadow: 0 0 0 0.6rem rgba(181, 72, 0, 0.12);
 }
 
-i.circular.inverted.wekb-glowIconHeader.wekb-vendors {
+i.circular.inverted.wekb-glowIconHeader.wekb-vendor {
   background-color: #5d7c62 !important;
   box-shadow: 0 0 0 0.6rem rgba(93, 124, 98, 0.12);
 }
@@ -52200,8 +52200,8 @@ dd {
 
 .ui.vertical.menu .item > .header:not(.ui) {
   margin: 0 0 0.5em;
-  font-size: 1em;
-  font-weight: bold;
+  font-size: 0.92857143em;
+  font-weight: normal;
 }
 
 /* --------------
@@ -52557,7 +52557,7 @@ Floated Menu / Item
 .ui.vertical.menu {
   display: block;
   flex-direction: column;
-  background: #fff;
+  background: #f9fafb;
   box-shadow: 0 1px 2px 0 rgba(34, 36, 38, 0.15);
 }
 
@@ -52624,8 +52624,8 @@ Floated Menu / Item
 .ui.vertical.menu .menu .item {
   background: none;
   padding: 0.5em 1.33333333em;
-  font-size: 1em;
-  color: rgba(0, 0, 0, 0.5);
+  font-size: 1.14285714em;
+  color: rgba(0, 0, 0, 0.87);
 }
 
 .ui.vertical.menu .item .menu a.item:hover,
@@ -54523,8 +54523,18 @@ Floated Menu / Item
 
 .ui.vertical.menu .item > .header:not(.ui) {
   margin: 0 0 0.5em;
-  font-size: 0.9em;
   text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.ui.vertical.menu.wekb-sidebar .menu .item {
+  font-weight: 600;
+}
+
+.ui.vertical.menu .item .menu .link.item:hover,
+.ui.vertical.menu .item .menu a.item:hover {
+  color: rgba(0, 0, 0, 0.5);
 }
 
 /* --------------

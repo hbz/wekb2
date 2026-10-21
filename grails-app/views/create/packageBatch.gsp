@@ -59,7 +59,7 @@
     <h3 class="ui header">Template Description</h3>
 
     <div class="content">
-        <table class="ui selectable sortable padded table">
+        <table class="ui selectable sortable table">
             <thead>
             <tr>
                 <th>ColumnName</th>

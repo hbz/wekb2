@@ -54,7 +54,7 @@
             <h3 class="ui header">Reference Data Values
             </h3>
 
-            <table class="ui selectable sortable padded table">
+            <table class="ui selectable sortable table">
                 <thead>
                 <tr>
                     <th>#</th>

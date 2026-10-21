@@ -14,7 +14,7 @@
 
 <div class="container">
     <g:set var="countTipps" value="${0}"/>
-    <table class="ui selectable sortable padded table">
+    <table class="ui selectable sortable table">
         <thead>
         <tr>
             <th>#</th>
