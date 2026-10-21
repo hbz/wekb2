@@ -467,6 +467,14 @@ public class HQLBuilder {
                 }
             }
           }
+
+            if (crit.defn.baseClass == 'wekb.IdentifierNamespace') {
+                def value = getValueFromBaseClass(grailsApplication, crit.defn.baseClass, crit.value)
+                if (baseclass.toString() == 'class wekb.Package') {
+                    hql_builder_context."${addToQuery}".add(" exists (select 1 from TitleInstancePackagePlatform as tipp join tipp.ids as identifier where tipp.pkg = o and ${crit.defn.contextTree.negate ? 'not ' : ''} exists (select 1 from Identifier as id where id.tipp = tipp and id.namespace = :${crit.defn.qparam}))");
+                    hql_builder_context.bindvars[crit.defn.qparam] = value
+                }
+            }
         }
         break;
 

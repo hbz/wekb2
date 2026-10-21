@@ -12,6 +12,7 @@ class GlobalSearchTemplatesService {
     @javax.annotation.PostConstruct
     def init() {
         globalSearchTemplates.put('adminPackages', adminPackages())
+        globalSearchTemplates.put('adminPackagesWithoutNameSpace', adminPackagesWithoutNameSpace())
         globalSearchTemplates.put('curatoryGroups', curatoryGroups())
         globalSearchTemplates.put('identifiers', identifiers())
         globalSearchTemplates.put('jobResults', jobResults())
@@ -152,6 +153,127 @@ class GlobalSearchTemplatesService {
                                 [heading: 'Deleted Titles', property: 'deletedTippCount', sort: 'deletedTippCount'],
                                 [heading: 'Frequency', property: 'kbartSource.frequency.value'],
                                 [heading: 'Default Supply Method', property: 'kbartSource.defaultSupplyMethod.value'],
+                                [heading: 'Source', property: 'kbartSource.name', link: true, sort: 'kbartSource.name', linkInfo: 'Link to Source']
+                        ],
+                        actions   : [
+                        ]
+                ]
+        ]
+
+        result
+    }
+
+    Map adminPackagesWithoutNameSpace() {
+        Map result = [
+                baseclass   : 'wekb.Package',
+                msgCode    : 'package.plural',
+                title       : 'Packages without Identifier Namespace by Titles',
+                defaultSort : 'lastUpdated',
+                defaultOrder: 'desc',
+                qbeConfig   : [
+                        qbeForm   : [
+                               //General Fields
+                                [
+                                        prompt     : 'Name of Package',
+                                        msgCode     : 'default.name',
+                                        qparam     : 'qp_name',
+                                        placeholder: 'Package Name',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'ilike', 'prop': 'name', 'wildcard': 'B', normalise: false]
+                                ],
+                                [
+                                       type       : 'lookup',
+                                       baseClass  : 'wekb.IdentifierNamespace',
+                                       prompt     : 'Namespace',
+                                       msgCode     : 'identifier.namespace',
+                                       qparam     : 'qp_namespace_value',
+                                       placeholder: 'Namespace',
+                                       filter1    : RDStore.IDENTIFIER_NAMESPACE_TARGET_TYPE_TIPP.value,
+                                       contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'tipps.ids.namespace', negate: true],
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        multiple    : 'true',
+                                        baseClass  : 'wekb.Org',
+                                        prompt     : 'Provider',
+                                        msgCode     : 'org.label',
+                                        qparam     : 'qp_provider',
+                                        placeholder: 'Provider',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'provider'],
+
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.CuratoryGroup',
+                                        prompt     : 'Curatory Group',
+                                        msgCode     : 'curatorygroup.label',
+                                        qparam     : 'qp_curgroup',
+                                        placeholder: 'Curatory Group',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'curatoryGroups.curatoryGroup'],
+
+                                ],
+                               [
+                                       type       : 'dropDown',
+                                       baseClass  : 'wekb.RefdataValue',
+                                       filter1    : RCConstants.YN,
+                                       prompt     : 'Source Automatic Updates',
+                                       msgCode     : 'kbartSource.automaticUpdates',
+                                       qparam     : 'qp_source_automaticUpdates',
+                                       placeholder: 'Source Automatic Updates',
+                                       propType   : 'Boolean',
+                                       contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'kbartSource.automaticUpdates'],
+                               ],
+                                [
+                                        type       : 'dropDown',
+                                        multiple    : 'true',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.COMPONENT_STATUS,
+                                        prompt     : 'Status',
+                                        msgCode    : 'default.status',
+                                        qparam     : 'qp_status',
+                                        placeholder: 'Status',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'status']
+                                ],
+                                [
+                                        type       : 'dropDown',
+                                        multiple    : 'true',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.SOURCE_FREQUENCY,
+                                        prompt     : 'Source Frequency',
+                                        msgCode     : 'kbartSource.frequency',
+                                        qparam     : 'qp_source_frequency',
+                                        placeholder: 'Source Frequency',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'in', 'prop': 'kbartSource.frequency'],
+                                ],
+
+                                [
+                                        type       : 'date',
+                                        prompt     : 'LastRun after',
+                                        placeholder: 'LastRun after',
+                                        qparam     : 'lastRunAfter',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'greaterOrNull', 'prop': 'kbartSource.lastRun', 'type': 'java.util.Date'],
+                                ],
+
+                                [
+                                        type       : 'date',
+                                        prompt     : 'LastRun before',
+                                        placeholder: 'LastRun before',
+                                        qparam     : 'lastRunBefore',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'smallerOrNull', 'prop': 'kbartSource.lastRun', 'type': 'java.util.Date'],
+                                ],
+                        ],
+                        qbeResults: [
+                                [heading: 'Name', property: 'name', sort: 'name', link: true, linkInfo: 'Link to Package'],
+                                [heading: 'Provider', property: 'provider.name', sort: 'provider.name', link: true, linkInfo: 'Link to Provider'],
+                                [heading: 'Content Type', property: 'contentType.value', sort: 'contentType'],
+                                [heading: 'Last Updated', property: 'lastUpdated', sort: 'lastUpdated'],
+                                [heading: 'Last Run', property: 'kbartSource.lastRun', sort: 'kbartSourceLastRun'],
+                                [heading: 'Last Try', property: 'lastTryDate', sort: 'lastTryDate'],
+                                [heading: 'Status', property: 'status.value', sort: 'status'],
+                                [heading: 'Frequency', property: 'kbartSource.frequency.value'],
+                                [heading: 'Default Supply Method', property: 'kbartSource.defaultSupplyMethod.value'],
+                                [heading: 'Current Titles without IN', property: 'currentTippsWithoutTitleIDCount'],
+                                [heading: 'Titles without IN', property: 'tippsWithoutTitleIDCount'],
+                                [heading: 'Automatic Updates', property: 'kbartSource.automaticUpdates', sort: 'kbartSourceAutomaticUpdates'],
                                 [heading: 'Source', property: 'kbartSource.name', link: true, sort: 'kbartSource.name', linkInfo: 'Link to Source']
                         ],
                         actions   : [
