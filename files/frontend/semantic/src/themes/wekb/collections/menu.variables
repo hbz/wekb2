@@ -22,4 +22,4 @@
 
 /* Deutlichere Untermenüpunkte */
 @subMenuFontSize: @relativeLarge;
-@subMenuTextColor: rgba(0, 0, 0, .87);
+//@subMenuTextColor: rgba(0, 0, 0, .87);

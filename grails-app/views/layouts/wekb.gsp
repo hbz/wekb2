@@ -34,10 +34,10 @@
 <!-- skip to main content / for screenreader -->
 
 
-<nav class="ui left vertical visible menu sidebar ${serverLabel}" id="toc" aria-label="main navigation" >
+<nav class="ui left vertical inverted visible menu sidebar ${serverLabel}" id="toc" aria-label="main navigation" >
 
     <g:link controller="public" action="index" class="header item">
-        <img height="36" alt="Logo wekb" src="${resource(dir: 'images', file: 'wekb-logo.svg')}"/>
+        <img alt="Logo wekb" src="${resource(dir: 'images', file: 'logo.svg')}"/>
     </g:link>
     <nav class="la-skipLink" role="navigation" aria-label="${g.message(code: 'accessibility.jumpLink')}">
         <p>
