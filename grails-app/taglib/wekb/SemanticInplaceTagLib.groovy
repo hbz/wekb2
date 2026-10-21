@@ -403,7 +403,7 @@ class SemanticInplaceTagLib {
 
         out << "<input type=\"hidden\" value=\"${attrs.value ?: ''}\" name=\"${attrs.name}\" data-domain=\"${attrs.baseClass}\" "
 
-        if ((attrs.value != null) && (attrs.value instanceof String && attrs.value.length() > 0)) {
+        if (attrs.value != null) {
             appendDropdownValueAttributes(out, attrs.value, multiple)
         }
 
@@ -445,8 +445,7 @@ class SemanticInplaceTagLib {
         out << ">"
 
         out << "<input type=\"hidden\" value=\"${attrs.value ?: ''}\" name=\"${attrs.name}\" data-domain=\"${attrs.baseClass}\" "
-
-        if ((attrs.value != null) && (attrs.value instanceof String && attrs.value.length() > 0)) {
+        if (attrs.value != null) {
             appendDropdownValueAttributes(out, attrs.value, multiple)
         }
         String placeholder = attrs.placeholder ?: 'Search for ...'
@@ -482,7 +481,7 @@ class SemanticInplaceTagLib {
 
         out << "<input type=\"hidden\" value=\"${attrs.value ?: ''}\" name=\"${attrs.name}\" data-domain=\"${attrs.dropDownType}\" "
 
-        if ((attrs.value != null) && (attrs.value instanceof String && attrs.value.length() > 0)) {
+        if (attrs.value != null) {
             appendDropdownValueAttributes(out, attrs.value, multiple)
         }
         String placeholder = attrs.placeholder ?: 'Search for ...'
@@ -647,7 +646,7 @@ class SemanticInplaceTagLib {
 
     private List<Map<String, String>> resolveDropdownValues(def value, boolean multiple) {
 
-        List<String> values = (value?.toString() ?: '').split(',').collect { it.trim() }.findAll { it }.unique()
+        List<String> values = value instanceof List ? value.unique() : ((value?.toString() ?: '').split(',').collect { it.trim() }.findAll { it }.unique())
 
         if (!multiple) {
             values = values.take(1)

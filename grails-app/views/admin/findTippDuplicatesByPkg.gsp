@@ -116,7 +116,7 @@
             <td>${t.publicationType?.value}</td>
             <td>${t.medium?.value}</td>
             <td>
-                ${t.url}
+                ${t.url} <a aria-label="${t.value}" href="${t.value.startsWith('http') ? t.value : 'http://' + t.value}" target="_blank"><i class="share square icon"></i></a>
             </td>
             <td>
                 <g:link controller="admin" action="permanentTitlesInLaser" params="[tippId: t.id]" id="${t.pkg.id}">

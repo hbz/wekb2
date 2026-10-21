@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<%@ page import="wekb.Package; wekb.TitleInstancePackagePlatform; wekb.helper.RDStore;" %>
+<%@ page import="wekb.Identifier; wekb.Package; wekb.TitleInstancePackagePlatform; wekb.helper.RDStore;" %>
 <html>
 <head>
     <meta name="layout" content="wekb"/>
@@ -212,6 +212,9 @@
                                     </g:each>
                                 </div>
                             </div>
+
+                            <g:link controller="admin" action="findTippDuplicatesByPkg" id="${displayobj.uuid}" params="[tippsDuplicatesBy: 'titleID']">Tipps Duplicates By Title ID</g:link>
+
                         </div>
 
                     </g:if>
@@ -235,6 +238,8 @@
                                     </g:each>
                                 </div>
                             </div>
+
+                            <g:link controller="admin" action="findTippDuplicatesByPkg" id="${displayobj.uuid}" params="[tippsDuplicatesBy: 'name']">Tipps Duplicates By Title ID</g:link>
                         </div>
 
                     </g:if>
@@ -257,6 +262,56 @@
                                         </g:if>
                                     </g:each>
                                 </div>
+                            </div>
+                            <g:link controller="admin" action="findTippDuplicatesByPkg" id="${displayobj.uuid}" params="[tippsDuplicatesBy: 'url']">Tipps Duplicates By Title ID</g:link>
+                        </div>
+
+                    </g:if>
+
+                    <g:if test="${displayobj.ids.size() > 0}">
+                        <div class="ui warning icon message">
+
+                            <div class="content wekb-inline-lists">
+                                <g:each in="${displayobj.ids?.sort { it.namespace?.value }}" var="identifier">
+                                    <h4 class="ui header">Identified Components with same Identifier: ${identifier.value}</h4>
+                                    <%
+                                        List tippIDs = wekb.Identifier.findAllByValueAndTippIsNotNullAndTippNotEqual(identifier.value, displayobj)
+                                    %>
+
+
+                                    <g:if test="${tippIDs}">
+                                        <table class="ui selectable striped celled table">
+                                            <thead>
+                                            <tr>
+                                                <th>Title</th>
+                                                <th>Package</th>
+                                                <th>Namespace</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <g:each in="${tippIDs.sort { it.tipp.name }}" var="tippIdentifier">
+                                                <tr>
+                                                    <td>
+                                                        <g:link controller="resource" action="show" id="${tippIdentifier.tipp.getOID()}">
+                                                            ${tippIdentifier.tipp.name}
+                                                        </g:link> <strong>(${tippIdentifier.tipp.status?.value})</strong>
+                                                    </td>
+                                                    <td class="${tippIdentifier.tipp.pkg == displayobj.pkg ? 'positive' : 'negative'}">
+                                                        <g:if test="${tippIdentifier.tipp.pkg}">
+                                                            <g:link controller="resource" action="show" id="${tippIdentifier.tipp.pkg.getOID()}">
+                                                                ${tippIdentifier.tipp.pkg.name}
+                                                            </g:link>
+                                                        </g:if>
+                                                    </td>
+                                                    <td>${tippIdentifier.namespace?.value}</td>
+                                                </tr>
+                                            </g:each>
+                                            </tbody>
+                                        </table>
+                                    </g:if>
+                                </g:each>
+                            </tbody>
+                            </table>
                             </div>
                         </div>
 
