@@ -180,7 +180,7 @@ class GlobalSearchTemplatesService {
                                         qparam     : 'qp_namespace_value',
                                         placeholder: 'Namespace',
                                         filter1    : RDStore.IDENTIFIER_NAMESPACE_TARGET_TYPE_TIPP.value,
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'tipps.ids.namespace', negate: true],
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'titles_Without_Identifier_Namespace', 'prop': 'tipps.ids.namespace'],
                                         hide: true
                                 ],
 
