@@ -467,15 +467,6 @@ public class HQLBuilder {
                 }
             }
           }
-
-            if (crit.defn.baseClass == 'wekb.IdentifierNamespace') {
-                def value = getValueFromBaseClass(grailsApplication, crit.defn.baseClass, crit.value)
-                if (baseclass.toString() == 'class wekb.Package') {
-                    hql_builder_context."${addToQuery}".add(" exists (select 1 from TitleInstancePackagePlatform as tipp where tipp.pkg = o and tipp.status != :tippStatusRemoved and ${crit.defn.contextTree.negate ? 'not ' : ''} exists (select 1 from Identifier as id where id.tipp = tipp and id.namespace = :${crit.defn.qparam}))");
-                    hql_builder_context.bindvars[crit.defn.qparam] = value
-                    hql_builder_context.bindvars['tippStatusRemoved'] = RDStore.KBC_STATUS_REMOVED
-                }
-            }
         }
         break;
 
@@ -568,6 +559,19 @@ public class HQLBuilder {
                 base_value +
                 ( ( crit.defn.contextTree.wildcard=='R' || crit.defn.contextTree.wildcard=='B') ? '%' : '')
         break;
+
+        case 'titles_Without_Identifier_Namespace':
+            def value = getValueFromBaseClass(grailsApplication, crit.defn.baseClass, crit.value)
+            String query = "  exists " +
+                    "(select 1 from TitleInstancePackagePlatform as tipp where " +
+                    "tipp.pkg = o and tipp.status != :tippStatusRemoved " +
+                    "and not exists (select 1 from Identifier as id where id.tipp = tipp and id.namespace = :${crit.defn.qparam}))"
+            if (value) {
+                hql_builder_context."${addToQuery}".add(query)
+                hql_builder_context.bindvars[crit.defn.qparam] = value
+                hql_builder_context.bindvars['tippStatusRemoved'] = RDStore.KBC_STATUS_REMOVED
+            }
+            break;
 
 
       default:
