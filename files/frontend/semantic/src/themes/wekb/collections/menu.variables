@@ -14,7 +14,7 @@
 
 
 /* Navigation */
-@verticalBackground: #f9fafb;
+@invertedBackground: #0e274e;
 
 /* Zurückgenommene Abschnittsüberschriften */
 @verticalHeaderFontSize: @relativeSmall;
