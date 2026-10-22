@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta name="layout" content="wekb"/>
-    <title>we:kb | wekb -  Tipp Duplicates</title>
+    <title>we:kb | wekb -  Tipp without Title_ID</title>
 </head>
 
 <body>

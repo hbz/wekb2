@@ -1,4 +1,4 @@
-<%@ page import="wekb.IdentifierNamespace" %>
+<%@ page import="wekb.helper.RDStore; wekb.IdentifierNamespace" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,7 +10,8 @@
 
 <g:set var="cleaned_params" value="${params.findAll { it.value && it.value != "" }}"/>
 
-<h1 class="ui header">Packages without Identifier Namespace by Titles ${params.qp_namespace_value ? wekb.IdentifierNamespace.findByValueAndTargetType(params.qp_namespace_value, RDStore.IDENTIFIER_NAMESPACE_TARGET_TYPE_TIPP).name : ''}</h1>
+
+<h1 class="ui header">Packages without Title_ID by Titles ${reccount.toInteger()}</h1>
 
 <g:if test="${(qbetemplate.message != null)}">
     <semui:message message="${qbetemplate.message}"/>

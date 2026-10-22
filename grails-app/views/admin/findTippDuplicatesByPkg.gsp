@@ -1,4 +1,4 @@
-<%@ page import="wekb.helper.RDStore" %>
+<%@ page import="wekb.IdentifierNamespace; wekb.helper.RDStore" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,7 +18,7 @@
 <h1 class="ui header">Tipp Duplicates for
 
 <g:link controller="resource" action="show" id="${pkg.getOID()}">
-    ${pkg.name}
+    ${pkg.name} (${pkg.getCurrentTippCount()})
 </g:link>
 </h1>
 
@@ -37,7 +37,7 @@
 </g:if>
 
 <g:if test="${params.tippsDuplicatesBy == "titleID"}">
-    <h3>Tipps Duplicates By Title ID (${totalCount}) <g:if test="${status}">[${status}]</g:if> </h3>
+    <h3>Tipps Duplicates By with Title_ID (${totalCount}) <g:if test="${status}">[${status}]</g:if> </h3>
 
 
     <g:link controller="admin" action="removeTippDuplicatesByTitleIDOfPkg" id="${params.id}"
@@ -50,27 +50,27 @@
     <br>
 
 
-    <g:link controller="admin" action="findTippDuplicatesByPkg" id="${params.id}" params="[status: RDStore.KBC_STATUS_CURRENT.id]"
-            class="ui button primary">Tipps Duplicates by Status Current (${pkg.getTippDuplicatesWithStatusByTitleIDCount(wekb.helper.RDStore.KBC_STATUS_CURRENT)})</g:link>
+%{--    <g:link controller="admin" action="findTippDuplicatesByPkg" id="${params.id}" params="[status: RDStore.KBC_STATUS_CURRENT.id]"
+            class="ui button primary">Tipps Duplicates with Title_ID by Status Current (${pkg.getTippDuplicatesWithStatusByTitleIDCount(wekb.helper.RDStore.KBC_STATUS_CURRENT)})</g:link>
     <br>
     <br>
     <g:link controller="admin" action="findTippDuplicatesByPkg" id="${params.id}" params="[status: RDStore.KBC_STATUS_RETIRED.id]"
-            class="ui button primary">Tipps Duplicates by Status Retired (${pkg.getTippDuplicatesWithStatusByTitleIDCount(wekb.helper.RDStore.KBC_STATUS_RETIRED)})</g:link>
+            class="ui button primary">Tipps Duplicates with Title_ID by Status Retired (${pkg.getTippDuplicatesWithStatusByTitleIDCount(wekb.helper.RDStore.KBC_STATUS_RETIRED)})</g:link>
 
     <br>
     <br>
     <g:link controller="admin" action="findTippDuplicatesByPkg" id="${params.id}" params="[status: RDStore.KBC_STATUS_EXPECTED.id]"
-            class="ui button primary">Tipps Duplicates by Status Expected (${pkg.getTippDuplicatesWithStatusByTitleIDCount(wekb.helper.RDStore.KBC_STATUS_EXPECTED)})</g:link>
+            class="ui button primary">Tipps Duplicates with Title_ID by Status Expected (${pkg.getTippDuplicatesWithStatusByTitleIDCount(wekb.helper.RDStore.KBC_STATUS_EXPECTED)})</g:link>
 
     <br>
     <br>
     <g:link controller="admin" action="findTippDuplicatesByPkg" id="${params.id}" params="[status: RDStore.KBC_STATUS_DELETED.id]"
-            class="ui button primary">Tipps Duplicates by Status Deleted (${pkg.getTippDuplicatesWithStatusByTitleIDCount(wekb.helper.RDStore.KBC_STATUS_DELETED)})</g:link>
+            class="ui button primary">Tipps Duplicates with Title_ID by Status Deleted (${pkg.getTippDuplicatesWithStatusByTitleIDCount(wekb.helper.RDStore.KBC_STATUS_DELETED)})</g:link>
 
     <br>
     <br>
-    <g:link controller="admin" action="findTippDuplicatesByPkg" id="${params.id}" params="[status: RDStore.KBC_STATUS_REMOVED.id]"
-            class="ui button primary">Tipps Duplicates by Status Removed (${pkg.getTippDuplicatesWithStatusByTitleIDCount(wekb.helper.RDStore.KBC_STATUS_REMOVED)})</g:link>
+  --}%%{--  <g:link controller="admin" action="findTippDuplicatesByPkg" id="${params.id}" params="[status: RDStore.KBC_STATUS_REMOVED.id]"
+            class="ui button primary">Tipps Duplicates with Title_ID by Status Removed (${pkg.getTippDuplicatesWithStatusByTitleIDCount(wekb.helper.RDStore.KBC_STATUS_REMOVED)})</g:link>--}%
 </g:if>
 
 <table class="ui selectable sortable table">
@@ -116,7 +116,7 @@
             <td>${t.publicationType?.value}</td>
             <td>${t.medium?.value}</td>
             <td>
-                ${t.url} <a aria-label="${t.value}" href="${t.value.startsWith('http') ? t.value : 'http://' + t.value}" target="_blank"><i class="share square icon"></i></a>
+                ${t.url} <a aria-label="${t.url}" href="${t.url.startsWith('http') ? t.url : 'http://' + t.url}" target="_blank"><i class="share square icon"></i></a>
             </td>
             <td>
                 <g:link controller="admin" action="permanentTitlesInLaser" params="[tippId: t.id]" id="${t.pkg.id}">

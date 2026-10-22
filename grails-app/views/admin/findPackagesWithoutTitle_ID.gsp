@@ -94,7 +94,7 @@
                 </td>
                 <td>
                     <g:set var="tippCurrentCount" value="${pkgMap.currentTippsWithoutTitleIDCount}"/>
-                    <g:link controller="admin" action="findTippWithoutTitleIDByPkg" id="${pkg.uuid}" target="_blank"
+                    <g:link controller="admin" action="findTippWithoutTitleIDByPkg" id="${pkg.id}" target="_blank"
                             params="[max: 100, offset: 0, status: 'Current']">
                         ${tippCurrentCount}
                     </g:link>
@@ -103,7 +103,7 @@
                 </td>
                 <td>
                     <g:set var="tippCount" value="${pkgMap.tippsWithoutTitleIDCount}"/>
-                    <g:link controller="admin" action="findTippWithoutTitleIDByPkg" id="${pkg.uuid}" target="_blank"
+                    <g:link controller="admin" action="findTippWithoutTitleIDByPkg" id="${pkg.id}" target="_blank"
                             params="[max: 100, offset: 0]">
                         ${tippCount}
                     </g:link>

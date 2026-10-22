@@ -131,7 +131,7 @@
                                 <div class="ui bulleted list">
 
                                     <div class="item">
-                                        <g:link controller="admin" action="findTippDuplicatesByPkg" id="${displayobj.uuid}" target="_blank"
+                                        <g:link controller="admin" action="findTippDuplicatesByPkg" id="${displayobj.id}" target="_blank"
                                                 params="[tippsDuplicatesBy: 'titleID', max: 100, offset: 0]">
                                             ${tippDuplicatesByTitleIDCount}
                                         </g:link>
@@ -152,7 +152,7 @@
                                 <div class="ui bulleted list">
 
                                     <div class="item">
-                                        <g:link controller="admin" action="findTippDuplicatesByPkg" id="${displayobj.uuid}" target="_blank"
+                                        <g:link controller="admin" action="findTippDuplicatesByPkg" id="${displayobj.id}" target="_blank"
                                                 params="[tippsDuplicatesBy: 'url', max: 100, offset: 0]">
                                             ${tippDuplicatesByURLCount}
                                         </g:link>
@@ -173,7 +173,7 @@
                                 <div class="ui bulleted list">
 
                                     <div class="item">
-                                        <g:link controller="admin" action="findTippDuplicatesByPkg" id="${displayobj.uuid}" target="_blank"
+                                        <g:link controller="admin" action="findTippDuplicatesByPkg" id="${displayobj.id}" target="_blank"
                                                 params="[tippsDuplicatesBy: 'name', max: 100, offset: 0]">
                                             ${tippDuplicatesByNameCount}
                                         </g:link>
@@ -213,7 +213,7 @@
                                 </div>
                             </div>
 
-                            <g:link controller="admin" action="findTippDuplicatesByPkg" id="${displayobj.uuid}" params="[tippsDuplicatesBy: 'titleID']">Tipps Duplicates By Title ID</g:link>
+                            <g:link controller="admin" action="findTippDuplicatesByPkg" id="${displayobj.id}" params="[tippsDuplicatesBy: 'titleID']">Tipps Duplicates By Title ID</g:link>
 
                         </div>
 
@@ -239,7 +239,7 @@
                                 </div>
                             </div>
 
-                            <g:link controller="admin" action="findTippDuplicatesByPkg" id="${displayobj.uuid}" params="[tippsDuplicatesBy: 'name']">Tipps Duplicates By Title ID</g:link>
+                            <g:link controller="admin" action="findTippDuplicatesByPkg" id="${displayobj.id}" params="[tippsDuplicatesBy: 'name']">Tipps Duplicates By Title ID</g:link>
                         </div>
 
                     </g:if>
@@ -263,7 +263,7 @@
                                     </g:each>
                                 </div>
                             </div>
-                            <g:link controller="admin" action="findTippDuplicatesByPkg" id="${displayobj.uuid}" params="[tippsDuplicatesBy: 'url']">Tipps Duplicates By Title ID</g:link>
+                            <g:link controller="admin" action="findTippDuplicatesByPkg" id="${displayobj.id}" params="[tippsDuplicatesBy: 'url']">Tipps Duplicates By Title ID</g:link>
                         </div>
 
                     </g:if>
