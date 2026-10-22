@@ -74,7 +74,7 @@
                 <td>
                     <g:set var="countTipps" value="${countTipps+pkgMap.tippDuplicatesByUrlCount}"/>
 
-                    <g:link controller="admin" action="findTippDuplicatesByPkg" id="${pkg.uuid}" target="_blank"
+                    <g:link controller="admin" action="findTippDuplicatesByPkg" id="${pkg.id}" target="_blank"
                             params="[tippsDuplicatesBy: 'titleID', max: 100, offset: 0]">
                         ${pkgMap.tippDuplicatesByUrlCount}
                     </g:link>

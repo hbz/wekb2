@@ -93,9 +93,6 @@
             <div class="ui divided large relaxed list">
                 <g:link class="item" controller="admin" action="systemThreads">Show Threads</g:link>
                 <g:link class="item" controller="admin" action="logging">Show Logging</g:link>
-                <g:link class="item" controller="admin" action="autoUpdatesFails">Automatic update fails</g:link>
-                <g:link class="item" controller="admin" action="adminAutoUpdatePackages">Search Auto Update Packages</g:link>
-                <g:link class="item" controller="admin" action="adminPackagesNeedsAutoUpdates">Packages due to automatic update</g:link>
                 <g:link class="item" controller="admin" action="checkCuratoryGroups">Check Curatory Groups</g:link>
                 <g:link class="item" controller="admin" action="tippIdentifiersWithSameNameSpace">Title Identifiers with same Identifier Namespace</g:link>
             </div>
@@ -105,6 +102,9 @@
             <h2 class="ui header">Admin Infos to Packages</h2>
 
             <div class="ui divided large relaxed list">
+                <g:link class="item" controller="admin" action="autoUpdatesFails">Automatic update fails</g:link>
+                <g:link class="item" controller="admin" action="adminAutoUpdatePackages">Search Auto Update Packages</g:link>
+                <g:link class="item" controller="admin" action="adminPackagesNeedsAutoUpdates">Packages due to automatic update</g:link>
                 <g:link class="item" controller="admin" action="findPackagesWithoutTitle_ID">Packages with Tipp without Title_ID</g:link>
                 <g:link class="item" controller="admin" action="findPackagesWithoutTitle_ID2">Packages with Tipp without Title_ID (Version 2)</g:link>
                 <g:link class="item" controller="admin" action="findPackagesAutoUpdatesTippsDiff">Auto Update Packages with Tipp Diff</g:link>
@@ -116,6 +116,7 @@
 
             <div class="ui divided large relaxed list">
                 <g:link class="item" controller="admin" action="findPackagesWithTippDuplicates">Packages with Tipp Duplicates by Title_ID</g:link>
+                <g:link class="item" controller="admin" action="findPackagesWithTippDuplicatesByTitleID">Packages with Tipp Duplicates by Title_ID (Version 2)</g:link>
                 <g:link class="item" controller="admin" action="findPackagesWithTippDuplicatesByUrl">Packages with Tipp Duplicates by URL</g:link>
                 <g:link class="item" controller="admin" action="findPackagesWithRemovedTippDuplicates">Packages with Tipp Duplicates by Title_ID with Removed</g:link>
             </div>
