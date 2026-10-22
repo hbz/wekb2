@@ -10,9 +10,9 @@
             <div class="statistic-number" data-value="${countComponent['Provider']}" data-decimals="0">
                 0
             </div>
-            <h3 class="statistic-title">
+            <h2 class="statistic-title">
                 Providers
-            </h3>
+            </h2>
             <p class="statistic-description">
                 Content providers and library suppliers share authoritative service information directly with the library community.
             </p>
@@ -45,9 +45,9 @@
                 0
             </div>
 
-            <h3 class="statistic-title">
+            <h2 class="statistic-title">
                 Platforms
-            </h3>
+            </h2>
             <p class="statistic-description">
                 Information on platform services answers central questions
                 concerning authentication methods, usage statistics and matters
@@ -80,9 +80,9 @@
             <div class="statistic-number" data-value="${countComponent['Package']}" data-decimals="0">
                 0
             </div>
-            <h3 class="statistic-title">
+            <h2 class="statistic-title">
                 Packages
-            </h3>
+            </h2>
             <p class="statistic-description">
                 Content providers create and maintain packages that reflect their
                 current sales units, heightening the visibility of these products
@@ -116,9 +116,9 @@
                  data-millions="true">
                 0
             </div>
-            <h3 class="statistic-title">
+            <h2 class="statistic-title">
                 Titles
-            </h3>
+            </h2>
             <p class="statistic-description">
                 Automated updates provide reliable, up-to-date package and title information.
             </p>
