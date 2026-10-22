@@ -52557,7 +52557,7 @@ Floated Menu / Item
 .ui.vertical.menu {
   display: block;
   flex-direction: column;
-  background: #f9fafb;
+  background: #fff;
   box-shadow: 0 1px 2px 0 rgba(34, 36, 38, 0.15);
 }
 
@@ -53537,7 +53537,7 @@ Floated Menu / Item
 
 .ui.inverted.menu {
   border: 0 solid transparent;
-  background: #1b1c1d;
+  background: #0e274e;
   box-shadow: none;
 }
 
@@ -54517,22 +54517,9 @@ Floated Menu / Item
   text-decoration: underline;
 }
 
-.ui.vertical.menu .menu .item {
-  margin-left: 5px;
-}
-
 .ui.vertical.menu .item > .header:not(.ui) {
-  margin: 0 0 0.5em;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-}
-
-.ui.vertical.menu.wekb-sidebar .menu .item {
-  font-weight: 600;
-}
-
-.ui.inverted.menu {
-  background: #242b33;
 }
 
 .ui.vertical.inverted.menu .menu .item,

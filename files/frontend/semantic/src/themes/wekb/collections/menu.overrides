@@ -5,20 +5,12 @@
 .ui.vertical.inverted.menu .item .menu a.item:hover {
   text-decoration: underline;
 }
-.ui.vertical.menu .menu .item {
-  margin-left: 5px;
-}
+
 .ui.vertical.menu .item>.header:not(.ui) {
-  margin: 0 0 .5em;
   text-transform: uppercase;
   letter-spacing: .08em;
 }
-.ui.vertical.menu.wekb-sidebar .menu .item {
-  font-weight: 600;
-}
-.ui.inverted.menu {
-    background: #242b33;
-}
+
 .ui.vertical.inverted.menu .menu .item,
 .ui.vertical.inverted.menu .menu .item a:not(.ui) {
     color: white
