@@ -427,6 +427,26 @@ class AdminController {
     result
   }
 
+    def findPackagesWithoutTitle_ID2() {
+        log.debug("findPackagesWithoutTitle_ID2::${params}")
+        def searchResult = [:]
+
+        searchResult.user = springSecurityService.currentUser
+
+        params.qbe = 'g:adminPackagesWithoutTitleID'
+        params.qp_source_automaticUpdates = params.qp_source_automaticUpdates ?: RDStore.YN_YES.getOID()
+        params.qp_namespace_value = params.qp_namespace_value ?: IdentifierNamespace.findByValueAndTargetType('title_id', RDStore.IDENTIFIER_NAMESPACE_TARGET_TYPE_TIPP).getOID()
+        params.qp_status = params.qp_status ?: [RDStore.KBC_STATUS_CURRENT.getOID(), RDStore.KBC_STATUS_RETIRED.getOID(), RDStore.KBC_STATUS_EXPECTED.getOID()]
+
+        params.max = params.max ?: '50'
+        params.sort = params.sort ?: 'name'
+        params.order = params.order ?: 'asc'
+
+        searchResult = searchService.search(searchResult.user, searchResult, params)
+
+        searchResult.result
+    }
+
 
     def findTippDuplicatesByPkg() {
         log.debug("findTippDuplicates::${params}")
@@ -434,7 +454,7 @@ class AdminController {
 
         params.tippsDuplicatesBy = params.tippsDuplicatesBy ?: "titleID"
 
-        Package aPackage = Package.findByUuid(params.id)
+        Package aPackage = Package.findById(params.id)
         List<TitleInstancePackagePlatform> tippsDuplicates
         if (params.tippsDuplicatesBy == "titleID") {
             if(params.status){
@@ -469,7 +489,7 @@ class AdminController {
         log.debug("findTippWithoutTitleIDByPkg::${params}")
         def result = [:]
 
-        Package aPackage = Package.findByUuid(params.id)
+        Package aPackage = Package.findById(params.id)
 
         List<TitleInstancePackagePlatform> tippsByWithoutTitleID
         if (params.status == 'Current') {
@@ -872,6 +892,26 @@ class AdminController {
     //result.pkgs = result.pkgs.drop((int) result.offset).take((int) result.max)
     result
   }
+
+    def findPackagesWithTippDuplicatesByTitleID() {
+        log.debug("findPackagesWithTippDuplicatesByTitleID::${params}")
+        def searchResult = [:]
+
+        searchResult.user = springSecurityService.currentUser
+
+        params.qbe = 'g:adminPackagesWithTippDuplicatesByTitleID'
+        params.qp_source_automaticUpdates = params.qp_source_automaticUpdates ?: RDStore.YN_YES.getOID()
+        params.qp_namespace_value = IdentifierNamespace.findByValueAndTargetType('title_id', RDStore.IDENTIFIER_NAMESPACE_TARGET_TYPE_TIPP).getOID()
+        params.qp_status = params.qp_status ?: [RDStore.KBC_STATUS_CURRENT.getOID(), RDStore.KBC_STATUS_RETIRED.getOID(), RDStore.KBC_STATUS_EXPECTED.getOID()]
+
+        params.max = params.max ?: '20'
+        params.sort = params.sort ?: 'provider.name'
+        params.order = params.order ?: 'asc'
+
+        searchResult = searchService.search(searchResult.user, searchResult, params)
+
+        searchResult.result
+    }
 
   def removeTippDuplicatesByUrlOfPkg(){
     Package aPackage = Package.findByUuid(params.id)
@@ -1408,7 +1448,7 @@ class AdminController {
         searchResult.user = springSecurityService.currentUser
 
         params.qbe = 'g:adminPackages'
-        params.qp_source_automaticUpdates = true
+        params.qp_source_automaticUpdates = RDStore.YN_YES
 
         params.max = params.max ?: '500'
         params.sort = params.sort ?: 'name'
@@ -1424,7 +1464,7 @@ class AdminController {
         searchResult.user = springSecurityService.currentUser
 
         params.qbe = 'g:adminPackages'
-        params.qp_source_automaticUpdates = true
+        params.qp_source_automaticUpdates = RDStore.YN_YES
         params.sort = params.sort ?: 'name'
         params.order = params.order ?: 'asc'
         params.max = '25000'

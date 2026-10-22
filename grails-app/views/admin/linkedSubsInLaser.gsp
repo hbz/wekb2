@@ -23,7 +23,7 @@
 <g:set var="refDataValueStatus" value="${status ? RefdataCategory.lookup(RCConstants.COMPONENT_STATUS, status) : null}"/>
 
 <g:if test="${refDataValueStatus}">
-    <g:link controller="admin" action="findTippDuplicatesByPkg" id="${pkg.uuid}" params="[status: refDataValueStatus.id]"
+    <g:link controller="admin" action="findTippDuplicatesByPkg" id="${pkg.id}" params="[status: refDataValueStatus.id]"
             class="ui button primary">Tipps Duplicates by Status ${status} (${pkg.getTippDuplicatesWithStatusByTitleIDCount(refDataValueStatus)})</g:link>
 </g:if>
 

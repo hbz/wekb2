@@ -12,7 +12,7 @@ class LaserService {
 
     int laserTippsCount() {
         Sql sql
-        int count
+        int count = -1
         try {
             Map config = getConfig()
 
@@ -42,7 +42,7 @@ class LaserService {
 
     int laserPackagesCount() {
         Sql sql
-        int count
+        int count = -1
         try {
             Map config = getConfig()
 
@@ -72,7 +72,7 @@ class LaserService {
 
     int laserProviderCount() {
         Sql sql
-        int count
+        int count = -1
         try {
             Map config = getConfig()
 
@@ -102,7 +102,7 @@ class LaserService {
 
     int laserPlaformCount() {
         Sql sql
-        int count
+        int count = -1
         try {
             Map config = getConfig()
 
@@ -132,7 +132,7 @@ class LaserService {
 
     int laserVendorCount() {
         Sql sql
-        int count
+        int count = -1
         try {
             Map config = getConfig()
 
@@ -193,7 +193,7 @@ class LaserService {
 
     int tippsInLaserCount(String wekbUuid) {
         Sql sql
-        int tippsInLaserCount
+        int tippsInLaserCount = -1
         try {
             Map config = getConfig()
 
@@ -223,7 +223,7 @@ class LaserService {
 
     int tippsWithStatusInLaserCount(String wekbUuid, String status) {
         Sql sql
-        int tippsInLaserCount
+        int tippsInLaserCount = -1
         try {
             Map config = getConfig()
 
@@ -256,8 +256,8 @@ class LaserService {
 
     String permanentTitlesWithStatusInLaserCount(String wekbUuid, String status) {
         Sql sql
-        int tippsInLaserCount
-        int ptInLaserCount
+        int tippsInLaserCount = -1
+        int ptInLaserCount = -1
         try {
             Map config = getConfig()
 
@@ -301,7 +301,7 @@ class LaserService {
 
     int permanentTitleInLaserCount(String wekbUuid, String status = null) {
         Sql sql
-        int ptInLaserCount
+        int ptInLaserCount = -1
         try {
             Map config = getConfig()
 
@@ -325,7 +325,7 @@ class LaserService {
                 sql.close()
             }
         }catch (Exception ex){
-            log.error("Problem by permanentTitleInLaserCount:", ex)
+            log.error("Problem by permanentTitleInLaserCount:", ex.message)
         }
         finally {
             try {
@@ -691,7 +691,7 @@ class LaserService {
 
     int packagesWithPermanentTitlesInLaserByProviderCount(String status, String wekbProviderUuid) {
         Sql sql
-        int count
+        int count = -1
         try {
             Map config = getConfig()
 
@@ -893,7 +893,7 @@ class LaserService {
 
     int packageLinkedInLaserCount(String wekbUuid) {
         Sql sql
-        int packageLinkedCount
+        int packageLinkedCount = -1
         try {
             Map config = getConfig()
 
@@ -924,7 +924,7 @@ class LaserService {
 
     int packageLinkedWithPerpetualAccessInLaserCount(String wekbUuid) {
         Sql sql
-        int packageLinkedCount
+        int packageLinkedCount = -1
         try {
             Map config = getConfig()
 
@@ -957,7 +957,7 @@ class LaserService {
 
     int packageLinkedWithOutPerpetualAccessInLaserCount(String wekbUuid) {
         Sql sql
-        int packageLinkedCount
+        int packageLinkedCount = -1
         try {
             Map config = getConfig()
 

@@ -560,8 +560,45 @@ public class HQLBuilder {
                 ( ( crit.defn.contextTree.wildcard=='R' || crit.defn.contextTree.wildcard=='B') ? '%' : '')
         break;
 
+        case 'titles_Without_Identifier_Namespace':
+            def value = getValueFromBaseClass(grailsApplication, crit.defn.baseClass, crit.value)
+            String query = "  exists " +
+                    "(select 1 from TitleInstancePackagePlatform as tipp where " +
+                    "tipp.pkg = o and tipp.status != :tippStatusRemoved " +
+                    "and not exists (select 1 from Identifier as id where id.tipp = tipp and id.namespace = :${crit.defn.qparam}))"
+            if (value) {
+                hql_builder_context."${addToQuery}".add(query)
+                hql_builder_context.bindvars[crit.defn.qparam] = value
+                hql_builder_context.bindvars['tippStatusRemoved'] = RDStore.KBC_STATUS_REMOVED
+            }
+            break;
 
-      default:
+        case 'titles_Duplicates_By_Identifier_Namespace':
+            def value = getValueFromBaseClass(grailsApplication, crit.defn.baseClass, crit.value)
+            String query = ''' exists (select 1
+                             from TitleInstancePackagePlatform as tipp
+                             join tipp.ids as ident
+                             where tipp.pkg = o
+                             and tipp.status != :tippStatusRemoved
+                             and ident.namespace = :namespace
+                             and exists (
+                                select 1
+                                from Identifier as ident2
+                                where ident2.tipp.pkg = o
+                                and ident2.namespace = :namespace
+                                and ident2.value = ident.value
+                                and ident2.tipp.id <> tipp.id
+                                and ident2.tipp.status != :tippStatusRemoved))'''
+            if (value) {
+                hql_builder_context."${addToQuery}".add(query)
+                hql_builder_context.bindvars['namespace'] = value
+                hql_builder_context.bindvars['tippStatusRemoved'] = RDStore.KBC_STATUS_REMOVED
+            }
+            break;
+
+
+
+        default:
         log.error("Unhandled comparator '${crit.defn.contextTree.comparator}'. crit: ${crit}");
     }
   }
