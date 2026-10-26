@@ -10,21 +10,32 @@ class TenantSwitchService {
     SessionFactory sessionFactory
 
     def withTenantRole(Closure c) {
-        def tenant = TenantContext.getTenant()
 
-        if (!tenant) {
-            throw new IllegalStateException('No tenant role set in TenantContext')
+        String tenant = TenantContext.getTenant()
+
+        Map<String, String> tenantTimeouts = [
+                'wekb_without_login': '120s',
+                'wekb_with_login'   : '0'
+        ]
+
+        if (!tenantTimeouts.containsKey(tenant)) {
+            throw new IllegalArgumentException(
+                    "Unsupported tenant role: ${tenant}"
+            )
         }
 
-        def conn = sessionFactory.currentSession.connection()
+        def session = sessionFactory.currentSession
 
-        try {
-            conn.createStatement().execute("SET ROLE ${tenant}")
+        return session.doReturningWork { conn ->
+
+            conn.createStatement().withCloseable { stmt ->
+                stmt.execute("SET LOCAL ROLE ${tenant}")
+                stmt.execute(
+                        "SET LOCAL statement_timeout = '${tenantTimeouts[tenant]}'"
+                )
+            }
+
             return c.call()
-        } finally {
-            conn.createStatement().execute("RESET ROLE")
         }
     }
-
-
 }
