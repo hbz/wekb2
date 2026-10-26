@@ -412,14 +412,14 @@ public class HQLBuilder {
       case 'exists':
         if ( crit.defn.type=='lookup' || crit.defn.type=='dropDown' || crit.defn.type=='dropDownGroup' ) {
 
-          if(crit.defn.baseClass == 'wekb.RefdataValue') {
+          if(crit.defn.baseClass == RefdataValue.class.name) {
             def value = getValueFromBaseClass(grailsApplication, crit.defn.baseClass, crit.value)
             if(value && value.class.getSimpleName() == 'RefdataValue') {
               hql_builder_context."${addToQuery}".add("${crit.defn.contextTree.negate ? 'not ' : ''} exists (select ${crit.defn.qparam} from ${scoped_property} as ${crit.defn.qparam} where ${crit.defn.qparam} = :${crit.defn.qparam} ) ");
               hql_builder_context.bindvars[crit.defn.qparam] = value
             }
           }
-          if(crit.defn.baseClass == 'wekb.CuratoryGroup') {
+          if(crit.defn.baseClass == CuratoryGroup.class.name) {
             def value = CuratoryGroup.get(crit.value)
             if(value) {
               if(baseclass.toString() == 'class wekb.Org') {
@@ -449,7 +449,7 @@ public class HQLBuilder {
               }
             }
           }
-          if(crit.defn.baseClass == 'wekb.Vendor') {
+          if(crit.defn.baseClass == Vendor.class.name) {
               //placeHolderForVendor
             def value = Vendor.get(crit.value)
             if(value) {

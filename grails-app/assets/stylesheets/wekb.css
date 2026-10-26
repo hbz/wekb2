@@ -19,35 +19,18 @@
     display: block;
     margin: -9px 3px 0 0;
     font-size: 1.5em;
-    -webkit-transition: color 0.6s ease, -webkit-transform 0.2s ease;
-    transition: color 0.6s ease, -webkit-transform 0.2s ease;
     transition: color 0.6s ease, transform 0.2s ease;
-    transition: color 0.6s ease, transform 0.2s ease, -webkit-transform 0.2s ease;
     font-family: Icons;
     font-style: normal;
     font-weight: 400;
     text-decoration: inherit;
     text-align: center;
-    -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
     z-index: 80;
 }
 
 .editable-clear-x:before {
     content: "\f2ed";
-}
-/* label what server */
-.wb-server-label {
-    position: fixed;
-    bottom: 0;
-    right: 0;
-    top: 0;
-    margin: 0 !important;
-    border-radius: 0 !important;
-    z-index: 999;
-}
-.wb-server-label span {
-    line-height: 30px;
 }
 
 .wekb-local{
@@ -126,16 +109,6 @@
 main {
     flex:1;
 }
-.wekb-local{
-    border-left: 10px solid #5bc0de!important;
-}
-.wekb-dev{
-    border-left: 10px solid #5cb85c!important;
-}
-.wekb-qa{
-    border-left: 10px solid #d9534f!important;
-}
-
 .ui.menu .item.wekb-pagination-custom-input {
     position: relative;
     padding-top: 0;
@@ -172,22 +145,59 @@ main {
 .js-copyTrigger:hover {
     cursor: pointer;
 }
+/****************************************
+        Landingpage
+*****************************************/
 
-/********************************
- * Chart Farben
- ********************************/
+.full-height-grid {
+    flex: 1;
+    min-height: 0;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+}
+.news-column {
+    min-height: 0;
+    overflow: hidden;
+    padding-left: 2rem !important;
+    padding-right: 2rem !important;
+}
+.news-column-inner {
+    position: absolute;
+    inset: 1rem;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    padding: 2rem 1.5rem;
+    margin: 2rem;
+    background: rgba(255, 255, 255, 1);
+    border: 1px solid rgba(34, 36, 38, 0.07);
+    border-radius: 1rem;
+    box-shadow:
+            0 0.4rem 1.5rem rgba(34, 36, 38, 0.045);
+}
 
-:root {
-    --chart-green: #5d7c62;
-    --chart-brown: #b54800;
-    --chart-yellow: #fbbd08;
-    --chart-orange: #f2711c;
-    --chart-blue: #2185d0;
-    --chart-purple:#76007a;
-    --chart-text: #1b1c1d;
-    --chart-muted: #6b7280;
-    --chart-line: #dfe5eb;
-    --chart-background: #ffffff;
+.news-feed {
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.ui.feed > .event > .content .extra {
+    margin: 0.1em 0 0;
+}
+
+.ui.button.news-more {
+    width: auto;
+    margin: 0;
+    align-self: center;
+}
+
+.ui.connected.feed > .event.last-visible::before {
+    border-left: none;
+}
+
+.ui.feed > .event > .label .icon {
+    font-size: 1.3em;
 }
 
 /********************************
@@ -196,11 +206,8 @@ main {
 
 .hero-claim {
     min-height: 10vh;
-    display: flex;
-    flex-direction: column;
     position: relative;
     z-index: 2;
-    flex: 0 0 auto;
     padding: 3rem 3rem 0 !important;
     margin: 0 !important;
     background: transparent !important;
@@ -215,36 +222,20 @@ main {
 
 
 .hero-claim h1 span {
-
-    background-image: linear-gradient(90deg, yellow, brown );
+    font-weight: 700;
     background-image: linear-gradient(
             90deg,
-            var(--chart-brown),
-            var(--chart-yellow)
+            #b54800,
+            #fbc71c
     );
-
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
-
-.hero-claim h1 span {
-    font-weight: 700;
-}
-
 .hero-claim p {
     margin-top: 1.5rem;
     font-size: 1.4rem;
     line-height: 1.5;
     opacity: 0.65;
-}
-
-.hero-chart-column {
-    position: relative;
-    width: 100%;
-}
-
-* {
-    box-sizing: border-box;
 }
 
 /********************************
@@ -268,7 +259,6 @@ main {
     width: 100%;
     margin: 0 auto;
     gap: 1.5rem;
-    align-items: stretch;
     grid-auto-rows: 1fr;
 }
 
@@ -279,11 +269,11 @@ main {
 .statistic {
     display: flex;
     flex-direction: column;
-    align-self: stretch;
     position: relative;
     min-width: 0;
     opacity: 0;
     transform: translateY(1rem);
+    transition: translate 300ms ease;
 
     padding: 2rem 1.5rem;
 
@@ -303,7 +293,7 @@ main {
     align-self: center;
 }
 .statistic:has(.button:hover) {
-    transform: translateY(-3px);
+    translate: 0 -3px;
 
     border-color: rgba(34, 36, 38, 0.2);
 
@@ -352,82 +342,10 @@ main {
     width: 6rem;
     height: 6rem;
     margin: 0 auto 1.25rem auto;
-    border: 1px solid rgba(0, 0, 0, 0.08);
-    border-radius: 50%;
-    background: #ffffff;
-    box-shadow: 0 0 0 0.75rem rgba(33, 133, 208, 0.04),
-    0 0.75rem 2rem rgba(0, 0, 0, 0.08);
-    opacity: 0;
-
+    scale: 1.3;
     transform: scale(0.35);
 }
 
-/********************************
- * Innerer farbiger Kreis
- ********************************/
-
-.statistic-dot {
-    display: grid;
-    place-items: center;
-    width: 3.2rem;
-    height: 3.2rem;
-    border-radius: 50%;
-    background: currentColor;
-    transform: scale(0);
-}
-
-/********************************
- * Icon im Kreis
- ********************************/
-
-.statistic-dot .icon {
-    margin: 0 !important;
-    width: auto !important;
-    height: auto !important;
-    font-size: 1.35rem;
-    line-height: 1 !important;
-    color: #ffffff;
-}
-
-/********************************
- * Farben der Statistiken
- ********************************/
-
-.statistic:nth-of-type(1) {
-    color: var(--chart-brown);
-}
-
-.statistic:nth-of-type(2) {
-    color: var(--chart-yellow);
-}
-
-.statistic:nth-of-type(3) {
-    color: var(--chart-purple);
-}
-
-.statistic:nth-of-type(4) {
-    color: var(--chart-blue);
-}
-
-/********************************
- * Heller Ring um inneren Kreis
- ********************************/
-
-.statistic:nth-of-type(1) .statistic-dot {
-    box-shadow: 0 0 0 0.55rem rgba(181, 72, 0, 0.18);
-}
-
-.statistic:nth-of-type(2) .statistic-dot {
-    box-shadow: 0 0 0 0.55rem rgba(251, 189, 8, 0.18);
-}
-
-.statistic:nth-of-type(3) .statistic-dot {
-    box-shadow: 0 0 0 0.55rem rgba(118, 0, 122, 0.15);
-}
-
-.statistic:nth-of-type(4) .statistic-dot {
-    box-shadow: 0 0 0 0.55rem rgba(33, 133, 208, 0.15);
-}
 
 /********************************
  * Animation äußerer Kreis
@@ -495,7 +413,7 @@ main {
     font-size: clamp(1rem, 1.5vw, 1.35rem);
     font-weight: 700;
     line-height: 1.2;
-    color: var(--chart-text);
+    color: #1b1c1d;
     text-align: center;
 }
 
@@ -509,7 +427,7 @@ main {
     margin: 0;
     font-size: 1.2rem;
     line-height: 1.6;
-    color: var(--chart-muted);
+    color: #6b7280;
     text-align: left;
 }
 
@@ -580,10 +498,6 @@ main {
         gap: 3.5rem 2rem;
     }
 
-    .statistic:nth-child(even) {
-        padding-right: 0;
-    }
-
     .statistic-description {
         font-size: 1.05rem;
     }
@@ -603,12 +517,7 @@ main {
 
     .statistics-track {
         grid-template-columns: 1fr;
-
         gap: 3rem;
-    }
-
-    .statistic {
-        padding-right: 0;
     }
 
     .statistic-number {
@@ -620,13 +529,25 @@ main {
     }
 
     .statistic-description {
-        width: 100%;
-        max-width: none;
-
         font-size: 1.05rem;
     }
 }
 
+.statistic:has(> .ui.button:hover) .statistic-dot {
+    transform: translateY(7px) scale(0.08);
+}
+.statistic:has(> .ui.button:hover) .statistic-dot i {
+    box-shadow: none;
+}
+
+.statistic:has(> .ui.button:hover) .statistic-marker {
+    scale: 1.15;
+}
+main.ui.main.fluid.container:has(.wekb-altchaCard) {
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+}
 /********************************
  * Reduced Motion
  ********************************/
@@ -637,17 +558,62 @@ main {
     .statistic-dot {
         animation: none !important;
         transition: none !important;
+        transform: none !important;
+        translate: none !important;
+        opacity: 1;
     }
 
-    .statistic,
     .statistic-marker {
-        opacity: 1;
-        transform: none;
+        scale: 1.3 !important;
     }
 
     .statistic-dot {
-        transform: none;
+        scale: 1 !important;
     }
 }
+/********************************
+ * Table Toolbar
+ ********************************/
+.ui.segment.wekb-tableToolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+}
 
+.ui.segment.wekb-tableToolbar > .ui.header,
+.ui.segment.wekb-tableToolbar > .ui.pagination.menu {
+    margin: 0;
+}
+.ui.segment.wekb-tableToolbar + form .ui.table {
+    border-top: none;
+    border-bottom: none;
+}
+.ui.segment.wekb-tableToolbar + form .ui.table,
+.ui.segment.wekb-tableToolbar + div .ui.table{
+    border-radius: 0;
+
+    > thead > tr:first-child {
+        > th:first-child,
+        > th:last-child {
+            border-radius: 0;
+        }
+    }
+}
+/********************************
+ * Segment beneath tab menu
+ ********************************/
+
+.ui.segment.wekb-tabBottom:has(.wekb-tableToolbar) {
+    border: none;
+    background: none;
+    box-shadow: none;
+}
+.ui.segment.wekb-tabBottom:has(.ui.segment) {
+    border: none;
+    background: none;
+    box-shadow: none;
+}
 

@@ -16,95 +16,7 @@
 </head>
 
 <body>
-<style>
 
-.wekb-content {
-    flex: 1 1 auto;
-    display: flex;
-    overflow: visible;
-
-    background-color: #fff;
-
-    background-image:
-            radial-gradient(
-                    ellipse at 25% 45%,
-                    rgba(242, 113, 28, 0.09) 0%,
-                    transparent 48%
-            ),
-            radial-gradient(
-                    ellipse at 88% 42%,
-                    rgba(33, 133, 208, 0.08) 0%,
-                    transparent 50%
-            );
-}
-
-.wekb-content > .ui.main.container {
-    flex: 1 1 auto;
-    display: flex;
-    overflow: visible;
-}
-
-.full-height-grid {
-    flex: 1 1 auto;
-    min-height: auto;
-    margin-top: 0 !important;
-    margin-bottom: 0 !important;
-}
-.wekb-columns {
-    align-items: stretch;
-}
-.news-column {
-    display: flex !important;
-    flex-direction: column;
-    min-height: 0;
-    overflow: hidden;
-    align-items: flex-start;
-    padding-left: 2rem!important;
-    padding-right: 2rem!important;
-
-}
-.news-column-inner {
-    position: absolute;
-    inset: 1rem;
-    overflow: hidden;
-    margin: 3rem;
-    padding: 1rem;
-
-    background: rgba(255, 255, 255, 1);
-
-    border: 1px solid rgba(34, 36, 38, 0.07);
-    border-radius: 1rem;
-
-    box-shadow:
-            0 0.4rem 1.5rem rgba(34, 36, 38, 0.045);
-}
-
-.news-feed {
-    flex: 1 1 auto;
-    min-height: 0;
-    overflow: hidden;
-}
-
-.ui.feed > .event > .content .extra {
-    margin: 0.1em 0 0;
-}
-
-.ui.button.news-more {
-    width: auto;
-    margin: 0 0 30px 50px;
-}
-
-.ui.connected.feed > .event.last-visible::before {
-    border-left: none;
-}
-
-.ui.feed > .event > .label .icon {
-    font-size: 1.3em;
-}
-.hero-chart-column {
-    flex: 1 1 auto;
-}
-</style>
 <g:set var="objectConfig" value="${[
         'package' : [
                 icon   : Icon.PACKAGE,
@@ -137,12 +49,12 @@
                     <g:each in="${allNews}" var="item">
                         <article class="event">
                             <div class="label" data-tooltip="${objectConfig[item.object]?.tooltip}" data-position="top left">
-                                <i class="inverted circular wekb-${objectConfig[item.object]?.color} ${objectConfig[item.object]?.icon}"
+                                <i class="inverted circular wekb-${objectConfig[item.object]?.color} icon"
                                    aria-hidden="true"></i>
                             </div>
                             <div class="content">
                                 <div class="date">
-                                    <g:formatDate
+                                    <wekb:dateTime
                                             format="${message(code: 'default.date.format')}"
                                             date="${item.date}"/>
                                 </div>
@@ -185,14 +97,11 @@
             </g:else>
         </div>
     </aside>
-    <main class="twelve wide column hero-chart-column">
+    <main class="twelve wide column">
         <section class="hero-claim">
             <h1>Provider Tool <span>we:kb&nbsp;</span>
             </h1>
-            <div style="display: flex;" >
-                <p>Provider-Curated Knowledge Base – Freely available under CC0</p>
-
-            </div>
+            <p>Provider-Curated Knowledge Base – Freely available under CC0</p>
         </section>
         <g:if test="${showAltcha}">
             <g:render template="/templates/altchaForm" model="[altchaForm: [origin: origin, startpage: true]]"/>

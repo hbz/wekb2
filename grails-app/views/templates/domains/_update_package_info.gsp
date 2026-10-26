@@ -172,7 +172,7 @@
                 Last Changed in KBART
             </dt>
             <dd>
-                <g:formatDate format="${message(code: 'default.date.format.notime')}"
+                <wekb:dateTime format="${message(code: 'default.date.format.notime')}"
                               date="${d.lastChangedInKbart}"/>
             </dd>
         </dl>

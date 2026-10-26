@@ -103,8 +103,13 @@
                     </div>
                 </g:if>
             </g:if>
-
-            <h1 class="ui header"><g:message code="${displayobj.class.simpleName.toLowerCase()}.label" default="${displayobj.getDomainName()}"/>: ${displayobj.getShowName()}</h1>
+            <semui:h1HeaderWithIcon
+                    iconClass="${'wekb-' + displayobj.getDomainName().toLowerCase()}"
+                    title="${displayobj.getShowName()}"
+                    subTitle="${message(
+                            code: displayobj.class.simpleName.toLowerCase() + '.label',
+                            default: displayobj.getDomainName()
+                    )}"/>
 
             <sec:ifAnyGranted roles="ROLE_ADMIN">
                 <g:if test="${displayobj instanceof wekb.Package}">

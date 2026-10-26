@@ -1,8 +1,11 @@
 package wekb
 
+import wekb.auth.Role
+import wekb.auth.User
 import wekb.helper.RCConstants
 import grails.gorm.transactions.Transactional
 import wekb.helper.RDStore
+import wekb.system.JobResult
 
 @Transactional
 class GlobalSearchTemplatesService {
@@ -49,7 +52,7 @@ class GlobalSearchTemplatesService {
 
     Map adminPackages() {
         Map result = [
-                baseclass   : 'wekb.Package',
+                baseclass   : Package.class.name,
                 msgCode    : 'package.plural',
                 title       : 'Auto Update Packages',
                 defaultSort : 'lastUpdated',
@@ -83,7 +86,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'dropDown',
                                         multiple    : 'true',
-                                        baseClass  : 'wekb.Org',
+                                        baseClass  : Org.class.name,
                                         prompt     : 'Provider',
                                         msgCode     : 'org.label',
                                         qparam     : 'qp_provider',
@@ -93,7 +96,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.CuratoryGroup',
+                                        baseClass  : CuratoryGroup.class.name,
                                         prompt     : 'Curatory Group',
                                         msgCode     : 'curatorygroup.label',
                                         qparam     : 'qp_curgroup',
@@ -104,7 +107,7 @@ class GlobalSearchTemplatesService {
                                 [
                                        type       : 'dropDown',
                                         multiple    : 'true',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.COMPONENT_STATUS,
                                         prompt     : 'Status',
                                         msgCode    : 'default.status',
@@ -115,7 +118,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'dropDown',
                                         multiple    : 'true',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.SOURCE_FREQUENCY,
                                         prompt     : 'Source Frequency',
                                         msgCode     : 'kbartSource.frequency',
@@ -411,7 +414,7 @@ class GlobalSearchTemplatesService {
 
     Map curatoryGroups() {
         Map result = [
-                baseclass: 'wekb.CuratoryGroup',
+                baseclass: CuratoryGroup.class.name,
                 msgCode    : 'curatorygroup.plural',
                 title    : 'Curatory Groups',
                 defaultSort : 'name',
@@ -427,7 +430,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.CURATORY_GROUP_TYPE,
                                         prompt     : 'Type',
                                         msgCode     : 'default.type',
@@ -438,7 +441,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'dropDown',
                                         multiple    : 'true',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.COMPONENT_STATUS,
                                         prompt     : 'Status',
                                         msgCode    : 'default.status',
@@ -464,7 +467,7 @@ class GlobalSearchTemplatesService {
 
     Map identifiers() {
         Map result = [
-                baseclass: 'wekb.Identifier',
+                baseclass: Identifier.class.name,
                 msgCode    : 'identifier.plural',
                 title    : 'Identifiers',
                 defaultSort : 'value',
@@ -478,7 +481,7 @@ class GlobalSearchTemplatesService {
                                         placeholder: 'Namespace',
                                         filter1    : 'all',
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.IdentifierNamespace',
+                                        baseClass  : IdentifierNamespace.class.name,
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'namespace'],
                                 ],
                                 [
@@ -503,7 +506,7 @@ class GlobalSearchTemplatesService {
 
     Map jobResults() {
         Map result = [
-                baseclass   : 'wekb.system.JobResult',
+                baseclass   : JobResult.class.name,
                 msgCode    : 'jobresult.plural',
                 title       : 'Job Results',
                 defaultSort : 'id',
@@ -512,7 +515,7 @@ class GlobalSearchTemplatesService {
                         qbeForm   : [
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.JOB_TYPE,
                                         prompt     : 'Type',
                                         msgCode     : 'default.type',
@@ -537,7 +540,7 @@ class GlobalSearchTemplatesService {
 
     Map namespaces() {
         Map result = [
-                baseclass: 'wekb.IdentifierNamespace',
+                baseclass: IdentifierNamespace.class.name,
                 msgCode    : 'identifiernamespace.plural',
                 title    : 'Identifier Namespaces',
                 defaultSort : 'name',
@@ -553,7 +556,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.IDENTIFIER_NAMESPACE_TARGET_TYPE,
                                         prompt     : 'Target Type',
                                         qparam     : 'qp_targetType',
@@ -562,7 +565,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Hard Data',
                                         qparam     : 'qp_hardData',
@@ -586,7 +589,7 @@ class GlobalSearchTemplatesService {
 
     Map orgs() {
         Map result = [
-                baseclass   : 'wekb.Org',
+                baseclass   : Org.class.name,
                 msgCode    : 'org.plural',
                 title       : 'Providers',
                 defaultSort : 'name',
@@ -597,7 +600,7 @@ class GlobalSearchTemplatesService {
                                 //Hidden Fields
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.CuratoryGroup',
+                                        baseClass  : CuratoryGroup.class.name,
                                         qparam     : 'qp_curgroups',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'placeHolderForCuratoryGroups'],
                                         hide       : true
@@ -614,7 +617,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.Vendor',
+                                        baseClass  : Vendor.class.name,
                                         qparam     : 'qp_vendor_id',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'placeHolderForVendor'],
                                         hide       : true
@@ -636,7 +639,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.CuratoryGroup',
+                                        baseClass  : CuratoryGroup.class.name,
                                         prompt     : 'Curatory Group',
                                         msgCode     : 'curatorygroup.label',
                                         qparam     : 'qp_curgroup',
@@ -646,7 +649,7 @@ class GlobalSearchTemplatesService {
                                 [
                                        type       : 'dropDown',
                                         multiple    : 'true',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.COMPONENT_STATUS,
                                         prompt     : 'Status',
                                         msgCode    : 'default.status',
@@ -656,7 +659,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.ORG_ROLE,
                                         prompt     : 'Role',
                                         msgCode     : 'org.role',
@@ -667,7 +670,7 @@ class GlobalSearchTemplatesService {
                                 //--------------------------------------------------------------------------------------------
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Inhouse Invoicing',
                                         msgCode     : 'org.invoicingYourself',
@@ -679,7 +682,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'dropDown',
                                         multiple    : 'true',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.VENDOR_ELECTRONIC_BILLING,
                                         prompt     : 'Electronic Invoice Formats',
                                         msgCode     : 'org.electronicBillings',
@@ -691,7 +694,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'dropDown',
                                         multiple    : 'true',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.VENDOR_INVOICE_DISPATCH,
                                         prompt     : 'Invoice dispatch via',
                                         msgCode     : 'org.invoiceDispatchs',
@@ -702,7 +705,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Paper Invoice',
                                         msgCode     : 'org.paperInvoice',
@@ -713,7 +716,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Management of Credits',
                                         msgCode     : 'org.managementOfCredits',
@@ -724,7 +727,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Processing of compensation payments (credits/subsequent debits)',
                                         msgCode     : 'org.processingOfCompensationPayments',
@@ -735,7 +738,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Individual invoice design',
                                         msgCode     : 'org.individualInvoiceDesign',
@@ -747,7 +750,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'dropDown',
                                         multiple    : 'true',
-                                        baseClass  : 'wekb.Vendor',
+                                        baseClass  : Vendor.class.name,
                                         prompt     : 'Invoicing possible by library supplier',
                                         msgCode     : 'org.invoicingVendors',
                                         qparam     : 'invoicingVendors',
@@ -757,7 +760,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                /* [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Collections',
                                         msgCode     : 'org.collections',
@@ -768,7 +771,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Pick and Choose',
                                         msgCode     : 'org.pickAndChoose',
@@ -779,7 +782,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Prepaid',
                                         msgCode     : 'org.prepaid',
@@ -790,7 +793,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Upfront',
                                         msgCode     : 'org.upfront',
@@ -801,7 +804,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Temporary Access',
                                         msgCode     : 'org.temporaryAccess',
@@ -812,7 +815,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Perpetual Access',
                                         msgCode     : 'org.perpetualAccess',
@@ -824,7 +827,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'dropDown',
                                         multiple    : 'true',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.ORG_DRM,
                                         prompt     : 'DRM',
                                         msgCode     : 'org.drm',
@@ -835,7 +838,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Remote Access',
                                         msgCode     : 'org.remoteAccess',
@@ -847,7 +850,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'dropDown',
                                         multiple    : 'true',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.PROVIDER_PRINT_DOWNLOAD,
                                         prompt     : 'Print/Download',
                                         //msgCode     : 'org.printDownloadChapter',
@@ -858,7 +861,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Quotes By Copy/Paste',
                                         msgCode     : 'org.quotesByCopyPaste',
@@ -869,7 +872,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 /*[
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Forwarding Usage Statistcs',
                                         msgCode     : 'org.forwardingUsageStatistics',
@@ -880,7 +883,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Alerts about new publications within e-book packages',
                                         msgCode     : 'org.org_alert_new_ebook_packages',
@@ -892,7 +895,7 @@ class GlobalSearchTemplatesService {
                               */
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.YN,
                                         prompt     : 'License-based e-book interlibrary loan supported',
                                         msgCode     : 'org.licenseBasedEBInterlibrarySupported',
@@ -904,7 +907,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'dropDown',
                                         multiple    : 'true',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.PROVIDER_RANGE,
                                         prompt     : 'Range',
                                         msgCode     : 'org.range',
@@ -916,7 +919,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'dropDown',
                                         multiple    : 'true',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.PROVIDER_AGREEMENT_MODEL,
                                         prompt     : 'Agreement model',
                                         msgCode     : 'org.agreementModel',
@@ -949,7 +952,7 @@ class GlobalSearchTemplatesService {
 
     Map providersByVendor() {
         Map result = [
-                baseclass   : 'wekb.Org',
+                baseclass   : Org.class.name,
                 msgCode    : 'org.plural',
                 title       : 'Providers',
                 defaultSort : 'name',
@@ -960,7 +963,7 @@ class GlobalSearchTemplatesService {
                                 //Hidden Fields
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.CuratoryGroup',
+                                        baseClass  : CuratoryGroup.class.name,
                                         qparam     : 'qp_curgroups',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'placeHolderForCuratoryGroups'],
                                         hide       : true
@@ -977,7 +980,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.Vendor',
+                                        baseClass  : Vendor.class.name,
                                         qparam     : 'qp_vendor_id',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'placeHolderForVendor'],
                                         hide       : true
@@ -999,7 +1002,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.CuratoryGroup',
+                                        baseClass  : CuratoryGroup.class.name,
                                         prompt     : 'Curatory Group',
                                         msgCode     : 'curatorygroup.label',
                                         qparam     : 'qp_curgroup',
@@ -1009,7 +1012,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'dropDown',
                                         multiple    : 'true',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.COMPONENT_STATUS,
                                         prompt     : 'Status',
                                         msgCode    : 'default.status',
@@ -1019,7 +1022,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.ORG_ROLE,
                                         prompt     : 'Role',
                                         msgCode     : 'org.role',
@@ -1030,7 +1033,7 @@ class GlobalSearchTemplatesService {
                                 //--------------------------------------------------------------------------------------------
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Inhouse Invoicing',
                                         msgCode     : 'org.invoicingYourself',
@@ -1042,7 +1045,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'dropDown',
                                         multiple    : 'true',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.VENDOR_ELECTRONIC_BILLING,
                                         prompt     : 'Electronic Invoice Formats',
                                         msgCode     : 'org.electronicBillings',
@@ -1054,7 +1057,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'dropDown',
                                         multiple    : 'true',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.VENDOR_INVOICE_DISPATCH,
                                         prompt     : 'Invoice dispatch via',
                                         msgCode     : 'org.invoiceDispatchs',
@@ -1065,7 +1068,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Paper Invoice',
                                         msgCode     : 'org.paperInvoice',
@@ -1076,7 +1079,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Management of Credits',
                                         msgCode     : 'org.managementOfCredits',
@@ -1087,7 +1090,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Processing of compensation payments (credits/subsequent debits)',
                                         msgCode     : 'org.processingOfCompensationPayments',
@@ -1098,7 +1101,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Individual invoice design',
                                         msgCode     : 'org.individualInvoiceDesign',
@@ -1110,7 +1113,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'dropDown',
                                         multiple    : 'true',
-                                        baseClass  : 'wekb.Vendor',
+                                        baseClass  : Vendor.class.name,
                                         prompt     : 'Invoicing possible by library supplier',
                                         msgCode     : 'org.invoicingVendors',
                                         qparam     : 'invoicingVendors',
@@ -1121,7 +1124,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'dropDown',
                                         multiple    : 'true',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.ORG_DRM,
                                         prompt     : 'DRM',
                                         msgCode     : 'org.drm',
@@ -1132,7 +1135,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Remote Access',
                                         msgCode     : 'org.remoteAccess',
@@ -1144,7 +1147,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'dropDown',
                                         multiple    : 'true',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.PROVIDER_PRINT_DOWNLOAD,
                                         prompt     : 'Print/Download',
                                         //msgCode     : 'org.printDownloadChapter',
@@ -1155,7 +1158,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Quotes By Copy/Paste',
                                         msgCode     : 'org.quotesByCopyPaste',
@@ -1166,7 +1169,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.YN,
                                         prompt     : 'License-based e-book interlibrary loan supported',
                                         msgCode     : 'org.licenseBasedEBInterlibrarySupported',
@@ -1178,7 +1181,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'dropDown',
                                         multiple    : 'true',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.PROVIDER_RANGE,
                                         prompt     : 'Range',
                                         msgCode     : 'org.range',
@@ -1190,7 +1193,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'dropDown',
                                         multiple    : 'true',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.PROVIDER_AGREEMENT_MODEL,
                                         prompt     : 'Agreement model',
                                         msgCode     : 'org.agreementModel',
@@ -1220,7 +1223,7 @@ class GlobalSearchTemplatesService {
 
     Map packages() {
         Map result = [
-                baseclass   : 'wekb.Package',
+                baseclass   : Package.class.name,
                 msgCode    : 'package.plural',
                 title       : 'Packages',
                 defaultSort : 'lastUpdated',
@@ -1246,7 +1249,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.Vendor',
+                                        baseClass  : Vendor.class.name,
                                         qparam     : 'qp_vendor_id',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'placeHolderForVendor'],
                                         hide       : true
@@ -1285,7 +1288,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'dropDown',
                                         multiple    : 'true',
-                                        baseClass  : 'wekb.Org',
+                                        baseClass  : Org.class.name,
                                         prompt     : 'Provider',
                                         msgCode     : 'org.label',
                                         qparam     : 'qp_provider',
@@ -1295,7 +1298,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.CuratoryGroup',
+                                        baseClass  : CuratoryGroup.class.name,
                                         prompt     : 'Curatory Group',
                                         msgCode     : 'curatorygroup.label',
                                         qparam     : 'qp_curgroup',
@@ -1306,7 +1309,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'dropDown',
                                         multiple    : 'true',
-                                        baseClass  : 'wekb.Platform',
+                                        baseClass  : Platform.class.name,
                                         prompt     : 'Platform',
                                         msgCode     : 'platform.label',
                                         qparam     : 'qp_platform',
@@ -1317,7 +1320,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'dropDown',
                                         multiple    : 'true',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.COMPONENT_STATUS,
                                         prompt     : 'Status',
                                         msgCode    : 'default.status',
@@ -1328,7 +1331,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'dropDown',
                                         multiple    : 'true',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.PACKAGE_SCOPE,
                                         prompt     : 'Scope',
                                         msgCode     : 'package.scope',
@@ -1339,7 +1342,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'dropDown',
                                         multiple    : 'true',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.PACKAGE_CONTENT_TYPE,
                                         prompt     : 'Content Type',
                                         msgCode     : 'package.contentType',
@@ -1350,7 +1353,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'dropDown',
                                         multiple    : 'true',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.PACKAGE_OPEN_ACCESS,
                                         prompt     : 'Open Access',
                                         msgCode     : 'package.openAccess',
@@ -1361,7 +1364,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type     : 'dropDownGroup',
                                         dropDownType  : 'ddcForPackages',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         prompt     : 'DDC',
                                         msgCode     : 'package.ddcs',
                                         qparam     : 'qp_ddc',
@@ -1371,7 +1374,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'dropDown',
                                         multiple    : 'true',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.PAA_ARCHIVING_AGENCY,
                                         prompt     : 'Package Archiving Agency',
                                         msgCode     : 'package.archivingAgency',
@@ -1381,7 +1384,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Source Automatic Updates',
                                         msgCode     : 'kbartSource.automaticUpdates',
@@ -1395,7 +1398,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'dropDown',
                                         multiple    : 'true',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.PACKAGE_BREAKABLE,
                                         prompt     : 'Breakable Type',
                                         msgCode     : 'package.breakable',
@@ -1407,7 +1410,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'dropDown',
                                         multiple    : 'true',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.PACKAGE_PAYMENT_TYPE,
                                         prompt     : 'Paid',
                                         msgCode     : 'package.paymentType',
@@ -1419,7 +1422,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'dropDown',
                                         multiple    : 'true',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.PACKAGE_FILE,
                                         prompt     : 'File',
                                         msgCode     : 'package.file',
@@ -1430,7 +1433,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Free Trial',
                                         msgCode     : 'package.freeTrial',
@@ -1444,7 +1447,7 @@ class GlobalSearchTemplatesService {
                                 //FOR My Components Area
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.CuratoryGroup',
+                                        baseClass  : CuratoryGroup.class.name,
                                         qparam     : 'qp_curgroups',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'placeHolderForCuratoryGroups'],
                                         hide       : true
@@ -1476,7 +1479,7 @@ class GlobalSearchTemplatesService {
 
     Map myPackageManagement() {
         Map result = [
-                baseclass   : 'wekb.Package',
+                baseclass   : Package.class.name,
                 msgCode    : 'package.plural',
                 title       : 'Packages',
                 defaultSort : 'lastUpdated',
@@ -1502,7 +1505,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.Vendor',
+                                        baseClass  : Vendor.class.name,
                                         qparam     : 'qp_vendor_id',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'placeHolderForVendor'],
                                         hide       : true
@@ -1541,7 +1544,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'dropDown',
                                         multiple    : 'true',
-                                        baseClass  : 'wekb.Org',
+                                        baseClass  : Org.class.name,
                                         prompt     : 'Provider',
                                         msgCode     : 'org.label',
                                         qparam     : 'qp_provider',
@@ -1551,7 +1554,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.CuratoryGroup',
+                                        baseClass  : CuratoryGroup.class.name,
                                         prompt     : 'Curatory Group',
                                         msgCode     : 'curatorygroup.label',
                                         qparam     : 'qp_curgroup',
@@ -1562,7 +1565,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'dropDown',
                                         multiple    : 'true',
-                                        baseClass  : 'wekb.Platform',
+                                        baseClass  : Platform.class.name,
                                         prompt     : 'Platform',
                                         msgCode     : 'platform.label',
                                         qparam     : 'qp_platform',
@@ -1573,7 +1576,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'dropDown',
                                         multiple    : 'true',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.COMPONENT_STATUS,
                                         prompt     : 'Status',
                                         msgCode    : 'default.status',
@@ -1584,7 +1587,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'dropDown',
                                         multiple    : 'true',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.PACKAGE_SCOPE,
                                         prompt     : 'Scope',
                                         msgCode     : 'package.scope',
@@ -1595,7 +1598,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'dropDown',
                                         multiple    : 'true',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.PACKAGE_CONTENT_TYPE,
                                         prompt     : 'Content Type',
                                         msgCode     : 'package.contentType',
@@ -1606,7 +1609,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'dropDown',
                                         multiple    : 'true',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.PACKAGE_OPEN_ACCESS,
                                         prompt     : 'Open Access',
                                         msgCode     : 'package.openAccess',
@@ -1617,7 +1620,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type     : 'dropDownGroup',
                                         dropDownType  : 'ddcForPackages',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         prompt     : 'DDC',
                                         msgCode     : 'package.ddcs',
                                         qparam     : 'qp_ddc',
@@ -1627,7 +1630,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'dropDown',
                                         multiple    : 'true',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.PAA_ARCHIVING_AGENCY,
                                         prompt     : 'Package Archiving Agency',
                                         msgCode     : 'package.archivingAgency',
@@ -1637,7 +1640,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Source Automatic Updates',
                                         msgCode     : 'kbartSource.automaticUpdates',
@@ -1649,7 +1652,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'dropDown',
                                         multiple    : 'true',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.SOURCE_FREQUENCY,
                                         prompt     : 'Source Frequency',
                                         msgCode     : 'kbartSource.frequency',
@@ -1662,7 +1665,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'dropDown',
                                         multiple    : 'true',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.PACKAGE_BREAKABLE,
                                         prompt     : 'Breakable Type',
                                         msgCode     : 'package.breakable',
@@ -1674,7 +1677,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'dropDown',
                                         multiple    : 'true',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.PACKAGE_PAYMENT_TYPE,
                                         prompt     : 'Paid',
                                         msgCode     : 'package.paymentType',
@@ -1686,7 +1689,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'dropDown',
                                         multiple    : 'true',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.PACKAGE_FILE,
                                         prompt     : 'File',
                                         msgCode     : 'package.file',
@@ -1697,7 +1700,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Free Trial',
                                         msgCode     : 'package.freeTrial',
@@ -1711,7 +1714,7 @@ class GlobalSearchTemplatesService {
                                 //FOR My Components Area
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.CuratoryGroup',
+                                        baseClass  : CuratoryGroup.class.name,
                                         qparam     : 'qp_curgroups',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'placeHolderForCuratoryGroups'],
                                         hide       : true
@@ -1758,7 +1761,7 @@ class GlobalSearchTemplatesService {
 
     Map publicPackages() {
         Map result = [
-                baseclass   : 'wekb.Package',
+                baseclass   : Package.class.name,
                 msgCode    : 'package.plural',
                 title       : 'Packages',
                 defaultSort : 'lastUpdated',
@@ -1797,7 +1800,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.CuratoryGroup',
+                                        baseClass  : CuratoryGroup.class.name,
                                         prompt     : 'Curatory Group',
                                         msgCode     : 'curatorygroup.label',
                                         qparam     : 'qp_curgroup',
@@ -1808,7 +1811,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'dropDown',
                                         multiple    : 'true',
-                                        baseClass  : 'wekb.Org',
+                                        baseClass  : Org.class.name,
                                         prompt     : 'Provider',
                                         msgCode     : 'org.label',
                                         qparam     : 'qp_provider',
@@ -1818,7 +1821,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Source Automatic Updates',
                                         msgCode     : 'kbartSource.automaticUpdates',
@@ -1841,7 +1844,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'dropDown',
                                         multiple    : 'true',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.PACKAGE_CONTENT_TYPE,
                                         prompt     : 'Content Type',
                                         msgCode     : 'package.contentType',
@@ -1853,7 +1856,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'dropDown',
                                         multiple    : 'true',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.COMPONENT_STATUS,
                                         prompt     : 'Status',
                                         msgCode    : 'default.status',
@@ -1864,7 +1867,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type     : 'dropDownGroup',
                                         dropDownType  : 'ddcForPackages',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         prompt     : 'DDC',
                                         msgCode     : 'package.ddcs',
                                         qparam     : 'qp_ddc',
@@ -1875,7 +1878,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'dropDown',
                                         multiple    : 'true',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.PACKAGE_PAYMENT_TYPE,
                                         prompt     : 'Paid',
                                         msgCode     : 'package.paymentType',
@@ -1887,7 +1890,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'dropDown',
                                         multiple    : 'true',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.PACKAGE_OPEN_ACCESS,
                                         prompt     : 'Open Access',
                                         msgCode     : 'package.openAccess',
@@ -1900,7 +1903,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'dropDown',
                                         multiple    : 'true',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.PAA_ARCHIVING_AGENCY,
                                         prompt     : 'Package Archiving Agency',
                                         msgCode     : 'package.archivingAgency',
@@ -1929,7 +1932,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'dropDown',
                                         multiple    : 'true',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.COMPONENT_STATUS,
                                         prompt     : 'Status',
                                         msgCode    : 'default.status',
@@ -1939,7 +1942,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.TIPP_PUBLICATION_TYPE,
                                         prompt     : 'Publication Type',
                                         msgCode     : 'titleinstancepackageplatform.publicationType',
@@ -1950,7 +1953,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.TIPP_MEDIUM,
                                         prompt     : 'Medium',
                                         msgCode     : 'titleinstancepackageplatform.label',
@@ -1961,7 +1964,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.TIPP_ACCESS_TYPE,
                                         prompt     : 'Access Type',
                                         msgCode     : 'titleinstancepackageplatform.label',
@@ -2042,7 +2045,7 @@ class GlobalSearchTemplatesService {
                                  ],*//*
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.DDC,
                                         prompt     : 'DDC',
                                         msgCode     : 'package.ddcs',
@@ -2053,7 +2056,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.COMPONENT_LANGUAGE,
                                         prompt     : 'Language',
                                         msgCode     : 'package.label',
@@ -2073,7 +2076,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Shibboleth Supported',
                                         msgCode     : 'platform.shibbolethAuthentication',
@@ -2084,7 +2087,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Open Athens Supported',
                                         msgCode     : 'platform.openAthens',
@@ -2095,7 +2098,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.PLATFORM_IP_AUTH,
                                         prompt     : 'IP Auth Supported',
                                         msgCode     : 'platform.ipAuthentication',
@@ -2106,7 +2109,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Mail Domain Auth Supported',
                                         msgCode    : 'platform.mailDomain',
@@ -2117,7 +2120,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Referrer Authentification Auth Supported',
                                         msgCode    : 'platform.referrerAuthentification',
@@ -2128,7 +2131,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.YN,
                                         prompt     : 'EZ Proxy Auth Supported',
                                         msgCode    : 'platform.ezProxy',
@@ -2139,7 +2142,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.YN,
                                         prompt     : 'HAN-Server Auth Supported',
                                         msgCode    : 'platform.hanServer',
@@ -2150,7 +2153,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Other Proxies Auth Supported',
                                         msgCode    : 'platform.otherProxies',
@@ -2161,7 +2164,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.PLATFORM_STATISTICS_FORMAT,
                                         prompt     : 'Statistics Format',
                                         msgCode     : 'platform.statisticsFormat',
@@ -2172,7 +2175,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Counter R4 Supported',
                                         msgCode     : 'platform.counterR4Supported',
@@ -2183,7 +2186,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Counter R5 Supported',
                                         msgCode     : 'platform.counterR5Supported',
@@ -2194,7 +2197,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Counter R4 Counter Api Supported',
                                         msgCode     : 'platform.counterR4CounterApiSupported',
@@ -2205,7 +2208,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Counter R5 Counter Api Supported',
                                         msgCode     : 'platform.counterR5CounterApiSupported',
@@ -2241,7 +2244,7 @@ class GlobalSearchTemplatesService {
 
     Map platforms() {
         Map result = [
-                baseclass   : 'wekb.Platform',
+                baseclass   : Platform.class.name,
                 msgCode    : 'platform.plural',
                 title       : 'Platforms',
                 defaultSort : 'name',
@@ -2251,7 +2254,7 @@ class GlobalSearchTemplatesService {
                                 //Hidden Fields
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.CuratoryGroup',
+                                        baseClass  : CuratoryGroup.class.name,
                                         qparam     : 'qp_curgroups',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'placeHolderForCuratoryGroups'],
                                         hide       : true
@@ -2281,7 +2284,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.CuratoryGroup',
+                                        baseClass  : CuratoryGroup.class.name,
                                         prompt     : 'Curatory Group',
                                         msgCode     : 'curatorygroup.label',
                                         qparam     : 'qp_curgroup',
@@ -2291,7 +2294,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'dropDown',
                                         multiple    : 'true',
-                                        baseClass  : 'wekb.Org',
+                                        baseClass  : Org.class.name,
                                         prompt     : 'Provider',
                                         msgCode     : 'org.label',
                                         qparam     : 'qp_provider',
@@ -2301,7 +2304,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'dropDown',
                                         multiple    : 'true',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.COMPONENT_STATUS,
                                         prompt     : 'Status',
                                         msgCode    : 'default.status',
@@ -2318,7 +2321,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Shibboleth Supported',
                                         msgCode     : 'platform.shibbolethAuthentication',
@@ -2329,7 +2332,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Open Athens Supported',
                                         msgCode     : 'platform.openAthens',
@@ -2341,7 +2344,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'dropDown',
                                         multiple    : 'true',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.PLATFORM_IP_AUTH,
                                         prompt     : 'IP Auth Supported',
                                         msgCode     : 'platform.ipAuthentication',
@@ -2352,7 +2355,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.YN,
                                         prompt     : 'User/Pass Supported',
                                         msgCode    : 'platform.passwordAuthentication',
@@ -2363,7 +2366,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Mail Domain Auth Supported',
                                         msgCode    : 'platform.mailDomain',
@@ -2374,7 +2377,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Referrer Authentification Auth Supported',
                                         msgCode    : 'platform.referrerAuthentification',
@@ -2385,7 +2388,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.YN,
                                         prompt     : 'EZ Proxy Auth Supported',
                                         msgCode    : 'platform.ezProxy',
@@ -2396,7 +2399,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.YN,
                                         prompt     : 'HAN-Server Auth Supported',
                                         msgCode    : 'platform.hanServer',
@@ -2407,7 +2410,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Other Proxies Auth Supported',
                                         msgCode    : 'platform.otherProxies',
@@ -2419,7 +2422,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'dropDown',
                                         multiple    : 'true',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.PLATFORM_STATISTICS_FORMAT,
                                         prompt     : 'Statistics Format',
                                         msgCode     : 'platform.statisticsFormat',
@@ -2430,7 +2433,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Counter R4 Supported',
                                         msgCode     : 'platform.counterR4Supported',
@@ -2441,7 +2444,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Counter R5 Supported',
                                         msgCode     : 'platform.counterR5Supported',
@@ -2452,7 +2455,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Counter R4 Counter Api Supported',
                                         msgCode     : 'platform.counterR4CounterApiSupported',
@@ -2463,7 +2466,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Counter R5 Counter Api Supported',
                                         msgCode     : 'platform.counterR5CounterApiSupported',
@@ -2475,7 +2478,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'dropDown',
                                         multiple    : 'true',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.UYNP,
                                         prompt     : 'Platform accessibility',
                                         //msgCode     : 'platform.accessPlatform',
@@ -2487,7 +2490,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'dropDown',
                                         multiple    : 'true',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.UYNP,
                                         prompt     : 'PDF viewer accessibility',
                                         //msgCode     : 'platform.viewerForPdf',
@@ -2499,7 +2502,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'dropDown',
                                         multiple    : 'true',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.UYNP,
                                         prompt     : 'ePub viewer accessibility',
                                         //msgCode     : 'platform.viewerForEpub',
@@ -2511,7 +2514,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'dropDown',
                                         multiple    : 'true',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.UYNP,
                                         prompt     : 'Audio player accessibility',
                                         //msgCode     : 'platform.playerForAudio',
@@ -2523,7 +2526,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'dropDown',
                                         multiple    : 'true',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.UYNP,
                                         prompt     : 'Video player accessibility',
                                         //msgCode     : 'platform.playerForVideo',
@@ -2534,7 +2537,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Accessibility Statement available',
                                         //msgCode     : 'platform.accessibilityStatementAvailable',
@@ -2546,7 +2549,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'dropDown',
                                         multiple    : 'true',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.UYNP,
                                         prompt     : 'EPUB e-books content accessibility',
                                         //msgCode     : 'platform.accessEPub',
@@ -2558,7 +2561,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'dropDown',
                                         multiple    : 'true',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.UYNP,
                                         prompt     : 'PDF e-books content accessibility',
                                         //msgCode     : 'platform.accessPdf',
@@ -2570,7 +2573,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'dropDown',
                                         multiple    : 'true',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.UYNP,
                                         prompt     : 'Audio content accessibility',
                                         //msgCode    : 'platform.accessAudio',
@@ -2582,7 +2585,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'dropDown',
                                         multiple    : 'true',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.UYNP,
                                         prompt     : 'Video content accessibility',
                                         //msgCode    : 'platform.accessVideo',
@@ -2594,7 +2597,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'dropDown',
                                         multiple    : 'true',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.UYNP,
                                         prompt     : 'Database content accessibility',
                                         //msgCode    : 'platform.accessDatabase',
@@ -2605,7 +2608,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Individual design / logo',
                                         qparam     : 'qp_individualDesignLogo',
@@ -2616,7 +2619,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Full text search',
                                         qparam     : 'qp_fullTextSearch',
@@ -2642,7 +2645,7 @@ class GlobalSearchTemplatesService {
 
     Map refdataCategories() {
         Map result = [
-                baseclass: 'wekb.RefdataCategory',
+                baseclass: RefdataCategory.class.name,
                 msgCode    : 'refdatacategory.plural',
                 title    : 'Refdata Categories ',
                 defaultSort : 'desc',
@@ -2680,7 +2683,7 @@ class GlobalSearchTemplatesService {
 
     Map refdataCategoriesPublic() {
         Map result = [
-                baseclass: 'wekb.RefdataCategory',
+                baseclass: RefdataCategory.class.name,
                 msgCode    : 'refdatacategory.plural',
                 title    : 'Reference Data Categories ',
                 defaultSort : 'desc',
@@ -2707,7 +2710,7 @@ class GlobalSearchTemplatesService {
 
     Map refdataValues() {
         Map result = [
-                baseclass: 'wekb.RefdataValue',
+                baseclass: RefdataValue.class.name,
                 msgCode    : 'refdatavalue.plural',
                 title    : 'Refdata Values ',
                 defaultSort : 'value',
@@ -2730,7 +2733,7 @@ class GlobalSearchTemplatesService {
 
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataCategory',
+                                        baseClass  : RefdataCategory.class.name,
                                         prompt     : 'Refdata Category',
                                         qparam     : 'qp_owner',
                                         placeholder: 'Refdata Category',
@@ -2755,9 +2758,9 @@ class GlobalSearchTemplatesService {
 
     Map sources() {
         Map result = [
-                baseclass: 'wekb.KbartSource',
+                baseclass: KbartSource.class.name,
                 msgCode    : 'kbartsource.plural',
-                title    : 'Source',
+                title    : 'Sources',
                 defaultSort : 'name',
                 defaultOrder: 'asc',
                 qbeConfig: [
@@ -2765,7 +2768,7 @@ class GlobalSearchTemplatesService {
                                 //Hidden Fields
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.CuratoryGroup',
+                                        baseClass  : CuratoryGroup.class.name,
                                         qparam     : 'qp_curgroups',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'placeHolderForCuratoryGroups'],
                                         hide       : true
@@ -2780,7 +2783,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.CuratoryGroup',
+                                        baseClass  : CuratoryGroup.class.name,
                                         prompt     : 'Curatory Group',
                                         msgCode    : 'curatorygroup.label',
                                         qparam     : 'qp_curgroup',
@@ -2791,7 +2794,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'dropDown',
                                         multiple    : 'true',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.COMPONENT_STATUS,
                                         prompt     : 'Status',
                                         msgCode    : 'default.status',
@@ -2801,7 +2804,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Automatic Updates',
                                         msgCode    : 'kbartsource.automaticUpdates',
@@ -2813,7 +2816,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'dropDown',
                                         multiple    : 'true',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.SOURCE_FREQUENCY,
                                         prompt     : 'Frequency',
                                         msgCode    : 'kbartsource.frequency',
@@ -2843,7 +2846,7 @@ class GlobalSearchTemplatesService {
         Map result = [
                 useDistinct: true,
                 minInput: 2,
-                baseclass: 'wekb.TitleInstancePackagePlatform',
+                baseclass: TitleInstancePackagePlatform.class.name,
                 msgCode    : 'titleinstancepackageplatform.plural',
                 title    : 'Titles',
                 defaultSort : 'name',
@@ -2884,7 +2887,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.CuratoryGroup',
+                                        baseClass  : CuratoryGroup.class.name,
                                         qparam     : 'qp_curgroups',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'placeHolderForCuratoryGroups'],
                                         hide       : true
@@ -2902,7 +2905,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.Vendor',
+                                        baseClass  : Vendor.class.name,
                                         qparam     : 'qp_vendor_id',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'placeHolderForVendor'],
                                         hide       : true
@@ -2940,7 +2943,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'dropDown',
                                         multiple    : 'true',
-                                        baseClass  : 'wekb.Org',
+                                        baseClass  : Org.class.name,
                                         prompt     : 'Provider',
                                         msgCode    : 'provider.label',
                                         qparam     : 'qp_provider',
@@ -2950,7 +2953,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.CuratoryGroup',
+                                        baseClass  : CuratoryGroup.class.name,
                                         prompt     : 'Curatory Group',
                                         msgCode    : 'curatoryGroup.label',
                                         qparam     : 'qp_curgroup',
@@ -2961,7 +2964,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'dropDown',
                                         multiple    : 'true',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.COMPONENT_STATUS,
                                         prompt     : 'Status',
                                         msgCode    : 'default.status',
@@ -2977,7 +2980,7 @@ class GlobalSearchTemplatesService {
                                         type       : 'dropDown',
                                         multiple    : 'true',
                                         load       : 'ajax',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.TIPP_ACCESS_TYPE,
                                         prompt     : 'Access Type',
                                         msgCode    : 'titleinstancepackageplatform.accessType',
@@ -2990,7 +2993,7 @@ class GlobalSearchTemplatesService {
                                        type       : 'dropDown',
                                         multiple    : 'true',
                                         load       : 'ajax',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.TIPP_OPEN_ACCESS,
                                         prompt     : 'Open Access',
                                         msgCode    : 'titleinstancepackageplatform.openAccess',
@@ -3003,7 +3006,7 @@ class GlobalSearchTemplatesService {
                                        type       : 'dropDown',
                                         multiple    : 'true',
                                         load       : 'ajax',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.TIPP_PUBLICATION_TYPE,
                                         prompt     : 'Publication Type',
                                         msgCode    : 'titleinstancepackageplatform.publicationType',
@@ -3016,7 +3019,7 @@ class GlobalSearchTemplatesService {
                                        type       : 'dropDown',
                                         multiple    : 'true',
                                         load       : 'ajax',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.TIPP_MEDIUM,
                                         prompt     : 'Medium',
                                         msgCode    : 'titleinstancepackageplatform.medium',
@@ -3078,7 +3081,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'dropDown',
                                         load       : 'ajax',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.DDC,
                                         prompt     : 'DDC',
                                         msgCode    : 'titleinstancepackageplatform.ddcs',
@@ -3092,7 +3095,7 @@ class GlobalSearchTemplatesService {
                                        type       : 'dropDown',
                                         multiple    : 'true',
                                         load       : 'ajax',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.COMPONENT_LANGUAGE,
                                         prompt     : 'Language',
                                         msgCode    : 'titleinstancepackageplatform.language',
@@ -3124,7 +3127,8 @@ class GlobalSearchTemplatesService {
     Map tippsOfPkg() {
         Map result = [
                 useDistinct: true,
-                baseclass: 'wekb.TitleInstancePackagePlatform',
+                baseclass: TitleInstancePackagePlatform.class.name,
+                msgCode    : 'title.plural',
                 title    : 'Titles',
                 defaultSort : 'name',
                 defaultOrder: 'asc',
@@ -3192,7 +3196,7 @@ class GlobalSearchTemplatesService {
                                         type       : 'dropDown',
                                         multiple    : 'true',
                                         load     : 'ajax',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.TIPP_PUBLICATION_TYPE,
                                         prompt     : 'Publication Type',
                                         msgCode    : 'titleinstancepackageplatform.publicationType',
@@ -3204,7 +3208,7 @@ class GlobalSearchTemplatesService {
                                         type       : 'dropDown',
                                         multiple    : 'true',
                                         load     : 'ajax',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.TIPP_MEDIUM,
                                         prompt     : 'Medium',
                                         msgCode    : 'titleinstancepackageplatform.medium',
@@ -3230,7 +3234,7 @@ class GlobalSearchTemplatesService {
                                         type       : 'dropDown',
                                         multiple    : 'true',
                                         load     : 'ajax',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.TIPP_ACCESS_TYPE,
                                         prompt     : 'Access Type',
                                         msgCode    : 'titleinstancepackageplatform.accessType',
@@ -3286,7 +3290,7 @@ class GlobalSearchTemplatesService {
                                         type     : 'dropDownGroup',
                                         load     : 'ajax',
                                         dropDownType  : 'ddc',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         prompt     : 'DDC',
                                         msgCode    : 'titleinstancepackageplatform.ddcs',
                                         qparam     : 'qp_ddc',
@@ -3297,7 +3301,7 @@ class GlobalSearchTemplatesService {
                                         type       : 'dropDown',
                                         multiple    : 'true',
                                         load       : 'ajax',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.TIPP_OPEN_ACCESS,
                                         prompt     : 'Open Access',
                                         msgCode    : 'titleinstancepackageplatform.openAccess',
@@ -3309,7 +3313,7 @@ class GlobalSearchTemplatesService {
                                         type       : 'dropDown',
                                         multiple    : 'true',
                                         load       : 'ajax',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.COMPONENT_LANGUAGE,
                                         prompt     : 'Language',
                                         msgCode    : 'titleinstancepackageplatform.languages',
@@ -3320,7 +3324,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'dropDown',
                                         multiple    : 'true',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.COMPONENT_STATUS,
                                         prompt     : 'Status',
                                         msgCode    : 'default.status',
@@ -3331,7 +3335,7 @@ class GlobalSearchTemplatesService {
                                 //FOR My Components Area
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.CuratoryGroup',
+                                        baseClass  : CuratoryGroup.class.name,
                                         qparam     : 'qp_curgroups',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'placeHolderForCuratoryGroups'],
                                         hide       : true
@@ -3356,7 +3360,7 @@ class GlobalSearchTemplatesService {
 
     Map vendors() {
         Map result = [
-                baseclass   : 'wekb.Vendor',
+                baseclass   : Vendor.class.name,
                 msgCode    : 'vendor.plural',
                 title       : 'Library Suppliers',
                 defaultSort : 'name',
@@ -3367,7 +3371,7 @@ class GlobalSearchTemplatesService {
                                 //Hidden Fields
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.CuratoryGroup',
+                                        baseClass  : CuratoryGroup.class.name,
                                         qparam     : 'qp_curgroups',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'placeHolderForCuratoryGroups'],
                                         hide       : true
@@ -3392,7 +3396,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.CuratoryGroup',
+                                        baseClass  : CuratoryGroup.class.name,
                                         prompt     : 'Curatory Group',
                                         msgCode    : 'curatorygroup.label',
                                         qparam     : 'qp_curgroup',
@@ -3402,7 +3406,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'dropDown',
                                         multiple    : 'true',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.COMPONENT_STATUS,
                                         prompt     : 'Status',
                                         msgCode    : 'default.status',
@@ -3413,7 +3417,7 @@ class GlobalSearchTemplatesService {
                                 //---------------------------------------------------------------------------------------------------
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.YN,
                                         prompt     : 'via Webshop',
                                         msgCode     : 'vendor.webShopOrders',
@@ -3424,7 +3428,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.YN,
                                         prompt     : 'via E-Mail',
                                         msgCode     : 'vendor.emailOrders',
@@ -3435,7 +3439,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.YN,
                                         prompt     : 'via XML',
                                         msgCode     : 'vendor.xmlOrders',
@@ -3446,7 +3450,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.YN,
                                         prompt     : 'via EDI',
                                         msgCode     : 'vendor.ediOrders',
@@ -3458,7 +3462,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'dropDown',
                                         multiple    : 'true',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.VENDOR_SUPPORTED_LIB_SYSTEM,
                                         prompt     : 'Supported Library Systems',
                                         msgCode     : 'vendor.supportedLibrarySystems',
@@ -3470,7 +3474,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'dropDown',
                                         multiple    : 'true',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.VENDOR_ELECTRONIC_DELIVERY_DELAY,
                                         prompt     : 'Electronic delivery delay notifications via',
                                         msgCode     : 'vendor.electronicDeliveryDelays',
@@ -3482,7 +3486,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'dropDown',
                                         multiple    : 'true',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.VENDOR_ELECTRONIC_BILLING,
                                         prompt     : 'Electronic Invoice Formats',
                                         msgCode     : 'vendor.electronicBillings',
@@ -3494,7 +3498,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'dropDown',
                                         multiple    : 'true',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.VENDOR_INVOICE_DISPATCH,
                                         prompt     : 'Invoice dispatch via',
                                         msgCode     : 'vendor.invoiceDispatchs',
@@ -3505,7 +3509,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Paper Invoice',
                                         msgCode     : 'vendor.paperInvoice',
@@ -3516,7 +3520,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Management of Credits',
                                         msgCode     : 'vendor.managementOfCredits',
@@ -3527,7 +3531,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Processing of compensation payments (credits/subsequent debits)',
                                         msgCode     : 'vendor.processingOfCompensationPayments',
@@ -3538,7 +3542,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Individual invoice design',
                                         msgCode     : 'vendor.individualInvoiceDesign',
@@ -3549,7 +3553,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Technical Support',
                                         msgCode     : 'vendor.technicalSupport',
@@ -3560,7 +3564,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Metadata (MARC records)',
                                         msgCode     : 'vendor.shippingMetadata',
@@ -3571,7 +3575,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Forwarding usage statistics from the publisher',
                                         msgCode     : 'vendor.forwardingUsageStatisticsFromPublisher',
@@ -3582,7 +3586,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Alerts about new publications within packages',
                                         msgCode     : 'vendor.activationForNewReleases',
@@ -3593,7 +3597,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Prequalification',
                                         msgCode     : 'vendor.prequalification',
@@ -3620,7 +3624,7 @@ class GlobalSearchTemplatesService {
     Map users() {
         Map result = [
                 useDistinct: true,
-                baseclass   : 'wekb.auth.User',
+                baseclass   : User.class.name,
                 msgCode    : 'user.plural',
                 title       : 'Users',
                 defaultSort : 'username',
@@ -3641,7 +3645,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                /* [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Enabled',
                                         qparam     : 'qp_enabled',
@@ -3651,7 +3655,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Account Expired',
                                         qparam     : 'qp_accountExpired',
@@ -3661,7 +3665,7 @@ class GlobalSearchTemplatesService {
                                 ],*/
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Account Locked',
                                         qparam     : 'qp_accountLocked',
@@ -3671,7 +3675,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Password Expired',
                                         qparam     : 'qp_passwordExpired',
@@ -3681,7 +3685,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.CURATORY_GROUP_TYPE,
                                         prompt     : 'Type',
                                         msgCode     : 'default.type',
@@ -3692,7 +3696,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'dropDown',
                                         multiple    : 'true',
-                                        baseClass  : 'wekb.auth.Role',
+                                        baseClass  : Role.class.name,
                                         filter1    : '',
                                         prompt     : 'Role',
                                         msgCode     : 'user.role',
@@ -3724,7 +3728,7 @@ class GlobalSearchTemplatesService {
 
     Map userJobs() {
         Map result = [
-                baseclass   : 'wekb.system.JobResult',
+                baseclass   : JobResult.class.name,
                 msgCode    : 'jobresult.plural',
                 title       : 'User Jobs',
                 defaultSort : 'id',
@@ -3733,7 +3737,7 @@ class GlobalSearchTemplatesService {
                         qbeForm   : [
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.JOB_TYPE,
                                         prompt     : 'Type',
                                         msgCode     : 'default.type',
@@ -3758,7 +3762,7 @@ class GlobalSearchTemplatesService {
 
     Map updatePackageInfos() {
         Map result = [
-                baseclass: 'wekb.UpdatePackageInfo',
+                baseclass: UpdatePackageInfo.class.name,
                 msgCode    : 'updatepackageinfo.plural',
                 title    : 'Package Update Infos',
                 defaultSort : 'startTime',
@@ -3773,7 +3777,7 @@ class GlobalSearchTemplatesService {
 
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.CuratoryGroup',
+                                        baseClass  : CuratoryGroup.class.name,
                                         qparam     : 'qp_curgroups',
                                         contextTree: ['ctxtp': 'qry', 'comparator': 'exists', 'prop': 'placeHolderForCuratoryGroups'],
                                         hide       : true
@@ -3781,7 +3785,7 @@ class GlobalSearchTemplatesService {
 
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.Package',
+                                        baseClass  : Package.class.name,
                                         prompt     : 'Package',
                                         msgCode    : 'package.label',
                                         qparam     : 'qp_pkg',
@@ -3791,7 +3795,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'dropDown',
                                         multiple    : 'true',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.UPDATE_STATUS,
                                         prompt     : 'Status',
                                         msgCode    : 'default.status',
@@ -3802,7 +3806,7 @@ class GlobalSearchTemplatesService {
 
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Automatic Update',
                                         msgCode    : 'updatepackageinfo.automaticUpdate',
@@ -3839,7 +3843,7 @@ class GlobalSearchTemplatesService {
 
     Map updateTippInfos() {
         Map result = [
-                baseclass: 'wekb.UpdateTippInfo',
+                baseclass: UpdateTippInfo.class.name,
                 msgCode    : 'updatetippinfo.plural',
                 title    : 'Title Update Infos',
                 defaultSort : 'startTime',
@@ -3890,7 +3894,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'dropDown',
                                         multiple    : 'true',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.UPDATE_TYPE,
                                         prompt     : 'Type',
                                         msgCode     : 'default.type',
@@ -3901,7 +3905,7 @@ class GlobalSearchTemplatesService {
                                 [
                                         type       : 'dropDown',
                                         multiple    : 'true',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.UPDATE_STATUS,
                                         prompt     : 'Status',
                                         msgCode    : 'default.status',
@@ -3911,7 +3915,7 @@ class GlobalSearchTemplatesService {
                                 ],
                                 [
                                         type       : 'dropDown',
-                                        baseClass  : 'wekb.RefdataValue',
+                                        baseClass  : RefdataValue.class.name,
                                         filter1    : RCConstants.YN,
                                         prompt     : 'Automatic Update',
                                         msgCode    : 'updatepackageinfo.automaticUpdate',

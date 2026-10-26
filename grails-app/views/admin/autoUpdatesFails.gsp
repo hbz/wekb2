@@ -14,13 +14,13 @@
 
 <h1 class="ui header">Automatic Update Fails (${autoUpdates.size()})</h1>
 
-<h3>Only fails automatic update from <g:formatDate date="${new java.util.Date()}" format="${message(code: 'default.date.format.noZ')}"/> - 1 DAY
-until <g:formatDate date="${new java.util.Date()}" format="${message(code: 'default.date.format.noZ')}"/></h3>
+<h3>Only fails automatic update from <wekb:dateTime date="${new java.util.Date()}" format="${message(code: 'default.date.format.noZ')}"/> - 1 DAY
+until <wekb:dateTime date="${new java.util.Date()}" format="${message(code: 'default.date.format.noZ')}"/></h3>
 
 
 <div class="container">
     <g:if test="${autoUpdates.size() > 0}">
-        <table class="ui selectable striped sortable celled table">
+        <table class="ui selectable sortable table">
             <thead>
             <tr>
                 <th>#</th>
@@ -57,11 +57,11 @@ until <g:formatDate date="${new java.util.Date()}" format="${message(code: 'defa
                         </g:each>
                     </td>
                     <td>
-                        <g:formatDate date="${autoUpdate.startTime}"
+                        <wekb:dateTime date="${autoUpdate.startTime}"
                                       format="${message(code: 'default.date.format.noZ')}"/>
                     </td>
                     <td>
-                        <g:formatDate date="${autoUpdate.endTime}"
+                        <wekb:dateTime date="${autoUpdate.endTime}"
                                       format="${message(code: 'default.date.format.noZ')}"/>
                     </td>
                 </tr>

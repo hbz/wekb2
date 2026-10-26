@@ -8,7 +8,7 @@
 <body>
 <h1 class="ui header">Logging (${totalCount})</h1>
 
-<table class="ui selectable striped sortable celled table">
+<table class="ui selectable sortable table">
     <thead>
     <tr>
         <th>Logger</th>
@@ -28,7 +28,7 @@
         <td>${log.effective}</td>
         <td>${log.configured}</td>
         <td>${log.source}</td>
-        <td><g:formatDate date="${log.expiresAt}" format="yyyy-MM-dd HH:mm:ss"/></td>
+        <td><wekb:dateTime date="${log.expiresAt}" format="yyyy-MM-dd HH:mm:ss"/></td>
         <td>${log.changedBy}</td>
         <td>
             ${log.previousLevel}

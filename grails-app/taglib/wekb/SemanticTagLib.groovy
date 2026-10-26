@@ -333,8 +333,6 @@ class SemanticTagLib {
         int laststep = Math.round(Math.ceil((total / max) as double)) as int
 
 
-        out << '<!--.pagination-->'
-        out << '<div class="ui center aligned basic segment">'
         out << '<nav class="ui pagination wrapping menu" aria-label="pagination2">'
 
         if (currentstep > firststep) {
@@ -426,7 +424,6 @@ class SemanticTagLib {
         }
 
         out << '</nav>'
-        out << '</div><!--.pagination-->'
     }
 
     def paginateNew = { attrs ->
@@ -496,8 +493,7 @@ class SemanticTagLib {
         Map nextMap = [title: (attrs.next ?: messageSource.getMessage('default.paginate.next', null, null, locale))]
 
 
-        out << '<div class="ui center aligned basic segment">'
-        out << '<nav class="ui pagination wrapping menu">'
+        out << '<nav class="ui pagination borderless wrapping menu">'
 
         if (steps && laststep > firststep) {
             if (maxsteps > laststep) { // | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | > |
@@ -635,7 +631,7 @@ class SemanticTagLib {
         customInputAttrs.params = new LinkedHashMap<String, Object>()
         customInputAttrs.params.putAll(linkTagAttrs.params)
         allLinkAttrs.putAt('title', messageSource.getMessage('default.paginate.all', null, locale))
-        if (total <= 200) {
+/*        if (total <= 200) {
             allLinkAttrs.class = "item"
             allLinkAttrs.params.remove('offset')
             allLinkAttrs.params.max = 200
@@ -643,7 +639,7 @@ class SemanticTagLib {
         }
         else {
             out << '<div class="disabled item wekb popup" data-content="'+messageSource.getMessage('default.paginate.listTooLong',null,locale)+'"><i class="list icon"></i></div>'
-        }
+        }*/
 
         // Custom Input
 
@@ -661,7 +657,6 @@ class SemanticTagLib {
         out << '    </div>'
         out << '</div>'
         out << '</nav>'
-        out << '</div><!--.pagination-->'
     }
 
     Closure showOutGoingLink = { Map attrs ->
@@ -765,7 +760,7 @@ class SemanticTagLib {
 
     Closure tabs = { attrs, body ->
         def newClass = attrs.class ?: ''
-        out << '<div class="ui top attached tabular  ' + newClass + ' stackable menu">'
+        out << '<div class="ui ui tabular pointing secondary tabular  ' + newClass + ' stackable menu">'
         out << body()
         out << '</div>'
     }
@@ -815,7 +810,7 @@ class SemanticTagLib {
 
     Closure tabsItemContent = { attrs, body ->
 
-        out << '<div class="ui bottom attached '
+        out << '<div class="ui wekb-tabBottom '
 
         if(attrs.defaultTab && attrs.tab == attrs.defaultTab && !attrs.activeTab){
             out << 'active '
@@ -914,5 +909,51 @@ class SemanticTagLib {
         out <<   '</div>'
 
         out << '</div>'
+    }
+
+    // <ui:h1HeaderWithIcon text="${text}" message="18n.token" args="[key:value]" type="${headerTitleIconType}" total="${totalNumber}" floated="true">
+    //    content
+    // </ui:headerWithIcon>
+
+    def h1HeaderWithIcon = { attrs, body ->
+        String title = attrs.title ?: ''
+        String iconClass =  attrs.iconClass ?: ''
+        def groups = attrs.groups ?: []
+
+        String groupNames = groups.collect { it.name }.join(', ')
+
+        String subTitle = groups
+                ? g.message(
+                code: groups.size() == 1
+                        ? 'header.curatoryGroup'
+                        : 'header.curatoryGroups',
+                args: [groupNames]
+        )
+                : (attrs.subTitle ?:'')
+
+        out << """
+        <h1 class="ui header wekb-pageHeader ">
+            <i class="circular inverted ${iconClass} wekb-glowIconHeader icon"
+               aria-hidden="true"></i>
+            <div class="content">
+                ${title.encodeAsHTML()}
+    """
+
+        if (subTitle) {
+            out << """
+            <div class="sub header">
+                ${subTitle.encodeAsHTML()}
+            </div>
+            """
+        }
+        else
+            out << """
+            <div class="sub header">
+                ${body()}
+            </div>
+            """
+
+        out << '</div>'
+        out << '</h1>'
     }
 }

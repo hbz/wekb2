@@ -12,6 +12,11 @@
   display: flex;
   min-height: 100vh;
   flex-direction: column;
+  background-color: #fff;
+
+  background-image:
+      radial-gradient(ellipse at 25% 45%, rgba(242, 113, 28, .09) 0, transparent 70%),
+      radial-gradient(ellipse at 88% 42%, rgba(33, 133, 208, .08) 0, transparent 75%);
 }
 .shrink {
   padding-right: 260px!important;
