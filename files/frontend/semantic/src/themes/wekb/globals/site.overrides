@@ -78,3 +78,10 @@ html {
 p > a {
     font-weight: @bold;
 }
+
+.wekb-time {
+    display: block;
+    margin-top: .2rem;
+    font-size: .85em;
+    color: #68717e;
+}

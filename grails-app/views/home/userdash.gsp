@@ -20,7 +20,7 @@
             <br><br>
         </g:if>
 
-        <table class="ui selectable striped sortable celled table">
+        <table class="ui selectable sortable table">
             <thead>
             <tr>
                 <th>#</th>
@@ -38,7 +38,7 @@
                 <td>
                     <semui:xEditable owner="${itm}" field="name" required="true"/>
                 </td>
-                <td><g:formatDate format="${message(code: 'default.date.format.noZ')}"
+                <td><wekb:dateTime format="${message(code: 'default.date.format.noZ')}"
                                   date="${itm.dateCreated}"/>
                 </td>
                 <td>

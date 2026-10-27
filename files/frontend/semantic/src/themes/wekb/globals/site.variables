@@ -7,7 +7,13 @@
        Fonts
 --------------------*/
 
+/* -------------------
+    Border Radius
+-------------------- */
 
+@absoluteBorderRadius: 0.375rem;
+
+@defaultBorderRadius: @absoluteBorderRadius;
 
 
 @importGoogleFonts : false;
@@ -387,7 +393,7 @@
     Brand Colors
 -------------------- */
 
-@primaryColor: #4c4f52;
+@primaryColor: #2e6fd9;
 @secondaryColor: @blue;
 @positiveColor: @green;
 
@@ -429,3 +435,5 @@
 @platform           :   @o-yellow;
 @vendor             :   @o-grey-green;
 @provider           :   @o-brown;
+
+@default            :   grey;

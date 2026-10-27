@@ -6,7 +6,7 @@
     <title>we:kb | wekb</title>
 </head>
 <body>
-    <div class="ui card">
+    <div class="ui card wekb-altchaCard">
         <g:render template="/templates/altchaForm" model="[altchaForm: [origin: params.origin, startpage: false]]" />
     </div>
 </body>

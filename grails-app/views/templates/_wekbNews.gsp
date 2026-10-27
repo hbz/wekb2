@@ -25,7 +25,7 @@
 
                     <div class="ui bottom attached tab segment" data-tab="packageNew">
 
-                        <table class="ui selectable striped sortable celled table">
+                        <table class="ui selectable sortable table">
                             <thead>
                             <tr>
                                 <th>#</th>
@@ -63,7 +63,7 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <g:formatDate
+                                        <wekb:dateTime
                                                 format="${message(code: 'default.date.format.noZWihoutSS')}"
                                                 date="${obj.dateCreated}"/>
                                     </td>
@@ -80,7 +80,7 @@
 
 
                     <div class="ui bottom attached tab segment" data-tab="packageLastUpdated">
-                        <table class="ui selectable striped sortable celled table">
+                        <table class="ui selectable sortable table">
                             <thead>
                             <tr>
                                 <th>#</th>
@@ -118,7 +118,7 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <g:formatDate
+                                        <wekb:dateTime
                                                 format="${message(code: 'default.date.format.noZWihoutSS')}"
                                                 date="${obj.lastUpdated}"/>
                                     </td>
@@ -156,7 +156,7 @@
                     </div>
 
                     <div class="ui bottom attached tab segment" data-tab="platformNew">
-                        <table class="ui selectable striped sortable celled table">
+                        <table class="ui selectable sortable table">
                             <thead>
                             <tr>
                                 <th>#</th>
@@ -194,7 +194,7 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <g:formatDate
+                                        <wekb:dateTime
                                                 format="${message(code: 'default.date.format.noZWihoutSS')}"
                                                 date="${obj.dateCreated}"/>
                                     </td>
@@ -210,7 +210,7 @@
                     </div>
 
                     <div class="ui bottom attached tab segment" data-tab="platformLastUpdated">
-                        <table class="ui selectable striped sortable celled table">
+                        <table class="ui selectable sortable table">
                             <thead>
                             <tr>
                                 <th>#</th>
@@ -248,7 +248,7 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <g:formatDate
+                                        <wekb:dateTime
                                                 format="${message(code: 'default.date.format.noZWihoutSS')}"
                                                 date="${obj.lastUpdated}"/>
                                     </td>
@@ -289,7 +289,7 @@
                     </div>
 
                     <div class="ui bottom attached tab segment" data-tab="orgNew">
-                        <table class="ui selectable striped sortable celled table">
+                        <table class="ui selectable sortable table">
                             <thead>
                             <tr>
                                 <th>#</th>
@@ -317,7 +317,7 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <g:formatDate
+                                        <wekb:dateTime
                                                 format="${message(code: 'default.date.format.noZWihoutSS')}"
                                                 date="${obj.dateCreated}"/>
                                     </td>
@@ -333,7 +333,7 @@
                     </div>
 
                     <div class="ui bottom attached tab segment" data-tab="orgLastUpdated">
-                        <table class="ui selectable striped sortable celled table">
+                        <table class="ui selectable sortable table">
                             <thead>
                             <tr>
                                 <th>#</th>
@@ -361,7 +361,7 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <g:formatDate
+                                        <wekb:dateTime
                                                 format="${message(code: 'default.date.format.noZWihoutSS')}"
                                                 date="${obj.lastUpdated}"/>
                                     </td>
@@ -400,7 +400,7 @@
                     </div>
 
                     <div class="ui bottom attached tab segment" data-tab="vendorNew">
-                        <table class="ui selectable striped sortable celled table">
+                        <table class="ui selectable sortable table">
                             <thead>
                             <tr>
                                 <th>#</th>
@@ -428,7 +428,7 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <g:formatDate
+                                        <wekb:dateTime
                                                 format="${message(code: 'default.date.format.noZWihoutSS')}"
                                                 date="${obj.dateCreated}"/>
                                     </td>
@@ -444,7 +444,7 @@
                     </div>
 
                     <div class="ui bottom attached tab segment" data-tab="vendorLastUpdated">
-                        <table class="ui selectable striped sortable celled table">
+                        <table class="ui selectable sortable table">
                             <thead>
                             <tr>
                                 <th>#</th>
@@ -472,7 +472,7 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <g:formatDate
+                                        <wekb:dateTime
                                                 format="${message(code: 'default.date.format.noZWihoutSS')}"
                                                 date="${obj.lastUpdated}"/>
                                     </td>
@@ -516,7 +516,7 @@
                     </div>
 
                     <div class="ui bottom attached tab segment" data-tab="tippNew">
-                        <table class="ui selectable striped sortable celled table">
+                        <table class="ui selectable sortable table">
                             <thead>
                             <tr>
                                 <th>#</th>
@@ -551,7 +551,7 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <g:formatDate
+                                        <wekb:dateTime
                                                 format="${message(code: 'default.date.format.noZWihoutSS')}"
                                                 date="${obj.dateCreated}"/>
                                     </td>
@@ -568,7 +568,7 @@
                     </div>
 
                     <div class="ui bottom attached tab segment" data-tab="tippLastUpdated">
-                        <table class="ui selectable striped sortable celled table">
+                        <table class="ui selectable sortable table">
                             <thead>
                             <tr>
                                 <th>#</th>
@@ -604,7 +604,7 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <g:formatDate
+                                        <wekb:dateTime
                                                 format="${message(code: 'default.date.format.noZWihoutSS')}"
                                                 date="${obj.lastUpdated}"/>
                                     </td>

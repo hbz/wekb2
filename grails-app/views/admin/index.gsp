@@ -1,4 +1,4 @@
-<%@ page import="wekb.utils.DateUtils" %>
+<%@ page import="wekb.auth.User; wekb.Vendor; wekb.Org; wekb.CuratoryGroup; wekb.RefdataValue; wekb.RefdataCategory; wekb.IdentifierNamespace; wekb.utils.DateUtils" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -39,19 +39,19 @@
 
             <div class="ui divided large relaxed list">
                 <g:link class="item" controller="create" action="index"
-                        params="[tmpl: 'wekb.IdentifierNamespace']">Identifier Namespace</g:link>
+                        params="[tmpl: wekb.IdentifierNamespace.class.name]">Identifier Namespace</g:link>
                 <g:link class="item" controller="create" action="index"
-                        params="[tmpl: 'wekb.RefdataCategory']">Refdata Category</g:link>
+                        params="[tmpl: wekb.RefdataCategory.class.name]">Refdata Category</g:link>
                 <g:link class="item" controller="create" action="index"
-                        params="[tmpl: 'wekb.RefdataValue']">Refdata Value</g:link>
+                        params="[tmpl: wekb.RefdataValue.class.name]">Refdata Value</g:link>
                 <g:link class="item" controller="create" action="index"
-                        params="[tmpl: 'wekb.CuratoryGroup']">Curatory Group</g:link>
+                        params="[tmpl: wekb.CuratoryGroup.class.name]">Curatory Group</g:link>
                 <g:link class="item" controller="create" action="index"
-                        params="[tmpl: 'wekb.Org']">Provider</g:link>
+                        params="[tmpl: wekb.Org.class.name]">Provider</g:link>
                 <g:link class="item" controller="create" action="index"
-                        params="[tmpl: 'wekb.Vendor']">Library Supplier</g:link>
+                        params="[tmpl: wekb.Vendor.class.name]">Library Supplier</g:link>
                 <g:link class="item" controller="create" action="index"
-                        params="[tmpl: 'wekb.auth.User']">User</g:link>
+                        params="[tmpl: wekb.auth.User.class.name]">User</g:link>
             </div>
         </div>
 
@@ -191,7 +191,7 @@
 <div class="ui segment">
     <h2 class="ui header">Components Infos</h2>
 
-    <table class="ui selectable striped sortable celled table">
+    <table class="ui selectable sortable table">
         <thead>
         <tr>
             <th>Name</th>
@@ -221,7 +221,7 @@
     <h2 class="ui header">
         Application Info
     </h2>
-    <table class="ui selectable striped sortable celled table">
+    <table class="ui selectable sortable table">
         
         <tr><td>App profile</td><td>${grailsApplication.config.getProperty('grails.profile')}</td></tr>
         <tr><td>Git Branch</td><td><g:meta name="build.git.branch"/></td></tr>
@@ -243,7 +243,7 @@
     <h2 class="ui header">
         Database
     </h2>
-    <table class="ui selectable striped sortable celled table">
+    <table class="ui selectable sortable table">
         <tbody>
         <tr><td>DBM version</td><td>${dbmVersion[0]} : ${dbmVersion[1]} -------> ${wekb.utils.DateUtils.getSDF_NoZ().format(dbmVersion[2])}</td></tr>
         <tr><td>DBM updateOnStart</td><td>${grailsApplication.config.getProperty('grails.plugin.databasemigration.updateOnStart', Boolean)}</td>
@@ -257,7 +257,7 @@
     <h2 class="ui header">
         Artefacts
     </h2>
-    <table class="ui selectable striped sortable celled table">
+    <table class="ui selectable sortable table">
         <tbody>
         <tr><td>Controllers:</td><td>${grailsApplication.controllerClasses.size()}</td></tr>
         <tr><td>Domains:</td><td>${grailsApplication.domainClasses.size()}</td></tr>
@@ -271,7 +271,7 @@
     <h2 class="ui header">
         Installed Plugins
     </h2>
-    <table class="ui selectable striped sortable celled table">
+    <table class="ui selectable sortable table">
         <tbody>
         <g:each var="plugin" in="${applicationContext.getBean('pluginManager').allPlugins}">
             <tr><td>${plugin.name}</td><td>${plugin.version}</td></tr>

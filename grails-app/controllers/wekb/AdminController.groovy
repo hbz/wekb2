@@ -275,7 +275,7 @@ class AdminController {
       FTControl.withTransaction {
         String domainClassName = ESWrapperService.typePerIndex.get(indexName)
         if(indexName == 'wekbdeletedcomponents'){
-          domainClassName = 'wekb.DeletedKBComponent'
+          domainClassName = DeletedKBComponent.class
         }
         else {
           domainClassName = "wekb.${domainClassName}"

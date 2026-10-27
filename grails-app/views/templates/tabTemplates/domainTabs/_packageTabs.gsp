@@ -1,4 +1,4 @@
-<%@ page import="wekb.RefdataValue; wekb.helper.RDStore;" %>
+<%@ page import="wekb.TitleInstancePackagePlatform; wekb.RefdataValue; wekb.helper.RDStore;" %>
 <g:if test="${d}">
 
     <semui:tabs>
@@ -48,7 +48,7 @@
         <g:if test="${editable && !d.kbartSource}">
             <div class="ui right floated buttons">
                 <g:link class="ui button primary" controller="create" action="index"
-                        params="[tmpl: 'wekb.TitleInstancePackagePlatform', linkwithPkg: d.id, linkwithPlatform: d.nominalPlatform?.id]">Create new title for this package</g:link>
+                        params="[tmpl: wekb.TitleInstancePackagePlatform.class.name, linkwithPkg: d.id, linkwithPlatform: d.nominalPlatform?.id]">Create new title for this package</g:link>
             </div>
             <br>
             <br>

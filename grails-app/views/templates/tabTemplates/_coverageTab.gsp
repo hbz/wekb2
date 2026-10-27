@@ -7,7 +7,7 @@
 					Coverage
 				</dt>
 				<dd>
-					<table class="ui selectable striped sortable celled table">
+					<table class="ui selectable sortable table">
 						<thead>
 						<tr>
 							<th>Start Date</th>

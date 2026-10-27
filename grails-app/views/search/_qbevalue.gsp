@@ -16,13 +16,13 @@
 </g:elseif>
 <g:elseif test="${c.value instanceof java.util.Date}">
     <g:if test="${c.value}">
-        <g:formatDate format="${message(code: 'default.date.format.noZWihoutSS')}"
+        <wekb:dateTime format="${message(code: 'default.date.format.noZWihoutSS')}"
                       date="${c.value}"/>
     </g:if>
 </g:elseif>
 <g:elseif test="${c.value instanceof java.time.LocalDateTime}">
     <g:if test="${c.value}">
-        <g:formatDate format="${message(code: 'default.date.format.noZWihoutSS')}"
+        <wekb:dateTime format="${message(code: 'default.date.format.noZWihoutSS')}"
                       date="${c.value}"/>
     </g:if>
 </g:elseif>

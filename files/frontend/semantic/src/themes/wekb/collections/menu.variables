@@ -5,3 +5,21 @@
 @invertedSubMenuColor: #B5B5B5;
 
 @subMenuFontSize: 1em;
+
+
+/* Pagination */
+@paginationMinWidth: 3em;
+@paginationActiveBackground: lighten(@primaryColor, 40);
+@paginationActiveTextColor: @selectedTextColor;
+
+
+/* Navigation */
+@invertedBackground: #0e274e;
+
+/* Zurückgenommene Abschnittsüberschriften */
+@verticalHeaderFontSize: @relativeSmall;
+@verticalHeaderFontWeight: @normal;
+
+/* Deutlichere Untermenüpunkte */
+@subMenuFontSize: @relativeLarge;
+//@subMenuTextColor: rgba(0, 0, 0, .87);
