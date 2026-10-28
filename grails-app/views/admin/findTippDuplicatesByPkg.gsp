@@ -22,6 +22,19 @@
 </g:link>
 </h1>
 
+    <g:if test="${pkg.kbartSource}">
+        <p>
+            (<b>Frequency:</b> <semui:xEditableRefData owner="${pkg.kbartSource}" field="frequency" config="${RCConstants.SOURCE_FREQUENCY}" overwriteEditable="false"/>,
+            <b>AutomaticUpdates:</b> <semui:xEditableBoolean owner="${pkg.kbartSource}" field="automaticUpdates" overwriteEditable="false"/>,
+            <b>LastRun:</b> <wekb:dateTime format="${message(code: 'default.date.format.noZ')}" date="${pkg.kbartSource.lastRun}"/>
+            <g:if test="${pkg.kbartSource && pkg.kbartSource.kbartHasWekbFields}">
+                , <b><g:message code="kbartsource.kbartHasWekbFields"/>:</b> <semui:xEditableBoolean owner="${pkg.kbartSource}" field="kbartHasWekbFields" overwriteEditable="false"/> <i class="info red big circle icon"></i>
+            </g:if>
+
+            )
+        </p>
+    </g:if>
+
 <g:if test="${params.tippsDuplicatesBy == "name"}">
     <h3>Tipps Duplicates By Name (${totalCount})</h3>
 </g:if>
@@ -84,6 +97,7 @@
         <th>Medium</th>
         <th>Url</th>
         <th>PT in LASER</th>
+        <th>DB-ID</th>
     </tr>
     </thead>
     <tbody>
@@ -95,6 +109,12 @@
             <td>
                 <g:link controller="resource" action="show" id="${t.getOID()}">
                     ${t.name} <strong>(${t.status.value})</strong>
+                    <br>
+                    [
+                    <g:message code="package.dateCreated"/>:<wekb:dateTime format="${message(code: 'default.date.format.noZ')}" date="${t.dateCreated}"/>
+                    <br>
+                    <g:message code="package.lastUpdated"/>:<wekb:dateTime format="${message(code: 'default.date.format.noZ')}" date="${t.lastUpdated}"/>
+                    ]
                 </g:link>
             </td>
             <td>
@@ -122,6 +142,15 @@
                 <g:link controller="admin" action="permanentTitlesInLaser" params="[tippId: t.id]" id="${t.pkg.id}">
                     ${laserService.permanentTitleInLaserCount(t.uuid)}
                 </g:link>
+            </td>
+            <td>
+                <span class="js-copyTriggerParent">
+                    <span class="ui small basic image label js-copyTrigger la-popup-tooltip" data-position="top center"
+                          data-tooltip="${message(code: 'tooltip.clickToCopy', args: ['DB-ID'])}">
+                        <i class="copy black icon la-js-copyTriggerIcon"></i>
+                        <span class="detail js-copyTopic">${t.id}</span>
+                    </span>
+                </span>
             </td>
         </tr>
     </g:each>
