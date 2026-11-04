@@ -85,3 +85,7 @@ p > a {
     font-size: .85em;
     color: #68717e;
 }
+
+.wekb-content > .ui.main.fluid.container:has(.news-column) {
+    display: flex;
+}

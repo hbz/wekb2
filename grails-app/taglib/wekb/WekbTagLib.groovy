@@ -61,5 +61,12 @@ class WekbTagLib {
             out << '</span>'
         }
     }
+    def date = { attrs ->
+        if (attrs.date != null) {
+            out << '<span class="wekb-date">'
+            out << g.formatDate(format: 'yyyy-MM-dd', date: attrs.date)
+            out << '</span>'
+        }
+    }
 
 }
