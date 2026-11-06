@@ -831,6 +831,10 @@ p > a {
   color: #68717e;
 }
 
+.wekb-content > .ui.main.fluid.container:has(.news-column) {
+  display: flex;
+}
+
 /*******************************
          Site Overrides
 *******************************/

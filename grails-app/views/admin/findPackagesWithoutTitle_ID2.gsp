@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta name="layout" content="wekb"/>
-    <title>we:kb | wekb - Packages without Identifier Namespace by Titles</title>
+    <title>we:kb | wekb - Packages without Identifier Namespace by Titles Version 2</title>
 </head>
 
 <body>
@@ -11,7 +11,7 @@
 <g:set var="cleaned_params" value="${params.findAll { it.value && it.value != "" }}"/>
 
 
-<h1 class="ui header">Packages without Title_ID by Titles ${reccount.toInteger()}</h1>
+<h1 class="ui header">Packages without Title_ID by Titles Version 2${reccount.toInteger()}</h1>
 
 <g:if test="${(qbetemplate.message != null)}">
     <semui:message message="${qbetemplate.message}"/>

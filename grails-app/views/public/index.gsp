@@ -54,7 +54,7 @@
                             </div>
                             <div class="content">
                                 <div class="date">
-                                    <wekb:dateTime
+                                    <wekb:date
                                             format="${message(code: 'default.date.format')}"
                                             date="${item.date}"/>
                                 </div>
@@ -73,7 +73,7 @@
                                         </g:else>
                                     </label>
                                 </div>
-                                <div class="extra text">
+%{--                                <div class="extra text">
                                     <g:if test="${item.provider}">
                                         <g:link controller="resource"
                                                 action="show"
@@ -81,7 +81,7 @@
                                             ${item.provider.name}
                                         </g:link>
                                     </g:if>
-                                </div>
+                                </div>--}%
                             </div>
                         </article>
                     </g:each>
