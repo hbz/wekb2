@@ -84,9 +84,7 @@
                 Packages
             </h2>
             <p class="statistic-description">
-                Content providers create and maintain packages that reflect their
-                current sales units, heightening the visibility of these products
-                and giving detailed descriptions with regard to their content.
+                Content providers create and maintain packages that reflect their current sales units. This increases product visibility and provides detailed content descriptions.
             </p>
             <g:if test="${showAltcha}">
                 <button
