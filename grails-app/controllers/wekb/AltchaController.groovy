@@ -3,9 +3,12 @@ package wekb
 import grails.plugin.springsecurity.annotation.Secured
 import groovy.json.JsonOutput
 import org.altcha.altcha.Altcha
+import org.grails.web.json.JSONObject
 import wekb.annotations.AltchaAnnotation
 import wekb.system.AltchaClient
 import wekb.utils.ServerUtils
+
+import java.nio.charset.StandardCharsets
 
 @Secured(['permitAll'])
 @AltchaAnnotation(comment = AltchaAnnotation.ACCESS_ALLOWED)
@@ -28,7 +31,8 @@ class AltchaController {
                 .setAlgorithm(ALTCHA_ALGORITHM)
                 .setHmacKey(ALTCHA_HMAC_KEY)
                 .setSecureRandomNumber(true)
-//                .setExpiresInSeconds(30)
+                .setExpiresInSeconds(20)
+                .addParam('client', request.getRemoteAddr())
 
         Altcha.Challenge challenge = Altcha.createChallenge(options)
 
@@ -40,7 +44,7 @@ class AltchaController {
             signature : challenge.signature
         ])
 
-        response.setContentType("application/json")
+        response.setContentType('application/json')
         render json
     }
 
@@ -48,16 +52,27 @@ class AltchaController {
     def submit() {
         log.info 'ALTCHA.SUBMIT'
 
-        String wt  = AltchaClient.getWidgetToken(request)
-        String b64 = params.get(wt)
+        String atn = AltchaClient.getChallengeName(request)
+        String b64 = params.get(atn)
 
-        boolean verified = Altcha.verifySolution(
-                b64,
-                ALTCHA_HMAC_KEY,
-                true
-        )
-        if (verified) {
-            AltchaClient.addNewClient(request)
+        if (b64) {
+            boolean validSolution = Altcha.verifySolution(
+                    b64,
+                    ALTCHA_HMAC_KEY,
+                    true
+            )
+            if (validSolution) {
+                String payload = new String(Base64.getDecoder().decode(b64), StandardCharsets.UTF_8)
+                JSONObject json = new JSONObject(payload)
+                String client = Altcha.extractParams(json.getString('salt')).get('client')
+
+                boolean validClient = (client == request.getRemoteAddr())
+                if (validClient) {
+                    AltchaClient.addNewClient(request)
+                } else {
+                    log.info 'ALTCHA.SUBMIT > valid solution BUT invalid client'
+                }
+            }
         }
 
         redirect(url: params.origin)

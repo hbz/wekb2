@@ -14,8 +14,8 @@
     </g:if>
     <div class="field">
         <altcha-widget
-                challenge="${createLink(controller: 'altcha', action: 'challenge', absolute:true)}"
-                name="${AltchaClient.getWidgetToken(request)}"
+                challenge="${createLink(controller: 'altcha', action: 'challenge', absolute: true)}"
+                name="${AltchaClient.getChallengeName(request)}"
                 auto="onsubmit"
                 display="invisible"
         ></altcha-widget>
