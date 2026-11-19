@@ -183,7 +183,7 @@ class AdminService {
                     Package aPackage1 = Package.get(aPackage.id)
 
                     try {
-                        autoUpdatePackagesService.startAutoPackageUpdate(aPackage1, false)
+                        autoUpdatePackagesService.startAutoPackageUpdate(aPackage1)
                     }catch (Exception exception) {
                         log.error("Error by updateListOfPackageWithKbart (${aPackage1.id} -> ${aPackage1.name}): ${exception.message}")
                         //exception.printStackTrace()

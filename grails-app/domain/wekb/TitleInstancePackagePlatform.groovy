@@ -7,6 +7,7 @@ import wekb.annotations.RefdataAnnotation
 import wekb.annotations.TrigramLowerIndex
 import wekb.base.AbstractBase
 import wekb.helper.BeanStore
+import wekb.helper.IdentiferNamespaceStore
 import wekb.helper.RCConstants
 import groovy.util.logging.Slf4j
 import wekb.helper.RDStore
@@ -173,6 +174,8 @@ class TitleInstancePackagePlatform  extends AbstractBase implements Auditable {
             key:    'tipp_fk',
             column: 'ddc_rv_fk', type:   'BIGINT'
     ], lazy: false
+
+    coverageStatements cascade: 'all-delete-orphan'
   }
 
   @Override
@@ -383,7 +386,7 @@ class TitleInstancePackagePlatform  extends AbstractBase implements Auditable {
     @Transient
     List<TitleInstancePackagePlatform> findTippDuplicatesByTitleID() {
 
-        IdentifierNamespace identifierNamespace = IdentifierNamespace.findByValueAndTargetType('title_id', RDStore.IDENTIFIER_NAMESPACE_TARGET_TYPE_TIPP)
+        IdentifierNamespace identifierNamespace = IdentiferNamespaceStore.TITLE_ID_NAMESPACE
         String value = getTitleID()
 
         if(identifierNamespace && value) {
@@ -397,7 +400,7 @@ class TitleInstancePackagePlatform  extends AbstractBase implements Auditable {
     @Transient
     List<TitleInstancePackagePlatform> findTippDuplicatesByTitleIDWithoutRemoved() {
 
-        IdentifierNamespace identifierNamespace = IdentifierNamespace.findByValueAndTargetType('title_id', RDStore.IDENTIFIER_NAMESPACE_TARGET_TYPE_TIPP)
+        IdentifierNamespace identifierNamespace = IdentiferNamespaceStore.TITLE_ID_NAMESPACE
         String value = getTitleID()
 
         if(identifierNamespace && value) {
@@ -410,7 +413,7 @@ class TitleInstancePackagePlatform  extends AbstractBase implements Auditable {
 
     @Transient
     Integer getTippDuplicatesByTitleIDCount() {
-        IdentifierNamespace identifierNamespace = IdentifierNamespace.findByValueAndTargetType('title_id', RDStore.IDENTIFIER_NAMESPACE_TARGET_TYPE_TIPP)
+        IdentifierNamespace identifierNamespace = IdentiferNamespaceStore.TITLE_ID_NAMESPACE
         String value = getTitleID()
 
         if(identifierNamespace && value) {
@@ -424,7 +427,7 @@ class TitleInstancePackagePlatform  extends AbstractBase implements Auditable {
 
     @Transient
     Integer getTippDuplicatesByTitleIDWithOutRemovedCount() {
-        IdentifierNamespace identifierNamespace = IdentifierNamespace.findByValueAndTargetType('title_id', RDStore.IDENTIFIER_NAMESPACE_TARGET_TYPE_TIPP)
+        IdentifierNamespace identifierNamespace = IdentiferNamespaceStore.TITLE_ID_NAMESPACE
         String value = getTitleID()
 
         if(identifierNamespace && value) {

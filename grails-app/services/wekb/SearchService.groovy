@@ -157,7 +157,7 @@ class SearchService {
                 // log.debug("Using template: ${result.qbetemplate}");
             }
 
-            println(result.qbetemplate.baseclass)
+
             // Looked up a template from somewhere, see if we can execute a search
             if ( result.qbetemplate) {
                 boolean preconditionsMet = (params.inline || params.hide || (result.qbetemplate.containsKey('minInput') && cleaned_params.keySet().intersect(result.qbetemplate.qbeConfig.qbeForm.qparam).size() >= result.qbetemplate.minInput) || !result.qbetemplate.containsKey('minInput'))

@@ -5,6 +5,7 @@ import groovy.sql.GroovyRowResult
 import groovy.sql.Sql
 import wekb.ConcurrencyManagerService.Job
 import wekb.auth.User
+import wekb.helper.IdentiferNamespaceStore
 import wekb.helper.RCConstants
 import wekb.helper.RDStore
 import grails.converters.JSON
@@ -157,24 +158,11 @@ class AdminController {
   }
 
   @Secured(['ROLE_SUPERUSER'])
-  def autoUpdatePackages() {
-      log.info("autoUpdatePackages: Beginning scheduled auto update packages job.")
-    executorService.execute({
-      Thread.currentThread().setName('autoUpdatePackages_OnlyLastChanged')
-      autoUpdatePackagesService.findPackageToUpdateOnAutoUpdate(true)
-    })
-
-    log.info("autoUpdatePackages: auto update packages job completed.")
-
-    redirect(controller: 'search', action: 'componentSearch', params: [qbe: 'g:updatePackageInfos'])
-  }
-
-  @Secured(['ROLE_SUPERUSER'])
   def autoUpdatePackagesAllTitles() {
     log.info("autoUpdatePackagesAllTitles: Beginning scheduled auto update packages job.")
     executorService.execute({
       Thread.currentThread().setName('autoUpdatePackages_AllTitles')
-      autoUpdatePackagesService.findPackageToUpdateOnAutoUpdate(false)
+      autoUpdatePackagesService.findPackageToUpdateOnAutoUpdate()
     })
 
     log.info("autoUpdatePackagesAllTitles: auto update packages job completed.")
@@ -435,7 +423,7 @@ class AdminController {
 
         params.qbe = 'g:adminPackagesWithoutTitleID'
         params.qp_source_automaticUpdates = params.qp_source_automaticUpdates ?: RDStore.YN_YES.getOID()
-        params.qp_namespace_value = params.qp_namespace_value ?: IdentifierNamespace.findByValueAndTargetType('title_id', RDStore.IDENTIFIER_NAMESPACE_TARGET_TYPE_TIPP).getOID()
+        params.qp_namespace_value = params.qp_namespace_value ?: IdentiferNamespaceStore.TITLE_ID_NAMESPACE.getOID()
         params.qp_status = params.qp_status ?: [RDStore.KBC_STATUS_CURRENT.getOID(), RDStore.KBC_STATUS_RETIRED.getOID(), RDStore.KBC_STATUS_EXPECTED.getOID()]
 
         params.max = params.max ?: '50'
@@ -901,7 +889,7 @@ class AdminController {
 
         params.qbe = 'g:adminPackagesWithTippDuplicatesByTitleID'
         params.qp_source_automaticUpdates = params.qp_source_automaticUpdates ?: RDStore.YN_YES.getOID()
-        params.qp_namespace_value = IdentifierNamespace.findByValueAndTargetType('title_id', RDStore.IDENTIFIER_NAMESPACE_TARGET_TYPE_TIPP).getOID()
+        params.qp_namespace_value = IdentiferNamespaceStore.TITLE_ID_NAMESPACE.getOID()
         params.qp_status = params.qp_status ?: [RDStore.KBC_STATUS_CURRENT.getOID(), RDStore.KBC_STATUS_RETIRED.getOID(), RDStore.KBC_STATUS_EXPECTED.getOID()]
 
         params.max = params.max ?: '20'

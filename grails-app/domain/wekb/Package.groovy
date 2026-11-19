@@ -5,6 +5,7 @@ import wekb.annotations.RefdataAnnotation
 import wekb.annotations.TrigramLowerIndex
 import wekb.base.AbstractBase
 import wekb.helper.BeanStore
+import wekb.helper.IdentiferNamespaceStore
 import wekb.helper.RCConstants
 import wekb.helper.RDStore
 import groovy.time.TimeCategory
@@ -493,7 +494,7 @@ class Package  extends AbstractBase implements Auditable {
   @Transient
   List<TitleInstancePackagePlatform> findTippDuplicatesByTitleID() {
 
-    IdentifierNamespace identifierNamespace = IdentifierNamespace.findByValueAndTargetType('title_id', RDStore.IDENTIFIER_NAMESPACE_TARGET_TYPE_TIPP)
+    IdentifierNamespace identifierNamespace = IdentiferNamespaceStore.TITLE_ID_NAMESPACE
 
     if(identifierNamespace) {
       List<TitleInstancePackagePlatform> tippsDuplicates = TitleInstancePackagePlatform.executeQuery("""
@@ -523,7 +524,7 @@ class Package  extends AbstractBase implements Auditable {
 
     List<TitleInstancePackagePlatform> findTippDuplicatesByTitleIDWithOutRemoved() {
 
-        IdentifierNamespace identifierNamespace = IdentifierNamespace.findByValueAndTargetType('title_id', RDStore.IDENTIFIER_NAMESPACE_TARGET_TYPE_TIPP)
+        IdentifierNamespace identifierNamespace = IdentiferNamespaceStore.TITLE_ID_NAMESPACE
 
         if(identifierNamespace) {
             List<TitleInstancePackagePlatform> tippsDuplicates = TitleInstancePackagePlatform.executeQuery("""select tipp
@@ -554,7 +555,7 @@ class Package  extends AbstractBase implements Auditable {
 
     List<TitleInstancePackagePlatform> findTippDuplicatesWithStatusByTitleID(RefdataValue status) {
 
-        IdentifierNamespace identifierNamespace = IdentifierNamespace.findByValueAndTargetType('title_id', RDStore.IDENTIFIER_NAMESPACE_TARGET_TYPE_TIPP)
+        IdentifierNamespace identifierNamespace = IdentiferNamespaceStore.TITLE_ID_NAMESPACE
 
         if(identifierNamespace) {
             List<TitleInstancePackagePlatform> tippsDuplicates = TitleInstancePackagePlatform.executeQuery("""select tipp
@@ -586,7 +587,7 @@ class Package  extends AbstractBase implements Auditable {
   @Transient
   List<TitleInstancePackagePlatform> findTippByWithoutTitleID() {
 
-    IdentifierNamespace identifierNamespace = IdentifierNamespace.findByValueAndTargetType('title_id', RDStore.IDENTIFIER_NAMESPACE_TARGET_TYPE_TIPP)
+    IdentifierNamespace identifierNamespace = IdentiferNamespaceStore.TITLE_ID_NAMESPACE
 
     if(identifierNamespace) {
       List<TitleInstancePackagePlatform> tippsByWithoutTitleID = TitleInstancePackagePlatform.executeQuery("select DISTINCT(tipp) from TitleInstancePackagePlatform as tipp" +
@@ -601,7 +602,7 @@ class Package  extends AbstractBase implements Auditable {
     @Transient
     List<TitleInstancePackagePlatform> findCurrentTippByWithoutTitleID() {
 
-        IdentifierNamespace identifierNamespace = IdentifierNamespace.findByValueAndTargetType('title_id', RDStore.IDENTIFIER_NAMESPACE_TARGET_TYPE_TIPP)
+        IdentifierNamespace identifierNamespace = IdentiferNamespaceStore.TITLE_ID_NAMESPACE
 
         if(identifierNamespace) {
             List<TitleInstancePackagePlatform> currentTippsByWithoutTitleID = TitleInstancePackagePlatform.executeQuery("select DISTINCT(tipp) from TitleInstancePackagePlatform as tipp" +
@@ -636,7 +637,7 @@ class Package  extends AbstractBase implements Auditable {
 
   @Transient
   Integer getTippDuplicatesByTitleIDCount() {
-    IdentifierNamespace identifierNamespace = IdentifierNamespace.findByValueAndTargetType('title_id', RDStore.IDENTIFIER_NAMESPACE_TARGET_TYPE_TIPP)
+    IdentifierNamespace identifierNamespace = IdentiferNamespaceStore.TITLE_ID_NAMESPACE
 
     if(identifierNamespace) {
       int result = TitleInstancePackagePlatform.executeQuery("""select count(DISTINCT(tipp))
@@ -667,7 +668,7 @@ class Package  extends AbstractBase implements Auditable {
 
     @Transient
     Integer getTippDuplicatesByTitleIDWithOutRemovedCount() {
-        IdentifierNamespace identifierNamespace = IdentifierNamespace.findByValueAndTargetType('title_id', RDStore.IDENTIFIER_NAMESPACE_TARGET_TYPE_TIPP)
+        IdentifierNamespace identifierNamespace = IdentiferNamespaceStore.TITLE_ID_NAMESPACE
 
         if(identifierNamespace) {
             int result = TitleInstancePackagePlatform.executeQuery("""select count(DISTINCT(tipp))
@@ -699,7 +700,7 @@ class Package  extends AbstractBase implements Auditable {
 
     @Transient
     Integer getTippDuplicatesWithStatusByTitleIDCount(RefdataValue status) {
-        IdentifierNamespace identifierNamespace = IdentifierNamespace.findByValueAndTargetType('title_id', RDStore.IDENTIFIER_NAMESPACE_TARGET_TYPE_TIPP)
+        IdentifierNamespace identifierNamespace = IdentiferNamespaceStore.TITLE_ID_NAMESPACE
 
         if(identifierNamespace) {
             int result = TitleInstancePackagePlatform.executeQuery("""select count(DISTINCT(tipp))
@@ -731,7 +732,7 @@ class Package  extends AbstractBase implements Auditable {
 
   @Transient
   Integer getTippsByTitleIDCount() {
-    IdentifierNamespace identifierNamespace = IdentifierNamespace.findByValueAndTargetType('title_id', RDStore.IDENTIFIER_NAMESPACE_TARGET_TYPE_TIPP)
+    IdentifierNamespace identifierNamespace = IdentiferNamespaceStore.TITLE_ID_NAMESPACE
 
     if(identifierNamespace) {
       int result = TitleInstancePackagePlatform.executeQuery("select count(*) from TitleInstancePackagePlatform as tipp" +
@@ -746,7 +747,7 @@ class Package  extends AbstractBase implements Auditable {
 
   @Transient
   Integer getTippsWithoutTitleIDCount() {
-    IdentifierNamespace identifierNamespace = IdentifierNamespace.findByValueAndTargetType('title_id', RDStore.IDENTIFIER_NAMESPACE_TARGET_TYPE_TIPP)
+    IdentifierNamespace identifierNamespace = IdentiferNamespaceStore.TITLE_ID_NAMESPACE
 
     if(identifierNamespace) {
       int result = TitleInstancePackagePlatform.executeQuery("select count(*) from TitleInstancePackagePlatform as tipp" +
@@ -761,7 +762,7 @@ class Package  extends AbstractBase implements Auditable {
 
     @Transient
     Integer getCurrentTippsWithoutTitleIDCount() {
-        IdentifierNamespace identifierNamespace = IdentifierNamespace.findByValueAndTargetType('title_id', RDStore.IDENTIFIER_NAMESPACE_TARGET_TYPE_TIPP)
+        IdentifierNamespace identifierNamespace = IdentiferNamespaceStore.TITLE_ID_NAMESPACE
 
         if (identifierNamespace) {
             int result = TitleInstancePackagePlatform.executeQuery("select count(*) from TitleInstancePackagePlatform as tipp" +
@@ -809,7 +810,7 @@ class Package  extends AbstractBase implements Auditable {
   @Transient
   public IdentifierNamespace getTitleIDNameSpace(){
     IdentifierNamespace identifierNamespace
-    identifierNamespace = IdentifierNamespace.findByValueAndTargetType('title_id', RDStore.IDENTIFIER_NAMESPACE_TARGET_TYPE_TIPP)
+    identifierNamespace = IdentiferNamespaceStore.TITLE_ID_NAMESPACE
 
 
     return identifierNamespace

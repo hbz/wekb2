@@ -60,7 +60,7 @@ class TIPPCoverageStatement extends AbstractBase {
     dateCreated(nullable:true, blank:true)
     lastUpdated(nullable:true, blank:true)
 
-    tipp(unique: ['tipp', 'startDate', 'startVolume', 'startIssue', 'endDate', 'endVolume', 'endIssue'])
+    tipp(unique: ['startDate', 'startVolume', 'startIssue', 'endDate', 'endVolume', 'endIssue'])
   }
 
   def afterInsert (){

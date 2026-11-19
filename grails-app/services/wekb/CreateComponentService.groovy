@@ -4,6 +4,7 @@ import grails.web.mvc.FlashScope
 
 import org.grails.web.servlet.mvc.GrailsWebRequest
 import org.grails.web.util.WebUtils
+import wekb.helper.IdentiferNamespaceStore
 import wekb.helper.RCConstants
 import wekb.helper.RDStore
 import grails.core.GrailsClass
@@ -936,7 +937,7 @@ class CreateComponentService {
 
                                         if (title_id && titleInstancePackagePlatform) {
 
-                                            IdentifierNamespace ns = IdentifierNamespace.findByValueAndTargetType('title_id', RDStore.IDENTIFIER_NAMESPACE_TARGET_TYPE_TIPP)
+                                            IdentifierNamespace ns = IdentiferNamespaceStore.TITLE_ID_NAMESPACE
 
                                             Identifier identifier = new Identifier(namespace: ns, value: title_id, tipp: titleInstancePackagePlatform)
 

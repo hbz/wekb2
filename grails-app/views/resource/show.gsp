@@ -268,14 +268,13 @@
 
                     </g:if>
 
-                    <g:if test="${displayobj.ids.size() > 0}">
+                    <g:if test="${displayobj.getTitleID()}">
                         <div class="ui warning icon message">
 
                             <div class="content wekb-inline-lists">
-                                <g:each in="${displayobj.ids?.sort { it.namespace?.value }}" var="identifier">
-                                    <h4 class="ui header">Identified Components with same Identifier: ${identifier.value}</h4>
+                                    <h4 class="ui header">Identified Title with same Title_ID: ${displayobj.getTitleID()}</h4>
                                     <%
-                                        List tippIDs = wekb.Identifier.findAllByValueAndTippIsNotNullAndTippNotEqual(identifier.value, displayobj)
+                                        List tippIDs = wekb.Identifier.findAllByValueAndTippIsNotNullAndTippNotEqual(displayobj.getTitleID(), displayobj)
                                     %>
 
 
@@ -309,7 +308,6 @@
                                             </tbody>
                                         </table>
                                     </g:if>
-                                </g:each>
                             </tbody>
                             </table>
                             </div>

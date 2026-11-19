@@ -73,7 +73,7 @@
                 Title ID Namespace
             </dt>
             <dd>
-                ${IdentifierNamespace.findByValueAndTargetType('title_id', RDStore.IDENTIFIER_NAMESPACE_TARGET_TYPE_TIPP).value}
+                ${IdentiferNamespaceStore.TITLE_ID_NAMESPACE.value}
             </dd>
         </dl>--}%
         <dl>

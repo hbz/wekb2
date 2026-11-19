@@ -66,8 +66,6 @@
                         onclick="return confirm('Are you sure?')">Recalculate Statistics</g:link>
                 <g:link class="item" controller="admin" action="expungeRemovedComponents"
                         onclick="return confirm('Are you sure?')">Expunge Removed Component</g:link>
-                <g:link class="item" controller="admin" action="autoUpdatePackages"
-                        onclick="return confirm('Are you sure?')">Auto Update All Packages (Last Changed)</g:link>
                 <g:link class="item" controller="admin" action="autoUpdatePackagesAllTitles"
                         onclick="return confirm('Are you sure?')">Auto Update All Packages</g:link>
                 <g:link class="item" controller="admin" action="autoUpdatePlatformCounterSources"

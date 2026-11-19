@@ -352,11 +352,9 @@ class GroupController {
             }
         }
 
-        boolean allTitles = params.allTitles == 'true' ? true : false
-
         Map result = [:]
         if(packageList.size() > 0){
-            result = workflowService.updateListOfPackageWithKbart(packageList, allTitles, curatoryGroupList)
+            result = workflowService.updateListOfPackageWithKbart(packageList, curatoryGroupList)
         }else{
             flash.error = 'Your packages have no source set / Your packages have no automatic updates set in source!'
         }

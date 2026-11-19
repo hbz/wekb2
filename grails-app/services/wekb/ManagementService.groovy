@@ -371,7 +371,6 @@ class ManagementService {
                         if (accessService.checkEditableObject(pkg, params)) {
                             List ddcs = params.list("ddcs")
                             ddcs.each {
-                                println(it)
                                 List splitDdcParam = it.split(':')
                                 Long refDdcId = Long.parseLong(splitDdcParam[1])
                                 if (refDdcId) {

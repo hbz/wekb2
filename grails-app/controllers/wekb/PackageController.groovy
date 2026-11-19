@@ -8,6 +8,7 @@ import grails.plugin.springsecurity.SpringSecurityUtils
 import org.mozilla.universalchardet.UniversalDetector
 import org.springframework.security.access.annotation.Secured
 import org.springframework.web.multipart.MultipartFile
+import wekb.kbart.KbartProcessService
 
 import java.util.concurrent.ExecutorService
 
@@ -151,7 +152,6 @@ class PackageController {
         def result = ['params': params]
 
         Package pkg = Package.get(params.int('id'))
-        Boolean onlyRowsWithLastChanged = params.onlyRowsWithLastChanged ? true : false
         if (pkg) {
             if(!pkg.nominalPlatform){
                 flash.error = "No nominal platform is set for this package! Please put a nominal platform on the package level."
@@ -197,7 +197,7 @@ class PackageController {
                                     executorService.execute({
                                         Package aPackage = Package.get(pkg.id)
                                         Thread.currentThread().setName('kImport' + pkg.id)
-                                        kbartProcessService.kbartImportManual(aPackage, file, onlyRowsWithLastChanged)
+                                        kbartProcessService.kbartImportManual(aPackage, file)
                                     })
 
                                     flash.success = "The package update for Package '${pkg.name}' was started. This runs in the background. When the update has gone through, you will see this on the Update Info of the package tab."

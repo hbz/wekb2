@@ -79,7 +79,6 @@ class WorkflowService {
                         [code: 'workFlowMethod::expungeRemovedTipps', modalID: 'expungeRemovedTipps', label: 'Remove all removed Titles hard from system', message: '', onlyAdmin: true, group: 7],
 
                         [code: 'workFlowMethod::manualKbartImport', label: 'Manual KBART Import', message: '', onlyAdmin: false, group: 1],
-                       /* [code: 'workFlowMethod::updatePackageFromKbartSource', label: 'Trigger KBART Update (Changed Titles)', message: '', onlyAdmin: false, group: 1],*/
                         [code: 'workFlowMethod::updatePackageAllTitlesFromKbartSource', label: 'Trigger KBART Update (all Titles)', message: '', onlyAdmin: false, group: 1],
                         [code: 'workFlowMethod::updatePackageAllTitlesFromKbartSourceAdmin', label: 'Trigger KBART Update (all Titles) ADMIN', message: '', onlyAdmin: true, group: 1]
                 ]
@@ -165,7 +164,6 @@ class WorkflowService {
                     }
                 }else {
                     if (editable) {
-                        println(result)
                         result = processSelectedAction(result, result.selectedAction, it)
                     }
                 }
@@ -218,7 +216,7 @@ class WorkflowService {
 
     private Map updatePackageAllTitlesFromKbartSource(Package pkg) {
         Map result = [:]
-        result = updatePackageFromKbartSource(pkg, true)
+        result = updatePackageFromKbartSource(pkg)
         result
     }
 
@@ -259,7 +257,7 @@ class WorkflowService {
         result
     }
 
-    private Map updatePackageFromKbartSource(Package pkg, boolean allTitles = false) {
+    private Map updatePackageFromKbartSource(Package pkg) {
         log.info("updatePackageFromKbartSource for Package ${pkg}..")
         Map result = [:]
 
@@ -279,7 +277,7 @@ class WorkflowService {
                 executorService.execute({
                     Package aPackage = Package.get(pkg.id)
                     Thread.currentThread().setName('uPFKS' + pkg.id)
-                    autoUpdatePackagesService.startAutoPackageUpdate(aPackage, !allTitles)
+                    autoUpdatePackagesService.startAutoPackageUpdate(aPackage)
                 })
 
                 result.success = "The package update for Package '${pkg.name}' was started. This runs in the background. When the update has gone through, you will see this on the Auto Update Info of the package tab."
@@ -297,7 +295,7 @@ class WorkflowService {
         result
     }
 
-    Map updateListOfPackageWithKbart(List<Package> packageList, boolean allTitles = false, List<CuratoryGroup> curatoryGroups){
+    Map updateListOfPackageWithKbart(List<Package> packageList, List<CuratoryGroup> curatoryGroups){
         Map result = [:]
 
         Set<Thread> threadSetMain = Thread.getAllStackTraces().keySet()
@@ -319,7 +317,7 @@ class WorkflowService {
                         Package aPackage1 = Package.get(aPackage.id)
 
                         try {
-                            autoUpdatePackagesService.startAutoPackageUpdate(aPackage1, !allTitles)
+                            autoUpdatePackagesService.startAutoPackageUpdate(aPackage1)
                         }catch (Exception exception) {
                             log.error("Error by updateListOfPackageWithKbart (${aPackage1.id} -> ${aPackage1.name}): ${exception.message}")
                             //exception.printStackTrace()

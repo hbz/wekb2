@@ -1,4 +1,4 @@
-<%@ page import="wekb.IdentifierNamespace; wekb.helper.RDStore" %>
+<%@ page import="wekb.IdentifierNamespace; wekb.helper.RDStore; wekb.helper.RCConstants" %>
 <!DOCTYPE html>
 <html>
 <head>
