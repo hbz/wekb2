@@ -327,116 +327,54 @@ class KbartProcessService {
             int processedGroups = 0
             int totalUpdateGroups = groups.size()
 
-            long lastLogTime = System.nanoTime()
-
-            long totalLookupNs = 0L
-            long totalUpdateNs = 0L
-            long totalCoverageNs = 0L
-            long totalTransactionNs = 0L
-
             groups.each { String key, List<Map> titleRows ->
                 String titleID = titleRows.first().title_id.toString().trim()
-                long transactionStart = System.nanoTime()
                 try {
                     Map outcome = TitleInstancePackagePlatform.withNewSession {
 
-                        Map transactionOutcome =
-                                TitleInstancePackagePlatform.withNewTransaction {
+                        Map transactionOutcome = TitleInstancePackagePlatform.withNewTransaction {
 
-                                    def innerSession = sessionFactory.currentSession
+                            Package processedPkg = Package.get(pkgID)
+                            Platform processedPlatform = Platform.get(platformID)
+                            UpdatePackageInfo processedUpdateInfo = UpdatePackageInfo.get(updateInfoID)
 
-                                    log.info(
-                                            "KBART SESSION INNER: " +
-                                                    "id=${System.identityHashCode(innerSession)}"
-                                    )
+                            List<TitleInstancePackagePlatform> matches = kbartImportService.tippsMatchingByTitleIDAutoUpdateV2(titleID, processedPkg)
 
-                        Session session = sessionFactory.currentSession
+                            if (!matches) {
+                                return [
+                                        isNew: true,
+                                ]
+                            }
 
-                        int entityCount = session.persistenceContext
-                                .numberOfManagedEntities
+                            TitleInstancePackagePlatform tipp = matches.first()
+                            List<Long> duplicateIDs = matches.drop(1).collect { it.id as Long }
 
-                        int collectionCount = session.persistenceContext
-                                .collectionEntries.size()
+                            Map updateResult = kbartImportService.tippImportForUpdate(tipp, titleRows.first(), processedUpdateInfo, processedPkg, processedPlatform)
 
-                        log.info(
-                                "KBART HIBERNATE: entities=${entityCount}, " +
-                                        "collections=${collectionCount}"
-                        )
+                            tipp = updateResult.tippObject
+                            if (!tipp) throw new IllegalStateException("TIPP update returned no TIPP for title_id=${titleID}")
 
-                        Package processedPkg = Package.get(pkgID)
-                        Platform processedPlatform = Platform.get(platformID)
-                        UpdatePackageInfo processedUpdateInfo = UpdatePackageInfo.get(updateInfoID)
+                            boolean isChanged = updateResult.changedTipp == true
+                            if (!hasWekbStatus && tipp.status != RDStore.KBC_STATUS_CURRENT) {
+                                tipp.status = RDStore.KBC_STATUS_CURRENT
+                                isChanged = true
+                            }
+                            tipp.save(failOnError: true)
 
-                        long t1 = System.nanoTime()
+                            if (tipp.publicationType == RDStore.TIPP_PUBLIC_TYPE_SERIAL) {
+                                kbartCoverageSyncService.createOrUpdateCoverageForTipp(tipp, buildCoverageMaps(titleRows))
+                            }
 
-                        List<TitleInstancePackagePlatform> matches = kbartImportService.tippsMatchingByTitleIDAutoUpdateV2(titleID, processedPkg)
-                        long lookupNs = System.nanoTime() - t1
-
-                        if (!matches) {
                             return [
-                                    isNew: true,
-                                    lookupNs: lookupNs,
-                                    updateNs: 0L,
-                                    coverageNs: 0L
+                                    isNew     : false,
+                                    id        : tipp.id,
+                                    changed   : isChanged,
+                                    removed   : updateResult.removedTipp == true,
+                                    duplicates: duplicateIDs
                             ]
                         }
-
-
-
-                        TitleInstancePackagePlatform tipp = matches.first()
-                        List<Long> duplicateIDs = matches.drop(1).collect { it.id as Long }
-
-                        long t2 = System.nanoTime()
-
-                        Map updateResult = kbartImportService.tippImportForUpdate(tipp, titleRows.first(), processedUpdateInfo, processedPkg, processedPlatform)
-
-                        long updateNs = System.nanoTime() - t2
-
-                        tipp = updateResult.tippObject
-                        if (!tipp) throw new IllegalStateException("TIPP update returned no TIPP for title_id=${titleID}")
-
-                        boolean isChanged = updateResult.changedTipp == true
-                        if (!hasWekbStatus && tipp.status != RDStore.KBC_STATUS_CURRENT) {
-                            tipp.status = RDStore.KBC_STATUS_CURRENT
-                            isChanged = true
-                        }
-                        tipp.save(failOnError: true)
-
-                        long t3 = System.nanoTime()
-
-                        if (tipp.publicationType == RDStore.TIPP_PUBLIC_TYPE_SERIAL) {
-                            kbartCoverageSyncService.createOrUpdateCoverageForTipp(tipp, buildCoverageMaps(titleRows))
-                        }
-
-
-                        long coverageNs = System.nanoTime() - t3
-
-                        return [
-                                isNew: false,
-                                id: tipp.id,
-                                changed: isChanged,
-                                removed: updateResult.removedTipp == true,
-                                duplicates: duplicateIDs,
-                                lookupNs: lookupNs,
-                                updateNs: updateNs,
-                                coverageNs: coverageNs
-                        ]
-                    }
-                        // Direkt nach withNewTransaction
-                        def outerSession = sessionFactory.currentSession
-
-                        log.info(
-                                "KBART SESSION OUTER: " +
-                                        "id=${System.identityHashCode(outerSession)}, " +
-                                        "entities=${outerSession.persistenceContext.numberOfManagedEntities}, " +
-                                        "collections=${outerSession.persistenceContext.collectionEntries.size()}"
-                        )
-
                         return transactionOutcome
-                        }
-                    totalLookupNs += outcome.lookupNs ?: 0L
-                    totalUpdateNs += outcome.updateNs ?: 0L
-                    totalCoverageNs += outcome.coverageNs ?: 0L
+                    }
 
                     if (outcome.isNew) {
                         newGroups[titleID] = titleRows
@@ -458,7 +396,6 @@ class KbartProcessService {
                     log.error("KBART import: failed to process title group, title_id=${titleID}", e)
                 }
                 finally {
-                    totalTransactionNs += System.nanoTime() - transactionStart
                     processedGroups++
 
                     if (processedGroups % 100 == 0 || processedGroups == totalUpdateGroups) {
@@ -467,28 +404,6 @@ class KbartProcessService {
 
                         updateImportProgress(updateInfoID, percent, PROGRESS_UPDATING, processedGroups, totalUpdateGroups
                         )
-                    }
-
-                    if (processedGroups % 100 == 0) {
-
-                        long now = System.nanoTime()
-                        double seconds = (now - lastLogTime) / 1_000_000_000.0d
-
-                        log.info(
-                                "KBART PERFORMANCE " +
-                                        "transactionMs=${Math.round(totalTransactionNs / 1_000_000.0)}, "+
-                                        "groups=${processedGroups}/${groups.size()}, " +
-                                        "batchSeconds=${String.format('%.2f', seconds)}, " +
-                                        "lookupMs=${Math.round(totalLookupNs / 1_000_000.0)}, " +
-                                        "updateMs=${Math.round(totalUpdateNs / 1_000_000.0)}, " +
-                                        "coverageMs=${Math.round(totalCoverageNs / 1_000_000.0)}"
-                        )
-
-                        lastLogTime = now
-                        totalLookupNs = 0L
-                        totalUpdateNs = 0L
-                        totalCoverageNs = 0L
-                        totalTransactionNs = 0L
                     }
                 }
             }
