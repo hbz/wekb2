@@ -57,17 +57,15 @@
         </dl>
         <dl>
             <dt class="control-label"><g:message code="package.description"/></dt>
-            <dd><g:if test="${!createObject}">
+            <dd>
                 <semui:xEditable owner="${d}" type="textarea" field="description"/>
-            </g:if>
             </dd>
 
         </dl>
         <dl>
             <dt class="control-label"><g:message code="package.descriptionURL"/></dt>
-            <dd><g:if test="${!createObject}">
+            <dd>
                 <semui:xEditable owner="${d}" field="descriptionURL" validation="url" outGoingLink="true"/>
-            </g:if>
             </dd>
         </dl>
 
@@ -76,9 +74,7 @@
                 <g:message code="package.breakable"/>
             </dt>
             <dd>
-                <g:if test="${!createObject}">
                     <semui:xEditableRefData owner="${d}" field="breakable" config="${RCConstants.PACKAGE_BREAKABLE}"/>
-                </g:if>
             </dd>
         </dl>
         <dl>
@@ -86,10 +82,9 @@
                 <g:message code="package.contentType"/>
             </dt>
             <dd>
-                <g:if test="${!createObject}">
                     <semui:xEditableRefData owner="${d}" field="contentType"
                                             config="${RCConstants.PACKAGE_CONTENT_TYPE}"/>
-                </g:if>
+
             </dd>
         </dl>
         <dl>
@@ -97,9 +92,7 @@
                 <g:message code="package.file"/>
             </dt>
             <dd>
-                <g:if test="${!createObject}">
                     <semui:xEditableRefData owner="${d}" field="file" config="${RCConstants.PACKAGE_FILE}"/>
-                </g:if>
             </dd>
         </dl>
         <dl>
@@ -107,9 +100,7 @@
                 <g:message code="package.openAccess"/>
             </dt>
             <dd>
-                <g:if test="${!createObject}">
                     <semui:xEditableRefData owner="${d}" field="openAccess" config="${RCConstants.PACKAGE_OPEN_ACCESS}"/>
-                </g:if>
             </dd>
         </dl>
         <dl>
@@ -117,10 +108,8 @@
                 <g:message code="package.paymentType"/>
             </dt>
             <dd>
-                <g:if test="${!createObject}">
                     <semui:xEditableRefData owner="${d}" field="paymentType"
                                             config="${RCConstants.PACKAGE_PAYMENT_TYPE}"/>
-                </g:if>
             </dd>
         </dl>
         <dl>
@@ -128,9 +117,7 @@
                 <g:message code="package.scope"/>
             </dt>
             <dd>
-                <g:if test="${!createObject}">
                     <semui:xEditableRefData owner="${d}" field="scope" config="${RCConstants.PACKAGE_SCOPE}"/>
-                </g:if>
             </dd>
         </dl>
 
@@ -163,9 +150,7 @@
                 <g:message code="package.freeTrial"/>
             </dt>
             <dd>
-                <g:if test="${!createObject}">
                     <semui:xEditableRefData owner="${d}" field="freeTrial" config="${RCConstants.YN}"/>
-                </g:if>
             </dd>
         </dl>
 
@@ -174,9 +159,7 @@
                 <g:message code="package.freeTrialPhase"/>
             </dt>
             <dd>
-                <g:if test="${!createObject}">
                     <semui:xEditable owner="${d}" field="freeTrialPhase"/>
-                </g:if>
             </dd>
         </dl>
 
