@@ -57,6 +57,7 @@ class GlobalSearchTemplatesService {
                 title       : 'Auto Update Packages',
                 defaultSort : 'lastUpdated',
                 defaultOrder: 'desc',
+                defaultStatus: RefdataValue.class.name + ':' + RDStore.KBC_STATUS_CURRENT.id,
                 qbeConfig   : [
                         qbeForm   : [
                                 //Hiden fields
@@ -174,6 +175,7 @@ class GlobalSearchTemplatesService {
                 title       : 'Packages without Title_ID by Titles',
                 defaultSort : 'lastUpdated',
                 defaultOrder: 'desc',
+                defaultStatus: RefdataValue.class.name + ':' + RDStore.KBC_STATUS_CURRENT.id,
                 qbeConfig   : [
                         qbeForm   : [
                                 [
@@ -297,6 +299,7 @@ class GlobalSearchTemplatesService {
                 title       : 'Packages with Title Duplicates by Title_ID',
                 defaultSort : 'lastUpdated',
                 defaultOrder: 'desc',
+                defaultStatus: RefdataValue.class.name + ':' + RDStore.KBC_STATUS_CURRENT.id,
                 qbeConfig   : [
                         qbeForm   : [
                                 [
@@ -419,6 +422,7 @@ class GlobalSearchTemplatesService {
                 title    : 'Curatory Groups',
                 defaultSort : 'name',
                 defaultOrder: 'asc',
+                defaultStatus: RefdataValue.class.name + ':' + RDStore.KBC_STATUS_CURRENT.id,
                 qbeConfig: [
                         qbeForm   : [
                                 [
@@ -1228,6 +1232,7 @@ class GlobalSearchTemplatesService {
                 title       : 'Packages',
                 defaultSort : 'lastUpdated',
                 defaultOrder: 'desc',
+                defaultStatus: RefdataValue.class.name + ':' + RDStore.KBC_STATUS_CURRENT.id,
                 qbeConfig   : [
                         qbeForm   : [
 
@@ -1484,6 +1489,7 @@ class GlobalSearchTemplatesService {
                 title       : 'Packages',
                 defaultSort : 'lastUpdated',
                 defaultOrder: 'desc',
+                defaultStatus: RefdataValue.class.name + ':' + RDStore.KBC_STATUS_CURRENT.id,
                 qbeConfig   : [
                         qbeForm   : [
 
@@ -1766,6 +1772,7 @@ class GlobalSearchTemplatesService {
                 title       : 'Packages',
                 defaultSort : 'lastUpdated',
                 defaultOrder: 'desc',
+                defaultStatus: RefdataValue.class.name + ':' + RDStore.KBC_STATUS_CURRENT.id,
                 qbeConfig   : [
                         qbeForm   : [
                                 [
@@ -2249,6 +2256,7 @@ class GlobalSearchTemplatesService {
                 title       : 'Platforms',
                 defaultSort : 'name',
                 defaultOrder: 'asc',
+                defaultStatus: RefdataValue.class.name + ':' + RDStore.KBC_STATUS_CURRENT.id,
                 qbeConfig   : [
                         qbeForm   : [
                                 //Hidden Fields
@@ -2763,6 +2771,7 @@ class GlobalSearchTemplatesService {
                 title    : 'Sources',
                 defaultSort : 'name',
                 defaultOrder: 'asc',
+                defaultStatus: RefdataValue.class.name + ':' + RDStore.KBC_STATUS_CURRENT.id,
                 qbeConfig: [
                         qbeForm   : [
                                 //Hidden Fields
@@ -3132,6 +3141,7 @@ class GlobalSearchTemplatesService {
                 title    : 'Titles',
                 defaultSort : 'name',
                 defaultOrder: 'asc',
+                defaultStatus: RefdataValue.class.name + ':' + RDStore.KBC_STATUS_CURRENT.id,
                 qbeConfig: [
                         qbeForm   : [
                                 [
