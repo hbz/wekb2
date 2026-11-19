@@ -1,4 +1,4 @@
-<%@ page import="wekb.helper.RDStore; wekb.RefdataCategory; wekb.helper.RCConstants" %>
+<%@ page import="wekb.RefdataValue; wekb.helper.RDStore; wekb.RefdataCategory; wekb.helper.RCConstants" %>
 <g:if test="${d.id}">
     <semui:tabs>
         <semui:tabsItemWithoutLink tab="invoice" defaultTab="invoice" activeTab="${params.activeTab}">
@@ -470,9 +470,10 @@
 
     <semui:tabsItemContent tab="platforms" activeTab="${params.activeTab}">
         <g:link class="display-inline" controller="search" action="inlineSearch"
-                params="[s_controllerName: controllerName, s_actionName: actionName, objectUUID: params.id, max: params.max, offset: params.activeTab == 'platforms' ? params.offset : '', sort: params.activeTab == 'platforms' ? params.sort : '', order: params.activeTab == 'platforms' ? params.order : '', qbe: 'g:platforms', refOID: d.getOID(), inline: true, qp_provider_id: d.id, hide: ['qp_provider', 'qp_provider_id'], activeTab: 'platforms', jumpOffset: params.activeTab == 'platforms' ? params.jumpOffset : '']"
+                params="[s_controllerName: controllerName, s_actionName: actionName, objectUUID: params.id, max: params.max, offset: params.activeTab == 'platforms' ? params.offset : '', sort: params.activeTab == 'platforms' ? params.sort : '', order: params.activeTab == 'platforms' ? params.order : '', qbe: 'g:platforms', refOID: d.getOID(), inline: true, qp_provider_id: d.id, hide: ['qp_provider', 'qp_provider_id'], activeTab: 'platforms', jumpOffset: params.activeTab == 'platforms' ? params.jumpOffset : '', qp_status: wekb.RefdataValue.class.name + ':' + RDStore.KBC_STATUS_CURRENT.id]"
                 id="">Titles published</g:link>
     </semui:tabsItemContent>
+
     <semui:tabsItemContent tab="titles" activeTab="${params.activeTab}">
         <g:link class="display-inline" controller="search" action="inlineSearch"
                 params="[s_controllerName: controllerName, s_actionName: actionName, objectUUID: params.id, max: params.max, offset: params.activeTab == 'titles' ? params.offset : '', sort: params.activeTab == 'titles' ? params.sort : '', order: params.activeTab == 'titles' ? params.order : '', qbe: 'g:tipps', refOID: d.getOID(), inline: true, qp_provider_id: d.id, hide: ['qp_provider', 'qp_provider_id'], activeTab: 'titles', jumpOffset: params.activeTab == 'titles' ? params.jumpOffset : '']"
