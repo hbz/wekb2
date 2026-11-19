@@ -91,6 +91,14 @@
         </dl>
         <dl>
             <dt class="control-label">
+                Title-ID
+            </dt>
+            <dd>
+                ${d.getTitle_ID()}
+            </dd>
+        </dl>
+        <dl>
+            <dt class="control-label">
                 <g:message code="default.status"/>
             </dt>
             <dd>

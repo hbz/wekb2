@@ -15,6 +15,14 @@
             ${d.uuid}
         </dd>
     </g:if>
+    <g:if test="${d instanceof wekb.TitleInstancePackagePlatform}">
+        <dt class="control-label">
+            Title-ID
+        </dt>
+        <dd>
+            ${d.getTitle_ID()}
+        </dd>
+    </g:if>
     <sec:ifAnyGranted roles="ROLE_ADMIN">
         <dt class="control-label">DB-ID</dt>
         <dd>

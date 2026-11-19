@@ -480,4 +480,16 @@ class TitleInstancePackagePlatform  extends AbstractBase implements Auditable {
         return result
     }
 
+  @Transient
+  public String getTitle_ID() {
+    IdentifierNamespace namespace = IdentiferNamespaceStore.TITLE_ID_NAMESPACE
+    List<String> identifiers = Identifier.executeQuery('select value from Identifier where namespace = :ns and tipp = :tipp', [tipp: this, ns: namespace])
+
+    if(identifiers.size() == 0){
+      return ''
+    }else {
+      return identifiers.join(', ')
+    }
+  }
+
 }
