@@ -89,14 +89,16 @@
                 <semui:xEditable owner="${d}" field="url" validation="url" outGoingLink="true" required="true" />
             </dd>
         </dl>
-        <dl>
-            <dt class="control-label">
-                Title-ID
-            </dt>
-            <dd>
-                ${d.getTitle_ID()}
-            </dd>
-        </dl>
+        <g:if test="${controllerName != 'create'}">
+                <dl>
+                    <dt class="control-label">
+                        Title-ID
+                    </dt>
+                    <dd>
+                        ${d.getTitle_ID()}
+                    </dd>
+                </dl>
+        </g:if>
         <dl>
             <dt class="control-label">
                 <g:message code="default.status"/>
