@@ -193,6 +193,16 @@ class Package  extends AbstractBase implements Auditable {
     super.beforeDeleteHandler()
   }
 
+  def afterUpdate(){
+    log.debug("afterUpdate for ${this}")
+    if(status in [RDStore.KBC_STATUS_REMOVED, RDStore.KBC_STATUS_DELETED] && kbartSource && kbartSource.automaticUpdates){
+      kbartSource.automaticUpdates = false
+      kbartSource.lastUpdated = new Date()
+      kbartSource.save()
+    }
+
+  }
+
   static def generateNormname(str_to_norm){
     def r = TextUtils.norm2(str_to_norm)
     if (r.length() == 0){
