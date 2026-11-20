@@ -59,7 +59,7 @@
                     <dl>
                         <dt class="control-label">Last Login</dt>
                         <dd>
-                            <semui:xEditable owner="${d}" field="lastLogin" type="date" overwriteEditable="false"/>
+                                <g:formatDate date="${d.lastLogin}" format="yyyy-MM-dd HH:mm"/>
                         </dd>
                     </dl>
                     <dl>

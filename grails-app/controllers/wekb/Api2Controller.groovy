@@ -8,6 +8,7 @@ import org.springframework.security.core.AuthenticationException
 import wekb.annotations.AltchaAnnotation
 import wekb.auth.User
 import grails.converters.JSON
+import wekb.utils.LoginService
 
 import java.security.SecureRandom
 
@@ -16,6 +17,7 @@ class Api2Controller {
     SecureRandom rand = new SecureRandom()
 
     Api2Service api2Service
+    LoginService loginService
     SpringSecurityService springSecurityService
     AuthenticationManager authenticationManager
 
@@ -262,6 +264,8 @@ class Api2Controller {
                         message: 'This user does not have permission to access the API!'
                 ]
             }
+
+            loginService.updateLastLogin(authentication.name)
 
         } catch (AuthenticationException e) {
             log.warn("API authentication failed for user: ${username}")

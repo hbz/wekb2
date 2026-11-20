@@ -163,12 +163,4 @@ class AccessService {
 
     }
 
-    void updateLastLogin() {
-        User user = springSecurityService.currentUser
-        user.lastLogin = new Date()
-        user.invalidLoginAttempts = 0
-        user.save()
-
-    }
-
 }

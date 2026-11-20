@@ -106,6 +106,18 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
         [pattern: '/apiKbart/**',                access: ['permitAll']],
 ]
 
+grails.plugin.springsecurity.useSecurityEventListener = true
+
+grails.plugin.springsecurity.onInteractiveAuthenticationSuccessEvent = { event, appCtx ->
+
+    println "LOGIN EVENT START: ${event.authentication.name}"
+
+    appCtx.getBean('loginService')
+            .updateLastLogin(event.authentication.name)
+
+    println "LOGIN EVENT END"
+}
+
 
 //--------------------------------------------------------------------------------------------------------------------
 

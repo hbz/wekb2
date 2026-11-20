@@ -11,6 +11,7 @@ import wekb.annotations.AltchaAnnotation
 import wekb.auth.User
 import wekb.helper.RDStore
 import wekb.utils.DateUtils
+import wekb.utils.LoginService
 
 import javax.servlet.ServletOutputStream
 import java.security.SecureRandom
@@ -25,6 +26,7 @@ class ApiKbartController {
     DateFormatService dateFormatService
     ExportService exportService
     GenericOIDService genericOIDService
+    LoginService loginService
     SpringSecurityService springSecurityService
 
     /**
@@ -110,6 +112,8 @@ class ApiKbartController {
                         message: 'This user does not have permission to access the KBART API!'
                 ]
             }
+
+            loginService.updateLastLogin(authentication.name)
 
         } catch (AuthenticationException e) {
             log.warn("KBART API authentication failed for user: ${params.username}")
