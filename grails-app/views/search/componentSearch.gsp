@@ -12,7 +12,7 @@
     <semui:h1HeaderWithIcon
             iconClass="${qbetemplate.baseclass.toLowerCase().replace('.', '-')}"
             title="${qbetemplate.msgCode
-                    ? message(code: qbetemplate.msgCode)
+                    ? message(code: qbetemplate.msgCode, default: qbetemplate.title)
                     : 'Object'}">
                 <g:if test="${refObject}">
                     ${message(code:'public.search')}  for ${refObject.getDomainName()}:

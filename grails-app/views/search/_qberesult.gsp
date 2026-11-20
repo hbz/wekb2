@@ -12,7 +12,7 @@
     <div class="ui top attached segment wekb-tableToolbar">
         <h2 class="ui header">
             ${reccount.toInteger()} ${qbetemplate.msgCode
-                    ? message(code: qbetemplate.msgCode)
+                    ? message(code: qbetemplate.msgCode, default:qbetemplate.title)
                     : (refObject
                     ? refObject.getDomainName()
                     : 'Object')}
@@ -115,7 +115,7 @@
     <div class="ui top attached segment wekb-tableToolbar">
         <h2 class="ui header">
             ${reccount.toInteger()} ${qbetemplate.msgCode
-                    ? message(code: qbetemplate.msgCode)
+                    ? message(code: qbetemplate.msgCode, default:qbetemplate.title)
                     : (refObject
                     ? refObject.getDomainName()
                     : 'Object')}
