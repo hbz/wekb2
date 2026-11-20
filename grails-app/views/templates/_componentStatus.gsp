@@ -28,7 +28,15 @@
             Title-ID
         </dt>
         <dd>
-            ${d.getTitle_ID()}
+            <span class="js-copyTriggerParent">
+                <span class="ui label js-copyTrigger la-popup-tooltip" data-position="top center"
+                      data-tooltip="${message(code: 'tooltip.clickToCopy', args: ["UUID"])}">
+                    <span class="detail js-copyTopic">
+                        ${d.getTitle_ID()}
+                        <i class="copy black icon la-js-copyTriggerIcon"></i>
+                    </span>
+                </span>
+            </span>
         </dd>
     </g:if>
     <sec:ifAnyGranted roles="ROLE_ADMIN">
