@@ -12,7 +12,15 @@
     <g:if test="${d.hasProperty('uuid')}">
         <dt class="control-label">UUID</dt>
         <dd>
-            ${d.uuid}
+            <span class="js-copyTriggerParent">
+                <span class="ui label js-copyTrigger la-popup-tooltip" data-position="top center"
+                      data-tooltip="${message(code: 'tooltip.clickToCopy', args: ["UUID"])}">
+                    <span class="detail js-copyTopic">
+                        ${d.uuid}
+                        <i class="copy black icon la-js-copyTriggerIcon"></i>
+                    </span>
+                </span>
+            </span>
         </dd>
     </g:if>
     <g:if test="${d instanceof wekb.TitleInstancePackagePlatform}">
@@ -26,7 +34,15 @@
     <sec:ifAnyGranted roles="ROLE_ADMIN">
         <dt class="control-label">DB-ID</dt>
         <dd>
-            ${d.id}
+            <span class="js-copyTriggerParent">
+                <span class="ui label js-copyTrigger la-popup-tooltip" data-position="top center"
+                      data-tooltip="${message(code: 'tooltip.clickToCopy', args: ["DB-ID"])}">
+                    <span class="detail js-copyTopic">
+                        ${d.id}
+                        <i class="copy black icon la-js-copyTriggerIcon"></i>
+                    </span>
+                </span>
+            </span>
         </dd>
 
         <g:if test="${curatoryGroups || d.hasProperty('curatoryGroups')}">
