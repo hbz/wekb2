@@ -1,4 +1,4 @@
-<%@ page import="wekb.RefdataValue; wekb.helper.RCConstants; wekb.RefdataCategory; wekb.ClassUtils; wekb.helper.RDStore; wekb.TitleInstancePackagePlatform;" %>
+<%@ page import="wekb.RefdataValue; wekb.helper.RCConstants; wekb.RefdataCategory; wekb.ClassUtils; wekb.helper.RDStore; wekb.TitleInstancePackagePlatform; wekb.helper.IdentiferNamespaceStore;" %>
 <semui:tabsItemContent tab="identifiers" class="${activeTab ? 'active' : ''}" defaultTab="${defaultTab}" activeTab="${params.activeTab}" counts="${d.ids.size()}">
 
     <table class="ui selectable sortable table">
@@ -25,7 +25,7 @@
                     </td>
                     <td>
 
-                        <g:if test="${editable}">
+                        <g:if test="${editable && (identifier.namespace.id != IdentiferNamespaceStore.TITLE_ID_NAMESPACE.id)}">
                             <semui:xEditable owner="${identifier}" field="value" />
                         </g:if>
                         <g:else>
@@ -62,7 +62,7 @@
 
                         <g:link controller="resource" action="show" id="${identifier.getOID()}" title="Identifier Infos"><i class="equals icon"></i></g:link>
                     </td>
-                    <g:if test="${editable}">
+                    <g:if test="${editable && (identifier.namespace.id != IdentiferNamespaceStore.TITLE_ID_NAMESPACE.id)}">
                         <td>
                             <g:link controller='ajaxHtml'
                                     action='delete'
