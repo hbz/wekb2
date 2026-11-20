@@ -504,9 +504,15 @@ class KbartImportService {
         result.changedTipp = changedPreviously13 || changedNow13
         //log.debug("12")
         // KBART -> notes -> note
+        if (tipp.publicationType != RDStore.TIPP_PUBLIC_TYPE_SERIAL) {
         boolean changedPreviously14 = (result.changedTipp == true)
         boolean changedNow14 = (checkAndSetByChangedValue(result, tipp, 'String', updatePackageInfo, tippMap, "notes", "note") == true)
         result.changedTipp = changedPreviously14 || changedNow14
+        }else{
+            if (tipp.note){
+                tipp.note = null
+            }
+        }
         //log.debug("13")
         // KBART -> date_monograph_published_print -> dateFirstInPrint
         boolean changedPreviously15 = (result.changedTipp == true)
@@ -906,7 +912,7 @@ class KbartImportService {
                                     firstAuthor: tippMap.first_author,
                                     firstEditor: tippMap.first_editor,
                                     lastChangedExternal: last_changed,
-                                    note: tippMap.notes,
+                                    note: tipp_publicationType != RDStore.TIPP_PUBLIC_TYPE_SERIAL ? tippMap.notes : null,
                                     openAccess: oaType,
                                     parentPublicationTitleId: tippMap.parent_publication_title_id,
                                     precedingPublicationTitleId: tippMap.preceding_publication_title_id,

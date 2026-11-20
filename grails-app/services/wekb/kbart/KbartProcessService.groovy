@@ -590,8 +590,8 @@ class KbartProcessService {
                     UpdateTippInfo.withNewTransaction {
                         UpdatePackageInfo processedUpdateInfo = UpdatePackageInfo.get(updateInfoID)
                         TitleInstancePackagePlatform processedTipp = issue.tippID ? TitleInstancePackagePlatform.get(issue.tippID as Long) : null
-                        String location = issue.titleID ? "title_id=${issue.titleID}" : 'file-level error'
-                        String rowText = chunk ? ", KBART rows: ${chunk.join(', ')}" : ''
+                        String location = issue.titleID ? "title_id=${issue.titleID}" : ''
+                        String rowText = chunk ? "KBART rows: ${chunk.join(', ')}" : ''
                         Date now = new Date()
                         new UpdateTippInfo(
                                 uuid: UUID.randomUUID().toString(),

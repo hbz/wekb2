@@ -17,7 +17,7 @@
 							<th>End Volume</th>
 							<th>End Issue</th>
 							<th>Embargo</th>
-							<th>Note</th>
+							<th>Notes</th>
 							<th>Depth</th>
 							<g:if test="${editable}">
 								<th>Actions</th>

@@ -9,6 +9,7 @@ import wekb.helper.RCConstants
 
 import java.time.LocalDate
 import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeParseException
 
 @Transactional
@@ -222,12 +223,12 @@ class KbartCoverageSyncService {
     private Date parseDate(Object value, boolean end) {
         if (value == null) return null
 
-        if (value instanceof Date) {
-            return new Date(((Date) value).time)
-        }
-
         if (value instanceof LocalDate) {
             return toDate((LocalDate) value)
+        }
+
+        if (value instanceof Date) {
+            return new Date(((Date) value).time)
         }
 
         String text = clean(value)
@@ -238,18 +239,29 @@ class KbartCoverageSyncService {
 
             if (text ==~ /\d{4}/) {
                 int year = Integer.parseInt(text)
-                date = LocalDate.of(year, end ? 12 : 1,
-                        end ? 31 : 1)
+                date = LocalDate.of(year, end ? 12 : 1, end ? 31 : 1)
 
             } else if (text ==~ /\d{4}-\d{2}/) {
                 date = LocalDate.parse(text + '-01')
+
                 if (end) {
-                    date = date.withDayOfMonth(
-                            date.lengthOfMonth())
+                    date = date.withDayOfMonth(date.lengthOfMonth())
                 }
 
             } else if (text ==~ /\d{4}-\d{2}-\d{2}/) {
                 date = LocalDate.parse(text)
+
+            } else if (text ==~ /\d{2}\.\d{2}\.\d{4}/) {
+                date = LocalDate.parse(
+                        text,
+                        DateTimeFormatter.ofPattern('dd.MM.uuuu')
+                )
+
+            } else if (text ==~ /\d{2}\/\d{2}\/\d{4}/) {
+                date = LocalDate.parse(
+                        text,
+                        DateTimeFormatter.ofPattern('dd/MM/uuuu')
+                )
 
             } else {
                 throw new IllegalArgumentException(
@@ -259,9 +271,8 @@ class KbartCoverageSyncService {
 
             return toDate(date)
 
-        } catch (DateTimeParseException | java.time.DateTimeException e) {
-            throw new IllegalArgumentException(
-                    "No Valid KBART-Date: ${text}", e)
+        } catch (java.time.DateTimeException e) {
+            throw new IllegalArgumentException("No Valid KBART-Date: ${text}", e)
         }
     }
 
