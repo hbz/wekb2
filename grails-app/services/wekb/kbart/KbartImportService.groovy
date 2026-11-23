@@ -476,16 +476,22 @@ class KbartImportService {
         result.changedTipp = changedPreviously9 || changedNow9
         //log.debug("8")
         // KBART -> access_type -> accessType
-        if (tippMap.access_type && tippMap.access_type.length() > 0) {
-            //log.debug("8a")
-            if (tippMap.access_type == 'P') {
-                tippMap.access_type = 'Paid'
-            } else if (tippMap.access_type == 'F') {
-                tippMap.access_type = 'Free'
+        if (tipp.publicationType != RDStore.TIPP_PUBLIC_TYPE_SERIAL) {
+            if (tippMap.access_type && tippMap.access_type.length() > 0) {
+                //log.debug("8a")
+                if (tippMap.access_type == 'P') {
+                    tippMap.access_type = 'Paid'
+                } else if (tippMap.access_type == 'F') {
+                    tippMap.access_type = 'Free'
+                }
+                boolean changedPreviously10 = (result.changedTipp == true)
+                boolean changedNow10 = (checkAndSetByChangedValue(result, tipp, 'RefDataValue', updatePackageInfo, tippMap, "access_type", "accessType", true, RCConstants.TIPP_ACCESS_TYPE) == true)
+                result.changedTipp = changedPreviously10 || changedNow10
             }
-            boolean changedPreviously10 = (result.changedTipp == true)
-            boolean changedNow10 = (checkAndSetByChangedValue(result, tipp, 'RefDataValue', updatePackageInfo, tippMap, "access_type", "accessType", true, RCConstants.TIPP_ACCESS_TYPE) == true)
-            result.changedTipp = changedPreviously10 || changedNow10
+        }else{
+            if (tipp.accessType){
+                tipp.accessType = null
+            }
         }
         //log.debug("9")
         // KBART -> access_start_date -> accessStartDate

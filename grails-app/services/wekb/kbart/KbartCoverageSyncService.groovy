@@ -16,8 +16,11 @@ import java.time.format.DateTimeParseException
 class KbartCoverageSyncService {
 
     private static final String DEPTH_CATEGORY = RCConstants.TIPPCOVERAGESTATEMENT_COVERAGE_DEPTH
+    private static final String ACCESS_TYPE_CATEGORY = RCConstants.TIPP_ACCESS_TYPE
 
     private static final Set<String> VALID_DEPTHS = ['fulltext', 'selected articles', 'abstracts'] as Set
+
+    private static final Set<String> VALID_ACCESS_TYPES = ['p', 'f', 'free', 'paid'] as Set
 
     private static final List<String> IDENTITY_FIELDS = [
             'startDate',
@@ -32,7 +35,8 @@ class KbartCoverageSyncService {
             'startDate', 'endDate',
             'startVolume', 'endVolume',
             'startIssue', 'endIssue',
-            'embargo', 'coverageNote', 'coverageDepth'
+            'embargo', 'coverageNote', 'coverageDepth',
+            'accessType'
     ]
 
     @Transactional
@@ -182,7 +186,8 @@ class KbartCoverageSyncService {
 
                 coverageNote : clean(field(row, 'coverageNote', 'notes')),
 
-                coverageDepth: normalizeDepth(field(row, 'coverageDepth', 'coverage_depth'))
+                coverageDepth: normalizeDepth(field(row, 'coverageDepth', 'coverage_depth')),
+                accessType: normalizeAccessType(field(row, 'accessType', 'access_type'))
         ]
 
 /*        if (result.startDate && result.endDate &&
@@ -306,6 +311,37 @@ class KbartCoverageSyncService {
         if (!result) {
             throw new IllegalArgumentException(
                     "CoverageDepth not in WEKB-Refdata: ${canonical}"
+            )
+        }
+
+        return result
+    }
+
+    private RefdataValue normalizeAccessType(Object value) {
+        if (value == null) return null
+        if (value instanceof RefdataValue) return value
+
+        String text = clean(value)
+
+        if (text == 'P') {
+            text = 'Paid'
+        } else if (value == 'F') {
+            text = 'Free'
+        }
+
+        if (!text) return null
+
+        if (!(text.toLowerCase() in VALID_ACCESS_TYPES)) {
+            throw new IllegalArgumentException(
+                    "Unknow KBART-AccessType: ${text}"
+            )
+        }
+
+        RefdataValue result = RefdataCategory.lookup(ACCESS_TYPE_CATEGORY, text)
+
+        if (!result) {
+            throw new IllegalArgumentException(
+                    "AccessType not in WEKB-Refdata: ${text}"
             )
         }
 
