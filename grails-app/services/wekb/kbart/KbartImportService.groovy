@@ -909,7 +909,7 @@ class KbartImportService {
                                     medium: tipp_medium,
                                     publicationType: tipp_publicationType,
                                     url: tippMap.title_url,
-                                    accessType: tipp_accessType,
+                                    accessType: tipp_publicationType != RDStore.TIPP_PUBLIC_TYPE_SERIAL ? tipp_accessType : null,
                                     accessStartDate: access_start_date,
                                     accessEndDate: access_end_date,
                                     dateFirstInPrint: date_monograph_published_print,

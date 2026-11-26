@@ -19,6 +19,7 @@
 							<th>Embargo</th>
 							<th>Notes</th>
 							<th>Depth</th>
+							<th>Access Type</th>
 							<g:if test="${editable}">
 								<th>Actions</th>
 							</g:if>
@@ -42,6 +43,9 @@
 									<td><semui:xEditable owner="${cs}" field="coverageNote"/></td>
 									<td><semui:xEditableRefData owner="${cs}" field="coverageDepth"
 																config="${RCConstants.TIPPCOVERAGESTATEMENT_COVERAGE_DEPTH}"/>
+									</td>
+									<td><semui:xEditableRefData owner="${cs}" field="accessType"
+																config="${RCConstants.TIPP_ACCESS_TYPE}"/>
 									</td>
 									<g:if test="${editable}">
 										<td>
@@ -130,6 +134,13 @@
                               <label>Coverage Note</label>
 
 				<input  type="text" name="coverageNote"/>
+			</div>
+			<div class="field">
+				<label>Access Type</label>
+
+				<semui:simpleReferenceDropdown name="accessType"
+											   baseClass="wekb.RefdataValue"
+											   filter1="${RCConstants.TIPP_ACCESS_TYPE}"/>
 			</div>
 		</g:form>
 	</semui:modal>

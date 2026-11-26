@@ -767,7 +767,8 @@ class Api2Service {
                                         endIssue: "coalesce(tcs_end_issue,'')",
                                         embargo: "coalesce(tcs_embargo,'')",
                                         coverageNote: "coalesce(tcs_note,'')",
-                                        coverageDepth: "coalesce((select rdv_value from refdata_value where rdv_id = tcs_depth),'')"
+                                        coverageDepth: "coalesce((select rdv_value from refdata_value where rdv_id = tcs_depth),'')",
+                                        accessType: "coalesce((select rdv_value from refdata_value where rdv_id = tcs_access_typ_fk),'')"
                                 ],
                                 identifierFields: [
                                         namespace: 'idns_value',
@@ -1865,7 +1866,7 @@ class Api2Service {
                 result.parentPublicationTitleId = object.parentPublicationTitleId
                 result.precedingPublicationTitleId = object.precedingPublicationTitleId
                 result.supersedingPublicationTitleId = object.supersedingPublicationTitleId
-                result.note = object.note
+                result.notes = object.note
                 result.fromKbartImport = object.fromKbartImport
 
 
@@ -1883,6 +1884,7 @@ class Api2Service {
                         cst.embargo = tcs.embargo ?: ""
                         cst.coverageNote = tcs.coverageNote ?: ""
                         cst.coverageDepth = tcs.coverageDepth ? tcs.coverageDepth.value : ""
+                        cst.accessType = tcs.accessType ? tcs.accessType.value : ""
                         result.coverage.add(cst)
                     }
                 }

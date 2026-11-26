@@ -1219,7 +1219,7 @@ class KbartProcessService {
             row.date_first_issue_online || row.date_last_issue_online ||
                     row.num_first_vol_online || row.num_first_issue_online ||
                     row.num_last_vol_online || row.num_last_issue_online ||
-                    row.embargo_info || row.coverage_depth
+                    row.embargo_info || row.coverage_depth || row.notes || row.access_type
         }.collect { Map row ->
             [startDate: row.date_first_issue_online,
              endDate: row.date_last_issue_online,
@@ -1229,7 +1229,8 @@ class KbartProcessService {
              endIssue: row.num_last_issue_online,
              embargo: row.embargo_info,
              coverageDepth: row.coverage_depth,
-             coverageNote: row.notes]
+             coverageNote: row.notes,
+             accessType: row.access_type]
         }
     }
 
