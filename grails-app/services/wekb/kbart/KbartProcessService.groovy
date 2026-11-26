@@ -553,7 +553,7 @@ class KbartProcessService {
                             Date now = new Date()
                             new UpdateTippInfo(
                                     uuid: UUID.randomUUID().toString(),
-                                    description: "Delete title '${missingTipp.name}' because it is missing from the KBART import.",
+                                    description: "Delete title '${missingTipp.name}' because it is missing in KBART-File.",
                                     tipp: missingTipp,
                                     startTime: now, endTime: now,
                                     status: RDStore.UPDATE_STATUS_SUCCESSFUL,
@@ -678,7 +678,7 @@ class KbartProcessService {
 
             if (!updateInfoID) {
                 throw new IllegalStateException(
-                        "Cannot mark KBART import as failed: UpdatePackageInfo has no ID"
+                        "Cannot mark KBART import as failed: Update Package Info has no ID"
                 )
             }
 
