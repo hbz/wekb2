@@ -341,6 +341,7 @@ class AutoUpdatePackagesService {
         return file
     }
 
+    @NotTransactional
     void lookupForSuccessfullUpdate(Package pkg) {
 
         if (!pkg.kbartSource?.url) {

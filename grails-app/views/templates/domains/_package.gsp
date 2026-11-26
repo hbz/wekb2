@@ -37,9 +37,7 @@
                         <b>LastRun:</b> <wekb:dateTime format="${message(code: 'default.date.format.noZ')}" date="${d.kbartSource.lastRun}"/>
                     <g:if test="${d.kbartSource && d.kbartSource.kbartHasWekbFields}">
                         , <b><g:message code="kbartsource.kbartHasWekbFields"/>:</b> <semui:xEditableBoolean owner="${d.kbartSource}" field="kbartHasWekbFields" overwriteEditable="false"/> <i class="info red big circle icon"></i>
-                    </g:if>
-
-                    )</p>
+                    </g:if>)</p>
                 </g:if>
             </dd>
         </dl>

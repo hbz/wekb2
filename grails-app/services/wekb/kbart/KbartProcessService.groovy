@@ -8,6 +8,7 @@ import wekb.IdentifierNamespace
 import wekb.KbartSource
 import wekb.Package
 import wekb.Platform
+import wekb.RefdataValue
 import wekb.TitleInstancePackagePlatform
 import wekb.UpdatePackageInfo
 import wekb.UpdateTippInfo
@@ -220,7 +221,7 @@ class KbartProcessService {
         final Long updateInfoID = updatePackageInfo.id
 
         final List<Map> rows = (kbartRows ?: []).collect { Map row -> new LinkedHashMap(row) }
-        final boolean hasWekbStatus = rows && rows.first().containsKey('status')
+        final boolean hasWekbStatus = rows && rows.first().containsKey('listprice_eur')
         boolean failed = false
         int processedRows = 0
         int created = 0
@@ -271,7 +272,7 @@ class KbartProcessService {
 
             List<Integer> rowNumbers = titleRows.collect { Map row ->
                 row.rowIndex != null ?
-                        row.rowIndex as Integer :
+                        row.rowIndex as Integer + 1 :
                         rows.indexOf(row) + 1
             }
 
@@ -284,7 +285,7 @@ class KbartProcessService {
                         titleID: null,
                         tippID: null,
                         rows: rowNumbers,
-                        message: 'Missing title_id',
+                        message: 'Validation failed: Missing title_id',
                         type: RDStore.UPDATE_TYPE_INVAILD_TITLE
                 ]
                 return
@@ -355,7 +356,7 @@ class KbartProcessService {
                             if (!tipp) throw new IllegalStateException("TIPP update returned no TIPP for title_id=${titleID}")
 
                             boolean isChanged = updateResult.changedTipp == true
-                            if (!hasWekbStatus && tipp.status != RDStore.KBC_STATUS_CURRENT) {
+                            if (tipp.status != RDStore.KBC_STATUS_CURRENT) {
                                 tipp.status = RDStore.KBC_STATUS_CURRENT
                                 isChanged = true
                             }
@@ -469,7 +470,7 @@ class KbartProcessService {
                                      rows: titleRows.collect { Map r ->
                                          r.rowIndex != null ? (r.rowIndex as Integer) + 1 : (rows.indexOf(r) + 1)
                                      },
-                                     message: "TIPP batch creation failed: ${e.message}",
+                                     message: "Title creation failed: ${e.message}",
                                      type: RDStore.UPDATE_TYPE_FAILED_TITLE]
                 }
                 log.error('KBART import: TIPP batch creation failed', e)
@@ -514,14 +515,14 @@ class KbartProcessService {
             } catch (Exception e) {
                 failed = true
                 importErrors << [titleID: null, tippID: null, rows: [],
-                                 message: "Duplicate cleanup failed: ${e.message}",
+                                 message: "Title duplicate cleanup failed: ${e.message}",
                                  type: RDStore.UPDATE_TYPE_FAILED_TITLE]
                 log.error('KBART import: duplicate cleanup failed', e)
             }
             updateImportProgress(updateInfoID, 90, PROGRESS_DUPLICATES)
         }
 
-        if (!failed && !hasWekbStatus) {
+        if (!failed) {
 
             updateImportProgress(updateInfoID, 91, PROGRESS_DELETING)
 
@@ -541,6 +542,10 @@ class KbartProcessService {
                     protectedIDs.addAll(tippDuplicates)
                     List<Long> missing = existing.findAll { Long id -> !protectedIDs.contains(id) }
                     int deletedCount = 0
+
+                    println("seenTippIDs: ${seenTippIDs.size()}")
+                    println("protectedIDs: ${protectedIDs.size()}")
+                    println("missing: ${missing.size()}")
 
 
                     missing.each { Long id ->
@@ -591,7 +596,7 @@ class KbartProcessService {
                         UpdatePackageInfo processedUpdateInfo = UpdatePackageInfo.get(updateInfoID)
                         TitleInstancePackagePlatform processedTipp = issue.tippID ? TitleInstancePackagePlatform.get(issue.tippID as Long) : null
                         String location = issue.titleID ? "title_id=${issue.titleID}" : ''
-                        String rowText = chunk ? "KBART rows: ${chunk.join(', ')}" : ''
+                        String rowText = chunk ? ", KBART row: ${chunk.join(', ')}" : ''
                         Date now = new Date()
                         new UpdateTippInfo(
                                 uuid: UUID.randomUUID().toString(),
@@ -672,7 +677,7 @@ class KbartProcessService {
         int countRows = 0
         List<Map<String, Object>> result = []
 
-        Closure markImportAsFailed = { String description ->
+        Closure markImportAs = { String description, RefdataValue status ->
 
             final Long updateInfoID = updatePackageInfo?.id
 
@@ -709,7 +714,7 @@ class KbartProcessService {
                 }
 
                 info.description = errorDescription
-                info.status = RDStore.UPDATE_STATUS_FAILED
+                info.status = status
                 info.endTime = new Date()
                 info.updateUrl = lastUpdateURL
                 info.countPreviouslyTippsInWekb = processedPkg.getTippCountWithoutRemoved()
@@ -726,7 +731,7 @@ class KbartProcessService {
         if (tsvFile == null || !tsvFile.exists() || !tsvFile.isFile()) {
             log.warn("KBART file does not exist or is not a file: ${tsvFile}")
 
-            markImportAsFailed("KBART file does not exist or is not a valid file. ")
+            markImportAs("KBART file does not exist or is not a valid file. ", RDStore.UPDATE_STATUS_FAILED)
 
             log.info("End KbartProcess with ${countRows} rows")
             return result
@@ -735,7 +740,7 @@ class KbartProcessService {
         if (tsvFile.length() == 0) {
             log.warn("KBART file is empty: ${lastUpdateURL}")
 
-            markImportAsFailed("KBART file is empty. ")
+            markImportAs("KBART file is empty. ", RDStore.UPDATE_STATUS_FAILED)
 
             log.info("End KbartProcess with ${countRows} rows")
             return result
@@ -757,11 +762,7 @@ class KbartProcessService {
 
                 log.warn("Encoding of file is wrong. File encoding is: ${encoding}")
 
-                markImportAsFailed(
-                        "Encoding of KBART file is wrong. " +
-                                "File encoding was: ${encoding}. " +
-                                "AllowedEncodings: ${allowedEncodings}"
-                )
+                markImportAs("Encoding of KBART file is wrong. File encoding was: ${encoding}. AllowedEncodings: ${allowedEncodings}", RDStore.UPDATE_STATUS_FAILED)
 
                 log.info("End KbartProcess with ${countRows} rows")
                 return result
@@ -771,15 +772,9 @@ class KbartProcessService {
 
         } catch (Exception encodingException) {
 
-            log.error(
-                    "Could not determine KBART encoding: ${encodingException.message}",
-                    encodingException
-            )
+            log.error("Could not determine KBART encoding: ${encodingException.message}", encodingException)
 
-            markImportAsFailed(
-                    "The encoding of the KBART file could not be determined. " +
-                            "AllowedEncodings: ${allowedEncodings}"
-            )
+            markImportAs("The encoding of the KBART file could not be determined. AllowedEncodings: ${allowedEncodings}", RDStore.UPDATE_STATUS_FAILED)
 
             log.info("End KbartProcess with ${countRows} rows")
             return result
@@ -806,7 +801,7 @@ class KbartProcessService {
             if (!firstLine) {
                 log.warn("KBART file has no header: ${lastUpdateURL}")
 
-                markImportAsFailed("KBART file is empty or does not contain a header. ")
+                markImportAs("KBART file is empty or does not contain a header. ", RDStore.UPDATE_STATUS_FAILED)
 
                 return result
             }
@@ -816,9 +811,7 @@ class KbartProcessService {
             if (!delimiter) {
                 log.warn("No delimiter recognized: ${lastUpdateURL}")
 
-                markImportAsFailed("Separator for the KBART file was not recognized. " +
-                                "The following separators are recognized: " +
-                                "tab, comma and semicolon. ")
+                markImportAs("Separator for the KBART file was not recognized. The following separators are recognized: tab, comma and semicolon. ", RDStore.UPDATE_STATUS_FAILED)
 
                 return result
             }
@@ -878,8 +871,7 @@ class KbartProcessService {
             if (!missingMinimumHeaders.isEmpty()) {
                 log.warn("KBART file does not have required headers: " + "${missingMinimumHeaders}")
 
-                markImportAsFailed("KBART file does not have the required headers: " +
-                                "${missingMinimumHeaders.join(', ')}. ")
+                markImportAs("KBART file does not have the required headers: ${missingMinimumHeaders.join(', ')}. ", RDStore.UPDATE_STATUS_FAILED)
 
                 return result
             }
@@ -961,7 +953,7 @@ class KbartProcessService {
             if (countRows == 0) {
                 log.warn("KBART file contains no data rows: ${lastUpdateURL}")
 
-                markImportAsFailed("KBART file is empty. ")
+                markImportAs("KBART file is empty. ", RDStore.UPDATE_STATUS_FAILED)
 
                 return result
             }
@@ -973,7 +965,7 @@ class KbartProcessService {
 
         } catch (Exception exception) {
             log.error("Error by KbartProcess: ${exception.message}", exception)
-            markImportAsFailed("An error occurred while processing the KBART file. More information can be seen in the system log. ")
+            markImportAs("An error occurred while processing the KBART file. More information can be seen in the system log. ", RDStore.UPDATE_STATUS_FAILED)
 
         } finally {
             if (parser != null) {
