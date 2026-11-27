@@ -33,7 +33,7 @@
                                       name="${field.qparam}"
                                       baseClass="${field.baseClass}"
                                       filter1="${field.filter1}"
-                                      placeholder="${message(code: 'search.select')}${field.selectPlaceHolder ?: field.prompt}"/>
+                                      placeholder="${message(code: 'search.select')} ${field.selectPlaceHolder ?: field.prompt}"/>
         </div>
     </g:elseif>
     <g:elseif test="${field.type == 'dropDownGroup'}">
@@ -53,7 +53,7 @@
                                         dropDownType="${field.dropDownType}"
                                         refObject="${refObject.class.name}:${refObject.id}"
                                         qpStatusId="${params.qp_status_id}"
-                                        placeholder="${message(code: 'search.select')}${field.selectPlaceHolder ?: field.prompt}"/>
+                                        placeholder="${message(code: 'search.select')} ${field.selectPlaceHolder ?: field.prompt}"/>
             </g:if>
             <g:else>
                 <semui:selectedDropDown multiple="${field.multiple}"
@@ -61,7 +61,7 @@
                                         name="${field.qparam}"
                                         dropDownType="${field.dropDownType}"
                                         qpStatusId="${params.qp_status_id}"
-                                        placeholder="${message(code: 'search.select')}${field.selectPlaceHolder ?: field.prompt}"/>
+                                        placeholder="${message(code: 'search.select')} ${field.selectPlaceHolder ?: field.prompt}"/>
             </g:else>
         </div>
     </g:elseif>

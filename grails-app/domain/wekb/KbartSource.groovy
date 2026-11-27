@@ -150,7 +150,7 @@ class KbartSource extends AbstractBase implements Auditable {
         params.sort = 'name'
 
         def ql = null;
-        ql = KbartSource.findAllByNameIlikeAndStatusNotInList("%${params.q}%", [RDStore.KBC_STATUS_DELETED, RDStore.KBC_STATUS_REMOVED], params)
+        ql = KbartSource.findAllByNameIlikeAndStatusNotInList("%${params.q.toLowerCase()}%", [RDStore.KBC_STATUS_DELETED, RDStore.KBC_STATUS_REMOVED], params)
 
         if (ql) {
             ql.each { t ->

@@ -244,7 +244,7 @@ class Org extends AbstractBase implements Auditable {
     params.sort = 'name'
 
     def ql = null;
-    ql = Org.findAllByNameIlikeAndStatusNotInList("%${params.q}%", [RDStore.KBC_STATUS_DELETED, RDStore.KBC_STATUS_REMOVED], params)
+    ql = Org.findAllByNameIlikeAndStatusNotInList("%${params.q.toLowerCase()}%", [RDStore.KBC_STATUS_DELETED, RDStore.KBC_STATUS_REMOVED], params)
 
     if (ql) {
       ql.each { t ->

@@ -79,8 +79,8 @@ class DropdownService {
                     order = "rv.order, rv.value_en"
                 queryMap = [desc: filter]
                 if(q) {
-                    queryString = "and rv.value_en like :queryStringFilter"
-                    queryMap.queryStringFilter = "${q}%"
+                    queryString = "and LOWER(rv.value_en) like :queryStringFilter"
+                    queryMap.queryStringFilter = "%${q.toLowerCase()}%"
                 }
                 query = "select rv from ${baseClass} as rv where rv.owner.desc = :desc ${queryString} order by ${order}"
                 RefdataValue.executeQuery(query, queryMap).each { t ->
@@ -100,8 +100,8 @@ class DropdownService {
             else {
                 queryMap = [status: [RDStore.KBC_STATUS_DELETED, RDStore.KBC_STATUS_REMOVED]]
                 if(q) {
-                    queryString = "and o.name like :queryStringFilter"
-                    queryMap.queryStringFilter = "${q}%"
+                    queryString = "and LOWER(o.name) like :queryStringFilter"
+                    queryMap.queryStringFilter = "%${q.toLowerCase()}%"
                 }
                 query = "select o.id, o.name from ${baseClass} as o where o.status not in :status ${queryString} order by o.name"
                 baseclass.executeQuery(query, queryMap).each { t ->
@@ -136,8 +136,8 @@ class DropdownService {
         String baseQuery, filter = ""
         Map<String, Object> queryParams = [status: listStatus]
         if(q) {
-            filter = "and series like :filter"
-            queryParams.filter = "${q}%"
+            filter = "and LOWER(series) like :filter"
+            queryParams.filter = "%${q.toLowerCase()}%"
         }
         if(pkgs) {
             baseQuery = "select series from TitleInstancePackagePlatform where series is not null and pkg in (:pkgs) and status in (:status) ${filter} order by series"
@@ -163,8 +163,8 @@ class DropdownService {
         String baseQuery, filter = ""
         Map<String, Object> queryParams = [status: listStatus]
         if(q) {
-            filter = "and series like :filter"
-            queryParams.filter = "${q}%"
+            filter = "and LOWER(ddc.value_en) like :filter"
+            queryParams.filter = "%${q.toLowerCase()}%"
         }
         if(pkgs) {
             baseQuery = "select ddc from TitleInstancePackagePlatform tipp join tipp.ddcs ddc join tipp.pkg pkg where pkg in (:pkgs) and tipp.status in (:status) ${filter} order by ddc.value_en"
@@ -185,8 +185,8 @@ class DropdownService {
         String baseQuery = "select ddc from Package pkg join pkg.ddcs ddc order by ddc.value_en"
         Map<String, Object> queryParams = null
         if(q) {
-            baseQuery = "select ddc from Package pkg join pkg.ddcs ddc and series like :filter order by ddc.value_en"
-            queryParams = [filter: "${q}%"]
+            baseQuery = "select ddc from Package pkg join pkg.ddcs ddc and LOWER(ddc.value_en) like :filter order by ddc.value_en"
+            queryParams = [filter: "%${q.toLowerCase()}%"]
         }
         Set<RefdataValue> ddcs
         if(queryParams) {
@@ -206,8 +206,8 @@ class DropdownService {
         String baseQuery, filter = ""
         Map<String, Object> queryParams = [status: listStatus]
         if(q) {
-            filter = "lang.language.value_en like :filter"
-            queryParams.filter = "${q}%"
+            filter = "LOWER(lang.language.value_en) like :filter"
+            queryParams.filter = "%${q.toLowerCase()}%"
         }
         if(pkgs) {
             baseQuery = "select lang.language from Language lang join lang.tipp tipp join tipp.pkg pkg where pkg in (:pkgs) and tipp.status in (:status) ${filter} order by lang.language.value_en"
@@ -230,8 +230,8 @@ class DropdownService {
         String baseQuery, filter = ""
         Map<String, Object> queryParams = [status: listStatus]
         if(q) {
-            filter = "and subjectArea like :filter"
-            queryParams.filter = "${q}%"
+            filter = "and LOWER(subjectArea) like :filter"
+            queryParams.filter = "%${q.toLowerCase()}%"
         }
         if(pkgs) {
             baseQuery = "select subjectArea from TitleInstancePackagePlatform where subjectArea is not null and pkg in (:pkgs) and status in (:status) ${filter} order by subjectArea"
@@ -258,7 +258,7 @@ class DropdownService {
         Map<String, Object> queryParams = [status: listStatus]
         if(q) {
             filter = "and to_char(dateFirstOnline, 'yyyy') like :filter"
-            queryParams.filter = "${q}%"
+            queryParams.filter = "%${q}%"
         }
         if(pkgs) {
             baseQuery = "select Year(dateFirstOnline) from TitleInstancePackagePlatform where dateFirstOnline is not null and pkg in (:pkgs) and status in (:status) ${filter} order by YEAR(dateFirstOnline)"
@@ -283,7 +283,7 @@ class DropdownService {
         Map<String, Object> queryParams = [status: listStatus]
         if(q) {
             filter = "and to_char(accessStartDate,'yyyy') like :filter"
-            queryParams.filter = "${q}%"
+            queryParams.filter = "%${q}%"
         }
         if(pkgs) {
             baseQuery = "select Year(accessStartDate) from TitleInstancePackagePlatform where accessStartDate is not null and pkg in (:pkgs) and status in (:status) "+filter+" order by YEAR(accessStartDate)"
@@ -308,7 +308,7 @@ class DropdownService {
         Map<String, Object> queryParams = [status: listStatus]
         if(q) {
             filter = "and to_char(accessEndDate,'yyyy') like :filter"
-            queryParams.filter = "${q}%"
+            queryParams.filter = "%${q}%"
         }
         if(pkgs) {
             baseQuery = "select Year(accessEndDate) from TitleInstancePackagePlatform where accessEndDate is not null and pkg in (:pkgs) and status in (:status) ${filter} order by YEAR(accessEndDate)"
@@ -334,8 +334,8 @@ class DropdownService {
         String baseQuery, filter = ""
         Map<String, Object> queryParams = [status: listStatus]
         if(q) {
-            filter = "and publisherName like :filter"
-            queryParams.filter = "${q}%"
+            filter = "and LOWER(publisherName) like :filter"
+            queryParams.filter = "%${q.toLowerCase()}%"
         }
         if(pkgs) {
             baseQuery = "select publisherName from TitleInstancePackagePlatform where publisherName is not null and pkg in (:pkgs) and status in (:status) ${filter} order by publisherName"
