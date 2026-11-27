@@ -62,8 +62,12 @@ class GlobalSearchTemplatesService {
                         qbeForm   : [
                                 //Hiden fields
                                 [
+                                        type       : 'dropDown',
+                                        baseClass  : 'wekb.RefdataValue',
+                                        filter1    : RCConstants.YN,
                                         qparam     : 'qp_source_automaticUpdates',
-                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'kbartSource.automaticUpdates', 'type': 'boolean'],
+                                        propType   : 'Boolean',
+                                        contextTree: ['ctxtp': 'qry', 'comparator': 'eq', 'prop': 'kbartSource.automaticUpdates'],
                                         hide: true
                                 ],
 

@@ -1436,7 +1436,7 @@ class AdminController {
         searchResult.user = springSecurityService.currentUser
 
         params.qbe = 'g:adminPackages'
-        params.qp_source_automaticUpdates = RDStore.YN_YES
+        params.qp_source_automaticUpdates = RDStore.YN_YES.getOID()
 
         params.max = params.max ?: '500'
         params.sort = params.sort ?: 'name'
@@ -1452,7 +1452,7 @@ class AdminController {
         searchResult.user = springSecurityService.currentUser
 
         params.qbe = 'g:adminPackages'
-        params.qp_source_automaticUpdates = RDStore.YN_YES
+        params.qp_source_automaticUpdates = RDStore.YN_YES.getOID()
         params.sort = params.sort ?: 'name'
         params.order = params.order ?: 'asc'
         params.max = '25000'
